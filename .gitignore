@@ -1,0 +1,9 @@
+External/Library/Script/
+External/Library/Engine/
+.vs/
+Project/Client/x64/
+Project/CodeGen/.vs/
+Project/DynamicLib/
+Project/Engine/x64/
+Project/Script/x64/
+Project/StaticLib/
