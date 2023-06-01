@@ -8,3 +8,5 @@ Project/Engine/x64/
 Project/Script/x64/
 Project/StaticLib/
 unity_*.cpp
+External/Include/Engine
+External/Include/Script
