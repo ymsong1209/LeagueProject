@@ -11,4 +11,6 @@ Project/StaticLib/
 unity_*.cpp
 External/Include/Engine
 External/Include/Script
-imgui.ini
+**/imgui.ini
+OutputFile/bin_d/Client.exe
+OutputFile/bin_d/Client.pdb
