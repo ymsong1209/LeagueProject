@@ -9,8 +9,11 @@ Project/Engine/x64/
 Project/Script/x64/
 Project/StaticLib/
 unity_*.cpp
-External/Include/Engine
-External/Include/Script
+External/Include/Engine/*
+!External/Include/Engine/SimpleMath.inl
+External/Include/Script/
 **/imgui.ini
 OutputFile/bin_d/Client.exe
 OutputFile/bin_d/Client.pdb
+OutputFile/bin/Client.exe
+OutputFile/bin/Client.pdb
