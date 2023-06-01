@@ -1,6 +1,7 @@
 External/Library/Script/
 External/Library/Engine/
 .vs/
+x64/
 Project/Client/x64/
 Project/CodeGen/.vs/
 Project/DynamicLib/
