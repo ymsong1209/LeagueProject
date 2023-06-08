@@ -424,6 +424,9 @@
     <Filter Include="02. Manager\RenderMgr">
       <UniqueIdentifier>{d8884ed6-cd05-4eb4-9c2c-1ac4312930ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. GameObject\test">
+      <UniqueIdentifier>{a7a3cf87-421f-49dd-a3aa-f0f8c3d6cfc7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="SimpleMath.inl">
