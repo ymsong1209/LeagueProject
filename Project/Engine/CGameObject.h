@@ -6,6 +6,7 @@ class CComponent;
 class CTransform;
 class CMeshRender;
 class CCollider2D;
+class CCollider3D;
 class CAnimator2D;
 class CLight2D;
 class CLight3D;
@@ -26,8 +27,8 @@ class CGameObject :
 {
 private:
     CComponent*             m_arrCom[(UINT)COMPONENT_TYPE::END];
-    CRenderComponent*       m_RenderCom;
-    vector<CScript*>        m_vecScript;
+    CRenderComponent*       m_RenderCom;// GameObject는 RenderComponent가 하나여야만 한다.
+    vector<CScript*>        m_vecScript;//Script가 여러개일수도 있음
 
     CGameObject*            m_Parent;
     vector<CGameObject*>    m_vecChild;
@@ -57,6 +58,7 @@ public:
     GET_COMPONENT(MeshRender, MESHRENDER);
     GET_COMPONENT(Camera, CAMERA);
     GET_COMPONENT(Collider2D, COLLIDER2D);
+    GET_COMPONENT(Collider3D, COLLIDER3D);
     GET_COMPONENT(Light2D, LIGHT2D);
     GET_COMPONENT(Light3D, LIGHT3D);
     GET_COMPONENT(TileMap, TILEMAP);
@@ -87,6 +89,8 @@ public:
     bool IsDead() { return m_bDead; }
     bool IsAncestor(CGameObject* _Target);
 
+    float GetLifeSpan() { return m_LifeTime; }
+    float GetCurLifeSpan() { return m_CurLifeTime; }
 
 private:
     void DisconnectFromParent();

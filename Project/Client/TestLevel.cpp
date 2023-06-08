@@ -96,6 +96,11 @@ void CreateTestLevel()
 	//pLandScape->AddComponent(new CLandScape);
 	//pLandScape->LandScape()->SetFace(4, 4);
 
+	pLandScape->AddComponent(new CCollider3D);
+	pLandScape->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
+	pLandScape->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+
+
 	pLandScape->Transform()->SetRelativeScale(Vec3(500.f, 500, 500));
 	pLandScape->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
 	pLandScape->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"TessMtrl"));
