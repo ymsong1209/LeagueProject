@@ -13,7 +13,9 @@ public:
     void SetLightDiffuse(Vec3 _vDiffuse) {m_LightInfo.Color.vDiffuse = _vDiffuse; }
     void SetLightAmbient(Vec3 _vAmbient) {m_LightInfo.Color.vAmbient = _vAmbient; }
     void SetRadius(float _Radius) { m_LightInfo.Radius = _Radius; }
+
     void SetAngle(float _Angle) { m_LightInfo.Angle = _Angle; }
+    const float GetAngle() { return m_LightInfo.Angle * 180.f / XM_PI; }
 
     const tLightInfo& GetLightInfo() { return m_LightInfo; }
 
@@ -26,6 +28,7 @@ public:
     CLONE(CLight2D);
 public:
     CLight2D();
+    CLight2D(const CLight2D& _other);
     ~CLight2D();
 };
 

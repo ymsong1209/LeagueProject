@@ -12,6 +12,13 @@ CLight2D::CLight2D()
 {
 }
 
+CLight2D::CLight2D(const CLight2D& _other)
+	: CComponent(_other)
+	, m_LightInfo(_other.m_LightInfo)
+{
+
+}
+
 CLight2D::~CLight2D()
 {
 }
