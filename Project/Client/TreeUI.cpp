@@ -12,7 +12,7 @@ TreeNode::TreeNode()
     , m_ID(0)
     , m_Data(0)
     , m_CategoryNode(false)
-    , m_Hilight(false)    
+    , m_Highlight(false)    
 {
 }
 
@@ -32,20 +32,20 @@ void TreeNode::render_update()
     strFinalName += szBuff;
 
     // Flag 체크
-    UINT flag = ImGuiTreeNodeFlags_DefaultOpen;
+    UINT flag = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_OpenOnArrow;
 
-    // 자식 노드가 없으면 Lear 플래그를 설정한다(화살표 제거)
+    // 자식 노드가 없으면 Leaf 플래그를 설정한다(화살표 제거)
     if (m_vecChildNode.empty())    
         flag |= ImGuiTreeNodeFlags_Leaf;
     
     // 클릭 되었거나, 항목 대표 노드인 경우 Selected 플래그로 하이라이트를 준다.
-    if(m_Hilight || m_CategoryNode)
+    if(m_Highlight || m_CategoryNode)
         flag |= ImGuiTreeNodeFlags_Selected;
 
     if (ImGui::TreeNodeEx(strFinalName.c_str(), flag))
     {
         // 해당 노드에 마우스 왼클릭이 발생하면 선택노드로 지정 준다.
-        if (ImGui::IsItemHovered() && ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Left))
+        if (ImGui::IsItemHovered() && ImGui::IsMouseDown(ImGuiMouseButton_::ImGuiMouseButton_Left) && !m_CategoryNode)
         {            
             m_Owner->m_LbtDownNode = this;
         }
@@ -59,6 +59,23 @@ void TreeNode::render_update()
             m_Owner->m_dwPrevSelected = 0;
             m_Owner->SetSelectedNode(this);
         }
+
+        //해당 노드에 우클릭을 하였을때 일어나는 Delegate
+        if (ImGui::BeginPopupContextItem())
+        {
+            //m_Owner->m_bIsRightClickActivated = true;
+            m_Owner->SetRightClickNode(this);
+
+            if (ImGui::Button("Close")) {
+                //m_Owner->m_bIsRightClickActivated = false;
+                ImGui::CloseCurrentPopup();
+            }
+
+            ImGui::EndPopup();
+            ImGui::TreePop();
+            return;
+        }
+
 
         // 해당 노드 위에서 드래그 스타트 체크
         if (ImGui::BeginDragDropSource())
@@ -87,7 +104,11 @@ void TreeNode::render_update()
             ImGui::EndDragDropTarget();
         }
 
-
+        // 드래그 드랍 후 초기화
+        if (m_Owner->m_DragNode == this && ImGui::IsMouseReleased(ImGuiMouseButton_::ImGuiMouseButton_Left) && ImGui::IsItemHovered()) {
+            m_Owner->m_DropNode = nullptr;
+            m_Owner->m_DragNode = nullptr;
+        }
 
         for (size_t i = 0; i < m_vecChildNode.size(); ++i)
         {
@@ -229,14 +250,14 @@ void TreeUI::SetSelectedNode(TreeNode* _Node)
     }        
 
     if (m_SelectedNode)
-        m_SelectedNode->m_Hilight = false;
+        m_SelectedNode->m_Highlight = false;
 
     m_SelectedNode = _Node;
     m_LbtDownNode = nullptr;
 
     if (m_SelectedNode)
     {
-        m_SelectedNode->m_Hilight = true;
+        m_SelectedNode->m_Highlight = true;
 
         if (m_SelectInst && m_SelectFunc)
         {
@@ -255,6 +276,15 @@ void TreeUI::SetDropNode(TreeNode* _Node)
 {
     m_DropNode = _Node;
 }
+
+void TreeUI::SetRightClickNode(TreeNode* _Node)
+{
+    if (m_RightClickInst && m_RightClickFunc)
+    {
+        (m_RightClickInst->*m_RightClickFunc)((DWORD_PTR)_Node);
+    }
+}
+
 
 bool TreeUI::GetSelectedNode(DWORD_PTR _Data)
 {
