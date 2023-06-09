@@ -27,7 +27,7 @@ class CGameObject :
 {
 private:
     CComponent*             m_arrCom[(UINT)COMPONENT_TYPE::END];
-    CRenderComponent*       m_RenderCom;// GameObject는 RenderComponent가 하나여야만 한다.
+    CRenderComponent*       m_RenderCom;//GameObject는 RenderComponent가 하나여야만 한다.
     vector<CScript*>        m_vecScript;//Script가 여러개일수도 있음
 
     CGameObject*            m_Parent;

@@ -23,6 +23,9 @@ public:
     CGameObject* FindObjectByName(const wstring& _Name);
     void FindObjectByName(const wstring& _Name, vector<CGameObject*>& _Out);
 
+    CGameObject* FindParentObjectByName(const wstring& _Name);
+    void FindParentObjectByName(const wstring& _Name, vector<CGameObject*>& _Out);
+
     void AddGameObject(CGameObject* _Object, int _iLayerIdx, bool _Move);
     void AddGameObject(CGameObject* _Object, const wstring& _LayerName, bool _Move);
     
