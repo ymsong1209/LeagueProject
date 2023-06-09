@@ -763,13 +763,19 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_LIGHT);
 	AddRes(pShader->GetKey(), pShader);
 
-	// ============================
+	// ==========================
 	// Decal Shader
-	// RS_TYPE : CULL_FRONT
-	// DS_TYPE : NO_TEST_NO_WRITE
-	// BS_TYPE : DEFAULT	 
-	// Domain : DOMAIN_DECAL
-	// ============================
+	// RS_TYPE  : CULL_FRONT
+	// DS_TYPE  : NO_TEST_NO_WRITE
+	// BS_TYPE  : ALPHA_BLEND
+
+	// g_tex_0  : Output Texture
+	// g_tex_1  : Position Target
+	// g_tex_2  : Data Target
+	// g_vec4_0 : LightColor
+	// g_int_0  : LightUse
+	// g_int_1  : layerCheck
+	// =========================
 	pShader = new CGraphicsShader;
 	pShader->SetKey(L"DecalShader");
 	pShader->CreateVertexShader(L"shader\\decal.fx", "VS_Decal");
