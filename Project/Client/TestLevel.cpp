@@ -92,20 +92,13 @@ void CreateTestLevel()
 	pLandScape->SetName(L"LandScape");
 
 	pLandScape->AddComponent(new CTransform);
-	pLandScape->AddComponent(new CMeshRender);
-	//pLandScape->AddComponent(new CLandScape);
-	//pLandScape->LandScape()->SetFace(4, 4);
-
-	pLandScape->AddComponent(new CCollider3D);
-	pLandScape->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
-	pLandScape->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
-
-
+	pLandScape->AddComponent(new CParticleSystem);
+	
 	pLandScape->Transform()->SetRelativeScale(Vec3(500.f, 500, 500));
-	pLandScape->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	pLandScape->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"TessMtrl"));
+	//pLandScape->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	//pLandScape->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"TessMtrl"));
 
-	SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 0.f), 0);
+	SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 500.f), 0);
 
 
 	// 충돌 시킬 레이어 짝 지정

@@ -35,8 +35,8 @@ CParticleSystem::CParticleSystem()
 	m_ModuleData.EndScale = 0.2f;
 
 	m_ModuleData.ModuleCheck[(UINT)PARTICLE_MODULE::COLOR_CHANGE] = true;
-	m_ModuleData.vStartColor = Vec3(0.2f, 0.3f, 1.0f);
-	m_ModuleData.vEndColor = Vec3(0.4f, 1.f, 0.4f);
+	m_ModuleData.vStartColor = Vec4(0.2f, 0.3f, 1.0f,1.f);
+	m_ModuleData.vEndColor = Vec4(0.4f, 1.f, 0.4f,1.f);
 
 	m_ModuleData.ModuleCheck[(UINT)PARTICLE_MODULE::ADD_VELOCITY] = true;
 	m_ModuleData.AddVelocityType = 0; // From Center
@@ -65,6 +65,8 @@ CParticleSystem::CParticleSystem()
 	// 파티클 전용 재질
 	SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"ParticleRenderMtrl"));
 
+	pParticleTex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\particle\\HardCircle.png");
+
 	// 파티클 업데이트 컴퓨트 쉐이더	
 	m_UpdateCS = (CParticleUpdateShader*)CResMgr::GetInst()->FindRes<CComputeShader>(L"ParticleUpdateCS").Get();
 
@@ -76,6 +78,34 @@ CParticleSystem::CParticleSystem()
 
 	m_ModuleDataBuffer = new CStructuredBuffer;
 	m_ModuleDataBuffer->Create(sizeof(tParticleModule), 1, SB_TYPE::READ_ONLY, true);
+}
+
+CParticleSystem::CParticleSystem(const CParticleSystem& _other)
+	: CRenderComponent(_other)
+	, m_ModuleData(_other.m_ModuleData)
+	, m_UpdateCS(_other.m_UpdateCS)
+	, pParticleTex(_other.pParticleTex)
+	, m_AccTime(_other.m_AccTime)
+
+{
+	m_ParticleBuffer = new CStructuredBuffer;
+	m_ParticleBuffer->Create(sizeof(tParticle), m_ModuleData.iMaxParticleCount, SB_TYPE::READ_WRITE, false);
+
+	m_RWBuffer = new CStructuredBuffer;
+	m_RWBuffer->Create(sizeof(tRWParticleBuffer), 1, SB_TYPE::READ_WRITE, true);
+
+	m_ModuleDataBuffer = new CStructuredBuffer;
+
+	m_ModuleDataBuffer->Create(sizeof(tParticleModule), 1, SB_TYPE::READ_ONLY, true);
+
+	// 입자 메쉬
+	SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"PointMesh"));
+
+	// 파티클 전용 재질
+	SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"ParticleRenderMtrl"));
+
+	GetMaterial()->SetTexParam(TEX_0, pParticleTex);
+
 }
 
 CParticleSystem::~CParticleSystem()
@@ -90,6 +120,16 @@ CParticleSystem::~CParticleSystem()
 		delete m_ModuleDataBuffer;
 }
 
+//파티클 구조화버퍼 크기 재설정 함수
+//현재 파티클 구조화버퍼 크기보다 더 많은 파티클을 만들고 싶을 경우 실행시켜줘야함
+//Imgui에서 MaxParticleCount설정해줄때 넣어줘야함
+void CParticleSystem::SetParticleBufferSize()
+{
+	if (m_ParticleBuffer->GetElementCount() < m_ModuleData.iMaxParticleCount)
+	{
+		m_ParticleBuffer->Create(sizeof(tParticle), m_ModuleData.iMaxParticleCount, SB_TYPE::READ_WRITE, false);
+	}
+}
 
 void CParticleSystem::finaltick()
 {
@@ -133,10 +173,10 @@ void CParticleSystem::render()
 	m_ParticleBuffer->UpdateData(20, PIPELINE_STAGE::PS_ALL);
 
 	// 모듈 데이터 t21 에 바인딩
-	m_ModuleDataBuffer->UpdateData(21, PIPELINE_STAGE::PS_GEOMETRY);
+	m_ModuleDataBuffer->UpdateData(21, PIPELINE_STAGE::PS_ALL);
 
 	// Particle Render	
-	Ptr<CTexture> pParticleTex = CResMgr::GetInst()->Load<CTexture>(L"Particle_0", L"texture\\particle\\AlphaCircle.png");
+	
 	GetMaterial()->SetTexParam(TEX_0, pParticleTex);
 
 	GetMaterial()->UpdateData();

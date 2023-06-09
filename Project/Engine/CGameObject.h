@@ -6,6 +6,7 @@ class CComponent;
 class CTransform;
 class CMeshRender;
 class CCollider2D;
+class CCollider3D;
 class CAnimator2D;
 class CLight2D;
 class CLight3D;

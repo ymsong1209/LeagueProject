@@ -94,7 +94,7 @@ struct tParticle
 
 	float   Age;			// 생존 시간
 	float   PrevAge;		// 이전 프레임 생존 시간
-	float   NomalizedAge;	// 수명대비 생존시간을 0~1로 정규화 한 값
+	float   NormalizedAge;	// 수명대비 생존시간을 0~1로 정규화 한 값
 	float	LifeTime;		// 수명
 	float	Mass;			// 질량
 	float   ScaleFactor;	// 추가 크기 배율
@@ -153,11 +153,26 @@ struct tParticleModule
 	float	fNoiseTerm;		// 랜덤 힘 변경 간격
 	float	fNoiseForce;	// 랜덤 힘 크기
 
+	// Gravity 모듈 - 중력 추가
+	float	fGravityForce;
+	float	GravityPad[3];
+
 	// Render 모듈
 	int		VelocityAlignment;	// 1 : 속도정렬 사용(이동 방향으로 회전) 0 : 사용 안함
 	int		VelocityScale;		// 1 : 속도에 따른 크기 변화 사용, 0 : 사용 안함	
+	int		AnimationUse;		// 1 : 애니메이션 사용, 0 : 사용 안함
+	int		AnimationLoop;		// 1 : 애니메이션 루프, 0 : 수명에 맞게 한번만
+	int     bRotate;			// 1 : 회전함, 0 : 회전안함
+
 	float   vMaxSpeed;			// 최대 크기에 도달하는 속력
+	float   fRotationAngle;
+	float   fRotateSpeed;
 	Vec4	vMaxVelocityScale;	// 속력에 따른 크기 변화량 최대치
+
+	int		iAnimXCount;
+	int		iAnimYCount;
+	float	fAnimFrmTime;
+
 	int		renderpad;
 
 	// Module Check
