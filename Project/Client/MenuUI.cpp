@@ -9,14 +9,14 @@
 #include <Engine/CLevelMgr.h>
 
 #include <Script\CScriptMgr.h>
-
-
+#include <Engine/CTimeMgr.h>
 
 #include "ImGuiMgr.h"
 #include "OutlinerUI.h"
+#include "ContentUI.h"
 #include "InspectorUI.h"
 #include "CLevelSaveLoad.h"
-
+#include "LevelUI.h"
 
 
 MenuUI::MenuUI()
@@ -45,20 +45,12 @@ int MenuUI::render_update()
         {
             if (ImGui::MenuItem("Save Level"))
             {
-                // Level 저장
-                CLevelSaveLoad::SaveLevel(L"Level\\TestLevel.lv", CLevelMgr::GetInst()->GetCurLevel());                
+                SaveLevel();
             }
 
             if (ImGui::MenuItem("Load Level"))
             {
-                // Level 불러오기
-                CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevel(L"Level\\TestLevel.lv");
-
-                tEvent evn = {};
-                evn.Type = EVENT_TYPE::LEVEL_CHANGE;
-                evn.wParam = (DWORD_PTR)pLoadedLevel;
-
-                CEventMgr::GetInst()->AddEvent(evn);
+                LoadLevel();
             }
 
             ImGui::EndMenu();
@@ -136,18 +128,34 @@ int MenuUI::render_update()
 
 
             if (ImGui::MenuItem("Play", nullptr, nullptr, PlayEnable))
-            {                
-                CLevelSaveLoad::SaveLevel(L"Level\\Temp.lv", CurLevel);
-                CurLevel->ChangeState(LEVEL_STATE::PLAY);
+            {   
+               
+                if (CurLevel->GetName() == L"")
+                {
+                    wchar_t szStr[256] = {};
+                    wsprintf(szStr, L"레벨 이름 없음 / 레벨을 먼저 저장하십시요");
+                    MessageBox(nullptr, szStr, L"레벨실행 실패.", MB_OK);
+                    ImGui::EndMenu();
+                    ImGui::EndMainMenuBar();
+                    return 0;
+                }
+                //stop ->play
+                else if (CurLevel->GetState() == LEVEL_STATE::STOP){
+                    CLevelSaveLoad::SaveLevel(CurLevel->GetName(), CurLevel);
+                }
+                CTimeMgr::GetInst()->SetTimeScale(1.f);
+                CLevelMgr::GetInst()->GetCurLevel()->ChangeState(LEVEL_STATE::PLAY);
             }
             else if (ImGui::MenuItem("Pause", nullptr, nullptr, PauseEnable))
             {
+                CTimeMgr::GetInst()->SetTimeScale(0.f);
                 CurLevel->ChangeState(LEVEL_STATE::PAUSE);
             }
             else if (ImGui::MenuItem("Stop", nullptr, nullptr, StopEnable))
             {
+                CTimeMgr::GetInst()->SetTimeScale(0.f);
                 CurLevel->ChangeState(LEVEL_STATE::STOP);
-                CLevel* pNewLevel = CLevelSaveLoad::LoadLevel(L"Level\\Temp.lv");
+                CLevel* pNewLevel = CLevelSaveLoad::LoadLevel(CurLevel->GetName());
              
                 tEvent evn = {};
                 evn.Type = EVENT_TYPE::LEVEL_CHANGE;
@@ -162,13 +170,103 @@ int MenuUI::render_update()
             ImGui::EndMenu();
         }
 
+        if (ImGui::BeginMenu("Editor")) {
+           
+            if (ImGui::MenuItem("LevelEditor")) {
+                LevelUI* levelEditor = (LevelUI*)ImGuiMgr::GetInst()->FindUI("##Level");
+                levelEditor->SetActive(true);
+            }
 
+            ImGui::EndMenu();
+        }
 
 
         ImGui::EndMainMenuBar();
     }
 
 	return 0;
+}
+
+void MenuUI::SaveLevel()
+{
+    // open a file name
+    OPENFILENAME ofn = {};
+
+    wstring strFolderPath = CPathMgr::GetInst()->GetContentPath();
+    strFolderPath += L"level\\";
+
+    wchar_t szFilePath[256] = {};
+
+    ZeroMemory(&ofn, sizeof(ofn));
+    ofn.lStructSize = sizeof(ofn);
+    ofn.hwndOwner = NULL;
+    ofn.lpstrFile = szFilePath;
+    ofn.lpstrFile[0] = '\0';
+    ofn.nMaxFile = 256;
+    ofn.lpstrFilter = L"lv\0*.lv\0ALL\0*.*";
+    ofn.nFilterIndex = 1;
+    ofn.lpstrFileTitle = NULL;
+    ofn.nMaxFileTitle = 0;
+    ofn.lpstrInitialDir = strFolderPath.c_str();
+    ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+    if (false == GetSaveFileName(&ofn))
+        return;
+
+
+    wstring filePath = wstring(szFilePath);
+    int length = filePath.length();
+    if (length < 2 || filePath.substr(length - 3) != L".lv") {
+        filePath.append(L".lv");
+    }
+
+    wstring path = CPathMgr::GetInst()->GetContentPath();
+    int prefixLength = path.length();
+    wstring subpath = wstring(filePath).substr(prefixLength);
+
+    // Level 저장
+    CLevelSaveLoad::SaveLevel(subpath, CLevelMgr::GetInst()->GetCurLevel());
+
+}
+
+void MenuUI::LoadLevel()
+{
+    // open a file name
+    OPENFILENAME ofn = {};
+
+    wstring strFolderPath = CPathMgr::GetInst()->GetContentPath();
+    strFolderPath += L"level\\";
+
+    wchar_t szFilePath[256] = {};
+
+    ZeroMemory(&ofn, sizeof(ofn));
+    ofn.lStructSize = sizeof(ofn);
+    ofn.hwndOwner = NULL;
+    ofn.lpstrFile = szFilePath;
+    ofn.lpstrFile[0] = '\0';
+    ofn.nMaxFile = 256;
+    ofn.lpstrFilter = L"lv\0*.lv\0ALL\0*.*";
+    ofn.nFilterIndex = 1;
+    ofn.lpstrFileTitle = NULL;
+    ofn.nMaxFileTitle = 0;
+    ofn.lpstrInitialDir = strFolderPath.c_str();
+    ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+    if (false == GetOpenFileName(&ofn))
+        return;
+
+    wstring path = CPathMgr::GetInst()->GetContentPath();
+    int prefixLength = path.length();
+    wstring subpath = wstring(szFilePath).substr(prefixLength);
+
+    // Level 불러오기
+    CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevel(subpath);
+
+    tEvent evn = {};
+    evn.Type = EVENT_TYPE::LEVEL_CHANGE;
+    evn.wParam = (DWORD_PTR)pLoadedLevel;
+
+    CEventMgr::GetInst()->AddEvent(evn);
 }
 
 void MenuUI::CreateEmptyObject()
@@ -262,4 +360,14 @@ void MenuUI::AddScript(const wstring& _strScriptName)
     pSelectedObject->AddComponent(pScript);
 
     inspector->SetTargetObject(pSelectedObject);
+}
+
+void MenuUI::CreateMaterial()
+{
+    Ptr<CMaterial> pMtrl = nullptr;
+    pMtrl = new CMaterial();
+    CResMgr::GetInst()->AddRes(L"New Material", pMtrl);
+    ContentUI* content = (ContentUI*)ImGuiMgr::GetInst()->FindUI("##Content");
+    content->ResetContent();
+
 }

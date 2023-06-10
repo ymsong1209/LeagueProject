@@ -10,8 +10,10 @@
 #define KEY_TAP(Key) CKeyMgr::GetInst()->GetKeyState(Key) == KEY_STATE::TAP		
 #define KEY_RELEASE(Key) CKeyMgr::GetInst()->GetKeyState(Key) == KEY_STATE::RELEASE
 #define KEY_PRESSED(Key) CKeyMgr::GetInst()->GetKeyState(Key) == KEY_STATE::PRESSED
+#define KEY_NONE(Key) CKeyMgr::GetInst()->GetKeyState(Key) == KEY_STATE::NONE
 
 #define DT CTimeMgr::GetInst()->GetDeltaTime()
+#define EditorDT CTimeMgr::GetInst()->GetEditorDeltaTime()
 
 #define MAX_LAYER 32
 

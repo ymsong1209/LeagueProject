@@ -10,13 +10,18 @@
 #include <Engine\CScript.h>
 
 #include <Script\CScriptMgr.h>
-
+#include <Engine/CCollisionMgr.h>
+#include <Engine/CRenderMgr.h>
 
 
 int CLevelSaveLoad::SaveLevel(const wstring& _LevelPath, CLevel* _Level)
 {
-	if (_Level->GetState() != LEVEL_STATE::STOP)
+	if (_Level->GetState() != LEVEL_STATE::STOP) {
+		wchar_t szStr[256] = {};
+		wsprintf(szStr, L"현재 Level이 Stop이 아닙니다. Stop상태로 만드십시요.");
+		MessageBox(nullptr, szStr, L"Level Save 실패.", MB_OK);
 		return E_FAIL;
+	}
 
 	wstring strPath = CPathMgr::GetInst()->GetContentPath();
 	strPath += _LevelPath;
@@ -29,7 +34,7 @@ int CLevelSaveLoad::SaveLevel(const wstring& _LevelPath, CLevel* _Level)
 		return E_FAIL;
 
 	// 레벨 이름 저장
-	SaveWString(_Level->GetName(), pFile);
+	SaveWString(_LevelPath, pFile);
 
 
 	// 레벨의 레이어들을 저장
@@ -53,6 +58,13 @@ int CLevelSaveLoad::SaveLevel(const wstring& _LevelPath, CLevel* _Level)
 			SaveGameObject(vecParent[i], pFile);
 		}
 	}
+
+	//오브젝트 충돌 정보 저장
+	UINT CollisionMatrix[MAX_LAYER];
+	for (UINT i = 0; i < MAX_LAYER; ++i) {
+		CollisionMatrix[i] = CCollisionMgr::GetInst()->GetMatrix()[i];
+	}
+	fwrite(CollisionMatrix, sizeof(UINT), 32, pFile);
 
 	fclose(pFile);
 
@@ -123,7 +135,9 @@ CLevel* CLevelSaveLoad::LoadLevel(const wstring& _LevelPath)
 
 	if (nullptr == pFile)
 		return nullptr;
-
+	
+	//Camera의 생성자에서 RenderMgr에 등록할라면 먼저 기존에 RenderMgr가 초기화되어야함
+	CRenderMgr::GetInst()->ClearCamera();
 	CLevel* NewLevel = new CLevel;
 
 	// 레벨 이름
@@ -153,9 +167,12 @@ CLevel* CLevelSaveLoad::LoadLevel(const wstring& _LevelPath)
 		}
 	}
 
-	fclose(pFile);
+	
+	UINT matrix[MAX_LAYER];
+	fread(&matrix, sizeof(UINT), 32, pFile);
+	CCollisionMgr::GetInst()->SetMatrix(matrix);
 
-	NewLevel->ChangeState(LEVEL_STATE::STOP);
+	fclose(pFile);
 
 	return NewLevel;
 }
@@ -190,7 +207,7 @@ CGameObject* CLevelSaveLoad::LoadGameObject(FILE* _File)
 			Component = new CCollider2D;
 			break;
 		case COMPONENT_TYPE::COLLIDER3D:
-			//Component = new CCollider2D;
+			Component = new CCollider3D;
 			break;
 		case COMPONENT_TYPE::ANIMATOR2D:
 			Component = new CAnimator2D;
@@ -201,6 +218,7 @@ CGameObject* CLevelSaveLoad::LoadGameObject(FILE* _File)
 			Component = new CLight2D;
 			break;
 		case COMPONENT_TYPE::LIGHT3D:
+			Component = new CLight3D;
 			break;
 		case COMPONENT_TYPE::CAMERA:
 			Component = new CCamera;
@@ -215,8 +233,13 @@ CGameObject* CLevelSaveLoad::LoadGameObject(FILE* _File)
 			Component = new CTileMap;
 			break;
 		case COMPONENT_TYPE::LANDSCAPE:			
+			Component = new CLandScape;
 			break;
-		case COMPONENT_TYPE::DECAL:			
+		case COMPONENT_TYPE::DECAL:
+			Component = new CDecal;
+			break;
+		case COMPONENT_TYPE::SKYBOX:
+			Component = new CSkyBox;
 			break;
 		}
 

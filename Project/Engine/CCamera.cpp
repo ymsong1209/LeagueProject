@@ -346,4 +346,5 @@ void CCamera::LoadFromLevelFile(FILE* _File)
 	fread(&m_ProjType, sizeof(UINT), 1, _File);
 	fread(&m_iLayerMask, sizeof(UINT), 1, _File);
 	fread(&m_iCamIdx, sizeof(int), 1, _File);
+	SetCameraIndex(m_iCamIdx);
 }

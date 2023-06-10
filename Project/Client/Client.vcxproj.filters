@@ -110,6 +110,9 @@
     <Filter Include="Manager\LevelSaveLoad">
       <UniqueIdentifier>{bd45bcb0-5b2d-4b83-a548-af8817de8f6a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI\LevelUI">
+      <UniqueIdentifier>{82d3f1c6-4175-4ce4-b04d-344177525bc0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -232,6 +235,9 @@
     </ClInclude>
     <ClInclude Include="CLevelSaveLoad.h">
       <Filter>Manager\LevelSaveLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelUI.h">
+      <Filter>UI\LevelUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -363,6 +369,9 @@
     </ClCompile>
     <ClCompile Include="CLevelSaveLoad.cpp">
       <Filter>Manager\LevelSaveLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelUI.cpp">
+      <Filter>UI\LevelUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -151,6 +151,7 @@ void ImGuiMgr::render()
 #include "OutlinerUI.h"
 #include "ListUI.h"
 #include "MenuUI.h"
+#include "LevelUI.h"
 
 void ImGuiMgr::CreateUI()
 {
@@ -176,12 +177,18 @@ void ImGuiMgr::CreateUI()
     pUI->SetActive(true);
     m_mapUI.insert(make_pair(pUI->GetID(), pUI));
 
+    //LevelUI
+    pUI = new LevelUI;
+    pUI->SetActive(true);
+    m_mapUI.insert(make_pair(pUI->GetID(), pUI));
 
     // ListUI
     pUI = new ListUI;
     pUI->SetModal(true);
     pUI->SetActive(false);
     m_mapUI.insert(make_pair(pUI->GetID(), pUI));
+
+
 
 
     for (const auto& pair : m_mapUI)
