@@ -334,7 +334,7 @@ void MenuUI::AddComponent(COMPONENT_TYPE _type)
         //pSelectedObject->AddComponent(new CLandScape);
         break;
     case COMPONENT_TYPE::DECAL:
-        //pSelectedObject->AddComponent(new CDecal);
+        pSelectedObject->AddComponent(new CDecal);
         break;            
     }
 

@@ -41,7 +41,7 @@ void CEditorObjMgr::init()
 	m_DebugShape[(UINT)SHAPE_TYPE::CUBE] = new CGameObjectEx;
 	m_DebugShape[(UINT)SHAPE_TYPE::CUBE]->AddComponent(new CTransform);
 	m_DebugShape[(UINT)SHAPE_TYPE::CUBE]->AddComponent(new CMeshRender);
-	m_DebugShape[(UINT)SHAPE_TYPE::CUBE]->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
+	m_DebugShape[(UINT)SHAPE_TYPE::CUBE]->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh_Debug"));
 	m_DebugShape[(UINT)SHAPE_TYPE::CUBE]->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"DebugShapeMtrl"));
 
 	m_DebugShape[(UINT)SHAPE_TYPE::SPHERE] = new CGameObjectEx;

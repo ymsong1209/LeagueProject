@@ -152,16 +152,32 @@ void CGameObject::AddComponent(CComponent* _Component)
 	else
 	{		
 		// 이미 보유하고 있는 컴포넌트인 경우
-		assert(!m_arrCom[(UINT)_Component->GetType()]);
-
-		m_arrCom[(UINT)_Component->GetType()] = _Component;
-
-		// RenderComponent 확인
-		if (COMPONENT_TYPE::MESHRENDER <= _Component->GetType()
-			&& _Component->GetType() <= COMPONENT_TYPE::DECAL)
+		if (m_arrCom[(UINT)_Component->GetType()])
 		{
-			assert(!m_RenderCom);
-			m_RenderCom = (CRenderComponent*)_Component;
+			wchar_t szStr[256] = {};
+			wsprintf(szStr, L"이미 동일한 Component가 존재합니다.");
+			MessageBox(nullptr, szStr, L"Component 추가 실패.", MB_OK);
+			delete _Component;
+		}
+		else {
+			// RenderComponent 확인
+			if (COMPONENT_TYPE::MESHRENDER <= _Component->GetType()
+				&& _Component->GetType() <= COMPONENT_TYPE::DECAL)
+			{
+				if (m_RenderCom) {
+					wchar_t szStr[256] = {};
+					wsprintf(szStr, L"이미 RenderComponent가 존재합니다.");
+					MessageBox(nullptr, szStr, L"RenderComponent 추가 실패.", MB_OK);
+					delete _Component;
+				}
+				else {
+					m_arrCom[(UINT)_Component->GetType()] = _Component;
+					m_RenderCom = (CRenderComponent*)_Component;
+				}
+			}
+			else {
+				m_arrCom[(UINT)_Component->GetType()] = _Component;
+			}
 		}
 	}
 }

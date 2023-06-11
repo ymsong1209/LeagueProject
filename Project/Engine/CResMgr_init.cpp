@@ -320,6 +320,38 @@ void CResMgr::CreateDefaultMesh()
 	AddRes<CMesh>(L"CubeMesh", pMesh);
 	vecIdx.clear();
 
+	///
+	//À­¸é
+	//0--1
+	//|  |
+	//3--2
+	//¾Æ·§¸é
+	//7---6
+	//|   |
+	//10--15
+
+	vecIdx.push_back(1);
+	vecIdx.push_back(2);
+	vecIdx.push_back(3);
+	vecIdx.push_back(10);
+	vecIdx.push_back(15);
+	vecIdx.push_back(6);
+	vecIdx.push_back(10);
+	vecIdx.push_back(7);
+	vecIdx.push_back(6);
+	vecIdx.push_back(1);
+	vecIdx.push_back(0);
+	vecIdx.push_back(7);
+	vecIdx.push_back(15);
+	vecIdx.push_back(2);
+	vecIdx.push_back(3);
+	vecIdx.push_back(0);
+
+	pMesh = new CMesh(true);
+	pMesh->Create(arrCube, 24, vecIdx.data(), vecIdx.size());
+	AddRes<CMesh>(L"CubeMesh_Debug", pMesh);
+	vecIdx.clear();
+
 
 	// ===========
 	// Sphere Mesh
