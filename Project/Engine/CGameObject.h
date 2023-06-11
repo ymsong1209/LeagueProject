@@ -12,7 +12,9 @@ class CLight2D;
 class CLight3D;
 class CCamera;
 class CRenderComponent;
+class CScript;
 class CTileMap;
+class CParticleSystem;
 class CSkyBox;
 class CDecal;
 class CLandScape;
@@ -62,10 +64,11 @@ public:
     GET_COMPONENT(Light2D, LIGHT2D);
     GET_COMPONENT(Light3D, LIGHT3D);
     GET_COMPONENT(TileMap, TILEMAP);
+    GET_COMPONENT(Animator2D, ANIMATOR2D);
+    GET_COMPONENT(ParticleSystem, PARTICLESYSTEM);
     GET_COMPONENT(SkyBox, SKYBOX);
     GET_COMPONENT(Decal, DECAL);
     GET_COMPONENT(LandScape, LANDSCAPE);
-    GET_COMPONENT(Animator2D, ANIMATOR2D);
 
     CRenderComponent* GetRenderComponent() const {  return m_RenderCom; }
 

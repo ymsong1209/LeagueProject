@@ -245,6 +245,9 @@
     <ClInclude Include="DecalUI.h">
       <Filter>UI\InspectorUI\ComponentUI\10.DecalUI</Filter>
     </ClInclude>
+    <ClInclude Include="ParticleSystemUI.h">
+      <Filter>UI\InspectorUI\ComponentUI\08. ParticleSystemUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -381,6 +384,9 @@
     </ClCompile>
     <ClCompile Include="DecalUI.cpp">
       <Filter>UI\InspectorUI\ComponentUI\10.DecalUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystemUI.cpp">
+      <Filter>UI\InspectorUI\ComponentUI\08. ParticleSystemUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
