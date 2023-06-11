@@ -6,21 +6,34 @@
 int g_arrVK[(UINT)KEY::END]
 =
 {
-	 VK_UP, 
+	VK_UP,
 	 VK_DOWN,
 	 VK_LEFT,
 	 VK_RIGHT,
 
-	 VK_SPACE,	 
+	 VK_SPACE,
 	 VK_RETURN,
 	 VK_ESCAPE,
 	 VK_LMENU,
 	 VK_LCONTROL,
 	 VK_LSHIFT,
-	 VK_TAB,	 
-	 
+	 VK_TAB,
+
 	 VK_LBUTTON,
 	 VK_RBUTTON,
+
+	 VK_F1,
+	 VK_F2,
+	 VK_F3,
+	 VK_F4,
+	 VK_F5,
+	 VK_F6,
+	 VK_F7,
+	 VK_F8,
+	 VK_F9,
+	 VK_F10,
+	 VK_F11,
+	 VK_F12,
 
 	 'Q',
 	 'W',
@@ -39,12 +52,20 @@ int g_arrVK[(UINT)KEY::END]
 	 'D',
 	 'F',
 
+	 'G',
+	 'H',
+	 'J',
+	 'K',
+	 'L',
+
+
 	 'Z',
 	 'X',
 	 'C',
 	 'V',
-	  
-	 	 
+	 'B',
+	 'N',
+	 'M',
 
 	 '0',
 	 '1',
@@ -57,6 +78,8 @@ int g_arrVK[(UINT)KEY::END]
 	 '8',
 	 '9',
 
+	 VK_OEM_PLUS,
+	 VK_OEM_MINUS,
 };
 
 
