@@ -1,16 +1,27 @@
 #pragma once
 
 #include <vector>
+#include <queue>
 #include <list>
 #include <map>
 #include <string>
+#include <iterator>
+#include <algorithm>
+#include <cmath>
+#include <unordered_set>
+#include <ctime>
+#include <functional>
 
 using std::vector;
+using std::queue;
+using std::priority_queue;
 using std::list;
 using std::map;
 using std::make_pair;
 using std::wstring;
 using std::string;
+using std::unordered_set;
+using std::pair;
 
 #include <typeinfo>
 #include <assert.h>
@@ -25,6 +36,7 @@ using namespace std::experimental::filesystem;
 
 
 #include <wrl.h>
+#include <commdlg.h>
 using namespace Microsoft::WRL;
 
 #include <d3d11.h>					// DirectX11

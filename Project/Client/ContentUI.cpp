@@ -8,7 +8,7 @@
 #include "TreeUI.h"
 #include "ImGuiMgr.h"
 #include "InspectorUI.h"
-
+#include "LevelUI.h"
 
 
 ContentUI::ContentUI()
@@ -59,13 +59,30 @@ void ContentUI::Reload()
 	wstring strContentPath = CPathMgr::GetInst()->GetContentPath();
 	FindFileName(strContentPath);
 
+
+	// 레벨 로딩
+	LevelUI* levelui = (LevelUI*)ImGuiMgr::GetInst()->FindUI("##Level");
+	levelui->m_vecLevelName.clear();
+
+
 	// 파일명으로 리소스 로딩
 	for (size_t i = 0; i < m_vecResPath.size(); ++i)
 	{
 		RES_TYPE type = GetResTypeByExt(m_vecResPath[i]);
 
 		if (type == RES_TYPE::END)
-			continue;
+		//로딩 된 것들 중 레벨은 레벨UI로 옮긴다.
+		{
+			wchar_t szExt[50] = {};
+			_wsplitpath_s(m_vecResPath[i].c_str(), 0, 0, 0, 0, 0, 0, szExt, 50);
+			wstring strExt = szExt;
+			if (L".lv" == strExt) {
+				levelui->m_vecLevelName.push_back(m_vecResPath[i]);
+			}
+			else {
+				continue;
+			}
+		}
 
 		switch (type)
 		{

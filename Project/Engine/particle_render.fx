@@ -122,7 +122,34 @@ void GS_ParticleRender (point VS_OUT _in[1], inout TriangleStream<GS_OUT> _outst
             {
                 NewPos[i] = mul(NewPos[i], matRotZ);
             }
-        }        
+        }
+        
+        if (ModuleData.bRotate)
+        {
+            float angle = 0.f;
+            if (ModuleData.fRotateSpeed == 0)
+            {
+                angle = ModuleData.fRotationAngle;
+            }
+            else
+            {
+                angle = ModuleData.fRotationAngle * ModuleData.fRotateSpeed * g_AccTime;
+            }
+           
+            // 구한 각도로 Z 축 회전 행렬을 만든다.
+            float3x3 matRotZ =
+            {
+                cos(angle), sin(angle), 0,
+                -sin(angle), cos(angle), 0,
+                0, 0, 1.f,
+            };
+            
+            // 4개의 정점을 회전시킨다.
+            for (int i = 0; i < 4; ++i)
+            {
+                NewPos[i] = mul(NewPos[i], matRotZ);
+            }
+        }
     }
     
     
@@ -159,13 +186,75 @@ void GS_ParticleRender (point VS_OUT _in[1], inout TriangleStream<GS_OUT> _outst
 
 
 float4 PS_ParticleRender(GS_OUT _in) : SV_Target
-{   
+{
     float4 vOutColor = float4(1.f, 0.f, 1.f, 1.f);
     
-    if(g_btex_0)
+    
+    if (g_btex_0)
     {
-        vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);        
-        vOutColor.rgb *= ParticleBuffer[_in.iInstID].vColor.rgb;
+        
+        //Render Module 내에 Animaion활성화 기능이 있다.
+        if (ModuleData.Render)
+        {
+            
+            if (ModuleData.AnimationUse)
+            {
+                
+                if (ModuleData.AnimationLoop)
+                {
+                    int totalFrm = ModuleData.iAnimXCount * ModuleData.iAnimYCount;
+                    float CurFrmTime = fmod(ParticleBuffer[_in.iInstID].Age, ModuleData.fAnimFrmTime);
+                    float NormalizedTime = CurFrmTime / ModuleData.fAnimFrmTime;
+                    
+                    float timePerFrm = 1.0 / totalFrm;
+                    int CurFrm = int(NormalizedTime / timePerFrm) + 1;
+                    if (CurFrm > totalFrm)
+                        CurFrm = totalFrm;
+                    
+                    int CurFrmY = CurFrm / ModuleData.iAnimXCount;
+                    int CurFrmX = CurFrm % ModuleData.iAnimXCount;
+                    
+                    float2 LeftTop = float2(float(CurFrmX - 1) / float(ModuleData.iAnimXCount), float(CurFrmY) / float(ModuleData.iAnimYCount));
+                    float2 Size = float2(1.0 / float(ModuleData.iAnimXCount), 1.0 / float(ModuleData.iAnimYCount));
+                    
+                    
+                    float2 vUV = LeftTop + _in.vUV * Size;
+                    vOutColor = g_tex_0.Sample(g_sam_0, vUV);
+                }
+                else
+                {
+                   
+                    int totalFrm = ModuleData.iAnimXCount * ModuleData.iAnimYCount;
+                    float timePerFrm = 1.0 / totalFrm;
+                    int CurFrm = int(ParticleBuffer[_in.iInstID].NormalizedAge / timePerFrm) + 1;
+                    if (CurFrm > totalFrm)
+                        CurFrm = totalFrm;
+                    
+                
+                    int CurFrmY = CurFrm / ModuleData.iAnimXCount;
+                    int CurFrmX = CurFrm % ModuleData.iAnimXCount;
+                    
+                    float2 LeftTop = float2(float(CurFrmX - 1) / float(ModuleData.iAnimXCount), float(CurFrmY) / float(ModuleData.iAnimYCount));
+                    float2 Size = float2(1.0 / float(ModuleData.iAnimXCount), 1.0 / float(ModuleData.iAnimYCount));
+                    
+                    
+                    float2 vUV = LeftTop + _in.vUV * Size;
+                    vOutColor = g_tex_0.Sample(g_sam_0, vUV);
+                }
+            }
+            else
+            {
+                vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
+            }
+        }
+        else
+        {
+            vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
+        }
+        
+                
+        vOutColor *= ParticleBuffer[_in.iInstID].vColor;
+        
     }
     
     return vOutColor;

@@ -63,7 +63,9 @@ void CS_ParticleUpdate(int3 _ID : SV_DispatchThreadID)
                     
                     // Box 스폰
                     if (ModuleData.SpawnShapeType == 0)
-                    {                           
+                    {  
+                        //2D에서 Z축으로도 랜덤하게 스폰시키면 ORTHOGRAPHIC한 카메라에서 파티클이 Velocity방향으로 이동하면 파티클이
+                        //작아져서 보인다.
                         particle.vLocalPos.xyz = float3(ModuleData.vBoxShapeScale.x * vOut1.r - ModuleData.vBoxShapeScale.x * 0.5f
                                                       , ModuleData.vBoxShapeScale.y * vOut2.r - ModuleData.vBoxShapeScale.y * 0.5f
                                                       , 0.f);//ModuleData.vBoxShapeScale.z * vOut3.r - ModuleData.vBoxShapeScale.z * 0.5f);
@@ -100,13 +102,24 @@ void CS_ParticleUpdate(int3 _ID : SV_DispatchThreadID)
                         // To Center
                         else if (ModuleData.AddVelocityType == 1)
                         {
-                            
+                            float3 vVelocity = -normalize(particle.vLocalPos.xyz);
+                            particle.vVelocity.xyz = vVelocity * ModuleData.Speed;
                         }
                         
                         // Fixed Direction
                         else
                         {
-                            
+                            float angle = (vOut1.r * radians(ModuleData.OffsetAngle)) - radians(ModuleData.OffsetAngle) / 2.f;
+                            float3 vVelocity = normalize(ModuleData.vVelocityDir.xyz);
+                            float4x4 rotationMatrix =
+                            {
+                                cos(angle), -sin(angle), 0, 0,
+                                sin(angle), cos(angle), 0, 0,
+                                0, 0, 1, 0,
+                                0, 0, 0, 1
+                            };
+                            float4 rotatedVelocity = mul(rotationMatrix, float4(vVelocity, 1.f));
+                            particle.vVelocity.xyz = rotatedVelocity.xyz * ModuleData.Speed;
                         }
                     }                    
                     
@@ -127,7 +140,7 @@ void CS_ParticleUpdate(int3 _ID : SV_DispatchThreadID)
         // 파티클의 Age 에 시간을 누적시킴
         particle.PrevAge = particle.Age;
         particle.Age += g_DT;
-        particle.NomalizedAge = saturate(particle.Age / particle.LifeTime);        
+        particle.NormalizedAge = saturate(particle.Age / particle.LifeTime);        
         particle.vForce.xyz = (float3) 0.f;
         
         
@@ -183,6 +196,11 @@ void CS_ParticleUpdate(int3 _ID : SV_DispatchThreadID)
             particle.vForce.xyz += particle.vRandomForce.xyz;
         }                
        
+        if (ModuleData.Gravity)
+        {
+            particle.vForce.y -= ModuleData.fGravityForce * particle.Age;
+        }
+        
         // 파티클에 힘이 적용 된 경우, 힘에 의한 속도의 변화량 계산
         float3 vAccel = particle.vForce.xyz / particle.Mass;
         particle.vVelocity.xyz += vAccel * g_DT; 
@@ -193,9 +211,10 @@ void CS_ParticleUpdate(int3 _ID : SV_DispatchThreadID)
         {
             // 파티클의 현재 속력
             float Speed = length(particle.vVelocity);
-            float fDrag = ModuleData.StartDrag + (ModuleData.EndDrag - ModuleData.StartDrag) * particle.NomalizedAge;
+            float fDrag = ModuleData.StartDrag + (ModuleData.EndDrag - ModuleData.StartDrag) * particle.NormalizedAge;
             
             // 속도가 반대로 뒤집히는것 방지
+            // 속도가 0이면 particle_render에서 0인 Velocity랑 내적을 해서 particle이 안나온다.
             if(fDrag <= 0.f)
                 fDrag = 0.001f;
             
@@ -220,7 +239,7 @@ void CS_ParticleUpdate(int3 _ID : SV_DispatchThreadID)
         
         // 크기 변화 모듈이 활성화 되어있으면
         if(ModuleData.ScaleChange)
-            particle.ScaleFactor = ModuleData.StartScale + particle.NomalizedAge * (ModuleData.EndScale - ModuleData.StartScale);                    
+            particle.ScaleFactor = ModuleData.StartScale + particle.NormalizedAge * (ModuleData.EndScale - ModuleData.StartScale);                    
         else
             particle.ScaleFactor = 1.f;
         
@@ -228,7 +247,7 @@ void CS_ParticleUpdate(int3 _ID : SV_DispatchThreadID)
         // 색상 변화모듈이 활성화 되어있으면
         if(ModuleData.ColorChange)
         {
-            particle.vColor = ModuleData.vStartColor + particle.NomalizedAge * (ModuleData.vEndColor - ModuleData.vStartColor);
+            particle.vColor = ModuleData.vStartColor + particle.NormalizedAge * (ModuleData.vEndColor - ModuleData.vStartColor);
         }               
         
     }    

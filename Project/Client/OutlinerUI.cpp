@@ -10,6 +10,14 @@
 #include <Engine\CLayer.h>
 #include <Engine\CGameObject.h>
 
+#include <Engine/CResMgr.h>
+#include <Engine/CKeyMgr.h>
+#include <Engine/CTransform.h>
+#include <Engine/CPrefab.h>
+#include <Engine/CRenderMgr.h>
+
+#include "ImGuiMgr.h"
+#include "ContentUI.h"
 #include "TreeUI.h"
 
 OutlinerUI::OutlinerUI()
@@ -26,6 +34,8 @@ OutlinerUI::OutlinerUI()
 
 	m_Tree->AddDynamic_Select(this, (UI_DELEGATE_1)&OutlinerUI::SetTargetToInspector);
 	m_Tree->AddDynamic_DragDrop(this, (UI_DELEGATE_2)&OutlinerUI::DragDrop);
+	m_Tree->AddDynamic_RightClick(this, (UI_DELEGATE_1)&OutlinerUI::RightClickFunction);
+
 	m_Tree->SetDragDropID("GameObject");
 
 
@@ -88,6 +98,72 @@ void OutlinerUI::SetTargetToInspector(DWORD_PTR _SelectedNode)
 	pInspector->SetTargetObject(pSelectObject);
 }
 
+
+void OutlinerUI::RightClickFunction(DWORD_PTR _RightClickedNode)
+{
+	TreeNode* pNode = (TreeNode*)_RightClickedNode;
+	CGameObject* pSelectObject = (CGameObject*)pNode->GetData();
+
+	ImGui::Text("Edit name:");
+	string EditedName = pNode->GetName();
+	string EditedNameID = "##RightClickFuncOutliner" + EditedName;
+
+	char input_buffer[256]; // allocate a buffer for the input
+	strcpy_s(input_buffer, EditedName.c_str());
+
+	if (ImGui::InputText(EditedNameID.c_str(), input_buffer, 256)) {
+
+		if (KEY_TAP(KEY::ENTER)) {
+			EditedName = input_buffer;
+			wstring name;
+			name.assign(EditedName.begin(), EditedName.end());// = wstring.assign(EditedName.begin(), EditedName.end());
+			pSelectObject->SetName(name);
+			ResetOutliner();
+		}
+		return;
+	}
+	if (ImGui::Button("SaveAsPrefab##Outliner")) {
+		//ContentUI에 중복된 Prefab있는지 확인
+		// 리소스 매니저에서 현재 모든 리소스 목록 받아옴
+		const map<wstring, Ptr<CRes>>& mapRes = CResMgr::GetInst()->GetResources(RES_TYPE::PREFAB);
+		wstring objectName = pSelectObject->GetName();
+		objectName = L"prefab\\" + objectName;
+		if (mapRes.find(objectName) != mapRes.end()) {
+			return;
+		}
+
+		Ptr<CPrefab> NewPrefab = new CPrefab;
+		CGameObject* PrefabObject = pSelectObject->Clone(); // Clone을 해서 LayerIdx를 -1로 만듬
+		NewPrefab->RegisterProtoObject(PrefabObject);
+
+		CResMgr::GetInst()->AddRes<CPrefab>(objectName, NewPrefab);
+		ContentUI* content = (ContentUI*)ImGuiMgr::GetInst()->FindUI("##Content");
+		content->ResetContent();
+
+		return;
+	}
+
+	if (ImGui::Button("Clone##RightClickFuncOutliner")) {
+		CGameObject* newObject = pSelectObject->Clone();
+		wstring name = newObject->GetName();
+		wstring id = std::to_wstring(newObject->GetID());
+		name += id;
+		newObject->SetName(name);
+		SpawnGameObject(newObject, pSelectObject->Transform()->GetRelativePos(), pSelectObject->GetLayerIndex());
+		//m_Tree->SetRightClickActivate(false);
+	}
+
+	if (ImGui::Button("Delete##RightClickFuncOutliner")) {
+
+		//InspectorUI가 이 Object를 들고 있으면 reset시킨다.	
+		InspectorUI* pInspector = (InspectorUI*)ImGuiMgr::GetInst()->FindUI("##Inspector");
+		if (pInspector->GetTargetObject() == pSelectObject) {
+			pInspector->SetTargetObject(nullptr);
+		}
+
+		DestroyObject(pSelectObject);
+	}
+}
 
 void OutlinerUI::AddGameObject(CGameObject* _Obj, TreeNode* _ParentNode)
 {

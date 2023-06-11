@@ -205,6 +205,12 @@
     <ClCompile Include="CFontMgr.cpp">
       <Filter>Source\03. Manager\11.FontMgr</Filter>
     </ClCompile>
+    <ClCompile Include="CCollider3D.cpp">
+      <Filter>Source\06.Component\7.Collider3D</Filter>
+    </ClCompile>
+    <ClCompile Include="CCollisionMgr_3D.cpp">
+      <Filter>Source\03. Manager\07.CollisionMgr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CEntity.h" />
@@ -369,6 +375,9 @@
     </ClInclude>
     <ClInclude Include="CFontMgr.h">
       <Filter>Source\03. Manager\11.FontMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CCollider3D.h">
+      <Filter>Source\06.Component\7.Collider3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

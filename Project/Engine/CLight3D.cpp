@@ -13,6 +13,14 @@ CLight3D::CLight3D()
 	SetLightType(LIGHT_TYPE::POINT);
 }
 
+CLight3D::CLight3D(const CLight3D& _other)
+	:CComponent(COMPONENT_TYPE::LIGHT3D)
+{
+	m_LightInfo = _other.m_LightInfo;
+	SetLightType(static_cast<LIGHT_TYPE>(_other.m_LightInfo.LightType));
+}
+
+
 CLight3D::~CLight3D()
 {
 }
@@ -70,9 +78,17 @@ void CLight3D::render()
 
 void CLight3D::SaveToLevelFile(FILE* _File)
 {
+	fwrite(&m_LightInfo, sizeof(tLightInfo), 1, _File);
+	SaveResRef(m_VolumeMesh.Get(), _File);
+	SaveResRef(m_LightMtrl.Get(), _File);
+	fwrite(&m_iLightIdx, sizeof(UINT), 1, _File);
 }
 
 void CLight3D::LoadFromLevelFile(FILE* _File)
 {
+	fread(&m_LightInfo, sizeof(tLightInfo), 1, _File);
+	LoadResRef(m_VolumeMesh, _File);
+	LoadResRef(m_LightMtrl, _File);
+	fread(&m_iLightIdx, sizeof(UINT), 1, _File);
 }
 

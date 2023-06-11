@@ -320,6 +320,38 @@ void CResMgr::CreateDefaultMesh()
 	AddRes<CMesh>(L"CubeMesh", pMesh);
 	vecIdx.clear();
 
+	///
+	//À­¸é
+	//0--1
+	//|  |
+	//3--2
+	//¾Æ·§¸é
+	//7---6
+	//|   |
+	//10--15
+
+	vecIdx.push_back(1);
+	vecIdx.push_back(2);
+	vecIdx.push_back(3);
+	vecIdx.push_back(10);
+	vecIdx.push_back(15);
+	vecIdx.push_back(6);
+	vecIdx.push_back(10);
+	vecIdx.push_back(7);
+	vecIdx.push_back(6);
+	vecIdx.push_back(1);
+	vecIdx.push_back(0);
+	vecIdx.push_back(7);
+	vecIdx.push_back(15);
+	vecIdx.push_back(2);
+	vecIdx.push_back(3);
+	vecIdx.push_back(0);
+
+	pMesh = new CMesh(true);
+	pMesh->Create(arrCube, 24, vecIdx.data(), vecIdx.size());
+	AddRes<CMesh>(L"CubeMesh_Debug", pMesh);
+	vecIdx.clear();
+
 
 	// ===========
 	// Sphere Mesh
@@ -763,13 +795,19 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_LIGHT);
 	AddRes(pShader->GetKey(), pShader);
 
-	// ============================
+	// ==========================
 	// Decal Shader
-	// RS_TYPE : CULL_FRONT
-	// DS_TYPE : NO_TEST_NO_WRITE
-	// BS_TYPE : DEFAULT	 
-	// Domain : DOMAIN_DECAL
-	// ============================
+	// RS_TYPE  : CULL_FRONT
+	// DS_TYPE  : NO_TEST_NO_WRITE
+	// BS_TYPE  : ALPHA_BLEND
+
+	// g_tex_0  : Output Texture
+	// g_tex_1  : Position Target
+	// g_tex_2  : Data Target
+	// g_vec4_0 : LightColor
+	// g_int_0  : LightUse
+	// g_int_1  : layerCheck
+	// =========================
 	pShader = new CGraphicsShader;
 	pShader->SetKey(L"DecalShader");
 	pShader->CreateVertexShader(L"shader\\decal.fx", "VS_Decal");

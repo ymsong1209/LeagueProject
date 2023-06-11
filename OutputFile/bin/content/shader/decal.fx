@@ -12,6 +12,10 @@
 
 // g_tex_0  : Output Texture
 // g_tex_1  : Position Target
+// g_tex_2  : Data Target
+// g_vec4_0 : LightColor
+// g_int_0  : LightUse
+// g_int_1  : layerCheck
 // =========================
 struct VS_DECAL_IN
 {
@@ -47,6 +51,16 @@ PS_OUT PS_Decal(VS_DECAL_OUT _in)
     float3 vViewPos = g_tex_1.Sample(g_sam_0, vUV).xyz;
     if (!any(vViewPos))
         discard;
+    
+    float3 vDataViewPos = g_tex_2.Sample(g_sam_0, vUV).xyz;
+    //g_int_1 = 0~31
+    //datalayer = 1~32
+    //datatexture의 r값을 1~32가 아니라 3~96으로 3의 배수로 넣었음
+    //0~31로 맞추기 위해 마지막에 1을 뺌
+    int DataLayer = vDataViewPos.x * 100 / 3 - 1;
+    if (!(g_int_1 & (1 << DataLayer)))
+        discard;
+    
     
     float3 vWorldPos = mul(float4(vViewPos, 1.f), g_matViewInv);
     float3 vLocalPos = mul(float4(vWorldPos, 1.f), g_matWorldInv);

@@ -22,18 +22,19 @@ CTransform::~CTransform()
 
 void CTransform::finaltick()
 {
-	m_matWorldScale = XMMatrixIdentity();
+	m_matWorldScale = XMMatrixIdentity(); //단위행렬 만들기
 	m_matWorldScale = XMMatrixScaling(m_vRelativeScale.x, m_vRelativeScale.y, m_vRelativeScale.z);
-	
-	Matrix matRot = XMMatrixIdentity();
-	matRot = XMMatrixRotationX(m_vRelativeRot.x);
-	matRot *= XMMatrixRotationY(m_vRelativeRot.y);
-	matRot *= XMMatrixRotationZ(m_vRelativeRot.z);
 
-	Matrix matTranslation = XMMatrixTranslation(m_vRelativePos.x, m_vRelativePos.y, m_vRelativePos.z);
 
-	
-	m_matWorld = m_matWorldScale * matRot * matTranslation;
+	m_matWorldRot = XMMatrixIdentity();
+	m_matWorldRot = XMMatrixRotationX(m_vRelativeRot.x);
+	m_matWorldRot *= XMMatrixRotationY(m_vRelativeRot.y);
+	m_matWorldRot *= XMMatrixRotationZ(m_vRelativeRot.z);
+
+	m_matWorldPos = XMMatrixTranslation(m_vRelativePos.x, m_vRelativePos.y, m_vRelativePos.z);
+
+	m_matWorld = m_matWorldScale * m_matWorldRot * m_matWorldPos;
+
 
 	Vec3 vDefaultDir[3] = {
 		  Vec3(1.f, 0.f, 0.f)
@@ -41,9 +42,10 @@ void CTransform::finaltick()
 		, Vec3(0.f, 0.f, 1.f)
 	};
 
+	//방향벡터에 회전행렬을 곱하면 현재 보고 있는 방향이 나온다.
 	for (int i = 0; i < 3; ++i)
 	{
-		m_vWorldDir[i] = m_vRelativeDir[i] = XMVector3TransformNormal(vDefaultDir[i], matRot);
+		m_vRelativeDir[i] = XMVector3TransformNormal(vDefaultDir[i], m_matWorldRot);
 	}
 
 	// 부모 오브젝트 확인
@@ -54,23 +56,24 @@ void CTransform::finaltick()
 		{
 			Matrix matParentWorld = pParent->Transform()->m_matWorld;
 			Matrix matParentScale = pParent->Transform()->m_matWorldScale;
-			Matrix matParentScaleInv = XMMatrixInverse(nullptr, matParentScale);
+			Matrix matParentScaleInv = XMMatrixInverse(nullptr, matParentScale); //크기 역함수,nullptr:판별식
 
 			// 월드 = 로컬월드 * 부모크기 역 * 부모 월드(크기/회전/이동)
 			m_matWorld = m_matWorld * matParentScaleInv * matParentWorld;
 		}
 		else
 		{
-			m_matWorldScale = pParent->Transform()->m_matWorldScale;
+			m_matWorldScale *= pParent->Transform()->m_matWorldScale;
+			m_matWorldRot *= pParent->Transform()->m_matWorldRot;
+			m_matWorldPos *= pParent->Transform()->m_matWorldPos;
 			m_matWorld *= pParent->Transform()->m_matWorld;
 		}
-		
+	}
 
-		for (int i = 0; i < 3; ++i)
-		{
-			m_vWorldDir[i] = XMVector3TransformNormal(vDefaultDir[i], m_matWorld);
-			m_vWorldDir[i].Normalize();
-		}
+	for (int i = 0; i < 3; ++i)
+	{
+		m_vWorldDir[i] = XMVector3TransformNormal(vDefaultDir[i], m_matWorld); //transformNormal로 m_matWorld의 이동량 삭제
+		m_vWorldDir[i].Normalize(); //Scale이 곱해져있으므로 정규화 진행
 	}
 
 	m_matWorldInv = XMMatrixInverse(nullptr, m_matWorld);

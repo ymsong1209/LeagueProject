@@ -96,9 +96,30 @@ void CEventMgr::tick()
 		{
 			// wParam : Level Adress
 			CLevel* Level = (CLevel*)m_vecEvent[i].wParam;
+			CLevel* CurLevel = CLevelMgr::GetInst()->GetCurLevel();
+			
+			//현재 레벨이 Play였는지 확인
+			bool IsPlay = false;
+			if (CurLevel != nullptr) {
+				if (CurLevel->GetState() == LEVEL_STATE::PLAY) {
+					IsPlay = true;
+				}
+			}
+
 			CLevelMgr::GetInst()->ChangeLevel(Level);
-			CRenderMgr::GetInst()->ClearCamera();
 			m_LevelChanged = true;
+
+			//사운드 초기화
+			const map<wstring, Ptr<CRes>> SoundRes = CResMgr::GetInst()->GetResources(RES_TYPE::SOUND);
+			for (const auto& kv : SoundRes) {
+				Ptr<CRes> Res = kv.second;
+				((CSound*)Res.Get())->Stop();
+			}
+
+			//이전 레벨이 play였으면 현재 레벨도 play로 바껴야함.
+			if (IsPlay) {
+				CLevelMgr::GetInst()->GetCurLevel()->ChangeState(LEVEL_STATE::PLAY);
+			}
 		}
 			break;		
 		}

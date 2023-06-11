@@ -3,7 +3,8 @@
 
 #include <Engine\CTransform.h>
 #include <Engine\CCamera.h>
-
+#include <Engine/CLevelMgr.h>
+#include <Engine/CLevel.h>
 CCameraMoveScript::CCameraMoveScript()
 	: CScript((UINT)SCRIPT_TYPE::CAMERAMOVESCRIPT)
 	, m_fCamSpeed(100.f)
@@ -16,6 +17,10 @@ CCameraMoveScript::~CCameraMoveScript()
 
 void CCameraMoveScript::tick()
 {
+	if (CLevelMgr::GetInst()->GetCurLevel()->GetState() == LEVEL_STATE::PLAY) {
+		return;
+	}
+
 	if (PROJ_TYPE::ORTHOGRAPHIC == Camera()->GetProjType())
 		Camera2DMove();
 	else
@@ -33,37 +38,22 @@ void CCameraMoveScript::Camera2DMove()
 
 	if (KEY_PRESSED(KEY::W))
 	{
-		vPos.y += DT * fSpeed;
+		vPos.y += EditorDT * fSpeed;
 	}
 
 	if (KEY_PRESSED(KEY::S))
 	{
-		vPos.y -= DT * fSpeed;
+		vPos.y -= EditorDT * fSpeed;
 	}
 
 	if (KEY_PRESSED(KEY::A))
 	{
-		vPos.x -= DT * fSpeed;
+		vPos.x -= EditorDT * fSpeed;
 	}
 
 	if (KEY_PRESSED(KEY::D))
 	{
-		vPos.x += DT * fSpeed;
-	}
-
-
-	if (KEY_PRESSED(KEY::_1))
-	{
-		float fScale = Camera()->GetScale();
-		fScale += DT * 1.f;
-		Camera()->SetScale(fScale);
-	}
-
-	if (KEY_PRESSED(KEY::_2))
-	{
-		float fScale = Camera()->GetScale();
-		fScale -= DT * 1.f;
-		Camera()->SetScale(fScale);
+		vPos.x += EditorDT * fSpeed;
 	}
 
 	Transform()->SetRelativePos(vPos);
@@ -85,22 +75,22 @@ void CCameraMoveScript::Camera3DMove()
 
 	if (KEY_PRESSED(KEY::W))
 	{
-		vPos += DT * vFront * fSpeed;
+		vPos += EditorDT * vFront * fSpeed;
 	}
 
 	if (KEY_PRESSED(KEY::S))
 	{
-		vPos -= DT * vFront * fSpeed;
+		vPos -= EditorDT * vFront * fSpeed;
 	}
 
 	if (KEY_PRESSED(KEY::A))
 	{
-		vPos -= DT * vRight * fSpeed;
+		vPos -= EditorDT * vRight * fSpeed;
 	}
 
 	if (KEY_PRESSED(KEY::D))
 	{
-		vPos += DT * vRight * fSpeed;
+		vPos += EditorDT * vRight * fSpeed;
 	}
 
 
@@ -108,8 +98,8 @@ void CCameraMoveScript::Camera3DMove()
 	if (KEY_PRESSED(KEY::RBTN))
 	{
 		Vec2 vMouseDir = CKeyMgr::GetInst()->GetMouseDir();
-		vRot.y += DT * vMouseDir.x * 5.f;
-		vRot.x -= DT * vMouseDir.y * 5.f;
+		vRot.y += EditorDT * vMouseDir.x * 5.f;
+		vRot.x -= EditorDT * vMouseDir.y * 5.f;
 	}
 
 	Transform()->SetRelativePos(vPos);

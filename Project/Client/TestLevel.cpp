@@ -41,7 +41,7 @@ void CreateTestLevel()
 	pMainCam->AddComponent(new CTransform);
 	pMainCam->AddComponent(new CCamera);
 
-	pMainCam->Camera()->SetProjType(PROJ_TYPE::ORTHOGRAPHIC);
+	pMainCam->Camera()->SetProjType(PROJ_TYPE::PERSPECTIVE);
 	pMainCam->Camera()->SetCameraIndex(0);		// MainCamera 로 설정
 	pMainCam->Camera()->SetLayerMaskAll(true);	// 모든 레이어 체크
 	pMainCam->Camera()->SetLayerMask(31, false);// UI Layer 는 렌더링하지 않는다.
@@ -92,16 +92,24 @@ void CreateTestLevel()
 	pLandScape->SetName(L"LandScape");
 
 	pLandScape->AddComponent(new CTransform);
-	pLandScape->AddComponent(new CMeshRender);
-	//pLandScape->AddComponent(new CLandScape);
-	//pLandScape->LandScape()->SetFace(4, 4);
-
+	pLandScape->AddComponent(new CParticleSystem);
+	
 	pLandScape->Transform()->SetRelativeScale(Vec3(500.f, 500, 500));
-	pLandScape->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	pLandScape->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"TessMtrl"));
+	//pLandScape->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	//pLandScape->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"TessMtrl"));
 
-	SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 0.f), 0);
+	SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 500.f), 0);
 
+
+	// LandScape Object
+	CGameObject* TmpCollider = new CGameObject;
+	TmpCollider->SetName(L"TmpCollider");
+
+	TmpCollider->AddComponent(new CTransform);
+	TmpCollider->AddComponent(new CCollider3D);
+	TmpCollider->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
+	TmpCollider->Transform()->SetRelativeScale(Vec3(500.f, 500, 500));
+	SpawnGameObject(TmpCollider, Vec3(0.f, 0.f, 500.f), 0);
 
 	// 충돌 시킬 레이어 짝 지정
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");	

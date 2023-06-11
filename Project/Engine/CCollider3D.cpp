@@ -1,25 +1,32 @@
 #include "pch.h"
-#include "CCollider2D.h"
-
+#include "CCollider3D.h"
 #include "CScript.h"
 #include "components.h"
 
-
-CCollider2D::CCollider2D()
-	: CComponent(COMPONENT_TYPE::COLLIDER2D)
-	, m_Shape(COLLIDER2D_TYPE::RECT)
+CCollider3D::CCollider3D()
+	: CComponent(COMPONENT_TYPE::COLLIDER3D)
+	, m_Shape(COLLIDER3D_TYPE::SPHERE)
 	, m_bAbsolute(false)
 	, m_iCollisionCount(0)
 {
-	SetName(L"Collider2D");
 }
 
-CCollider2D::~CCollider2D()
+CCollider3D::CCollider3D(const CCollider3D& _other)
+	: CComponent(COMPONENT_TYPE::COLLIDER3D)
+	, m_vOffsetPos(_other.m_vOffsetPos)
+	, m_vOffsetScale(_other.m_vOffsetScale)
+	, m_bAbsolute(_other.m_bAbsolute)
+	, m_Shape(_other.m_Shape)
+{
+
+}
+
+CCollider3D::~CCollider3D()
 {
 }
 
 
-void CCollider2D::finaltick()
+void CCollider3D::finaltick()
 {
 	// 충돌 회수가 음수인 경우
 	assert(0 <= m_iCollisionCount);
@@ -29,8 +36,8 @@ void CCollider2D::finaltick()
 	m_matColliderPos = XMMatrixTranslation(m_vOffsetPos.x, m_vOffsetPos.y, m_vOffsetPos.z);
 
 
-	m_matCollider2D = XMMatrixScaling(m_vOffsetScale.x, m_vOffsetScale.y, m_vOffsetScale.z);
-	m_matCollider2D *= XMMatrixTranslation(m_vOffsetPos.x, m_vOffsetPos.y, m_vOffsetPos.z);
+	m_matCollider3D = XMMatrixScaling(m_vOffsetScale.x, m_vOffsetScale.y, m_vOffsetScale.z);
+	m_matCollider3D *= XMMatrixTranslation(m_vOffsetPos.x, m_vOffsetPos.y, m_vOffsetPos.z);
 	//크기 X 회전 X 이동 (회전은 안함)
 	const Matrix& matWorld = Transform()->GetWorldMat(); //최종 월드 행렬
 
@@ -39,13 +46,13 @@ void CCollider2D::finaltick()
 		//부모의 Scale없애기
 		Matrix matParentScaleInv = XMMatrixInverse(nullptr, Transform()->GetWorldScaleMat());
 		//Collider의 Offset * 부모 크기의 역행렬 * 부모
-		m_matCollider2D = m_matCollider2D * matParentScaleInv * matWorld;
+		m_matCollider3D = m_matCollider3D * matParentScaleInv * matWorld;
 
 	}
 	else
 	{
 		// 충돌체 월드 * 오브젝트 월드
-		m_matCollider2D *= matWorld;
+		m_matCollider3D *= matWorld;
 
 		// 충돌체 scale update
 		m_matColliderScale *= Transform()->GetWorldScaleMat();
@@ -59,15 +66,13 @@ void CCollider2D::finaltick()
 		vColor = Vec4(1.f, 0.f, 0.f, 1.f);
 
 	// 마지막에 0.f로 설정해 GameObject가 사라지면 Collider도 사라진다.
-	if (COLLIDER2D_TYPE::CIRCLE == m_Shape)
-		DrawDebugCircle(m_matCollider2D, vColor, 0.f);
+	if (COLLIDER3D_TYPE::SPHERE == m_Shape)
+		DrawDebugSphere(m_matCollider3D, vColor, 0.f);
 	else
-		DrawDebugRect(m_matCollider2D, vColor, 0.f);
+		DrawDebugCube(m_matCollider3D, vColor, 0.f);
 }
 
-
-
-void CCollider2D::BeginOverlap(CCollider2D* _Other)
+void CCollider3D::BeginOverlap(CCollider3D* _Other)
 {
 	m_iCollisionCount += 1;
 
@@ -79,7 +84,7 @@ void CCollider2D::BeginOverlap(CCollider2D* _Other)
 	}
 }
 
-void CCollider2D::OnOverlap(CCollider2D* _Other)
+void CCollider3D::OnOverlap(CCollider3D* _Other)
 {
 	// Script 호출
 	const vector<CScript*>& vecScript = GetOwner()->GetScripts();
@@ -89,7 +94,7 @@ void CCollider2D::OnOverlap(CCollider2D* _Other)
 	}
 }
 
-void CCollider2D::EndOverlap(CCollider2D* _Other)
+void CCollider3D::EndOverlap(CCollider3D* _Other)
 {
 	m_iCollisionCount -= 1;
 
@@ -101,7 +106,7 @@ void CCollider2D::EndOverlap(CCollider2D* _Other)
 	}
 }
 
-void CCollider2D::SaveToLevelFile(FILE* _File)
+void CCollider3D::SaveToLevelFile(FILE* _File)
 {
 	fwrite(&m_vOffsetPos, sizeof(Vec3), 1, _File);
 	fwrite(&m_vOffsetScale, sizeof(Vec3), 1, _File);
@@ -109,7 +114,7 @@ void CCollider2D::SaveToLevelFile(FILE* _File)
 	fwrite(&m_Shape, sizeof(UINT), 1, _File);
 }
 
-void CCollider2D::LoadFromLevelFile(FILE* _File)
+void CCollider3D::LoadFromLevelFile(FILE* _File)
 {
 	fread(&m_vOffsetPos, sizeof(Vec3), 1, _File);
 	fread(&m_vOffsetScale, sizeof(Vec3), 1, _File);
