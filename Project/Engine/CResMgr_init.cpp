@@ -696,8 +696,11 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader = new CGraphicsShader;
 	pShader->SetKey(L"LandScapeShader");
 	pShader->CreateVertexShader(L"shader\\landscape.fx", "VS_LandScape");
+	pShader->CreateHullShader(L"shader\\landscape.fx", "HS_LandScape");
+	pShader->CreateDomainShader(L"shader\\landscape.fx", "DS_LandScape");
 	pShader->CreatePixelShader(L"shader\\landscape.fx", "PS_LandScape");
 
+	pShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY_3_CONTROL_POINT_PATCHLIST);
 	pShader->SetRSType(RS_TYPE::CULL_BACK);
 	pShader->SetDSType(DS_TYPE::LESS);
 	pShader->SetBSType(BS_TYPE::DEFAULT);
