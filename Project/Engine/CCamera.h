@@ -1,10 +1,13 @@
 #pragma once
 #include "CComponent.h"
+#include "CFrustum.h"
 
 class CCamera :
     public CComponent
 {
 private:
+    CFrustum    m_Frustum;
+
     float       m_fAspectRatio;
     float       m_fScale;       // Orthograpic 에서 사용하는 카메라 배율
     float       m_fFar;
@@ -14,6 +17,7 @@ private:
     Matrix      m_matView;
     Matrix      m_matViewInv;
     Matrix      m_matProj;
+    Matrix      m_matProjInv;
 
     UINT        m_iLayerMask;
 
@@ -46,7 +50,9 @@ public:
     void SetCameraIndex(int _idx);
 
     const Matrix& GetViewMat() { return m_matView; }
+    const Matrix& GetViewMatInv() { return m_matViewInv; }
     const Matrix& GetProjMat() { return m_matProj; }
+    const Matrix& GetProjMatInv() { return m_matProjInv; }
 
 public:
     void SortObject();

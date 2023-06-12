@@ -211,6 +211,9 @@
     <ClCompile Include="CCollisionMgr_3D.cpp">
       <Filter>Source\03. Manager\07.CollisionMgr</Filter>
     </ClCompile>
+    <ClCompile Include="CFrustum.cpp">
+      <Filter>Source\06.Component\3.Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CEntity.h" />
@@ -378,6 +381,9 @@
     </ClInclude>
     <ClInclude Include="CCollider3D.h">
       <Filter>Source\06.Component\7.Collider3D</Filter>
+    </ClInclude>
+    <ClInclude Include="CFrustum.h">
+      <Filter>Source\06.Component\3.Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

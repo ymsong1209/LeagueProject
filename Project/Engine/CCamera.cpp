@@ -22,6 +22,7 @@
 
 CCamera::CCamera()
 	: CComponent(COMPONENT_TYPE::CAMERA)
+	, m_Frustum(this)
 	, m_fAspectRatio(1.f)
 	, m_fScale(1.f)
 	, m_fFar(10000.f)
@@ -37,6 +38,7 @@ CCamera::CCamera()
 
 CCamera::CCamera(const CCamera& _Other)
 	: CComponent(_Other)
+	, m_Frustum(_Other.m_Frustum)
 	, m_fAspectRatio(_Other.m_fAspectRatio)
 	, m_fScale(_Other.m_fScale)
 	, m_ProjType(_Other.m_ProjType)
@@ -61,7 +63,9 @@ void CCamera::finaltick()
 {
 	CalcViewMat();
 
-	CalcProjMat();	
+	CalcProjMat();
+
+	m_Frustum.finaltick();
 }
 
 void CCamera::CalcViewMat()
@@ -109,6 +113,8 @@ void CCamera::CalcProjMat()
 		m_matProj = XMMatrixPerspectiveFovLH(XM_PI / 2.f, m_fAspectRatio, 1.f, m_fFar);
 	}
 
+	// 투영행렬 역행렬
+	m_matProjInv = XMMatrixInverse(nullptr, m_matProj);
 }
 
 
