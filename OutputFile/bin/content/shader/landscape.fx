@@ -61,11 +61,10 @@ PatchOutput PatchConstFunc(InputPatch<VS_OUT, 3> _input
     return output;
 }
 
-
 struct HS_OUT
 {
-    float3 vLocalPos : POSITION;
-    float2 vUV : TEXCOORD;
+    float3 vLocalPos        : POSITION;
+    float2 vUV              : TEXCOORD;
 };
 
 [domain("tri")]
@@ -93,6 +92,11 @@ struct DS_OUT
 {
     float4 vPosition : SV_Position;
     float2 vUV : TEXCOORD;
+
+    float3 vViewPos : POSITION;
+    float3 vViewNormal : NORMAL;
+    float3 vViewTangent : TANGENT;
+    float3 vViewBinormal : BINORMAL;
 };
 
 
@@ -116,21 +120,59 @@ DS_OUT DS_LandScape(const OutputPatch<HS_OUT, 3> _origin
     float2 vHeightMapUV = vUV / float2(FaceX, FaceZ);
     vLocalPos.y = HeightMap.SampleLevel(g_sam_0, vHeightMapUV, 0).x;
 
+    // Normal, Tangent, Binormal 재 계산
+
+
+    // 도메인 쉐이더 정점의 주변(위, 아래, 좌, 우) 로 접근하기 위한 간격
+    float fLocalStep = 1.f / _patchtess.Inside;
+    float2 vUVStep = fLocalStep / float2(FaceX, FaceZ);
+
+    // 도메인 정점 주변 정점 위치값(월드 좌표계) 구하기
+    float3 vUp = mul(float4(vLocalPos.x, HeightMap.SampleLevel(g_sam_0, vHeightMapUV + float2(0.f, -vUVStep.y), 0).x, vLocalPos.z + fLocalStep, 1.f), g_matWorld).xyz;
+    float3 vDown = mul(float4(vLocalPos.x, HeightMap.SampleLevel(g_sam_0, vHeightMapUV + float2(0.f, +vUVStep.y), 0).x, vLocalPos.z - fLocalStep, 1.f), g_matWorld).xyz;
+    float3 vLeft = mul(float4(vLocalPos.x - fLocalStep, HeightMap.SampleLevel(g_sam_0, vHeightMapUV + float2(-vUVStep.x, 0.f), 0).x, vLocalPos.z, 1.f), g_matWorld).xyz;
+    float3 vRight = mul(float4(vLocalPos.x + fLocalStep, HeightMap.SampleLevel(g_sam_0, vHeightMapUV + float2(+vUVStep.x, 0.f), 0).x, vLocalPos.z, 1.f), g_matWorld).xyz;
+
+    // 월드 방향 구하기
+    float3 vTangent = normalize(vRight - vLeft);
+    float3 vBinormal = normalize(vDown - vUp);
+    float3 vNormal = normalize(cross(vTangent, vBinormal));
+
+
     // 투영좌표계
     output.vPosition = mul(float4(vLocalPos, 1.f), g_matWVP);
     output.vUV = vUV;
 
+    output.vViewPos = mul(float4(vLocalPos, 1.f), g_matWV).xyz;
+    output.vViewNormal = normalize(mul(float4(vNormal, 0.f), g_matView)).xyz;
+    output.vViewTangent = normalize(mul(float4(vTangent, 0.f), g_matView)).xyz;
+    output.vViewBinormal = normalize(mul(float4(vBinormal, 0.f), g_matView)).xyz;
+
     return output;
 }
 
-float4 PS_LandScape(DS_OUT _in) : SV_Target
+struct PS_OUT
 {
-    float4 vObjectColor = float4(0.4f, 0.4f, 0.4f, 1.f);
-    float4 vOutColor = float4(0.f, 0.f, 0.f, 1.f);
+    float4 vColor : SV_Target0;
+    float4 vNormal : SV_Target1;
+    float4 vPosition : SV_Target2;
+    float4 vData : SV_Target3;
+    float4 vEmissive : SV_Target4;
+};
 
-    vOutColor = float4(0.f, 1.f, 0.f, 1.f);
 
-    return vOutColor;
+PS_OUT PS_LandScape(DS_OUT _in)
+{
+    PS_OUT output = (PS_OUT)0.f;
+
+    output.vColor = float4(0.8f, 0.8f, 0.8f, 1.f);
+    output.vNormal = float4(_in.vViewNormal, 1.f);
+    output.vPosition = float4(_in.vViewPos, 1.f);
+    output.vData;
+    output.vEmissive;
+
+
+    return output;
 }
 
 

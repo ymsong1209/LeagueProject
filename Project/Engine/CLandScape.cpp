@@ -28,7 +28,7 @@ void CLandScape::render()
 
 	Transform()->UpdateData();
 
-	GetMaterial()->GetShader()->SetRSType(RS_TYPE::WIRE_FRAME);
+	//GetMaterial()->GetShader()->SetRSType(RS_TYPE::WIRE_FRAME);
 
 	GetMaterial()->SetScalarParam(INT_0, &m_iFaceX);
 	GetMaterial()->SetScalarParam(INT_1, &m_iFaceZ);
@@ -38,6 +38,7 @@ void CLandScape::render()
 
 	GetMesh()->render();	
 }
+
 
 void CLandScape::SetFace(UINT _iFaceX, UINT _iFaceZ)
 {
