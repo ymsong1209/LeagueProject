@@ -126,13 +126,13 @@ void CRenderMgr::MRT_Clear()
 void CRenderMgr::UpdateData()
 {
     // GlobalData 에 광원 개수정보 세팅
-    GlobalData.Light2DCount = m_vecLight2D.size();
-    GlobalData.Light3DCount = m_vecLight3D.size();
+    GlobalData.Light2DCount = (UINT)m_vecLight2D.size();
+    GlobalData.Light3DCount = (UINT)m_vecLight3D.size();
 
     // 구조화버퍼의 크기가 모자라면 더 크게 새로 만든다.
     if (m_Light2DBuffer->GetElementCount() < m_vecLight2D.size())
     {
-        m_Light2DBuffer->Create(sizeof(tLightInfo), m_vecLight2D.size(), SB_TYPE::READ_ONLY, true);
+        m_Light2DBuffer->Create(sizeof(tLightInfo), (UINT)m_vecLight2D.size(), SB_TYPE::READ_ONLY, true);
     }
 
     // 구조화버퍼로 광원 데이터를 옮긴다.
@@ -144,14 +144,14 @@ void CRenderMgr::UpdateData()
         vecLight2DInfo.push_back(m_vecLight2D[i]->GetLightInfo());
     }
 
-    m_Light2DBuffer->SetData(vecLight2DInfo.data(), sizeof(tLightInfo) * vecLight2DInfo.size());
+    m_Light2DBuffer->SetData(vecLight2DInfo.data(), sizeof(tLightInfo) * (UINT)vecLight2DInfo.size());
     m_Light2DBuffer->UpdateData(12, PIPELINE_STAGE::PS_PIXEL);
 
 
     // 구조화버퍼의 크기가 모자라면 더 크게 새로 만든다.
     if (m_Light3DBuffer->GetElementCount() < m_vecLight3D.size())
     {
-        m_Light3DBuffer->Create(sizeof(tLightInfo), m_vecLight3D.size(), SB_TYPE::READ_ONLY, true);
+        m_Light3DBuffer->Create(sizeof(tLightInfo), (UINT)m_vecLight3D.size(), SB_TYPE::READ_ONLY, true);
     }
 
     // 구조화버퍼로 광원 데이터를 옮긴다.
@@ -163,7 +163,7 @@ void CRenderMgr::UpdateData()
         vecLight3DInfo.push_back(m_vecLight3D[i]->GetLightInfo());
     }
 
-    m_Light3DBuffer->SetData(vecLight3DInfo.data(), sizeof(tLightInfo) * vecLight3DInfo.size());
+    m_Light3DBuffer->SetData(vecLight3DInfo.data(), sizeof(tLightInfo) * (UINT)vecLight3DInfo.size());
     m_Light3DBuffer->UpdateData(13, PIPELINE_STAGE::PS_PIXEL);
 
 

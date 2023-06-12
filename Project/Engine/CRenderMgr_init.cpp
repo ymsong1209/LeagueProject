@@ -40,27 +40,27 @@ void CRenderMgr::init()
 
         Ptr<CTexture> arrRTTex[8] = {
               CResMgr::GetInst()->CreateTexture(L"ColorTargetTex"
-                , vRenderResolotion.x, vRenderResolotion.y
+                , (UINT)vRenderResolotion.x, (UINT)vRenderResolotion.y
                 , DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE
                 , D3D11_USAGE_DEFAULT),
 
               CResMgr::GetInst()->CreateTexture(L"NormalTargetTex"
-                , vRenderResolotion.x, vRenderResolotion.y
+                , (UINT)vRenderResolotion.x, (UINT)vRenderResolotion.y
                 , DXGI_FORMAT_R32G32B32A32_FLOAT, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE
                 , D3D11_USAGE_DEFAULT),
 
              CResMgr::GetInst()->CreateTexture(L"PositionTargetTex"
-                , vRenderResolotion.x, vRenderResolotion.y
+                , (UINT)vRenderResolotion.x, (UINT)vRenderResolotion.y
                 , DXGI_FORMAT_R32G32B32A32_FLOAT, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE
                 , D3D11_USAGE_DEFAULT),
 
              CResMgr::GetInst()->CreateTexture(L"DataTargetTex"
-                , vRenderResolotion.x, vRenderResolotion.y
+                , (UINT)vRenderResolotion.x, (UINT)vRenderResolotion.y
                 , DXGI_FORMAT_R32G32B32A32_FLOAT, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE
                 , D3D11_USAGE_DEFAULT),
 
             CResMgr::GetInst()->CreateTexture(L"EmissiveTargetTex"
-                , vRenderResolotion.x, vRenderResolotion.y
+                , (UINT)vRenderResolotion.x, (UINT)vRenderResolotion.y
                 , DXGI_FORMAT_R32G32B32A32_FLOAT, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE
                 , D3D11_USAGE_DEFAULT),
         };
@@ -99,12 +99,12 @@ void CRenderMgr::init()
 
         Ptr<CTexture> arrRTTex[8] = {
               CResMgr::GetInst()->CreateTexture(L"DiffuseTargetTex"
-                , vRenderResolotion.x, vRenderResolotion.y
+                , (UINT)vRenderResolotion.x, (UINT)vRenderResolotion.y
                 , DXGI_FORMAT_R32G32B32A32_FLOAT, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE
                 , D3D11_USAGE_DEFAULT),
 
               CResMgr::GetInst()->CreateTexture(L"SpecularTargetTex"
-                , vRenderResolotion.x, vRenderResolotion.y
+                , (UINT)vRenderResolotion.x, (UINT)vRenderResolotion.y
                 , DXGI_FORMAT_R32G32B32A32_FLOAT, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE
                 , D3D11_USAGE_DEFAULT),
         };

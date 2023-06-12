@@ -101,7 +101,7 @@ void CreateTestLevel()
 	pLandScape->LandScape()->SetHeightMap(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\HeightMap_01.jpg"));
  
 
-	SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 500.f), 0);
+	SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 0.f), 0);
 
 
 	// LandScape Object
