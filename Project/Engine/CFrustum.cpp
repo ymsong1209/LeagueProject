@@ -42,11 +42,44 @@ void CFrustum::finaltick()
 		vWorldPos[i] = XMVector3TransformCoord(m_arrProj[i], matInv);
 	}
 
-
 	m_arrFace[FT_NEAR] = XMPlaneFromPoints(vWorldPos[0], vWorldPos[1], vWorldPos[2]);
-	m_arrFace[FT_FAR] = XMPlaneFromPoints(vWorldPos[4], vWorldPos[7], vWorldPos[6]);
-	m_arrFace[FT_LEFT] = XMPlaneFromPoints(vWorldPos[0], vWorldPos[1], vWorldPos[2]);
-	m_arrFace[FT_RIGHT] = XMPlaneFromPoints(vWorldPos[0], vWorldPos[1], vWorldPos[2]);
-	m_arrFace[FT_TOP] = XMPlaneFromPoints(vWorldPos[0], vWorldPos[1], vWorldPos[2]);
-	m_arrFace[FT_BOT] = XMPlaneFromPoints(vWorldPos[0], vWorldPos[1], vWorldPos[2]);
+	m_arrFace[FT_FAR] = XMPlaneFromPoints(vWorldPos[7], vWorldPos[6], vWorldPos[5]);
+	m_arrFace[FT_LEFT] = XMPlaneFromPoints(vWorldPos[4], vWorldPos[0], vWorldPos[7]);
+	m_arrFace[FT_RIGHT] = XMPlaneFromPoints(vWorldPos[1], vWorldPos[5], vWorldPos[6]);
+	m_arrFace[FT_TOP] = XMPlaneFromPoints(vWorldPos[4], vWorldPos[5], vWorldPos[1]);
+	m_arrFace[FT_BOT] = XMPlaneFromPoints(vWorldPos[2], vWorldPos[6], vWorldPos[7]);
+}
+
+bool CFrustum::FrustumCheckByPoint(Vec3 _vWorldPos)
+{
+	for (int i = 0; i < FT_END; ++i)
+	{
+		// 임의의 점과 해당 평면의 법선벡터와 내적
+		Vec3 vNormal = m_arrFace[i];
+		vNormal.Normalize();
+		float fDot = vNormal.Dot(_vWorldPos);
+
+		// 내적한 값과 원점에서 해당 평면까지의 최단거리(D) 와 비교
+		if (fDot + m_arrFace[i].w > 0)
+			return false;
+	}
+
+	return true;
+}
+
+bool CFrustum::FrustumCheckBySphere(Vec3 _vWorldPos, float _fRadius)
+{
+	for (int i = 0; i < FT_END; ++i)
+	{
+		// 임의의 점과 해당 평면의 법선벡터와 내적
+		Vec3 vNormal = m_arrFace[i];
+		vNormal.Normalize();
+		float fDot = vNormal.Dot(_vWorldPos);
+
+		// 내적한 값과 원점에서 해당 평면까지의 최단거리(D) 와 비교
+		if (fDot + m_arrFace[i].w > _fRadius)
+			return false;
+	}
+
+	return true;
 }

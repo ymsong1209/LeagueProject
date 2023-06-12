@@ -18,7 +18,7 @@ CSkyBox::CSkyBox(const CSkyBox& _other)
 	, m_SkyTex(_other.m_SkyTex)
 {
 	SetType(m_Type);
-	//SetFrustumCheck(false);
+	SetFrustumCheck(false);
 }
 
 

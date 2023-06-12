@@ -25,7 +25,7 @@ CCamera::CCamera()
 	, m_Frustum(this)
 	, m_fAspectRatio(1.f)
 	, m_fScale(1.f)
-	, m_fFar(10000.f)
+	, m_fFar(50000.f)
 	, m_ProjType(PROJ_TYPE::ORTHOGRAPHIC)
 	, m_iLayerMask(0)
 	, m_iCamIdx(-1)
@@ -38,9 +38,10 @@ CCamera::CCamera()
 
 CCamera::CCamera(const CCamera& _Other)
 	: CComponent(_Other)
-	, m_Frustum(_Other.m_Frustum)
+	, m_Frustum(this)
 	, m_fAspectRatio(_Other.m_fAspectRatio)
 	, m_fScale(_Other.m_fScale)
+	, m_fFar(50000.f)
 	, m_ProjType(_Other.m_ProjType)
 	, m_iLayerMask(_Other.m_iLayerMask)
 	, m_iCamIdx(-1)
@@ -170,6 +171,14 @@ void CCamera::SortObject()
 					|| nullptr == pRenderCom->GetMaterial()
 					|| nullptr == pRenderCom->GetMaterial()->GetShader())
 					continue;
+
+				// FrustumCheck
+				if (pRenderCom->IsUseFrustumCheck())
+				{
+					Vec3 vWorldPos = vecObject[j]->Transform()->GetWorldPos();
+					if (false == m_Frustum.FrustumCheckBySphere(vWorldPos, pRenderCom->GetBounding()))
+						continue;
+				}
 
 				// 쉐이더 도메인에 따른 분류
 				SHADER_DOMAIN eDomain = pRenderCom->GetMaterial()->GetShader()->GetDomain();

@@ -20,12 +20,15 @@ class CFrustum :
 private:
     CCamera* m_pOwner;
     Vec4        m_arrFace[FT_END];
-
     Vec3        m_arrProj[8];
-
 
 public:
     void finaltick();
+
+public:
+    bool FrustumCheckByPoint(Vec3 _vWorldPos);
+    bool FrustumCheckBySphere(Vec3 _vWorldPos, float _fRadius);
+
 
 public:
     CLONE(CFrustum);

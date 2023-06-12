@@ -79,8 +79,8 @@ void CreateTestLevel()
 	pSkyBox->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 100.f));
 	pSkyBox->Transform()->SetRelativeRot(Vec3(0.f, XM_PI / 2.f, 0.f));
 
-	pSkyBox->SkyBox()->SetType(SKYBOX_TYPE::SPHERE);
-	pSkyBox->SkyBox()->SetSkyTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\skybox\\Sky02.jpg"));
+	pSkyBox->SkyBox()->SetType(SKYBOX_TYPE::CUBE);
+	pSkyBox->SkyBox()->SetSkyTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\skybox\\SkyWater.dds"));
 
 	SpawnGameObject(pSkyBox, Vec3(0.f, 0.f, 0.f), 0);
 
@@ -96,7 +96,8 @@ void CreateTestLevel()
 	
 	pLandScape->Transform()->SetRelativeScale(Vec3(500.f, 500, 500));
 	//pLandScape->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	//pLandScape->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"TessMtrl"));
+	//pLandScape->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3DMtrl"));
+	//pLandScape->MeshRender()->SetBounding(270);
 
 	SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 500.f), 0);
 
