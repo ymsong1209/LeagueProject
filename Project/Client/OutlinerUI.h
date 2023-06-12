@@ -27,6 +27,8 @@ public:
         m_dwSelectedData = _data;
     }
 
+    void RightClickFunction(DWORD_PTR _RightClickedNode);
+
 private:
     void AddGameObject(CGameObject* _Obj, TreeNode* _ParentNode);
     void DragDrop(DWORD_PTR _DragNode, DWORD_PTR _DropNode);

@@ -159,6 +159,7 @@
     <ClInclude Include="ComponentUI.h" />
     <ClInclude Include="ComputeShaderUI.h" />
     <ClInclude Include="ContentUI.h" />
+    <ClInclude Include="DecalUI.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GraphicsShaderUI.h" />
     <ClInclude Include="ImGuiMgr.h" />
@@ -168,6 +169,7 @@
     <ClInclude Include="ImGui\imgui_impl_win32.h" />
     <ClInclude Include="ImGui\imgui_internal.h" />
     <ClInclude Include="InspectorUI.h" />
+    <ClInclude Include="LevelUI.h" />
     <ClInclude Include="Light2DUI.h" />
     <ClInclude Include="ListUI.h" />
     <ClInclude Include="MaterialUI.h" />
@@ -177,6 +179,7 @@
     <ClInclude Include="MeshUI.h" />
     <ClInclude Include="OutlinerUI.h" />
     <ClInclude Include="ParamUI.h" />
+    <ClInclude Include="ParticleSystemUI.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PrefabUI.h" />
     <ClInclude Include="Resource.h" />
@@ -201,6 +204,7 @@
     <ClCompile Include="ComponentUI.cpp" />
     <ClCompile Include="ComputeShaderUI.cpp" />
     <ClCompile Include="ContentUI.cpp" />
+    <ClCompile Include="DecalUI.cpp" />
     <ClCompile Include="GraphicsShaderUI.cpp" />
     <ClCompile Include="ImGuiMgr.cpp" />
     <ClCompile Include="ImGui\imgui.cpp" />
@@ -211,6 +215,7 @@
     <ClCompile Include="ImGui\imgui_tables.cpp" />
     <ClCompile Include="ImGui\imgui_widgets.cpp" />
     <ClCompile Include="InspectorUI.cpp" />
+    <ClCompile Include="LevelUI.cpp" />
     <ClCompile Include="Light2DUI.cpp" />
     <ClCompile Include="ListUI.cpp" />
     <ClCompile Include="main.cpp" />
@@ -221,6 +226,7 @@
     <ClCompile Include="MeshUI.cpp" />
     <ClCompile Include="OutlinerUI.cpp" />
     <ClCompile Include="ParamUI.cpp" />
+    <ClCompile Include="ParticleSystemUI.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>

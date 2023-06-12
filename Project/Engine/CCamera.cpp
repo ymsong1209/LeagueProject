@@ -256,6 +256,13 @@ void CCamera::render_deferred()
 {
 	for (size_t i = 0; i < m_vecDeferred.size(); ++i)
 	{
+		//DataTex에 자신의 LayerNum을 집어넣는다.
+		if (m_vecDeferred[i]->GetLayerIndex() != -1) {
+			//layer는 0~31이지만 비트연산을 위해 한칸씩 옮김
+			//layernum = 1~32
+			float layernum = m_vecDeferred[i]->GetLayerIndex() + 1;
+			m_vecDeferred[i]->GetRenderComponent()->GetMaterial()->SetScalarParam(FLOAT_0, &layernum);
+		}
 		m_vecDeferred[i]->render();
 	}
 }
@@ -339,4 +346,5 @@ void CCamera::LoadFromLevelFile(FILE* _File)
 	fread(&m_ProjType, sizeof(UINT), 1, _File);
 	fread(&m_iLayerMask, sizeof(UINT), 1, _File);
 	fread(&m_iCamIdx, sizeof(int), 1, _File);
+	SetCameraIndex(m_iCamIdx);
 }

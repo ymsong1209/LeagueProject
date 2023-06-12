@@ -74,17 +74,20 @@ void CLevel::AddGameObject(CGameObject* _Object, const wstring& _LayerName, bool
 
 void CLevel::ChangeState(LEVEL_STATE _State)
 {	
-	m_State = _State;
-
-	if (LEVEL_STATE::PLAY == m_State)
+	if (LEVEL_STATE::PLAY == _State)
 	{
 		CRenderMgr::GetInst()->SetRenderFunc(true);
-		begin();
+		//stop->play일때만 begin 호출
+		//pause->play일때는 호출 X
+		if (m_State == LEVEL_STATE::STOP) {
+			begin();
+		}
 	}
 	else
 	{
 		CRenderMgr::GetInst()->SetRenderFunc(false);
 	}
+	m_State = _State;
 }
 
 
@@ -121,6 +124,34 @@ void CLevel::FindObjectByName(const wstring& _Name, vector<CGameObject*>& _Out)
 		{
 			if (_Name == vecObjects[j]->GetName())
 				_Out.push_back(vecObjects[j]);
+		}
+	}
+}
+
+CGameObject* CLevel::FindParentObjectByName(const wstring& _Name)
+{
+	for (UINT i = 0; i < MAX_LAYER; ++i)
+	{
+		const vector<CGameObject*>& vecParentObjects = m_arrLayer[i]->GetParentObject();
+		for (size_t j = 0; j < vecParentObjects.size(); ++j)
+		{
+			if (_Name == vecParentObjects[j]->GetName())
+				return vecParentObjects[j];
+		}
+	}
+
+	return nullptr;
+}
+
+void CLevel::FindParentObjectByName(const wstring& _Name, vector<CGameObject*>& _Out)
+{
+	for (UINT i = 0; i < MAX_LAYER; ++i)
+	{
+		const vector<CGameObject*>& vecParentObjects = m_arrLayer[i]->GetParentObject();
+		for (size_t j = 0; j < vecParentObjects.size(); ++j)
+		{
+			if (_Name == vecParentObjects[j]->GetName())
+				_Out.push_back(vecParentObjects[j]);
 		}
 	}
 }

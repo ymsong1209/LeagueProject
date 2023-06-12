@@ -10,6 +10,7 @@
 //
 // g_tex_0 : Color Texture
 // g_tex_1 : Normal Texture
+// g_float_0 : LayerNum
 // ========================
 
 
@@ -94,7 +95,20 @@ PS_OUT PS_Std3D_Deferred(VS_OUT _in) : SV_Target
     output.vColor = float4(vObjectColor.xyz, 1.f);
     output.vNormal = float4(vViewNormal.xyz, 1.f);
     output.vPosition = float4(_in.vViewPos.xyz, 1.f);
-    output.vData = float4(0.f, 0.f, 0.f, 1.f);
+    
+    // 모든 deferred object는 자신의 layer번호를 datattex의 x자리에 집어넣음
+    // decal.fx에서 datatex를 가져와 원하는 layer에만 출력시키게 한다.
+    if (g_float_0)
+    {
+        //g_float_0 : 1~32
+        //layer는 0~31이지만 한칸 옮겼다.
+        float3 data = float3(0.03f * g_float_0, 0.f, 0.f);
+        output.vData = float4(data, 1.f);
+    }
+    else
+    {
+        output.vData = float4(0.f, 0.f, 0.f, 1.f);
+    }
     output.vEmissive = float4(0.f, 0.f, 0.f, 1.f);
         
     return output;

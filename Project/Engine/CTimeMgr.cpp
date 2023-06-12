@@ -38,15 +38,23 @@ void CTimeMgr::tick()
 
 	// tick 간격 시간
 	m_fDeltaTime = (float)(m_llCurCount.QuadPart - m_llPrevCount.QuadPart) / (float)m_llFrequency.QuadPart;
+	m_fEditorDeltaTime = (float)(m_llCurCount.QuadPart - m_llPrevCount.QuadPart) / (float)m_llFrequency.QuadPart;
 
 	// 누적 시간
 	m_fTime += m_fDeltaTime;
-
+	m_fAccTime += m_fDeltaTime;
 	// 함수 호출 횟수
 	++m_iCallCount;
 		
 	// 이전 카운트 값을 현재 카운트로 갱신
-	m_llPrevCount = m_llCurCount;		
+	m_llPrevCount = m_llCurCount;
+
+	// Deltatime 빠르게/느리게/정지시키기
+	m_fDeltaTime = m_fDeltaTime * m_fTimeScale;
+
+	//saturate
+	if (m_fDeltaTime >= 1.f) m_fDeltaTime = 1.f;
+	if (m_fDeltaTime < 0.f) m_fDeltaTime = 0.f;
 
 	// GlobalData 갱신
 	GlobalData.tDT = m_fDeltaTime;

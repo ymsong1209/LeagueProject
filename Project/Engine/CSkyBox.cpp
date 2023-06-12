@@ -9,7 +9,18 @@ CSkyBox::CSkyBox()
 	, m_Type(SKYBOX_TYPE::SPHERE)
 {	
 	SetType(m_Type);
+	//SetFrustumCheck(false);
 }
+
+CSkyBox::CSkyBox(const CSkyBox& _other)
+	: CRenderComponent(_other)
+	, m_Type(_other.m_Type)
+	, m_SkyTex(_other.m_SkyTex)
+{
+	SetType(m_Type);
+	//SetFrustumCheck(false);
+}
+
 
 CSkyBox::~CSkyBox()
 {
@@ -41,6 +52,28 @@ void CSkyBox::render()
 
 	GetMesh()->render();
 }
+
+void CSkyBox::SaveToLevelFile(FILE* _File)
+{
+	CRenderComponent::SaveToLevelFile(_File);
+
+	fwrite(&m_Type, sizeof(SKYBOX_TYPE), 1, _File);
+	SaveResRef(m_SkyTex.Get(), _File);
+}
+
+void CSkyBox::LoadFromLevelFile(FILE* _File)
+{
+	CRenderComponent::LoadFromLevelFile(_File);
+
+	fread(&m_Type, sizeof(SKYBOX_TYPE), 1, _File);
+	LoadResRef(m_SkyTex, _File);
+	//생성자호출->LoadFromLevelFile순으로 함수 실행
+	//생성자의 SetType에선 SkyTex가 아직 설정이 안되어있다.
+	//다시 한번 재호출
+	SetType(m_Type);
+}
+
+
 
 void CSkyBox::SetType(SKYBOX_TYPE _Type)
 {

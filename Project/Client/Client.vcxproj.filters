@@ -110,6 +110,12 @@
     <Filter Include="Manager\LevelSaveLoad">
       <UniqueIdentifier>{bd45bcb0-5b2d-4b83-a548-af8817de8f6a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI\LevelUI">
+      <UniqueIdentifier>{82d3f1c6-4175-4ce4-b04d-344177525bc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\InspectorUI\ComponentUI\10.DecalUI">
+      <UniqueIdentifier>{594e6009-9efd-48d7-a2aa-5b0e9058d808}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -162,9 +168,6 @@
     </ClInclude>
     <ClInclude Include="MeshRenderUI.h">
       <Filter>UI\InspectorUI\ComponentUI\02. MeshRenderUI</Filter>
-    </ClInclude>
-    <ClInclude Include="ComponentUI.h">
-      <Filter>UI\InspectorUI\ComponentUI</Filter>
     </ClInclude>
     <ClInclude Include="Collider2DUI.h">
       <Filter>UI\InspectorUI\ComponentUI\03. Collider2DUI</Filter>
@@ -233,6 +236,18 @@
     <ClInclude Include="CLevelSaveLoad.h">
       <Filter>Manager\LevelSaveLoad</Filter>
     </ClInclude>
+    <ClInclude Include="LevelUI.h">
+      <Filter>UI\LevelUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentUI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="DecalUI.h">
+      <Filter>UI\InspectorUI\ComponentUI\10.DecalUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystemUI.h">
+      <Filter>UI\InspectorUI\ComponentUI\08. ParticleSystemUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -292,9 +307,6 @@
     </ClCompile>
     <ClCompile Include="MeshRenderUI.cpp">
       <Filter>UI\InspectorUI\ComponentUI\02. MeshRenderUI</Filter>
-    </ClCompile>
-    <ClCompile Include="ComponentUI.cpp">
-      <Filter>UI\InspectorUI\ComponentUI</Filter>
     </ClCompile>
     <ClCompile Include="Collider2DUI.cpp">
       <Filter>UI\InspectorUI\ComponentUI\03. Collider2DUI</Filter>
@@ -363,6 +375,18 @@
     </ClCompile>
     <ClCompile Include="CLevelSaveLoad.cpp">
       <Filter>Manager\LevelSaveLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelUI.cpp">
+      <Filter>UI\LevelUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentUI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="DecalUI.cpp">
+      <Filter>UI\InspectorUI\ComponentUI\10.DecalUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystemUI.cpp">
+      <Filter>UI\InspectorUI\ComponentUI\08. ParticleSystemUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

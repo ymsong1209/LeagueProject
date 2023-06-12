@@ -19,7 +19,7 @@ private:
 
 
     bool                m_CategoryNode; // 항목 대표 노드
-    bool                m_Hilight;      // 노드 하이라이트 처리
+    bool                m_Highlight;      // 노드 하이라이트 처리
 
 
 public:
@@ -70,6 +70,9 @@ private:
     UI*             m_DragDropInst;
     UI_DELEGATE_2   m_DragDropFunc;
 
+    UI*             m_RightClickInst;
+    UI_DELEGATE_1   m_RightClickFunc;
+
     string          m_strDragDropID;
 
 
@@ -93,6 +96,12 @@ public:
         m_DragDropFunc = _MemFunc;
     }
 
+    void AddDynamic_RightClick(UI* _UI, UI_DELEGATE_1 _MemFunc)
+    {
+        m_RightClickInst = _UI;
+        m_RightClickFunc = _MemFunc;
+    }
+
     void SetDragDropID(const string& _strID) { m_strDragDropID = _strID; }
 
 
@@ -100,6 +109,7 @@ private:
     void SetSelectedNode(TreeNode* _Node);   
     void SetDragNode(TreeNode* _Node);
     void SetDropNode(TreeNode* _Node);
+    void SetRightClickNode(TreeNode* _Node);
 
 public:
     TreeNode* GetSelectedNode() { return m_SelectedNode; }
