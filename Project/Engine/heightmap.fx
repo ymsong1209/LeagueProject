@@ -5,15 +5,15 @@
 #include "struct.fx"
 
 RWTexture2D<float> HEIGHT_MAP : register(u0); // unordered acess
-StructuredBuffer<tRaycastOut> LOCATION : register(t16); // ºê·¯½¬ À§Ä¡(ÁÂ»ó´Ü ±âÁØ)
+StructuredBuffer<tRaycastOut> LOCATION : register(t16); // ï¿½ê·¯ï¿½ï¿½ ï¿½ï¿½Ä¡(ï¿½Â»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 
 #define WIDTH       g_int_0
 #define HEIGHT      g_int_1
 
 //#define BRUSH_TEX   g_texarr_0
 #define BRUSH_TEX   g_tex_0
-#define SCALE       g_vec2_0   // ºê·¯½¬ Å©±â
-#define BRUSH_IDX   g_int_2    // ºê·¯½¬ ÀÎµ¦½º
+#define SCALE       g_vec2_0   // ï¿½ê·¯ï¿½ï¿½ Å©ï¿½ï¿½
+#define BRUSH_IDX   g_int_2    // ï¿½ê·¯ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½
 
 [numthreads(32, 32, 1)]
 void CS_HeightMap(int3 _iThreadID : SV_DispatchThreadID)
@@ -32,16 +32,16 @@ void CS_HeightMap(int3 _iThreadID : SV_DispatchThreadID)
         return;
     }
 
-    // brush texture ¿¡¼­ »ùÇÃ¸µ ÇÒ UV °è»ê
+    // brush texture ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ã¸ï¿½ ï¿½ï¿½ UV ï¿½ï¿½ï¿½
     int2 vLTPos = vCenterPos - (vScale / 2);
     float2 vUV = float2(_iThreadID.xy - vLTPos) / float2(vScale);
 
-    // ºê·¯½¬·Î ºÎÅÍ ¾ËÆÄ°ª »ùÇÃ¸µ
+    // ï¿½ê·¯ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ä°ï¿½ ï¿½ï¿½ï¿½Ã¸ï¿½
     //float4 vBrushColor = BRUSH_TEX.SampleLevel(g_sam_0, float3(vUV, BRUSH_IDX), 0);
     //float4 vBrushColor = BRUSH_TEX.SampleLevel(g_sam_0, vUV, 0);
-    //HEIGHT_MAP[_iThreadID.xy] += g_EditDT * vBrushColor.a * 0.2f; // ºê·¯½¬ ¾ËÆÄ°ªÀ¸·Î ³ôÀÌ ¼³Á¤
+    //HEIGHT_MAP[_iThreadID.xy] += g_EditDT * vBrushColor.a * 0.2f; // ï¿½ê·¯ï¿½ï¿½ ï¿½ï¿½ï¿½Ä°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    // cos ±×·¡ÇÁ·Î ³ôÀÌ ¼³Á¤
+    // cos ï¿½×·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     float vDist = (distance(vCenterPos, _iThreadID.xy) / vScale) * 3.1415926535f;        
     HEIGHT_MAP[_iThreadID.xy] += saturate(g_EditDT * cos(vDist) * 0.2f);    
 }

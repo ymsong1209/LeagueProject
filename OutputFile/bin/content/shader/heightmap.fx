@@ -43,7 +43,11 @@ void CS_HeightMap(int3 _iThreadID : SV_DispatchThreadID)
 
     // cos 그래프로 높이 설정
     float vDist = (distance(vCenterPos, _iThreadID.xy) / vScale) * 3.1415926535f;        
+<<<<<<< HEAD
     HEIGHT_MAP[_iThreadID.xy] += saturate(g_EditDT * cos(vDist) * 0.2f);    
+=======
+    HEIGHT_MAP[_iThreadID.xy] += saturate(g_EditDT * cos(vDist) * 0.2f);
+>>>>>>> b22c8abd68aa6c263d69669dcd2d1711fadf6d62
 }
 
 
