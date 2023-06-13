@@ -15,6 +15,10 @@ void CLandScape::init()
 	CreateComputeShader();
 
 	CreateTexture();
+
+	// 레이캐스팅 결과 받는 버퍼
+	m_pCrossBuffer = new CStructuredBuffer;
+	m_pCrossBuffer->Create(sizeof(tRaycastOut), 1, SB_TYPE::READ_WRITE, true);
 }
 
 void CLandScape::CreateMesh()
@@ -76,20 +80,28 @@ void CLandScape::CreateComputeShader()
 		m_pCSHeightMap->CreateComputeShader(L"shader\\heightmap.fx", "CS_HeightMap");
 		CResMgr::GetInst()->AddRes<CComputeShader>(L"HeightMapShader", m_pCSHeightMap.Get());
 	}
+
+	// =====================
+	// 지형 피킹 컴퓨트 쉐이더
+	// =====================
+	m_pCSRaycast = (CRaycastShader*)CResMgr::GetInst()->FindRes<CComputeShader>(L"RaycastShader").Get();
+	if (nullptr == m_pCSRaycast)
+	{
+		m_pCSRaycast = new CRaycastShader(32, 32, 1);
+		m_pCSRaycast->CreateComputeShader(L"shader\\raycast.fx", "CS_Raycast");
+		CResMgr::GetInst()->AddRes<CComputeShader>(L"RaycastShader", m_pCSHeightMap.Get());
+	}
 }
 
 void CLandScape::CreateTexture()
 {
 	// 높이맵 텍스쳐	
 	//m_pHeightMap = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\landscape\\HeightMap_01.jpg");
-	m_pHeightMap = CResMgr::GetInst()->FindRes<CTexture>(L"HeightMap");
-	if (!m_pHeightMap.Get()) {
-		m_pHeightMap = CResMgr::GetInst()->CreateTexture(L"HeightMap"
-			, 2048, 2048
-			, DXGI_FORMAT_R32_FLOAT
-			, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS
-			, D3D11_USAGE_DEFAULT);
-	}
-	
+	m_pHeightMap = CResMgr::GetInst()->CreateTexture(L"HeightMap"
+		, 2048, 2048
+		, DXGI_FORMAT_R32_FLOAT
+		, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS
+		, D3D11_USAGE_DEFAULT);
+
 	m_pBrushTex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\brush\\Brush_01.png");
 }

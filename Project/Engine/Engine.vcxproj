@@ -205,6 +205,7 @@ call EngineCopy.bat</Command>
     <ClInclude Include="CParticleUpdateShader.h" />
     <ClInclude Include="CPathMgr.h" />
     <ClInclude Include="CPrefab.h" />
+    <ClInclude Include="CRaycastShader.h" />
     <ClInclude Include="CRenderComponent.h" />
     <ClInclude Include="CRenderMgr.h" />
     <ClInclude Include="CRes.h" />
@@ -268,6 +269,7 @@ call EngineCopy.bat</Command>
     <ClCompile Include="CParticleUpdateShader.cpp" />
     <ClCompile Include="CPathMgr.cpp" />
     <ClCompile Include="CPrefab.cpp" />
+    <ClCompile Include="CRaycastShader.cpp" />
     <ClCompile Include="CRenderComponent.cpp" />
     <ClCompile Include="CRenderMgr.cpp" />
     <ClCompile Include="CRenderMgr_init.cpp" />
@@ -394,6 +396,16 @@ call EngineCopy.bat</Command>
       </ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="raycast.fx">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="setcolor.fx">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>

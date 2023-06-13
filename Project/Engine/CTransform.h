@@ -40,6 +40,7 @@ public:
     Vec3 GetRelativeDir(DIR_TYPE _type) const { return m_vRelativeDir[(UINT)_type]; }
     Vec3 GetWorldDir(DIR_TYPE _type) const { { return m_vWorldDir[(UINT)_type]; } }
     Vec3 GetWorldPos() { return m_matWorld.Translation(); }
+    const Matrix& GetWorldInvMat() const { return m_matWorldInv; }
 
     const Matrix& GetWorldRotMat() { return m_matWorldRot; }
     const Matrix& GetWorldScaleMat() { return m_matWorldScale; }

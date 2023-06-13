@@ -55,6 +55,9 @@
     <FxCompile Include="heightmap.fx">
       <Filter>Source\08. ShaderCode\03. Compute\LandScape\HeightMap</Filter>
     </FxCompile>
+    <FxCompile Include="raycast.fx">
+      <Filter>Source\08. ShaderCode\03. Compute\LandScape\RayCast</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CEntity.cpp" />
@@ -222,6 +225,9 @@
     </ClCompile>
     <ClCompile Include="CLandScape_init.cpp">
       <Filter>Source\06.Component\RenderComponent\6.LandScape</Filter>
+    </ClCompile>
+    <ClCompile Include="CRaycastShader.cpp">
+      <Filter>Source\08. ShaderCode\03. Compute\LandScape\RayCast</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -396,6 +402,9 @@
     </ClInclude>
     <ClInclude Include="CHeightMapShader.h">
       <Filter>Source\08. ShaderCode\03. Compute\LandScape\HeightMap</Filter>
+    </ClInclude>
+    <ClInclude Include="CRaycastShader.h">
+      <Filter>Source\08. ShaderCode\03. Compute\LandScape\RayCast</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
