@@ -26,6 +26,9 @@ public:
     virtual void finaltick() override;
     virtual void render() override;
 
+    virtual void SaveToLevelFile(FILE* _File) override;
+    virtual void LoadFromLevelFile(FILE* _File) override;
+
 private:
     void init();
     void CreateMesh();
