@@ -2,6 +2,7 @@
 #include "CTexture.h"
 
 #include "CDevice.h"
+#include "CPathMgr.h"
 
 CTexture::CTexture(bool _bEngine)
 	: CRes(RES_TYPE::TEXTURE, _bEngine)
@@ -50,6 +51,7 @@ void CTexture::UpdateData_CS(int _iRegisterNum, bool _bShaderRes)
 
 	if (_bShaderRes)
 	{
+
 		CONTEXT->CSSetShaderResources(m_iRecentNum, 1, m_SRV.GetAddressOf());
 	}
 	else
@@ -258,6 +260,63 @@ int CTexture::Create(ComPtr<ID3D11Texture2D> _tex2D)
 	}
 
 	return S_OK;
+}
+
+void CTexture::SaveTextureAsDDS(const wstring& _LevelPath)
+{
+	
+	//Texture를 Save할라면 D3D11_USAGE_STAGING으로 전환해야함.
+	ID3D11Texture2D* pStagingTexture = nullptr;
+	D3D11_TEXTURE2D_DESC stagingDesc;
+	stagingDesc.Width = m_Desc.Width;
+	stagingDesc.Height = m_Desc.Height;
+	stagingDesc.MipLevels = 1;
+	stagingDesc.ArraySize = 1;
+	stagingDesc.Format = m_Desc.Format;
+	stagingDesc.SampleDesc.Count = 1;
+	stagingDesc.SampleDesc.Quality = 0;
+	stagingDesc.Usage = D3D11_USAGE_STAGING;
+	stagingDesc.BindFlags = 0;
+	stagingDesc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+	stagingDesc.MiscFlags = 0;
+
+	if (FAILED(DEVICE->CreateTexture2D(&stagingDesc, nullptr, &pStagingTexture)))
+	{
+		return;
+	}
+
+	CDevice::GetInst()->GetDeviceContext()->CopyResource(pStagingTexture, m_Tex2D.Get());
+
+
+	DirectX::ScratchImage image;
+	HRESULT hr = DirectX::CaptureTexture(CDevice::GetInst()->GetDevice(), CDevice::GetInst()->GetDeviceContext(), pStagingTexture, image);
+	if (SUCCEEDED(hr))
+	{
+		wstring strFolderPath = CPathMgr::GetInst()->GetContentPath();
+		if (_LevelPath == L"") {
+			strFolderPath += L"texture\\";
+		}
+		else {
+			strFolderPath += _LevelPath;
+		}
+		strFolderPath += GetName();
+		strFolderPath += L".dds";
+		
+
+		hr = DirectX::SaveToDDSFile(image.GetImages(), image.GetImageCount(), image.GetMetadata(), DirectX::DDS_FLAGS_NONE, strFolderPath.c_str());
+
+		if (FAILED(hr))
+		{
+			// Handle error
+		}
+	}
+
+	pStagingTexture->Release();
+	wstring FixedName;
+	FixedName += _LevelPath;
+	FixedName += GetName();
+	FixedName += L".dds";
+	SetName(FixedName);
 }
 
 

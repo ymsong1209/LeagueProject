@@ -41,6 +41,8 @@ private:
 
     void Raycasting();
 
+    void CopyFromLoadedTexture(wstring _FilePath);
+
     CLONE(CLandScape);
 public:
     CLandScape();

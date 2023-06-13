@@ -848,6 +848,8 @@ void CResMgr::CreateDefaultGraphicsShader()
 
 #include "CSetColorShader.h"
 #include "CParticleUpdateShader.h"
+#include "CHeightMapShader.h"
+#include "CRaycastShader.h"
 
 void CResMgr::CreateDefaultComputeShader()
 {
@@ -863,6 +865,16 @@ void CResMgr::CreateDefaultComputeShader()
 	pCS = new CParticleUpdateShader(128, 1, 1);
 	pCS->SetKey(L"ParticleUpdateCS");
 	pCS->CreateComputeShader(L"shader\\particle_update.fx", "CS_ParticleUpdate");
+	AddRes(pCS->GetKey(), pCS);
+
+	pCS = new CHeightMapShader(32, 32, 1);
+	pCS->SetKey(L"HeightMapShader");
+	pCS->CreateComputeShader(L"shader\\heightmap.fx", "CS_HeightMap");
+	AddRes(pCS->GetKey(), pCS);
+	
+	pCS = new CRaycastShader(32, 32, 1);
+	pCS->SetKey(L"RaycastShader");
+	pCS->CreateComputeShader(L"shader\\raycast.fx", "CS_Raycast");
 	AddRes(pCS->GetKey(), pCS);
 }
 
