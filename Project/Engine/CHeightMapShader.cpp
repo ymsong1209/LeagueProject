@@ -49,7 +49,7 @@ void CHeightMapShader::Clear()
 {
 	if (nullptr != m_pHeightMap)
 	{
-		m_pHeightMap->Clear_CS(0);
+		m_pHeightMap->Clear_CS(false);
 		m_pHeightMap = nullptr;
 	}
 

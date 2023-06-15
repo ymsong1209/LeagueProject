@@ -582,8 +582,6 @@ void CResMgr::CreateDefaultGraphicsShader()
 	AddRes(pShader->GetKey(), pShader);
 
 
-
-
 	// =================
 	// DebugShape Shader
 	// Topology : LineStrip
@@ -798,6 +796,7 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_LIGHT);
 	AddRes(pShader->GetKey(), pShader);
 
+
 	// ==========================
 	// Decal Shader
 	// RS_TYPE  : CULL_FRONT
@@ -820,6 +819,7 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->SetBSType(BS_TYPE::ALPHA_BLEND);
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_DECAL);
 	AddRes(pShader->GetKey(), pShader);
+
 
 	// ============================
 	// TessShader
