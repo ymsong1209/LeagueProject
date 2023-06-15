@@ -1,24 +1,29 @@
 #pragma once
 #include "CComponent.h"
+#include "CFrustum.h"
 
 class CCamera :
     public CComponent
 {
 private:
-    float       m_fAspectRatio;
-    float       m_fScale;       // Orthograpic 에서 사용하는 카메라 배율
-    float       m_fFar;
+    CFrustum                m_Frustum;
 
-    PROJ_TYPE   m_ProjType;
+    float                   m_fAspectRatio;
+    float                   m_fScale;       // Orthograpic 에서 사용하는 카메라 배율
+    float                   m_fFar;
 
-    Matrix      m_matView;
-    Matrix      m_matViewInv;
-    Matrix      m_matProj;
+    PROJ_TYPE               m_ProjType;
 
-    UINT        m_iLayerMask;
+    Matrix                  m_matView;
+    Matrix                  m_matViewInv;
+    Matrix                  m_matProj;
+    Matrix                  m_matProjInv;
 
-    int         m_iCamIdx;  // 카메라 우선순위
+    UINT                    m_iLayerMask;
 
+    int                     m_iCamIdx;  // 카메라 우선순위
+
+    tRay                    m_ray;      // 마우스 방향을 향하는 직선
 
     vector<CGameObject*>    m_vecDeferred;
     vector<CGameObject*>    m_vecDecal;
@@ -45,8 +50,12 @@ public:
 
     void SetCameraIndex(int _idx);
 
+    const tRay& GetRay() { return m_ray; }
+
     const Matrix& GetViewMat() { return m_matView; }
+    const Matrix& GetViewMatInv() { return m_matViewInv; }
     const Matrix& GetProjMat() { return m_matProj; }
+    const Matrix& GetProjMatInv() { return m_matProjInv; }
 
 public:
     void SortObject();
@@ -55,6 +64,9 @@ public:
 public:
     virtual void begin() override;
     virtual void finaltick() override;
+
+protected:
+    void CalRay();  // 마우스 방향으로 광선 연산
 
 
 private:
@@ -69,7 +81,6 @@ private:
     void render_transparent();
     void render_postprocess();
     void render_ui();
-
 
     void CalcViewMat();
     void CalcProjMat();

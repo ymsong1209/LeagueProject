@@ -316,7 +316,7 @@ void CResMgr::CreateDefaultMesh()
 	}
 
 	pMesh = new CMesh(true);
-	pMesh->Create(arrCube, 24, vecIdx.data(), vecIdx.size());
+	pMesh->Create(arrCube, 24, vecIdx.data(), (UINT)vecIdx.size());
 	AddRes<CMesh>(L"CubeMesh", pMesh);
 	vecIdx.clear();
 
@@ -348,7 +348,7 @@ void CResMgr::CreateDefaultMesh()
 	vecIdx.push_back(0);
 
 	pMesh = new CMesh(true);
-	pMesh->Create(arrCube, 24, vecIdx.data(), vecIdx.size());
+	pMesh->Create(arrCube, 24, vecIdx.data(), (UINT)vecIdx.size());
 	AddRes<CMesh>(L"CubeMesh_Debug", pMesh);
 	vecIdx.clear();
 
@@ -457,7 +457,7 @@ void CResMgr::CreateDefaultMesh()
 	}
 
 	pMesh = new CMesh(true);
-	pMesh->Create(vecVtx.data(), vecVtx.size(), vecIdx.data(), vecIdx.size());
+	pMesh->Create(vecVtx.data(), (UINT)vecVtx.size(), vecIdx.data(), (UINT)vecIdx.size());
 	AddRes<CMesh>(L"SphereMesh", pMesh);
 	vecVtx.clear();
 	vecIdx.clear();
@@ -696,12 +696,15 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader = new CGraphicsShader;
 	pShader->SetKey(L"LandScapeShader");
 	pShader->CreateVertexShader(L"shader\\landscape.fx", "VS_LandScape");
+	pShader->CreateHullShader(L"shader\\landscape.fx", "HS_LandScape");
+	pShader->CreateDomainShader(L"shader\\landscape.fx", "DS_LandScape");
 	pShader->CreatePixelShader(L"shader\\landscape.fx", "PS_LandScape");
 
+	pShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY_3_CONTROL_POINT_PATCHLIST);
 	pShader->SetRSType(RS_TYPE::CULL_BACK);
 	pShader->SetDSType(DS_TYPE::LESS);
 	pShader->SetBSType(BS_TYPE::DEFAULT);
-	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_OPAQUE);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_DEFERRED);
 
 	AddRes(pShader->GetKey(), pShader);
 
@@ -845,6 +848,8 @@ void CResMgr::CreateDefaultGraphicsShader()
 
 #include "CSetColorShader.h"
 #include "CParticleUpdateShader.h"
+#include "CHeightMapShader.h"
+#include "CRaycastShader.h"
 
 void CResMgr::CreateDefaultComputeShader()
 {
@@ -860,6 +865,16 @@ void CResMgr::CreateDefaultComputeShader()
 	pCS = new CParticleUpdateShader(128, 1, 1);
 	pCS->SetKey(L"ParticleUpdateCS");
 	pCS->CreateComputeShader(L"shader\\particle_update.fx", "CS_ParticleUpdate");
+	AddRes(pCS->GetKey(), pCS);
+
+	pCS = new CHeightMapShader(32, 32, 1);
+	pCS->SetKey(L"HeightMapShader");
+	pCS->CreateComputeShader(L"shader\\heightmap.fx", "CS_HeightMap");
+	AddRes(pCS->GetKey(), pCS);
+	
+	pCS = new CRaycastShader(32, 32, 1);
+	pCS->SetKey(L"RaycastShader");
+	pCS->CreateComputeShader(L"shader\\raycast.fx", "CS_Raycast");
 	AddRes(pCS->GetKey(), pCS);
 }
 

@@ -52,6 +52,12 @@
     <FxCompile Include="tess.fx">
       <Filter>Source\08. ShaderCode\02. Render\3D</Filter>
     </FxCompile>
+    <FxCompile Include="heightmap.fx">
+      <Filter>Source\08. ShaderCode\03. Compute\LandScape\HeightMap</Filter>
+    </FxCompile>
+    <FxCompile Include="raycast.fx">
+      <Filter>Source\08. ShaderCode\03. Compute\LandScape\RayCast</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CEntity.cpp" />
@@ -210,6 +216,18 @@
     </ClCompile>
     <ClCompile Include="CCollisionMgr_3D.cpp">
       <Filter>Source\03. Manager\07.CollisionMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CFrustum.cpp">
+      <Filter>Source\06.Component\3.Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CHeightMapShader.cpp">
+      <Filter>Source\08. ShaderCode\03. Compute\LandScape\HeightMap</Filter>
+    </ClCompile>
+    <ClCompile Include="CLandScape_init.cpp">
+      <Filter>Source\06.Component\RenderComponent\6.LandScape</Filter>
+    </ClCompile>
+    <ClCompile Include="CRaycastShader.cpp">
+      <Filter>Source\08. ShaderCode\03. Compute\LandScape\RayCast</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -379,6 +397,15 @@
     <ClInclude Include="CCollider3D.h">
       <Filter>Source\06.Component\7.Collider3D</Filter>
     </ClInclude>
+    <ClInclude Include="CFrustum.h">
+      <Filter>Source\06.Component\3.Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CHeightMapShader.h">
+      <Filter>Source\08. ShaderCode\03. Compute\LandScape\HeightMap</Filter>
+    </ClInclude>
+    <ClInclude Include="CRaycastShader.h">
+      <Filter>Source\08. ShaderCode\03. Compute\LandScape\RayCast</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -539,6 +566,15 @@
     </Filter>
     <Filter Include="Source\03. Manager\11.FontMgr">
       <UniqueIdentifier>{b2f54b4f-27ea-4c08-8990-d4ef47e131a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\08. ShaderCode\03. Compute\LandScape">
+      <UniqueIdentifier>{d036a779-5be4-4c4f-a891-b00bfc0dc0e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\08. ShaderCode\03. Compute\LandScape\HeightMap">
+      <UniqueIdentifier>{af66da94-c010-4f70-b5a3-314277038e36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\08. ShaderCode\03. Compute\LandScape\RayCast">
+      <UniqueIdentifier>{f39bf417-610c-4049-8245-d987928cbd32}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

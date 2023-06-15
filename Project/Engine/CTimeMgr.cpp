@@ -58,6 +58,7 @@ void CTimeMgr::tick()
 
 	// GlobalData °»½Å
 	GlobalData.tDT = m_fDeltaTime;
+	GlobalData.tEditDT = m_fEditorDeltaTime;
 	GlobalData.tAccTime += m_fDeltaTime;
 }
 
@@ -68,7 +69,7 @@ void CTimeMgr::render()
 
 	if (1.f <= m_fTime)
 	{		
-		swprintf_s(szBuff, L"FPS : %d, DT : %f", m_iCallCount, m_fDeltaTime);
+		swprintf_s(szBuff, L"FPS : %d, DT : %f, EditDT : %f", m_iCallCount, m_fDeltaTime, m_fEditorDeltaTime);
 		//SetWindowText(CEngine::GetInst()->GetMainWnd(), szBuff);	
 
 		m_fTime = 0.f;

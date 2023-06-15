@@ -55,11 +55,13 @@ cbuffer MATERIAL : register(b1)
 cbuffer GLOBAL : register(b2)
 {
     float2 g_Resolution;
-    float  g_DT;
+    float  g_DT;                //Play상태일때 1프레임당 흐르는 시간
     float  g_AccTime;
+    
     uint   g_Light2DCount;
     uint   g_Light3DCount;
-    int2   g_globalpadding;
+    float  g_EditDT;            //Play,Pause상관없이 1프레임당 흐르는 시간
+    int    g_globalpadding;
 }
 
 Texture2D g_tex_0 : register(t0);

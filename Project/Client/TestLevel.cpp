@@ -63,7 +63,7 @@ void CreateTestLevel()
 		
 	pLightObj->Light3D()->SetLightDiffuse(Vec3(1.f, 1.f, 1.f));
 	//pLightObj->Light3D()->SetLightSpecular(Vec3(0.3f, 0.3f, 0.3f));
-	pLightObj->Light3D()->SetLightAmbient(Vec3(0.1f, 0.1f, 0.1f));	
+	pLightObj->Light3D()->SetLightAmbient(Vec3(0.15f, 0.15f, 0.15f));	
 
 	pLightObj->Light3D()->SetRadius(400.f);
 
@@ -79,8 +79,8 @@ void CreateTestLevel()
 	pSkyBox->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 100.f));
 	pSkyBox->Transform()->SetRelativeRot(Vec3(0.f, XM_PI / 2.f, 0.f));
 
-	pSkyBox->SkyBox()->SetType(SKYBOX_TYPE::SPHERE);
-	pSkyBox->SkyBox()->SetSkyTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\skybox\\Sky02.jpg"));
+	pSkyBox->SkyBox()->SetType(SKYBOX_TYPE::CUBE);
+	pSkyBox->SkyBox()->SetSkyTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\skybox\\SkyWater.dds"));
 
 	SpawnGameObject(pSkyBox, Vec3(0.f, 0.f, 0.f), 0);
 
@@ -92,13 +92,16 @@ void CreateTestLevel()
 	pLandScape->SetName(L"LandScape");
 
 	pLandScape->AddComponent(new CTransform);
-	pLandScape->AddComponent(new CParticleSystem);
+	pLandScape->AddComponent(new CLandScape);
 	
-	pLandScape->Transform()->SetRelativeScale(Vec3(500.f, 500, 500));
-	//pLandScape->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	//pLandScape->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"TessMtrl"));
+	pLandScape->Transform()->SetRelativeScale(Vec3(200.f, 1000.f, 200.f));
 
-	SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 500.f), 0);
+	pLandScape->LandScape()->SetFace(32, 32);
+	pLandScape->LandScape()->SetFrustumCheck(false);
+	pLandScape->LandScape()->SetHeightMap(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\HeightMap_01.jpg"));
+ 
+
+	SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 0.f), 0);
 
 
 	// LandScape Object

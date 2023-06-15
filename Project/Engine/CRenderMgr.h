@@ -55,13 +55,8 @@ public:
     void AddDebugShapeInfo(const tDebugShapeInfo& _info) { m_vecShapeInfo.push_back(_info); }
     vector<tDebugShapeInfo>& GetDebugShapeInfo() { return m_vecShapeInfo; }
 
-    CCamera* GetMainCam() 
-    { 
-        if (m_vecCam.empty())
-            return nullptr;
+    CCamera* GetMainCam();
 
-        return m_vecCam[0];
-    }
 
     const vector<CLight3D*> GetLight3D() { return m_vecLight3D; }
 

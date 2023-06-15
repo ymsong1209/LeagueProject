@@ -29,6 +29,16 @@ void CMRT::Create(Ptr<CTexture>(&_RTArr)[8], Vec4(&_Clear)[8], Ptr<CTexture> _DS
 	memcpy(m_Clear, _Clear, sizeof(Vec4) * 8);
 
 	m_DSTex = _DSTex;
+
+	//// ViewPort ¼³Á¤	
+	m_tViewPort.TopLeftX = 0;
+	m_tViewPort.TopLeftY = 0;
+
+	m_tViewPort.Width = m_RT[0]->Width();
+	m_tViewPort.Height = m_RT[0]->Height();
+
+	m_tViewPort.MinDepth = 0;
+	m_tViewPort.MaxDepth = 1;
 }
 
 void CMRT::OMSet()

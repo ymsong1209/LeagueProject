@@ -18,13 +18,15 @@
 #include "CLight3D.h"
 
 #include "CResMgr.h"
+#include "CKeyMgr.h"
 
 
 CCamera::CCamera()
 	: CComponent(COMPONENT_TYPE::CAMERA)
+	, m_Frustum(this)
 	, m_fAspectRatio(1.f)
 	, m_fScale(1.f)
-	, m_fFar(10000.f)
+	, m_fFar(50000.f)
 	, m_ProjType(PROJ_TYPE::ORTHOGRAPHIC)
 	, m_iLayerMask(0)
 	, m_iCamIdx(-1)
@@ -37,8 +39,10 @@ CCamera::CCamera()
 
 CCamera::CCamera(const CCamera& _Other)
 	: CComponent(_Other)
+	, m_Frustum(this)
 	, m_fAspectRatio(_Other.m_fAspectRatio)
 	, m_fScale(_Other.m_fScale)
+	, m_fFar(50000.f)
 	, m_ProjType(_Other.m_ProjType)
 	, m_iLayerMask(_Other.m_iLayerMask)
 	, m_iCamIdx(-1)
@@ -61,7 +65,35 @@ void CCamera::finaltick()
 {
 	CalcViewMat();
 
-	CalcProjMat();	
+	CalcProjMat();
+
+	m_Frustum.finaltick();
+
+	// 마우스방향 직선 계산
+	CalRay();
+}
+
+void CCamera::CalRay()
+{
+	// 마우스 방향을 향하는 Ray 구하기
+	// SwapChain 타겟의 ViewPort 정보
+	CMRT* pMRT = CRenderMgr::GetInst()->GetMRT(MRT_TYPE::SWAPCHAIN);
+	D3D11_VIEWPORT tVP = pMRT->GetViewPort();
+
+	//  현재 마우스 좌표
+	Vec2 vMousePos = CKeyMgr::GetInst()->GetMousePos();
+
+	// 직선은 카메라의 좌표를 반드시 지난다.
+	m_ray.vStart = Transform()->GetWorldPos();
+
+	// view space 에서의 방향
+	m_ray.vDir.x = ((((vMousePos.x - tVP.TopLeftX) * 2.f / tVP.Width) - 1.f) - m_matProj._31) / m_matProj._11;
+	m_ray.vDir.y = (-(((vMousePos.y - tVP.TopLeftY) * 2.f / tVP.Height) - 1.f) - m_matProj._32) / m_matProj._22;
+	m_ray.vDir.z = 1.f;
+
+	// world space 에서의 방향
+	m_ray.vDir = XMVector3TransformNormal(m_ray.vDir, m_matViewInv);
+	m_ray.vDir.Normalize();
 }
 
 void CCamera::CalcViewMat()
@@ -108,6 +140,10 @@ void CCamera::CalcProjMat()
 		// 원근 투영
 		m_matProj = XMMatrixPerspectiveFovLH(XM_PI / 2.f, m_fAspectRatio, 1.f, m_fFar);
 	}
+
+	// 투영행렬 역행렬
+	m_matProjInv = XMMatrixInverse(nullptr, m_matProj);
+
 
 }
 
@@ -164,6 +200,14 @@ void CCamera::SortObject()
 					|| nullptr == pRenderCom->GetMaterial()
 					|| nullptr == pRenderCom->GetMaterial()->GetShader())
 					continue;
+
+				// FrustumCheck
+				if (pRenderCom->IsUseFrustumCheck())
+				{
+					Vec3 vWorldPos = vecObject[j]->Transform()->GetWorldPos();
+					if (false == m_Frustum.FrustumCheckBySphere(vWorldPos, pRenderCom->GetBounding()))
+						continue;
+				}
 
 				// 쉐이더 도메인에 따른 분류
 				SHADER_DOMAIN eDomain = pRenderCom->GetMaterial()->GetShader()->GetDomain();

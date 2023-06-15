@@ -30,6 +30,8 @@ public:
 
     int Create(ComPtr<ID3D11Texture2D> _tex2D);
 
+    void SaveTextureAsDDS(const wstring& _LevelPath = L"");
+
 
 public:
     float Width() { return (float)m_Desc.Width; }
@@ -39,6 +41,7 @@ public:
 	ComPtr<ID3D11RenderTargetView>	    GetRTV() { return m_RTV; }
 	ComPtr<ID3D11DepthStencilView>	    GetDSV() { return m_DSV; }
 	ComPtr<ID3D11UnorderedAccessView>   GetUAV() { return m_UAV; }
+    D3D11_TEXTURE2D_DESC                GetDesc() { return m_Desc; }
 
 private:
     virtual int Load(const wstring& _strFilePath) override;

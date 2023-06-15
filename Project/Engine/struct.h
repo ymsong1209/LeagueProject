@@ -17,8 +17,6 @@ struct tVertex
 typedef tVertex Vtx;
 
 
-
-
 // Event
 struct tEvent
 {
@@ -180,6 +178,21 @@ struct tParticleModule
 };
 
 
+// 광선 구조체
+struct tRay
+{
+	Vec3 vStart;
+	Vec3 vDir;
+};
+
+// Raycast 결과를 받을 구조체
+struct tRaycastOut
+{
+	Vec2 vUV;
+	int  iDist;
+	int  bSuccess;
+};
+
 
 // ===================
 // 상수버퍼 대응 구조체
@@ -215,11 +228,13 @@ struct tMtrlConst
 struct tGlobal
 {
 	Vec2  Resolution;
-	float tDT;
-	float tAccTime;
+	float tDT;				//play도중일때 한 프레임당 흐르는 시간
+	float tAccTime;			//프로그램이 실행되고 나서 쌓인 총 시간
+
 	UINT  Light2DCount;
 	UINT  Light3DCount;
-	int	  globalpadding[2];
+	float tEditDT;			//Play,Pause상관없이 흐르는 DT
+	int	  globalpadding;
 };
 
 extern tGlobal GlobalData;

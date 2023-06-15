@@ -39,7 +39,7 @@ void CMaterial::UpdateData()
 		else
 		{
 			m_Const.arrTex[i] = 1;
-			m_arrTex[i]->UpdateData(i, PIPELINE_STAGE::PS_PIXEL);
+			m_arrTex[i]->UpdateData(i, PIPELINE_STAGE::PS_ALL);
 		}
 	}
 

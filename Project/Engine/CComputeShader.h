@@ -1,6 +1,9 @@
 #pragma once
 #include "CShader.h"
 
+#include "ptr.h"
+#include "CTexture.h"
+
 class CComputeShader :
     public CShader
 {

@@ -9,7 +9,7 @@ CSkyBox::CSkyBox()
 	, m_Type(SKYBOX_TYPE::SPHERE)
 {	
 	SetType(m_Type);
-	//SetFrustumCheck(false);
+	SetFrustumCheck(false);
 }
 
 CSkyBox::CSkyBox(const CSkyBox& _other)
@@ -18,7 +18,7 @@ CSkyBox::CSkyBox(const CSkyBox& _other)
 	, m_SkyTex(_other.m_SkyTex)
 {
 	SetType(m_Type);
-	//SetFrustumCheck(false);
+	SetFrustumCheck(false);
 }
 
 
