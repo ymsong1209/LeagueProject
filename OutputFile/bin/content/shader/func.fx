@@ -211,4 +211,24 @@ int IntersectsLay(float3 _vertices[3], float3 _vStart, float3 _vDir, out float3 
     return 1;
 }
 
+float GetTessFactor(float3 _vPos, int _iMinLevel, int _iMaxLevel, float _MinDistance, float _MaxDistance)
+{
+    float fDistance = abs(length(_vPos));
+
+    if (_MaxDistance < fDistance)
+    {
+        return 0.f;
+    }
+    else if (fDistance < _MinDistance)
+    {
+        return _iMaxLevel;
+    }
+    else
+    {
+        float fLevel = _iMaxLevel - (_iMaxLevel - _iMinLevel) * ((fDistance - _MinDistance) / (_MaxDistance - _MinDistance));
+
+        return fLevel;
+    }
+}
+
 #endif

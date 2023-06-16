@@ -36,6 +36,8 @@ public:
 public:
     float Width() { return (float)m_Desc.Width; }
 	float Height() { return (float)m_Desc.Height; }
+    UINT GetArraySize() { return m_Desc.ArraySize; }
+
 	ComPtr<ID3D11Texture2D>             GetTex2D() { return m_Tex2D; }
 	ComPtr<ID3D11ShaderResourceView>    GetSRV() { return m_SRV; }
 	ComPtr<ID3D11RenderTargetView>	    GetRTV() { return m_RTV; }
