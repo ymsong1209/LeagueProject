@@ -99,7 +99,7 @@ void ContentUI::Reload()
 
 			break;
 		case RES_TYPE::TEXTURE:
-			CResMgr::GetInst()->Load<CTexture>(m_vecResPath[i], m_vecResPath[i]);
+			CResMgr::GetInst()->LoadTexture(m_vecResPath[i], m_vecResPath[i],1);
 			break;
 		case RES_TYPE::SOUND:
 			CResMgr::GetInst()->Load<CSound>(m_vecResPath[i], m_vecResPath[i]);

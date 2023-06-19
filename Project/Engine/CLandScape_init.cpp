@@ -21,7 +21,10 @@ void CLandScape::init()
 	m_pCrossBuffer->Create(sizeof(tRaycastOut), 1, SB_TYPE::READ_WRITE, true);
 
 	// 타일 텍스쳐(Color, Normal 혼합, 총 6장)	
-	m_pTileArrTex = CResMgr::GetInst()->Load<CTexture>(L"texture\\tile\\TILE_ARRR.dds", L"texture\\tile\\TILE_ARRR.dds");
+	//m_pTileArrTex = CResMgr::GetInst()->Load<CTexture>(L"texture\\tile\\TILE_ARRR.dds", L"texture\\tile\\TILE_ARRR.dds");	// 기존 Load함수(MipMap 0단계(원본))
+	//m_pTileArrTex = CResMgr::GetInst()->LoadTexture(L"texture\\tile\\TILE_ARRR.dds", L"texture\\tile\\TILE_ARRR.dds", 8); // MipMap 포함한 Texture 전용 Load함수
+	m_pTileArrTex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\tile\\TILE_ARRR.dds");
+	m_pTileArrTex->GenerateMip(8);
 }
 
 void CLandScape::CreateMesh()
@@ -82,6 +85,7 @@ void CLandScape::CreateComputeShader()
 	// 지형 피킹 컴퓨트 쉐이더
 	// =====================
 	m_pCSRaycast = (CRaycastShader*)CResMgr::GetInst()->FindRes<CComputeShader>(L"RaycastShader").Get();
+
 
 	// =======================
 	// 가중치 수정 컴퓨트 쉐이더

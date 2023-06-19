@@ -25,7 +25,7 @@ private:
     Ptr<CTexture>           m_pHeightMap;       // 높이맵 텍스쳐
 
     Ptr<CWeightMapShader>   m_pCSWeightMap;     // 가중치 쉐이더
-    CStructuredBuffer* m_pWeightMapBuffer; // 가중치 저장 버퍼
+    CStructuredBuffer*      m_pWeightMapBuffer; // 가중치 저장 버퍼
     UINT					m_iWeightWidth;		// 가중치 버퍼 가로세로 행렬 수
     UINT					m_iWeightHeight;	// 가중치 버퍼 가로세로 행렬 수
     UINT                    m_iWeightIdx;		// 증가 시킬 가중치 부위
@@ -52,7 +52,7 @@ private:
 
     void Raycasting();
 
-    void CopyFromLoadedTexture(wstring _FilePath);
+    //void CopyFromLoadedTexture(wstring _FilePath);
 
     CLONE(CLandScape);
 public:

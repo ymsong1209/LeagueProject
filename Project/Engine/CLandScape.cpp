@@ -39,11 +39,11 @@ CLandScape::~CLandScape()
 
 void CLandScape::finaltick()
 {
-	if (KEY_TAP(KEY::NUM_0))
+	if (KEY_TAP(KEY::_8))
 		m_eMod = LANDSCAPE_MOD::NONE;
-	else if (KEY_TAP(KEY::NUM_1))
+	else if (KEY_TAP(KEY::_9))
 		m_eMod = LANDSCAPE_MOD::HEIGHT_MAP;
-	else if (KEY_TAP(KEY::NUM_2))
+	else if (KEY_TAP(KEY::_0))
 		m_eMod = LANDSCAPE_MOD::SPLAT;
 
 	if (LANDSCAPE_MOD::NONE == m_eMod)
@@ -162,10 +162,57 @@ void CLandScape::Raycasting()
 	m_pCSRaycast->Execute();
 }
 
+void CLandScape::SaveToLevelFile(FILE* _File)
+{
+	/*
+	if (m_pHeightMap->GetKey() == L"HeightMap") {
+		wstring HeightMapName = L"";
+		HeightMapName += L"HeightMap";
+		HeightMapName += std::to_wstring(m_pHeightMap->GetID());
+		m_pHeightMap->SetName(HeightMapName);
+	}
+
+	wstring strFolderPath = L"";
+	strFolderPath += L"texture\\LandScape\\";
+
+	//m_pHeightMap->Save(strFolderPath);
+	//m_pHeightMap->SaveTextureAsDDS(strFolderPath);
+	
+	wstring test = m_pHeightMap->GetName();
+	SaveWString(m_pHeightMap->GetName(), _File);
+	*/
+	//wstring strFolderPath = L"";
+	//strFolderPath += L"texture\\LandScape\\";
+	//wstring HeightTexture = L"HeightMap";
+	//strFolderPath += HeightTexture;
+	//
+	//m_pHeightMap->Save(m_pHeightMap->GetKey());
+
+	SaveResRef(m_pHeightMap.Get(), _File);
+	fwrite(&m_iFaceX, sizeof(UINT), 1, _File);
+	fwrite(&m_iFaceZ, sizeof(UINT), 1, _File);
+}
+
+void CLandScape::LoadFromLevelFile(FILE* _File)
+{
+	//wstring texturepath;
+	//LoadWString(texturepath, _File);
+	//CopyFromLoadedTexture(texturepath);
+
+	LoadResRef(m_pHeightMap, _File);
+	fread(&m_iFaceX, sizeof(UINT), 1, _File);
+	fread(&m_iFaceZ, sizeof(UINT), 1, _File);
+	//생성자 호출 후 LoadFromLevelFile실행
+	//생성자 시점에서는 m_ifacex가 0로 설정되어있음.
+	SetFace(m_iFaceX, m_iFaceZ);
+	//GetMaterial()->SetTexParam(TEX_2, m_pHeightMap);
+}
+
+
+/*
 void CLandScape::CopyFromLoadedTexture(wstring _FilePath)
 {
 	Ptr<CTexture> stagingtex = CResMgr::GetInst()->FindRes<CTexture>(_FilePath);
-
 
 	string fileName = string(_FilePath.begin(), _FilePath.end());
 
@@ -191,49 +238,8 @@ void CLandScape::CopyFromLoadedTexture(wstring _FilePath)
 			, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS
 			, D3D11_USAGE_DEFAULT);
 	}
-	
 
 	if (stagingtex == nullptr) return;
 	CDevice::GetInst()->GetDeviceContext()->CopyResource(m_pHeightMap.Get()->GetTex2D().Get(), stagingtex.Get()->GetTex2D().Get());
-	
 }
-
-
-void CLandScape::SaveToLevelFile(FILE* _File)
-{
-	
-	if (m_pHeightMap->GetKey() == L"HeightMap") {
-		wstring HeightMapName = L"";
-		HeightMapName += L"HeightMap";
-		HeightMapName += std::to_wstring(m_pHeightMap->GetID());
-		m_pHeightMap->SetName(HeightMapName);
-	}
-
-	wstring strFolderPath = L"";
-	strFolderPath += L"texture\\LandScape\\";
-
-	m_pHeightMap->SaveTextureAsDDS(strFolderPath);
-	
-
-	wstring test = m_pHeightMap->GetName();
-	SaveWString(m_pHeightMap->GetName(), _File);
-	
-
-	fwrite(&m_iFaceX, sizeof(UINT), 1, _File);
-	fwrite(&m_iFaceZ, sizeof(UINT), 1, _File);
-}
-
-void CLandScape::LoadFromLevelFile(FILE* _File)
-{
-
-	wstring texturepath;
-	LoadWString(texturepath, _File);
-	CopyFromLoadedTexture(texturepath);
-
-	fread(&m_iFaceX, sizeof(UINT), 1, _File);
-	fread(&m_iFaceZ, sizeof(UINT), 1, _File);
-	//생성자 호출 후 LoadFromLevelFile실행
-	//생성자 시점에서는 m_ifacex가 0로 설정되어있음.
-	SetFace(m_iFaceX, m_iFaceZ);
-	//GetMaterial()->SetTexParam(TEX_2, m_pHeightMap);
-}
+*/
