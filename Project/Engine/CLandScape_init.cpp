@@ -19,6 +19,9 @@ void CLandScape::init()
 	// 레이캐스팅 결과 받는 버퍼
 	m_pCrossBuffer = new CStructuredBuffer;
 	m_pCrossBuffer->Create(sizeof(tRaycastOut), 1, SB_TYPE::READ_WRITE, true);
+
+	// 타일 텍스쳐(Color, Normal 혼합, 총 6장)	
+	m_pTileArrTex = CResMgr::GetInst()->Load<CTexture>(L"texture\\tile\\TILE_ARRR.dds", L"texture\\tile\\TILE_ARRR.dds");
 }
 
 void CLandScape::CreateMesh()
@@ -79,6 +82,17 @@ void CLandScape::CreateComputeShader()
 	// 지형 피킹 컴퓨트 쉐이더
 	// =====================
 	m_pCSRaycast = (CRaycastShader*)CResMgr::GetInst()->FindRes<CComputeShader>(L"RaycastShader").Get();
+
+	// =======================
+	// 가중치 수정 컴퓨트 쉐이더
+	// =======================
+	m_pCSWeightMap = (CWeightMapShader*)CResMgr::GetInst()->FindRes<CComputeShader>(L"WeightMapShader").Get();
+	if (nullptr == m_pCSWeightMap)
+	{
+		m_pCSWeightMap = new CWeightMapShader(32, 32, 1);
+		m_pCSWeightMap->CreateComputeShader(L"shader\\weightmap.fx", "CS_WeightMap");
+		CResMgr::GetInst()->AddRes<CComputeShader>(L"WeightMapShader", m_pCSWeightMap.Get());
+	}
 }
 
 void CLandScape::CreateTexture()
@@ -96,4 +110,11 @@ void CLandScape::CreateTexture()
 	
 
 	m_pBrushTex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\brush\\Brush_01.png");
+
+	// 가중치 버퍼
+	m_iWeightWidth = 1024;
+	m_iWeightHeight = 1024;
+
+	m_pWeightMapBuffer = new CStructuredBuffer;
+	m_pWeightMapBuffer->Create(sizeof(tWeight_4), m_iWeightWidth * m_iWeightHeight, SB_TYPE::READ_WRITE, false);
 }

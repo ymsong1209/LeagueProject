@@ -50,6 +50,12 @@ cbuffer MATERIAL : register(b1)
     int g_btex_5;
     int g_btex_6;
     int g_btex_7;   
+    
+    int g_bcube_0;
+    int g_bcube_1;
+
+    int g_btexarr_0;
+    int g_btexarr_1;
 };
 
 cbuffer GLOBAL : register(b2)
@@ -76,8 +82,8 @@ Texture2D g_tex_7 : register(t7);
 TextureCube g_cube_0 : register(t8);
 TextureCube g_cube_1 : register(t9);
 
-Texture2DArray g_arrtex_0 : register(t10);
-Texture2DArray g_arrtex_1 : register(t11);
+Texture2DArray g_texarr_0 : register(t10);
+Texture2DArray g_texarr_1 : register(t11);
 
 StructuredBuffer<tLightInfo> g_Light2DBuffer : register(t12);
 StructuredBuffer<tLightInfo> g_Light3DBuffer : register(t13);

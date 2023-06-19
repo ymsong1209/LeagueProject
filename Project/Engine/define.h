@@ -290,3 +290,10 @@ enum class PARTICLE_MODULE
 	GRAVITY,
 	END,
 };
+
+enum class LANDSCAPE_MOD
+{
+	HEIGHT_MAP,
+	SPLAT,
+	NONE,
+};
