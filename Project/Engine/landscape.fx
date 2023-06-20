@@ -201,8 +201,8 @@ PS_OUT PS_LandScape(DS_OUT _in)
 
         for (int i = 0; i < 4; ++i)
         {
-            //vColor += TileTexArr.SampleGrad(g_sam_0, float3(_in.vUV, i), derivX, derivY) * vWeight[i];
-            vColor += TileTexArr.Sample(g_sam_0, float3(_in.vUV, i)) * vWeight[i];
+            vColor += TileTexArr.SampleGrad(g_sam_0, float3(_in.vUV, i), derivX, derivY) * vWeight[i];
+            //vColor += TileTexArr.Sample(g_sam_0, float3(_in.vUV, i)) * vWeight[i];
 
             if (fMaxWeight < vWeight[i])
             {
@@ -215,8 +215,8 @@ PS_OUT PS_LandScape(DS_OUT _in)
         // 타일 노말
         if (-1 != iMaxWeightIdx)
         {
-            //float3 vTangentSpaceNormal = TileTexArr.SampleGrad(g_sam_0, float3(_in.vUV, iMaxWeightIdx + TileCount), derivX, derivY).xyz;
-            float3 vTangentSpaceNormal = TileTexArr.Sample(g_sam_0, float3(_in.vUV, iMaxWeightIdx + TileCount)).xyz;
+            float3 vTangentSpaceNormal = TileTexArr.SampleGrad(g_sam_0, float3(_in.vUV, iMaxWeightIdx + TileCount), derivX, derivY).xyz;
+            //float3 vTangentSpaceNormal = TileTexArr.SampleLevel(g_sam_0, float3(_in.vUV, iMaxWeightIdx + TileCount), 7).xyz;
             vTangentSpaceNormal = vTangentSpaceNormal * 2.f - 1.f;
 
             float3x3 matTBN = { _in.vViewTangent, _in.vViewBinormal, _in.vViewNormal };

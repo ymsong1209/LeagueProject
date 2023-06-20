@@ -5,15 +5,15 @@
 #include "struct.fx"
 
 RWTexture2D<float> HEIGHT_MAP : register(u0); // unordered acess
-StructuredBuffer<tRaycastOut> LOCATION : register(t16); // �귯�� ��ġ(�»�� ����)
+StructuredBuffer<tRaycastOut> LOCATION : register(t16); // 브러쉬 위치(좌상단 기준)
 
 #define WIDTH       g_int_0
 #define HEIGHT      g_int_1
 
 //#define BRUSH_TEX   g_texarr_0
 #define BRUSH_TEX   g_tex_0
-#define SCALE       g_vec2_0   // �귯�� ũ��
-#define BRUSH_IDX   g_int_2    // �귯�� �ε���
+#define SCALE       g_vec2_0   // 브러쉬 크기
+#define BRUSH_IDX   g_int_2    // 브러쉬 인덱스
 
 [numthreads(32, 32, 1)]
 void CS_HeightMap(int3 _iThreadID : SV_DispatchThreadID)
@@ -32,16 +32,16 @@ void CS_HeightMap(int3 _iThreadID : SV_DispatchThreadID)
         return;
     }
 
-    // brush texture ���� ���ø� �� UV ���
+    // brush texture 에서 샘플링 할 UV 계산
     int2 vLTPos = vCenterPos - (vScale / 2);
     float2 vUV = float2(_iThreadID.xy - vLTPos) / float2(vScale);
 
-    // �귯���� ���� ���İ� ���ø�
+    // 브러쉬로 부터 알파값 샘플링
     //float4 vBrushColor = BRUSH_TEX.SampleLevel(g_sam_0, float3(vUV, BRUSH_IDX), 0);
     //float4 vBrushColor = BRUSH_TEX.SampleLevel(g_sam_0, vUV, 0);
-    //HEIGHT_MAP[_iThreadID.xy] += g_EditDT * vBrushColor.a * 0.2f; // �귯�� ���İ����� ���� ����
+    //HEIGHT_MAP[_iThreadID.xy] += g_EditDT * vBrushColor.a * 0.2f; // 브러쉬 알파값으로 높이 설정
 
-    // cos �׷����� ���� ����
+    // cos 그래프로 높이 설정
     float vDist = (distance(vCenterPos, _iThreadID.xy) / vScale) * 3.1415926535f;        
     HEIGHT_MAP[_iThreadID.xy] += saturate(g_EditDT * cos(vDist) * 0.2f);    
 }

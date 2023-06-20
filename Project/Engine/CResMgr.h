@@ -43,6 +43,8 @@ public:
 
     Ptr<CTexture> CreateTexture(const wstring& _strKey, ComPtr<ID3D11Texture2D> _Tex2D);
 
+    Ptr<CTexture> LoadTexture(const wstring& _strKey, const wstring& _strRelativePath, int _iMapLevel);
+
     bool IsResourceChanged() { return m_Changed; }
 
     template<typename T>
