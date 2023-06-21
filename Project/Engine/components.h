@@ -8,6 +8,7 @@
 #include "CLight3D.h"
 #include "CCamera.h"
 #include "CAnimator2D.h"
+#include "CFsm.h"
 
 #include "CMeshRender.h"
 #include "CTileMap.h"
