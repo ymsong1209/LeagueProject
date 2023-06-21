@@ -112,6 +112,31 @@ int MeshRenderUI::render_update()
 		pListUI->AddDynamic_Select(this, (UI_DELEGATE_1)&MeshRenderUI::SelectMaterial);
 	}
 
+
+	// ============================== 나중에 수정 필요한 부분 Instancing 배운 이후 (06.14작성) ==============================
+	Ptr<CMaterial> DynamicMtrl = GetTarget()->MeshRender()->GetMaterial();
+
+	// Additive Texture가 있는 지 확인 
+	if (DynamicMtrl->GetTexParam(TEX_PARAM::TEX_2).Get() != nullptr)
+	{
+		ImGui::Text("Additive Color Choose");
+
+		Vec4 AdditiveColor;
+		
+		DynamicMtrl->GetScalarParam(SCALAR_PARAM::VEC4_0, &AdditiveColor);
+
+		float AdditiveVec[4] = { AdditiveColor.x, AdditiveColor.y, AdditiveColor.z, 0.f };
+
+		ImGui::InputFloat4("##AdditiveColor", AdditiveVec);
+
+		AdditiveColor = Vec4{ AdditiveVec[0], AdditiveVec[1], AdditiveVec[2], 0.f };
+
+		DynamicMtrl->SetScalarParam(SCALAR_PARAM::VEC4_0, &AdditiveColor);
+	}
+	// =======================================================================================================================
+
+	
+
 	return TRUE;
 }
 

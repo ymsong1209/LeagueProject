@@ -12,6 +12,7 @@ private:
     Ptr<CGraphicsShader>    m_pShader;
     tMtrlConst              m_Const;
     Ptr<CTexture>           m_arrTex[TEX_END];
+ 
    
 
 
@@ -21,6 +22,9 @@ public:
 
     void GetScalarParam(SCALAR_PARAM _param, void* _pData);
     Ptr<CTexture> GetTexParam(TEX_PARAM _param) { return m_arrTex[(UINT)_param]; }
+
+     
+   
 
 
 

@@ -88,7 +88,7 @@ void CreateTestLevel()
 
 
 	// LandScape Object
-	CGameObject* pLandScape = new CGameObject;
+	/*CGameObject* pLandScape = new CGameObject;
 	pLandScape->SetName(L"LandScape");
 
 	pLandScape->AddComponent(new CTransform);
@@ -101,18 +101,57 @@ void CreateTestLevel()
 	pLandScape->LandScape()->SetHeightMap(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\HeightMap_01.jpg"));
  
 
-	SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 0.f), 0);
+	SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 0.f), 0);*/
 
 
 	// LandScape Object
-	CGameObject* TmpCollider = new CGameObject;
+	/*CGameObject* TmpCollider = new CGameObject;
 	TmpCollider->SetName(L"TmpCollider");
 
 	TmpCollider->AddComponent(new CTransform);
 	TmpCollider->AddComponent(new CCollider3D);
 	TmpCollider->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
 	TmpCollider->Transform()->SetRelativeScale(Vec3(500.f, 500, 500));
-	SpawnGameObject(TmpCollider, Vec3(0.f, 0.f, 500.f), 0);
+	SpawnGameObject(TmpCollider, Vec3(0.f, 0.f, 500.f), 0);*/
+
+
+
+	// TestFastForward
+	CGameObject* pRectFast = new CGameObject;
+	pRectFast->SetName(L"ReftFast");
+
+	pRectFast->AddComponent(new CMeshRender);
+	pRectFast->AddComponent(new CTransform);
+
+	pRectFast->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
+
+	pRectFast->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl")->Clone());
+	//pRectFast->MeshRender()->GetMaterial()->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Base_e.dds"));
+	pRectFast->MeshRender()->GetMaterial()->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Base_e_Puncture.dds"));
+	pRectFast->MeshRender()->GetMaterial()->SetTexParam(TEX_2, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Round.dds"));
+
+
+	SpawnGameObject(pRectFast, Vec3(0.f, 0.f, 500.f), 0);
+
+
+
+	// TestFastForward
+	CGameObject* pRectFast2 = new CGameObject;
+	pRectFast2->SetName(L"ReftFast2");
+
+	pRectFast2->AddComponent(new CMeshRender);
+	pRectFast2->AddComponent(new CTransform);
+
+	pRectFast2->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
+
+	pRectFast2->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	pRectFast2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl")->Clone());
+	pRectFast2->MeshRender()->GetMaterial()->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Fighter.bmp"));
+	pRectFast2->MeshRender()->GetMaterial()->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Dots.jpg"));
+
+	SpawnGameObject(pRectFast2, Vec3(300.f, 0.f, 500.f), 0);
+
 
 	// 충돌 시킬 레이어 짝 지정
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");	

@@ -24,10 +24,23 @@ struct VS_OUT
 //
 // Parameter
 // g_int_0              : AnimUse
+// g_int_1              : TexMove
 // g_vec2_0             : AnimAtlas LeftTop
 // g_vec2_1             : AnimAtlas Slice
 //
-// g_tex_0              : Output Texture
+// g_tex_0              : Output   Texture
+// g_tex_1              : Puncture Texture
+// g_tex_2              : Additive Texture
+// g_vec4_0             : Additive Color
+// g_vec2_2             : Output Tex Move Offset
+// g_vec2_3             : Puncture Tex Move Offset
+#define IsOutputTextureExist        g_btex_0
+#define IsPunctureTextureExist      g_btex_1
+#define IsAdditiveTextureExist      g_btex_2
+#define Output_Texture              g_tex_0 
+#define Puncture_Texture            g_tex_1
+#define Additive_Texture            g_tex_2
+#define Additive_Color              g_vec4_0
 // ============================
 VS_OUT VS_Std2D(VS_IN _in)
 {
@@ -42,23 +55,70 @@ VS_OUT VS_Std2D(VS_IN _in)
 
 float4 PS_Std2D(VS_OUT _in) : SV_Target
 {
-    float4 vOutColor = (float4) 0.f;            
-        
-    if (g_btex_0)
+    float4 vOutColor = float4(0.f, 0.f, 0.f, 1.f);
+       
+    // Sample Texture가 없는 경우
+    // g_btex_0 값이 왜 0, 1 로 바뀔 수 있는 지 알기 위해선 
+    // CMaterial::UpdateData() 참고
+    if (IsOutputTextureExist)
     {
-        vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
+        // 참조해야하는 UV값의 Offset
+        float2 Offset = float2(0.f, 0.f);
+
+        // Output Texture가 움직여야 하는지 확인
+        int assist_bit = 0;
+        assist_bit = g_int_1 | (assist_bit << 0);
+
+        if (!assist_bit)
+        {
+            Offset = g_vec2_2;
+        }
+
+        vOutColor = Output_Texture.Sample(g_sam_0, _in.vUV + Offset);
+
+        if (vOutColor.w == 0.f)
+            discard;
     }
-    else
+
+
+    // 구멍뚫기 (알파값 처리)
+    if (IsPunctureTextureExist)
     {
-        vOutColor = float4(1.f, 0.f, 1.f, 1.f);
-    }    
+        // 참조해야하는 UV값의 Offset
+        float2 Offset = float2(0.f, 0.f);
+
+        // Puncture Texture 가 움직여야 되는지 확인 
+        int assist_bit = 0;
+        assist_bit = g_int_1 | (assist_bit << 1);
+
+        if (!assist_bit)
+        {
+            Offset = g_vec2_3;
+        }
+
+
+        float4 vPunctureSample = Puncture_Texture.Sample(g_sam_0, _in.vUV + Offset);
+
+        vOutColor = float4(vOutColor.xyz, vPunctureSample.x);
+    }
+
+
+    // 색상 첨가 (Color Additive)
+    if (IsAdditiveTextureExist)
+    {
+        float4 vAdditiveSample = Additive_Texture.Sample(g_sam_0, _in.vUV);
+
+        vOutColor = float4(vOutColor.x + Additive_Color.x * vAdditiveSample.x * vOutColor.w,
+            vOutColor.y + Additive_Color.y * vAdditiveSample.y * vOutColor.w,
+            vOutColor.z + Additive_Color.z * vAdditiveSample.z * vOutColor.w,
+            vOutColor.w);
+    }
+    
         
-    if (0.f == vOutColor.a)
-        discard;
-    
-    if(g_int_2 == 1)
-        vOutColor = float4(1.f, 0.f, 0.f, 1.f);
-    
+        
+    //if (0.f == vOutColor.a)
+    //    discard;
+     
     return vOutColor;
 }
 
