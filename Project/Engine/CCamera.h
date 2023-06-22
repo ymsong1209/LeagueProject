@@ -8,6 +8,7 @@ class CCamera :
 private:
     CFrustum                m_Frustum;
 
+    float                   m_fWidth;       // 투영 가로길이
     float                   m_fAspectRatio;
     float                   m_fScale;       // Orthograpic 에서 사용하는 카메라 배율
     float                   m_fFar;
@@ -33,7 +34,7 @@ private:
     vector<CGameObject*>    m_vecUI;
     vector<CGameObject*>    m_vecPost;
 
-
+    vector<CGameObject*>    m_vecDynamicShadow;     // 동적 그림자 물체
 
 public:
     void SetProjType(PROJ_TYPE _Type) { m_ProjType = _Type; }
@@ -44,6 +45,9 @@ public:
 
     void SetFar(float _Far) { m_fFar = _Far; }
     float GetFar() { return m_fFar; }
+
+    void SetWidth(float _fWidth) { m_fWidth = _fWidth; }
+    void SetAspectRatio(float _fRatio) { m_fAspectRatio = _fRatio; }
 
     void SetLayerMask(int _iLayer, bool _Visible);
     void SetLayerMaskAll(bool _Visible);
@@ -59,7 +63,9 @@ public:
 
 public:
     void SortObject();
+    void SortShadowObject();
     void render();
+    void render_depthmap();
 
 public:
     virtual void begin() override;
