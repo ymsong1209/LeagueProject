@@ -17,3 +17,8 @@ CComponent::CComponent(const CComponent& _Other)
 CComponent::~CComponent()
 {
 }
+
+void CComponent::finaltick_module()
+{
+	finaltick();
+}

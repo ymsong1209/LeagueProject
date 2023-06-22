@@ -843,6 +843,25 @@ void CResMgr::CreateDefaultGraphicsShader()
 
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_OPAQUE);
 	AddRes(pShader->GetKey(), pShader);
+
+	// ============================
+	// DepthmapShader
+	// RS_TYPE : CULL_BACK
+	// DS_TYPE : LESS
+	// BS_TYPE : DEFAULT	 
+	// Domain : DOMAIN_UNDEFINED
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->CreateVertexShader(L"Shader\\light.fx", "VS_DepthMap");
+	pShader->CreatePixelShader(L"Shader\\light.fx", "PS_DepthMap");
+
+	pShader->SetRSType(RS_TYPE::CULL_BACK);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::DEFAULT);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UNDEFINED);
+
+	AddRes<CGraphicsShader>(L"DepthMapShader", pShader);
+
 }
 
 
@@ -978,4 +997,9 @@ void CResMgr::CreateDefaultMaterial()
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"TessShader"));
 	
 	AddRes(L"TessMtrl", pMtrl);
+
+	// DepthMapMtrl
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"DepthMapShader"));
+	AddRes<CMaterial>(L"DepthMapMtrl", pMtrl);
 }

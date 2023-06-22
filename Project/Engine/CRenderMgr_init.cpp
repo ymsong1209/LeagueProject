@@ -114,4 +114,26 @@ void CRenderMgr::init()
         m_MRT[(UINT)MRT_TYPE::LIGHT] = new CMRT;
         m_MRT[(UINT)MRT_TYPE::LIGHT]->Create(arrRTTex, arrClear, nullptr);
     }
+
+    // =============
+    // ShadowMap MRT
+    // =============
+    {
+        Ptr<CTexture> arrRTTex[8] = {
+            CResMgr::GetInst()->CreateTexture(L"DepthMapTex"
+              , 4096, 4096
+              , DXGI_FORMAT_R32_FLOAT, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE
+              , D3D11_USAGE_DEFAULT),
+        };
+
+        Vec4 arrClear[8] = { Vec4(0.f, 0.f, 0.f, 0.f) , };
+
+        // Depth Stencil Texture ¸¸µé±â
+        Ptr<CTexture> DSTex = CResMgr::GetInst()->CreateTexture(L"DepthMapDSTex", 4096, 4096
+            , DXGI_FORMAT_D32_FLOAT, D3D11_BIND_DEPTH_STENCIL, D3D11_USAGE_DEFAULT);
+
+        m_MRT[(UINT)MRT_TYPE::SHADOW] = new CMRT;
+        m_MRT[(UINT)MRT_TYPE::SHADOW]->Create(arrRTTex, arrClear, DSTex);
+    }
+
 }

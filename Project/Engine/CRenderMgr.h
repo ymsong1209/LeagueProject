@@ -39,6 +39,7 @@ public:
 
 private:
     void render_clear();
+    void render_dynamic_shadowdepth();
 
 public:
     CMRT* GetMRT(MRT_TYPE _type) { return m_MRT[(UINT)_type]; }

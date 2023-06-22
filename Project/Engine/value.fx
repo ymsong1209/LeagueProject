@@ -37,10 +37,10 @@ cbuffer MATERIAL : register(b1)
     float4 g_vec4_2;
     float4 g_vec4_3;
     
-    matrix g_mat_0;
-    matrix g_mat_1;
-    matrix g_mat_2;
-    matrix g_mat_3;
+    row_major matrix g_mat_0;
+    row_major matrix g_mat_1;
+    row_major matrix g_mat_2;
+    row_major matrix g_mat_3;
     
     int g_btex_0;
     int g_btex_1;

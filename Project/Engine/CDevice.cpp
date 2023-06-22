@@ -226,67 +226,6 @@ int CDevice::CreateDepthStencilState()
     Desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
     DEVICE->CreateDepthStencilState(&Desc, m_DSState[(UINT)DS_TYPE::NO_TEST_NO_WRITE].GetAddressOf());
 
-    // 
-    {
-        D3D11_DEPTH_STENCIL_DESC Desc = {};
-        Desc.DepthEnable = true;      
-        Desc.DepthFunc = D3D11_COMPARISON_LESS;
-
-        Desc.StencilEnable = true;
-        Desc.FrontFace.StencilFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_ALWAYS;
-        Desc.FrontFace.StencilPassOp = D3D11_STENCIL_OP::D3D11_STENCIL_OP_REPLACE;
-        Desc.FrontFace.StencilPassOp = D3D11_STENCIL_OP::D3D11_STENCIL_OP_ZERO;
-        Desc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP::D3D11_STENCIL_OP_ZERO;
-
-        Desc.BackFace.StencilFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_ALWAYS;
-        Desc.BackFace.StencilPassOp = D3D11_STENCIL_OP::D3D11_STENCIL_OP_ZERO;
-        Desc.BackFace.StencilPassOp = D3D11_STENCIL_OP::D3D11_STENCIL_OP_ZERO;
-        Desc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP::D3D11_STENCIL_OP_ZERO;
-
-        DEVICE->CreateDepthStencilState(&Desc, m_DSState[(UINT)DS_TYPE::FRONT_CHECK].GetAddressOf());
-    }
-
-    {
-        D3D11_DEPTH_STENCIL_DESC Desc = {};
-        Desc.DepthEnable = true;
-        Desc.DepthFunc = D3D11_COMPARISON_GREATER;
-        
-        Desc.StencilEnable = true;
-        Desc.FrontFace.StencilFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_ALWAYS;
-        Desc.FrontFace.StencilPassOp = D3D11_STENCIL_OP::D3D11_STENCIL_OP_REPLACE;
-        Desc.FrontFace.StencilPassOp = D3D11_STENCIL_OP::D3D11_STENCIL_OP_ZERO;
-        //Desc.FrontFace.StencilFailOp =
-
-        Desc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP::D3D11_STENCIL_OP_ZERO;
-
-        Desc.BackFace.StencilFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_EQUAL;
-        Desc.BackFace.StencilDepthFailOp;
-        Desc.BackFace.StencilPassOp = D3D11_STENCIL_OP::D3D11_STENCIL_OP_KEEP;
-        Desc.BackFace.StencilPassOp = D3D11_STENCIL_OP::D3D11_STENCIL_OP_ZERO;
-        Desc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP::D3D11_STENCIL_OP_ZERO;
-
-        //DEVICE->CreateDepthStencilState(&Desc, m_DSState[(UINT)DS_TYPE::BACK_CHECK].GetAddressOf());
-    }
-
-    {
-        D3D11_DEPTH_STENCIL_DESC Desc = {};
-        Desc.DepthEnable = false;
-
-        Desc.StencilEnable = true;
-        Desc.FrontFace.StencilFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_EQUAL;
-        Desc.FrontFace.StencilPassOp = D3D11_STENCIL_OP::D3D11_STENCIL_OP_ZERO;
-        Desc.FrontFace.StencilPassOp = D3D11_STENCIL_OP::D3D11_STENCIL_OP_ZERO;
-        Desc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP::D3D11_STENCIL_OP_ZERO;
-
-        Desc.BackFace.StencilFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_ALWAYS;
-        Desc.BackFace.StencilPassOp = D3D11_STENCIL_OP::D3D11_STENCIL_OP_ZERO;
-        Desc.BackFace.StencilPassOp = D3D11_STENCIL_OP::D3D11_STENCIL_OP_ZERO;
-        Desc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP::D3D11_STENCIL_OP_ZERO;
-
-        //Desc.BackFace.
-        //DEVICE->CreateDepthStencilState(&Desc, m_DSState[(UINT)DS_TYPE::STENCIL_EQUAL].GetAddressOf());
-    }
-
 
     return S_OK;
 }

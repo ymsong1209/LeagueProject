@@ -27,6 +27,7 @@ enum class MRT_TYPE
 	DEFERRED,	
 	DECAL,
 	LIGHT,
+	SHADOW,
 	END,
 };
 
