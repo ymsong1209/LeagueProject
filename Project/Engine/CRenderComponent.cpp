@@ -1,10 +1,14 @@
 #include "pch.h"
 #include "CRenderComponent.h"
 
+#include "CResMgr.h"
+#include "CTransform.h"
+
 CRenderComponent::CRenderComponent(COMPONENT_TYPE _type)
 	: CComponent(_type)
 	, m_fBounding(500.f)
 	, m_bFrustumCheck(true)
+	, m_bDynamicShadow(false)
 {
 }
 
@@ -38,6 +42,20 @@ Ptr<CMaterial> CRenderComponent::GetDynamicMaterial()
 
 
 	return m_pCurrentMtrl;
+}
+
+void CRenderComponent::render_depthmap()
+{
+	Transform()->UpdateData();
+
+	Ptr<CMaterial> pMtrl = CResMgr::GetInst()->FindRes<CMaterial>(L"DepthMapMtrl");
+
+	// 사용할 재질 업데이트
+	pMtrl->UpdateData();
+
+	// 사용할 메쉬 업데이트 및 렌더링
+	GetMesh()->render();
+
 }
 
 void CRenderComponent::SaveToLevelFile(FILE* _File)

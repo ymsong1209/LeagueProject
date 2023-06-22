@@ -24,6 +24,7 @@
 CCamera::CCamera()
 	: CComponent(COMPONENT_TYPE::CAMERA)
 	, m_Frustum(this)
+	, m_fWidth(0.f)
 	, m_fAspectRatio(1.f)
 	, m_fScale(1.f)
 	, m_fFar(50000.f)
@@ -34,12 +35,14 @@ CCamera::CCamera()
 	SetName(L"Camera");
 
 	Vec2 vRenderResol = CDevice::GetInst()->GetRenderResolution();
+	m_fWidth = vRenderResol.x;
 	m_fAspectRatio = vRenderResol.x / vRenderResol.y;
 }
 
 CCamera::CCamera(const CCamera& _Other)
 	: CComponent(_Other)
 	, m_Frustum(this)
+	, m_fWidth(_Other.m_fWidth)
 	, m_fAspectRatio(_Other.m_fAspectRatio)
 	, m_fScale(_Other.m_fScale)
 	, m_fFar(50000.f)
@@ -132,8 +135,8 @@ void CCamera::CalcProjMat()
 	if (PROJ_TYPE::ORTHOGRAPHIC == m_ProjType)
 	{
 		// 직교 투영
-		Vec2 vResolution = CDevice::GetInst()->GetRenderResolution();
-		m_matProj =  XMMatrixOrthographicLH(vResolution.x * (1.f / m_fScale), vResolution.y * (1.f / m_fScale), 1.f, m_fFar);
+		float fHeight = m_fWidth / m_fAspectRatio;
+		m_matProj = XMMatrixOrthographicLH(m_fWidth * (1.f / m_fScale), fHeight * (1.f / m_fScale), 1.f, m_fFar);
 	}
 	else
 	{	
@@ -240,6 +243,29 @@ void CCamera::SortObject()
 	}
 }
 
+void CCamera::SortShadowObject()
+{
+	m_vecDynamicShadow.clear();
+
+	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
+
+	for (UINT i = 0; i < MAX_LAYER; ++i)
+	{
+		CLayer* pLayer = pCurLevel->GetLayer(i);
+		const vector<CGameObject*>& vecObj = pLayer->GetObjects();
+
+		for (size_t j = 0; j < vecObj.size(); ++j)
+		{
+			CRenderComponent* pRenderCom = vecObj[j]->GetRenderComponent();
+
+			if (pRenderCom && pRenderCom->IsDynamicShadow())
+			{
+				m_vecDynamicShadow.push_back(vecObj[j]);
+			}
+		}
+	}
+}
+
 void CCamera::render()
 {
 	// 행렬 업데이트
@@ -282,6 +308,19 @@ void CCamera::render()
 
 	// UI
 	render_ui();
+}
+
+void CCamera::render_depthmap()
+{
+	// 광원 카메라의 View, Proj 세팅
+	g_transform.matView = m_matView;
+	g_transform.matViewInv = m_matViewInv;
+	g_transform.matProj = m_matProj;
+
+	for (size_t i = 0; i < m_vecDynamicShadow.size(); ++i)
+	{
+		m_vecDynamicShadow[i]->GetRenderComponent()->render_depthmap();
+	}
 }
 
 

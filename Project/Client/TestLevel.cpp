@@ -51,23 +51,23 @@ void CreateTestLevel()
 	
 	// 광원 추가
 	CGameObject* pLightObj = new CGameObject;
-	pLightObj->SetName(L"Point Light");
+	pLightObj->SetName(L"Directional Light");
 
 	pLightObj->AddComponent(new CTransform);
 	pLightObj->AddComponent(new CLight3D);
 
-	pLightObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
-	pLightObj->Transform()->SetRelativeRot(Vec3(XM_PI / 7.f, -XM_PI / 2.f, 0.f));
-
 	pLightObj->Light3D()->SetLightType(LIGHT_TYPE::DIRECTIONAL);
-		
+	pLightObj->Light3D()->SetLightDirection(Vec3(1.f, -1.f, 1.f));
+
+
 	pLightObj->Light3D()->SetLightDiffuse(Vec3(1.f, 1.f, 1.f));
-	//pLightObj->Light3D()->SetLightSpecular(Vec3(0.3f, 0.3f, 0.3f));
+	pLightObj->Light3D()->SetLightSpecular(Vec3(0.3f, 0.3f, 0.3f));
 	pLightObj->Light3D()->SetLightAmbient(Vec3(0.15f, 0.15f, 0.15f));	
 
 	pLightObj->Light3D()->SetRadius(400.f);
 
-	SpawnGameObject(pLightObj, Vec3(0.f, 100.f, 0.f), 0);
+	SpawnGameObject(pLightObj, -pLightObj->Light3D()->GetLightDirection() * 1000.f, 0);
+
 
 	// SkyBox
 	CGameObject* pSkyBox  = new CGameObject;
@@ -85,7 +85,20 @@ void CreateTestLevel()
 	SpawnGameObject(pSkyBox, Vec3(0.f, 0.f, 0.f), 0);
 
 
+	// Shadow Test Object
+	CGameObject* pObject = new CGameObject;
+	pObject->SetName(L"Sphere Object");
 
+	pObject->AddComponent(new CTransform);
+	pObject->AddComponent(new CMeshRender);
+
+	pObject->Transform()->SetRelativeScale(Vec3(500.f, 500.f, 500.f));
+
+	pObject->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+	pObject->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"));
+	pObject->MeshRender()->SetDynamicShadow(true);
+
+	SpawnGameObject(pObject, Vec3(0.f, 0.f, 0.f), 0);
 
 	// LandScape Object
 	CGameObject* pLandScape = new CGameObject;
@@ -99,20 +112,20 @@ void CreateTestLevel()
 	pLandScape->LandScape()->SetFace(32, 32);
 	pLandScape->LandScape()->SetFrustumCheck(false);
 	pLandScape->LandScape()->SetHeightMap(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\HeightMap_01.jpg"));
- 
+	pLandScape->LandScape()->SetDynamicShadow(true);
 
 	SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 0.f), 0);
 
 
-	// LandScape Object
-	CGameObject* TmpCollider = new CGameObject;
-	TmpCollider->SetName(L"TmpCollider");
-
-	TmpCollider->AddComponent(new CTransform);
-	TmpCollider->AddComponent(new CCollider3D);
-	TmpCollider->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
-	TmpCollider->Transform()->SetRelativeScale(Vec3(500.f, 500, 500));
-	SpawnGameObject(TmpCollider, Vec3(0.f, 0.f, 500.f), 0);
+	// // Collider Test Object
+	// CGameObject* TmpCollider = new CGameObject;
+	// TmpCollider->SetName(L"TmpCollider");
+	// 
+	// TmpCollider->AddComponent(new CTransform);
+	// TmpCollider->AddComponent(new CCollider3D);
+	// TmpCollider->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
+	// TmpCollider->Transform()->SetRelativeScale(Vec3(500.f, 500, 500));
+	// SpawnGameObject(TmpCollider, Vec3(0.f, 0.f, 500.f), 0);
 
 	// 충돌 시킬 레이어 짝 지정
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");	

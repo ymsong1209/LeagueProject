@@ -53,6 +53,9 @@ void CMRT::OMSet()
 		CONTEXT->OMSetRenderTargets(m_RTCount, RTView, m_DSTex->GetDSV().Get());
 	else
 		CONTEXT->OMSetRenderTargets(m_RTCount, RTView, nullptr);
+
+	// ºäÆ÷Æ® ¼³Á¤
+	CONTEXT->RSSetViewports(1, &m_tViewPort);
 }
 
 void CMRT::Clear()
