@@ -46,6 +46,7 @@ public:
     GET_OTHER_COMPONENT(Animator2D);
     GET_OTHER_COMPONENT(ParticleSystem);
     GET_OTHER_COMPONENT(LandScape);
+    GET_OTHER_COMPONENT(Fsm);
 
 public:
     CComponent(COMPONENT_TYPE _Type);

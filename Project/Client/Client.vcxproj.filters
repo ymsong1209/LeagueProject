@@ -116,6 +116,9 @@
     <Filter Include="UI\InspectorUI\ComponentUI\10.DecalUI">
       <UniqueIdentifier>{594e6009-9efd-48d7-a2aa-5b0e9058d808}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI\InspectorUI\ComponentUI\11. FsmUI">
+      <UniqueIdentifier>{47d9f624-63d7-4ca0-bf08-7e6a9757ec41}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -247,6 +250,9 @@
     </ClInclude>
     <ClInclude Include="ParticleSystemUI.h">
       <Filter>UI\InspectorUI\ComponentUI\08. ParticleSystemUI</Filter>
+    </ClInclude>
+    <ClInclude Include="FsmUI.h">
+      <Filter>UI\InspectorUI\ComponentUI\11. FsmUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -387,6 +393,9 @@
     </ClCompile>
     <ClCompile Include="ParticleSystemUI.cpp">
       <Filter>UI\InspectorUI\ComponentUI\08. ParticleSystemUI</Filter>
+    </ClCompile>
+    <ClCompile Include="FsmUI.cpp">
+      <Filter>UI\InspectorUI\ComponentUI\11. FsmUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

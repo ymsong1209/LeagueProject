@@ -11,6 +11,7 @@ class CAnimator2D;
 class CLight2D;
 class CLight3D;
 class CCamera;
+class CFsm;
 class CRenderComponent;
 class CScript;
 class CTileMap;
@@ -69,6 +70,7 @@ public:
     GET_COMPONENT(SkyBox, SKYBOX);
     GET_COMPONENT(Decal, DECAL);
     GET_COMPONENT(LandScape, LANDSCAPE);
+    GET_COMPONENT(Fsm, FSM);
 
     CRenderComponent* GetRenderComponent() const {  return m_RenderCom; }
 

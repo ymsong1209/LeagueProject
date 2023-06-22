@@ -63,7 +63,6 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CEntity.cpp" />
     <ClCompile Include="CRes.cpp">
       <Filter>Source\07. Resource</Filter>
     </ClCompile>
@@ -235,9 +234,17 @@
     <ClCompile Include="CWeightMapShader.cpp">
       <Filter>Source\08. ShaderCode\03. Compute\LandScape\WeightMap</Filter>
     </ClCompile>
+    <ClCompile Include="CFsm.cpp">
+      <Filter>Source\06.Component\9.Fsm</Filter>
+    </ClCompile>
+    <ClCompile Include="CState.cpp">
+      <Filter>Source\06.Component\9.Fsm</Filter>
+    </ClCompile>
+    <ClCompile Include="CEntity.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CEntity.h" />
     <ClInclude Include="components.h">
       <Filter>Source\00. header</Filter>
     </ClInclude>
@@ -415,6 +422,15 @@
     <ClInclude Include="CWeightMapShader.h">
       <Filter>Source\08. ShaderCode\03. Compute\LandScape\WeightMap</Filter>
     </ClInclude>
+    <ClInclude Include="CFsm.h">
+      <Filter>Source\06.Component\9.Fsm</Filter>
+    </ClInclude>
+    <ClInclude Include="CState.h">
+      <Filter>Source\06.Component\9.Fsm</Filter>
+    </ClInclude>
+    <ClInclude Include="CEntity.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -587,6 +603,12 @@
     </Filter>
     <Filter Include="Source\08. ShaderCode\03. Compute\LandScape\WeightMap">
       <UniqueIdentifier>{ebf8d8af-993c-4d13-8173-9ad62881f42c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\06.Component\8.Animator3D">
+      <UniqueIdentifier>{e4e5c7d9-befb-46bd-b557-5ea410471f5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\06.Component\9.Fsm">
+      <UniqueIdentifier>{bc2f1e94-2327-47f0-8662-4a85b578a7f9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
