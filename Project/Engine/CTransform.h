@@ -16,7 +16,7 @@ private:
 
     Matrix  m_matWorldRot;      // 월드 회전 행렬
     Matrix  m_matWorldScale;    // 월드 크기 행렬
-    Matrix  m_matWorldPos;      // 월드 위치(이동) 행렬
+    Matrix  m_matWorldPos;      // 월드 위치 행렬
 
     Matrix  m_matWorld; // 크기, 회전, 이동 정보를 합쳐놓음
     Matrix  m_matWorldInv; // 월드 역행렬
@@ -42,7 +42,7 @@ public:
     Vec3 GetWorldPos() { return m_matWorld.Translation(); }
     const Matrix& GetWorldInvMat() const { return m_matWorldInv; }
 
-          Matrix  GetWorldRotMat();
+    const Matrix& GetWorldRotMat() { return m_matWorldRot; }
     const Matrix& GetWorldScaleMat() { return m_matWorldScale; }
     const Matrix& GetWorldPosMat() { return m_matWorldPos; }
     const Matrix& GetWorldMat() const { return m_matWorld; }

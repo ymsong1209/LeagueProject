@@ -17,7 +17,7 @@ CLandScape::CLandScape()
 	: CRenderComponent(COMPONENT_TYPE::LANDSCAPE)
 	, m_iFaceX(0)
 	, m_iFaceZ(0)
-	, m_vBrushScale(0.25f, 0.25f)
+	, m_vBrushScale(0.1f, 0.1f)
 	, m_pCrossBuffer(nullptr)
 	, m_pWeightMapBuffer(nullptr)
 	, m_iWeightWidth(0)
@@ -120,12 +120,6 @@ void CLandScape::render()
 	// 리소스 정리
 	// ==========
 	m_pWeightMapBuffer->Clear();
-}
-
-void CLandScape::render_depthmap()
-{
-	CRenderComponent::render_depthmap();
-
 }
 
 

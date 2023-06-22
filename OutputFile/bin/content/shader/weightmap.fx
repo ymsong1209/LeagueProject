@@ -53,7 +53,7 @@ void CS_WeightMap(int3 _iThreadID : SV_DispatchThreadID)
     float arrWeight[4] = WEIGHT_MAP[iIdx].arrWeight;
 
     // 증가 량
-    float fAdd = g_EditDT * vBrushColor.a * 6.f;
+    float fAdd = g_EditDT * vBrushColor.a * 2.f;
 
     // 가중치를 올리고, 나머지 부위를 비율에 맞추어 내린다.
     arrWeight[WEIGHT_IDX] = saturate(arrWeight[WEIGHT_IDX] + fAdd);
