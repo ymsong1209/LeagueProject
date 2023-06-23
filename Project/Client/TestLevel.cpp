@@ -92,13 +92,14 @@ void CreateTestLevel()
 	pObject->AddComponent(new CTransform);
 	pObject->AddComponent(new CMeshRender);
 
-	pObject->Transform()->SetRelativeScale(Vec3(500.f, 500.f, 500.f));
+	pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 300.f));
 
 	pObject->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
 	pObject->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"));
 	pObject->MeshRender()->SetDynamicShadow(true);
+	pObject->MeshRender()->SetBounding(150.f);
 
-	SpawnGameObject(pObject, Vec3(0.f, 0.f, 0.f), 0);
+	SpawnGameObject(pObject, Vec3(0.f, 200.f, 300.f), 0);
 
 	// LandScape Object
 	CGameObject* pLandScape = new CGameObject;

@@ -10,6 +10,7 @@
 
 #include "CCamera.h"
 #include "CLight2D.h"
+#include "CTransform.h"
 
 #include "CResMgr.h"
 #include "CMRT.h"
@@ -97,6 +98,17 @@ void CRenderMgr::render_editor()
 
     m_pEditorCam->SortObject();
     m_pEditorCam->render();    
+
+
+    // Play Main Camera Debug View(Frustum Shape)
+    if (GetPlayMainCam()->GetShowDebug())
+    {
+        DrawDebugFrustum(GetPlayMainCam()->Transform()->GetWorldPos()
+            , Vec2(GetPlayMainCam()->Transform()->GetRelativeScale().x, GetPlayMainCam()->Transform()->GetRelativeScale().y)
+            , Vec4(0.f, 1.f, 0.f, 1.f)
+            , Vec3(GetPlayMainCam()->Transform()->GetRelativeRot())
+            , 0.f);
+    }
 }
 
 void CRenderMgr::render_dynamic_shadowdepth()
@@ -142,6 +154,14 @@ CCamera* CRenderMgr::GetMainCam()
     {
         return m_pEditorCam;
     }
+}
+
+CCamera* CRenderMgr::GetPlayMainCam()
+{
+    if (m_vecCam.empty())
+        return nullptr;
+
+    return m_vecCam[0];
 }
 
 void CRenderMgr::CopyRenderTarget()

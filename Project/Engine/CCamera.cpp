@@ -31,6 +31,7 @@ CCamera::CCamera()
 	, m_ProjType(PROJ_TYPE::ORTHOGRAPHIC)
 	, m_iLayerMask(0)
 	, m_iCamIdx(-1)
+	, m_bShowFrustumDebug(false)
 {
 	SetName(L"Camera");
 
@@ -49,6 +50,7 @@ CCamera::CCamera(const CCamera& _Other)
 	, m_ProjType(_Other.m_ProjType)
 	, m_iLayerMask(_Other.m_iLayerMask)
 	, m_iCamIdx(-1)
+	, m_bShowFrustumDebug(_Other.m_bShowFrustumDebug)
 {
 }
 
@@ -208,6 +210,14 @@ void CCamera::SortObject()
 				if (pRenderCom->IsUseFrustumCheck())
 				{
 					Vec3 vWorldPos = vecObject[j]->Transform()->GetWorldPos();
+
+					// Bounding Debug Shape ±×¸®±â
+					tDebugBoundingInfo info = {};
+					info.vWorldPos = vWorldPos;
+					info.fBounding = pRenderCom->GetBounding();
+					info.fMaxTime = 0.f;
+					CRenderMgr::GetInst()->AddDebugBoundingInfo(info);
+
 					if (false == m_Frustum.FrustumCheckBySphere(vWorldPos, pRenderCom->GetBounding()))
 						continue;
 				}
@@ -420,6 +430,8 @@ void CCamera::SaveToLevelFile(FILE* _File)
 	fwrite(&m_ProjType, sizeof(UINT), 1, _File);
 	fwrite(&m_iLayerMask, sizeof(UINT), 1, _File);
 	fwrite(&m_iCamIdx, sizeof(int), 1, _File);
+	fwrite(&m_fFar, sizeof(float), 1, _File);
+	fwrite(&m_bShowFrustumDebug, sizeof(bool), 1, _File);
 }
 
 void CCamera::LoadFromLevelFile(FILE* _File)
@@ -429,5 +441,7 @@ void CCamera::LoadFromLevelFile(FILE* _File)
 	fread(&m_ProjType, sizeof(UINT), 1, _File);
 	fread(&m_iLayerMask, sizeof(UINT), 1, _File);
 	fread(&m_iCamIdx, sizeof(int), 1, _File);
+	fread(&m_fFar, sizeof(float), 1, _File);
+	fread(&m_bShowFrustumDebug, sizeof(bool), 1, _File);
 	SetCameraIndex(m_iCamIdx);
 }
