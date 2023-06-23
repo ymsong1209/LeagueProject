@@ -196,7 +196,7 @@ void CEditorObjMgr::render()
 		pBoundingObj->render();
 
 		Boundingiter->fCurTime += EditorDT;
-		if (Boundingiter->fMaxTime < Boundingiter->fCurTime)
+		if (Boundingiter->fMaxTime <= Boundingiter->fCurTime)
 		{
 			Boundingiter = m_vecBoundingInfo.erase(Boundingiter);
 		}

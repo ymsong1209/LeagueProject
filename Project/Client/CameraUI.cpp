@@ -31,9 +31,12 @@ int CameraUI::render_update()
     float fFar = GetTarget()->Camera()->GetFar();
     ImGui::Text("Far");
     ImGui::SameLine();
-    ImGui::DragFloat("##CameraFar", &fFar, 10, 2, 50000); 
-    GetTarget()->Camera()->SetFar(fFar);
-
-
+	if (ImGui::DragFloat("##CameraFar", &fFar, 10, 2, 50000)) {
+		if (fFar <= 2.0f) {
+			fFar = 2.0f;
+		}
+		GetTarget()->Camera()->SetFar(fFar);
+	}
+   
     return TRUE;
 }
