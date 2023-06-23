@@ -194,6 +194,8 @@ void CLandScape::SaveToLevelFile(FILE* _File)
 	//
 	//m_pHeightMap->Save(m_pHeightMap->GetKey());
 
+	CRenderComponent::SaveToLevelFile(_File);
+
 	SaveResRef(m_pHeightMap.Get(), _File);
 	fwrite(&m_iFaceX, sizeof(UINT), 1, _File);
 	fwrite(&m_iFaceZ, sizeof(UINT), 1, _File);
@@ -204,6 +206,8 @@ void CLandScape::LoadFromLevelFile(FILE* _File)
 	//wstring texturepath;
 	//LoadWString(texturepath, _File);
 	//CopyFromLoadedTexture(texturepath);
+
+	CRenderComponent::LoadFromLevelFile(_File);
 
 	LoadResRef(m_pHeightMap, _File);
 	fread(&m_iFaceX, sizeof(UINT), 1, _File);
