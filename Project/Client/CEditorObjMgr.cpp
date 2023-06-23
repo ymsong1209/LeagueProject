@@ -23,6 +23,50 @@ CEditorObjMgr::~CEditorObjMgr()
 	Safe_Del_Array(m_DebugShape);
 }
 
+void CEditorObjMgr::CreateFrustumDebugMesh()
+{
+	Vtx v;
+	vector<Vtx> vecVtx;
+
+	CCamera* pMainCam = CRenderMgr::GetInst()->GetPlayMainCam();
+
+	Vec3	arrProj[8];
+	arrProj[0] = Vec3(-1.f, 1.f, 0.f);
+	arrProj[1] = Vec3(1.f, 1.f, 0.f);
+	arrProj[2] = Vec3(1.f, -1.f, 0.f);
+	arrProj[3] = Vec3(-1.f, -1.f, 0.f);
+	arrProj[4] = Vec3(-1.f, 1.f, 1.f);
+	arrProj[5] = Vec3(1.f, 1.f, 1.f);
+	arrProj[6] = Vec3(1.f, -1.f, 1.f);
+	arrProj[7] = Vec3(-1.f, -1.f, 1.f);
+
+
+	// 절두체 로컬 정점들
+	Matrix matInv = pMainCam->GetProjMatInv() * pMainCam->GetViewMatInv() * pMainCam->Transform()->GetWorldMatInv();
+	for (int i = 0; i < 8; ++i)
+	{
+		v.vPos = XMVector3TransformCoord(arrProj[i], matInv);
+		v.vColor = Vec4(1.f, 1.f, 1.f, 1.f);
+		vecVtx.push_back(v);
+	}
+
+	vector<UINT> vecIdx;
+	vecIdx.push_back(0); vecIdx.push_back(1); vecIdx.push_back(2); 
+	vecIdx.push_back(3); vecIdx.push_back(0); vecIdx.push_back(4);
+	vecIdx.push_back(5); vecIdx.push_back(6); vecIdx.push_back(7);
+	vecIdx.push_back(4); vecIdx.push_back(7); vecIdx.push_back(3);
+	vecIdx.push_back(2); vecIdx.push_back(6); vecIdx.push_back(5);
+	vecIdx.push_back(1);
+
+	Ptr<CMesh> pMesh = new CMesh;
+	pMesh->Create(vecVtx.data(), (UINT)vecVtx.size(), vecIdx.data(), (UINT)vecIdx.size());
+
+	m_DebugShape[(UINT)SHAPE_TYPE::FRUSTUM]->MeshRender()->SetMesh(pMesh);
+
+	vecVtx.clear();
+	vecIdx.clear();
+}
+
 void CEditorObjMgr::init()
 {
 	// 디버그 쉐이프 생성
@@ -49,6 +93,12 @@ void CEditorObjMgr::init()
 	m_DebugShape[(UINT)SHAPE_TYPE::SPHERE]->AddComponent(new CMeshRender);
 	m_DebugShape[(UINT)SHAPE_TYPE::SPHERE]->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
 	m_DebugShape[(UINT)SHAPE_TYPE::SPHERE]->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"DebugShapeMtrl"));
+
+	m_DebugShape[(UINT)SHAPE_TYPE::FRUSTUM] = new CGameObjectEx;
+	m_DebugShape[(UINT)SHAPE_TYPE::FRUSTUM]->AddComponent(new CTransform);
+	m_DebugShape[(UINT)SHAPE_TYPE::FRUSTUM]->AddComponent(new CMeshRender);
+	m_DebugShape[(UINT)SHAPE_TYPE::FRUSTUM]->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh_Debug")); // 임시
+	m_DebugShape[(UINT)SHAPE_TYPE::FRUSTUM]->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"DebugShapeMtrl"));
 
 	// EditorObject 생성
 	CGameObjectEx* pEditorCamObj = new CGameObjectEx;
@@ -120,6 +170,12 @@ void CEditorObjMgr::render()
 		case SHAPE_TYPE::SPHERE:
 			pShapeObj = m_DebugShape[(UINT)SHAPE_TYPE::SPHERE];
 			break;		
+		case SHAPE_TYPE::FRUSTUM:
+		{
+			pShapeObj = m_DebugShape[(UINT)SHAPE_TYPE::FRUSTUM];
+			CreateFrustumDebugMesh();
+			break;
+		}
 		}
 
 		if (iter->matWorld != XMMatrixIdentity())

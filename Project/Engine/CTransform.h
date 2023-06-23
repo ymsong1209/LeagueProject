@@ -47,6 +47,8 @@ public:
     const Matrix& GetWorldPosMat() { return m_matWorldPos; }
     const Matrix& GetWorldMat() const { return m_matWorld; }
 
+    const Matrix& GetWorldMatInv() const { return m_matWorldInv; }
+
     void SetWorldMat(const Matrix& _mat) { m_matWorld = _mat; }
 public:
     virtual void finaltick() override;

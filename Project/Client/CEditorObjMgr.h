@@ -13,6 +13,8 @@ private:
 	vector<tDebugShapeInfo> m_DebugShapeInfo;
 
 public:
+	void CreateFrustumDebugMesh();
+
 	void init();
 	void progress();
 
