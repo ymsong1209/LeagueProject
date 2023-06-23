@@ -604,6 +604,35 @@ void CResMgr::CreateDefaultGraphicsShader()
 
 	AddRes(pShader->GetKey(), pShader);
 
+
+	// ============================
+	// DebugBounding Shader
+	// 
+	// RS_TYPE : CULL_NONE
+	// DS_TYPE : NO_TEST_NO_WRITE
+	// BS_TYPE : Default
+
+	// Parameter
+	// g_float_0 : Bounding
+	// 
+	// Domain : DOMAIN_MASK
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"DebugBoundingShader");
+	pShader->CreateVertexShader(L"shader\\debugbounding.fx", "VS_DebugBounding");
+	pShader->CreateGeometryShader(L"shader\\debugbounding.fx", "GS_DebugBounding");
+	pShader->CreatePixelShader(L"shader\\debugbounding.fx", "PS_DebugBounding");
+
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	pShader->SetBSType(BS_TYPE::DEFAULT);
+	pShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
+
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_MASK);
+
+	AddRes(pShader->GetKey(), pShader);
+
+
 	// ============================
 	// TileMap Shader
 	// 
@@ -941,11 +970,15 @@ void CResMgr::CreateDefaultMaterial()
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"LandScapeShader"));
 	AddRes(L"LandScapeMtrl", pMtrl);
 
-
 	// DebugShape Material
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"DebugShapeShader"));
 	AddRes(L"DebugShapeMtrl", pMtrl);
+
+	// DebugBounding Material
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"DebugBoundingShader"));
+	AddRes(L"DebugBoundingMtrl", pMtrl);
 
 	// TileMap Material
 	pMtrl = new CMaterial(true);

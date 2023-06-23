@@ -13,6 +13,7 @@
 
 CEditorObjMgr::CEditorObjMgr()
 	: m_DebugShape{}
+	, m_DebugBounding(nullptr)
 {
 
 }
@@ -21,51 +22,10 @@ CEditorObjMgr::~CEditorObjMgr()
 {
 	Safe_Del_Vec(m_vecEditorObj);
 	Safe_Del_Array(m_DebugShape);
+
+	delete m_DebugBounding;
 }
 
-void CEditorObjMgr::CreateFrustumDebugMesh()
-{
-	Vtx v;
-	vector<Vtx> vecVtx;
-
-	CCamera* pMainCam = CRenderMgr::GetInst()->GetPlayMainCam();
-
-	Vec3	arrProj[8];
-	arrProj[0] = Vec3(-1.f, 1.f, 0.f);
-	arrProj[1] = Vec3(1.f, 1.f, 0.f);
-	arrProj[2] = Vec3(1.f, -1.f, 0.f);
-	arrProj[3] = Vec3(-1.f, -1.f, 0.f);
-	arrProj[4] = Vec3(-1.f, 1.f, 1.f);
-	arrProj[5] = Vec3(1.f, 1.f, 1.f);
-	arrProj[6] = Vec3(1.f, -1.f, 1.f);
-	arrProj[7] = Vec3(-1.f, -1.f, 1.f);
-
-
-	// 절두체 로컬 정점들
-	Matrix matInv = pMainCam->GetProjMatInv() * pMainCam->GetViewMatInv() * pMainCam->Transform()->GetWorldMatInv();
-	for (int i = 0; i < 8; ++i)
-	{
-		v.vPos = XMVector3TransformCoord(arrProj[i], matInv);
-		v.vColor = Vec4(1.f, 1.f, 1.f, 1.f);
-		vecVtx.push_back(v);
-	}
-
-	vector<UINT> vecIdx;
-	vecIdx.push_back(0); vecIdx.push_back(1); vecIdx.push_back(2); 
-	vecIdx.push_back(3); vecIdx.push_back(0); vecIdx.push_back(4);
-	vecIdx.push_back(5); vecIdx.push_back(6); vecIdx.push_back(7);
-	vecIdx.push_back(4); vecIdx.push_back(7); vecIdx.push_back(3);
-	vecIdx.push_back(2); vecIdx.push_back(6); vecIdx.push_back(5);
-	vecIdx.push_back(1);
-
-	Ptr<CMesh> pMesh = new CMesh;
-	pMesh->Create(vecVtx.data(), (UINT)vecVtx.size(), vecIdx.data(), (UINT)vecIdx.size());
-
-	m_DebugShape[(UINT)SHAPE_TYPE::FRUSTUM]->MeshRender()->SetMesh(pMesh);
-
-	vecVtx.clear();
-	vecIdx.clear();
-}
 
 void CEditorObjMgr::init()
 {
@@ -112,6 +72,15 @@ void CEditorObjMgr::init()
 
 	m_vecEditorObj.push_back(pEditorCamObj);
 	CRenderMgr::GetInst()->RegisterEditorCamera(pEditorCamObj->Camera());
+
+
+	// Editor BoundingObject 생성
+	m_DebugBounding = new CGameObjectEx;
+	m_DebugBounding->AddComponent(new CTransform);
+	m_DebugBounding->AddComponent(new CMeshRender);
+
+	m_DebugBounding->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"PointMesh"));
+	m_DebugBounding->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"DebugBoundingMtrl"));
 }
 
 
@@ -122,6 +91,11 @@ void CEditorObjMgr::progress()
 	vector<tDebugShapeInfo>& vecInfo = CRenderMgr::GetInst()->GetDebugShapeInfo();
 	m_DebugShapeInfo.insert(m_DebugShapeInfo.end(), vecInfo.begin(), vecInfo.end());
 	vecInfo.clear();
+
+	// Bounding DebugShape 정보 가져오기
+	vector<tDebugBoundingInfo>& vecBoundingInfo = CRenderMgr::GetInst()->GetDebugBoundingInfo();
+	m_vecBoundingInfo.insert(m_vecBoundingInfo.end(), vecBoundingInfo.begin(), vecBoundingInfo.end());
+	vecBoundingInfo.clear();
 
 
 	tick();
@@ -203,4 +177,78 @@ void CEditorObjMgr::render()
 			++iter;
 		}
 	}
+
+
+	// DebugBounding render
+	CGameObjectEx* pBoundingObj = nullptr;
+
+	vector<tDebugBoundingInfo>::iterator Boundingiter = m_vecBoundingInfo.begin();
+	for (; Boundingiter != m_vecBoundingInfo.end();)
+	{
+		pBoundingObj = m_DebugBounding;
+		pBoundingObj->Transform()->SetRelativePos(Boundingiter->vWorldPos);
+		pBoundingObj->Transform()->SetRelativeScale(Vec3(1.f, 1.f, 1.f));
+		pBoundingObj->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
+		pBoundingObj->finaltick();
+
+		pBoundingObj->MeshRender()->GetMaterial()->SetScalarParam(FLOAT_0, &Boundingiter->fBounding);
+
+		pBoundingObj->render();
+
+		Boundingiter->fCurTime += DT;
+		if (Boundingiter->fMaxTime < Boundingiter->fCurTime)
+		{
+			Boundingiter = m_vecBoundingInfo.erase(Boundingiter);
+		}
+		else
+		{
+			++Boundingiter;
+		}
+	}
+}
+
+
+
+void CEditorObjMgr::CreateFrustumDebugMesh()
+{
+	Vtx v;
+	vector<Vtx> vecVtx;
+
+	CCamera* pMainCam = CRenderMgr::GetInst()->GetPlayMainCam();
+
+	Vec3	arrProj[8];
+	arrProj[0] = Vec3(-1.f, 1.f, 0.f);
+	arrProj[1] = Vec3(1.f, 1.f, 0.f);
+	arrProj[2] = Vec3(1.f, -1.f, 0.f);
+	arrProj[3] = Vec3(-1.f, -1.f, 0.f);
+	arrProj[4] = Vec3(-1.f, 1.f, 1.f);
+	arrProj[5] = Vec3(1.f, 1.f, 1.f);
+	arrProj[6] = Vec3(1.f, -1.f, 1.f);
+	arrProj[7] = Vec3(-1.f, -1.f, 1.f);
+
+
+	// 절두체 로컬 정점들
+	Matrix matInv = pMainCam->GetProjMatInv() * pMainCam->GetViewMatInv() * pMainCam->Transform()->GetWorldMatInv();
+	for (int i = 0; i < 8; ++i)
+	{
+		v.vPos = XMVector3TransformCoord(arrProj[i], matInv);
+		v.vColor = Vec4(1.f, 1.f, 1.f, 1.f);
+		vecVtx.push_back(v);
+	}
+
+	vector<UINT> vecIdx;
+	vecIdx.push_back(0); vecIdx.push_back(1); vecIdx.push_back(2);
+	vecIdx.push_back(3); vecIdx.push_back(0); vecIdx.push_back(4);
+	vecIdx.push_back(5); vecIdx.push_back(6); vecIdx.push_back(7);
+	vecIdx.push_back(4); vecIdx.push_back(7); vecIdx.push_back(3);
+	vecIdx.push_back(2); vecIdx.push_back(6); vecIdx.push_back(5);
+	vecIdx.push_back(1);
+
+	Ptr<CMesh> pMesh = new CMesh;
+	pMesh->Create(vecVtx.data(), (UINT)vecVtx.size(), vecIdx.data(), (UINT)vecIdx.size());
+
+	m_DebugShape[(UINT)SHAPE_TYPE::FRUSTUM]->MeshRender()->SetMesh(pMesh);
+
+	vecVtx.clear();
+	vecIdx.clear();
 }

@@ -39,6 +39,13 @@ struct tDebugShapeInfo
 };
 
 
+struct tDebugBoundingInfo
+{
+	Vec3		vWorldPos;
+	float		fBounding;
+	float		fMaxTime;
+	float		fCurTime;
+};
 
 struct tLightColor
 {

@@ -21,6 +21,7 @@ private:
     CCamera*                    m_pEditorCam;
 
     vector<tDebugShapeInfo>     m_vecShapeInfo;
+    vector<tDebugBoundingInfo>  m_vecBoundingInfo;
 
     vector<CLight2D*>           m_vecLight2D;
     CStructuredBuffer*          m_Light2DBuffer;
@@ -55,6 +56,9 @@ public:
 
     void AddDebugShapeInfo(const tDebugShapeInfo& _info) { m_vecShapeInfo.push_back(_info); }
     vector<tDebugShapeInfo>& GetDebugShapeInfo() { return m_vecShapeInfo; }
+
+    void AddDebugBoundingInfo(const tDebugBoundingInfo& _info) { m_vecBoundingInfo.push_back(_info); }
+    vector<tDebugBoundingInfo>& GetDebugBoundingInfo() { return m_vecBoundingInfo; }
 
     CCamera* GetMainCam();      // 상태에 따라 MainCam을 가져온다
     CCamera* GetPlayMainCam();  // PLAY 상태의 MainCam을 가져온다

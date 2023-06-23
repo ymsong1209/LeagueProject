@@ -61,6 +61,9 @@
     <FxCompile Include="weightmap.fx">
       <Filter>Source\08. ShaderCode\03. Compute\LandScape\WeightMap</Filter>
     </FxCompile>
+    <FxCompile Include="debugbounding.fx">
+      <Filter>Source\08. ShaderCode\02. Render</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CRes.cpp">
