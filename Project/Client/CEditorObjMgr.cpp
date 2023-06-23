@@ -164,10 +164,10 @@ void CEditorObjMgr::render()
 			pShapeObj->finaltick();
 		}
 		
-		pShapeObj->MeshRender()->GetMaterial()->SetScalarParam(VEC4_0, &iter->vColor);
+		pShapeObj->GetRenderComponent()->GetMaterial()->SetScalarParam(VEC4_0, &iter->vColor);
 		pShapeObj->render();
 
-		iter->fCurTime += DT;
+		iter->fCurTime += EditorDT;
 		if (iter->fMaxTime <= iter->fCurTime)
 		{
 			iter = m_DebugShapeInfo.erase(iter);
@@ -191,11 +191,11 @@ void CEditorObjMgr::render()
 		pBoundingObj->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
 		pBoundingObj->finaltick();
 
-		pBoundingObj->MeshRender()->GetMaterial()->SetScalarParam(FLOAT_0, &Boundingiter->fBounding);
+		pBoundingObj->GetRenderComponent()->GetMaterial()->SetScalarParam(FLOAT_0, &Boundingiter->fBounding);
 
 		pBoundingObj->render();
 
-		Boundingiter->fCurTime += DT;
+		Boundingiter->fCurTime += EditorDT;
 		if (Boundingiter->fMaxTime < Boundingiter->fCurTime)
 		{
 			Boundingiter = m_vecBoundingInfo.erase(Boundingiter);

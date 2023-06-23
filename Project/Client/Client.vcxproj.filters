@@ -242,9 +242,6 @@
     <ClInclude Include="LevelUI.h">
       <Filter>UI\LevelUI</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentUI.h">
-      <Filter>UI</Filter>
-    </ClInclude>
     <ClInclude Include="DecalUI.h">
       <Filter>UI\InspectorUI\ComponentUI\10.DecalUI</Filter>
     </ClInclude>
@@ -253,6 +250,12 @@
     </ClInclude>
     <ClInclude Include="FsmUI.h">
       <Filter>UI\InspectorUI\ComponentUI\11. FsmUI</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderComponentUI.h">
+      <Filter>UI\InspectorUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentUI.h">
+      <Filter>UI\InspectorUI\ComponentUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -385,9 +388,6 @@
     <ClCompile Include="LevelUI.cpp">
       <Filter>UI\LevelUI</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentUI.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
     <ClCompile Include="DecalUI.cpp">
       <Filter>UI\InspectorUI\ComponentUI\10.DecalUI</Filter>
     </ClCompile>
@@ -396,6 +396,12 @@
     </ClCompile>
     <ClCompile Include="FsmUI.cpp">
       <Filter>UI\InspectorUI\ComponentUI\11. FsmUI</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderComponentUI.cpp">
+      <Filter>UI\InspectorUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentUI.cpp">
+      <Filter>UI\InspectorUI\ComponentUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

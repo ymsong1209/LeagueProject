@@ -27,6 +27,7 @@
 #include "ScriptUI.h"
 #include "DecalUI.h"
 
+#include "RenderComponentUI.h"
 
 
 InspectorUI::InspectorUI()
@@ -36,6 +37,10 @@ InspectorUI::InspectorUI()
 	, m_arrResUI{}
 {
 	SetName("Inspector");
+
+	m_RenderComUI = new RenderComponentUI;
+	m_RenderComUI->SetSize(0.f, 150.f);
+	AddChildUI(m_RenderComUI);
 
 	m_arrComUI[(UINT)COMPONENT_TYPE::TRANSFORM] = new TransformUI;
 	m_arrComUI[(UINT)COMPONENT_TYPE::TRANSFORM]->SetSize(0.f, 150.f);	
@@ -139,6 +144,8 @@ void InspectorUI::SetTargetObject(CGameObject* _Target)
 	// 타겟오브젝트 정보 노출
 	m_pTargetObj = _Target;
 
+	m_RenderComUI->SetTarget(m_pTargetObj);
+
 	for (UINT i = 0; i < (UINT)COMPONENT_TYPE::END; ++i)
 	{
 		if (nullptr == m_arrComUI[i])
@@ -151,6 +158,8 @@ void InspectorUI::SetTargetObject(CGameObject* _Target)
 	// 스크립트UI 들을 전부 비활성화 시킨다.
 	if (nullptr == m_pTargetObj)
 	{
+		m_RenderComUI->SetActive(false);
+
 		for (size_t i = 0; i < m_vecScriptUI.size(); ++i)
 		{
 			m_vecScriptUI[i]->SetActive(false);
