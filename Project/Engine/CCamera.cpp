@@ -31,6 +31,7 @@ CCamera::CCamera()
 	, m_ProjType(PROJ_TYPE::ORTHOGRAPHIC)
 	, m_iLayerMask(0)
 	, m_iCamIdx(-1)
+	, m_bShowFrustumDebug(false)
 {
 	SetName(L"Camera");
 
@@ -49,6 +50,7 @@ CCamera::CCamera(const CCamera& _Other)
 	, m_ProjType(_Other.m_ProjType)
 	, m_iLayerMask(_Other.m_iLayerMask)
 	, m_iCamIdx(-1)
+	, m_bShowFrustumDebug(_Other.m_bShowFrustumDebug)
 {
 }
 
