@@ -24,6 +24,8 @@ private:
 
     int                     m_iCamIdx;  // 카메라 우선순위
 
+    bool                    m_bShowFrustumDebug;
+
     tRay                    m_ray;      // 마우스 방향을 향하는 직선
 
     vector<CGameObject*>    m_vecDeferred;
@@ -53,6 +55,9 @@ public:
     void SetLayerMaskAll(bool _Visible);
 
     void SetCameraIndex(int _idx);
+
+    void SetShowDebug(bool _debug) { m_bShowFrustumDebug = _debug; }
+    bool GetShowDebug() { return m_bShowFrustumDebug; }
 
     const tRay& GetRay() { return m_ray; }
 

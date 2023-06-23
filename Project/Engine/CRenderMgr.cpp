@@ -101,11 +101,14 @@ void CRenderMgr::render_editor()
 
 
     // Play Main Camera Debug View(Frustum Shape)
-    DrawDebugFrustum(GetPlayMainCam()->Transform()->GetWorldPos()
-        , Vec2(GetPlayMainCam()->Transform()->GetRelativeScale().x, GetPlayMainCam()->Transform()->GetRelativeScale().y)
-        , Vec4(0.f, 1.f, 0.f, 1.f)
-        , Vec3(GetPlayMainCam()->Transform()->GetRelativeRot())
-        , 0.f);
+    if (GetPlayMainCam()->GetShowDebug())
+    {
+        DrawDebugFrustum(GetPlayMainCam()->Transform()->GetWorldPos()
+            , Vec2(GetPlayMainCam()->Transform()->GetRelativeScale().x, GetPlayMainCam()->Transform()->GetRelativeScale().y)
+            , Vec4(0.f, 1.f, 0.f, 1.f)
+            , Vec3(GetPlayMainCam()->Transform()->GetRelativeRot())
+            , 0.f);
+    }
 }
 
 void CRenderMgr::render_dynamic_shadowdepth()

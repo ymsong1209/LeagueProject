@@ -1,5 +1,5 @@
-#ifndef _DEBUG_BOUNDING
-#define _DEBUG_BOUNDING
+#ifndef _DEBUGBOUNDING
+#define _DEBUGBOUNDING
 
 
 #include "value.fx"
