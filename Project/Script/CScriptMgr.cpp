@@ -7,6 +7,7 @@
 #include "CMonsterScript.h"
 #include "CPlayerScript.h"
 
+
 void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 {
 	_vec.push_back(L"CCameraMoveScript");
@@ -14,6 +15,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CMissileScript");
 	_vec.push_back(L"CMonsterScript");
 	_vec.push_back(L"CPlayerScript");
+	_vec.push_back(L"CTestScript");
 }
 
 CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
