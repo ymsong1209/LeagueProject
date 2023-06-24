@@ -10,6 +10,9 @@
     <Filter Include="ScriptMgr">
       <UniqueIdentifier>{78d2676d-e9d6-47ca-8d90-52e8d457d264}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Script\testCharacter">
+      <UniqueIdentifier>{528cd190-3cb9-457c-9a96-9cd6e2c5d4ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h">
@@ -36,6 +39,9 @@
     <ClInclude Include="CGravityScript.h">
       <Filter>Script</Filter>
     </ClInclude>
+    <ClInclude Include="CTestIdleState.h">
+      <Filter>Script\testCharacter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCameraMoveScript.cpp">
@@ -61,6 +67,9 @@
     </ClCompile>
     <ClCompile Include="CGravityScript.cpp">
       <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="CTestIdleState.cpp">
+      <Filter>Script\testCharacter</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
