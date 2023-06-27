@@ -34,7 +34,7 @@ void CAnimator2D::finaltick()
 
 void CAnimator2D::UpdateData()
 {
-	Ptr<CMaterial> pMtrl = MeshRender()->GetMaterial();
+	Ptr<CMaterial> pMtrl = MeshRender()->GetMaterial(0);
 
 	const tAnim2DFrm& frm = m_pCurAnim->GetCurFrame();
 	Vec2 vBackSize = m_pCurAnim->GetBackSize();
@@ -51,7 +51,7 @@ void CAnimator2D::UpdateData()
 
 void CAnimator2D::Clear()
 {
-	Ptr<CMaterial> pMtrl = MeshRender()->GetMaterial();
+	Ptr<CMaterial> pMtrl = MeshRender()->GetMaterial(0);
 
 	int iAnimUse = 0;
 	pMtrl->SetScalarParam(INT_0, &iAnimUse);

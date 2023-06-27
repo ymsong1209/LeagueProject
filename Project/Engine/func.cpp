@@ -198,6 +198,18 @@ void SaveWString(const wstring& _str, FILE* _File)
 	fwrite(_str.c_str(), sizeof(wchar_t), _str.length(), _File);
 }
 
+wstring GetRelativePath(const wstring& _strBase, const wstring& _strPath)
+{
+	wstring strRelativePath;
+	if (-1 == _strPath.find(_strBase))
+	{
+		return strRelativePath;
+	}
+
+	strRelativePath = _strPath.substr(_strBase.length(), _strPath.length());
+	return strRelativePath;
+}
+
 void LoadWString(wstring& _str, FILE* _File)
 {
 	wchar_t szBuffer[256] = {};

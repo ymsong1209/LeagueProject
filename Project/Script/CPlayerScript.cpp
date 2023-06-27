@@ -21,7 +21,7 @@ CPlayerScript::~CPlayerScript()
 
 void CPlayerScript::begin()
 {
-	MeshRender()->GetDynamicMaterial();
+	MeshRender()->GetDynamicMaterial(0);
 }
 
 void CPlayerScript::tick()

@@ -17,9 +17,6 @@ private:
 public:
 	virtual int Save(const wstring& _strRelativePath) { return S_OK; }
 
-private:
-	virtual void UpdateData() override {}
-
 public:
 	void RegisterProtoObject(CGameObject* _Proto);
 

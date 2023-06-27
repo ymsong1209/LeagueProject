@@ -95,7 +95,7 @@ void CreateTestLevel()
 	pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 300.f));
 
 	pObject->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
-	pObject->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"));
+	pObject->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"),0);
 	pObject->MeshRender()->SetDynamicShadow(true);
 	pObject->MeshRender()->SetBounding(150.f);
 
@@ -118,15 +118,15 @@ void CreateTestLevel()
 	SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 0.f), 0);
 
 
-	// // Collider Test Object
-	// CGameObject* TmpCollider = new CGameObject;
-	// TmpCollider->SetName(L"TmpCollider");
-	// 
-	// TmpCollider->AddComponent(new CTransform);
-	// TmpCollider->AddComponent(new CCollider3D);
-	// TmpCollider->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
-	// TmpCollider->Transform()->SetRelativeScale(Vec3(500.f, 500, 500));
-	// SpawnGameObject(TmpCollider, Vec3(0.f, 0.f, 500.f), 0);
+	// ============
+	// FBX Loading
+	// ============	
+	{
+		Ptr<CMeshData> pMeshData = nullptr;
+		CGameObject* pObj = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\house.fbx");
+		SpawnGameObject(pMeshData->Instantiate(), Vec3(0.f, 500.f, 0.f), 0);
+	}
 
 	// 충돌 시킬 레이어 짝 지정
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");	

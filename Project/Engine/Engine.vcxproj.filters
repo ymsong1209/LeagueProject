@@ -246,6 +246,12 @@
     <ClCompile Include="CEntity.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="CMeshData.cpp">
+      <Filter>Source\07. Resource\7.MeshData</Filter>
+    </ClCompile>
+    <ClCompile Include="CFBXLoader.cpp">
+      <Filter>Source\03. Manager\05.CResMgr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="components.h">
@@ -434,6 +440,12 @@
     <ClInclude Include="CEntity.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="CMeshData.h">
+      <Filter>Source\07. Resource\7.MeshData</Filter>
+    </ClInclude>
+    <ClInclude Include="CFBXLoader.h">
+      <Filter>Source\03. Manager\05.CResMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -612,6 +624,9 @@
     </Filter>
     <Filter Include="Source\06.Component\9.Fsm">
       <UniqueIdentifier>{bc2f1e94-2327-47f0-8662-4a85b578a7f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\07. Resource\7.MeshData">
+      <UniqueIdentifier>{6543cc12-9674-48e6-b00d-74c51c28f802}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

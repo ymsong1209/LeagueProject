@@ -79,6 +79,30 @@ Ptr<CTexture> CResMgr::LoadTexture(const wstring& _strKey, const wstring& _strRe
 	return pRes;
 }
 
+Ptr<CMeshData> CResMgr::LoadFBX(const wstring& _strPath)
+{
+	wstring strFileName = path(_strPath).stem();
+
+	wstring strName = L"meshdata\\";
+	strName += strFileName + L".mdat";
+
+	Ptr<CMeshData> pMeshData = FindRes<CMeshData>(strName);
+
+	if (nullptr != pMeshData)
+		return pMeshData;
+
+	pMeshData = CMeshData::LoadFromFBX(_strPath);
+	pMeshData->SetKey(strName);
+	pMeshData->SetRelativePath(strName);
+
+	m_arrRes[(UINT)RES_TYPE::MESHDATA].insert(make_pair(strName, pMeshData.Get()));
+
+	// meshdata 를 실제파일로 저장
+	//pMeshData->Save(strName);
+
+	return pMeshData;
+}
+
 void CResMgr::DeleteRes(RES_TYPE _type, const wstring& _strKey)
 {
 	map<wstring, Ptr<CRes>>::iterator iter = m_arrRes[(UINT)_type].find(_strKey);

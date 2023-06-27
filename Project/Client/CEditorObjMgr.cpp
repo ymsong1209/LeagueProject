@@ -34,31 +34,31 @@ void CEditorObjMgr::init()
 	m_DebugShape[(UINT)SHAPE_TYPE::RECT]->AddComponent(new CTransform);
 	m_DebugShape[(UINT)SHAPE_TYPE::RECT]->AddComponent(new CMeshRender);
 	m_DebugShape[(UINT)SHAPE_TYPE::RECT]->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh_Debug"));
-	m_DebugShape[(UINT)SHAPE_TYPE::RECT]->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"DebugShapeMtrl"));
+	m_DebugShape[(UINT)SHAPE_TYPE::RECT]->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"DebugShapeMtrl"),0);
 
 	m_DebugShape[(UINT)SHAPE_TYPE::CIRCLE] = new CGameObjectEx;
 	m_DebugShape[(UINT)SHAPE_TYPE::CIRCLE]->AddComponent(new CTransform);
 	m_DebugShape[(UINT)SHAPE_TYPE::CIRCLE]->AddComponent(new CMeshRender);
 	m_DebugShape[(UINT)SHAPE_TYPE::CIRCLE]->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CircleMesh_Debug"));
-	m_DebugShape[(UINT)SHAPE_TYPE::CIRCLE]->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"DebugShapeMtrl"));
+	m_DebugShape[(UINT)SHAPE_TYPE::CIRCLE]->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"DebugShapeMtrl"),0);
 
 	m_DebugShape[(UINT)SHAPE_TYPE::CUBE] = new CGameObjectEx;
 	m_DebugShape[(UINT)SHAPE_TYPE::CUBE]->AddComponent(new CTransform);
 	m_DebugShape[(UINT)SHAPE_TYPE::CUBE]->AddComponent(new CMeshRender);
 	m_DebugShape[(UINT)SHAPE_TYPE::CUBE]->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh_Debug"));
-	m_DebugShape[(UINT)SHAPE_TYPE::CUBE]->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"DebugShapeMtrl"));
+	m_DebugShape[(UINT)SHAPE_TYPE::CUBE]->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"DebugShapeMtrl"),0);
 
 	m_DebugShape[(UINT)SHAPE_TYPE::SPHERE] = new CGameObjectEx;
 	m_DebugShape[(UINT)SHAPE_TYPE::SPHERE]->AddComponent(new CTransform);
 	m_DebugShape[(UINT)SHAPE_TYPE::SPHERE]->AddComponent(new CMeshRender);
 	m_DebugShape[(UINT)SHAPE_TYPE::SPHERE]->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
-	m_DebugShape[(UINT)SHAPE_TYPE::SPHERE]->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"DebugShapeMtrl"));
+	m_DebugShape[(UINT)SHAPE_TYPE::SPHERE]->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"DebugShapeMtrl"),0);
 
 	m_DebugShape[(UINT)SHAPE_TYPE::FRUSTUM] = new CGameObjectEx;
 	m_DebugShape[(UINT)SHAPE_TYPE::FRUSTUM]->AddComponent(new CTransform);
 	m_DebugShape[(UINT)SHAPE_TYPE::FRUSTUM]->AddComponent(new CMeshRender);
 	m_DebugShape[(UINT)SHAPE_TYPE::FRUSTUM]->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh_Debug")); // 임시
-	m_DebugShape[(UINT)SHAPE_TYPE::FRUSTUM]->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"DebugShapeMtrl"));
+	m_DebugShape[(UINT)SHAPE_TYPE::FRUSTUM]->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"DebugShapeMtrl"),0);
 
 	// EditorObject 생성
 	CGameObjectEx* pEditorCamObj = new CGameObjectEx;
@@ -80,7 +80,7 @@ void CEditorObjMgr::init()
 	m_DebugBounding->AddComponent(new CMeshRender);
 
 	m_DebugBounding->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"PointMesh"));
-	m_DebugBounding->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"DebugBoundingMtrl"));
+	m_DebugBounding->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"DebugBoundingMtrl"),0);
 }
 
 
@@ -164,7 +164,7 @@ void CEditorObjMgr::render()
 			pShapeObj->finaltick();
 		}
 		
-		pShapeObj->GetRenderComponent()->GetMaterial()->SetScalarParam(VEC4_0, &iter->vColor);
+		pShapeObj->GetRenderComponent()->GetMaterial(0)->SetScalarParam(VEC4_0, &iter->vColor);
 		pShapeObj->render();
 
 		iter->fCurTime += EditorDT;
@@ -191,7 +191,7 @@ void CEditorObjMgr::render()
 		pBoundingObj->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
 		pBoundingObj->finaltick();
 
-		pBoundingObj->GetRenderComponent()->GetMaterial()->SetScalarParam(FLOAT_0, &Boundingiter->fBounding);
+		pBoundingObj->GetRenderComponent()->GetMaterial(0)->SetScalarParam(FLOAT_0, &Boundingiter->fBounding);
 
 		pBoundingObj->render();
 

@@ -21,5 +21,5 @@ void CMissileScript::tick()
 	Transform()->SetRelativePos(vPos);
 
 	int a = 1;
-	MeshRender()->GetDynamicMaterial()->SetScalarParam(INT_2, &a);
+	MeshRender()->GetDynamicMaterial(0)->SetScalarParam(INT_2, &a);
 }

@@ -223,10 +223,20 @@ struct tTransform
 
 extern tTransform g_transform;
 
+// Material °è¼ö
+struct tMtrlData
+{
+	Vec4 vDiff;
+	Vec4 vSpec;
+	Vec4 vAmb;
+	Vec4 vEmv;
+};
 
 
 struct tMtrlConst
 {
+	tMtrlData mtrl;
+
 	int arrInt[4];
 	float arrFloat[4];
 	Vec2 arrV2[4];
