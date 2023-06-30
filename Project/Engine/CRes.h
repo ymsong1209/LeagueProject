@@ -13,10 +13,12 @@ private:
 
     bool            m_bEngine;
 
-private:
+
+protected:
     void SetKey(const wstring& _strKey) { m_strKey = _strKey; }
     void SetRelativePath(const wstring& _strPath) { m_strRelativePath = _strPath; }
 
+private:
     void AddRef() { ++m_iRefCount; }
     void Release();
 

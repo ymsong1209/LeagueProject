@@ -87,7 +87,7 @@ void ContentUI::Reload()
 		switch (type)
 		{
 		case RES_TYPE::MESHDATA:
-
+			CResMgr::GetInst()->Load<CMeshData>(m_vecResPath[i], m_vecResPath[i]);
 			break;
 		case RES_TYPE::MATERIAL:
 			CResMgr::GetInst()->Load<CMaterial>(m_vecResPath[i], m_vecResPath[i]);

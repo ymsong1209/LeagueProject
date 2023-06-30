@@ -13,9 +13,6 @@
     <FxCompile Include="std3d.fx">
       <Filter>Source\08. ShaderCode\02. Render\3D</Filter>
     </FxCompile>
-    <FxCompile Include="particle_update.fx">
-      <Filter>Source\08. ShaderCode\03. Compute</Filter>
-    </FxCompile>
     <FxCompile Include="tilemap.fx">
       <Filter>Source\08. ShaderCode\02. Render\2D</Filter>
     </FxCompile>
@@ -33,9 +30,6 @@
     </FxCompile>
     <FxCompile Include="debugshape.fx">
       <Filter>Source\08. ShaderCode\02. Render</Filter>
-    </FxCompile>
-    <FxCompile Include="setcolor.fx">
-      <Filter>Source\08. ShaderCode\03. Compute</Filter>
     </FxCompile>
     <FxCompile Include="std3d_deferred.fx">
       <Filter>Source\08. ShaderCode\02. Render\3D</Filter>
@@ -64,6 +58,15 @@
     <FxCompile Include="debugbounding.fx">
       <Filter>Source\08. ShaderCode\02. Render</Filter>
     </FxCompile>
+    <FxCompile Include="particle_update.fx">
+      <Filter>Source\08. ShaderCode\03. Compute\Particle</Filter>
+    </FxCompile>
+    <FxCompile Include="setcolor.fx">
+      <Filter>Source\08. ShaderCode\03. Compute\SetColor</Filter>
+    </FxCompile>
+    <FxCompile Include="animation3d.fx">
+      <Filter>Source\08. ShaderCode\03. Compute\Animation\AnimationUpdate</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CRes.cpp">
@@ -77,12 +80,6 @@
     </ClCompile>
     <ClCompile Include="CLevel.cpp">
       <Filter>Source\04. Level</Filter>
-    </ClCompile>
-    <ClCompile Include="CParticleUpdateShader.cpp">
-      <Filter>Source\08. ShaderCode\03. Compute</Filter>
-    </ClCompile>
-    <ClCompile Include="CSetColorShader.cpp">
-      <Filter>Source\08. ShaderCode\03. Compute</Filter>
     </ClCompile>
     <ClCompile Include="CMRT.cpp">
       <Filter>Source\10. MRT</Filter>
@@ -151,7 +148,7 @@
       <Filter>Source\06.Component\5.Animator2D</Filter>
     </ClCompile>
     <ClCompile Include="CLight3D.cpp">
-      <Filter>Source\06.Component\6.Light3D</Filter>
+      <Filter>Source\06.Component\7.Light3D</Filter>
     </ClCompile>
     <ClCompile Include="CAnim2D.cpp">
       <Filter>Source\06.Component\5.Animator2D</Filter>
@@ -217,7 +214,7 @@
       <Filter>Source\03. Manager\11.FontMgr</Filter>
     </ClCompile>
     <ClCompile Include="CCollider3D.cpp">
-      <Filter>Source\06.Component\7.Collider3D</Filter>
+      <Filter>Source\06.Component\8.Collider3D</Filter>
     </ClCompile>
     <ClCompile Include="CCollisionMgr_3D.cpp">
       <Filter>Source\03. Manager\07.CollisionMgr</Filter>
@@ -252,6 +249,18 @@
     <ClCompile Include="CFBXLoader.cpp">
       <Filter>Source\03. Manager\05.CResMgr</Filter>
     </ClCompile>
+    <ClCompile Include="CSetColorShader.cpp">
+      <Filter>Source\08. ShaderCode\03. Compute\SetColor</Filter>
+    </ClCompile>
+    <ClCompile Include="CParticleUpdateShader.cpp">
+      <Filter>Source\08. ShaderCode\03. Compute\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="CAnimator3D.cpp">
+      <Filter>Source\06.Component\6.Animator3D</Filter>
+    </ClCompile>
+    <ClCompile Include="CAnimation3DShader.cpp">
+      <Filter>Source\08. ShaderCode\03. Compute\Animation\AnimationUpdate</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="components.h">
@@ -283,12 +292,6 @@
     </ClInclude>
     <ClInclude Include="CLevel.h">
       <Filter>Source\04. Level</Filter>
-    </ClInclude>
-    <ClInclude Include="CSetColorShader.h">
-      <Filter>Source\08. ShaderCode\03. Compute</Filter>
-    </ClInclude>
-    <ClInclude Include="CParticleUpdateShader.h">
-      <Filter>Source\08. ShaderCode\03. Compute</Filter>
     </ClInclude>
     <ClInclude Include="CMRT.h">
       <Filter>Source\10. MRT</Filter>
@@ -357,7 +360,7 @@
       <Filter>Source\06.Component\5.Animator2D</Filter>
     </ClInclude>
     <ClInclude Include="CLight3D.h">
-      <Filter>Source\06.Component\6.Light3D</Filter>
+      <Filter>Source\06.Component\7.Light3D</Filter>
     </ClInclude>
     <ClInclude Include="CAnim2D.h">
       <Filter>Source\06.Component\5.Animator2D</Filter>
@@ -417,7 +420,7 @@
       <Filter>Source\03. Manager\11.FontMgr</Filter>
     </ClInclude>
     <ClInclude Include="CCollider3D.h">
-      <Filter>Source\06.Component\7.Collider3D</Filter>
+      <Filter>Source\06.Component\8.Collider3D</Filter>
     </ClInclude>
     <ClInclude Include="CFrustum.h">
       <Filter>Source\06.Component\3.Camera</Filter>
@@ -445,6 +448,18 @@
     </ClInclude>
     <ClInclude Include="CFBXLoader.h">
       <Filter>Source\03. Manager\05.CResMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CSetColorShader.h">
+      <Filter>Source\08. ShaderCode\03. Compute\SetColor</Filter>
+    </ClInclude>
+    <ClInclude Include="CParticleUpdateShader.h">
+      <Filter>Source\08. ShaderCode\03. Compute\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="CAnimator3D.h">
+      <Filter>Source\06.Component\6.Animator3D</Filter>
+    </ClInclude>
+    <ClInclude Include="CAnimation3DShader.h">
+      <Filter>Source\08. ShaderCode\03. Compute\Animation\AnimationUpdate</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -547,12 +562,6 @@
     <Filter Include="Source\06.Component\5.Animator2D">
       <UniqueIdentifier>{2c8444d0-717f-49c3-a879-4de7f5eee205}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\06.Component\6.Light3D">
-      <UniqueIdentifier>{5cf9d941-35d8-43e4-8c21-6acfe929db25}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\06.Component\7.Collider3D">
-      <UniqueIdentifier>{86267b67-046c-4ea6-99c1-4c0aa3517ad6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\06.Component\RenderComponent">
       <UniqueIdentifier>{3ae703e4-fa1b-4106-b337-e7cc537b582c}</UniqueIdentifier>
     </Filter>
@@ -619,14 +628,32 @@
     <Filter Include="Source\08. ShaderCode\03. Compute\LandScape\WeightMap">
       <UniqueIdentifier>{ebf8d8af-993c-4d13-8173-9ad62881f42c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\06.Component\8.Animator3D">
-      <UniqueIdentifier>{e4e5c7d9-befb-46bd-b557-5ea410471f5b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\06.Component\9.Fsm">
       <UniqueIdentifier>{bc2f1e94-2327-47f0-8662-4a85b578a7f9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\07. Resource\7.MeshData">
       <UniqueIdentifier>{6543cc12-9674-48e6-b00d-74c51c28f802}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\08. ShaderCode\03. Compute\Animation">
+      <UniqueIdentifier>{5d412c9b-4993-486e-8706-ce8119a7db4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\08. ShaderCode\03. Compute\Particle">
+      <UniqueIdentifier>{4f4a9f85-a42f-4c57-938c-0d94007b15c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\08. ShaderCode\03. Compute\SetColor">
+      <UniqueIdentifier>{ad1b42fe-de09-4882-8031-bcaf8821a87b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\08. ShaderCode\03. Compute\Animation\AnimationUpdate">
+      <UniqueIdentifier>{b799bada-30b3-4625-9801-a4fc00abd87d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\06.Component\7.Light3D">
+      <UniqueIdentifier>{5cf9d941-35d8-43e4-8c21-6acfe929db25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\06.Component\8.Collider3D">
+      <UniqueIdentifier>{86267b67-046c-4ea6-99c1-4c0aa3517ad6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\06.Component\6.Animator3D">
+      <UniqueIdentifier>{732b0ad4-f200-46d0-b46c-b32f1ac0f700}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

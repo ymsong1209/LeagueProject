@@ -6,6 +6,7 @@
 CMRT::CMRT()
 	: m_RT{}
 	, m_RTCount(0)	
+	, m_tViewPort{}
 {
 }
 

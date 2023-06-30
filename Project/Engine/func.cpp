@@ -191,13 +191,6 @@ const char* ToString(COMPONENT_TYPE type)
 	return COMPONENT_TYPE_STR[(UINT)type];
 }
 
-void SaveWString(const wstring& _str, FILE* _File)
-{	
-	UINT iLen = (UINT)_str.length();
-	fwrite(&iLen, sizeof(UINT), 1, _File);
-	fwrite(_str.c_str(), sizeof(wchar_t), _str.length(), _File);
-}
-
 wstring GetRelativePath(const wstring& _strBase, const wstring& _strPath)
 {
 	wstring strRelativePath;
@@ -208,6 +201,26 @@ wstring GetRelativePath(const wstring& _strBase, const wstring& _strPath)
 
 	strRelativePath = _strPath.substr(_strBase.length(), _strPath.length());
 	return strRelativePath;
+}
+
+Matrix GetMatrixFromFbxMatrix(FbxAMatrix& _mat)
+{
+	Matrix mat;
+	for (int i = 0; i < 4; ++i)
+	{
+		for (int j = 0; j < 4; ++j)
+		{
+			mat.m[i][j] = (float)_mat.Get(i, j);
+		}
+	}
+	return mat;
+}
+
+void SaveWString(const wstring& _str, FILE* _File)
+{	
+	UINT iLen = (UINT)_str.length();
+	fwrite(&iLen, sizeof(UINT), 1, _File);
+	fwrite(_str.c_str(), sizeof(wchar_t), _str.length(), _File);
 }
 
 void LoadWString(wstring& _str, FILE* _File)

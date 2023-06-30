@@ -98,7 +98,7 @@ Ptr<CMeshData> CResMgr::LoadFBX(const wstring& _strPath)
 	m_arrRes[(UINT)RES_TYPE::MESHDATA].insert(make_pair(strName, pMeshData.Get()));
 
 	// meshdata 를 실제파일로 저장
-	//pMeshData->Save(strName);
+	pMeshData->Save(strName);
 
 	return pMeshData;
 }
