@@ -14,7 +14,8 @@
 #include <Script\CMonsterScript.h>
 
 #include "CLevelSaveLoad.h"
-
+#include <Engine\CAnimator3D.h>
+#include <Engine\CAnim3D.h>
 
 
 void CreateTestLevel()
@@ -124,18 +125,23 @@ void CreateTestLevel()
 	{
 		Ptr<CMeshData> pMeshData = nullptr;
 		CGameObject* pObj = nullptr;
-		/*pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\house.fbx");
-		pMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\house.mdat");
-		pObj = pMeshData->Instantiate();
-		pObj->SetName(L"House");*/
 
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\monster.fbx");
-		//pMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\monster.mdat");
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\jinx55.fbx");
+		//pMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\jinx55.mdat");
 		pObj = pMeshData->Instantiate();
-		pObj->SetName(L"Monster");
+		pObj->SetName(L"jinx");
+		pObj->AddComponent(new CPlayerScript);
+		pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-90.f), 0.f, 0.f));
+
+		pObj->Animator3D()->CreateClipToAnimT((double)0, (double)1.43, L"animation\\jinx55_Clip.anim", L"animation\\jinx.anim");
+		//현재 위 메쉬데이터 Instantiate()함수를 들어가보면 알겠지만 내부에서 로드하는 FBX 이름 (ex. jinx55) 을 따서 L"animation\\jinx55_Clip.anim" 라는 애님클립 애니메이션이 만들어집니다.
+		//그래서 거기서 프레임을 잘라서 새로운 애니메이션을 만들고 싶다면 위와같이 기존 클립이름과, 새로만들 애니메이션 이름을 지정해  CreateClipToAnimT()나 , CreateClipToAnimF 함수 인자에 넣어주면 됩니다.
+		pObj->Animator3D()->Play(L"animation\\jinx.anim", true, true, true);
 
 		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
 	}
+
+
 
 	// 충돌 시킬 레이어 짝 지정
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");	

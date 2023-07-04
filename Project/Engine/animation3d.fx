@@ -47,7 +47,7 @@ float4 VectorShiftLeft(in float4 _V1, in float4 _V2, uint _Elements)
 {
     float4 vOut = (float4) 0.f;
 
-    VectorPermute(_Elements, ((_Elements)+1), ((_Elements)+2), ((_Elements)+3), _V1, _V2, vOut);
+    VectorPermute(_Elements, ((_Elements) + 1), ((_Elements) + 2), ((_Elements) + 3), _V1, _V2, vOut);
 
     return vOut;
 }
@@ -215,6 +215,11 @@ RWStructuredBuffer<matrix> g_arrFinelMat : register(u0);
 #define BoneCount   g_int_0
 #define CurFrame    g_int_1
 #define Ratio       g_float_0
+
+//애님블렌딩으로 추가된 변수 -------
+#define IsAnimBlend  g_float_1 
+#define BlendRatio   g_float_2
+#define PrevAnimFrameIdx  g_int_3
 // ===========================
 [numthreads(256, 1, 1)]
 void CS_Animation3D(int3 _iThreadIdx : SV_DispatchThreadID)
@@ -229,11 +234,26 @@ void CS_Animation3D(int3 _iThreadIdx : SV_DispatchThreadID)
     // Frame Data Index == Bone Count * Frame Count + _iThreadIdx.x
     uint iFrameDataIndex = BoneCount * CurFrame + _iThreadIdx.x;
     uint iNextFrameDataIdx = BoneCount * (CurFrame + 1) + _iThreadIdx.x;
+    
+    //블렌딩 전용 이전 애님 인덱스 구하기
+    uint iPrevAnimFrameIndex = BoneCount * PrevAnimFrameIdx + _iThreadIdx.x;
 
+    //이건 프레임간의 애님블렌딩
     float4 vScale = lerp(g_arrFrameTrans[iFrameDataIndex].vScale, g_arrFrameTrans[iNextFrameDataIdx].vScale, Ratio);
     float4 vTrans = lerp(g_arrFrameTrans[iFrameDataIndex].vTranslate, g_arrFrameTrans[iNextFrameDataIdx].vTranslate, Ratio);
     float4 qRot = QuternionLerp(g_arrFrameTrans[iFrameDataIndex].qRot, g_arrFrameTrans[iNextFrameDataIdx].qRot, Ratio);
 
+    //프레임간의 애님블렌딩 & 애니메이션 사이의 애님블렌딩 두개 같이 사용하기 위해 프레임간의 애님블렌딩 진행 후, 애니메이션 사이의 애님블렌딩 진행
+    
+    if (IsAnimBlend == 1.f) //이건 애니메이션 사이의 애님 블렌딩
+    {
+        //기존의 프레임 러프가 된 값에 추가적으로 애니메이션 블렌딩진행
+        vScale = lerp(g_arrFrameTrans[iPrevAnimFrameIndex].vScale, vScale, BlendRatio);
+        vTrans = lerp(g_arrFrameTrans[iPrevAnimFrameIndex].vTranslate, vTrans, BlendRatio);
+        qRot = QuternionLerp(g_arrFrameTrans[iPrevAnimFrameIndex].qRot, qRot, BlendRatio);
+    }
+    
+    
     // 최종 본행렬 연산
     MatrixAffineTransformation(vScale, vQZero, qRot, vTrans, matBone);
 
