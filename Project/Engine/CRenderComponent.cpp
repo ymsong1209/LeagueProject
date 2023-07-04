@@ -54,6 +54,9 @@ void CRenderComponent::SetMaterial(Ptr<CMaterial> _Mtrl, UINT _idx)
 
 Ptr<CMaterial> CRenderComponent::GetMaterial(UINT _idx)
 {
+	//Camera에서 sortobject할때 getmaterial로 판정함. 이때 mtrl이 없으면 nullptr반환
+	if (m_vecMtrls.size() == 0) return nullptr;
+
 	if (nullptr == m_vecMtrls[_idx].pCurMtrl)
 	{
 		m_vecMtrls[_idx].pCurMtrl = m_vecMtrls[_idx].pSharedMtrl;
@@ -95,10 +98,7 @@ Ptr<CMaterial> CRenderComponent::GetDynamicMaterial(UINT _idx)
 
 void CRenderComponent::SaveToLevelFile(FILE* _File)
 {
-	COMPONENT_TYPE type = GetType();
-	fwrite(&type, sizeof(UINT), 1, _File);
-
-
+	
 	SaveResRef(m_pMesh.Get(), _File);
 
 	UINT iMtrlCount = GetMtrlCount();
@@ -121,6 +121,8 @@ void CRenderComponent::LoadFromLevelFile(FILE* _File)
 
 	UINT iMtrlCount = GetMtrlCount();
 	fread(&iMtrlCount, sizeof(UINT), 1, _File);
+
+	m_vecMtrls.resize(iMtrlCount);
 
 	for (UINT i = 0; i < iMtrlCount; ++i)
 	{

@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Anim3DEditorUI.h" />
     <ClInclude Include="Animator2DUI.h" />
     <ClInclude Include="CameraUI.h" />
     <ClInclude Include="CEditorObjMgr.h" />
@@ -197,6 +198,7 @@
     <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Anim3DEditorUI.cpp" />
     <ClCompile Include="Animator2DUI.cpp" />
     <ClCompile Include="CameraUI.cpp" />
     <ClCompile Include="CEditorObjMgr.cpp" />

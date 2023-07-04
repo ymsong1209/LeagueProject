@@ -214,6 +214,7 @@ RWStructuredBuffer<matrix> g_arrFinelMat : register(u0);
 // Animation3D Compute Shader
 #define BoneCount   g_int_0
 #define CurFrame    g_int_1
+#define NextFrame   g_int_2
 #define Ratio       g_float_0
 // ===========================
 [numthreads(256, 1, 1)]
@@ -228,7 +229,7 @@ void CS_Animation3D(int3 _iThreadIdx : SV_DispatchThreadID)
 
     // Frame Data Index == Bone Count * Frame Count + _iThreadIdx.x
     uint iFrameDataIndex = BoneCount * CurFrame + _iThreadIdx.x;
-    uint iNextFrameDataIdx = BoneCount * (CurFrame + 1) + _iThreadIdx.x;
+    uint iNextFrameDataIdx = BoneCount * (NextFrame) + _iThreadIdx.x;
 
     float4 vScale = lerp(g_arrFrameTrans[iFrameDataIndex].vScale, g_arrFrameTrans[iNextFrameDataIdx].vScale, Ratio);
     float4 vTrans = lerp(g_arrFrameTrans[iFrameDataIndex].vTranslate, g_arrFrameTrans[iNextFrameDataIdx].vTranslate, Ratio);

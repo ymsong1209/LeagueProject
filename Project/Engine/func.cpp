@@ -314,3 +314,14 @@ Vec3 DecomposeRotMat(const Matrix& _matRot)
 	}
 	return vNewRot;
 }
+
+wstring ReplacePipeCharacter(const std::wstring& _mywstring)
+{
+	std::wstring replacedFileName = _mywstring;
+	size_t found = replacedFileName.find(L"|");
+	while (found != std::wstring::npos) {
+		replacedFileName.replace(found, 1, L"-");
+		found = replacedFileName.find(L"|", found + 1);
+	}
+	return replacedFileName;
+}

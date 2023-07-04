@@ -116,5 +116,7 @@ void Safe_Del_Map(map<T1, T2>& _map)
 	_map.clear();
 }
 
-
+//문자열내에 |문자를 -로 바꾸는 함수
+//파일저장시에 |를 저장 못함
+wstring ReplacePipeCharacter(const std::wstring& _mywstring);
 

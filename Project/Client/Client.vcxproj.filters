@@ -119,6 +119,9 @@
     <Filter Include="UI\InspectorUI\ComponentUI\11. FsmUI">
       <UniqueIdentifier>{47d9f624-63d7-4ca0-bf08-7e6a9757ec41}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI\Anim3DEditorUI">
+      <UniqueIdentifier>{bc45d8bc-96a1-4685-b900-691e9c1fed9a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -256,6 +259,9 @@
     </ClInclude>
     <ClInclude Include="ComponentUI.h">
       <Filter>UI\InspectorUI\ComponentUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Anim3DEditorUI.h">
+      <Filter>UI\Anim3DEditorUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -402,6 +408,9 @@
     </ClCompile>
     <ClCompile Include="ComponentUI.cpp">
       <Filter>UI\InspectorUI\ComponentUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Anim3DEditorUI.cpp">
+      <Filter>UI\Anim3DEditorUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

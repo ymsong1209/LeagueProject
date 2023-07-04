@@ -17,6 +17,8 @@
 #include "InspectorUI.h"
 #include "CLevelSaveLoad.h"
 #include "LevelUI.h"
+#include "Anim3DEditorUI.h"
+
 
 
 MenuUI::MenuUI()
@@ -176,6 +178,10 @@ int MenuUI::render_update()
                 LevelUI* levelEditor = (LevelUI*)ImGuiMgr::GetInst()->FindUI("##Level");
                 levelEditor->SetActive(true);
             }
+            if (ImGui::MenuItem("Anim3DEditorUI")) {
+                Anim3DEditorUI* Anim3DEditor = (Anim3DEditorUI*)ImGuiMgr::GetInst()->FindUI("##Anim3DEditorUI");
+                Anim3DEditor->SetActive(true);
+            }
 
             ImGui::EndMenu();
         }
@@ -292,8 +298,12 @@ void MenuUI::AddComponent(COMPONENT_TYPE _type)
     // 선택된 오브젝트를 가져와서 ComponentType 에 맞는 컴포넌트를 생성해서 추가한다.
     CGameObject* pSelectedObject = outliner->GetSelectedObject();
 
-    if (nullptr == pSelectedObject)
+    if (nullptr == pSelectedObject) {
+        wchar_t szStr[256] = {};
+        wsprintf(szStr, L"현재 Inspector에 선택된 Object가 없습니다. Outliner에서 Object를 고르십시요.");
+        MessageBox(nullptr, szStr, L"Component추가 실패.", MB_OK);
         return;
+    }
 
     switch (_type)
     {
@@ -304,19 +314,19 @@ void MenuUI::AddComponent(COMPONENT_TYPE _type)
         pSelectedObject->AddComponent(new CCollider2D);
         break;
     case COMPONENT_TYPE::COLLIDER3D:
-        //pSelectedObject->AddComponent(new CCollider3D);
+        pSelectedObject->AddComponent(new CCollider3D);
         break;
     case COMPONENT_TYPE::ANIMATOR2D:
         pSelectedObject->AddComponent(new CAnimator2D);
         break;
     case COMPONENT_TYPE::ANIMATOR3D:
-        //pSelectedObject->AddComponent(new CAnimator3D);
+        pSelectedObject->AddComponent(new CAnimator3D);
         break;
     case COMPONENT_TYPE::LIGHT2D:
         pSelectedObject->AddComponent(new CLight2D);
         break;
     case COMPONENT_TYPE::LIGHT3D:
-        //pSelectedObject->AddComponent(new CLight3D);
+        pSelectedObject->AddComponent(new CLight3D);
         break;
     case COMPONENT_TYPE::CAMERA:
         pSelectedObject->AddComponent(new CCamera);
@@ -331,7 +341,7 @@ void MenuUI::AddComponent(COMPONENT_TYPE _type)
         pSelectedObject->AddComponent(new CTileMap);
         break;
     case COMPONENT_TYPE::LANDSCAPE:
-        //pSelectedObject->AddComponent(new CLandScape);
+        pSelectedObject->AddComponent(new CLandScape);
         break;
     case COMPONENT_TYPE::DECAL:
         pSelectedObject->AddComponent(new CDecal);
