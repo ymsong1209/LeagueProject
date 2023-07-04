@@ -257,7 +257,6 @@
     <ClInclude Include="ComponentUI.h">
       <Filter>UI\InspectorUI\ComponentUI</Filter>
     </ClInclude>
-    <ClInclude Include="Animator3DUI.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -404,6 +403,5 @@
     <ClCompile Include="ComponentUI.cpp">
       <Filter>UI\InspectorUI\ComponentUI</Filter>
     </ClCompile>
-    <ClCompile Include="Animator3DUI.cpp" />
   </ItemGroup>
 </Project>

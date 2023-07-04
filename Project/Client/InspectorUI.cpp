@@ -26,7 +26,6 @@
 #include "MaterialUI.h"
 #include "ScriptUI.h"
 #include "DecalUI.h"
-#include "Animator3DUI.h"
 
 #include "RenderComponentUI.h"
 
@@ -62,10 +61,6 @@ InspectorUI::InspectorUI()
 	m_arrComUI[(UINT)COMPONENT_TYPE::ANIMATOR2D] = new Animator2DUI;
 	m_arrComUI[(UINT)COMPONENT_TYPE::ANIMATOR2D]->SetSize(0.f, 150.f);
 	AddChildUI(m_arrComUI[(UINT)COMPONENT_TYPE::ANIMATOR2D]);
-
-	m_arrComUI[(UINT)COMPONENT_TYPE::ANIMATOR3D] = new Animator3DUI;
-	m_arrComUI[(UINT)COMPONENT_TYPE::ANIMATOR3D]->SetSize(0.f, 450.f);
-	AddChildUI(m_arrComUI[(UINT)COMPONENT_TYPE::ANIMATOR3D]);
 
 	m_arrComUI[(UINT)COMPONENT_TYPE::LIGHT2D] = new Light2DUI;
 	m_arrComUI[(UINT)COMPONENT_TYPE::LIGHT2D]->SetSize(0.f, 150.f);

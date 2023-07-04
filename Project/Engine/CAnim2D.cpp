@@ -21,7 +21,7 @@ void CAnim2D::finaltick()
 	if (m_bFinish)
 		return;
 
-	m_fTime += EditorDT;
+	m_fTime += DT;
 
 	if (m_vecFrm[m_iCurFrm].fDuration < m_fTime)
 	{
