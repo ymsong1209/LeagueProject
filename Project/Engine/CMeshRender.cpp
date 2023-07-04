@@ -5,6 +5,7 @@
 #include "CTransform.h"
 #include "CAnimator2D.h"
 #include "CAnimator3D.h"
+#include "CAnim3D.h"
 
 CMeshRender::CMeshRender()
 	: CRenderComponent(COMPONENT_TYPE::MESHRENDER)		
@@ -44,7 +45,7 @@ void CMeshRender::render()
 				continue;
 
 			GetMaterial(i)->SetAnim3D(true); // Animation Mesh ¾Ë¸®±â
-			GetMaterial(i)->SetBoneCount(Animator3D()->GetBoneCount());
+			GetMaterial(i)->SetBoneCount(Animator3D()->GetCurAnim3D()->GetBoneCount());
 		}
 	}
 

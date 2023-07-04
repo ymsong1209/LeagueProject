@@ -42,8 +42,14 @@ CGameObject* CMeshData::Instantiate()
 	CAnimator3D* pAnimator = new CAnimator3D;
 	pNewObj->AddComponent(pAnimator);
 
-	pAnimator->SetBones(m_pMesh->GetBones());
-	pAnimator->SetAnimClip(m_pMesh->GetAnimClip());
+	wstring key = this->GetKey();
+	key.erase(0, 9);
+	key.erase(key.size() - 5, 5);
+
+	key = L"animation\\" + key + L"_Clip.anim"; //애니메이션이 있다면 그 이름에 _Clip을 붙여 클립애니메이션임을 구별하도록 함(일반적인 애님과는 구조적으로 똑같음)
+
+	pAnimator->SetAnimClip(m_pMesh->GetAnimClip(), key, m_pMesh->GetBones()); //키값과 함께 애님을 만듬 (본도 함께넣음)
+	pAnimator->Play(key, true);
 
 	return pNewObj;
 }

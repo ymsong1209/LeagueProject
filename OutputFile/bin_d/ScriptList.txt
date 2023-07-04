@@ -3,4 +3,3 @@ CGravityScript
 CMissileScript
 CMonsterScript
 CPlayerScript
-CTestScript
