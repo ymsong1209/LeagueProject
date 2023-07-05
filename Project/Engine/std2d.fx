@@ -285,8 +285,8 @@ float4 PS_Anim2D(VS_Anim_OUT _in) : SV_Target
             else
             {
                 // UV를 초과한 바깥 부분은 버린다.
-                vOutColor = float4(1.f, 1.f, 0.f, 1.f);
-                //discard;
+                //vOutColor = float4(1.f, 1.f, 0.f, 1.f);
+                discard;
             }
         }
         // 애니메이션 사용하지 않을 시

@@ -45,7 +45,8 @@ Animator2DUI::~Animator2DUI()
 	}
 	m_vecAnimFrm.clear();
 
-	delete m_pEditingAnim;
+	if(!m_pEditingAnim)
+		delete m_pEditingAnim;
 }
 
 
@@ -58,7 +59,8 @@ void Animator2DUI::init()
 	}
 	if (m_pCurAnim)
 	{
-		m_pEditingAnim = m_pCurAnim->Clone();
+		//m_pEditingAnim = m_pCurAnim->Clone();
+		m_pEditingAnim = m_pCurAnim;
 		CreateFrameImage(m_pEditingAnim);
 	}
 }
@@ -80,7 +82,7 @@ int Animator2DUI::render_update()
 		}
 	}
 
-	PlayAnim();
+	//PlayAnim();
 
 	// ======= 1. 현재 애니메이션 리스트========
 	char szBuff[50] = {};
@@ -111,10 +113,11 @@ int Animator2DUI::render_update()
 		wstring AnimKey = AnimListWstr[m_iSelectedAnimIdx];
 		GetTarget()->Animator2D()->Play(AnimKey, true);
 
-		if (m_pEditingAnim != nullptr)
-			delete m_pEditingAnim;
+		//if (m_pEditingAnim != nullptr)
+			//delete m_pEditingAnim;
 
-		m_pEditingAnim = GetTarget()->Animator2D()->GetCurAnim()->Clone();
+		//m_pEditingAnim = GetTarget()->Animator2D()->GetCurAnim()->Clone();
+		m_pEditingAnim = GetTarget()->Animator2D()->GetCurAnim();
 		m_Changed = true;
 	}
 
@@ -132,6 +135,12 @@ int Animator2DUI::render_update()
 	{
 		if (ImGui::Begin("Animation Editor", &show_editor_window, ImGuiWindowFlags_NoBringToFrontOnFocus))
 		{
+			if (m_pEditingAnim == nullptr)
+			{
+				m_pEditingAnim = m_pCurAnim;
+				CreateFrameImage(m_pEditingAnim);
+			}
+
 			// 1. 애니메이션 프레임 정보
 			ImGui::BeginChild("##Animation Frame Image", ImVec2(0, 130.f), true, ImGuiWindowFlags_HorizontalScrollbar);
 
@@ -306,13 +315,13 @@ int Animator2DUI::render_update()
 			ImGui::SameLine();
 			if (ImGui::Button("Save"))
 			{
-				//m_pEditingAnim->Save();
+				m_pEditingAnim->Save();
 			}
 			ImGui::SameLine();
 			if (ImGui::Button("Load"))
 			{
-				//m_pEditingAnim->Load();
-				//m_Changed = true;
+				m_pEditingAnim->Load();
+				m_Changed = true;
 			}
 
 			// Dynamic Transfrom Option
@@ -343,44 +352,60 @@ int Animator2DUI::render_update()
 				ImGui::InputFloat3("##OriginalRot", tOriPos.OriginalRot, "%.1f", ImGuiInputTextFlags_::ImGuiInputTextFlags_ReadOnly);
 
 				ImGui::EndChild();
-				
-				ImGui::BeginChild("##Dynamic Transform", ImVec2(0.f, 100.f), true);
+
+				ImGui::BeginChild("##Dynamic Transform", ImVec2(0.f, 150.f), true);
 				ImGui::Text("Dynamic Transform");
 
 				ImGui::Text("Position  :");
 				ImGui::SameLine();
 				Vec3 DynamicPos = m_pEditingAnim->GetCurFrameDynamicPos();
-				if (Im Gui::DragFloat3("##DynamicPos", DynamicPos))
+				if (ImGui::DragFloat3("##DynamicPos", DynamicPos))
 				{
 					if (GetTarget()->Animator2D()->IsPaused())
 					{
 						m_pCurAnim->SetCurFrameDynamicPos(DynamicPos);
-						m_pEditingAnim->SetCurFrameDynamicPos(DynamicPos);
 					}
 				}
 
 				ImGui::Text("Scale     :");
 				ImGui::SameLine();
 				Vec3 DynamicScale = m_pEditingAnim->GetCurFrameDynamicScale();
-				if (ImGui::DragFloat3("##DynamicScale", DynamicScale))
+				if (ImGui::DragFloat3("##DynamicScale", DynamicScale, 0.1f))
 				{
 					if (GetTarget()->Animator2D()->IsPaused())
 					{
 						m_pEditingAnim->SetCurFrameDynamicScale(DynamicScale);
-						m_pCurAnim->SetCurFrameDynamicScale(DynamicScale);
 					}
 				}
 
-				ImGui::Text("Rotation   :");
+				ImGui::Text("Rotation  :");
 				ImGui::SameLine();
 				Vec3 DynamicRot = m_pEditingAnim->GetCurFrameDynamicRot();
+				DynamicRot = (DynamicRot / XM_PI) * 180.f;
 				if (ImGui::DragFloat3("##DynamicRot", DynamicRot))
 				{
 					if (GetTarget()->Animator2D()->IsPaused())
 					{
 						DynamicRot = (DynamicRot / 180.f) * XM_PI;
 						m_pEditingAnim->SetCurFrameDynamicRot(DynamicRot);
-						m_pCurAnim->SetCurFrameDynamicRot(DynamicRot);
+					}
+				}
+
+				if (ImGui::Button("Copy Prev Data"))
+				{
+					if (GetTarget()->Animator2D()->IsPaused())
+					{
+						int PrevFrameIdx = m_iCurFrmIdx - 1;
+						if (PrevFrameIdx >= 0)
+						{
+							Vec3 PrevPos = m_pEditingAnim->GetFrameByIdx(PrevFrameIdx).DynamicPos;
+							Vec3 PrevScale = m_pEditingAnim->GetFrameByIdx(PrevFrameIdx).DynamicScale;
+							Vec3 PrevRot = m_pEditingAnim->GetFrameByIdx(PrevFrameIdx).DynamicRot;
+
+							m_pEditingAnim->SetCurFrameDynamicPos(PrevPos);
+							m_pEditingAnim->SetCurFrameDynamicScale(PrevScale);
+							m_pEditingAnim->SetCurFrameDynamicRot(PrevRot);
+						}
 					}
 				}
 
@@ -571,12 +596,14 @@ int Animator2DUI::render_update()
 
 	if (ImGui::Button("Load"))
 	{
-		//CAnim2D* newAnim = new CAnim2D;
-		//newAnim->Load();
-		//GetTarget()->Animator2D()->AddAnim(newAnim->Clone());
+		CAnim2D* newAnim = new CAnim2D;
+		newAnim->Load();
+		GetTarget()->Animator2D()->AddAnim(newAnim);
+		m_pEditingAnim = newAnim;
+		m_Changed = true;
 	}
 
-	if(ImGui::Button("Set to Original Transform"))
+	if (ImGui::Button("Set to Original Transform"))
 	{
 		GetTarget()->Animator2D()->SetOriginalTransform();
 	}
@@ -718,10 +745,11 @@ void Animator2DUI::CreateNewAnim(DWORD_PTR _AtlasKey)
 	// Atlas 한 장 짜리의 애니메이션을 만든다.
 	NewAnim->Create(L"New Anim", pAtlasTex, Vec2(0, 0), Vec2(1, 1), Vec2(0.1f, 0.1f), 1, 16);
 
-	//Target의 Anim Map에 해당 애니메이션을 등록한다.
+	// Target의 Anim Map에 해당 애니메이션을 등록한다.
 	GetTarget()->Animator2D()->AddAnim(NewAnim);
 
-	m_pEditingAnim = NewAnim->Clone();
+	//m_pEditingAnim = NewAnim->Clone();
+	m_pEditingAnim = NewAnim;
 	m_Changed = true;
 }
 
@@ -806,7 +834,7 @@ void Animator2DUI::CreateFrameImage(CAnim2D* _curAnim)
 
 		// 5. RectMesh->render()로 빈 텍스처에 해당 프레임 잘라서 출력
 		Ptr<CMesh> pRectMesh = CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh");
-		pRectMesh->render();
+		pRectMesh->render(0);
 
 		// 6. 출력 완료된 텍스처 벡터에 저장
 		m_vecAnimFrm.push_back(pAnimFrameTex);
