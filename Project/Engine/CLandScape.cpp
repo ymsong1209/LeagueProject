@@ -83,38 +83,38 @@ void CLandScape::finaltick()
 
 void CLandScape::render()
 {
-	if (GetMesh() == nullptr || GetMaterial() == nullptr)
+	if (GetMesh() == nullptr || GetMaterial(0) == nullptr)
 		return;
 
 	Transform()->UpdateData();
 
 	//GetMaterial()->GetShader()->SetRSType(RS_TYPE::WIRE_FRAME);
 
-	GetMaterial()->SetScalarParam(INT_0, &m_iFaceX);
-	GetMaterial()->SetScalarParam(INT_1, &m_iFaceZ);
-	GetMaterial()->SetTexParam(TEX_2, m_HeightMap);
+	GetMaterial(0)->SetScalarParam(INT_0, &m_iFaceX);
+	GetMaterial(0)->SetScalarParam(INT_1, &m_iFaceZ);
+	GetMaterial(0)->SetTexParam(TEX_2, m_HeightMap);
 
 	Vec2 vResolution = Vec2(m_pHeightMap->Width(), m_pHeightMap->Height());
-	GetMaterial()->SetScalarParam(SCALAR_PARAM::VEC2_0, &vResolution);
-	GetMaterial()->SetTexParam(TEX_PARAM::TEX_2, m_pHeightMap);
+	GetMaterial(0)->SetScalarParam(SCALAR_PARAM::VEC2_0, &vResolution);
+	GetMaterial(0)->SetTexParam(TEX_PARAM::TEX_2, m_pHeightMap);
 
 	// 가중치 버퍼 전달
 	m_pWeightMapBuffer->UpdateData(17, PIPELINE_STAGE::PS_PIXEL);
 
 	// 가중치 버퍼 해상도 전달
 	Vec2 vWeightMapResolution = Vec2((float)m_iWeightWidth, (float)m_iWeightHeight);
-	GetMaterial()->SetScalarParam(SCALAR_PARAM::VEC2_1, &vWeightMapResolution);
+	GetMaterial(0)->SetScalarParam(SCALAR_PARAM::VEC2_1, &vWeightMapResolution);
 
 	// 타일 배열 개수 전달
 	float m_fTileCount = float(m_pTileArrTex->GetArraySize() / 2); // 색상, 노말 합쳐져있어서 나누기 2 해줌
-	GetMaterial()->SetScalarParam(SCALAR_PARAM::FLOAT_1, &m_fTileCount);
+	GetMaterial(0)->SetScalarParam(SCALAR_PARAM::FLOAT_1, &m_fTileCount);
 
 	// 타일 텍스쳐 전달
-	GetMaterial()->SetTexParam(TEX_PARAM::TEX_ARR_0, m_pTileArrTex);
+	GetMaterial(0)->SetTexParam(TEX_PARAM::TEX_ARR_0, m_pTileArrTex);
 
-	GetMaterial()->UpdateData();
+	GetMaterial(0)->UpdateData();
 
-	GetMesh()->render();	
+	GetMesh()->render(0);	
 
 	// ==========
 	// 리소스 정리

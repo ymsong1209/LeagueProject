@@ -79,35 +79,28 @@ Ptr<CTexture> CResMgr::LoadTexture(const wstring& _strKey, const wstring& _strRe
 	return pRes;
 }
 
-void CResMgr::DeleteTexture(const wstring& _strKey)
+Ptr<CMeshData> CResMgr::LoadFBX(const wstring& _strPath)
 {
-	// 1. 삭제할 텍스처의 키값으로 검색 -> 해당 텍스처 없을 경우 assert
-	Ptr<CTexture> pTex = FindRes<CTexture>(_strKey);
-	assert(pTex != nullptr);
+	wstring strFileName = path(_strPath).stem();
 
-	// 2. 리소스 목록에서 해당 텍스처 삭제
-	m_arrRes[(UINT)RES_TYPE::TEXTURE].erase(_strKey);
+	wstring strName = L"meshdata\\";
+	strName += strFileName + L".mdat";
 
-	// 3. 해당 텍스처 삭제
-	delete pTex.Get();
+	Ptr<CMeshData> pMeshData = FindRes<CMeshData>(strName);
 
-	m_Changed = true;
-}
+	if (nullptr != pMeshData)
+		return pMeshData;
 
-void CResMgr::DeleteTexture(Ptr<CTexture> _Tex)
-{
-	// 1. 삭제할 텍스처의 키값으로 검색 -> 해당 텍스처 없을 경우 assert
-	Ptr<CTexture> pTex = FindRes<CTexture>(_Tex->GetKey());
-	assert(pTex != nullptr);
+	pMeshData = CMeshData::LoadFromFBX(_strPath);
+	pMeshData->SetKey(strName);
+	pMeshData->SetRelativePath(strName);
 
-	// 2. 리소스 목록에서 해당 텍스처 삭제
-	m_arrRes[(UINT)RES_TYPE::TEXTURE].erase(_Tex->GetKey());
+	m_arrRes[(UINT)RES_TYPE::MESHDATA].insert(make_pair(strName, pMeshData.Get()));
 
-	// 3. 해당 텍스처 삭제
-	delete pTex.Get();
-	pTex = nullptr;
+	// meshdata 를 실제파일로 저장
+	pMeshData->Save(strName);
 
-	m_Changed = true;
+	return pMeshData;
 }
 
 void CResMgr::DeleteRes(RES_TYPE _type, const wstring& _strKey)

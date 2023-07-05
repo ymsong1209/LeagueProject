@@ -202,8 +202,8 @@ void CCamera::SortObject()
 
 				// 렌더링 기능이 없는 오브젝트는 제외
 				if (   nullptr == pRenderCom 
-					|| nullptr == pRenderCom->GetMaterial()
-					|| nullptr == pRenderCom->GetMaterial()->GetShader())
+					|| nullptr == pRenderCom->GetMaterial(0)
+					|| nullptr == pRenderCom->GetMaterial(0)->GetShader())
 					continue;
 
 				// FrustumCheck
@@ -223,7 +223,7 @@ void CCamera::SortObject()
 				}
 
 				// 쉐이더 도메인에 따른 분류
-				SHADER_DOMAIN eDomain = pRenderCom->GetMaterial()->GetShader()->GetDomain();
+				SHADER_DOMAIN eDomain = pRenderCom->GetMaterial(0)->GetShader()->GetDomain();
 				switch (eDomain)
 				{
 				case SHADER_DOMAIN::DOMAIN_DEFERRED:
@@ -354,7 +354,7 @@ void CCamera::render_deferred()
 			//layer는 0~31이지만 비트연산을 위해 한칸씩 옮김
 			//layernum = 1~32
 			float layernum = m_vecDeferred[i]->GetLayerIndex() + 1;
-			m_vecDeferred[i]->GetRenderComponent()->GetMaterial()->SetScalarParam(FLOAT_0, &layernum);
+			m_vecDeferred[i]->GetRenderComponent()->GetMaterial(0)->SetScalarParam(FLOAT_0, &layernum);
 		}
 		m_vecDeferred[i]->render();
 	}
@@ -379,7 +379,7 @@ void CCamera::render_merge()
 	pMtrl->SetTexParam(TEX_3, CResMgr::GetInst()->FindRes<CTexture>(L"EmissiveTargetTex"));
 	pMtrl->UpdateData();
 
-	pMesh->render();
+	pMesh->render(0);
 }
 
 void CCamera::render_opaque()

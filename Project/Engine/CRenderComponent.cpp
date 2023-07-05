@@ -16,34 +16,6 @@ CRenderComponent::~CRenderComponent()
 {
 }
 
-void CRenderComponent::SetMaterial(Ptr<CMaterial> _Mtrl)
-{
-	m_pSharedMtrl = _Mtrl;
-	m_pCurrentMtrl = m_pSharedMtrl;
-}
-
-Ptr<CMaterial> CRenderComponent::GetDynamicMaterial()
-{
-	// 원본 재질이 없다 -> Nullptr 반환
-	if (nullptr == m_pSharedMtrl)
-	{
-		m_pCurrentMtrl = nullptr;
-		return m_pCurrentMtrl;
-	}
-
-	// 동적 재질 최초 요청시 제작 해서 준다.
-	if (nullptr == m_pDynamicMtrl)
-	{		
-		m_pDynamicMtrl = m_pSharedMtrl->Clone();		
-	}
-
-	// 동적 재질을 현재 사용재질로 지정한다.
-	m_pCurrentMtrl = m_pDynamicMtrl;
-
-
-	return m_pCurrentMtrl;
-}
-
 void CRenderComponent::render_depthmap()
 {
 	Transform()->UpdateData();
@@ -54,14 +26,90 @@ void CRenderComponent::render_depthmap()
 	pMtrl->UpdateData();
 
 	// 사용할 메쉬 업데이트 및 렌더링
-	GetMesh()->render();
+	GetMesh()->render(0);
 
+}
+
+void CRenderComponent::SetMesh(Ptr<CMesh> _Mesh)
+{
+	m_pMesh = _Mesh;
+
+	if (!m_vecMtrls.empty())
+	{
+		m_vecMtrls.clear();
+		vector<tMtrlSet> vecMtrls;
+		m_vecMtrls.swap(vecMtrls);
+	}
+
+
+	if (nullptr != m_pMesh)
+		m_vecMtrls.resize(m_pMesh->GetSubsetCount());
+}
+
+void CRenderComponent::SetMaterial(Ptr<CMaterial> _Mtrl, UINT _idx)
+{
+	m_vecMtrls[_idx].pSharedMtrl = _Mtrl;
+	m_vecMtrls[_idx].pCurMtrl = _Mtrl;
+}
+
+Ptr<CMaterial> CRenderComponent::GetMaterial(UINT _idx)
+{
+	if (nullptr == m_vecMtrls[_idx].pCurMtrl)
+	{
+		m_vecMtrls[_idx].pCurMtrl = m_vecMtrls[_idx].pSharedMtrl;
+	}
+
+	return m_vecMtrls[_idx].pCurMtrl;
+}
+
+Ptr<CMaterial> CRenderComponent::GetSharedMaterial(UINT _idx)
+{
+	m_vecMtrls[_idx].pCurMtrl = m_vecMtrls[_idx].pSharedMtrl;
+
+	if (m_vecMtrls[_idx].pDynamicMtrl.Get())
+	{
+		m_vecMtrls[_idx].pDynamicMtrl = nullptr;
+	}
+
+	return m_vecMtrls[_idx].pSharedMtrl;
+}
+
+Ptr<CMaterial> CRenderComponent::GetDynamicMaterial(UINT _idx)
+{
+	// 원본 재질이 없다 -> Nullptr 반환
+	if (nullptr == m_vecMtrls[_idx].pSharedMtrl)
+	{
+		m_vecMtrls[_idx].pCurMtrl = nullptr;
+		return m_vecMtrls[_idx].pCurMtrl;
+	}
+
+	if (nullptr == m_vecMtrls[_idx].pDynamicMtrl)
+	{
+		m_vecMtrls[_idx].pDynamicMtrl = m_vecMtrls[_idx].pSharedMtrl->Clone();
+		m_vecMtrls[_idx].pDynamicMtrl->SetName(m_vecMtrls[_idx].pSharedMtrl->GetName() + L"_Clone");
+		m_vecMtrls[_idx].pCurMtrl = m_vecMtrls[_idx].pDynamicMtrl;
+	}
+
+	return m_vecMtrls[_idx].pCurMtrl;
 }
 
 void CRenderComponent::SaveToLevelFile(FILE* _File)
 {
+	COMPONENT_TYPE type = GetType();
+	fwrite(&type, sizeof(UINT), 1, _File);
+
+
 	SaveResRef(m_pMesh.Get(), _File);
-	SaveResRef(m_pSharedMtrl.Get(), _File);	
+
+	UINT iMtrlCount = GetMtrlCount();
+	fwrite(&iMtrlCount, sizeof(UINT), 1, _File);
+
+	for (UINT i = 0; i < iMtrlCount; ++i)
+	{
+		SaveResRef(m_vecMtrls[i].pSharedMtrl.Get(), _File);
+	}
+
+
 	fwrite(&m_fBounding, sizeof(float), 1, _File);
 	fwrite(&m_bFrustumCheck, sizeof(bool), 1, _File);
 	fwrite(&m_bDynamicShadow, sizeof(bool), 1, _File);
@@ -70,10 +118,18 @@ void CRenderComponent::SaveToLevelFile(FILE* _File)
 void CRenderComponent::LoadFromLevelFile(FILE* _File)
 {
 	LoadResRef(m_pMesh, _File);
-	LoadResRef(m_pSharedMtrl, _File);
+
+	UINT iMtrlCount = GetMtrlCount();
+	fread(&iMtrlCount, sizeof(UINT), 1, _File);
+
+	for (UINT i = 0; i < iMtrlCount; ++i)
+	{
+		Ptr<CMaterial> pMtrl;
+		LoadResRef(pMtrl, _File);
+		SetMaterial(pMtrl, i);
+	}
+
 	fread(&m_fBounding, sizeof(float), 1, _File);
 	fread(&m_bFrustumCheck, sizeof(bool), 1, _File);
 	fread(&m_bDynamicShadow, sizeof(bool), 1, _File);
-
-	SetMaterial(m_pSharedMtrl);
 }

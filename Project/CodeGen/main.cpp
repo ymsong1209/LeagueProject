@@ -54,6 +54,13 @@ int main()
 			}
 		}
 
+		// 'State.h' 또는 'state.h'가 포함된 파일들을 제외한다.
+		wstring currentFileName(tData.cFileName);
+		std::transform(currentFileName.begin(), currentFileName.end(), currentFileName.begin(), ::towlower);
+		if (currentFileName.find(L"state.h") != wstring::npos) {
+			bExeption = true;
+		}
+
 		if (!bExeption)
 		{
 			g_vecName.push_back(wstring(tData.cFileName).substr(0, wcslen(tData.cFileName) - 2));

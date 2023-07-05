@@ -129,7 +129,7 @@ void CLight3D::render()
 	
 	m_LightMtrl->UpdateData();
 
-	m_VolumeMesh->render();
+	m_VolumeMesh->render(0);
 }
 
 void CLight3D::render_depthmap()

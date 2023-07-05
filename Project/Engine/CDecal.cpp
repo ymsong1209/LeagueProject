@@ -15,7 +15,7 @@ CDecal::CDecal()
 {
 
 	SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
-	SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"DecalMtrl"));
+	SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"DecalMtrl"),0);
 }
 
 CDecal::CDecal(const CDecal& _other)
@@ -28,7 +28,7 @@ CDecal::CDecal(const CDecal& _other)
 	, m_BSType(_other.m_BSType)
 {
 	SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
-	SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"DecalMtrl"));
+	SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"DecalMtrl"),0);
 }
 
 CDecal::~CDecal()
@@ -47,16 +47,16 @@ void CDecal::render()
 {
 	Transform()->UpdateData();
 
-	GetMaterial()->GetShader()->SetBSType(m_BSType);
-	GetMaterial()->SetScalarParam(INT_0, &m_Light);
-	GetMaterial()->SetScalarParam(INT_1, &m_iLayerCheck);
-	GetMaterial()->SetScalarParam(VEC4_0, &m_vLightDiffuse);
-	GetMaterial()->SetTexParam(TEX_0, m_DecalTex);
-	GetMaterial()->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"PositionTargetTex"));
-	GetMaterial()->SetTexParam(TEX_2, CResMgr::GetInst()->FindRes<CTexture>(L"DataTargetTex"));
-	GetMaterial()->UpdateData();
+	GetMaterial(0)->GetShader()->SetBSType(m_BSType);
+	GetMaterial(0)->SetScalarParam(INT_0, &m_Light);
+	GetMaterial(0)->SetScalarParam(INT_1, &m_iLayerCheck);
+	GetMaterial(0)->SetScalarParam(VEC4_0, &m_vLightDiffuse);
+	GetMaterial(0)->SetTexParam(TEX_0, m_DecalTex);
+	GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"PositionTargetTex"));
+	GetMaterial(0)->SetTexParam(TEX_2, CResMgr::GetInst()->FindRes<CTexture>(L"DataTargetTex"));
+	GetMaterial(0)->UpdateData();
 
-	GetMesh()->render();
+	GetMesh()->render(0);
 }
 
 void CDecal::SaveToLevelFile(FILE* _File)

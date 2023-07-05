@@ -46,6 +46,7 @@ public:
     GET_OTHER_COMPONENT(SkyBox);
     GET_OTHER_COMPONENT(Decal);
     GET_OTHER_COMPONENT(Animator2D);
+    GET_OTHER_COMPONENT(Animator3D);
     GET_OTHER_COMPONENT(ParticleSystem);
     GET_OTHER_COMPONENT(LandScape);
     GET_OTHER_COMPONENT(Fsm);

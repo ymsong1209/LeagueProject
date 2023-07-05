@@ -12,7 +12,7 @@ CTileMap::CTileMap()
 	, m_iTileCountY(1)
 {	
 	SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"TileMapMtrl"));
+	SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"TileMapMtrl"),0);
 
 	m_Buffer = new CStructuredBuffer;
 	m_Buffer->Create(sizeof(tTile), m_iTileCountX * m_iTileCountY, SB_TYPE::READ_ONLY, true);
@@ -30,22 +30,22 @@ void CTileMap::finaltick()
 
 void CTileMap::render()
 {
-	if (nullptr == GetMesh() || nullptr == GetMaterial())
+	if (nullptr == GetMesh() || nullptr == GetMaterial(0))
 		return;
 
 	// Transform 에 UpdateData 요청
 	Transform()->UpdateData();
 
 	// 재질 업데이트
-	GetMaterial()->SetScalarParam(INT_0, &m_iTileCountX);
-	GetMaterial()->SetScalarParam(INT_1, &m_iTileCountY);
-	GetMaterial()->UpdateData();
+	GetMaterial(0)->SetScalarParam(INT_0, &m_iTileCountX);
+	GetMaterial(0)->SetScalarParam(INT_1, &m_iTileCountY);
+	GetMaterial(0)->UpdateData();
 
 	// 구조화버퍼 업데이트
 	UpdateData();
 
 	// 렌더
-	GetMesh()->render();
+	GetMesh()->render(0);
 }
 
 void CTileMap::UpdateData()

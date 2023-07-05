@@ -33,7 +33,7 @@ void CSkyBox::finaltick()
 
 void CSkyBox::render()
 {
-	if (nullptr == GetMesh() || nullptr == GetMaterial())
+	if (nullptr == GetMesh() || nullptr == GetMaterial(0))
 		return;
 
 	Transform()->UpdateData();
@@ -41,16 +41,16 @@ void CSkyBox::render()
 
 	if (SKYBOX_TYPE::SPHERE == m_Type)
 	{
-		GetMaterial()->SetTexParam(TEX_0, m_SkyTex);
+		GetMaterial(0)->SetTexParam(TEX_0, m_SkyTex);
 	}
 	else if (SKYBOX_TYPE::CUBE == m_Type)
 	{
-		GetMaterial()->SetTexParam(TEX_CUBE_0, m_SkyTex);
+		GetMaterial(0)->SetTexParam(TEX_CUBE_0, m_SkyTex);
 	}
 
-	GetMaterial()->UpdateData();
+	GetMaterial(0)->UpdateData();
 
-	GetMesh()->render();
+	GetMesh()->render(0);
 }
 
 void CSkyBox::SaveToLevelFile(FILE* _File)
@@ -89,6 +89,6 @@ void CSkyBox::SetType(SKYBOX_TYPE _Type)
 		SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));				
 	}
 
-	SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"SkyBoxMtrl"));
-	GetMaterial()->SetScalarParam(INT_0, &m_Type);
+	SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"SkyBoxMtrl"),0);
+	GetMaterial(0)->SetScalarParam(INT_0, &m_Type);
 }

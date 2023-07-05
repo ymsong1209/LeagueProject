@@ -28,7 +28,6 @@ void DrawDebugFrustum(Vec3 _vWorldPos, Vec2 _vWorldScale, Vec4 _vColor, Vec3 _vR
 
 
 Vec3 DecomposeRotMat(const Matrix& _matRot);
- 
 
 
 const char* ToString(RES_TYPE);
@@ -36,6 +35,15 @@ const wchar_t* ToWSTring(RES_TYPE);
 
 const char* ToString(COMPONENT_TYPE);
 const wchar_t* ToWSTring(COMPONENT_TYPE);
+
+ 
+// Relative Path 가져오기
+wstring GetRelativePath(const wstring& _strBase, const wstring& _strPath);
+
+// FbxMatrix -> Matrix
+Matrix GetMatrixFromFbxMatrix(FbxAMatrix& _mat);
+
+
 
 
 // Save / Load
