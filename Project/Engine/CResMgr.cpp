@@ -79,6 +79,37 @@ Ptr<CTexture> CResMgr::LoadTexture(const wstring& _strKey, const wstring& _strRe
 	return pRes;
 }
 
+void CResMgr::DeleteTexture(const wstring& _strKey)
+{
+	// 1. 삭제할 텍스처의 키값으로 검색 -> 해당 텍스처 없을 경우 assert
+	Ptr<CTexture> pTex = FindRes<CTexture>(_strKey);
+	assert(pTex != nullptr);
+
+	// 2. 리소스 목록에서 해당 텍스처 삭제
+	m_arrRes[(UINT)RES_TYPE::TEXTURE].erase(_strKey);
+
+	// 3. 해당 텍스처 삭제
+	delete pTex.Get();
+
+	m_Changed = true;
+}
+
+void CResMgr::DeleteTexture(Ptr<CTexture> _Tex)
+{
+	// 1. 삭제할 텍스처의 키값으로 검색 -> 해당 텍스처 없을 경우 assert
+	Ptr<CTexture> pTex = FindRes<CTexture>(_Tex->GetKey());
+	assert(pTex != nullptr);
+
+	// 2. 리소스 목록에서 해당 텍스처 삭제
+	m_arrRes[(UINT)RES_TYPE::TEXTURE].erase(_Tex->GetKey());
+
+	// 3. 해당 텍스처 삭제
+	delete pTex.Get();
+	pTex = nullptr;
+
+	m_Changed = true;
+}
+
 void CResMgr::DeleteRes(RES_TYPE _type, const wstring& _strKey)
 {
 	map<wstring, Ptr<CRes>>::iterator iter = m_arrRes[(UINT)_type].find(_strKey);

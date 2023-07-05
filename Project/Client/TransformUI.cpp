@@ -19,6 +19,12 @@ int TransformUI::render_update()
 	if (FALSE == ComponentUI::render_update())
 		return FALSE;
 
+	static bool Absolute = GetTarget()->Transform()->GetAbsolute();
+	if (ImGui::Checkbox("Absolute", &Absolute))
+	{
+		GetTarget()->Transform()->SetAbsolute(Absolute);
+	}
+
 	Vec3 vPos = GetTarget()->Transform()->GetRelativePos();
 	Vec3 vScale = GetTarget()->Transform()->GetRelativeScale();
 	Vec3 vRotation = GetTarget()->Transform()->GetRelativeRot();

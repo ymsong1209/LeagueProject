@@ -42,8 +42,10 @@ public:
         , DXGI_FORMAT _pixelformat, UINT _BindFlag, D3D11_USAGE _Usage);
 
     Ptr<CTexture> CreateTexture(const wstring& _strKey, ComPtr<ID3D11Texture2D> _Tex2D);
-
     Ptr<CTexture> LoadTexture(const wstring& _strKey, const wstring& _strRelativePath, int _iMapLevel);
+
+    void DeleteTexture(const wstring& _strKey);
+    void DeleteTexture(Ptr<CTexture> _Tex);
 
     bool IsResourceChanged() { return m_Changed; }
 
