@@ -398,6 +398,16 @@ void CAnimator3D::check_mesh(Ptr<CMesh> _pMesh)
 
 void CAnimator3D::SaveToLevelFile(FILE* _pFile)
 {
+	bool isEmpty = false;
+	if (m_MeshDataRelativePath == L"") {
+		isEmpty = true;
+		fwrite(&isEmpty, sizeof(bool), 1, _pFile);
+		return;
+	}
+	else {
+		fwrite(&isEmpty, sizeof(bool), 1, _pFile);
+	}
+
 	SaveWString(m_MeshDataRelativePath, _pFile);
 	fwrite(&m_bRepeat, sizeof(bool), 1, _pFile);
 	size_t AnimCount = m_mapAnim.size();
@@ -421,6 +431,10 @@ void CAnimator3D::SaveToLevelFile(FILE* _pFile)
 
 void CAnimator3D::LoadFromLevelFile(FILE* _pFile)
 {
+	bool isempty;
+	fread(&isempty, sizeof(bool), 1, _pFile);
+	if (isempty) return;
+
 	LoadWString(m_MeshDataRelativePath, _pFile);
 	// Mesh Load
 	Ptr<CMeshData> MeshData = CResMgr::GetInst()->FindRes<CMeshData>(m_MeshDataRelativePath);
