@@ -421,7 +421,8 @@ void Anim3DEditorUI::SelectMainAnimation()
 				if (!MapAnim.empty()) {
 					string strKey = (char*)AnimList[i].c_str();
 					wstring wstrKey = wstring(strKey.begin(), strKey.end());
-					m_pTestObject->Animator3D()->Play(wstrKey, m_bRepeat, m_fBlendTime);
+					bool repeatblend = m_pTestObject->Animator3D()->IsRepeatBlend();
+					m_pTestObject->Animator3D()->Play(wstrKey, m_bRepeat,repeatblend,false, m_fBlendTime);
 				}
 			}
 
