@@ -99,15 +99,16 @@ void CRenderMgr::render_editor()
     m_pEditorCam->SortObject();
     m_pEditorCam->render();    
 
-
-    // Play Main Camera Debug View(Frustum Shape)
-    if (GetPlayMainCam()->GetShowDebug())
+    //Camera별로 frustum을 보여줌.
+    for (size_t i = 0; i < m_vecCam.size(); ++i)
     {
-        DrawDebugFrustum(GetPlayMainCam()->Transform()->GetWorldPos()
-            , Vec2(GetPlayMainCam()->Transform()->GetRelativeScale().x, GetPlayMainCam()->Transform()->GetRelativeScale().y)
-            , Vec4(0.f, 1.f, 0.f, 1.f)
-            , Vec3(GetPlayMainCam()->Transform()->GetRelativeRot())
-            , 0.f);
+        if (m_vecCam[i]->GetShowDebug()) {
+            DrawDebugFrustum(m_vecCam[i]->Transform()->GetWorldPos()
+                , Vec2(m_vecCam[i]->Transform()->GetRelativeScale().x, m_vecCam[i]->Transform()->GetRelativeScale().y)
+                , Vec4(0.f, 1.f, 0.f, 1.f)
+                , Vec3(m_vecCam[i]->Transform()->GetRelativeRot())
+                , 0.f);
+        }
     }
 }
 
@@ -117,7 +118,7 @@ void CRenderMgr::render_dynamic_shadowdepth()
 
     for (size_t i = 0; i < m_vecLight3D.size(); ++i)
     {
-        if (LIGHT_TYPE::DIRECTIONAL == m_vecLight3D[i]->GetLightType())
+        if (LIGHT_TYPE::DIRECTIONAL == (LIGHT_TYPE)m_vecLight3D[i]->GetLightInfo().LightType)
             m_vecLight3D[i]->render_depthmap();
     }
 }

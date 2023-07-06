@@ -659,7 +659,6 @@ void Anim3DEditorUI::SaveCustomAnim()
 		if (false == GetSaveFileName(&ofn))
 			return;
 
-		szFilePath;
 		wstring filePath = wstring(szFilePath);
 		int length = filePath.length();
 		if (length < 7 || filePath.substr(length - 7) != L".anim3d") {

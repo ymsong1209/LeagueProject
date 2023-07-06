@@ -24,6 +24,8 @@ CLandScape::CLandScape()
 	, m_iWeightHeight(0)
 	, m_iWeightIdx(1)
 	, m_eMod(LANDSCAPE_MOD::SPLAT)
+	, m_bIsClicking(false)
+	, m_rstype(RS_TYPE::CULL_BACK)
 {	
 	init();
 }
@@ -39,22 +41,18 @@ CLandScape::~CLandScape()
 
 void CLandScape::finaltick()
 {
-	if (KEY_TAP(KEY::_8))
-		m_eMod = LANDSCAPE_MOD::NONE;
-	else if (KEY_TAP(KEY::_9))
-		m_eMod = LANDSCAPE_MOD::HEIGHT_MAP;
-	else if (KEY_TAP(KEY::_0))
-		m_eMod = LANDSCAPE_MOD::SPLAT;
 
 	if (LANDSCAPE_MOD::NONE == m_eMod)
 	{
 		return;
 	}
+	else {
+		Raycasting();
+	}
 
 	if (KEY_PRESSED(KEY::LBTN))
 	{
-		Raycasting();
-
+		m_bIsClicking = true;
 		if (LANDSCAPE_MOD::HEIGHT_MAP == m_eMod)
 		{
 			// 교점 위치정보를 토대로 높이를 수정 함
@@ -79,6 +77,9 @@ void CLandScape::finaltick()
 		}
 	}
 
+	if (KEY_NONE(KEY::LBTN))
+		m_bIsClicking = false;
+
 }
 
 void CLandScape::render()
@@ -88,11 +89,10 @@ void CLandScape::render()
 
 	Transform()->UpdateData();
 
-	//GetMaterial()->GetShader()->SetRSType(RS_TYPE::WIRE_FRAME);
+	GetMaterial(0)->GetShader()->SetRSType(m_rstype);
 
 	GetMaterial(0)->SetScalarParam(INT_0, &m_iFaceX);
 	GetMaterial(0)->SetScalarParam(INT_1, &m_iFaceZ);
-	GetMaterial(0)->SetTexParam(TEX_2, m_HeightMap);
 
 	Vec2 vResolution = Vec2(m_pHeightMap->Width(), m_pHeightMap->Height());
 	GetMaterial(0)->SetScalarParam(SCALAR_PARAM::VEC2_0, &vResolution);
@@ -100,6 +100,7 @@ void CLandScape::render()
 
 	// 가중치 버퍼 전달
 	m_pWeightMapBuffer->UpdateData(17, PIPELINE_STAGE::PS_PIXEL);
+	m_pCrossBuffer->UpdateData(16, PIPELINE_STAGE::PS_PIXEL);
 
 	// 가중치 버퍼 해상도 전달
 	Vec2 vWeightMapResolution = Vec2((float)m_iWeightWidth, (float)m_iWeightHeight);
@@ -112,6 +113,12 @@ void CLandScape::render()
 	// 타일 텍스쳐 전달
 	GetMaterial(0)->SetTexParam(TEX_PARAM::TEX_ARR_0, m_pTileArrTex);
 
+	//Brush 크기 전달
+	GetMaterial(0)->SetScalarParam(VEC2_2, &m_vBrushScale);
+
+	//Click 정보 전달
+	GetMaterial(0)->SetScalarParam(INT_2, &m_bIsClicking);
+
 	GetMaterial(0)->UpdateData();
 
 	GetMesh()->render(0);	
@@ -120,6 +127,7 @@ void CLandScape::render()
 	// 리소스 정리
 	// ==========
 	m_pWeightMapBuffer->Clear();
+	m_pCrossBuffer->Clear();
 }
 
 void CLandScape::render_depthmap()
@@ -134,8 +142,15 @@ void CLandScape::SetFace(UINT _iFaceX, UINT _iFaceZ)
 	m_iFaceX = _iFaceX;
 	m_iFaceZ = _iFaceZ;
 
-
 	CreateMesh();
+}
+
+void CLandScape::SetLandScapeMod(LANDSCAPE_MOD _mod)
+{
+	m_eMod = _mod;
+	if (m_eMod == LANDSCAPE_MOD::NONE) {
+		m_pCrossBuffer->Create(sizeof(tRaycastOut), 1, SB_TYPE::READ_WRITE, true);
+	}
 }
 
 
@@ -170,7 +185,18 @@ void CLandScape::Raycasting()
 
 void CLandScape::SaveToLevelFile(FILE* _File)
 {
-	/*
+	// rendercomponent의 savetolevelfile은 mesh까지 저장을 한다.
+	// landscape의 mesh는 직접 생성할것이므로 key값이 저장이 안됨.
+	// 나머지 부분만 수동으로 저장
+	float bound = GetBounding();
+	bool frustumUse = IsUseFrustumCheck();
+	bool ShadowUse = IsDynamicShadow();
+
+	fwrite(&bound, sizeof(float), 1, _File);
+	fwrite(&frustumUse, sizeof(bool), 1, _File);
+	fwrite(&ShadowUse, sizeof(bool), 1, _File);
+
+	//HeightMap은 자신의 id를 이름으로 한다.
 	if (m_pHeightMap->GetKey() == L"HeightMap") {
 		wstring HeightMapName = L"";
 		HeightMapName += L"HeightMap";
@@ -181,35 +207,61 @@ void CLandScape::SaveToLevelFile(FILE* _File)
 	wstring strFolderPath = L"";
 	strFolderPath += L"texture\\LandScape\\";
 
-	//m_pHeightMap->Save(strFolderPath);
-	//m_pHeightMap->SaveTextureAsDDS(strFolderPath);
-	
+	//heightmap 파일로 저장
+	m_pHeightMap->SaveTextureAsDDS(strFolderPath);
+	//heightmap 이름 저장
 	wstring test = m_pHeightMap->GetName();
 	SaveWString(m_pHeightMap->GetName(), _File);
-	*/
-	//wstring strFolderPath = L"";
-	//strFolderPath += L"texture\\LandScape\\";
-	//wstring HeightTexture = L"HeightMap";
-	//strFolderPath += HeightTexture;
-	//
-	//m_pHeightMap->Save(m_pHeightMap->GetKey());
 
-	CRenderComponent::SaveToLevelFile(_File);
 
-	SaveResRef(m_pHeightMap.Get(), _File);
+	//WeightMap 구조화버퍼 저장
+	fwrite(&m_iWeightWidth, sizeof(UINT), 1, _File);
+	fwrite(&m_iWeightHeight, sizeof(UINT), 1, _File);
+	fwrite(&m_iWeightIdx, sizeof(UINT), 1, _File);
+
+	UINT bufferSize = m_pWeightMapBuffer->GetBufferSize();
+	tWeight_4* data = new tWeight_4[bufferSize / sizeof(tWeight_4)];
+	m_pWeightMapBuffer->GetData((void*)data);
+	size_t numItems = bufferSize / sizeof(tWeight_4);
+	fwrite(&numItems, sizeof(size_t), 1, _File);
+	fwrite(data, sizeof(tWeight_4), numItems, _File);
+
+	delete[] data;
+	
 	fwrite(&m_iFaceX, sizeof(UINT), 1, _File);
 	fwrite(&m_iFaceZ, sizeof(UINT), 1, _File);
 }
 
 void CLandScape::LoadFromLevelFile(FILE* _File)
 {
-	//wstring texturepath;
-	//LoadWString(texturepath, _File);
-	//CopyFromLoadedTexture(texturepath);
+	float bound;
+	bool frustumUse;
+	bool ShadowUse;
 
-	CRenderComponent::LoadFromLevelFile(_File);
+	fread(&bound, sizeof(float), 1, _File);
+	fread(&frustumUse, sizeof(bool), 1, _File);
+	fread(&ShadowUse, sizeof(bool), 1, _File);
+	SetBounding(bound);
+	SetFrustumCheck(frustumUse);
+	SetDynamicShadow(ShadowUse);
 
-	LoadResRef(m_pHeightMap, _File);
+	//HeightMap 로딩
+	wstring HeighMaptexturepath;
+	LoadWString(HeighMaptexturepath, _File);
+	CopyFromLoadedTexture(HeighMaptexturepath);
+
+	//WeightMap 구조화버퍼 로딩
+	fread(&m_iWeightWidth, sizeof(UINT), 1, _File);
+	fread(&m_iWeightHeight, sizeof(UINT), 1, _File);
+	fread(&m_iWeightIdx, sizeof(UINT), 1, _File);
+
+	size_t numItems;
+	fread(&numItems, sizeof(size_t), 1, _File);
+	tWeight_4* data = new tWeight_4[numItems];
+	size_t readItems = fread(data, sizeof(tWeight_4), numItems, _File);
+	m_pWeightMapBuffer->SetData((void*)data, numItems * sizeof(tWeight_4));
+	delete[] data;
+
 	fread(&m_iFaceX, sizeof(UINT), 1, _File);
 	fread(&m_iFaceZ, sizeof(UINT), 1, _File);
 	//생성자 호출 후 LoadFromLevelFile실행
@@ -219,10 +271,10 @@ void CLandScape::LoadFromLevelFile(FILE* _File)
 }
 
 
-/*
 void CLandScape::CopyFromLoadedTexture(wstring _FilePath)
 {
 	Ptr<CTexture> stagingtex = CResMgr::GetInst()->FindRes<CTexture>(_FilePath);
+
 
 	string fileName = string(_FilePath.begin(), _FilePath.end());
 
@@ -249,7 +301,8 @@ void CLandScape::CopyFromLoadedTexture(wstring _FilePath)
 			, D3D11_USAGE_DEFAULT);
 	}
 
+
 	if (stagingtex == nullptr) return;
 	CDevice::GetInst()->GetDeviceContext()->CopyResource(m_pHeightMap.Get()->GetTex2D().Get(), stagingtex.Get()->GetTex2D().Get());
+
 }
-*/

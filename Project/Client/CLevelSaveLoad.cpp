@@ -242,6 +242,9 @@ CGameObject* CLevelSaveLoad::LoadGameObject(FILE* _File)
 		case COMPONENT_TYPE::SKYBOX:
 			Component = new CSkyBox;
 			break;
+		case COMPONENT_TYPE::FSM:
+			Component = new CFsm;
+			break;
 		}
 
 		Component->LoadFromLevelFile(_File);

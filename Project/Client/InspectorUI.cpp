@@ -13,6 +13,7 @@
 #include "Animator2DUI.h"
 #include "TileMapUI.h"
 #include "Light2DUI.h"
+#include "Light3DUI.h"
 #include "FsmUI.h"
 #include "ParticleSystemUI.h"
 
@@ -26,7 +27,7 @@
 #include "MaterialUI.h"
 #include "ScriptUI.h"
 #include "DecalUI.h"
-
+#include "LandScapeUI.h"
 #include "RenderComponentUI.h"
 
 
@@ -66,6 +67,10 @@ InspectorUI::InspectorUI()
 	m_arrComUI[(UINT)COMPONENT_TYPE::LIGHT2D]->SetSize(0.f, 150.f);
 	AddChildUI(m_arrComUI[(UINT)COMPONENT_TYPE::LIGHT2D]);
 
+	m_arrComUI[(UINT)COMPONENT_TYPE::LIGHT3D] = new Light3DUI;
+	m_arrComUI[(UINT)COMPONENT_TYPE::LIGHT3D]->SetSize(0.f, 200.f);
+	AddChildUI(m_arrComUI[(UINT)COMPONENT_TYPE::LIGHT3D]);
+
 	m_arrComUI[(UINT)COMPONENT_TYPE::FSM] = new FsmUI;
 	m_arrComUI[(UINT)COMPONENT_TYPE::FSM]->SetSize(0.f, 150.f);
 	AddChildUI(m_arrComUI[(UINT)COMPONENT_TYPE::FSM]);
@@ -81,6 +86,11 @@ InspectorUI::InspectorUI()
 	m_arrComUI[(UINT)COMPONENT_TYPE::DECAL] = new DecalUI;
 	m_arrComUI[(UINT)COMPONENT_TYPE::DECAL]->SetSize(0.f, 400.f);
 	AddChildUI(m_arrComUI[(UINT)COMPONENT_TYPE::DECAL]);
+
+	m_arrComUI[(UINT)COMPONENT_TYPE::LANDSCAPE] = new LandScapeUI;
+	m_arrComUI[(UINT)COMPONENT_TYPE::LANDSCAPE]->SetSize(0.f, 600.f);
+	AddChildUI(m_arrComUI[(UINT)COMPONENT_TYPE::LANDSCAPE]);
+
 
 	// ResUI
 	m_arrResUI[(UINT)RES_TYPE::MESHDATA] = new MeshDataUI;

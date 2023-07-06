@@ -32,7 +32,7 @@ public:
     int  CreateArrayTexture(const vector<Ptr<CTexture>>& _vecTex, int _iMapLevel);
     void GenerateMip(UINT _iMipLevel);
 
-    //void SaveTextureAsDDS(const wstring& _LevelPath = L"");
+    void SaveTextureAsDDS(const wstring& _LevelPath = L"");
 
 
 public:

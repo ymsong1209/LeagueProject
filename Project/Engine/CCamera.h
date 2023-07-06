@@ -53,8 +53,10 @@ public:
 
     void SetLayerMask(int _iLayer, bool _Visible);
     void SetLayerMaskAll(bool _Visible);
+    UINT GetLayerMask() { return m_iLayerMask; }
 
     void SetCameraIndex(int _idx);
+    int  GetCameraIndex() { return m_iCamIdx; }
 
     void SetShowDebug(bool _debug) { m_bShowFrustumDebug = _debug; }
     bool GetShowDebug() { return m_bShowFrustumDebug; }
