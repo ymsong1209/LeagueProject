@@ -12,11 +12,12 @@ class CRenderComponent :
 private:
     Ptr<CMesh>              m_pMesh;
 
-    Ptr<CMaterial>          m_pSharedMtrl;      // 원본 메테리얼
-    Ptr<CMaterial>          m_pDynamicMtrl;     // SharedMaterial 복사본
-    Ptr<CMaterial>          m_pCurrentMtrl;     // 현재 사용 중인 재질
-    float                   m_fBounding;        // FrustumCheck 용도 경계범위
-    bool                    m_bFrustumCheck;    // 절두체 컬링 체크 유무
+    Ptr<CMaterial>          m_pSharedMtrl;          // 원본 메테리얼
+    Ptr<CMaterial>          m_pDynamicMtrl;         // SharedMaterial 복사본
+    Ptr<CMaterial>          m_pCurrentMtrl;         // 현재 사용 중인 재질
+    float                   m_fBounding;            // FrustumCheck 용도 경계범위
+    bool                    m_bFrustumCheck;        // 절두체 컬링 체크 유무
+     
 
 
 public:
@@ -35,6 +36,9 @@ public:
     bool IsUseFrustumCheck() { return m_bFrustumCheck; }
     void SetBounding(float _fBounding) { m_fBounding = _fBounding; }
     float GetBounding() { return m_fBounding; }
+
+    bool IsDynamicMtrlEmpty() { return (nullptr == m_pDynamicMtrl); }
+    void ClearDynamicMtrl();
 
 
     virtual void SaveToLevelFile(FILE* _File) override;

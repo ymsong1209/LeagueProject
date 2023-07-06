@@ -4,24 +4,58 @@
 
 #include "CTransform.h"
 #include "CAnimator2D.h"
+#include "CResMgr.h"
+
+ 
 
 CMeshRender::CMeshRender()
 	: CRenderComponent(COMPONENT_TYPE::MESHRENDER)		
 {
 
-	// 움직일 여지가 있는 Texture들 전부 Vector안에 집어넣어줌.
-	MovingStruct Temp;
 
-	Temp.MovingStyle = eTexMovingStyle::COS;
-	Temp.FuncValue = Vec4(1.f, 0.5f, 1.f, 0.f);
-	Temp.PreviousPos = Vec2(0.f, 0.f);
+	SetUsingMovingVec(true);
 
-	for (int i = 0; i < (int)eTargetTexture::END; ++i)
+ 
+}
+
+void CMeshRender::SetUsingMovingVec(bool _use)
+{
+	m_bIsUsingMovingVec = _use;
+
+
+	// 처음 MovingVec을 만들어야 하는 경우
+	if (_use == true && m_vMovingVec.size() == 0)
 	{
-		Temp.TargetTex = (eTargetTexture)i;
-		MovingVec.push_back(Temp);
+		// 움직일 여지가 있는 Texture들 전부 Vector안에 집어넣어줌.
+		MovingStruct Temp;
+
+		Temp.TargetTex = eTargetTexture::OUTPUT;
+		Temp.MovingStyle = eTexMovingStyle::NONE;
+		Temp.FuncValue = Vec4(1.f, 0.5f, 1.f, 0.f);
+		Temp.PreviousPos = Vec2(0.f, 0.f);
+
+		m_vMovingVec.push_back(Temp);
+
+
+		MovingStruct Temp2;
+
+		Temp2.TargetTex = eTargetTexture::PUNCTURE;
+		Temp2.MovingStyle = eTexMovingStyle::COS;
+		Temp2.FuncValue = Vec4(1.f, 0.5f, 1.f, 0.f);
+		Temp2.PreviousPos = Vec2(0.f, 0.f);
+
+		m_vMovingVec.push_back(Temp2);
+	}
+
+	else if (_use == false)
+	{
+		if (m_vMovingVec.size() != 0)
+		{
+			m_vMovingVec.clear();
+		}
 	}
 }
+
 
 CMeshRender::~CMeshRender()
 {
@@ -34,16 +68,16 @@ void CMeshRender::finaltick()
 	// 참조해야할 UV Offset 값을 계산해준다.
 	int MovingUse = 0;
 
-	for (int i = 0; i < MovingVec.size(); ++i)
+	for (int i = 0; i < m_vMovingVec.size(); ++i)
 	{
-		Vec2 PreviousPos = MovingVec[i].PreviousPos;
-		Vec4 FuncValue = MovingVec[i].FuncValue;
+		Vec2 PreviousPos = m_vMovingVec[i].PreviousPos;
+		Vec4 FuncValue = m_vMovingVec[i].FuncValue;
 
-		switch (MovingVec[i].MovingStyle)
+		switch (m_vMovingVec[i].MovingStyle)
 		{
 		case eTexMovingStyle::NONE:
 		{
-			MovingUse |= (1 << i);
+			MovingUse |= (1 << i );
 		}
 			break;
 		case eTexMovingStyle::HORIZONTAL:
@@ -103,7 +137,7 @@ void CMeshRender::finaltick()
 			break;
 		}
 
-		switch (MovingVec[i].TargetTex)
+		switch (m_vMovingVec[i].TargetTex)
 		{
 		case eTargetTexture::OUTPUT:
 		{
@@ -122,10 +156,13 @@ void CMeshRender::finaltick()
 		}
 
 		// Previous Postion Update
-		MovingVec[i].PreviousPos = PreviousPos;
+		m_vMovingVec[i].PreviousPos = PreviousPos;
 
 	}
 	// Texture가 Moving을 Option을 쓰는지 전달 (int_1 에 지정되어 있음 (Std2dMtrl기준))
+
+	int a = MovingUse;
+
 	GetMaterial()->SetScalarParam(SCALAR_PARAM::INT_1, &MovingUse);
 
 

@@ -40,6 +40,24 @@ Ptr<CMaterial> CRenderComponent::GetDynamicMaterial()
 	return m_pCurrentMtrl;
 }
 
+void CRenderComponent::ClearDynamicMtrl()
+{
+	if (m_pCurrentMtrl == m_pDynamicMtrl)
+	{
+		if (m_pSharedMtrl != nullptr)
+		{
+			m_pCurrentMtrl = m_pSharedMtrl;
+		}
+
+		else
+		{
+			m_pCurrentMtrl = nullptr;
+		}
+	}
+
+	m_pDynamicMtrl = nullptr;
+}
+
 void CRenderComponent::SaveToLevelFile(FILE* _File)
 {
 	SaveResRef(m_pMesh.Get(), _File);

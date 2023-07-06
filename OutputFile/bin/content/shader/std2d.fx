@@ -66,8 +66,8 @@ float4 PS_Std2D(VS_OUT _in) : SV_Target
         float2 Offset = float2(0.f, 0.f);
 
         // Output Texture가 움직여야 하는지 확인
-        int assist_bit = 0;
-        assist_bit = g_int_1 | (assist_bit << 0);
+        int assist_bit = 1;
+        assist_bit = g_int_1 & (assist_bit);
 
         if (!assist_bit)
         {
@@ -88,8 +88,8 @@ float4 PS_Std2D(VS_OUT _in) : SV_Target
         float2 Offset = float2(0.f, 0.f);
 
         // Puncture Texture 가 움직여야 되는지 확인 
-        int assist_bit = 0;
-        assist_bit = g_int_1 | (assist_bit << 1);
+        int assist_bit = 2;
+        assist_bit = g_int_1 & (assist_bit);
 
         if (!assist_bit)
         {
@@ -108,10 +108,15 @@ float4 PS_Std2D(VS_OUT _in) : SV_Target
     {
         float4 vAdditiveSample = Additive_Texture.Sample(g_sam_0, _in.vUV);
 
-        vOutColor = float4(vOutColor.x + Additive_Color.x * vAdditiveSample.x * vOutColor.w,
-            vOutColor.y + Additive_Color.y * vAdditiveSample.y * vOutColor.w,
-            vOutColor.z + Additive_Color.z * vAdditiveSample.z * vOutColor.w,
-            vOutColor.w);
+        if (vAdditiveSample.w != 0)
+        {
+            vOutColor = float4( vOutColor.x + saturate(Additive_Color.x) * vAdditiveSample.x * vOutColor.w * vAdditiveSample.w,
+                                vOutColor.y + saturate(Additive_Color.y) * vAdditiveSample.y * vOutColor.w * vAdditiveSample.w,
+                                vOutColor.z + saturate(Additive_Color.z) * vAdditiveSample.z * vOutColor.w * vAdditiveSample.w,
+                                vOutColor.w);
+        }
+
+       
     }
     
         
