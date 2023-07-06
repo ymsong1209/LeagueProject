@@ -32,7 +32,7 @@ using std::pair;
 #include <experimental/filesystem>
 using namespace std::experimental;
 using namespace std::experimental::filesystem;
-
+#include <shlobj.h>
 
 #include <fstream>
 #include <wrl.h>

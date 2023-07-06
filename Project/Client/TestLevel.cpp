@@ -122,17 +122,17 @@ void CreateTestLevel()
 	// FBX Loading
 	// ============	
 	{
-		Ptr<CMeshData> pMeshData = nullptr;
-		CGameObject* pObj = nullptr;
-	
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Monster.fbx");
-		
-		pObj = pMeshData->Instantiate();
-		pObj->SetName(L"Monster");
+		//Ptr<CMeshData> pMeshData = nullptr;
+		//CGameObject* pObj = nullptr;
+		//
+		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Monster.fbx");
+		//
+		//pObj = pMeshData->Instantiate();
+		//pObj->SetName(L"Monster");
 
 	
 		//단일재생
-		pObj->Animator3D()->Play(L"Take 001");
+		//pObj->Animator3D()->Play(L"Take 001");
 		//단일재생, 이전 애니메이션 0.5초 블렌딩 후 단일재생
 		//pObj->Animator3D()->Play(L"Take001", true, 0.5f);
 		//반복재생, 마지막프레임후 첫프레임으로 blend안함
@@ -160,8 +160,15 @@ void CreateTestLevel()
 		*/
 
 
-		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
+		//SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
 	}
+
+	CGameObject* pObj = new CGameObject;
+	pObj->AddComponent(new CTransform);
+	pObj->AddComponent(new CMeshRender);
+	pObj->AddComponent(new CAnimator3D);
+	pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\jinx55");
+	SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
 
 	// 충돌 시킬 레이어 짝 지정
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");	

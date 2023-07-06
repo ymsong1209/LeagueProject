@@ -135,10 +135,22 @@ void CAnim3D::Save()
 	wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
 	wstring RelativePath;
 	RelativePath += L"animation\\";
+	//자동 세이브는 meshdata이름을 딴 폴더 안에 저장됨
+	wstring MeshDataPath = m_pOwner->GetMeshDataRelativePath();
+	filesystem::path meshpath = MeshDataPath;
+	wstring meshdataname = meshpath.stem();
+	RelativePath += meshdataname + L"\\";
 	RelativePath += name + L".anim3d";
 	strFilePath += RelativePath;
 
 	m_RelativePath = RelativePath;
+
+
+	// 자동으로 폴더 생성
+	filesystem::path directory = filesystem::path(strFilePath).parent_path();
+	if (!filesystem::exists(directory))
+		filesystem::create_directories(directory);
+
 
 	// 파일 쓰기모드로 열기
 	FILE* pFile = nullptr;
@@ -157,7 +169,6 @@ void CAnim3D::Save()
 	fwrite(&m_pClip.dTimeLength, sizeof(double), 1, pFile);
 	fwrite(&m_pClip.eMode, sizeof(FbxTime::EMode), 1, pFile);
 	fwrite(&m_iFrameRate, sizeof(int), 1, pFile);
-	wstring MeshDataPath = m_pOwner->GetMeshDataRelativePath();
 	SaveWString(MeshDataPath, pFile);
 	fclose(pFile);
 }

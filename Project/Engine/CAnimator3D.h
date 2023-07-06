@@ -89,6 +89,7 @@ public:
     map<wstring, CAnim3D*>& GetMapAnim() { return m_mapAnim; }
     void DeleteCurrentAnim();
     void DeleteEveryAnim();
+    void LoadEveryAnimFromFolder(const wstring& _strRelativePath);
 
 private:
     void check_mesh(Ptr<CMesh> _pMesh);

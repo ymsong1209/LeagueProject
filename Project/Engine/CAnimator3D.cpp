@@ -385,6 +385,30 @@ void CAnimator3D::DeleteEveryAnim()
 	m_mapAnim.clear();
 }
 
+void CAnimator3D::LoadEveryAnimFromFolder(const std::wstring& _strRelativePath) {
+	std::wstring folderPath = CPathMgr::GetInst()->GetContentPath() + _strRelativePath;
+
+	WIN32_FIND_DATA findFileData;
+	HANDLE hFind;
+
+	std::wstring search_path = folderPath + L"/*.anim3d";
+	hFind = FindFirstFile(search_path.c_str(), &findFileData);
+	if (hFind == INVALID_HANDLE_VALUE) {
+		// 폴더 내 .anim3d 파일 없음
+		return;
+	}
+	do {
+		if (!(findFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
+			std::wstring animRelativePath = _strRelativePath + L"/" + findFileData.cFileName;
+			CAnim3D* pNewAnim = new CAnim3D;
+			pNewAnim->m_pOwner = this;
+			pNewAnim->Load(animRelativePath);
+			m_mapAnim.insert(make_pair(pNewAnim->GetName(), pNewAnim));
+		}
+	} while (FindNextFile(hFind, &findFileData) != 0);
+	FindClose(hFind);
+}
+
 
 
 void CAnimator3D::check_mesh(Ptr<CMesh> _pMesh)

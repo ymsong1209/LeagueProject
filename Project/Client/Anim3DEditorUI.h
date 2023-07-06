@@ -34,6 +34,8 @@ public:
     void LoadFBX();
     void LoadMeshdata();
     void LoadAnim3D();
+    wstring BrowseFolder();
+    void LoadAnimFromFolder();
     void SelectEditMode();
     void SelectPlayMode();
     void SetRepeat();

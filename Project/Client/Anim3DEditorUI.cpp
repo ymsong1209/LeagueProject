@@ -37,7 +37,8 @@ int Anim3DEditorUI::render_update()
 	SpawnTestObject(); ImGui::SameLine();
 	LoadFBX(); ImGui::SameLine();
 	LoadMeshdata(); ImGui::SameLine();
-	LoadAnim3D();
+	LoadAnim3D(); ImGui::SameLine();
+	LoadAnimFromFolder();
 	SelectEditMode();
 
 	if (!FindTestObject()) return TRUE;
@@ -305,6 +306,66 @@ void Anim3DEditorUI::LoadAnim3D()
 		content->ResetContent();
 
 	}
+}
+
+wstring Anim3DEditorUI::BrowseFolder()
+{
+	wchar_t path[MAX_PATH];
+	BROWSEINFO bi = { 0 };
+	bi.lpszTitle = L"폴더를 선택하세요.";
+	LPITEMIDLIST pidl = SHBrowseForFolder(&bi);
+
+	if (pidl != 0)
+	{
+		// 사용자가 폴더를 선택하면 절대 경로를 얻음
+		SHGetPathFromIDList(pidl, path);
+
+		// 메모리 해제
+		IMalloc* imalloc = 0;
+		if (SUCCEEDED(SHGetMalloc(&imalloc)))
+		{
+			imalloc->Free(pidl);
+			imalloc->Release();
+		}
+
+		return path;
+	}
+
+	return L"";
+}
+
+void Anim3DEditorUI::LoadAnimFromFolder()
+{
+
+	if (ImGui::Button("LoadAnimFromFolder##Anim3DEditorUI")) {
+		if (!FindTestObject()) {
+			wchar_t szStr[256] = {};
+			wsprintf(szStr, L"Anim3DEditorUI / TestObject가 없습니다. Spawn버튼을 누르십시요.");
+			MessageBox(nullptr, szStr, L"Anim3D 로드 실패.", MB_OK);
+			return;
+		}
+
+		//폴더의 상대경로를 알아냄
+		wstring folderPath = BrowseFolder();
+		if (folderPath.empty()) {
+			MessageBox(nullptr, L"폴더를 선택하지 않았습니다.", L"폴더 선택 오류", MB_OK);
+			return;
+		}
+		wstring ContentPath = CPathMgr::GetInst()->GetContentPath();
+		size_t pos = folderPath.find(ContentPath);
+		wstring relativePath;
+		if (pos != std::wstring::npos)
+		{
+			relativePath = folderPath.substr(pos + ContentPath.length());
+			m_pTestObject->Animator3D()->LoadEveryAnimFromFolder(relativePath);
+		}
+		else
+		{
+			// 오류 처리. folderPath가 ContentPath로 시작하지 않는 경우입니다.
+		}
+
+	}
+	
 }
 
 void Anim3DEditorUI::SelectEditMode()
