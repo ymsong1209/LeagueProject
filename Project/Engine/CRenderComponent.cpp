@@ -131,6 +131,45 @@ void CRenderComponent::SaveToLevelFile(FILE* _File)
 	fwrite(&m_fBounding, sizeof(float), 1, _File);
 	fwrite(&m_bFrustumCheck, sizeof(bool), 1, _File);
 	fwrite(&m_bDynamicShadow, sizeof(bool), 1, _File);
+
+
+	bool IsDynamicMtrlExist = false;
+
+	// 동적 재질을 사용하는 경우 이에 대한 정보 저장
+	for (UINT i = 0; i < iMtrlCount; ++i)
+	{
+		if (m_vecMtrls[i].pDynamicMtrl != nullptr)
+		{
+			IsDynamicMtrlExist = true;
+			fwrite(&IsDynamicMtrlExist, sizeof(bool), 1, _File);
+
+			// 동적 재질이 존재한다면 그에대한 정보를 저장해 줘야함
+
+			// Const 정보 저장
+			tMtrlConst SaveConstMtrlData = m_vecMtrls[i].pDynamicMtrl->GetMtrlConst();
+			fwrite(&SaveConstMtrlData, sizeof(tMtrlConst), 1, _File);
+
+			// Texture 정보 저장
+			//Ptr<CTexture> GetTexParam(TEX_PARAM _param) { return m_arrTex[(UINT)_param]; }
+
+			for (UINT j = 0; j < (UINT)TEX_PARAM::TEX_END ;  ++j)
+			{
+				Ptr<CTexture> SaveTextureData = m_vecMtrls[i].pDynamicMtrl->GetTexParam(TEX_PARAM(j));
+				SaveResRef(SaveTextureData.Get(), _File);
+
+			}
+		}
+
+		else
+		{
+			IsDynamicMtrlExist = false;
+			fwrite(&IsDynamicMtrlExist, sizeof(bool), 1, _File);
+
+			// 동적 재질이 존재하지 않았다면 더이상 저장할 정보는 없음
+
+		}
+	}
+
 }
 
 void CRenderComponent::LoadFromLevelFile(FILE* _File)
@@ -152,4 +191,37 @@ void CRenderComponent::LoadFromLevelFile(FILE* _File)
 	fread(&m_fBounding, sizeof(float), 1, _File);
 	fread(&m_bFrustumCheck, sizeof(bool), 1, _File);
 	fread(&m_bDynamicShadow, sizeof(bool), 1, _File);
+
+	
+	// 동적 재질에 대한 정보를 가져와야 되는지 확인
+	for (UINT i = 0; i < iMtrlCount; ++i)
+	{
+		bool IsDynamicMtrlExist;
+
+		fread(&IsDynamicMtrlExist, sizeof(bool), 1, _File);
+
+		// 만약에 동적 재질이 존재했었으면 동적재질을 만들고, 그에대한 정보를 불러와야함
+		if (IsDynamicMtrlExist == true)
+		{
+			// Dynamic Material 생성먼저한다
+			GetDynamicMaterial(i);
+
+
+			// ConstMtrl Data 불러오기
+			tMtrlConst LoadConstMtrlData;
+			fread(&LoadConstMtrlData, sizeof(tMtrlConst), 1, _File);
+			m_vecMtrls[i].pDynamicMtrl->SetMtrlConst(LoadConstMtrlData);
+
+
+			// Texture 정보 불러오기
+			for (UINT j = 0; j < (UINT)TEX_PARAM::TEX_END; ++j)
+			{
+				Ptr<CTexture> LoadTextureData;
+				LoadResRef(LoadTextureData, _File);
+
+				m_vecMtrls[i].pDynamicMtrl->SetTexParam((TEX_PARAM)j, LoadTextureData);
+
+			}
+		}
+	}
 }

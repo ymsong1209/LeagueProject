@@ -14,13 +14,11 @@
  
 
 CMeshRender::CMeshRender()
-	: CRenderComponent(COMPONENT_TYPE::MESHRENDER)		
+	: CRenderComponent(COMPONENT_TYPE::MESHRENDER)	
+	, m_bIsUsingMovingVec(false)
 {
 
 
-	SetUsingMovingVec(true);
-
- 
 }
 
 void CMeshRender::SetUsingMovingVec(bool _use)
@@ -146,12 +144,12 @@ void CMeshRender::finaltick()
 		{
 		case eTargetTexture::OUTPUT:
 		{
-			GetMaterial()->SetScalarParam(VEC2_2, &PreviousPos);
+			GetMaterial(0)->SetScalarParam(VEC2_2, &PreviousPos);
 		}
 			break;
 		case eTargetTexture::PUNCTURE:
 		{
-			GetMaterial()->SetScalarParam(VEC2_3, &PreviousPos);
+			GetMaterial(0)->SetScalarParam(VEC2_3, &PreviousPos);
 		}
 			break;
 		case eTargetTexture::END:
@@ -168,7 +166,7 @@ void CMeshRender::finaltick()
 
 	int a = MovingUse;
 
-	GetMaterial()->SetScalarParam(SCALAR_PARAM::INT_1, &MovingUse);
+	GetMaterial(0)->SetScalarParam(SCALAR_PARAM::INT_1, &MovingUse);
 
 
 }
@@ -235,4 +233,45 @@ void CMeshRender::render()
 
 	if (Animator3D())
 		Animator3D()->ClearData();
+}
+
+void CMeshRender::SaveToLevelFile(FILE* _File)
+{	
+	CRenderComponent::SaveToLevelFile(_File);
+
+	
+	fwrite(&m_bIsUsingMovingVec, sizeof(bool), 1, _File);
+
+	// 만약에 MovingVec을 사용하고 있었다면 이에 대한 정보도 저장해줘야 하낟.
+	if (m_bIsUsingMovingVec)
+	{
+		for (int i = 0; i < m_vMovingVec.size(); ++i)
+		{
+			fwrite(&m_vMovingVec[i], sizeof(MovingStruct), 1, _File);
+		}
+	}
+
+	 
+}
+
+void CMeshRender::LoadFromLevelFile(FILE* _File)
+{
+	CRenderComponent::LoadFromLevelFile(_File);
+
+	fread(&m_bIsUsingMovingVec, sizeof(bool), 1, _File);
+
+	if (m_bIsUsingMovingVec)
+	{
+		SetUsingMovingVec(true);
+
+		for (int i = 0; i < m_vMovingVec.size(); ++i)
+		{
+			fread(&m_vMovingVec[i], sizeof(MovingStruct), 1, _File);
+		}		
+	}
+	else
+	{
+		SetUsingMovingVec(false);
+	}
+	 
 }

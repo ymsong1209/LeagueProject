@@ -88,9 +88,9 @@ int MeshRenderUI::render_update()
 			CRes* pRes = (CRes*)pNode->GetData();
 			if (RES_TYPE::MATERIAL == pRes->GetType())
 			{
-				GetTarget()->MeshRender()->SetMaterial(((CMaterial*)pRes));
+				GetTarget()->MeshRender()->SetMaterial(((CMaterial*)pRes), 0);
 
-				GetTarget()->MeshRender()->ClearDynamicMtrl();
+				GetTarget()->MeshRender()->ClearDynamicMtrl(0);
 
 				/*SelectMaterial((DWORD_PTR))(pRes->GetKey());
 				GetTarget()->MeshRender()->SetMesh((CMesh*)pRes);*/
@@ -118,16 +118,16 @@ int MeshRenderUI::render_update()
 		pListUI->AddDynamic_Select(this, (UI_DELEGATE_1)&MeshRenderUI::SelectMaterial);
 	}
 
-	int isDynamicMtrlUse = (int)(GetTarget()->MeshRender()->IsDynamicMtrlEmpty());
+	int isDynamicMtrlUse = (int)(GetTarget()->MeshRender()->IsDynamicMtrlEmpty(0));
 	ImGui::Text("Dynamic Mtrl Use :"); ImGui::SameLine();
 	if (ImGui::RadioButton("Use", &isDynamicMtrlUse, 0))
 	{
-		GetTarget()->MeshRender()->GetDynamicMaterial();
+		GetTarget()->MeshRender()->GetDynamicMaterial(0);
 	}
 	ImGui::SameLine();
 	if (ImGui::RadioButton("Not Use", &isDynamicMtrlUse, 1))
 	{
-		GetTarget()->MeshRender()->ClearDynamicMtrl();
+		GetTarget()->MeshRender()->ClearDynamicMtrl(0);
 	}
 	
 
@@ -206,7 +206,7 @@ int MeshRenderUI::render_update()
 					CRes* pRes = (CRes*)pNode->GetData();
 					if (RES_TYPE::TEXTURE == pRes->GetType())
 					{
-						GetTarget()->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM(i), (CTexture*)pRes);  
+						GetTarget()->MeshRender()->GetMaterial(0)->SetTexParam(TEX_PARAM(i), (CTexture*)pRes);  
 					}
 				}
 
@@ -219,7 +219,7 @@ int MeshRenderUI::render_update()
 			string TexClearButton = "Clear##" +  std::to_string(i);
 			if (ImGui::Button(TexClearButton.c_str(), ImVec2(50.f, 20.f)))
 			{
-				GetTarget()->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM(i), (CTexture*)nullptr);
+				GetTarget()->MeshRender()->GetMaterial(0)->SetTexParam(TEX_PARAM(i), (CTexture*)nullptr);
 			}
 
 
@@ -332,7 +332,7 @@ int MeshRenderUI::render_update()
 				CRes* pRes = (CRes*)pNode->GetData();
 				if (RES_TYPE::TEXTURE == pRes->GetType())
 				{
-					GetTarget()->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM(2), (CTexture*)pRes);
+					GetTarget()->MeshRender()->GetMaterial(0)->SetTexParam(TEX_PARAM(2), (CTexture*)pRes);
 				}
 			}
 
@@ -345,12 +345,12 @@ int MeshRenderUI::render_update()
 		string TexClearButton = "Clear##" + std::to_string(3);
 		if (ImGui::Button(TexClearButton.c_str(), ImVec2(50.f, 20.f)))
 		{
-			GetTarget()->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM(2), (CTexture*)nullptr);
+			GetTarget()->MeshRender()->GetMaterial(0)->SetTexParam(TEX_PARAM(2), (CTexture*)nullptr);
 		}
 
 
 
-		Ptr<CMaterial> Material = GetTarget()->MeshRender()->GetMaterial();
+		Ptr<CMaterial> Material = GetTarget()->MeshRender()->GetMaterial(0);
 
 		// Additive Texture가 있는 지 확인 
 		if (Material->GetTexParam(TEX_PARAM::TEX_2).Get() != nullptr)
@@ -392,8 +392,8 @@ void MeshRenderUI::SelectMaterial(DWORD_PTR _Key)
 	Ptr<CMaterial> pMtrl = CResMgr::GetInst()->FindRes<CMaterial>(wstring(strKey.begin(), strKey.end()));
 
 	GetTarget()->MeshRender()->SetMaterial(pMtrl, 0);
-	GetTarget()->MeshRender()->SetMaterial(pMtrl);
+ 
 
-	GetTarget()->MeshRender()->ClearDynamicMtrl();
+	GetTarget()->MeshRender()->ClearDynamicMtrl(0);
  
 }

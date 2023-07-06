@@ -45,9 +45,9 @@ public:
 
 
 public:
-    void SetOutputTexture(Ptr<CTexture> _Tex) { GetMaterial()->SetTexParam(TEX_0, _Tex); }
-    void SetPunctureTexture(Ptr<CTexture> _Tex) { GetMaterial()->SetTexParam(TEX_1, _Tex); }
-    void SetAdditiveTexture(Ptr<CTexture> _Tex) { GetMaterial()->SetTexParam(TEX_2, _Tex); }
+    void SetOutputTexture(Ptr<CTexture> _Tex) { GetMaterial(0)->SetTexParam(TEX_0, _Tex); }
+    void SetPunctureTexture(Ptr<CTexture> _Tex) { GetMaterial(0)->SetTexParam(TEX_1, _Tex); }
+    void SetAdditiveTexture(Ptr<CTexture> _Tex) { GetMaterial(0)->SetTexParam(TEX_2, _Tex); }
 
     const vector<MovingStruct>& GetMovingStruct() { return m_vMovingVec; }
     void SetMovingStruct(int _index, MovingStruct _info) { m_vMovingVec[_index] = _info; }
@@ -55,6 +55,9 @@ public:
     bool IsUsingMovingVec() { return m_bIsUsingMovingVec; }
     void SetUsingMovingVec(bool _use); 
 
+    virtual void SaveToLevelFile(FILE* _File) override;
+    virtual void LoadFromLevelFile(FILE* _File) override;
+    
     
 
     CLONE(CMeshRender);

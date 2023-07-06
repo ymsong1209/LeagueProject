@@ -140,6 +140,27 @@ int CTexture::Load(const wstring& _strFilePath, int _iMipLevel)
 	// Texture2D 생성
 	m_Desc.Format = m_Image.GetMetadata().format;
 
+	if (m_Desc.Format == DXGI_FORMAT_BC1_UNORM  
+					||   DXGI_FORMAT_BC3_UNORM)
+	{
+		HRESULT hr = CreateShaderResourceView(DEVICE
+			, m_Image.GetImages()
+			, m_Image.GetImageCount()
+			, m_Image.GetMetadata()
+			, m_SRV.GetAddressOf());
+
+		if (FAILED(hr))
+		{
+			MessageBox(nullptr, L"ShaderResourceView 생성 실패", L"텍스쳐 로딩 실패", MB_OK);
+			return E_FAIL;
+		}
+
+		m_SRV->GetResource((ID3D11Resource**)m_Tex2D.GetAddressOf());
+		m_Tex2D->GetDesc(&m_Desc);
+
+		return S_OK;
+	}
+
 	if (m_Image.GetMetadata().IsCubemap())
 	{
 		m_Desc.MipLevels = 1;	// 0 ==> 가능한 모든 밉맵이 저장 될 수 있는 공간이 만들어짐

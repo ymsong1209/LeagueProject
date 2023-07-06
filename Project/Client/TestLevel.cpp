@@ -102,7 +102,7 @@ void CreateTestLevel()
 	SpawnGameObject(pObject, Vec3(0.f, 200.f, 300.f), 0);
 
 	// LandScape Object
-	/*CGameObject* pLandScape = new CGameObject;
+	CGameObject* pLandScape = new CGameObject;
 	pLandScape->SetName(L"LandScape");
 
 	pLandScape->AddComponent(new CTransform);
@@ -115,73 +115,20 @@ void CreateTestLevel()
 	//pLandScape->LandScape()->SetHeightMap(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\HeightMap_01.jpg"));
 
 
-	SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 0.f), 0);*/
+	SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 0.f), 0);
 
 
-<<<<<<< HEAD
-	// LandScape Object
-	/*CGameObject* TmpCollider = new CGameObject;
-	TmpCollider->SetName(L"TmpCollider");
-
-	TmpCollider->AddComponent(new CTransform);
-	TmpCollider->AddComponent(new CCollider3D);
-	TmpCollider->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
-	TmpCollider->Transform()->SetRelativeScale(Vec3(500.f, 500, 500));
-	SpawnGameObject(TmpCollider, Vec3(0.f, 0.f, 500.f), 0);*/
-
-
-
-	// TestFastForward
-	CGameObject* pRectFast = new CGameObject;
-	pRectFast->SetName(L"ReftFast");
-
-	pRectFast->AddComponent(new CMeshRender);
-	pRectFast->AddComponent(new CTransform);
-
-	pRectFast->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
-
-	pRectFast->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"));
-	pRectFast->MeshRender()->GetDynamicMaterial();
-	//pRectFast->MeshRender()->GetMaterial()->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Base_e.dds"));
-	pRectFast->MeshRender()->GetMaterial()->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Base_e_Puncture.dds"));
-	pRectFast->MeshRender()->GetMaterial()->SetTexParam(TEX_2, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Round.dds"));
-
-
-	SpawnGameObject(pRectFast, Vec3(0.f, 0.f, 500.f), 0);
-
-
-
-	// TestFastForward
-	CGameObject* pRectFast2 = new CGameObject;
-	pRectFast2->SetName(L"ReftFast2");
-
-	pRectFast2->AddComponent(new CMeshRender);
-	pRectFast2->AddComponent(new CTransform);
-
-	pRectFast2->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
-
-	pRectFast2->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	pRectFast2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"));
-	pRectFast2->MeshRender()->GetDynamicMaterial();
-
-	pRectFast2->MeshRender()->GetMaterial()->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Fighter.bmp"));
-	pRectFast2->MeshRender()->GetMaterial()->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Dots.jpg"));
-
-	SpawnGameObject(pRectFast2, Vec3(300.f, 0.f, 500.f), 0);
-
-=======
 	// ============
 	// FBX Loading
 	// ============	
 	{
-		//Ptr<CMeshData> pMeshData = nullptr;
-		//CGameObject* pObj = nullptr;
-		//
-		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Monster.fbx");
-		//
-		//pObj = pMeshData->Instantiate();
-		//pObj->SetName(L"Monster");
+		/*Ptr<CMeshData> pMeshData = nullptr;
+		CGameObject* pObj = nullptr;
+		
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Monster.fbx");
+		
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"Monster");*/
 
 	
 		//단일재생
@@ -195,22 +142,22 @@ void CreateTestLevel()
 		//반복재생, AnimA->Take001로 0.5초동안 애니메이션 blend하고 take001재생,take001마지막프레임->첫프레임 돌아오면서 blend 0.5초동안 하기
 		//pObj->Animator3D()->Play(L"Take001", true, true, true, 0.5f);
 		//사용 예시
-		/*
-		IdleAnimation 반복재생 blend안함
-		pobj->animator3d()->play(L"IdleAnimation",true,false);
-		공격버튼 누르면 공격 애니메이션 단일재생, blending 0.2초
-		if(key_pressed(key::lbtn){
-		changestate(attack);
-		pobj->animator3d()->play(L"AttackAnimation", true,0.2f);
-		}
-		공격 애님 끝나면 다시 idle로 전환
-		if(animator3d()->getcuranim()->isfinish()){
-		changestate(idle)
-		//Attack->Idle 0.2초 blend주고, idle animation 재생, idle anim은 마지막프레임->첫프레임 이동시 blend없음 
-		pobj->animator3d()->play(L"IdleAnimation",true,false,true,0.2f); 
-		}
 		
-		*/
+		//IdleAnimation 반복재생 blend안함
+		//pObj->animator3d()->play(L"IdleAnimation",true,false);
+		//공격버튼 누르면 공격 애니메이션 단일재생, blending 0.2초
+		//if(key_pressed(key::lbtn){
+		//changestate(attack);
+		//pobj->animator3d()->play(L"AttackAnimation", true,0.2f);
+		//}
+		//공격 애님 끝나면 다시 idle로 전환
+		//if(animator3d()->getcuranim()->isfinish()){
+		//changestate(idle)
+		////Attack->Idle 0.2초 blend주고, idle animation 재생, idle anim은 마지막프레임->첫프레임 이동시 blend없음 
+		//pobj->animator3d()->play(L"IdleAnimation",true,false,true,0.2f); 
+		//}
+		
+		
 
 
 		//SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
@@ -222,7 +169,49 @@ void CreateTestLevel()
 	pObj->AddComponent(new CAnimator3D);
 	pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\jinx55");
 	SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
->>>>>>> origin/dev
+
+
+	// TestFastForward
+	CGameObject* pRectFast = new CGameObject;
+	pRectFast->SetName(L"ReftFast");
+
+	pRectFast->AddComponent(new CMeshRender);
+	pRectFast->AddComponent(new CTransform);
+
+	pRectFast->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
+
+	pRectFast->MeshRender()->SetUsingMovingVec(true);
+
+	pRectFast->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
+	pRectFast->MeshRender()->GetDynamicMaterial(0);
+	//pRectFast->MeshRender()->GetMaterial()->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Base_e.dds"));
+	pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Base_e_Puncture.dds"));
+	pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_2, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Round.dds"));
+
+
+	SpawnGameObject(pRectFast, Vec3(-600.f, 0.f, 500.f), 0);
+
+
+
+	// TestFastForward
+	CGameObject* pRectFast2 = new CGameObject;
+	pRectFast2->SetName(L"ReftFast2");
+
+	pRectFast2->AddComponent(new CMeshRender);
+	pRectFast2->AddComponent(new CTransform);
+
+	pRectFast2->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
+	pRectFast2->MeshRender()->SetUsingMovingVec(true);
+
+	pRectFast2->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	pRectFast2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
+	pRectFast2->MeshRender()->GetDynamicMaterial(0);
+
+	pRectFast2->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Fighter.bmp"));
+	pRectFast2->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Dots.jpg"));
+
+	SpawnGameObject(pRectFast2, Vec3(-300.f, 0.f, 500.f), 0);
 
 	// 충돌 시킬 레이어 짝 지정
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");	

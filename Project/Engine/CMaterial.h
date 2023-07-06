@@ -25,6 +25,9 @@ public:
     void SetShader(Ptr<CGraphicsShader> _Shader) { m_pShader = _Shader; }
     Ptr<CGraphicsShader> GetShader() { return m_pShader; }
 
+    tMtrlConst& GetMtrlConst() { return m_Const; }
+    void SetMtrlConst(tMtrlConst _Data) { m_Const = _Data; }
+
     void SetMaterialCoefficient(Vec4 _vDiff, Vec4 _vSpec, Vec4 _vAmb, Vec4 _vEmis)
     {
         m_Const.mtrl.vDiff = _vDiff;
