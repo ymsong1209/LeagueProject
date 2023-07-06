@@ -18,33 +18,39 @@
 #include "CLight3D.h"
 
 #include "CResMgr.h"
+#include "CKeyMgr.h"
 
 
 CCamera::CCamera()
 	: CComponent(COMPONENT_TYPE::CAMERA)
 	, m_Frustum(this)
+	, m_fWidth(0.f)
 	, m_fAspectRatio(1.f)
 	, m_fScale(1.f)
 	, m_fFar(50000.f)
 	, m_ProjType(PROJ_TYPE::ORTHOGRAPHIC)
 	, m_iLayerMask(0)
 	, m_iCamIdx(-1)
+	, m_bShowFrustumDebug(false)
 {
 	SetName(L"Camera");
 
 	Vec2 vRenderResol = CDevice::GetInst()->GetRenderResolution();
+	m_fWidth = vRenderResol.x;
 	m_fAspectRatio = vRenderResol.x / vRenderResol.y;
 }
 
 CCamera::CCamera(const CCamera& _Other)
 	: CComponent(_Other)
 	, m_Frustum(this)
+	, m_fWidth(_Other.m_fWidth)
 	, m_fAspectRatio(_Other.m_fAspectRatio)
 	, m_fScale(_Other.m_fScale)
 	, m_fFar(50000.f)
 	, m_ProjType(_Other.m_ProjType)
 	, m_iLayerMask(_Other.m_iLayerMask)
 	, m_iCamIdx(-1)
+	, m_bShowFrustumDebug(_Other.m_bShowFrustumDebug)
 {
 }
 
@@ -67,6 +73,32 @@ void CCamera::finaltick()
 	CalcProjMat();
 
 	m_Frustum.finaltick();
+
+	// 마우스방향 직선 계산
+	CalRay();
+}
+
+void CCamera::CalRay()
+{
+	// 마우스 방향을 향하는 Ray 구하기
+	// SwapChain 타겟의 ViewPort 정보
+	CMRT* pMRT = CRenderMgr::GetInst()->GetMRT(MRT_TYPE::SWAPCHAIN);
+	D3D11_VIEWPORT tVP = pMRT->GetViewPort();
+
+	//  현재 마우스 좌표
+	Vec2 vMousePos = CKeyMgr::GetInst()->GetMousePos();
+
+	// 직선은 카메라의 좌표를 반드시 지난다.
+	m_ray.vStart = Transform()->GetWorldPos();
+
+	// view space 에서의 방향
+	m_ray.vDir.x = ((((vMousePos.x - tVP.TopLeftX) * 2.f / tVP.Width) - 1.f) - m_matProj._31) / m_matProj._11;
+	m_ray.vDir.y = (-(((vMousePos.y - tVP.TopLeftY) * 2.f / tVP.Height) - 1.f) - m_matProj._32) / m_matProj._22;
+	m_ray.vDir.z = 1.f;
+
+	// world space 에서의 방향
+	m_ray.vDir = XMVector3TransformNormal(m_ray.vDir, m_matViewInv);
+	m_ray.vDir.Normalize();
 }
 
 void CCamera::CalcViewMat()
@@ -105,8 +137,8 @@ void CCamera::CalcProjMat()
 	if (PROJ_TYPE::ORTHOGRAPHIC == m_ProjType)
 	{
 		// 직교 투영
-		Vec2 vResolution = CDevice::GetInst()->GetRenderResolution();
-		m_matProj =  XMMatrixOrthographicLH(vResolution.x * (1.f / m_fScale), vResolution.y * (1.f / m_fScale), 1.f, m_fFar);
+		float fHeight = m_fWidth / m_fAspectRatio;
+		m_matProj = XMMatrixOrthographicLH(m_fWidth * (1.f / m_fScale), fHeight * (1.f / m_fScale), 1.f, m_fFar);
 	}
 	else
 	{	
@@ -116,6 +148,8 @@ void CCamera::CalcProjMat()
 
 	// 투영행렬 역행렬
 	m_matProjInv = XMMatrixInverse(nullptr, m_matProj);
+
+
 }
 
 
@@ -167,21 +201,31 @@ void CCamera::SortObject()
 				CRenderComponent* pRenderCom = vecObject[j]->GetRenderComponent();
 
 				// 렌더링 기능이 없는 오브젝트는 제외
-				if (   nullptr == pRenderCom 
-					|| nullptr == pRenderCom->GetMaterial()
-					|| nullptr == pRenderCom->GetMaterial()->GetShader())
+				if (nullptr == pRenderCom
+					|| nullptr == pRenderCom->GetMaterial(0))
+					continue;
+				if (nullptr != pRenderCom->GetMaterial(0)
+					&& nullptr == pRenderCom->GetMaterial(0)->GetShader())
 					continue;
 
 				// FrustumCheck
 				if (pRenderCom->IsUseFrustumCheck())
 				{
 					Vec3 vWorldPos = vecObject[j]->Transform()->GetWorldPos();
+
+					// Bounding Debug Shape 그리기
+					tDebugBoundingInfo info = {};
+					info.vWorldPos = vWorldPos;
+					info.fBounding = pRenderCom->GetBounding();
+					info.fMaxTime = 0.f;
+					CRenderMgr::GetInst()->AddDebugBoundingInfo(info);
+
 					if (false == m_Frustum.FrustumCheckBySphere(vWorldPos, pRenderCom->GetBounding()))
 						continue;
 				}
 
 				// 쉐이더 도메인에 따른 분류
-				SHADER_DOMAIN eDomain = pRenderCom->GetMaterial()->GetShader()->GetDomain();
+				SHADER_DOMAIN eDomain = pRenderCom->GetMaterial(0)->GetShader()->GetDomain();
 				switch (eDomain)
 				{
 				case SHADER_DOMAIN::DOMAIN_DEFERRED:
@@ -206,6 +250,29 @@ void CCamera::SortObject()
 					m_vecUI.push_back(vecObject[j]);
 					break;				
 				}
+			}
+		}
+	}
+}
+
+void CCamera::SortShadowObject()
+{
+	m_vecDynamicShadow.clear();
+
+	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
+
+	for (UINT i = 0; i < MAX_LAYER; ++i)
+	{
+		CLayer* pLayer = pCurLevel->GetLayer(i);
+		const vector<CGameObject*>& vecObj = pLayer->GetObjects();
+
+		for (size_t j = 0; j < vecObj.size(); ++j)
+		{
+			CRenderComponent* pRenderCom = vecObj[j]->GetRenderComponent();
+
+			if (pRenderCom && pRenderCom->IsDynamicShadow())
+			{
+				m_vecDynamicShadow.push_back(vecObj[j]);
 			}
 		}
 	}
@@ -255,6 +322,19 @@ void CCamera::render()
 	render_ui();
 }
 
+void CCamera::render_depthmap()
+{
+	// 광원 카메라의 View, Proj 세팅
+	g_transform.matView = m_matView;
+	g_transform.matViewInv = m_matViewInv;
+	g_transform.matProj = m_matProj;
+
+	for (size_t i = 0; i < m_vecDynamicShadow.size(); ++i)
+	{
+		m_vecDynamicShadow[i]->GetRenderComponent()->render_depthmap();
+	}
+}
+
 
 void CCamera::clear()
 {
@@ -276,7 +356,7 @@ void CCamera::render_deferred()
 			//layer는 0~31이지만 비트연산을 위해 한칸씩 옮김
 			//layernum = 1~32
 			float layernum = m_vecDeferred[i]->GetLayerIndex() + 1;
-			m_vecDeferred[i]->GetRenderComponent()->GetMaterial()->SetScalarParam(FLOAT_0, &layernum);
+			m_vecDeferred[i]->GetRenderComponent()->GetMaterial(0)->SetScalarParam(FLOAT_0, &layernum);
 		}
 		m_vecDeferred[i]->render();
 	}
@@ -301,7 +381,7 @@ void CCamera::render_merge()
 	pMtrl->SetTexParam(TEX_3, CResMgr::GetInst()->FindRes<CTexture>(L"EmissiveTargetTex"));
 	pMtrl->UpdateData();
 
-	pMesh->render();
+	pMesh->render(0);
 }
 
 void CCamera::render_opaque()
@@ -352,6 +432,8 @@ void CCamera::SaveToLevelFile(FILE* _File)
 	fwrite(&m_ProjType, sizeof(UINT), 1, _File);
 	fwrite(&m_iLayerMask, sizeof(UINT), 1, _File);
 	fwrite(&m_iCamIdx, sizeof(int), 1, _File);
+	fwrite(&m_fFar, sizeof(float), 1, _File);
+	fwrite(&m_bShowFrustumDebug, sizeof(bool), 1, _File);
 }
 
 void CCamera::LoadFromLevelFile(FILE* _File)
@@ -361,5 +443,7 @@ void CCamera::LoadFromLevelFile(FILE* _File)
 	fread(&m_ProjType, sizeof(UINT), 1, _File);
 	fread(&m_iLayerMask, sizeof(UINT), 1, _File);
 	fread(&m_iCamIdx, sizeof(int), 1, _File);
+	fread(&m_fFar, sizeof(float), 1, _File);
+	fread(&m_bShowFrustumDebug, sizeof(bool), 1, _File);
 	SetCameraIndex(m_iCamIdx);
 }

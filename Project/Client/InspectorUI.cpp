@@ -13,6 +13,8 @@
 #include "Animator2DUI.h"
 #include "TileMapUI.h"
 #include "Light2DUI.h"
+#include "Light3DUI.h"
+#include "FsmUI.h"
 #include "ParticleSystemUI.h"
 
 #include "MeshDataUI.h"
@@ -25,7 +27,8 @@
 #include "MaterialUI.h"
 #include "ScriptUI.h"
 #include "DecalUI.h"
-
+#include "LandScapeUI.h"
+#include "RenderComponentUI.h"
 
 
 InspectorUI::InspectorUI()
@@ -35,6 +38,10 @@ InspectorUI::InspectorUI()
 	, m_arrResUI{}
 {
 	SetName("Inspector");
+
+	m_RenderComUI = new RenderComponentUI;
+	m_RenderComUI->SetSize(0.f, 150.f);
+	AddChildUI(m_RenderComUI);
 
 	m_arrComUI[(UINT)COMPONENT_TYPE::TRANSFORM] = new TransformUI;
 	m_arrComUI[(UINT)COMPONENT_TYPE::TRANSFORM]->SetSize(0.f, 150.f);	
@@ -60,6 +67,14 @@ InspectorUI::InspectorUI()
 	m_arrComUI[(UINT)COMPONENT_TYPE::LIGHT2D]->SetSize(0.f, 150.f);
 	AddChildUI(m_arrComUI[(UINT)COMPONENT_TYPE::LIGHT2D]);
 
+	m_arrComUI[(UINT)COMPONENT_TYPE::LIGHT3D] = new Light3DUI;
+	m_arrComUI[(UINT)COMPONENT_TYPE::LIGHT3D]->SetSize(0.f, 200.f);
+	AddChildUI(m_arrComUI[(UINT)COMPONENT_TYPE::LIGHT3D]);
+
+	m_arrComUI[(UINT)COMPONENT_TYPE::FSM] = new FsmUI;
+	m_arrComUI[(UINT)COMPONENT_TYPE::FSM]->SetSize(0.f, 150.f);
+	AddChildUI(m_arrComUI[(UINT)COMPONENT_TYPE::FSM]);
+
 	m_arrComUI[(UINT)COMPONENT_TYPE::TILEMAP] = new TileMapUI;
 	m_arrComUI[(UINT)COMPONENT_TYPE::TILEMAP]->SetSize(0.f, 150.f);
 	AddChildUI(m_arrComUI[(UINT)COMPONENT_TYPE::TILEMAP]);
@@ -71,6 +86,11 @@ InspectorUI::InspectorUI()
 	m_arrComUI[(UINT)COMPONENT_TYPE::DECAL] = new DecalUI;
 	m_arrComUI[(UINT)COMPONENT_TYPE::DECAL]->SetSize(0.f, 400.f);
 	AddChildUI(m_arrComUI[(UINT)COMPONENT_TYPE::DECAL]);
+
+	m_arrComUI[(UINT)COMPONENT_TYPE::LANDSCAPE] = new LandScapeUI;
+	m_arrComUI[(UINT)COMPONENT_TYPE::LANDSCAPE]->SetSize(0.f, 600.f);
+	AddChildUI(m_arrComUI[(UINT)COMPONENT_TYPE::LANDSCAPE]);
+
 
 	// ResUI
 	m_arrResUI[(UINT)RES_TYPE::MESHDATA] = new MeshDataUI;
@@ -134,6 +154,8 @@ void InspectorUI::SetTargetObject(CGameObject* _Target)
 	// 타겟오브젝트 정보 노출
 	m_pTargetObj = _Target;
 
+	m_RenderComUI->SetTarget(m_pTargetObj);
+
 	for (UINT i = 0; i < (UINT)COMPONENT_TYPE::END; ++i)
 	{
 		if (nullptr == m_arrComUI[i])
@@ -146,6 +168,8 @@ void InspectorUI::SetTargetObject(CGameObject* _Target)
 	// 스크립트UI 들을 전부 비활성화 시킨다.
 	if (nullptr == m_pTargetObj)
 	{
+		m_RenderComUI->SetActive(false);
+
 		for (size_t i = 0; i < m_vecScriptUI.size(); ++i)
 		{
 			m_vecScriptUI[i]->SetActive(false);

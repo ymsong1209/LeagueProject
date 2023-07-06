@@ -63,7 +63,7 @@ CParticleSystem::CParticleSystem()
 	SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"PointMesh"));
 
 	// 파티클 전용 재질
-	SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"ParticleRenderMtrl"));
+	SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"ParticleRenderMtrl"),0);
 
 	pParticleTex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\particle\\HardCircle.png");
 
@@ -102,9 +102,9 @@ CParticleSystem::CParticleSystem(const CParticleSystem& _other)
 	SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"PointMesh"));
 
 	// 파티클 전용 재질
-	SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"ParticleRenderMtrl"));
+	SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"ParticleRenderMtrl"),0);
 
-	GetMaterial()->SetTexParam(TEX_0, pParticleTex);
+	GetMaterial(0)->SetTexParam(TEX_0, pParticleTex);
 
 }
 
@@ -170,16 +170,16 @@ void CParticleSystem::render()
 	Transform()->UpdateData();
 
 	// 파티클버퍼 t20 에 바인딩
-	m_ParticleBuffer->UpdateData(20, PIPELINE_STAGE::PS_ALL);
+	m_ParticleBuffer->UpdateData(20, PIPELINE_STAGE::PS_ALL_STAGES);
 
 	// 모듈 데이터 t21 에 바인딩
-	m_ModuleDataBuffer->UpdateData(21, PIPELINE_STAGE::PS_ALL);
+	m_ModuleDataBuffer->UpdateData(21, PIPELINE_STAGE::PS_ALL_STAGES);
 
 	// Particle Render	
 	
-	GetMaterial()->SetTexParam(TEX_0, pParticleTex);
+	GetMaterial(0)->SetTexParam(TEX_0, pParticleTex);
 
-	GetMaterial()->UpdateData();
+	GetMaterial(0)->UpdateData();
 	GetMesh()->render_particle(m_ModuleData.iMaxParticleCount);
 
 	// 파티클 버퍼 바인딩 해제

@@ -20,6 +20,7 @@ CTransform::~CTransform()
 {
 }
 
+
 void CTransform::finaltick()
 {
 	m_matWorldScale = XMMatrixIdentity(); //단위행렬 만들기
@@ -92,6 +93,22 @@ void CTransform::UpdateData()
 
 	pTransformBuffer->SetData(&g_transform);
 	pTransformBuffer->UpdateData();
+}
+
+
+Matrix CTransform::GetWorldRotMat()
+{
+	Matrix matWorldRot = m_matWorldRot;
+
+	CGameObject* pParent = GetOwner()->GetParent();
+
+	while (pParent)
+	{
+		matWorldRot *= pParent->Transform()->m_matWorldRot;
+		pParent = pParent->GetParent();
+	}
+
+	return matWorldRot;
 }
 
 void CTransform::SaveToLevelFile(FILE* _File)

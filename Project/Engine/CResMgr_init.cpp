@@ -316,7 +316,7 @@ void CResMgr::CreateDefaultMesh()
 	}
 
 	pMesh = new CMesh(true);
-	pMesh->Create(arrCube, 24, vecIdx.data(), vecIdx.size());
+	pMesh->Create(arrCube, 24, vecIdx.data(), (UINT)vecIdx.size());
 	AddRes<CMesh>(L"CubeMesh", pMesh);
 	vecIdx.clear();
 
@@ -348,7 +348,7 @@ void CResMgr::CreateDefaultMesh()
 	vecIdx.push_back(0);
 
 	pMesh = new CMesh(true);
-	pMesh->Create(arrCube, 24, vecIdx.data(), vecIdx.size());
+	pMesh->Create(arrCube, 24, vecIdx.data(), (UINT)vecIdx.size());
 	AddRes<CMesh>(L"CubeMesh_Debug", pMesh);
 	vecIdx.clear();
 
@@ -457,8 +457,327 @@ void CResMgr::CreateDefaultMesh()
 	}
 
 	pMesh = new CMesh(true);
-	pMesh->Create(vecVtx.data(), vecVtx.size(), vecIdx.data(), vecIdx.size());
+	pMesh->Create(vecVtx.data(), (UINT)vecVtx.size(), vecIdx.data(), (UINT)vecIdx.size());
 	AddRes<CMesh>(L"SphereMesh", pMesh);
+	vecVtx.clear();
+	vecIdx.clear();
+
+	/////////////////
+	//Cylinder Mesh//
+	/////////////////
+
+	float stackHeight = 1.f / iStackCount;
+	float radiusStep = 0.f;
+	int ringCount = iStackCount + 1;
+
+	for (int i = 0; i < ringCount; i++) {
+		float y = -0.5f * 1.f + i * stackHeight;
+		float r = 0.5f + i * radiusStep;
+		float dTheta = 2.0f * XM_PI / iSliceCount;
+		for (int j = 0; j <= iSliceCount; j++) {
+			float c = cos(j * dTheta);
+			float s = sin(j * dTheta);
+
+			v.vPos = Vec3(r * c, y, r * s);
+			v.vUV = Vec2(static_cast<float>(j) / iSliceCount, 1.0f - static_cast<float>(i) / iStackCount);
+
+			v.vNormal = Vec3(c, 0, s);
+			v.vNormal = v.vNormal.Normalize();
+			v.vTangent = Vec3(c, 0, -s);
+			v.vTangent = v.vTangent.Normalize();
+			v.vBinormal.Cross(v.vNormal, v.vTangent);
+
+			vecVtx.push_back(v);
+		}
+	}
+
+	int ringVertexCount = iSliceCount + 1;
+	for (int i = 0; i < iStackCount; i++) {
+		for (int j = 0; j < iSliceCount; j++) {
+			vecIdx.push_back(i * ringVertexCount + j);
+			vecIdx.push_back((i + 1) * ringVertexCount + j);
+			vecIdx.push_back((i + 1) * ringVertexCount + j + 1);
+
+			vecIdx.push_back(i * ringVertexCount + j);
+			vecIdx.push_back((i + 1) * ringVertexCount + j + 1);
+			vecIdx.push_back(i * ringVertexCount + j + 1);
+		}
+	}
+	//topcap
+	int baseIndex = static_cast<int>(vecVtx.size());
+
+	float y = 0.5f;
+	float dTheta = 2.0f * XM_PI / iSliceCount;
+
+	for (int i = 0; i <= iSliceCount; i++) {
+		float x = 0.5 * cos(i * dTheta);
+		float z = 0.5 * sin(i * dTheta);
+
+		v.vPos = Vec3(x, y, z);
+		v.vNormal = Vec3(0, 1, 0);
+		v.vTangent = Vec3(1, 0, 0);
+		v.vBinormal = Vec3(0, 0, -1);
+		v.vUV = Vec2(x / 1.f + 0.5f, z / 1.f + 0.5f);
+		vecVtx.push_back(v);
+
+	}
+
+	v.vPos = Vec3(0, y, 0);
+	v.vNormal = Vec3(0, 1, 0);
+	v.vTangent = Vec3(1, 0, 0);
+	v.vBinormal = Vec3(0, 0, -1);
+	v.vUV = Vec2(0.5f, 0.5f);
+	vecVtx.push_back(v);
+
+	int centerIndex = static_cast<int>(vecVtx.size()) - 1;
+
+	for (int i = 0; i < iSliceCount; i++) {
+		vecIdx.push_back(centerIndex);
+		vecIdx.push_back(baseIndex + i + 1);
+		vecIdx.push_back(baseIndex + i);
+	}
+
+	//bottomcap
+	baseIndex = static_cast<int>(vecVtx.size());
+
+	y = -0.5f;
+	dTheta = 2.0f * XM_PI / iSliceCount;
+
+	for (int i = 0; i <= iSliceCount; i++) {
+
+		float x = 0.5 * cos(i * dTheta);
+		float z = 0.5 * sin(i * dTheta);
+
+		v.vPos = Vec3(x, y, z);
+		v.vNormal = Vec3(0, -1, 0);
+		v.vTangent = Vec3(1, 0, 0);
+		v.vBinormal = Vec3(0, 0, 1);
+		v.vUV = Vec2(x / 1.f + 0.5f, z / 1.f + 0.5f);
+		vecVtx.push_back(v);
+
+	}
+
+	v.vPos = Vec3(0, y, 0);
+	v.vNormal = Vec3(0, -1, 0);
+	v.vTangent = Vec3(1, 0, 0);
+	v.vBinormal = Vec3(0, 0, 1);
+	v.vUV = Vec2(0.5f, 0.5f);
+	vecVtx.push_back(v);
+
+
+	centerIndex = static_cast<int>(vecVtx.size()) - 1;
+
+	for (int i = 0; i < iSliceCount; i++) {
+		vecIdx.push_back(centerIndex);
+		vecIdx.push_back(baseIndex + i);
+		vecIdx.push_back(baseIndex + i + 1);
+	}
+
+	pMesh = new CMesh(true);
+	pMesh->Create(vecVtx.data(), vecVtx.size(), vecIdx.data(), vecIdx.size());
+	AddRes<CMesh>(L"CylinderMesh", pMesh);
+	vecVtx.clear();
+	vecIdx.clear();
+
+	/////////////////
+	//Cone Mesh//////
+	/////////////////
+
+	stackHeight = 1.f / iStackCount;
+	radiusStep = -0.5f / iStackCount;
+	ringCount = iStackCount + 1;
+
+	for (int i = 0; i < ringCount; i++) {
+		float y = -0.5f * 1.f + i * stackHeight;
+		float r = 0.5f + i * radiusStep;
+		float dTheta = 2.0f * XM_PI / iSliceCount;
+		for (int j = 0; j <= iSliceCount; j++) {
+			float c = cos(j * dTheta);
+			float s = sin(j * dTheta);
+
+			v.vPos = Vec3(r * c, y, r * s);
+			v.vUV = Vec2(static_cast<float>(j) / iSliceCount, 1.0f - static_cast<float>(i) / iStackCount);
+
+			v.vNormal = Vec3(c, 0, s);
+			v.vNormal = v.vNormal.Normalize();
+			v.vTangent = Vec3(c, 0, -s);
+			v.vTangent = v.vTangent.Normalize();
+			v.vBinormal.Cross(v.vNormal, v.vTangent);
+
+			vecVtx.push_back(v);
+		}
+	}
+
+	ringVertexCount = iSliceCount + 1;
+	for (int i = 0; i < iStackCount; i++) {
+		for (int j = 0; j < iSliceCount; j++) {
+			vecIdx.push_back(i * ringVertexCount + j);
+			vecIdx.push_back((i + 1) * ringVertexCount + j);
+			vecIdx.push_back((i + 1) * ringVertexCount + j + 1);
+
+			vecIdx.push_back(i * ringVertexCount + j);
+			vecIdx.push_back((i + 1) * ringVertexCount + j + 1);
+			vecIdx.push_back(i * ringVertexCount + j + 1);
+		}
+	}
+	//topcap
+	baseIndex = static_cast<int>(vecVtx.size());
+
+	y = 0.5f;
+	dTheta = 2.0f * XM_PI / iSliceCount;
+
+	for (int i = 0; i <= iSliceCount; i++) {
+		float x = 0 * 0.5 * cos(i * dTheta);
+		float z = 0 * 0.5 * sin(i * dTheta);
+
+		v.vPos = Vec3(x, y, z);
+		v.vNormal = Vec3(0, 1, 0);
+		v.vTangent = Vec3(1, 0, 0);
+		v.vBinormal = Vec3(0, 0, -1);
+		v.vUV = Vec2(x / 1.f + 0.5f, z / 1.f + 0.5f);
+		vecVtx.push_back(v);
+
+	}
+
+	v.vPos = Vec3(0, y, 0);
+	v.vNormal = Vec3(0, 1, 0);
+	v.vTangent = Vec3(1, 0, 0);
+	v.vBinormal = Vec3(0, 0, -1);
+	v.vUV = Vec2(0.5f, 0.5f);
+	vecVtx.push_back(v);
+
+	centerIndex = static_cast<int>(vecVtx.size()) - 1;
+
+	for (int i = 0; i < iSliceCount; i++) {
+		vecIdx.push_back(centerIndex);
+		vecIdx.push_back(baseIndex + i + 1);
+		vecIdx.push_back(baseIndex + i);
+	}
+
+	//bottomcap
+	baseIndex = static_cast<int>(vecVtx.size());
+
+	y = -0.5f;
+	dTheta = 2.0f * XM_PI / iSliceCount;
+
+	for (int i = 0; i <= iSliceCount; i++) {
+
+		float x = 0.5 * cos(i * dTheta);
+		float z = 0.5 * sin(i * dTheta);
+
+		v.vPos = Vec3(x, y, z);
+		v.vNormal = Vec3(0, -1, 0);
+		v.vTangent = Vec3(1, 0, 0);
+		v.vBinormal = Vec3(0, 0, 1);
+		v.vUV = Vec2(x / 1.f + 0.5f, z / 1.f + 0.5f);
+		vecVtx.push_back(v);
+
+	}
+
+	v.vPos = Vec3(0, y, 0);
+	v.vNormal = Vec3(0, -1, 0);
+	v.vTangent = Vec3(1, 0, 0);
+	v.vBinormal = Vec3(0, 0, 1);
+	v.vUV = Vec2(0.5f, 0.5f);
+	vecVtx.push_back(v);
+
+
+	centerIndex = static_cast<int>(vecVtx.size()) - 1;
+
+	for (int i = 0; i < iSliceCount; i++) {
+		vecIdx.push_back(centerIndex);
+		vecIdx.push_back(baseIndex + i);
+		vecIdx.push_back(baseIndex + i + 1);
+	}
+
+	pMesh = new CMesh(true);
+	pMesh->Create(vecVtx.data(), vecVtx.size(), vecIdx.data(), vecIdx.size());
+	AddRes<CMesh>(L"ConeMesh", pMesh);
+	vecVtx.clear();
+	vecIdx.clear();
+
+	/////////////////
+	//IceCream Mesh//
+	/////////////////
+
+	stackHeight = 0.5 / iStackCount;
+	radiusStep = 0.5f / iStackCount;
+	ringCount = iStackCount + 1;
+
+	for (int i = 0; i < ringCount; i++) {
+		float y = i * stackHeight;
+		float r = i * radiusStep;
+		float dTheta = 2.0f * XM_PI / iSliceCount;
+		for (int j = 0; j <= iSliceCount; j++) {
+			float c = cos(j * dTheta);
+			float s = sin(j * dTheta);
+
+			v.vPos = Vec3(r * c, r * s, y);
+			v.vUV = Vec2(static_cast<float>(j) / iSliceCount, 1.0f - static_cast<float>(i) / iStackCount);
+
+			v.vNormal = Vec3(c, s, 0);
+			v.vNormal = v.vNormal.Normalize();
+			v.vTangent = Vec3(c, -s, 0);
+			v.vTangent = v.vTangent.Normalize();
+			v.vBinormal.Cross(v.vNormal, v.vTangent);
+
+			vecVtx.push_back(v);
+		}
+	}
+
+	ringVertexCount = iSliceCount + 1;
+	for (int i = 0; i < iStackCount; i++) {
+		for (int j = 0; j < iSliceCount; j++) {
+			vecIdx.push_back(i * ringVertexCount + j);
+			vecIdx.push_back((i + 1) * ringVertexCount + j + 1);
+			vecIdx.push_back((i + 1) * ringVertexCount + j);
+
+			vecIdx.push_back(i * ringVertexCount + j);
+			vecIdx.push_back((i)*ringVertexCount + j + 1);
+			vecIdx.push_back((i + 1) * ringVertexCount + j + 1);
+		}
+	}
+
+	//bottomcap
+	baseIndex = static_cast<int>(vecVtx.size());
+
+	y = 0.5f;
+	dTheta = 2.0f * XM_PI / iSliceCount;
+
+	for (int i = 0; i <= iSliceCount; i++) {
+
+		float x = 0.5 * cos(i * dTheta);
+		float z = 0.5 * sin(i * dTheta);
+
+		v.vPos = Vec3(x, z, y);
+		v.vNormal = Vec3(0, 0, 1);
+		v.vTangent = Vec3(-1, 0, 0);
+		v.vBinormal = Vec3(0, 1, 0);
+		v.vUV = Vec2(x / 1.f + 0.5f, z / 1.f + 0.5f);
+		vecVtx.push_back(v);
+
+	}
+
+	v.vPos = Vec3(0, 0, y);
+	v.vNormal = Vec3(0, 0, 1);
+	v.vTangent = Vec3(1, 0, 0);
+	v.vBinormal = Vec3(0, 1, 0);
+	v.vUV = Vec2(0.5f, 0.5f);
+	vecVtx.push_back(v);
+
+
+	centerIndex = static_cast<int>(vecVtx.size()) - 1;
+
+	for (int i = 0; i < iSliceCount; i++) {
+		vecIdx.push_back(centerIndex);
+		vecIdx.push_back(baseIndex + i);
+		vecIdx.push_back(baseIndex + i + 1);
+	}
+
+
+	pMesh = new CMesh(true);
+	pMesh->Create(vecVtx.data(), vecVtx.size(), vecIdx.data(), vecIdx.size());
+	AddRes<CMesh>(L"IceCreamMesh", pMesh);
 	vecVtx.clear();
 	vecIdx.clear();
 }
@@ -582,8 +901,6 @@ void CResMgr::CreateDefaultGraphicsShader()
 	AddRes(pShader->GetKey(), pShader);
 
 
-
-
 	// =================
 	// DebugShape Shader
 	// Topology : LineStrip
@@ -605,6 +922,35 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_MASK);
 
 	AddRes(pShader->GetKey(), pShader);
+
+
+	// ============================
+	// DebugBounding Shader
+	// 
+	// RS_TYPE : CULL_NONE
+	// DS_TYPE : NO_TEST_NO_WRITE
+	// BS_TYPE : Default
+
+	// Parameter
+	// g_float_0 : Bounding
+	// 
+	// Domain : DOMAIN_MASK
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"DebugBoundingShader");
+	pShader->CreateVertexShader(L"shader\\debugbounding.fx", "VS_DebugBounding");
+	pShader->CreateGeometryShader(L"shader\\debugbounding.fx", "GS_DebugBounding");
+	pShader->CreatePixelShader(L"shader\\debugbounding.fx", "PS_DebugBounding");
+
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	pShader->SetBSType(BS_TYPE::DEFAULT);
+	pShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
+
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_MASK);
+
+	AddRes(pShader->GetKey(), pShader);
+
 
 	// ============================
 	// TileMap Shader
@@ -782,6 +1128,23 @@ void CResMgr::CreateDefaultGraphicsShader()
 	AddRes(pShader->GetKey(), pShader);
 
 	// ============================
+	// Spot Light Shader
+	// RS_TYPE : CULL_NONE
+	// DS_TYPE : NO_TEST_NO_WRITE
+	// BS_TYPE : DEFAULT	 
+	// Domain : DOMAIN_LIGHT
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"SpotLightShader");
+	pShader->CreateVertexShader(L"shader\\light.fx", "VS_SpotLightShader");
+	pShader->CreatePixelShader(L"shader\\light.fx", "PS_SpotLightShader");
+	pShader->SetRSType(RS_TYPE::CULL_FRONT);
+	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	pShader->SetBSType(BS_TYPE::ONE_ONE);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_LIGHT);
+	AddRes(pShader->GetKey(), pShader);
+
+	// ============================
 	// Light Merge Shader
 	// RS_TYPE : CULL_NONE
 	// DS_TYPE : NO_TEST_NO_WRITE
@@ -797,6 +1160,7 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->SetBSType(BS_TYPE::DEFAULT);
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_LIGHT);
 	AddRes(pShader->GetKey(), pShader);
+
 
 	// ==========================
 	// Decal Shader
@@ -821,6 +1185,7 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_DECAL);
 	AddRes(pShader->GetKey(), pShader);
 
+
 	// ============================
 	// TessShader
 	// RS_TYPE : CULL_NONE
@@ -843,11 +1208,33 @@ void CResMgr::CreateDefaultGraphicsShader()
 
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_OPAQUE);
 	AddRes(pShader->GetKey(), pShader);
+
+	// ============================
+	// DepthmapShader
+	// RS_TYPE : CULL_BACK
+	// DS_TYPE : LESS
+	// BS_TYPE : DEFAULT	 
+	// Domain : DOMAIN_UNDEFINED
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->CreateVertexShader(L"Shader\\light.fx", "VS_DepthMap");
+	pShader->CreatePixelShader(L"Shader\\light.fx", "PS_DepthMap");
+
+	pShader->SetRSType(RS_TYPE::CULL_BACK);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::DEFAULT);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UNDEFINED);
+
+	AddRes<CGraphicsShader>(L"DepthMapShader", pShader);
+
 }
 
 
 #include "CSetColorShader.h"
 #include "CParticleUpdateShader.h"
+#include "CHeightMapShader.h"
+#include "CRaycastShader.h"
+#include "CAnimation3DShader.h"
 
 void CResMgr::CreateDefaultComputeShader()
 {
@@ -863,6 +1250,22 @@ void CResMgr::CreateDefaultComputeShader()
 	pCS = new CParticleUpdateShader(128, 1, 1);
 	pCS->SetKey(L"ParticleUpdateCS");
 	pCS->CreateComputeShader(L"shader\\particle_update.fx", "CS_ParticleUpdate");
+	AddRes(pCS->GetKey(), pCS);
+
+	// Animation Matrix Update ½¦ÀÌ´õ
+	pCS = new CAnimation3DShader(256, 1, 1);
+	pCS->SetKey(L"Animation3DUpdateCS");
+	pCS->CreateComputeShader(L"shader\\animation3d.fx", "CS_Animation3D");
+	AddRes(pCS->GetKey(), pCS);
+
+	pCS = new CHeightMapShader(32, 32, 1);
+	pCS->SetKey(L"HeightMapShader");
+	pCS->CreateComputeShader(L"shader\\heightmap.fx", "CS_HeightMap");
+	AddRes(pCS->GetKey(), pCS);
+	
+	pCS = new CRaycastShader(32, 32, 1);
+	pCS->SetKey(L"RaycastShader");
+	pCS->CreateComputeShader(L"shader\\raycast.fx", "CS_Raycast");
 	AddRes(pCS->GetKey(), pCS);
 }
 
@@ -910,11 +1313,15 @@ void CResMgr::CreateDefaultMaterial()
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"LandScapeShader"));
 	AddRes(L"LandScapeMtrl", pMtrl);
 
-
 	// DebugShape Material
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"DebugShapeShader"));
 	AddRes(L"DebugShapeMtrl", pMtrl);
+
+	// DebugBounding Material
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"DebugBoundingShader"));
+	AddRes(L"DebugBoundingMtrl", pMtrl);
 
 	// TileMap Material
 	pMtrl = new CMaterial(true);
@@ -951,6 +1358,11 @@ void CResMgr::CreateDefaultMaterial()
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"PointLightShader"));
 	AddRes(L"PointLightMtrl", pMtrl);
 
+	// SpotLightMtrl
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"SpotLightShader"));
+	AddRes(L"SpotLightMtrl", pMtrl);
+
 	// LightMergeMtrl
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"LightMergeShader"));
@@ -966,4 +1378,9 @@ void CResMgr::CreateDefaultMaterial()
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"TessShader"));
 	
 	AddRes(L"TessMtrl", pMtrl);
+
+	// DepthMapMtrl
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"DepthMapShader"));
+	AddRes<CMaterial>(L"DepthMapMtrl", pMtrl);
 }

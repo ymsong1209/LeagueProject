@@ -5,8 +5,12 @@
 #include "CConstBuffer.h"
 #include "CStructuredBuffer.h"
 
+#include "CLevelMgr.h"
+#include "CLevel.h"
+
 #include "CCamera.h"
 #include "CLight2D.h"
+#include "CTransform.h"
 
 #include "CResMgr.h"
 #include "CMRT.h"
@@ -52,6 +56,7 @@ void CRenderMgr::render_clear()
     }    
 }
 
+
 void CRenderMgr::render()
 {
     // 렌더링 시작
@@ -71,7 +76,10 @@ void CRenderMgr::render()
 
 
 void CRenderMgr::render_play()
-{
+{    
+    // Directional 광원 시점에서 Shadow맵핑을 위한 DepthMap 생성
+    render_dynamic_shadowdepth();
+
     // 카메라 기준 렌더링
     for (size_t i = 0; i < m_vecCam.size(); ++i)
     {
@@ -84,11 +92,36 @@ void CRenderMgr::render_play()
 }
 
 void CRenderMgr::render_editor()
-{
+{   
+    // Directional 광원 시점에서 Shadow맵핑을 위한 DepthMap 생성
+    render_dynamic_shadowdepth();
+
     m_pEditorCam->SortObject();
     m_pEditorCam->render();    
+
+    //Camera별로 frustum을 보여줌.
+    for (size_t i = 0; i < m_vecCam.size(); ++i)
+    {
+        if (m_vecCam[i]->GetShowDebug()) {
+            DrawDebugFrustum(m_vecCam[i]->Transform()->GetWorldPos()
+                , Vec2(m_vecCam[i]->Transform()->GetRelativeScale().x, m_vecCam[i]->Transform()->GetRelativeScale().y)
+                , Vec4(0.f, 1.f, 0.f, 1.f)
+                , Vec3(m_vecCam[i]->Transform()->GetRelativeRot())
+                , 0.f);
+        }
+    }
 }
 
+void CRenderMgr::render_dynamic_shadowdepth()
+{
+    m_MRT[(UINT)MRT_TYPE::SHADOW]->OMSet();
+
+    for (size_t i = 0; i < m_vecLight3D.size(); ++i)
+    {
+        if (LIGHT_TYPE::DIRECTIONAL == (LIGHT_TYPE)m_vecLight3D[i]->GetLightInfo().LightType)
+            m_vecLight3D[i]->render_depthmap();
+    }
+}
 
 int CRenderMgr::RegisterCamera(CCamera* _Cam, int _idx)
 {
@@ -107,6 +140,29 @@ void CRenderMgr::SetRenderFunc(bool _IsPlay)
         RENDER_FUNC = &CRenderMgr::render_play;
     else
         RENDER_FUNC = &CRenderMgr::render_editor;
+}
+
+CCamera* CRenderMgr::GetMainCam()
+{
+    if (CLevelMgr::GetInst()->GetCurLevel()->GetState() == LEVEL_STATE::PLAY)
+    {
+        if (m_vecCam.empty())
+            return nullptr;
+
+        return m_vecCam[0];
+    }
+    else
+    {
+        return m_pEditorCam;
+    }
+}
+
+CCamera* CRenderMgr::GetPlayMainCam()
+{
+    if (m_vecCam.empty())
+        return nullptr;
+
+    return m_vecCam[0];
 }
 
 void CRenderMgr::CopyRenderTarget()

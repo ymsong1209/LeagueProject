@@ -26,11 +26,12 @@ void CHeightMapShader::UpdateData()
 	m_Const.arrInt[2] = m_iBrushIdx;
 	m_Const.arrV2[0] = m_vScale;
 
-	// 높이맵
-	m_pHeightMap->UpdateData_CS(0, false);
 
 	// 브러쉬
 	m_pBrushTex->UpdateData_CS(0, true);
+
+	// 높이맵
+	m_pHeightMap->UpdateData_CS(0, false);
 
 	// 피킹정보
 	if (nullptr != m_pInput)
@@ -48,7 +49,7 @@ void CHeightMapShader::Clear()
 {
 	if (nullptr != m_pHeightMap)
 	{
-		m_pHeightMap->Clear_CS(0);
+		m_pHeightMap->Clear_CS(false);
 		m_pHeightMap = nullptr;
 	}
 

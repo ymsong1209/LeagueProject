@@ -161,6 +161,63 @@ bool CCollisionMgr::CollisionBtw3DCollider(CCollider3D* _pLeft, CCollider3D* _pR
 		if (LeftRadius + RightRadius >= CenterLength) return true;
 	}
 
+	//구, 큐브 
+	else if ((_pLeft->GetCollider3DType() == COLLIDER3D_TYPE::SPHERE && _pRight->GetCollider3DType() == COLLIDER3D_TYPE::CUBE) ||
+		(_pLeft->GetCollider3DType() == COLLIDER3D_TYPE::CUBE && _pRight->GetCollider3DType() == COLLIDER3D_TYPE::SPHERE)) {
+		CCollider3D* CubeCollider;
+		CCollider3D* SphereCollider;
+
+		if (_pLeft->GetCollider3DType() == COLLIDER3D_TYPE::CUBE) {
+			CubeCollider = _pLeft;
+			SphereCollider = _pRight;
+		}
+		else {
+			CubeCollider = _pRight;
+			SphereCollider = _pLeft;
+		}
+
+
+		// 사각형의 꼭지점(local space에서의 좌표)을 나타내는 배열
+		Vec3 arrLocal[8] =
+		{
+			Vec3(-0.5f, 0.5f, 0.5f),
+			Vec3(0.5f, 0.5f, 0.5f),
+			Vec3(0.5f, -0.5f, 0.5f),
+			Vec3(-0.5f, -0.5f, 0.5f),
+			Vec3(-0.5f, 0.5f, -0.5f),
+			Vec3(0.5f, 0.5f, -0.5f),
+			Vec3(0.5f, -0.5f, -0.5f),
+			Vec3(-0.5f, -0.5f, -0.5f)
+		};
+		Vec3 sphereCenter = XMVector3TransformCoord(Vec3(0.f, 0.f, 0.f), SphereCollider->GetColliderWorldMat());
+		Vec3 sphereRadius = Vec3(1.f, 1.f, 1.f);
+		sphereRadius = XMVector3TransformCoord(sphereRadius, SphereCollider->GetColliderScaleMat());
+		float radius = sphereRadius.x / 2.f;
+
+		// Cube의 AABB 구하기
+		Vec3 cubeMin = XMVector3TransformCoord(arrLocal[7], CubeCollider->GetColliderWorldMat()); // 기본적으로 (0.5, 0.5, 0.5)를 최소로 가정
+		Vec3 cubeMax = cubeMin;
+
+		for (int i = 0; i < 8; ++i) {
+			Vec3 cubeCorner = XMVector3TransformCoord(arrLocal[i], CubeCollider->GetColliderWorldMat());
+			cubeMin = Vec3::Min(cubeMin, cubeCorner);
+			cubeMax = Vec3::Max(cubeMax, cubeCorner);
+		}
+
+		// Sphere의 중심이 AABB 내에 있는지 확인
+		if (sphereCenter.x >= cubeMin.x && sphereCenter.y >= cubeMin.y && sphereCenter.z >= cubeMin.z &&
+			sphereCenter.x <= cubeMax.x && sphereCenter.y <= cubeMax.y && sphereCenter.z <= cubeMax.z) {
+			return true;
+		}
+
+		// 그렇지 않다면, AABB의 가장 가까운 지점까지의 거리와 Sphere의 반지름 비교
+		float x = max(cubeMin.x - sphereCenter.x, max(0.f, sphereCenter.x - cubeMax.x));
+		float y = max(cubeMin.y - sphereCenter.y, max(0.f, sphereCenter.y - cubeMax.y));
+		float z = max(cubeMin.z - sphereCenter.z, max(0.f, sphereCenter.z - cubeMax.z));
+
+		return (x * x + y * y + z * z) <= (radius * radius);
+	}
+
 
 	return false;
 }

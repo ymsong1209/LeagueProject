@@ -8,9 +8,11 @@ class CMeshRender;
 class CCollider2D;
 class CCollider3D;
 class CAnimator2D;
+class CAnimator3D;
 class CLight2D;
 class CLight3D;
 class CCamera;
+class CFsm;
 class CRenderComponent;
 class CScript;
 class CTileMap;
@@ -45,6 +47,7 @@ public:
     void begin();       // 레벨이 시작될 때 호출 or 시작 된 레벨에 합류할 때
     void tick();        
     virtual void finaltick();
+    virtual void finaltick_module();
     void render();
 
 public:
@@ -65,10 +68,12 @@ public:
     GET_COMPONENT(Light3D, LIGHT3D);
     GET_COMPONENT(TileMap, TILEMAP);
     GET_COMPONENT(Animator2D, ANIMATOR2D);
+    GET_COMPONENT(Animator3D, ANIMATOR3D);
     GET_COMPONENT(ParticleSystem, PARTICLESYSTEM);
     GET_COMPONENT(SkyBox, SKYBOX);
     GET_COMPONENT(Decal, DECAL);
     GET_COMPONENT(LandScape, LANDSCAPE);
+    GET_COMPONENT(Fsm, FSM);
 
     CRenderComponent* GetRenderComponent() const {  return m_RenderCom; }
 

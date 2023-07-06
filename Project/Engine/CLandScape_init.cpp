@@ -10,11 +10,23 @@
 
 void CLandScape::init()
 {
-	SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"LandScapeMtrl"));
+	SetFace(1, 1);
+
+	//SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"LandScapeMtrl"),0);
 
 	CreateComputeShader();
 
 	CreateTexture();
+
+	// 레이캐스팅 결과 받는 버퍼
+	m_pCrossBuffer = new CStructuredBuffer;
+	m_pCrossBuffer->Create(sizeof(tRaycastOut), 1, SB_TYPE::READ_WRITE, true);
+
+	// 타일 텍스쳐(Color, Normal 혼합, 총 6장)	
+	//m_pTileArrTex = CResMgr::GetInst()->Load<CTexture>(L"texture\\tile\\TILE_ARRR.dds", L"texture\\tile\\TILE_ARRR.dds");	// 기존 Load함수(MipMap 0단계(원본))
+	//m_pTileArrTex = CResMgr::GetInst()->LoadTexture(L"texture\\tile\\TILE_ARRR.dds", L"texture\\tile\\TILE_ARRR.dds", 8); // MipMap 포함한 Texture 전용 Load함수
+	m_pTileArrTex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\tile\\TILE_ARRR.dds");
+	m_pTileArrTex->GenerateMip(8);
 }
 
 void CLandScape::CreateMesh()
@@ -62,6 +74,8 @@ void CLandScape::CreateMesh()
 	Ptr<CMesh> pMesh = new CMesh;
 	pMesh->Create(vecVtx.data(), (UINT)vecVtx.size(), vecIdx.data(), (UINT)vecIdx.size());
 	SetMesh(pMesh);
+
+	SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"LandScapeMtrl"), 0);
 }
 
 void CLandScape::CreateComputeShader()
@@ -70,11 +84,22 @@ void CLandScape::CreateComputeShader()
 	// 높이 수정 컴퓨트 쉐이더
 	// ======================
 	m_pCSHeightMap = (CHeightMapShader*)CResMgr::GetInst()->FindRes<CComputeShader>(L"HeightMapShader").Get();
-	if (nullptr == m_pHeightMap && !m_pCSHeightMap.Get())
+
+	// =====================
+	// 지형 피킹 컴퓨트 쉐이더
+	// =====================
+	m_pCSRaycast = (CRaycastShader*)CResMgr::GetInst()->FindRes<CComputeShader>(L"RaycastShader").Get();
+
+
+	// =======================
+	// 가중치 수정 컴퓨트 쉐이더
+	// =======================
+	m_pCSWeightMap = (CWeightMapShader*)CResMgr::GetInst()->FindRes<CComputeShader>(L"WeightMapShader").Get();
+	if (nullptr == m_pCSWeightMap)
 	{
-		m_pCSHeightMap = new CHeightMapShader(32, 32, 1);
-		m_pCSHeightMap->CreateComputeShader(L"shader\\heightmap.fx", "CS_HeightMap");
-		CResMgr::GetInst()->AddRes<CComputeShader>(L"HeightMapShader", m_pCSHeightMap.Get());
+		m_pCSWeightMap = new CWeightMapShader(32, 32, 1);
+		m_pCSWeightMap->CreateComputeShader(L"shader\\weightmap.fx", "CS_WeightMap");
+		CResMgr::GetInst()->AddRes<CComputeShader>(L"WeightMapShader", m_pCSWeightMap.Get());
 	}
 }
 
@@ -91,5 +116,13 @@ void CLandScape::CreateTexture()
 			, D3D11_USAGE_DEFAULT);
 	}
 	
+
 	m_pBrushTex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\brush\\Brush_01.png");
+
+	// 가중치 버퍼
+	m_iWeightWidth = 1024;
+	m_iWeightHeight = 1024;
+
+	m_pWeightMapBuffer = new CStructuredBuffer;
+	m_pWeightMapBuffer->Create(sizeof(tWeight_4), m_iWeightWidth * m_iWeightHeight, SB_TYPE::READ_WRITE, true);
 }

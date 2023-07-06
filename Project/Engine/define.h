@@ -27,6 +27,7 @@ enum class MRT_TYPE
 	DEFERRED,	
 	DECAL,
 	LIGHT,
+	SHADOW,
 	END,
 };
 
@@ -43,6 +44,7 @@ enum class COMPONENT_TYPE
 	LIGHT2D,		// 2Â÷¿ø ±¤¿ø
 	LIGHT3D,		// 3Â÷¿ø ±¤¿ø
 	CAMERA,			// Camera
+	FSM,
 
 	// render
 	MESHRENDER,		// ±âº»ÀûÀÎ ·»´õ¸µ
@@ -149,7 +151,7 @@ enum PIPELINE_STAGE
 	PS_GEOMETRY = 0x08,
 	PS_PIXEL = 0x10,	
 
-	PS_ALL = PS_VERTEX | PS_HULL | PS_DOMAIN | PS_GEOMETRY | PS_PIXEL,	
+	PS_ALL_STAGES = PS_VERTEX | PS_HULL | PS_DOMAIN | PS_GEOMETRY | PS_PIXEL,	
 };
 
 enum class RS_TYPE
@@ -240,6 +242,8 @@ enum class SHAPE_TYPE
 	CIRCLE,
 	CUBE,
 	SPHERE,
+	ICECREAM,
+	FRUSTUM,
 	END,
 };
 
@@ -289,4 +293,11 @@ enum class PARTICLE_MODULE
 	RENDER,
 	GRAVITY,
 	END,
+};
+
+enum class LANDSCAPE_MOD
+{
+	HEIGHT_MAP,
+	SPLAT,
+	NONE,
 };

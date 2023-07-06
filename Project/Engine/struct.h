@@ -12,11 +12,13 @@ struct tVertex
 	Vec3 vTangent;	// 접선 벡터
 	Vec3 vNormal;	// 법선 벡터
 	Vec3 vBinormal; // 종법선 벡터
+
+	// Animation 가중치 및 인덱스
+	Vec4 vWeights;
+	Vec4 vIndices;
 };
 
 typedef tVertex Vtx;
-
-
 
 
 // Event
@@ -41,6 +43,13 @@ struct tDebugShapeInfo
 };
 
 
+struct tDebugBoundingInfo
+{
+	Vec3		vWorldPos;
+	float		fBounding;
+	float		fMaxTime;
+	float		fCurTime;
+};
 
 struct tLightColor
 {
@@ -60,7 +69,7 @@ struct tLightInfo
 	UINT		LightType;   // 빛의 타입(방향성, 점, 스포트)
 	float		Radius;		 // 빛의 반경(사거리)
 	float		Angle;		 // 빛의 각도
-	int			padding;
+	float		InnerAngle;
 };
 
 
@@ -180,6 +189,81 @@ struct tParticleModule
 };
 
 
+// 광선 구조체
+struct tRay
+{
+	Vec3 vStart;
+	Vec3 vDir;
+};
+
+// Raycast 결과를 받을 구조체
+struct tRaycastOut
+{
+	Vec2 vUV;
+	int  iDist;
+	int  bSuccess;
+};
+
+struct tWeight_4
+{
+	float arrWeight[4];
+};
+
+
+// Material 계수
+struct tMtrlData
+{
+	Vec4 vDiff;
+	Vec4 vSpec;
+	Vec4 vAmb;
+	Vec4 vEmv;
+};
+
+// ============
+// Animation 3D
+// ============
+struct tFrameTrans
+{
+	Vec4	vTranslate;
+	Vec4	vScale;
+	Vec4	qRot;
+};
+
+struct tMTKeyFrame
+{
+	double	dTime;
+	int		iFrame;
+	Vec3	vTranslate;
+	Vec3	vScale;
+	Vec4	qRot;
+};
+
+
+struct tMTBone
+{
+	wstring				strBoneName;
+	int					iDepth;
+	int					iParentIndx;
+	Matrix				matOffset;	// Offset 행렬(뼈 -> 루트 까지의 행렬)
+	Matrix				matBone;   // 이거 안씀
+	vector<tMTKeyFrame>	vecKeyFrame;
+};
+
+struct tMTAnimClip
+{
+	wstring			strAnimName;
+	int				iStartFrame;
+	int				iEndFrame;
+	int				iFrameLength;
+
+	double			dStartTime;
+	double			dEndTime;
+	double			dTimeLength;
+	float			fUpdateTime; // 이거 안씀
+
+	FbxTime::EMode	eMode;
+};
+
 
 // ===================
 // 상수버퍼 대응 구조체
@@ -199,9 +283,10 @@ struct tTransform
 extern tTransform g_transform;
 
 
-
 struct tMtrlConst
 {
+	tMtrlData mtrl;
+
 	int arrInt[4];
 	float arrFloat[4];
 	Vec2 arrV2[4];
@@ -209,6 +294,8 @@ struct tMtrlConst
 	Matrix arrMat[4];
 
 	int arrTex[(UINT)TEX_PARAM::TEX_END];
+
+	int	arrAnimData[4];	// 3D Animation 정보
 };
 
 

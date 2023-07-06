@@ -53,6 +53,55 @@ Ptr<CTexture> CResMgr::CreateTexture(const wstring& _strKey, ComPtr<ID3D11Textur
 	return pTex;
 }
 
+Ptr<CTexture> CResMgr::LoadTexture(const wstring& _strKey, const wstring& _strRelativePath, int _iMapLevel)
+{
+	CTexture* pRes = FindRes<CTexture>(_strKey).Get();
+	if (nullptr != pRes)
+	{
+		return pRes;
+	}
+
+	pRes = new CTexture;
+	pRes->SetKey(_strKey);
+	pRes->SetRelativePath(_strRelativePath);
+
+	wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
+	strFilePath += _strRelativePath;
+
+	if (FAILED(pRes->Load(strFilePath, _iMapLevel)))
+	{
+		return nullptr;
+	}
+
+	m_arrRes[(UINT)RES_TYPE::TEXTURE].insert(make_pair(_strKey, pRes));
+	m_Changed = true;
+
+	return pRes;
+}
+
+Ptr<CMeshData> CResMgr::LoadFBX(const wstring& _strPath)
+{
+	wstring strFileName = path(_strPath).stem();
+
+	wstring strName = L"meshdata\\";
+	strName += strFileName + L".mdat";
+
+	Ptr<CMeshData> pMeshData = FindRes<CMeshData>(strName);
+
+	if (nullptr != pMeshData)
+		return pMeshData;
+
+	pMeshData = CMeshData::LoadFromFBX(_strPath);
+	pMeshData->SetKey(strName);
+	pMeshData->SetRelativePath(strName);
+
+	m_arrRes[(UINT)RES_TYPE::MESHDATA].insert(make_pair(strName, pMeshData.Get()));
+
+	// meshdata 를 실제파일로 저장
+	pMeshData->Save(strName);
+
+	return pMeshData;
+}
 
 void CResMgr::DeleteRes(RES_TYPE _type, const wstring& _strKey)
 {

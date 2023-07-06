@@ -32,9 +32,9 @@ using std::pair;
 #include <experimental/filesystem>
 using namespace std::experimental;
 using namespace std::experimental::filesystem;
+#include <shlobj.h>
 
-
-
+#include <fstream>
 #include <wrl.h>
 #include <commdlg.h>
 using namespace Microsoft::WRL;
@@ -58,6 +58,14 @@ typedef Vector2 Vec2;
 typedef Vector3 Vec3;
 typedef Vector4 Vec4;
 
+// Fbx Loader
+#include <FBXLoader/fbxsdk.h>
+
+#ifdef _DEBUG
+#pragma comment(lib, "FBXLoader/x64/debug/libfbxsdk-md.lib")
+#else
+#pragma comment(lib, "FBXLoader/x64/release/libfbxsdk-md.lib")
+#endif
 
 #include "define.h"
 #include "struct.h"

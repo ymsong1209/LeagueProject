@@ -26,6 +26,8 @@ public:
     virtual void begin() {}
     virtual void tick() {}
     virtual void finaltick() = 0;
+    virtual void finaltick_module();
+
     virtual CComponent* Clone() = 0;
 
 public:
@@ -44,8 +46,10 @@ public:
     GET_OTHER_COMPONENT(SkyBox);
     GET_OTHER_COMPONENT(Decal);
     GET_OTHER_COMPONENT(Animator2D);
+    GET_OTHER_COMPONENT(Animator3D);
     GET_OTHER_COMPONENT(ParticleSystem);
     GET_OTHER_COMPONENT(LandScape);
+    GET_OTHER_COMPONENT(Fsm);
 
 public:
     CComponent(COMPONENT_TYPE _Type);

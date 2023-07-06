@@ -14,8 +14,6 @@ private:
     Ptr<CTexture>           m_arrTex[TEX_END];
  
    
-
-
 public:
     void SetScalarParam(SCALAR_PARAM _Param, const void* _Src);
     void SetTexParam(TEX_PARAM _Param, const Ptr<CTexture>& _Tex);
@@ -23,15 +21,22 @@ public:
     void GetScalarParam(SCALAR_PARAM _param, void* _pData);
     Ptr<CTexture> GetTexParam(TEX_PARAM _param) { return m_arrTex[(UINT)_param]; }
 
-     
-   
-
-
-
+ 
     void SetShader(Ptr<CGraphicsShader> _Shader) { m_pShader = _Shader; }
     Ptr<CGraphicsShader> GetShader() { return m_pShader; }
 
-    virtual void UpdateData() override;
+    void SetMaterialCoefficient(Vec4 _vDiff, Vec4 _vSpec, Vec4 _vAmb, Vec4 _vEmis)
+    {
+        m_Const.mtrl.vDiff = _vDiff;
+        m_Const.mtrl.vAmb = _vAmb;
+        m_Const.mtrl.vSpec = _vSpec;
+        m_Const.mtrl.vEmv = _vEmis;
+    }
+
+    void SetAnim3D(bool _bTrue) { m_Const.arrAnimData[0] = (int)_bTrue; }
+    void SetBoneCount(int _iBoneCount) { m_Const.arrAnimData[1] = _iBoneCount; }
+
+    void UpdateData();
 
 private:
     virtual int Load(const wstring& _strFilePath);

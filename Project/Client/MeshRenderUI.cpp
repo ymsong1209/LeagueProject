@@ -31,7 +31,7 @@ int MeshRenderUI::render_update()
 	char szBuff[50] = {};
 
 	Ptr<CMesh> pMesh = GetTarget()->MeshRender()->GetMesh();
-	Ptr<CMaterial> pMtrl = GetTarget()->MeshRender()->GetMaterial();
+	Ptr<CMaterial> pMtrl = GetTarget()->MeshRender()->GetMaterial(0);
 		
 	ImGui::Text("Mesh    ");
 	ImGui::SameLine();	
@@ -390,7 +390,10 @@ void MeshRenderUI::SelectMaterial(DWORD_PTR _Key)
 {
 	string strKey = (char*)_Key;
 	Ptr<CMaterial> pMtrl = CResMgr::GetInst()->FindRes<CMaterial>(wstring(strKey.begin(), strKey.end()));
+
+	GetTarget()->MeshRender()->SetMaterial(pMtrl, 0);
 	GetTarget()->MeshRender()->SetMaterial(pMtrl);
 
 	GetTarget()->MeshRender()->ClearDynamicMtrl();
+ 
 }

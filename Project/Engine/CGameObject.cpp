@@ -113,7 +113,7 @@ void CGameObject::finaltick()
 	}
 
 
-	for (UINT i = 0; i < (UINT)COMPONENT_TYPE::SCRIPT; ++i)
+	for (UINT i = 0; i < (UINT)COMPONENT_TYPE::END; ++i)
 	{
 		if (nullptr != m_arrCom[i])
 			m_arrCom[i]->finaltick();
@@ -130,6 +130,22 @@ void CGameObject::finaltick()
 	// 레이어 등록
 	CLayer* pCurLayer = CLevelMgr::GetInst()->GetCurLevel()->GetLayer(m_iLayerIdx);
 	pCurLayer->RegisterObject(this);
+}
+
+void CGameObject::finaltick_module()
+{
+	// Component
+	for (UINT i = 0; i < (UINT)COMPONENT_TYPE::END; ++i)
+	{
+		if (nullptr != m_arrCom[i])
+			m_arrCom[i]->finaltick_module();
+	}
+
+	// Child Object
+	for (size_t i = 0; i < m_vecChild.size(); ++i)
+	{
+		m_vecChild[i]->finaltick_module();
+	}
 }
 
 void CGameObject::render()

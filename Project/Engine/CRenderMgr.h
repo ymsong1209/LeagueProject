@@ -21,6 +21,7 @@ private:
     CCamera*                    m_pEditorCam;
 
     vector<tDebugShapeInfo>     m_vecShapeInfo;
+    vector<tDebugBoundingInfo>  m_vecBoundingInfo;
 
     vector<CLight2D*>           m_vecLight2D;
     CStructuredBuffer*          m_Light2DBuffer;
@@ -39,6 +40,7 @@ public:
 
 private:
     void render_clear();
+    void render_dynamic_shadowdepth();
 
 public:
     CMRT* GetMRT(MRT_TYPE _type) { return m_MRT[(UINT)_type]; }
@@ -55,13 +57,12 @@ public:
     void AddDebugShapeInfo(const tDebugShapeInfo& _info) { m_vecShapeInfo.push_back(_info); }
     vector<tDebugShapeInfo>& GetDebugShapeInfo() { return m_vecShapeInfo; }
 
-    CCamera* GetMainCam() 
-    { 
-        if (m_vecCam.empty())
-            return nullptr;
+    void AddDebugBoundingInfo(const tDebugBoundingInfo& _info) { m_vecBoundingInfo.push_back(_info); }
+    vector<tDebugBoundingInfo>& GetDebugBoundingInfo() { return m_vecBoundingInfo; }
 
-        return m_vecCam[0];
-    }
+    CCamera* GetMainCam();      // 상태에 따라 MainCam을 가져온다
+    CCamera* GetPlayMainCam();  // PLAY 상태의 MainCam을 가져온다
+
 
     const vector<CLight3D*> GetLight3D() { return m_vecLight3D; }
 

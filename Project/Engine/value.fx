@@ -17,6 +17,11 @@ cbuffer TRANSFORM : register(b0)
 
 cbuffer MATERIAL : register(b1)
 {
+    float4 g_vDiff;
+    float4 g_vSpec;
+    float4 g_vAmb;
+    float4 g_vEmv;
+    
     int g_int_0;
     int g_int_1;
     int g_int_2;
@@ -37,10 +42,10 @@ cbuffer MATERIAL : register(b1)
     float4 g_vec4_2;
     float4 g_vec4_3;
     
-    matrix g_mat_0;
-    matrix g_mat_1;
-    matrix g_mat_2;
-    matrix g_mat_3;
+    row_major matrix g_mat_0;
+    row_major matrix g_mat_1;
+    row_major matrix g_mat_2;
+    row_major matrix g_mat_3;
     
     int g_btex_0;
     int g_btex_1;
@@ -50,6 +55,17 @@ cbuffer MATERIAL : register(b1)
     int g_btex_5;
     int g_btex_6;
     int g_btex_7;   
+    
+    int g_bcube_0;
+    int g_bcube_1;
+
+    int g_btexarr_0;
+    int g_btexarr_1;
+
+    // 3D Animation 정보
+    int             g_iAnim;
+    int             g_iBoneCount;
+    int2            padding;
 };
 
 cbuffer GLOBAL : register(b2)
@@ -57,7 +73,7 @@ cbuffer GLOBAL : register(b2)
     float2 g_Resolution;
     float  g_DT;                //Play상태일때 1프레임당 흐르는 시간
     float  g_AccTime;
-    
+  
     uint   g_Light2DCount;
     uint   g_Light3DCount;
     float  g_EditDT;            //Play,Pause상관없이 1프레임당 흐르는 시간
@@ -76,11 +92,14 @@ Texture2D g_tex_7 : register(t7);
 TextureCube g_cube_0 : register(t8);
 TextureCube g_cube_1 : register(t9);
 
-Texture2DArray g_arrtex_0 : register(t10);
-Texture2DArray g_arrtex_1 : register(t11);
+Texture2DArray g_texarr_0 : register(t10);
+Texture2DArray g_texarr_1 : register(t11);
 
 StructuredBuffer<tLightInfo> g_Light2DBuffer : register(t12);
 StructuredBuffer<tLightInfo> g_Light3DBuffer : register(t13);
+
+// Animation3D Bone Matrix Buffer
+StructuredBuffer<Matrix> g_arrBoneMat : register(t30);
 
 
 SamplerState g_sam_0 : register(s0);
