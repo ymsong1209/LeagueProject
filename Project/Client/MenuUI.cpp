@@ -281,7 +281,7 @@ void MenuUI::LoadLevel()
     wstring subpath = wstring(szFilePath).substr(prefixLength);
 
     // Level 불러오기
-    //CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevel(subpath);
+    // CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevel(subpath);
 
     // json으로 Level 불러오기
     CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevelFromJson(subpath);

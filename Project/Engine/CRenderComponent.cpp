@@ -177,7 +177,4 @@ void CRenderComponent::LoadFromLevelJsonFile(const Value& _componentValue)
 	m_fBounding = _componentValue["fBounding"].GetFloat();
 	m_bFrustumCheck = _componentValue["bFrustumCheck"].GetBool();
 	m_bDynamicShadow = _componentValue["bDynamicShadow"].GetBool();
-	
-
-
 }

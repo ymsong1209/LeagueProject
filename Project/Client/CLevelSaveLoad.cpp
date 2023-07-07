@@ -278,7 +278,15 @@ CGameObject* CLevelSaveLoad::LoadGameObject(FILE* _File)
 	return pObject;
 }
 
-int CLevelSaveLoad::SaveLevelToJson(const wstring& levelPath, CLevel* level) {
+int CLevelSaveLoad::SaveLevelToJson(const wstring& levelPath, CLevel* level) 
+{
+	if (level->GetState() != LEVEL_STATE::STOP) {
+		wchar_t szStr[256] = {};
+		wsprintf(szStr, L"현재 Level이 Stop이 아닙니다. Stop상태로 만드십시요.");
+		MessageBox(nullptr, szStr, L"Level Save 실패.", MB_OK);
+		return E_FAIL;
+	}
+
 	Document document;
 	document.SetObject();
 
@@ -310,6 +318,22 @@ int CLevelSaveLoad::SaveLevelToJson(const wstring& levelPath, CLevel* level) {
 		layers.PushBack(layerValue, allocator);
 	}
 	document.AddMember("layers", layers, allocator);
+
+
+	//오브젝트 충돌 정보 저장
+	UINT CollisionMatrix[MAX_LAYER];
+	for (UINT i = 0; i < MAX_LAYER; ++i) {
+		CollisionMatrix[i] = CCollisionMgr::GetInst()->GetMatrix()[i];
+	}
+
+	// CollisionMatrixArray 배열을 저장
+	Value CollisionMatrixArray(kArrayType);
+	for (UINT i = 0; i < MAX_LAYER; ++i) {
+		CollisionMatrixArray.PushBack(CollisionMatrix[i], allocator);
+	}
+	document.AddMember("CollisionMatrix", CollisionMatrixArray, allocator);
+
+
 
 	// JSON 데이터를 문자열로 변환
 	rapidjson::StringBuffer buffer;
@@ -417,7 +441,6 @@ CLevel* CLevelSaveLoad::LoadLevelFromJson(const wstring& _LevelPath)
 		// 파일 열기 실패
 		return nullptr;
 	}
-
 	// JSON 데이터 읽기
 	string jsonData((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
 
@@ -429,6 +452,9 @@ CLevel* CLevelSaveLoad::LoadLevelFromJson(const wstring& _LevelPath)
 		// 파싱 실패
 		return nullptr;
 	}
+
+	//Camera의 생성자에서 RenderMgr에 등록할라면 먼저 기존에 RenderMgr가 초기화되어야함
+	CRenderMgr::GetInst()->ClearCamera();
 
 	// CLevel 객체 생성
 	CLevel* NewLevel = new CLevel();
@@ -498,10 +524,18 @@ CLevel* CLevelSaveLoad::LoadLevelFromJson(const wstring& _LevelPath)
 		}
 	}
 
+	// 오브젝트 충돌 정보 로드
+	UINT matrix[MAX_LAYER];
+	const Value& CollisionMatrixArray = document["CollisionMatrix"];
+	size_t CollisionMatrixArraySize = CollisionMatrixArray.Size();
+	for (size_t i = 0; i < CollisionMatrixArraySize; ++i) {
+		matrix[i] = CollisionMatrixArray[i].GetUint();
+	}
+	CCollisionMgr::GetInst()->SetMatrix(matrix);
+
 	// 파일 닫기
 	file.close();
 
-	NewLevel->ChangeState(LEVEL_STATE::STOP);
 	return NewLevel;
 }
 
@@ -539,7 +573,7 @@ CGameObject* CLevelSaveLoad::LoadGameObjectFromJson(const Value& _gameObjectValu
 						break;
 
 					CComponent* Component = nullptr;
-
+					
 					switch ((COMPONENT_TYPE)ComponentType)
 					{
 					case COMPONENT_TYPE::TRANSFORM:
@@ -549,7 +583,7 @@ CGameObject* CLevelSaveLoad::LoadGameObjectFromJson(const Value& _gameObjectValu
 						Component = new CCollider2D;
 						break;
 					case COMPONENT_TYPE::COLLIDER3D:
-						//Component = new CCollider3D;
+						Component = new CCollider3D;
 						break;
 					case COMPONENT_TYPE::ANIMATOR2D:
 						Component = new CAnimator2D;
