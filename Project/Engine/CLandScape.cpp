@@ -23,7 +23,7 @@ CLandScape::CLandScape()
 	, m_iWeightWidth(0)
 	, m_iWeightHeight(0)
 	, m_iWeightIdx(1)
-	, m_eMod(LANDSCAPE_MOD::SPLAT)
+	, m_eMod(LANDSCAPE_MOD::NONE)
 	, m_bIsClicking(false)
 	, m_rstype(RS_TYPE::CULL_BACK)
 {	

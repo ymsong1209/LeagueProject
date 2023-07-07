@@ -21,9 +21,6 @@ private:
     int							m_iNextFrameIdx;        // 클립의 다음 프레임
     float						m_fRatio;	            // 프레임 사이 비율
 
-
-    bool						m_bFinalMatUpdate;      // 최종행렬 연산 수행여부
-
     bool                        m_bFinish;
     bool                        m_bPause;
 
@@ -49,8 +46,8 @@ public:
     int GetFrameRate() { return m_iFrameRate; }
     void SetUpdateTime(float _time) { m_fClipUpdateTime = _time; }
     float GetRatio() { return m_fRatio; }
-    bool GetFinalMatUpdate() { return m_bFinalMatUpdate; }
-    void SetFinalMatUpdate(bool _set) { m_bFinalMatUpdate = _set; }
+    //bool GetFinalMatUpdate() { return m_bFinalMatUpdate; }
+    //void SetFinalMatUpdate(bool _set) { m_bFinalMatUpdate = _set; }
     wstring GetAnimRelativePath() { return m_RelativePath; }
 
     //blend 옵션을 줄때 강제로 적용할 것
