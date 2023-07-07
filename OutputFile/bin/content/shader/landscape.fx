@@ -10,16 +10,21 @@
 // LandScape
 #define                     FaceX                           g_int_0
 #define                     FaceZ                           g_int_1
+#define                     Click                           g_int_2
+
 
 #define                     ColorTexture                    g_tex_0
 #define                     NormalTexture                   g_tex_1
 #define                     HeightMap                       g_tex_2
 
 #define                     TileCount                       g_float_1   // 배열 개수
+#define                     HeightMapResolution             g_vec2_0    // HeightMap 해상도
 #define                     WeightMapResolution             g_vec2_1    // 가중치 버퍼 해상도
+#define                     BrushScale                      g_vec2_2    // 가중치 버퍼 해상도
 
 #define                     TileTexArr                      g_texarr_0  // Tile 배열 택스쳐
 StructuredBuffer<float4> WEIGHT_MAP : register(t17); // 가중치 버퍼
+StructuredBuffer<tRaycastOut> LOCATION : register(t16); // 브러쉬 위치(좌상단 기준)
 // ========================
 struct VS_IN
 {
@@ -40,7 +45,7 @@ VS_OUT VS_LandScape(VS_IN _in)
         
     output.vLocalPos = _in.vPos;
     output.vUV = _in.vUV;
-    output.vViewPos = mul(float4(_in.vPos, 1.f), g_matWorld).xyz;
+    output.vViewPos = mul(float4(_in.vPos, 1.f), g_matWV).xyz;
     
     return output;
 }
@@ -222,6 +227,25 @@ PS_OUT PS_LandScape(DS_OUT _in)
             float3x3 matTBN = { _in.vViewTangent, _in.vViewBinormal, _in.vViewNormal };
             vViewNormal = normalize(mul(vTangentSpaceNormal, matTBN));
         }
+    }
+    
+    // 타일 색상
+    if (LOCATION[0].success)
+    {
+        float distance = length(_in.vFullUV - LOCATION[0].vUV);
+        if (distance < BrushScale.x / 2.f)
+        {
+            if (Click)
+            {
+                output.vColor = float4(1.f, 0.f, 0.f, 1.f);
+            }
+            else
+            {
+                output.vColor = float4(0.f, 1.f, 0.f, 1.f);
+            }
+            
+        }
+
     }
 
     output.vNormal = float4(vViewNormal, 1.f);

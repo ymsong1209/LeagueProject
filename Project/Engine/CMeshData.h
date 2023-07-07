@@ -12,6 +12,7 @@ class CMeshData :
 	Ptr<CMesh>				m_pMesh;
 	vector<Ptr<CMaterial>>	m_vecMtrl;
 
+
 public:
 	static CMeshData* LoadFromFBX(const wstring& _strFilePath);
 
@@ -19,6 +20,9 @@ public:
 	virtual int Load(const wstring& _strFilePath) override;
 
 	CGameObject* Instantiate();
+
+	const Ptr<CMesh>& GetMesh() { return m_pMesh; }
+	const vector<Ptr<CMaterial>>& GetMaterial() { return m_vecMtrl; }
 
 	CLONE_DISABLE(CMeshData)
 public:

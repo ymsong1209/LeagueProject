@@ -54,6 +54,12 @@ void CEditorObjMgr::init()
 	m_DebugShape[(UINT)SHAPE_TYPE::SPHERE]->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
 	m_DebugShape[(UINT)SHAPE_TYPE::SPHERE]->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"DebugShapeMtrl"),0);
 
+	m_DebugShape[(UINT)SHAPE_TYPE::ICECREAM] = new CGameObjectEx;
+	m_DebugShape[(UINT)SHAPE_TYPE::ICECREAM]->AddComponent(new CTransform);
+	m_DebugShape[(UINT)SHAPE_TYPE::ICECREAM]->AddComponent(new CMeshRender);
+	m_DebugShape[(UINT)SHAPE_TYPE::ICECREAM]->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"IceCreamMesh"));
+	m_DebugShape[(UINT)SHAPE_TYPE::ICECREAM]->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"DebugShapeMtrl"), 0);
+
 	m_DebugShape[(UINT)SHAPE_TYPE::FRUSTUM] = new CGameObjectEx;
 	m_DebugShape[(UINT)SHAPE_TYPE::FRUSTUM]->AddComponent(new CTransform);
 	m_DebugShape[(UINT)SHAPE_TYPE::FRUSTUM]->AddComponent(new CMeshRender);
@@ -143,7 +149,10 @@ void CEditorObjMgr::render()
 			break;
 		case SHAPE_TYPE::SPHERE:
 			pShapeObj = m_DebugShape[(UINT)SHAPE_TYPE::SPHERE];
-			break;		
+			break;
+		case SHAPE_TYPE::ICECREAM:
+			pShapeObj = m_DebugShape[(UINT)SHAPE_TYPE::ICECREAM];
+			break;
 		case SHAPE_TYPE::FRUSTUM:
 		{
 			pShapeObj = m_DebugShape[(UINT)SHAPE_TYPE::FRUSTUM];

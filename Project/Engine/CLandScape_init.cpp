@@ -12,7 +12,7 @@ void CLandScape::init()
 {
 	SetFace(1, 1);
 
-	SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"LandScapeMtrl"),0);
+	//SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"LandScapeMtrl"),0);
 
 	CreateComputeShader();
 
@@ -74,6 +74,8 @@ void CLandScape::CreateMesh()
 	Ptr<CMesh> pMesh = new CMesh;
 	pMesh->Create(vecVtx.data(), (UINT)vecVtx.size(), vecIdx.data(), (UINT)vecIdx.size());
 	SetMesh(pMesh);
+
+	SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"LandScapeMtrl"), 0);
 }
 
 void CLandScape::CreateComputeShader()
@@ -122,5 +124,5 @@ void CLandScape::CreateTexture()
 	m_iWeightHeight = 1024;
 
 	m_pWeightMapBuffer = new CStructuredBuffer;
-	m_pWeightMapBuffer->Create(sizeof(tWeight_4), m_iWeightWidth * m_iWeightHeight, SB_TYPE::READ_WRITE, false);
+	m_pWeightMapBuffer->Create(sizeof(tWeight_4), m_iWeightWidth * m_iWeightHeight, SB_TYPE::READ_WRITE, true);
 }

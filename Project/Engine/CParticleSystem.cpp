@@ -170,10 +170,10 @@ void CParticleSystem::render()
 	Transform()->UpdateData();
 
 	// 파티클버퍼 t20 에 바인딩
-	m_ParticleBuffer->UpdateData(20, PIPELINE_STAGE::PS_ALL);
+	m_ParticleBuffer->UpdateData(20, PIPELINE_STAGE::PS_ALL_STAGES);
 
 	// 모듈 데이터 t21 에 바인딩
-	m_ModuleDataBuffer->UpdateData(21, PIPELINE_STAGE::PS_ALL);
+	m_ModuleDataBuffer->UpdateData(21, PIPELINE_STAGE::PS_ALL_STAGES);
 
 	// Particle Render	
 	

@@ -201,9 +201,11 @@ void CCamera::SortObject()
 				CRenderComponent* pRenderCom = vecObject[j]->GetRenderComponent();
 
 				// 렌더링 기능이 없는 오브젝트는 제외
-				if (   nullptr == pRenderCom 
-					|| nullptr == pRenderCom->GetMaterial(0)
-					|| nullptr == pRenderCom->GetMaterial(0)->GetShader())
+				if (nullptr == pRenderCom
+					|| nullptr == pRenderCom->GetMaterial(0))
+					continue;
+				if (nullptr != pRenderCom->GetMaterial(0)
+					&& nullptr == pRenderCom->GetMaterial(0)->GetShader())
 					continue;
 
 				// FrustumCheck

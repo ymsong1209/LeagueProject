@@ -24,6 +24,9 @@ void DrawDebugCube(const Matrix& _matWorld, Vec4 _vColor, float _fTime = 0.f);
 void DrawDebugSphere(Vec3 _vWorldPos, float _fRadius, Vec4 _vColor, Vec3 _vRotation, float _fTime = 0.f);
 void DrawDebugSphere(const Matrix& _matWorld, Vec4 _vColor, float _fTime = 0.f);
 
+void DrawDebugIceCream(Vec3 _vWorldPos, Vec3 _WorldScale, Vec4 _vColor, Vec3 _vRotation, float _fTime = 0.f);
+void DrawDebugIceCream(const Matrix& _matWorld, Vec4 _vColor, float _fTime = 0.f);
+
 void DrawDebugFrustum(Vec3 _vWorldPos, Vec2 _vWorldScale, Vec4 _vColor, Vec3 _vRotation, float _fTime);
 
 
@@ -116,5 +119,7 @@ void Safe_Del_Map(map<T1, T2>& _map)
 	_map.clear();
 }
 
-
+//문자열내에 |문자를 -로 바꾸는 함수
+//파일저장시에 |를 저장 못함
+wstring ReplacePipeCharacter(const std::wstring& _mywstring);
 

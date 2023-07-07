@@ -152,6 +152,7 @@ void ImGuiMgr::render()
 #include "ListUI.h"
 #include "MenuUI.h"
 #include "LevelUI.h"
+#include "Anim3DEditorUI.h"
 
 void ImGuiMgr::CreateUI()
 {
@@ -180,6 +181,11 @@ void ImGuiMgr::CreateUI()
     //LevelUI
     pUI = new LevelUI;
     pUI->SetActive(true);
+    m_mapUI.insert(make_pair(pUI->GetID(), pUI));
+
+    // Anim3DEditor
+    pUI = new Anim3DEditorUI;
+    pUI->SetActive(false);
     m_mapUI.insert(make_pair(pUI->GetID(), pUI));
 
     // ListUI

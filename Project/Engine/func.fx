@@ -7,11 +7,13 @@ void CalcLight2D(float3 _vWorldPos, inout tLightColor _Light)
 {       
     for (int i = 0; i < g_Light2DCount; ++i)
     {
+        // Directional light
         if (g_Light2DBuffer[i].LightType == 0)
         {
             _Light.vDiffuse.rgb += g_Light2DBuffer[i].Color.vDiffuse.rgb;
             _Light.vAmbient.rgb += g_Light2DBuffer[i].Color.vAmbient.rgb;
         }
+        // Point Light
         else if (g_Light2DBuffer[i].LightType == 1)
         {
             float3 vLightWorldPos = float3(g_Light2DBuffer[i].vWorldPos.xy, 0.f);
@@ -22,9 +24,34 @@ void CalcLight2D(float3 _vWorldPos, inout tLightColor _Light)
         
             _Light.vDiffuse.rgb += g_Light2DBuffer[i].Color.vDiffuse.rgb * fPow;
         }
+        // Spot Light
         else if (g_Light2DBuffer[i].LightType == 2)
         {
+             //광원의 x축으로 타원형 빛을 발사한다.
+            float3 vLightDir = float3(g_Light2DBuffer[i].vWorldDir.xy, 0.f);
+            //광원의 중심의 WorldPosition
+            float3 vLightWorldPos = float3(g_Light2DBuffer[i].vWorldPos.xy, 0.f);
+            //광원의 빛을 받는 물체의 Position
+            float3 vWorldPos = float3(_vWorldPos.xy, 0.f);
             
+           // 광원 중심에서 물체를 향하는 방향
+            float3 vLight = normalize(vWorldPos - vLightWorldPos);
+            
+            
+            if (acos(dot(vLight, vLightDir)) < g_Light2DBuffer[i].Angle / 2.f)
+            {
+                float fDistance = abs(distance(vWorldPos, vLightWorldPos));
+                //광원에서 멀리 있는 물체는 흐려지게 함
+                float fPow = saturate(1.f - (fDistance / g_Light2DBuffer[i].Radius));
+                //양옆으로 갈수록 흐려지게 함
+                float fAnglePow = saturate(1.f - acos(dot(vLight, vLightDir)) / (g_Light2DBuffer[i].Angle / 2.f));
+        
+                _Light.vDiffuse.rgb += g_Light2DBuffer[i].Color.vDiffuse.rgb * fPow * fAnglePow;
+            }
+            else
+            {
+                _Light.vDiffuse.rgb = float3(0.f, 0.f, 0.f);
+            }
         }
     }
 }
@@ -56,6 +83,31 @@ void CalcLight2D(float3 _vWorldPos, float3 _vWorldDir, inout tLightColor _Light)
         else if (g_Light2DBuffer[i].LightType == 2)
         {
             
+            //광원의 x축으로 타원형 빛을 발사한다.
+            float3 vLightDir = float3(g_Light2DBuffer[i].vWorldDir.xy, 0.f);
+            //광원의 중심의 WorldPosition
+            float3 vLightWorldPos = float3(g_Light2DBuffer[i].vWorldPos.xy, 0.f);
+            //광원의 빛을 받는 물체의 Position
+            float3 vWorldPos = float3(_vWorldPos.xy, 0.f);
+            
+           // 광원 중심에서 물체를 향하는 방향
+            float3 vLight = normalize(vWorldPos - vLightWorldPos);
+            float fDiffusePow = saturate(dot(-vLight, _vWorldDir));
+            
+            if (acos(dot(vLight, vLightDir)) < g_Light2DBuffer[i].Angle / 2.f)
+            {
+                float fDistance = abs(distance(vWorldPos, vLightWorldPos));
+                //광원에서 멀리 있는 물체는 흐려지게 함
+                float fDistPow = saturate(1.f - (fDistance / g_Light2DBuffer[i].Radius));
+                //양옆으로 갈수록 흐려지게 함
+                float fAnglePow = saturate(1.f - acos(dot(vLight, vLightDir)) / (g_Light2DBuffer[i].Angle / 2.f));
+        
+                _Light.vDiffuse.rgb += g_Light2DBuffer[i].Color.vDiffuse.rgb * fDiffusePow * fDistPow * fAnglePow;
+            }
+            else
+            {
+                _Light.vDiffuse.rgb = float3(0.f, 0.f, 0.f);
+            }
         }
     }
 }
@@ -94,7 +146,36 @@ void CalcLight3D(float3 _vViewPos, float3 _vViewNormal, uint _LightIdx, inout tL
     // SpotLight
     else
     {
+        // Light 의 ViewSpace 에서의 방향
+        float4 vLightViewPos = mul(float4(lightinfo.vWorldPos.xyz, 1.f), g_matView);
         
+        float4 vLightViewDir = normalize(mul(float4(lightinfo.vWorldDir.xyz, 0.f), g_matView));
+        
+        // 광원->물체표면
+        vLightDir = normalize(_vViewPos - vLightViewPos.xyz);
+        
+        
+        if (acos(saturate(dot(vLightDir, vLightViewDir.xyz))) <= lightinfo.InnerAngle / 2.f)
+        {
+                // 거리에 따른 세기 변화
+            float fDist = distance(_vViewPos, vLightViewPos.xyz);
+            fDistPow = 1.f - saturate(fDist / lightinfo.Radius);
+                
+               
+        }
+        else if (acos(saturate(dot(vLightDir, vLightViewDir.xyz))) <= lightinfo.Angle / 2.f)
+        {
+                // 거리에 따른 세기 변화
+            float fDist = distance(_vViewPos, vLightViewPos.xyz);
+            fDistPow = 1.f - saturate(fDist / lightinfo.Radius);
+                
+            fDistPow *= (1.f - ((acos(saturate(dot(vLightDir, vLightViewDir.xyz)))) - lightinfo.InnerAngle / 2.f) /
+                            (lightinfo.Angle / 2.f - lightinfo.InnerAngle / 2.f));
+        }
+        else
+        {
+            fDistPow = 0.f;
+        }
     }             
     
     // Diffuse Power

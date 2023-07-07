@@ -101,41 +101,72 @@ void CreateTestLevel()
 
 	SpawnGameObject(pObject, Vec3(0.f, 200.f, 300.f), 0);
 
-	// LandScape Object
-	CGameObject* pLandScape = new CGameObject;
-	pLandScape->SetName(L"LandScape");
+	//// LandScape Object
+	//CGameObject* pLandScape = new CGameObject;
+	//pLandScape->SetName(L"LandScape");
 
-	pLandScape->AddComponent(new CTransform);
-	pLandScape->AddComponent(new CLandScape);
-	
-	pLandScape->Transform()->SetRelativeScale(Vec3(200.f, 1000.f, 200.f));
+	//pLandScape->AddComponent(new CTransform);
+	//pLandScape->AddComponent(new CLandScape);
 
-	pLandScape->LandScape()->SetFace(32, 32);
-	pLandScape->LandScape()->SetFrustumCheck(false);
-	pLandScape->LandScape()->SetHeightMap(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\HeightMap_01.jpg"));
-	pLandScape->LandScape()->SetDynamicShadow(true);
+	//pLandScape->Transform()->SetRelativeScale(Vec3(200.f, 1000.f, 200.f));
 
-	SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 0.f), 0);
+	//pLandScape->LandScape()->SetFace(32, 32);
+	//pLandScape->LandScape()->SetFrustumCheck(false);
+
+	//SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 0.f), 0);
 
 
 	// ============
 	// FBX Loading
 	// ============	
 	{
-		Ptr<CMeshData> pMeshData = nullptr;
-		CGameObject* pObj = nullptr;
-		/*pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\house.fbx");
-		pMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\house.mdat");
-		pObj = pMeshData->Instantiate();
-		pObj->SetName(L"House");*/
+		//Ptr<CMeshData> pMeshData = nullptr;
+		//CGameObject* pObj = nullptr;
+		//
+		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Monster.fbx");
+		//
+		//pObj = pMeshData->Instantiate();
+		//pObj->SetName(L"Monster");
 
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\monster.fbx");
-		//pMeshData = CResMgr::GetInst()->FindRes<CMeshData>(L"meshdata\\monster.mdat");
-		pObj = pMeshData->Instantiate();
-		pObj->SetName(L"Monster");
+	
+		//단일재생
+		//pObj->Animator3D()->Play(L"Take 001");
+		//단일재생, 이전 애니메이션 0.5초 블렌딩 후 단일재생
+		//pObj->Animator3D()->Play(L"Take001", true, 0.5f);
+		//반복재생, 마지막프레임후 첫프레임으로 blend안함
+		//pObj->Animator3D()->Play(L"Take001", true, false);
+		//반복재생, AnimA->Take001로 0.5초동안 애니메이션 blend하고 take001재생,take001마지막프레임->첫프레임 돌아오면서 blend안하기 
+		//pObj->Animator3D()->Play(L"Take001", true, false, true, 0.5f);
+		//반복재생, AnimA->Take001로 0.5초동안 애니메이션 blend하고 take001재생,take001마지막프레임->첫프레임 돌아오면서 blend 0.5초동안 하기
+		//pObj->Animator3D()->Play(L"Take001", true, true, true, 0.5f);
+		//사용 예시
+		/*
+		IdleAnimation 반복재생 blend안함
+		pobj->animator3d()->play(L"IdleAnimation",true,false);
+		공격버튼 누르면 공격 애니메이션 단일재생, blending 0.2초
+		if(key_pressed(key::lbtn){
+		changestate(attack);
+		pobj->animator3d()->play(L"AttackAnimation", true,0.2f);
+		}
+		공격 애님 끝나면 다시 idle로 전환
+		if(animator3d()->getcuranim()->isfinish()){
+		changestate(idle)
+		//Attack->Idle 0.2초 blend주고, idle animation 재생, idle anim은 마지막프레임->첫프레임 이동시 blend없음 
+		pobj->animator3d()->play(L"IdleAnimation",true,false,true,0.2f); 
+		}
+		
+		*/
 
-		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
+
+		//SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
 	}
+
+	CGameObject* pObj = new CGameObject;
+	pObj->AddComponent(new CTransform);
+	pObj->AddComponent(new CMeshRender);
+	pObj->AddComponent(new CAnimator3D);
+	pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\jinx55");
+	SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
 
 	// 충돌 시킬 레이어 짝 지정
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");	

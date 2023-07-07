@@ -11,9 +11,8 @@
 CLight3D::CLight3D()
 	: CComponent(COMPONENT_TYPE::LIGHT3D)
 	, m_LightInfo{}
+	, m_bShowDebug(false)
 {
-	SetLightType(LIGHT_TYPE::POINT);
-
 	m_pLightCam = new CGameObject;
 	m_pLightCam->AddComponent(new CTransform);
 	m_pLightCam->AddComponent(new CCamera);
@@ -22,10 +21,10 @@ CLight3D::CLight3D()
 CLight3D::CLight3D(const CLight3D& _other)
 	: CComponent(_other)
 	, m_LightInfo(_other.m_LightInfo)
-	, m_iLightIdx(-1)
 	, m_pLightCam(nullptr)
 {
 	m_pLightCam = _other.m_pLightCam->Clone();
+	SetLightType(static_cast<LIGHT_TYPE>(_other.m_LightInfo.LightType));
 }
 
 
@@ -59,8 +58,8 @@ void CLight3D::SetLightType(LIGHT_TYPE _Type)
 
 	else
 	{
-		m_VolumeMesh = CResMgr::GetInst()->FindRes<CMesh>(L"ConeMesh");
-		//m_LightMtrl = 
+		m_VolumeMesh = CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh");
+		m_LightMtrl = CResMgr::GetInst()->FindRes<CMaterial>(L"SpotLightMtrl");
 	}
 }
 
@@ -101,6 +100,23 @@ void CLight3D::finaltick()
 
 
 	m_iLightIdx = CRenderMgr::GetInst()->RegisterLight3D(this);
+
+	Vec4 vColor = Vec4(1.f, 1.f, 0.f, 1.f);
+
+	if (m_LightInfo.LightType == (UINT)LIGHT_TYPE::POINT) {
+		if (m_bShowDebug) {
+			DrawDebugSphere(Transform()->GetWorldMat(), vColor, 0.f);
+		}
+		Transform()->SetRelativeScale(m_LightInfo.Radius * 2, m_LightInfo.Radius * 2, m_LightInfo.Radius * 2);
+	}
+	else if (m_LightInfo.LightType == (UINT)LIGHT_TYPE::SPOT) {
+		if (m_bShowDebug) {
+			DrawDebugIceCream(Transform()->GetWorldMat(), vColor, 0.f);
+		}
+		Transform()->SetRelativeScale(m_LightInfo.Radius * tan(m_LightInfo.Angle), m_LightInfo.Radius * tan(m_LightInfo.Angle), m_LightInfo.Radius * 2);
+	}
+
+
 }
 
 void CLight3D::render()
@@ -144,6 +160,7 @@ void CLight3D::SaveToLevelFile(FILE* _File)
 	SaveResRef(m_VolumeMesh.Get(), _File);
 	SaveResRef(m_LightMtrl.Get(), _File);
 	fwrite(&m_iLightIdx, sizeof(UINT), 1, _File);
+	fwrite(&m_bShowDebug, sizeof(bool), 1, _File);
 }
 
 void CLight3D::LoadFromLevelFile(FILE* _File)
@@ -152,5 +169,6 @@ void CLight3D::LoadFromLevelFile(FILE* _File)
 	LoadResRef(m_VolumeMesh, _File);
 	LoadResRef(m_LightMtrl, _File);
 	fread(&m_iLightIdx, sizeof(UINT), 1, _File);
+	fread(&m_bShowDebug, sizeof(bool), 1, _File);
 }
 

@@ -119,6 +119,18 @@
     <Filter Include="UI\InspectorUI\ComponentUI\11. FsmUI">
       <UniqueIdentifier>{47d9f624-63d7-4ca0-bf08-7e6a9757ec41}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI\Anim3DEditorUI">
+      <UniqueIdentifier>{bc45d8bc-96a1-4685-b900-691e9c1fed9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\InspectorUI\ComponentUI\12. Light3DUI">
+      <UniqueIdentifier>{b3c37c91-c77f-4ec9-a820-113e1b2c6d4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\InspectorUI\ComponentUI\13. Collider3DUI">
+      <UniqueIdentifier>{1e2f4f6b-82cc-419f-b76b-3008c6baee91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\InspectorUI\ComponentUI\14. LandScapeUI">
+      <UniqueIdentifier>{0e85020b-01da-45b7-9584-5378d8d31520}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -256,6 +268,18 @@
     </ClInclude>
     <ClInclude Include="ComponentUI.h">
       <Filter>UI\InspectorUI\ComponentUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Anim3DEditorUI.h">
+      <Filter>UI\Anim3DEditorUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Light3DUI.h">
+      <Filter>UI\InspectorUI\ComponentUI\12. Light3DUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider3DUI.h">
+      <Filter>UI\InspectorUI\ComponentUI\13. Collider3DUI</Filter>
+    </ClInclude>
+    <ClInclude Include="LandScapeUI.h">
+      <Filter>UI\InspectorUI\ComponentUI\14. LandScapeUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -402,6 +426,18 @@
     </ClCompile>
     <ClCompile Include="ComponentUI.cpp">
       <Filter>UI\InspectorUI\ComponentUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Anim3DEditorUI.cpp">
+      <Filter>UI\Anim3DEditorUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Light3DUI.cpp">
+      <Filter>UI\InspectorUI\ComponentUI\12. Light3DUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider3DUI.cpp">
+      <Filter>UI\InspectorUI\ComponentUI\13. Collider3DUI</Filter>
+    </ClCompile>
+    <ClCompile Include="LandScapeUI.cpp">
+      <Filter>UI\InspectorUI\ComponentUI\14. LandScapeUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

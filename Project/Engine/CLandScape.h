@@ -13,8 +13,6 @@ private:
     UINT                    m_iFaceX;
     UINT                    m_iFaceZ;
 
-    Ptr<CTexture>           m_HeightMap;
-
     Vec2                    m_vBrushScale;      // 브러쉬 크기(전체 지형대비 크기 비율값)
     Ptr<CTexture>           m_pBrushTex;        // 브러쉬용 텍스쳐
 
@@ -34,9 +32,10 @@ private:
 
     Ptr<CTexture>           m_pTileArrTex;      // 타일 배열 텍스쳐
 
+    bool                    m_bIsClicking;
+    RS_TYPE                 m_rstype;
+
 public:
-    void SetFace(UINT _iFaceX, UINT _iFaceZ);
-    void SetHeightMap(Ptr<CTexture> _HeightMap) { m_HeightMap = _HeightMap; }
 
     virtual void finaltick() override;
     virtual void render() override;
@@ -45,6 +44,26 @@ public:
     virtual void SaveToLevelFile(FILE* _File) override;
     virtual void LoadFromLevelFile(FILE* _File) override;
 
+public:
+    const UINT& GetFaceX() { return m_iFaceX; }
+    const UINT& GetFaceZ() { return m_iFaceZ; }
+    const Vec2& GetBrushScale() { return m_vBrushScale; }
+    Ptr<CTexture>           GetBrushTex() { return m_pBrushTex; }
+    const UINT& GetWeightWidth() { return m_iWeightWidth; }
+    const UINT& GetWeightHeight() { return m_iWeightHeight; }
+    const UINT& GetWeightIdx() { return m_iWeightIdx; }
+    const RS_TYPE& GetRSType() { return m_rstype; }
+    Ptr<CTexture>           GetHeightMap() { return m_pHeightMap; }
+    const LANDSCAPE_MOD& GetLandScapeMod() { return m_eMod; }
+
+    void SetFace(UINT _iFaceX, UINT _iFaceZ);
+    void SetHeightMap(Ptr<CTexture> _HeightMap) { m_pHeightMap = _HeightMap; }
+    void SetBrushScale(float scale) { m_vBrushScale = Vec2(scale, scale); }
+    void SetBrushTex(Ptr<CTexture> tex) { m_pBrushTex = tex; }
+    void SetRSType(RS_TYPE rs) { m_rstype = rs; }
+    void SetWeightIdx(int num) { m_iWeightIdx = (UINT)num; }
+    void SetLandScapeMod(LANDSCAPE_MOD _mod);
+
 private:
     void init();
     void CreateMesh();
@@ -52,8 +71,7 @@ private:
     void CreateTexture();
 
     void Raycasting();
-
-    //void CopyFromLoadedTexture(wstring _FilePath);
+    void CopyFromLoadedTexture(wstring _FilePath);
 
     CLONE(CLandScape);
 public:

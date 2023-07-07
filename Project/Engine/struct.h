@@ -69,7 +69,7 @@ struct tLightInfo
 	UINT		LightType;   // 빛의 타입(방향성, 점, 스포트)
 	float		Radius;		 // 빛의 반경(사거리)
 	float		Angle;		 // 빛의 각도
-	int			padding;
+	float		InnerAngle;
 };
 
 

@@ -36,8 +36,8 @@ int ScriptUI::render_update()
 
 	// Script 에서 요구하는 ScalarParameter 를 UI 에 노출	
 	const vector<tScriptParam>& vecScriptParam = m_pTargetScript->GetScritpParam();
-	if (vecScriptParam.empty())
-		return 1;
+	/*if (vecScriptParam.empty())
+		return 1;*/
 	
 	ImGui::Text("Parameter");
 
@@ -61,7 +61,14 @@ int ScriptUI::render_update()
 			break;
 		}
 	}
-
+	
+	vector<tScriptTexParam>& vecScriptTexParam = m_pTargetScript->GetScriptTexParam();
+	for (size_t i = 0; i < vecScriptTexParam.size(); ++i) {
+		Ptr<CTexture> pCurTex = vecScriptTexParam[i].tex;
+		m_strTexDesc = vecScriptTexParam[i].strDesc;
+		ParamUI::Param_Tex(vecScriptTexParam[i].strDesc, pCurTex, this, (UI_DELEGATE_1)&ScriptUI::SelectTexture);
+		m_pTargetScript->SetScriptTexParam(pCurTex, vecScriptTexParam[i].strDesc);
+	}
 
     return 1;
 }
@@ -72,4 +79,12 @@ void ScriptUI::SetScript(CScript* _Script)
 	m_pTargetScript = _Script;
 	wstring wstr = CScriptMgr::GetScriptName(m_pTargetScript);
 	m_strScriptName = string(wstr.begin(), wstr.end());
+}
+
+void ScriptUI::SelectTexture(DWORD_PTR _Key)
+{
+	string strKey = (char*)_Key;
+	Ptr<CTexture> pTex = CResMgr::GetInst()->FindRes<CTexture>(wstring(strKey.begin(), strKey.end()));
+
+	m_pTargetScript->SetScriptTexParam(pTex, m_strTexDesc);
 }

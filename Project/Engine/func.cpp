@@ -159,6 +159,34 @@ void DrawDebugSphere(const Matrix& _matWorld, Vec4 _vColor, float _fTime)
 	CRenderMgr::GetInst()->AddDebugShapeInfo(info);
 }
 
+void DrawDebugIceCream(Vec3 _vWorldPos, Vec3 _WorldScale, Vec4 _vColor, Vec3 _vRotation, float _fTime)
+{
+	tDebugShapeInfo info = {};
+
+
+	info.matWorld = XMMatrixIdentity();
+	info.eShape = SHAPE_TYPE::ICECREAM;
+	info.fMaxTime = _fTime;
+	info.vWorldPos = _vWorldPos;
+	info.vWorldScale = _WorldScale;
+	info.vWorldRotation = _vRotation;
+	info.vColor = _vColor;
+
+
+	CRenderMgr::GetInst()->AddDebugShapeInfo(info);
+}
+
+void DrawDebugIceCream(const Matrix& _matWorld, Vec4 _vColor, float _fTime)
+{
+	tDebugShapeInfo info = {};
+
+	info.matWorld = _matWorld;
+	info.eShape = SHAPE_TYPE::ICECREAM;
+	info.fMaxTime = _fTime;
+	info.vColor = _vColor;
+
+	CRenderMgr::GetInst()->AddDebugShapeInfo(info);
+}
 void DrawDebugFrustum(Vec3 _vWorldPos, Vec2 _vWorldScale, Vec4 _vColor, Vec3 _vRotation, float _fTime)
 {
 	tDebugShapeInfo info = {};
@@ -313,4 +341,15 @@ Vec3 DecomposeRotMat(const Matrix& _matRot)
 		}
 	}
 	return vNewRot;
+}
+
+wstring ReplacePipeCharacter(const std::wstring& _mywstring)
+{
+	std::wstring replacedFileName = _mywstring;
+	size_t found = replacedFileName.find(L"|");
+	while (found != std::wstring::npos) {
+		replacedFileName.replace(found, 1, L"-");
+		found = replacedFileName.find(L"|", found + 1);
+	}
+	return replacedFileName;
 }

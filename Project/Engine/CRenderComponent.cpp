@@ -22,10 +22,10 @@ void CRenderComponent::render_depthmap()
 
 	Ptr<CMaterial> pMtrl = CResMgr::GetInst()->FindRes<CMaterial>(L"DepthMapMtrl");
 
-	// »ç¿ëÇÒ ÀçÁú ¾÷µ¥ÀÌÆ®
+	// ì‚¬ìš©í•  ì¬ì§ˆ ì—…ë°ì´íŠ¸
 	pMtrl->UpdateData();
 
-	// »ç¿ëÇÒ ¸Ş½¬ ¾÷µ¥ÀÌÆ® ¹× ·»´õ¸µ
+	// ì‚¬ìš©í•  ë©”ì‰¬ ì—…ë°ì´íŠ¸ ë° ë Œë”ë§
 	GetMesh()->render(0);
 
 }
@@ -54,7 +54,7 @@ void CRenderComponent::SetMaterial(Ptr<CMaterial> _Mtrl, UINT _idx)
 
 Ptr<CMaterial> CRenderComponent::GetMaterial(UINT _idx)
 {
-	//Camera¿¡¼­ sortobjectÇÒ¶§ getmaterial·Î ÆÇÁ¤ÇÔ. ÀÌ¶§ mtrlÀÌ ¾øÀ¸¸é nullptr¹İÈ¯
+	//Cameraì—ì„œ sortobjectí• ë•Œ getmaterialë¡œ íŒì •í•¨. ì´ë•Œ mtrlì´ ì—†ìœ¼ë©´ nullptrë°˜í™˜
 	if (m_vecMtrls.size() == 0) return nullptr;
 
 	if (nullptr == m_vecMtrls[_idx].pCurMtrl)
@@ -79,7 +79,7 @@ Ptr<CMaterial> CRenderComponent::GetSharedMaterial(UINT _idx)
 
 Ptr<CMaterial> CRenderComponent::GetDynamicMaterial(UINT _idx)
 {
-	// ¿øº» ÀçÁúÀÌ ¾ø´Ù -> Nullptr ¹İÈ¯
+	// ì›ë³¸ ì¬ì§ˆì´ ì—†ë‹¤ -> Nullptr ë°˜í™˜
 	if (nullptr == m_vecMtrls[_idx].pSharedMtrl)
 	{
 		m_vecMtrls[_idx].pCurMtrl = nullptr;
@@ -98,9 +98,6 @@ Ptr<CMaterial> CRenderComponent::GetDynamicMaterial(UINT _idx)
 
 void CRenderComponent::SaveToLevelFile(FILE* _File)
 {
-	//COMPONENT_TYPE type = GetType();
-	//fwrite(&type, sizeof(UINT), 1, _File);
-
 	SaveResRef(m_pMesh.Get(), _File);
 
 	UINT iMtrlCount = GetMtrlCount();
@@ -124,6 +121,8 @@ void CRenderComponent::LoadFromLevelFile(FILE* _File)
 
 	UINT iMtrlCount = GetMtrlCount();
 	fread(&iMtrlCount, sizeof(UINT), 1, _File);
+
+	m_vecMtrls.resize(iMtrlCount);
 
 	for (UINT i = 0; i < iMtrlCount; ++i)
 	{

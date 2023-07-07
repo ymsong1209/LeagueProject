@@ -6,11 +6,12 @@
 
 #include "CGameObject.h"
 #include "components.h"
+
 #include "CFBXLoader.h"
 
 #include "CMesh.h"
 #include "CMaterial.h"
-
+#include "CAnim3D.h"
 
 CMeshData::CMeshData(bool _bEngine)
 	: CRes(RES_TYPE::MESHDATA, _bEngine)
@@ -43,7 +44,18 @@ CGameObject* CMeshData::Instantiate()
 	pNewObj->AddComponent(pAnimator);
 
 	pAnimator->SetBones(m_pMesh->GetBones());
-	pAnimator->SetAnimClip(m_pMesh->GetAnimClip());
+	pAnimator->SetMeshDataRelativePath(GetRelativePath());
+
+	const vector<tMTAnimClip>* animClipPtr = m_pMesh->GetAnimClip();  // GetAnimClip()로부터 포인터를 가져옴
+
+	// 벡터의 요소들에 접근
+	for (const tMTAnimClip& animClip : *animClipPtr)
+	{
+		// 각 tMTAnimClip에 대한 작업 수행
+		// animClip을 읽기 전용으로 사용
+		CAnim3D* anim = pAnimator->CreateAnimation(animClip);
+		anim->Save();
+	}
 
 	return pNewObj;
 }
@@ -68,6 +80,7 @@ CMeshData* CMeshData::LoadFromFBX(const wstring& _strPath)
 		wstring strMeshKey = L"mesh\\";
 		strMeshKey += path(strFullPath).stem();
 		strMeshKey += L".mesh";
+
 		CResMgr::GetInst()->AddRes<CMesh>(strMeshKey, pMesh);
 
 		// 메시를 실제 파일로 저장

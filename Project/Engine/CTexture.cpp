@@ -535,7 +535,7 @@ int CTexture::Save(const wstring& _strRelativePath)
 	return hr;
 }
 
-/*
+
 void CTexture::SaveTextureAsDDS(const wstring& _LevelPath)
 {
 	
@@ -593,5 +593,5 @@ void CTexture::SaveTextureAsDDS(const wstring& _LevelPath)
 	SetName(FixedName);
 	
 }
-*/
+
 

@@ -213,6 +213,7 @@ CGameObject* CLevelSaveLoad::LoadGameObject(FILE* _File)
 			Component = new CAnimator2D;
 			break;
 		case COMPONENT_TYPE::ANIMATOR3D:
+			Component = new CAnimator3D;
 			break;
 		case COMPONENT_TYPE::LIGHT2D:
 			Component = new CLight2D;
@@ -240,6 +241,9 @@ CGameObject* CLevelSaveLoad::LoadGameObject(FILE* _File)
 			break;
 		case COMPONENT_TYPE::SKYBOX:
 			Component = new CSkyBox;
+			break;
+		case COMPONENT_TYPE::FSM:
+			Component = new CFsm;
 			break;
 		}
 

@@ -214,7 +214,10 @@ RWStructuredBuffer<matrix> g_arrFinelMat : register(u0);
 // Animation3D Compute Shader
 #define BoneCount   g_int_0
 #define CurFrame    g_int_1
+#define NextFrame   g_int_2
+#define BlendFrame   g_int_3
 #define Ratio       g_float_0
+#define BlendRatio  g_float_1
 // ===========================
 [numthreads(256, 1, 1)]
 void CS_Animation3D(int3 _iThreadIdx : SV_DispatchThreadID)
@@ -228,11 +231,19 @@ void CS_Animation3D(int3 _iThreadIdx : SV_DispatchThreadID)
 
     // Frame Data Index == Bone Count * Frame Count + _iThreadIdx.x
     uint iFrameDataIndex = BoneCount * CurFrame + _iThreadIdx.x;
-    uint iNextFrameDataIdx = BoneCount * (CurFrame + 1) + _iThreadIdx.x;
+    uint iNextFrameDataIdx = BoneCount * (NextFrame) + _iThreadIdx.x;
+    uint iBlendFrameDataIdx = BoneCount * (BlendFrame) + _iThreadIdx.x;
 
     float4 vScale = lerp(g_arrFrameTrans[iFrameDataIndex].vScale, g_arrFrameTrans[iNextFrameDataIdx].vScale, Ratio);
     float4 vTrans = lerp(g_arrFrameTrans[iFrameDataIndex].vTranslate, g_arrFrameTrans[iNextFrameDataIdx].vTranslate, Ratio);
     float4 qRot = QuternionLerp(g_arrFrameTrans[iFrameDataIndex].qRot, g_arrFrameTrans[iNextFrameDataIdx].qRot, Ratio);
+    
+    if (BlendRatio)
+    {
+        vScale = lerp(g_arrFrameTrans[iBlendFrameDataIdx].vScale, vScale, BlendRatio);
+        vTrans = lerp(g_arrFrameTrans[iBlendFrameDataIdx].vTranslate, vTrans, BlendRatio);
+        qRot = QuternionLerp(g_arrFrameTrans[iBlendFrameDataIdx].qRot, qRot, BlendRatio);
+    }
 
     // 최종 본행렬 연산
     MatrixAffineTransformation(vScale, vQZero, qRot, vTrans, matBone);

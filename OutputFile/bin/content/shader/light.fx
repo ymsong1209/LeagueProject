@@ -145,6 +145,55 @@ PS_OUT PS_PointLightShader(VS_OUT _in)
     return output;
 }
 
+// ========================
+// Spot Light Shader
+// mesh : SphereMesh//IceCreamMesh
+// g_int_0 : Light Index
+// g_tex_0 : Position Target
+// g_tex_1 : Normal Target
+// ========================
+VS_OUT VS_SpotLightShader(VS_IN _in)
+{
+    VS_OUT output = (VS_OUT) 0.f;
+    
+    output.vPosition = mul(float4(_in.vPos, 1.f), g_matWVP);
+        
+    return output;
+}
+
+PS_OUT PS_SpotLightShader(VS_OUT _in)
+{
+    PS_OUT output = (PS_OUT) 0.f;
+      
+    float2 vUV = _in.vPosition.xy / g_Resolution;
+    
+    float3 vViewPos = g_tex_0.Sample(g_sam_0, vUV).xyz;
+    float3 vWorldPos = mul(float4(vViewPos, 1.f), g_matViewInv);
+    float3 vLocalPos = mul(float4(vWorldPos, 1.f), g_matWorldInv);
+    float3 NormalizedLocalPos = normalize(float3(vLocalPos.x, vLocalPos.y, vLocalPos.z));
+    
+    if (length(vLocalPos) <= 0.5f)
+    {
+        // ³»ºÎ   
+        
+        tLightColor lightcolor = (tLightColor) 0.f;
+        float3 vViewNormal = g_tex_1.Sample(g_sam_0, vUV).xyz;
+        
+        CalcLight3D(vViewPos, vViewNormal, g_int_0, lightcolor);
+        
+        output.vDiffuse = lightcolor.vDiffuse + lightcolor.vAmbient;
+        output.vSpecular = lightcolor.vSpecular;
+    }
+    else
+    {
+        discard;
+        //output.vDiffuse = float4(0.f, 0.f, 1.f, 1.f);
+        //output.vSpecular = float4(0.f, 0.f, 1.f, 1.f);
+    }
+    
+    return output;
+}
+
 
 // ========================
 // Light Merge Shader

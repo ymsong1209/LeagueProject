@@ -28,6 +28,12 @@ struct tScriptParam
     string          strDesc;
 };
 
+struct tScriptTexParam
+{
+    Ptr<CTexture>& tex;
+    string strDesc;
+};
+
 class CCollider2D;
 
 class CScript :
@@ -36,13 +42,15 @@ class CScript :
 private:  
     UINT                    m_iScriptType;
     vector<tScriptParam>    m_vecParam;
-
+    vector<tScriptTexParam> m_vecTexParam;
 
 public:
     void Destroy() { DestroyObject(GetOwner()); }
     void SetLifeSpan(float _Time) { GetOwner()->SetLifeSpan(_Time); }
     UINT GetScriptType() { return m_iScriptType; }
     const vector<tScriptParam>& GetScritpParam() { return m_vecParam; }
+    vector<tScriptTexParam>& GetScriptTexParam() { return m_vecTexParam; }
+    void SetScriptTexParam(Ptr<CTexture> pCurTex, const string& _Desc);
 
 public:   
     virtual void finaltick() final {};
@@ -61,6 +69,7 @@ public:
 
 protected:
     void AddScriptParam(SCRIPT_PARAM eParam, void* _pData, const string& _Desc);
+    void AddScriptTexParam(Ptr<CTexture>& Tex, const string& _Desc);
 
 public:
     CScript(UINT _iScriptType);

@@ -16,7 +16,9 @@ private:
 
     UINT            m_iLightIdx;
 
-    CGameObject*    m_pLightCam;    // 광원 시점용 카메라
+    CGameObject*    m_pLightCam;    // 광원 시점용 카메라, Component안에 GameObject가 있으므로 finaltick_module을 사용
+
+    bool            m_bShowDebug;
 
 public:
     void SetLightType(LIGHT_TYPE _Type);
@@ -25,15 +27,16 @@ public:
     void SetLightSpecular(Vec3 _vSpec) { m_LightInfo.Color.vSpecular = _vSpec; }
     void SetLightAmbient(Vec3 _vAmbient) { m_LightInfo.Color.vAmbient = _vAmbient; }
     void SetRadius(float _Radius) { m_LightInfo.Radius = _Radius; }
-    void SetAngle(float _Angle) { m_LightInfo.Angle = _Angle; }
+    void SetAngle(float _Angle) { m_LightInfo.Angle = _Angle * XM_PI / 180.f; }
+    void SetInnerAngle(float _Angle) { m_LightInfo.InnerAngle = _Angle * XM_PI / 180.f; }
+    void SetShowDebug(bool _Debugbool) { m_bShowDebug = _Debugbool; }
     void SetLightDirection(Vec3 _vDir);
 
 
     const tLightInfo& GetLightInfo() { return m_LightInfo; }
-    Vec3 GetLightColor() { return m_LightInfo.Color.vDiffuse; }
-    LIGHT_TYPE GetLightType() { return (LIGHT_TYPE)m_LightInfo.LightType; }
-    float GetRadius(float _fRadius) { return m_LightInfo.Radius; }
-    float GetAngle(float _fAngle) { return m_LightInfo.Angle; }
+    const float GetAngle() { return m_LightInfo.Angle * 180.f / XM_PI; }
+    const float GetInnerAngle() { return m_LightInfo.InnerAngle * 180.f / XM_PI; }
+    const bool  GetShowDebug() { return m_bShowDebug; }
     Vec3 GetLightDirection() { return m_LightInfo.vWorldDir; }
 
 public:
