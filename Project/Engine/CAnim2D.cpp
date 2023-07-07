@@ -131,7 +131,7 @@ void CAnim2D::Save()
 	ofn.lpstrFile = szFilePath;
 	ofn.lpstrFile[0] = '\0';
 	ofn.nMaxFile = 256;
-	ofn.lpstrFilter = L"Anim2d\0*.anim2d\0ALL\0*.*";
+	ofn.lpstrFilter = L"anim2d\0*.anim2d\0ALL\0*.*";
 	ofn.nFilterIndex = 1;
 	ofn.lpstrFileTitle = NULL;
 	ofn.nMaxFileTitle = 0;
@@ -141,9 +141,15 @@ void CAnim2D::Save()
 	if (false == GetSaveFileName(&ofn))
 		return;
 
+	// 저장할 anim2d 이름에 .anim2d가 없다면 자동으로 확장자 붙여줌
+	wstring filePath = wstring(szFilePath);
+	int length = filePath.length();
+	if (length < 7 || filePath.substr(length - 7) != L".anim2d") 
+		filePath.append(L".anim2d");
+
 	// 파일 입출력
 	FILE* pFile = nullptr;
-	errno_t iErrNum = _wfopen_s(&pFile, szFilePath, L"wb");
+	errno_t iErrNum = _wfopen_s(&pFile, filePath.c_str(), L"wb");
 
 	//파일 포인터가 nullptr라면 파일 생성이 제대로 되지 않은 것으로 리턴
 	if (nullptr == pFile)
@@ -162,8 +168,8 @@ void CAnim2D::Save()
 	{
 		++i;
 	}
-	wstring FileName = wstring(szFilePath).substr(i);
-
+	wstring FileName = wstring(filePath).substr(i);
+	
 	// 확장자명 제거한 이름을 애니메이션 이름으로 지정
 	size_t dotPos = FileName.find_last_of('.');
 	wstring AnimName = FileName.substr(0, dotPos);
@@ -172,7 +178,7 @@ void CAnim2D::Save()
 	SaveWString(AnimName, pFile);
 
 	//===== 02. 애니메이션 경로 저장=====
-	wstring RelativePath = L"anim2D\\" + FileName;
+	wstring RelativePath = L"anim2d\\" + FileName;
 	SaveWString(RelativePath, pFile);
 	SetRelativePath(RelativePath);
 
