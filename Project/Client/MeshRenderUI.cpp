@@ -87,7 +87,7 @@ int MeshRenderUI::render_update()
 			CRes* pRes = (CRes*)pNode->GetData();
 			if (RES_TYPE::MATERIAL == pRes->GetType())
 			{
-				GetTarget()->MeshRender()->SetMesh((CMesh*)pRes);
+				GetTarget()->MeshRender()->SetMaterial((CMaterial*)pRes, 0);
 			}
 		}
 

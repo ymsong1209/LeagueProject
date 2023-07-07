@@ -848,6 +848,32 @@ void CResMgr::CreateDefaultGraphicsShader()
 	AddRes(pShader->GetKey(), pShader);
 
 	// ============================
+	// Std2DAnimEditShader
+	// RasterizerState      : None
+	// BlendState           : Mask
+	// DepthStencilState    : Less
+	//
+	// Parameter
+	// g_tex_0              : Output Texture
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"Std2DAnimEditShader");
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_Anim2D");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_Anim2D");
+
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::MASK);
+
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_MASK);
+
+	// Param
+	pShader->AddTexParam(TEX_0, "Output Texture");
+
+	AddRes(pShader->GetKey(), pShader);
+
+
+	// ============================
 	// Std3DShader
 	// RasterizerState      : CULL_BACK
 	// BlendState           : Mask
@@ -920,6 +946,8 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->SetBSType(BS_TYPE::DEFAULT);
 
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_MASK);
+
+	pShader->AddScalarParam(VEC4_0, "DebugLine Color");
 
 	AddRes(pShader->GetKey(), pShader);
 
@@ -1297,6 +1325,11 @@ void CResMgr::CreateDefaultMaterial()
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std2DLightShader"));
 	AddRes(L"Std2DAnimLightMtrl", pMtrl);
+
+	// Std2DAnimEdit Material
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std2DAnimEditShader"));
+	AddRes(L"Std2DAnimEditMtrl", pMtrl);
 
 	// Std3DMtrl
 	pMtrl = new CMaterial(true);
