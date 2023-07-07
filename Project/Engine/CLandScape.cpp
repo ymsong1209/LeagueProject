@@ -270,6 +270,14 @@ void CLandScape::LoadFromLevelFile(FILE* _File)
 	//GetMaterial()->SetTexParam(TEX_2, m_pHeightMap);
 }
 
+void CLandScape::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
+{
+}
+
+void CLandScape::LoadFromLevelJsonFile(const Value& _componentValue)
+{
+}
+
 
 void CLandScape::CopyFromLoadedTexture(wstring _FilePath)
 {

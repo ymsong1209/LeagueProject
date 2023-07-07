@@ -39,6 +39,9 @@ public:
     void SaveToLevelFile(FILE* _File);
     void LoadFromLevelFile(FILE* _File);
 
+    void SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator);
+    void LoadFromLevelJsonFile(const Value& _componentValue);
+
 
     CLONE(CAnim2D);
 public:

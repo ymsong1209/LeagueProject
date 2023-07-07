@@ -39,6 +39,16 @@ using namespace std::experimental::filesystem;
 #include <commdlg.h>
 using namespace Microsoft::WRL;
 
+// jsonSystem
+#include <iostream>
+#include <fstream>
+#include <Engine\rapidjson\document.h>
+#include <Engine\rapidjson\writer.h>
+#include <Engine\rapidjson\prettywriter.h>
+#include <Engine\rapidjson\stringbuffer.h>
+using namespace rapidjson;
+
+
 #include <d3d11.h>					// DirectX11
 #include <d3dcompiler.h>			// Shader ÄÄÆÄÀÏ
 #include <DirectXMath.h>			// DX Math

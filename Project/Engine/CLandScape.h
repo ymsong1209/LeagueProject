@@ -44,6 +44,9 @@ public:
     virtual void SaveToLevelFile(FILE* _File) override;
     virtual void LoadFromLevelFile(FILE* _File) override;
 
+    virtual void SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)override;
+    virtual void LoadFromLevelJsonFile(const Value& _componentValue)override;
+
 public:
     const UINT& GetFaceX() { return m_iFaceX; }
     const UINT& GetFaceZ() { return m_iFaceZ; }

@@ -108,3 +108,13 @@ void CPlayerScript::LoadFromLevelFile(FILE* _File)
 {
 	fread(&m_fSpeed, sizeof(float), 1, _File);
 }
+
+void CPlayerScript::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
+{
+	_objValue.AddMember("fSpeed", m_fSpeed, allocator);
+}
+
+void CPlayerScript::LoadFromLevelJsonFile(const Value& _componentValue)
+{
+	m_fSpeed = _componentValue["fSpeed"].GetFloat();
+}

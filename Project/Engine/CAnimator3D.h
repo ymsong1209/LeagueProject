@@ -101,6 +101,10 @@ private:
 public:
     virtual void SaveToLevelFile(FILE* _pFile) override;
     virtual void LoadFromLevelFile(FILE* _pFile) override;
+    
+    virtual void SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)override;
+    virtual void LoadFromLevelJsonFile(const Value& _componentValue)override;
+
     CLONE(CAnimator3D);
 
 public:

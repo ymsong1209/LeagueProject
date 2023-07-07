@@ -135,3 +135,49 @@ void CRenderComponent::LoadFromLevelFile(FILE* _File)
 	fread(&m_bFrustumCheck, sizeof(bool), 1, _File);
 	fread(&m_bDynamicShadow, sizeof(bool), 1, _File);
 }
+
+void CRenderComponent::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
+{
+	string key = "Mesh";
+	Value keyName(kStringType);
+	keyName.SetString(key.c_str(), key.length(), allocator);
+	_objValue.AddMember(keyName, SaveResRefJson(m_pMesh.Get(), allocator), allocator);
+
+	UINT iMtrlCount = GetMtrlCount();
+	_objValue.AddMember("MtrlCount", iMtrlCount, allocator);
+
+	for (UINT i = 0; i < m_vecMtrls.size(); ++i)
+	{
+		string key = "vecMtrls[" + std::to_string(i) + "]SharedMtrl";
+		Value keyName(kStringType);
+		keyName.SetString(key.c_str(), key.length(), allocator);
+		_objValue.AddMember(keyName, SaveResRefJson(m_vecMtrls[i].pSharedMtrl.Get(), allocator), allocator);
+	}
+
+	_objValue.AddMember("fBounding", m_fBounding, allocator);
+	_objValue.AddMember("bFrustumCheck", m_bFrustumCheck, allocator);
+	_objValue.AddMember("bDynamicShadow", m_bDynamicShadow, allocator);
+
+}
+
+void CRenderComponent::LoadFromLevelJsonFile(const Value& _componentValue)
+{
+	LoadResRefJson(m_pMesh, _componentValue["Mesh"]);
+
+	UINT iMtrlCount = _componentValue["MtrlCount"].GetUint();
+	m_vecMtrls.resize(iMtrlCount);
+	for (UINT i = 0; i < m_vecMtrls.size(); ++i)
+	{
+		string key = "vecMtrls[" + std::to_string(i) + "]SharedMtrl";
+		Value keyName(kStringType);
+		keyName.SetString(key.c_str(), key.length());
+		LoadResRefJson(m_vecMtrls[i].pSharedMtrl, _componentValue[keyName]);
+	}
+
+	m_fBounding = _componentValue["fBounding"].GetFloat();
+	m_bFrustumCheck = _componentValue["bFrustumCheck"].GetBool();
+	m_bDynamicShadow = _componentValue["bDynamicShadow"].GetBool();
+	
+
+
+}

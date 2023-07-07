@@ -133,3 +133,45 @@ void CAnimator2D::LoadFromLevelFile(FILE* _File)
 
 	m_pCurAnim = FindAnim(strCurAnimName);		
 }
+
+void CAnimator2D::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
+{
+	//_objValue.AddMember("bRepeat", m_bRepeat, allocator);
+	//
+	//size_t AnimCount = m_mapAnim.size();
+	//_objValue.AddMember("AnimCount", AnimCount, allocator);
+	//
+	//for (const auto& pair : m_mapAnim)
+	//{
+	//	pair.second->SaveToLevelJsonFile(_objValue, allocator);
+	//}
+	//
+	//wstring strCurAnimName;
+	//if (nullptr != m_pCurAnim)
+	//{
+	//	strCurAnimName = m_pCurAnim->GetName();
+	//}
+	//_objValue.AddMember("strCurAnimName", Value(wStrToStr(strCurAnimName).c_str(), allocator).Move(), allocator);
+}
+
+void CAnimator2D::LoadFromLevelJsonFile(const Value& _componentValue)
+{
+	//m_bRepeat = _componentValue["bRepeat"].GetBool();
+	//
+	//size_t AnimCount = 0;
+	//AnimCount = _componentValue["AnimCount"].GetUint64();
+	//
+	//for (size_t i = 0; i < AnimCount; ++i)
+	//{
+	//	CAnim2D* pNewAnim = new CAnim2D;
+	//	pNewAnim->LoadFromLevelJsonFile(_componentValue);
+	//
+	//	m_mapAnim.insert(make_pair(pNewAnim->GetName(), pNewAnim));
+	//	pNewAnim->m_pOwner = this;
+	//}
+	//
+	//wstring strCurAnimName;
+	//strCurAnimName = StrToWStr(_componentValue["strCurAnimName"].GetString());
+	//
+	//m_pCurAnim = FindAnim(strCurAnimName);
+}

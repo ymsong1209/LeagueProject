@@ -48,6 +48,7 @@ int MenuUI::render_update()
             if (ImGui::MenuItem("Save Level"))
             {
                 SaveLevel();
+
             }
 
             if (ImGui::MenuItem("Load Level"))
@@ -232,7 +233,21 @@ void MenuUI::SaveLevel()
 
     // Level 저장
     CLevelSaveLoad::SaveLevel(subpath, CLevelMgr::GetInst()->GetCurLevel());
+    
 
+
+    // Json 저장
+    filePath = wstring(szFilePath);
+    length = filePath.length();
+    if (length < 2 || filePath.substr(length - 5) != L".json") {
+        filePath.append(L".json");
+    }
+
+    path = CPathMgr::GetInst()->GetContentPath();
+    prefixLength = path.length();
+    subpath = wstring(filePath).substr(prefixLength);
+
+    CLevelSaveLoad::SaveLevelToJson(subpath, CLevelMgr::GetInst()->GetCurLevel());
 }
 
 void MenuUI::LoadLevel()
@@ -266,7 +281,10 @@ void MenuUI::LoadLevel()
     wstring subpath = wstring(szFilePath).substr(prefixLength);
 
     // Level 불러오기
-    CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevel(subpath);
+    //CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevel(subpath);
+
+    // json으로 Level 불러오기
+    CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevelFromJson(subpath);
 
     tEvent evn = {};
     evn.Type = EVENT_TYPE::LEVEL_CHANGE;

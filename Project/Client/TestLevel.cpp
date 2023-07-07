@@ -164,8 +164,10 @@ void CreateTestLevel()
 	CGameObject* pObj = new CGameObject;
 	pObj->AddComponent(new CTransform);
 	pObj->AddComponent(new CMeshRender);
-	pObj->AddComponent(new CAnimator3D);
-	pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\jinx55");
+	//pObj->AddComponent(new CAnimator3D);
+	//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\jinx55");
+
+	pObj->SetName(L"jinx");
 	SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
 
 	// 충돌 시킬 레이어 짝 지정

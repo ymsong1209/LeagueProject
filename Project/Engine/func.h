@@ -76,8 +76,33 @@ void LoadResRef(Ptr<T>& _Res, FILE* _File)
 	}
 }
 
+// Json Save / Load
+string wStrToStr(wstring _before);
+wstring StrToWStr(string _before);
 
 
+Value SaveVec2Json(Vec2 _input, Document::AllocatorType& allocator);
+Value SaveVec3Json(Vec3 _input, Document::AllocatorType& allocator);
+Value SaveVec4Json(Vec4 _input, Document::AllocatorType& allocator);
+
+Vec2 LoadVec2Json(const Value& _vec2Value);
+Vec3 LoadVec3Json(const Value& _vec3Value);
+Vec4 LoadVec4Json(const Value& _vec4Value);
+
+Value& SaveResRefJson(Ptr<CRes> _Res, Document::AllocatorType& allocator);
+
+template<typename T>
+void LoadResRefJson(Ptr<T>& _Res, const Value& _value)
+{
+	if (!_value["IsNull"].GetBool())
+	{
+		wstring strKey, strRelativePath;
+		strKey = StrToWStr(_value["Key"].GetString());
+		strRelativePath = StrToWStr(_value["RelativePath"].GetString());
+
+		_Res = CResMgr::GetInst()->Load<T>(strKey, strRelativePath);
+	}
+}
 
 
 

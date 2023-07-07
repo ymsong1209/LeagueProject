@@ -277,3 +277,351 @@ CGameObject* CLevelSaveLoad::LoadGameObject(FILE* _File)
 
 	return pObject;
 }
+
+int CLevelSaveLoad::SaveLevelToJson(const wstring& levelPath, CLevel* level) {
+	Document document;
+	document.SetObject();
+
+	Document::AllocatorType& allocator = document.GetAllocator();
+
+	// 레벨 이름 저장
+	Value levelValue(kStringType);
+	levelValue.SetString(wStrToStr(level->GetName()).c_str(), wStrToStr(level->GetName()).length(), allocator);
+	document.AddMember("levelName", levelValue, allocator);
+
+	// 레벨의 레이어들을 저장
+	Value layers(kArrayType);
+	for (UINT i = 0; i < MAX_LAYER; ++i) {
+		CLayer* layer = level->GetLayer(i);
+
+		Value layerValue(kObjectType);  // 레이어 정보
+
+		// 1. 레이어 이름
+		layerValue.AddMember("layerName", Value(wStrToStr(layer->GetName()).c_str(), allocator).Move(), allocator);
+
+		// 2. 레이어의 게임 오브젝트들 저장
+		const vector<CGameObject*>& gameObjects = layer->GetParentObject();
+		Value gameObjectsArray(kArrayType);
+		for (CGameObject* gameObject : gameObjects) {
+			SaveGameObjectToJson(gameObject, allocator, gameObjectsArray);
+		}
+		layerValue.AddMember("gameObjects", gameObjectsArray, allocator);
+
+		layers.PushBack(layerValue, allocator);
+	}
+	document.AddMember("layers", layers, allocator);
+
+	// JSON 데이터를 문자열로 변환
+	rapidjson::StringBuffer buffer;
+	rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer); // 가독성
+	//rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+	document.Accept(writer);
+	std::string jsonData = buffer.GetString();
+
+	// JSON 데이터 출력
+	std::cout << "JSON data: " << jsonData << std::endl;
+
+	// JSON 데이터를 level 폴더 경로에  json파일에 저장
+	wstring strPath = CPathMgr::GetInst()->GetContentPath();
+	strPath += levelPath;
+
+	std::ofstream file(strPath);
+	if (file.is_open()) {
+		file << jsonData << std::endl;
+		file.close();
+		std::cout << "JSON file saved." << std::endl;
+	}
+	else {
+		std::cout << "Failed to open JSON file." << std::endl;
+	}
+
+	return 0;
+}
+
+int CLevelSaveLoad::SaveGameObjectToJson(CGameObject* gameObject, Document::AllocatorType& allocator, rapidjson::Value& value)
+{
+	// 이름 저장
+	Value gameObjectValue(kObjectType);
+	gameObjectValue.AddMember("ObjName", Value(wStrToStr(gameObject->GetName()).c_str(), allocator).Move(), allocator);
+
+	// 컴포넌트 저장
+	Value components(kArrayType);
+	for (UINT i = 0; i <= (UINT)COMPONENT_TYPE::END; ++i) {
+		if (i == (UINT)COMPONENT_TYPE::END) {
+			// 마지막 저장
+			components.PushBack(i, allocator);
+			break;
+		}
+
+		CComponent* Com = gameObject->GetComponent((COMPONENT_TYPE)i);
+		if (nullptr == Com)
+			continue;
+
+		// 컴포넌트 value
+		Value componentValue(kObjectType);
+
+		// 컴포넌트 이름 저장
+		string componentName = ToString((COMPONENT_TYPE)i);
+		Value componentNameValue(componentName.c_str(), allocator);
+		componentValue.AddMember(componentNameValue, i, allocator);
+
+		// 컴포넌트 정보 저장
+		Com->SaveToLevelJsonFile(componentValue, allocator);
+
+		components.PushBack(componentValue, allocator);
+	}
+	gameObjectValue.AddMember("components", components, allocator);
+
+	// 스크립트 저장
+	// 기존에는 스크립트 개수를 처음에 저장하는데 json은 필요없겠지? 
+	const vector<CScript*>& scripts = gameObject->GetScripts();
+	Value scriptArray(kArrayType);
+	for (CScript* script : scripts) {
+		Value scriptValue(kObjectType);
+		wstring scriptName = CScriptMgr::GetScriptName(script);
+
+		scriptValue.AddMember("scriptName", Value(wStrToStr(scriptName).c_str(), allocator).Move(), allocator);
+		script->SaveToLevelJsonFile(scriptValue, allocator);
+		scriptArray.PushBack(scriptValue, allocator);
+	}
+	gameObjectValue.AddMember("scripts", scriptArray, allocator);
+
+
+	// 자식 오브젝트 저장
+	const vector<CGameObject*>& vecChild = gameObject->GetChild();
+	size_t ChildCount = vecChild.size();
+
+	Value childObjectsArray(kArrayType);
+	//fwrite(&ChildCount, sizeof(size_t), 1, _File);
+
+	for (size_t i = 0; i < ChildCount; ++i)
+	{
+		SaveGameObjectToJson(vecChild[i], allocator, childObjectsArray);
+	}
+	gameObjectValue.AddMember("children", childObjectsArray, allocator);
+
+	value.PushBack(gameObjectValue, allocator);
+
+	return 0;
+}
+
+CLevel* CLevelSaveLoad::LoadLevelFromJson(const wstring& _LevelPath)
+{
+	// JSON 파일 경로 설정
+	wstring jsonPath = CPathMgr::GetInst()->GetContentPath() + _LevelPath;
+
+	// JSON 파일 열기
+	ifstream file(jsonPath);
+	if (!file.is_open())
+	{
+		// 파일 열기 실패
+		return nullptr;
+	}
+
+	// JSON 데이터 읽기
+	string jsonData((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
+
+	// JSON 데이터 파싱
+	Document document;
+	document.Parse(jsonData.c_str());
+	if (document.HasParseError())
+	{
+		// 파싱 실패
+		return nullptr;
+	}
+
+	// CLevel 객체 생성
+	CLevel* NewLevel = new CLevel();
+
+	// 레벨 이름 로드
+	if (document.HasMember("levelName"))
+	{
+		const Value& levelNameValue = document["levelName"];
+		if (levelNameValue.IsString())
+		{
+			wstring levelName = StrToWStr(levelNameValue.GetString());
+			NewLevel->SetName(levelName);
+		}
+	}
+
+	// 레이어들 로드
+	if (document.HasMember("layers"))
+	{
+		const Value& layersValue = document["layers"];
+		if (layersValue.IsArray())
+		{
+			for (SizeType i = 0; i < layersValue.Size(); ++i)
+			{
+				const Value& layerValue = layersValue[i];
+				if (layerValue.IsObject())
+				{
+					// 레이어 생성
+					CLayer* pLayer = NewLevel->GetLayer(i);
+
+					// 레이어 이름 로드
+					if (layerValue.HasMember("layerName"))
+					{
+						const Value& layerNameValue = layerValue["layerName"];
+						if (layerNameValue.IsString())
+						{
+							wstring layerName = StrToWStr(layerNameValue.GetString());
+							pLayer->SetName(layerName);
+						}
+					}
+
+					// 게임 오브젝트들 로드
+					if (layerValue.HasMember("gameObjects"))
+					{
+						const Value& gameObjectsValue = layerValue["gameObjects"];
+						if (gameObjectsValue.IsArray())
+						{
+							for (SizeType j = 0; j < gameObjectsValue.Size(); ++j)
+							{
+								const Value& gameObjectValue = gameObjectsValue[j];
+								if (gameObjectValue.IsObject())
+								{
+									// 게임 오브젝트 생성
+									CGameObject* gameObject = new CGameObject();
+
+									// 게임 오브젝트 정보 로드
+									LoadGameObjectFromJson(gameObjectValue, gameObject);
+
+									// 레이어에 게임 오브젝트 추가
+									NewLevel->AddGameObject(gameObject, i, false);
+								}
+							}
+						}
+					}
+
+				}
+			}
+		}
+	}
+
+	// 파일 닫기
+	file.close();
+
+	NewLevel->ChangeState(LEVEL_STATE::STOP);
+	return NewLevel;
+}
+
+CGameObject* CLevelSaveLoad::LoadGameObjectFromJson(const Value& _gameObjectValue, CGameObject* _gameObject)
+{
+	// 게임 오브젝트 이름 로드
+	if (_gameObjectValue.HasMember("ObjName"))
+	{
+		const Value& objNameValue = _gameObjectValue["ObjName"];
+		if (objNameValue.IsString())
+		{
+			std::wstring objName = StrToWStr(objNameValue.GetString());
+			_gameObject->SetName(objName);
+		}
+	}
+
+	// 컴포넌트 로드
+	if (_gameObjectValue.HasMember("components"))
+	{
+		const Value& componentsValue = _gameObjectValue["components"];
+		if (componentsValue.IsArray())
+		{
+			for (SizeType i = 0; i < componentsValue.Size(); ++i)
+			{
+				const Value& componentValue = componentsValue[i];
+				if (componentValue.IsObject())
+				{
+					Value::ConstMemberIterator itr = componentValue.MemberBegin();
+					const Value& key = itr->value;
+					UINT ComponentType = key.GetInt();
+
+					// 컴포넌트 로드 및 추가
+					// 컴포넌트 정보의 끝을 확인
+					if ((UINT)COMPONENT_TYPE::END == ComponentType)
+						break;
+
+					CComponent* Component = nullptr;
+
+					switch ((COMPONENT_TYPE)ComponentType)
+					{
+					case COMPONENT_TYPE::TRANSFORM:
+						Component = new CTransform;
+						break;
+					case COMPONENT_TYPE::COLLIDER2D:
+						Component = new CCollider2D;
+						break;
+					case COMPONENT_TYPE::COLLIDER3D:
+						//Component = new CCollider3D;
+						break;
+					case COMPONENT_TYPE::ANIMATOR2D:
+						Component = new CAnimator2D;
+						break;
+					case COMPONENT_TYPE::ANIMATOR3D:
+						Component = new CAnimator3D;
+						break;
+					case COMPONENT_TYPE::LIGHT2D:
+						Component = new CLight2D;
+						break;
+					case COMPONENT_TYPE::LIGHT3D:
+						Component = new CLight3D;
+						break;
+					case COMPONENT_TYPE::CAMERA:
+						Component = new CCamera;
+						break;
+					case COMPONENT_TYPE::MESHRENDER:
+						Component = new CMeshRender;
+						break;
+					case COMPONENT_TYPE::PARTICLESYSTEM:
+						Component = new CParticleSystem;
+						break;
+					case COMPONENT_TYPE::TILEMAP:
+						Component = new CTileMap;
+						break;
+					case COMPONENT_TYPE::SKYBOX:
+						Component = new CSkyBox;
+						break;
+					case COMPONENT_TYPE::LANDSCAPE:
+						Component = new CLandScape;
+						break;
+					case COMPONENT_TYPE::DECAL:
+						Component = new CDecal;
+						break;
+					}
+
+					Component->LoadFromLevelJsonFile(componentValue);
+					_gameObject->AddComponent(Component);
+				}
+			}
+		}
+	}
+
+	// 스크립트 load
+	const Value& scriptsValue = _gameObjectValue["scripts"];
+	for (SizeType i = 0; i < scriptsValue.Size(); ++i)
+	{
+		const Value& scriptValue = scriptsValue[i];
+		if (scriptValue.IsObject())
+		{
+			wstring ScriptName = StrToWStr(scriptValue["scriptName"].GetString());
+			CScript* pScript = CScriptMgr::GetScript(ScriptName);
+
+			pScript->LoadFromLevelJsonFile(scriptValue);
+			_gameObject->AddComponent(pScript);
+		}
+	}
+
+	// 자식 오브젝트 load
+	const Value& childrenValue = _gameObjectValue["children"];
+	for (SizeType i = 0; i < childrenValue.Size(); ++i)
+	{
+		const Value& childValue = childrenValue[i];
+		if (childValue.IsObject())
+		{
+			// 게임 오브젝트 생성
+			CGameObject* childGameObject = new CGameObject();
+			LoadGameObjectFromJson(childValue, childGameObject);
+			_gameObject->AddChild(childGameObject);
+		}
+	}
+
+	return _gameObject;
+}
+

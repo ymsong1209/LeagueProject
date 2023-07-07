@@ -476,3 +476,11 @@ void CAnimator3D::LoadFromLevelFile(FILE* _pFile)
 
 	m_pCurAnim = FindAnim(strCurAnimName);
 }
+
+void CAnimator3D::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
+{
+}
+
+void CAnimator3D::LoadFromLevelJsonFile(const Value& _componentValue)
+{
+}

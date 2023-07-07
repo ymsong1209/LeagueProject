@@ -93,3 +93,64 @@ void CAnim2D::LoadFromLevelFile(FILE* _File)
 		
 	LoadResRef(m_AtlasTex, _File);
 }
+
+void CAnim2D::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
+{
+	_objValue.AddMember("AnimName", Value(wStrToStr(GetName()).c_str(), allocator).Move(), allocator);
+	
+	size_t FrameCount = m_vecFrm.size();
+	_objValue.AddMember("FrameCount", FrameCount, allocator);
+	
+	Value frameArray(kArrayType);
+	int idx = 0;
+	for (const auto& frame : m_vecFrm) {
+		// tAnim2DFrm 구조체 데이터를 rapidjson의 객체 타입 생성
+		Value frameObject(kObjectType);
+		
+		// 프레임 인덱스 (가독성용)
+		frameObject.AddMember("Index", idx, allocator); 
+		idx++;
+	
+		// frameObject에 tAnim2DFrm 구조체의 멤버를 rapidjson의 값(Value)으로 추가
+		frameObject.AddMember("LeftTopUV", SaveVec2Json(frame.LeftTopUV, allocator), allocator);
+		frameObject.AddMember("SliceUV", SaveVec2Json(frame.SliceUV, allocator), allocator);
+		frameObject.AddMember("Offset", SaveVec2Json(frame.Offset, allocator), allocator);
+		frameObject.AddMember("fDuration", frame.fDuration, allocator);
+	
+		// frameObject를 frameArray에 추가
+		frameArray.PushBack(frameObject, allocator);
+	}
+	
+	_objValue.AddMember("vecFrm", frameArray, allocator);
+
+	_objValue.AddMember("vBackSize", SaveVec2Json(m_vBackSize, allocator), allocator);
+	
+	// m_AtlasTex
+	string key = "AtlasTex";
+	Value keyName(kStringType);
+	keyName.SetString(key.c_str(), key.length(), allocator);
+	_objValue.AddMember(keyName, SaveResRefJson(m_AtlasTex.Get(), allocator), allocator);
+}
+
+void CAnim2D::LoadFromLevelJsonFile(const Value& _componentValue)
+{
+	SetName(StrToWStr(_componentValue["AnimName"].GetString()));
+	
+	size_t FrameCount = _componentValue["FrameCount"].GetUint64();
+	
+	for (Value::ConstValueIterator itr = _componentValue["vecFrm"].Begin(); itr != _componentValue["vecFrm"].End(); ++itr)
+	{
+		const Value& frameObject = *itr;
+	
+		tAnim2DFrm frm = {};
+		frm.LeftTopUV = LoadVec2Json(frameObject["LeftTopUV"]);
+		frm.SliceUV = LoadVec2Json(frameObject["SliceUV"]);
+		frm.Offset = LoadVec2Json(frameObject["Offset"]);
+		frm.fDuration = frameObject["fDuration"].GetFloat();
+		m_vecFrm.push_back(frm);
+	}
+	
+	m_vBackSize = LoadVec2Json(_componentValue["vBackSize"]);
+	
+	LoadResRefJson(m_AtlasTex, _componentValue["AtlasTex"]);
+}
