@@ -141,12 +141,6 @@ void CAnimator3D::UpdateData()
 {
 	if (!m_pCurAnim) return;
 
-	//if (!m_pCurAnim->GetFinalMatUpdate())
-	//{
-
-
-	//	m_pCurAnim->SetFinalMatUpdate(true);
-	//}
 
 	// Animation3D Update Compute Shader
 	CAnimation3DShader* pUpdateShader = (CAnimation3DShader*)CResMgr::GetInst()->FindRes<CComputeShader>(L"Animation3DUpdateCS").Get();
@@ -391,6 +385,105 @@ void CAnimator3D::LoadEveryAnimFromFolder(const std::wstring& _strRelativePath) 
 		}
 	} while (FindNextFile(hFind, &findFileData) != 0);
 	FindClose(hFind);
+}
+
+void CAnimator3D::CreateAnimFromText(const wstring& _strRelativePath)
+{
+	wstring FilePath = CPathMgr::GetInst()->GetContentPath();
+	FilePath += _strRelativePath;
+
+	// _strRelativePath에서 파일명만 가져옴
+	filesystem::path path(_strRelativePath);
+	wstring FileName = path.stem();
+	
+	wstring FullName = L"fbx\\";
+	FullName += FileName;
+	FullName += L".fbx";
+	Ptr<CMeshData> pMeshData  = CResMgr::GetInst()->LoadFBX(FullName);
+
+	m_MeshDataRelativePath = pMeshData->GetRelativePath();
+
+	// 파일 경로 만들기
+	wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
+	wstring RelativePath;
+	RelativePath += L"animation\\";
+	//자동 세이브는 meshdata이름을 딴 폴더 안에 저장됨
+	filesystem::path meshpath = m_MeshDataRelativePath;
+	wstring meshdataname = meshpath.stem();
+	RelativePath += meshdataname;
+	
+	// 자동으로 폴더 생성
+	filesystem::path directory = filesystem::path(strFilePath + RelativePath);
+	if (!filesystem::exists(directory))
+		filesystem::create_directories(directory);
+	
+	std::wifstream file(FilePath); // 파일을 읽기 모드로 연다
+	if (!file) {
+		wchar_t szStr[256] = {};
+		wsprintf(szStr, L"animator3d / 텍스트 로드 실패.");
+		MessageBox(nullptr, szStr, L"텍스트 로드 실패.", MB_OK);
+		return;
+	}
+	std::wstring line;
+
+	while (std::getline(file, line)) { // 각 줄을 읽는다
+		std::wistringstream iss(line);
+
+		vector<wstring> tokens = split(line, ',');
+		if (tokens.size() != 3) { // 올바른 포맷이 아니면 건너뛴다
+			continue;
+		}
+
+		std::wstring strAnimName = tokens[0];
+		int startFrame = stoi(tokens[1]);
+		int endFrame = stoi(tokens[2]);
+
+		wstring AnimFinalName;
+		AnimFinalName += FileName;
+		AnimFinalName += L"\\";
+		if (strAnimName.find(FileName) != wstring::npos) // strAnimName에 FileName이 있다면,
+		{
+			strAnimName.erase(strAnimName.find(FileName), FileName.length()); // 지운다
+		}
+		AnimFinalName += strAnimName; // 그리고 AnimFinalName에 붙인다
+
+		CAnim3D* panim = new CAnim3D;
+		panim->SetName(AnimFinalName);
+		tMTAnimClip clip;
+		clip.strAnimName = AnimFinalName;
+		clip.iStartFrame = startFrame;
+		clip.iEndFrame = endFrame;
+		
+
+		const vector<tMTAnimClip>* animClipPtr = pMeshData->GetMesh()->GetAnimClip();  // GetAnimClip()로부터 포인터를 가져옴
+		tMTAnimClip originclip = (*animClipPtr)[0];
+		clip.iFrameLength = originclip.iEndFrame - originclip.iStartFrame;
+		clip.eMode = originclip.eMode;
+		FbxTime::EMode timeMode = clip.eMode;	// 시간 모드
+		int frameRate = FbxTime::GetFrameRate(timeMode);	// 프레임 레이트
+		panim->SetFrameRate(frameRate);
+		double TimePerFrm = 1.f / frameRate;
+		clip.dStartTime = TimePerFrm * clip.iStartFrame;
+		clip.dEndTime = TimePerFrm * clip.iEndFrame;
+		clip.dTimeLength = clip.dEndTime - clip.dStartTime;
+
+		panim->Create(clip);
+		panim->m_pOwner = this;
+		panim->Save(true);
+		delete panim;
+	}
+	file.close();
+}
+
+vector<wstring> CAnimator3D::split(const std::wstring& s, wchar_t delimiter)
+{
+	std::vector<std::wstring> tokens;
+	std::wstring token;
+	std::wistringstream tokenStream(s);
+	while (std::getline(tokenStream, token, delimiter)) {
+		tokens.push_back(token);
+	}
+	return tokens;
 }
 
 

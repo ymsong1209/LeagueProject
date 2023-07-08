@@ -31,7 +31,8 @@ public:
 
     void Create(const tMTAnimClip& _OriginalVecClip, const wstring& _AnimName = L"");
     //animator3d를 통해 자동저장
-    void Save();
+    //CreateAnimFromTxt일때만 bool값 true임
+    void Save(bool _nameincludesmeshpath = false);
     //수동저장
     void Save(const wstring& _strRelativePath);
     void Load(const wstring& _strRelativePath);

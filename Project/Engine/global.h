@@ -35,6 +35,7 @@ using namespace std::experimental::filesystem;
 #include <shlobj.h>
 
 #include <fstream>
+#include <sstream>
 #include <wrl.h>
 #include <commdlg.h>
 using namespace Microsoft::WRL;

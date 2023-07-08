@@ -36,6 +36,7 @@ public:
     void LoadAnim3D();
     wstring BrowseFolder();
     void LoadAnimFromFolder();
+    void CreateAnimFromText();
     void SelectEditMode();
     void SelectPlayMode();
     void SetRepeat();
