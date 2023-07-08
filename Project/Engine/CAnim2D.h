@@ -10,22 +10,22 @@ class CAnim2D :
     public CEntity
 {
 private:
-    CAnimator2D*        m_pOwner;               // �ش� �ִϸ��̼��� �����ϴ� �ִϸ�����
-    vector<tAnim2DFrm>  m_vecFrm;               // ������ ����
+    CAnimator2D*        m_pOwner;               // 해당 애니메이션을 관리하는 애니메이터
+    vector<tAnim2DFrm>  m_vecFrm;               // 프레임 정보
 
-    Ptr<CTexture>       m_AtlasTex;             // Atlas �̹��� 
-    Vec2                m_vAtlasResolution;     // Atlas �̹��� �ػ�
-    wstring             m_strRelativePath;         // �ش� �ִϸ��̼� ���� ���
+    Ptr<CTexture>       m_AtlasTex;             // Atlas 이미지 
+    Vec2                m_vAtlasResolution;     // Atlas 이미지 해상도
+    wstring             m_strRelativePath;      // 해당 애니메이션 저장 경로
 
-    int                 m_iCurFrm;              // ���� ������
-    float               m_fTime;                // ���� �ð�
+    int                 m_iCurFrm;              // 현재 프레임
+    float               m_fTime;                // 누적 시간
 
     int                 m_iFPS;                 // FPS
-    Vec2                m_vBackSizeUV;          // ���� Slice���� �˳��ϰ� ���� �޹�� ũ��
+    Vec2                m_vBackSizeUV;          // 실제 Slice보다 넉넉하게 잡을 뒷배경 크기
 
-    bool                m_bFinish;              // �ִϸ��̼� ���� ����
+    bool                m_bFinish;              // 애니메이션 종료 여부
 
-    bool                m_bDynamicTransform;    // �����Ӹ��� Transform ����Ǵ� �ɼ� ��뿩��
+    bool                m_bDynamicTransform;    // 프레임마다 Transform 변경되는 옵션 사용여부
 
 public:
     void finaltick();

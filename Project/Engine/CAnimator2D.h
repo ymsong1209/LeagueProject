@@ -17,13 +17,13 @@ class CAnimator2D :
     public CComponent
 {
 private:
-    map<wstring, CAnim2D*>  m_mapAnim;  // Animation ���
-    CAnim2D*                m_pCurAnim; // ���� ������� Animation
-    bool                    m_bRepeat;  // �ݺ�
+    map<wstring, CAnim2D*>  m_mapAnim;  // Animation 목록
+    CAnim2D*                m_pCurAnim; // 현재 재생중인 Animation
+    bool                    m_bRepeat;  // 반복
 
     bool                    m_bPause;
 
-    tOriginalTransform      m_tOriginalTransform;   // ������Ʈ�� ���� Transform
+    tOriginalTransform      m_tOriginalTransform;   // 오브젝트의 원본 Transform
 
 
 public:
