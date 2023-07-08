@@ -1,0 +1,383 @@
+{
+    "levelName": "level\\0709test.json",
+    "layers": [
+        {
+            "layerName": "Default",
+            "gameObjects": [
+                {
+                    "ObjName": "MainCamera",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vRelativeScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false
+                        },
+                        {
+                            "CAMERA": 7,
+                            "fAspectRatio": 1.6666666269302368,
+                            "fScale": 1.0,
+                            "ProjType": 1,
+                            "iLayerMask": 2147483647,
+                            "iCamIdx": 0,
+                            "fFar": 50000.0,
+                            "bShowFrustumDebug": false
+                        },
+                        15
+                    ],
+                    "scripts": [],
+                    "children": []
+                },
+                {
+                    "ObjName": "Directional Light",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": -577.3502807617188,
+                                "y": 577.3502807617188,
+                                "z": -577.3502807617188
+                            },
+                            "vRelativeScale": {
+                                "x": 800.0,
+                                "y": 800.0,
+                                "z": 800.0
+                            },
+                            "vRelativeRot": {
+                                "x": 0.6154797673225403,
+                                "y": 0.7853981256484985,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false
+                        },
+                        {
+                            "LIGHT3D": 6,
+                            "LightInfo": {
+                                "Color": {
+                                    "vDiffuse": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "vAmbient": {
+                                        "x": 0.15000000596046448,
+                                        "y": 0.15000000596046448,
+                                        "z": 0.15000000596046448,
+                                        "w": 0.0
+                                    },
+                                    "vSpecular": {
+                                        "x": 0.30000001192092896,
+                                        "y": 0.30000001192092896,
+                                        "z": 0.30000001192092896,
+                                        "w": 0.0
+                                    }
+                                },
+                                "vWorldPos": {
+                                    "x": -577.3502807617188,
+                                    "y": 577.3502807617188,
+                                    "z": -577.3502807617188,
+                                    "w": 0.0
+                                },
+                                "vWorldDir": {
+                                    "x": 0.5773501992225647,
+                                    "y": -0.5773503184318542,
+                                    "z": 0.5773502588272095,
+                                    "w": 0.0
+                                },
+                                "LightType": 0,
+                                "Radius": 400.0,
+                                "Angle": 0.0,
+                                "InnerAngle": 0.0
+                            },
+                            "VolumeMesh": {
+                                "IsNull": false,
+                                "Key": "RectMesh",
+                                "RelativePath": ""
+                            },
+                            "LightMtrl": {
+                                "IsNull": false,
+                                "Key": "DirLightMtrl",
+                                "RelativePath": ""
+                            },
+                            "iLightIdx": 0,
+                            "bShowDebug": false
+                        },
+                        15
+                    ],
+                    "scripts": [],
+                    "children": []
+                },
+                {
+                    "ObjName": "SkyBox",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vRelativeScale": {
+                                "x": 100.0,
+                                "y": 100.0,
+                                "z": 100.0
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": 1.5707963705062866,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false
+                        },
+                        {
+                            "SKYBOX": 12,
+                            "Mesh": {
+                                "IsNull": false,
+                                "Key": "CubeMesh",
+                                "RelativePath": ""
+                            },
+                            "MtrlCount": 1,
+                            "vecMtrls[0]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "SkyBoxMtrl",
+                                "RelativePath": ""
+                            },
+                            "fBounding": 500.0,
+                            "bFrustumCheck": false,
+                            "bDynamicShadow": false,
+                            "Type": 1,
+                            "SkyTex": {
+                                "IsNull": false,
+                                "Key": "texture\\skybox\\SkyWater.dds",
+                                "RelativePath": "texture\\skybox\\SkyWater.dds"
+                            }
+                        },
+                        15
+                    ],
+                    "scripts": [],
+                    "children": []
+                },
+                {
+                    "ObjName": "LandScape",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vRelativeScale": {
+                                "x": 200.0,
+                                "y": 1000.0,
+                                "z": 200.0
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false
+                        },
+                        {
+                            "LANDSCAPE": 13,
+                            "bound": 500.0,
+                            "frustumUse": false,
+                            "ShadowUse": false,
+                            "HeightMapName": "texture\\LandScape\\HeightMap222.dds",
+                            "WeightWidth": 1024,
+                            "WeightHeight": 1024,
+                            "WeightIdx": 1,
+                            "numItems": 1048576,
+                            "data": {
+                                "arrWeight[4]": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ]
+                            },
+                            "iFaceX": 32,
+                            "iFaceZ": 32
+                        },
+                        15
+                    ],
+                    "scripts": [],
+                    "children": []
+                }
+            ]
+        },
+        {
+            "layerName": "Tile",
+            "gameObjects": []
+        },
+        {
+            "layerName": "Player",
+            "gameObjects": []
+        },
+        {
+            "layerName": "Monster",
+            "gameObjects": []
+        },
+        {
+            "layerName": "PlayerProjectile",
+            "gameObjects": []
+        },
+        {
+            "layerName": "MonsterProjectile",
+            "gameObjects": []
+        },
+        {
+            "layerName": "",
+            "gameObjects": []
+        },
+        {
+            "layerName": "",
+            "gameObjects": []
+        },
+        {
+            "layerName": "",
+            "gameObjects": []
+        },
+        {
+            "layerName": "",
+            "gameObjects": []
+        },
+        {
+            "layerName": "",
+            "gameObjects": []
+        },
+        {
+            "layerName": "",
+            "gameObjects": []
+        },
+        {
+            "layerName": "",
+            "gameObjects": []
+        },
+        {
+            "layerName": "",
+            "gameObjects": []
+        },
+        {
+            "layerName": "",
+            "gameObjects": []
+        },
+        {
+            "layerName": "",
+            "gameObjects": []
+        },
+        {
+            "layerName": "",
+            "gameObjects": []
+        },
+        {
+            "layerName": "",
+            "gameObjects": []
+        },
+        {
+            "layerName": "",
+            "gameObjects": []
+        },
+        {
+            "layerName": "",
+            "gameObjects": []
+        },
+        {
+            "layerName": "",
+            "gameObjects": []
+        },
+        {
+            "layerName": "",
+            "gameObjects": []
+        },
+        {
+            "layerName": "",
+            "gameObjects": []
+        },
+        {
+            "layerName": "",
+            "gameObjects": []
+        },
+        {
+            "layerName": "",
+            "gameObjects": []
+        },
+        {
+            "layerName": "",
+            "gameObjects": []
+        },
+        {
+            "layerName": "",
+            "gameObjects": []
+        },
+        {
+            "layerName": "",
+            "gameObjects": []
+        },
+        {
+            "layerName": "",
+            "gameObjects": []
+        },
+        {
+            "layerName": "",
+            "gameObjects": []
+        },
+        {
+            "layerName": "",
+            "gameObjects": []
+        },
+        {
+            "layerName": "ViewPort UI",
+            "gameObjects": []
+        }
+    ],
+    "CollisionMatrix": [
+        0,
+        0,
+        8,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+    ]
+}
