@@ -234,42 +234,68 @@ void CAnimator2D::LoadFromLevelFile(FILE* _File)
 
 void CAnimator2D::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
 {
-	//_objValue.AddMember("bRepeat", m_bRepeat, allocator);
-	//
-	//size_t AnimCount = m_mapAnim.size();
-	//_objValue.AddMember("AnimCount", AnimCount, allocator);
-	//
-	//for (const auto& pair : m_mapAnim)
-	//{
-	//	pair.second->SaveToLevelJsonFile(_objValue, allocator);
-	//}
-	//
-	//wstring strCurAnimName;
-	//if (nullptr != m_pCurAnim)
-	//{
-	//	strCurAnimName = m_pCurAnim->GetName();
-	//}
-	//_objValue.AddMember("strCurAnimName", Value(wStrToStr(strCurAnimName).c_str(), allocator).Move(), allocator);
+	_objValue.AddMember("bRepeat", m_bRepeat, allocator);
+	
+	// m_tOriginalTransform 
+	Value tOriTransValue(kObjectType);
+	tOriTransValue.AddMember("OriginalPos", SaveVec3Json(m_tOriginalTransform.OriginalPos, allocator), allocator);
+	tOriTransValue.AddMember("OriginalScale", SaveVec3Json(m_tOriginalTransform.OriginalScale, allocator), allocator);
+	tOriTransValue.AddMember("OriginalRot", SaveVec3Json(m_tOriginalTransform.OriginalRot, allocator), allocator);
+	_objValue.AddMember("tOriginalTransform", tOriTransValue, allocator);
+	
+	// Anim Save
+	Value animArray(kArrayType);
+	for (const auto& pair : m_mapAnim)
+	{
+		Value AnimObject(kObjectType);
+	
+		// 애니메이션 이름 저장
+		AnimObject.AddMember("AnimName",SaveWStringJson(pair.first, allocator), allocator);
+	
+		// 애니메이션 경로 저장
+		wstring RelativePath = (pair.second)->GetRelativePath();
+		AnimObject.AddMember("AnimRelativePath",SaveWStringJson(RelativePath, allocator), allocator);
+		
+		// AnimObject를 animArray에 추가
+		animArray.PushBack(AnimObject,allocator);
+	}
+	_objValue.AddMember("mapAnim", animArray, allocator);
+	
+	// strCurAnimName
+	wstring strCurAnimName;
+	if (nullptr != m_pCurAnim)
+	{
+		strCurAnimName = m_pCurAnim->GetName();
+	}
+	_objValue.AddMember("strCurAnimName", SaveWStringJson(strCurAnimName, allocator), allocator);
 }
 
 void CAnimator2D::LoadFromLevelJsonFile(const Value& _componentValue)
 {
-	//m_bRepeat = _componentValue["bRepeat"].GetBool();
-	//
-	//size_t AnimCount = 0;
-	//AnimCount = _componentValue["AnimCount"].GetUint64();
-	//
-	//for (size_t i = 0; i < AnimCount; ++i)
-	//{
-	//	CAnim2D* pNewAnim = new CAnim2D;
-	//	pNewAnim->LoadFromLevelJsonFile(_componentValue);
-	//
-	//	m_mapAnim.insert(make_pair(pNewAnim->GetName(), pNewAnim));
-	//	pNewAnim->m_pOwner = this;
-	//}
-	//
-	//wstring strCurAnimName;
-	//strCurAnimName = StrToWStr(_componentValue["strCurAnimName"].GetString());
-	//
-	//m_pCurAnim = FindAnim(strCurAnimName);
+	m_bRepeat = _componentValue["bRepeat"].GetBool();
+
+	const Value& mapAnimArray = _componentValue["mapAnim"];
+	for (size_t i = 0; i < mapAnimArray.Size(); ++i)
+	{
+		// 새 애니메이션 생성
+		CAnim2D* pNewAnim = new CAnim2D;
+	
+		// 애니메이션 이름 설정
+		wstring AnimName;
+		AnimName = StrToWStr(mapAnimArray[i]["AnimName"].GetString());
+		pNewAnim->SetName(AnimName);
+	
+		// 애니메이션 경로 Load 후, 경로값으로 애니메이션 Load
+		wstring RelativePath;
+		RelativePath = StrToWStr(mapAnimArray[i]["AnimRelativePath"].GetString());
+		pNewAnim->Load(RelativePath);
+	
+		// 애니메이션 맵에 등록
+		m_mapAnim.insert(make_pair(pNewAnim->GetName(), pNewAnim));
+		pNewAnim->m_pOwner = this;
+	}
+	
+	wstring strCurAnimName;
+	strCurAnimName = StrToWStr(_componentValue["strCurAnimName"].GetString());
+	m_pCurAnim = FindAnim(strCurAnimName);
 }

@@ -9,6 +9,7 @@
 #include "CRenderMgr.h"
 #include "ptr.h"
 #include "CResMgr.h"
+#include "func.h"
 
 void SpawnGameObject(CGameObject* _NewObject, Vec3 _vWorldPos, int _LayerIdx)
 {
@@ -364,6 +365,14 @@ wstring StrToWStr(string _before)
 	std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
 	return converter.from_bytes(_before);
 }
+
+Value SaveWStringJson(wstring _before, Document::AllocatorType& allocator)
+{
+	Value vTemp(kStringType);
+	vTemp.SetString(wStrToStr(_before).c_str(), allocator);
+	return vTemp;
+}
+
 
 Value SaveVec2Json(Vec2 _input, Document::AllocatorType& allocator)
 {

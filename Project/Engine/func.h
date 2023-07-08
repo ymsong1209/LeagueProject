@@ -79,7 +79,7 @@ void LoadResRef(Ptr<T>& _Res, FILE* _File)
 // Json Save / Load
 string wStrToStr(wstring _before);
 wstring StrToWStr(string _before);
-
+Value SaveWStringJson(wstring _before, Document::AllocatorType& allocator);
 
 Value SaveVec2Json(Vec2 _input, Document::AllocatorType& allocator);
 Value SaveVec3Json(Vec3 _input, Document::AllocatorType& allocator);
