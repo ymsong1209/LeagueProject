@@ -81,6 +81,7 @@ void CAnim2D::Create(const wstring& _strAnimName, Ptr<CTexture> _AtlasTex
 
 void CAnim2D::SaveToLevelFile(FILE* _File)
 {
+	// æ»æ∏
 	SaveWString(GetName(), _File);
 	fwrite(&m_bDynamicTransform, sizeof(bool), 1, _File);
 
@@ -94,6 +95,7 @@ void CAnim2D::SaveToLevelFile(FILE* _File)
 
 void CAnim2D::LoadFromLevelFile(FILE* _File)
 {
+	// æ»æ∏
 	wstring name;
 	LoadWString(name, _File);
 	SetName(name);
@@ -116,14 +118,15 @@ void CAnim2D::LoadFromLevelFile(FILE* _File)
 
 void CAnim2D::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
 {
-	_objValue.AddMember("AnimName", Value(wStrToStr(GetName()).c_str(), allocator).Move(), allocator);
+	// æ»æ∏
+	_objValue.AddMember("AnimName", SaveWStringJson(GetName(), allocator),allocator);
+	_objValue.AddMember("bDynamicTransform", m_bDynamicTransform, allocator);
 	
-	size_t FrameCount = m_vecFrm.size();
-	_objValue.AddMember("FrameCount", FrameCount, allocator);
-	
+	// m_vecFrm
 	Value frameArray(kArrayType);
 	int idx = 0;
-	for (const auto& frame : m_vecFrm) {
+	for (const auto& frame : m_vecFrm) 
+	{
 		// tAnim2DFrm ±∏¡∂√º µ•¿Ã≈Õ∏¶ rapidjson¿« ∞¥√º ≈∏¿‘ ª˝º∫
 		Value frameObject(kObjectType);
 		
@@ -143,9 +146,9 @@ void CAnim2D::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& all
 		// frameObject∏¶ frameArrayø° √ﬂ∞°
 		frameArray.PushBack(frameObject, allocator);
 	}
-	
 	_objValue.AddMember("vecFrm", frameArray, allocator);
 
+	// m_vBackSizeUV
 	_objValue.AddMember("BackSizeUV", SaveVec2Json(m_vBackSizeUV, allocator), allocator);
 	
 	// m_AtlasTex
@@ -157,27 +160,29 @@ void CAnim2D::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& all
 
 void CAnim2D::LoadFromLevelJsonFile(const Value& _componentValue)
 {
+	// æ»æ∏
 	SetName(StrToWStr(_componentValue["AnimName"].GetString()));
+	m_bDynamicTransform = _componentValue["bDynamicTransform"].GetBool();
 
-	size_t FrameCount = _componentValue["FrameCount"].GetUint64();
-
-	for (Value::ConstValueIterator itr = _componentValue["vecFrm"].Begin(); itr != _componentValue["vecFrm"].End(); ++itr)
+	const Value& vecFrmArray = _componentValue["vecFrm"];
+	for (size_t i = 0; i < vecFrmArray.Size(); ++i)
 	{
-		const Value& frameObject = *itr;
-
 		tAnim2DFrm frm = {};
-		frm.LeftTopUV = LoadVec2Json(frameObject["LeftTopUV"]);
-		frm.SliceUV = LoadVec2Json(frameObject["SliceUV"]);
-		frm.OffsetUV = LoadVec2Json(frameObject["OffsetUV"]);
-		frm.fDuration = frameObject["fDuration"].GetFloat();
-		frm.DynamicPos = LoadVec3Json(frameObject["DynamicPos"]);
-		frm.DynamicScale = LoadVec3Json(frameObject["DynamicScale"]);
-		frm.DynamicRot = LoadVec3Json(frameObject["DynamicRot"]);
+		frm.LeftTopUV = LoadVec2Json(vecFrmArray[i]["LeftTopUV"]);
+		frm.SliceUV = LoadVec2Json(vecFrmArray[i]["SliceUV"]);
+		frm.OffsetUV = LoadVec2Json(vecFrmArray[i]["OffsetUV"]);
+		frm.fDuration = vecFrmArray[i]["fDuration"].GetFloat();
+		frm.DynamicPos = LoadVec3Json(vecFrmArray[i]["DynamicPos"]);
+		frm.DynamicScale = LoadVec3Json(vecFrmArray[i]["DynamicScale"]);
+		frm.DynamicRot = LoadVec3Json(vecFrmArray[i]["DynamicRot"]);
+
 		m_vecFrm.push_back(frm);
 	}
 
+	// m_vBackSizeUV
 	m_vBackSizeUV = LoadVec2Json(_componentValue["BackSizeUV"]);
 
+	// m_AtlasTex
 	LoadResRefJson(m_AtlasTex, _componentValue["AtlasTex"]);
 }
 void CAnim2D::Save()
