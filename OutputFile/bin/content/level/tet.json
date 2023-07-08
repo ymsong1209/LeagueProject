@@ -31,7 +31,7 @@
                             "fAspectRatio": 1.6666666269302368,
                             "fScale": 1.0,
                             "ProjType": 1,
-                            "iLayerMask": 2147483647,
+                            "iLayerMask": 50000,
                             "iCamIdx": 0,
                             "fFar": 50000.0,
                             "bShowFrustumDebug": false
@@ -177,9 +177,9 @@
                         {
                             "TRANSFORM": 0,
                             "vRelativePos": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
+                                "x": -305.0,
+                                "y": -194.0,
+                                "z": -327.0
                             },
                             "vRelativeScale": {
                                 "x": 200.0,
@@ -198,7 +198,7 @@
                             "bound": 500.0,
                             "frustumUse": false,
                             "ShadowUse": false,
-                            "HeightMapName": "texture\\LandScape\\HeightMap227.dds",
+                            "HeightMapName": "texture\\LandScape\\.dds",
                             "WeightWidth": 1024,
                             "WeightHeight": 1024,
                             "WeightIdx": 1,
@@ -213,62 +213,6 @@
                             },
                             "iFaceX": 32,
                             "iFaceZ": 32
-                        },
-                        15
-                    ],
-                    "scripts": [],
-                    "children": []
-                },
-                {
-                    "ObjName": "Zilean",
-                    "components": [
-                        {
-                            "TRANSFORM": 0,
-                            "vRelativePos": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "vRelativeScale": {
-                                "x": 1.0,
-                                "y": 1.0,
-                                "z": 1.0
-                            },
-                            "vRelativeRot": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "bAbsolute": false
-                        },
-                        {
-                            "ANIMATOR3D": 4,
-                            "IsEmpty": false,
-                            "MeshDataRelativePath": "meshdata\\Zilean.mdat",
-                            "bRepeat": false,
-                            "mapAnim": [
-                                {
-                                    "Anim3DRelativePath": "animation\\Zilean\\Zilean-Zilean_AllAnim.anim3d"
-                                }
-                            ],
-                            "strCurAnimName": "Zilean-Zilean_AllAnim"
-                        },
-                        {
-                            "MESHRENDER": 9,
-                            "Mesh": {
-                                "IsNull": false,
-                                "Key": "mesh\\Zilean.mesh",
-                                "RelativePath": "mesh\\Zilean.mesh"
-                            },
-                            "MtrlCount": 1,
-                            "vecMtrls[0]SharedMtrl": {
-                                "IsNull": false,
-                                "Key": "material\\MAT_zilean.mtrl",
-                                "RelativePath": "material\\MAT_zilean.mtrl"
-                            },
-                            "fBounding": 500.0,
-                            "bFrustumCheck": true,
-                            "bDynamicShadow": false
                         },
                         15
                     ],
