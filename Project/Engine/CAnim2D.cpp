@@ -134,8 +134,11 @@ void CAnim2D::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& all
 		// frameObject에 tAnim2DFrm 구조체의 멤버를 rapidjson의 값(Value)으로 추가
 		frameObject.AddMember("LeftTopUV", SaveVec2Json(frame.LeftTopUV, allocator), allocator);
 		frameObject.AddMember("SliceUV", SaveVec2Json(frame.SliceUV, allocator), allocator);
-		frameObject.AddMember("Offset", SaveVec2Json(frame.Offset, allocator), allocator);
+		frameObject.AddMember("OffsetUV", SaveVec2Json(frame.OffsetUV, allocator), allocator);
 		frameObject.AddMember("fDuration", frame.fDuration, allocator);
+		frameObject.AddMember("DynamicPos", SaveVec3Json(frame.DynamicPos, allocator), allocator);
+		frameObject.AddMember("DynamicScale", SaveVec3Json(frame.DynamicScale, allocator), allocator);
+		frameObject.AddMember("DynamicRot", SaveVec3Json(frame.DynamicRot, allocator), allocator);
 	
 		// frameObject를 frameArray에 추가
 		frameArray.PushBack(frameObject, allocator);
@@ -143,7 +146,7 @@ void CAnim2D::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& all
 	
 	_objValue.AddMember("vecFrm", frameArray, allocator);
 
-	_objValue.AddMember("vBackSize", SaveVec2Json(m_vBackSize, allocator), allocator);
+	_objValue.AddMember("BackSizeUV", SaveVec2Json(m_vBackSizeUV, allocator), allocator);
 	
 	// m_AtlasTex
 	string key = "AtlasTex";
@@ -155,24 +158,28 @@ void CAnim2D::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& all
 void CAnim2D::LoadFromLevelJsonFile(const Value& _componentValue)
 {
 	SetName(StrToWStr(_componentValue["AnimName"].GetString()));
-	
+
 	size_t FrameCount = _componentValue["FrameCount"].GetUint64();
-	
+
 	for (Value::ConstValueIterator itr = _componentValue["vecFrm"].Begin(); itr != _componentValue["vecFrm"].End(); ++itr)
 	{
 		const Value& frameObject = *itr;
-	
+
 		tAnim2DFrm frm = {};
 		frm.LeftTopUV = LoadVec2Json(frameObject["LeftTopUV"]);
 		frm.SliceUV = LoadVec2Json(frameObject["SliceUV"]);
-		frm.Offset = LoadVec2Json(frameObject["Offset"]);
+		frm.OffsetUV = LoadVec2Json(frameObject["OffsetUV"]);
 		frm.fDuration = frameObject["fDuration"].GetFloat();
+		frm.DynamicPos = LoadVec3Json(frameObject["DynamicPos"]);
+		frm.DynamicScale = LoadVec3Json(frameObject["DynamicScale"]);
+		frm.DynamicRot = LoadVec3Json(frameObject["DynamicRot"]);
 		m_vecFrm.push_back(frm);
 	}
-	
-	m_vBackSize = LoadVec2Json(_componentValue["vBackSize"]);
-	
+
+	m_vBackSizeUV = LoadVec2Json(_componentValue["BackSizeUV"]);
+
 	LoadResRefJson(m_AtlasTex, _componentValue["AtlasTex"]);
+}
 void CAnim2D::Save()
 {
 	// open a file name
