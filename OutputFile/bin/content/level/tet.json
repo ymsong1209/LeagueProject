@@ -57,7 +57,7 @@
                                 "z": 800.0
                             },
                             "vRelativeRot": {
-                                "x": 2.640054941177368,
+                                "x": 0.6154797673225403,
                                 "y": 0.7853981256484985,
                                 "z": 0.0
                             },
@@ -93,9 +93,9 @@
                                     "w": 0.0
                                 },
                                 "vWorldDir": {
-                                    "x": -0.6200224757194519,
-                                    "y": -0.48077452182769775,
-                                    "z": -0.6200225949287415,
+                                    "x": 0.5773501992225647,
+                                    "y": -0.5773503184318542,
+                                    "z": 0.5773502588272095,
                                     "w": 0.0
                                 },
                                 "LightType": 0,
@@ -165,6 +165,54 @@
                                 "Key": "texture\\skybox\\SkyWater.dds",
                                 "RelativePath": "texture\\skybox\\SkyWater.dds"
                             }
+                        },
+                        15
+                    ],
+                    "scripts": [],
+                    "children": []
+                },
+                {
+                    "ObjName": "LandScape",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vRelativeScale": {
+                                "x": 200.0,
+                                "y": 1000.0,
+                                "z": 200.0
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false
+                        },
+                        {
+                            "LANDSCAPE": 13,
+                            "bound": 500.0,
+                            "frustumUse": false,
+                            "ShadowUse": false,
+                            "HeightMapName": "texture\\LandScape\\HeightMap227.dds",
+                            "WeightWidth": 1024,
+                            "WeightHeight": 1024,
+                            "WeightIdx": 1,
+                            "numItems": 1048576,
+                            "data": {
+                                "arrWeight[4]": [
+                                    0.0,
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ]
+                            },
+                            "iFaceX": 32,
+                            "iFaceZ": 32
                         },
                         15
                     ],
