@@ -294,7 +294,7 @@ int CLevelSaveLoad::SaveLevelToJson(const wstring& levelPath, CLevel* level)
 
 	// 레벨 이름 저장
 	Value levelValue(kStringType);
-	levelValue.SetString(wStrToStr(level->GetName()).c_str(), wStrToStr(level->GetName()).length(), allocator);
+	levelValue.SetString(wStrToStr(levelPath).c_str(), wStrToStr(levelPath).length(), allocator);
 	document.AddMember("levelName", levelValue, allocator);
 
 	// 레벨의 레이어들을 저장
@@ -353,10 +353,13 @@ int CLevelSaveLoad::SaveLevelToJson(const wstring& levelPath, CLevel* level)
 	if (file.is_open()) {
 		file << jsonData << std::endl;
 		file.close();
-		std::cout << "JSON file saved." << std::endl;
 	}
 	else {
-		std::cout << "Failed to open JSON file." << std::endl;
+		wchar_t szStr[256] = {};
+		wsprintf(szStr, L"Failed to open JSON file.");
+		MessageBox(nullptr, szStr, L"Level Save 실패. // LevelSaveLoad", MB_OK);
+		return E_FAIL;
+
 	}
 
 	return 0;
@@ -438,6 +441,9 @@ CLevel* CLevelSaveLoad::LoadLevelFromJson(const wstring& _LevelPath)
 	ifstream file(jsonPath);
 	if (!file.is_open())
 	{
+		wchar_t szStr[256] = {};
+		wsprintf(szStr, L"Failed to open JSON file.");
+		MessageBox(nullptr, szStr, L"Level Load 실패.", MB_OK);
 		// 파일 열기 실패
 		return nullptr;
 	}
@@ -449,6 +455,9 @@ CLevel* CLevelSaveLoad::LoadLevelFromJson(const wstring& _LevelPath)
 	document.Parse(jsonData.c_str());
 	if (document.HasParseError())
 	{
+		wchar_t szStr[256] = {};
+		wsprintf(szStr, L"JSON 파일 파싱 실패.");
+		MessageBox(nullptr, szStr, L"Level Load 실패.", MB_OK);
 		// 파싱 실패
 		return nullptr;
 	}
@@ -617,6 +626,9 @@ CGameObject* CLevelSaveLoad::LoadGameObjectFromJson(const Value& _gameObjectValu
 						break;
 					case COMPONENT_TYPE::DECAL:
 						Component = new CDecal;
+						break;
+					case COMPONENT_TYPE::FSM:
+						Component = new CFsm;
 						break;
 					}
 

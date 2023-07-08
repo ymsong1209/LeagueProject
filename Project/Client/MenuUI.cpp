@@ -51,7 +51,7 @@ int MenuUI::render_update()
 
             }
 
-            if (ImGui::MenuItem("Load Level"))
+            if (ImGui::MenuItem("Load Level",0,false,false))
             {
                 LoadLevel();
             }
@@ -144,7 +144,7 @@ int MenuUI::render_update()
                 }
                 //stop ->play
                 else if (CurLevel->GetState() == LEVEL_STATE::STOP){
-                    CLevelSaveLoad::SaveLevel(CurLevel->GetName(), CurLevel);
+                    CLevelSaveLoad::SaveLevelToJson(CurLevel->GetName(), CurLevel);
                 }
                 CTimeMgr::GetInst()->SetTimeScale(1.f);
                 CLevelMgr::GetInst()->GetCurLevel()->ChangeState(LEVEL_STATE::PLAY);
@@ -158,7 +158,7 @@ int MenuUI::render_update()
             {
                 CTimeMgr::GetInst()->SetTimeScale(0.f);
                 CurLevel->ChangeState(LEVEL_STATE::STOP);
-                CLevel* pNewLevel = CLevelSaveLoad::LoadLevel(CurLevel->GetName());
+                CLevel* pNewLevel = CLevelSaveLoad::LoadLevelFromJson(CurLevel->GetName());
              
                 tEvent evn = {};
                 evn.Type = EVENT_TYPE::LEVEL_CHANGE;
@@ -210,7 +210,7 @@ void MenuUI::SaveLevel()
     ofn.lpstrFile = szFilePath;
     ofn.lpstrFile[0] = '\0';
     ofn.nMaxFile = 256;
-    ofn.lpstrFilter = L"lv\0*.lv\0ALL\0*.*";
+    ofn.lpstrFilter = L"json\0*.json\0ALL\0*.*";
     ofn.nFilterIndex = 1;
     ofn.lpstrFileTitle = NULL;
     ofn.nMaxFileTitle = 0;
@@ -221,37 +221,40 @@ void MenuUI::SaveLevel()
         return;
 
 
+    //wstring filePath = wstring(szFilePath);
+    //int length = filePath.length();
+    //if (length < 2 || filePath.substr(length - 3) != L".lv") {
+    //    filePath.append(L".lv");
+    //}
+
+    //wstring path = CPathMgr::GetInst()->GetContentPath();
+    //int prefixLength = path.length();
+    //wstring subpath = wstring(filePath).substr(prefixLength);
+
+    //// Level 저장
+    //CLevelSaveLoad::SaveLevel(subpath, CLevelMgr::GetInst()->GetCurLevel());
+    
+
+
+    // Json 저장
     wstring filePath = wstring(szFilePath);
     int length = filePath.length();
-    if (length < 2 || filePath.substr(length - 3) != L".lv") {
-        filePath.append(L".lv");
+    if (length < 5 || filePath.substr(length - 5) != L".json") {
+        filePath.append(L".json");
     }
 
     wstring path = CPathMgr::GetInst()->GetContentPath();
     int prefixLength = path.length();
     wstring subpath = wstring(filePath).substr(prefixLength);
 
-    // Level 저장
-    CLevelSaveLoad::SaveLevel(subpath, CLevelMgr::GetInst()->GetCurLevel());
-    
-
-
-    // Json 저장
-    filePath = wstring(szFilePath);
-    length = filePath.length();
-    if (length < 2 || filePath.substr(length - 5) != L".json") {
-        filePath.append(L".json");
-    }
-
-    path = CPathMgr::GetInst()->GetContentPath();
-    prefixLength = path.length();
-    subpath = wstring(filePath).substr(prefixLength);
-
     CLevelSaveLoad::SaveLevelToJson(subpath, CLevelMgr::GetInst()->GetCurLevel());
 }
 
 void MenuUI::LoadLevel()
 {
+    // 이제는 안 쓰는 코드입니다.
+    return;
+
     // open a file name
     OPENFILENAME ofn = {};
 
@@ -281,10 +284,8 @@ void MenuUI::LoadLevel()
     wstring subpath = wstring(szFilePath).substr(prefixLength);
 
     // Level 불러오기
-    // CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevel(subpath);
+    CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevel(subpath);
 
-    // json으로 Level 불러오기
-    CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevelFromJson(subpath);
 
     tEvent evn = {};
     evn.Type = EVENT_TYPE::LEVEL_CHANGE;
