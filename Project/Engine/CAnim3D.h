@@ -46,8 +46,6 @@ public:
     int GetFrameRate() { return m_iFrameRate; }
     void SetUpdateTime(float _time) { m_fClipUpdateTime = _time; }
     float GetRatio() { return m_fRatio; }
-    //bool GetFinalMatUpdate() { return m_bFinalMatUpdate; }
-    //void SetFinalMatUpdate(bool _set) { m_bFinalMatUpdate = _set; }
     wstring GetAnimRelativePath() { return m_RelativePath; }
 
     //blend 옵션을 줄때 강제로 적용할 것

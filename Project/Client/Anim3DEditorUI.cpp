@@ -608,7 +608,7 @@ void Anim3DEditorUI::SetCustomAnim()
 		clip.iFrameLength = m_iEndFrm - m_iStartFrm;
 		clip.eMode = m_pTestObject->Animator3D()->GetCurAnim()->GetClipList().eMode;
 		int frameRate = FbxTime::GetFrameRate(clip.eMode);	// 프레임 레이트
-		float TimePerFrm = 1.f / frameRate;
+		double TimePerFrm = 1.f / frameRate;
 		clip.dStartTime = TimePerFrm * m_iStartFrm;
 		clip.dEndTime = TimePerFrm * m_iEndFrm;
 		clip.dTimeLength = clip.dEndTime - clip.dStartTime;
