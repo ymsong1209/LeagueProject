@@ -498,8 +498,6 @@ void CAnimator3D::check_mesh(Ptr<CMesh> _pMesh)
 }
 
 
-
-
 void CAnimator3D::SaveToLevelFile(FILE* _pFile)
 {
 	// 빈 애니메이터는 저장 안함
@@ -572,8 +570,74 @@ void CAnimator3D::LoadFromLevelFile(FILE* _pFile)
 
 void CAnimator3D::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
 {
+	// 빈 애니메이터는 저장 안함
+	// 빈 애니메이터는 meshdata path가 저장안되어있음
+	bool isEmpty = false;
+	if (m_MeshDataRelativePath == L"") {
+		isEmpty = true;
+		_objValue.AddMember("IsEmpty", isEmpty, allocator);
+		return;
+	}
+	else {
+		_objValue.AddMember("IsEmpty", isEmpty, allocator);
+	}
+
+
+	_objValue.AddMember("MeshDataRelativePath", SaveWStringJson(m_MeshDataRelativePath, allocator), allocator);
+	_objValue.AddMember("bRepeat", m_bRepeat, allocator);
+
+	// Anim Save
+	Value animArray(kArrayType);
+	for (const auto& pair : m_mapAnim)
+	{
+		Value AnimObject(kObjectType);
+
+		pair.second->Save();
+		wstring path = pair.second->GetAnimRelativePath();
+		AnimObject.AddMember("Anim3DRelativePath", SaveWStringJson(path, allocator), allocator);
+
+		animArray.PushBack(AnimObject, allocator);
+	}
+	_objValue.AddMember("mapAnim", animArray, allocator);
+
+
+	wstring strCurAnimName;
+	if (nullptr != m_pCurAnim)
+	{
+		strCurAnimName = m_pCurAnim->GetName();
+	}
+	_objValue.AddMember("strCurAnimName", SaveWStringJson(strCurAnimName, allocator), allocator);
 }
 
 void CAnimator3D::LoadFromLevelJsonFile(const Value& _componentValue)
 {
+	bool isEmpty;
+	isEmpty = _componentValue["IsEmpty"].GetBool();
+	if (isEmpty) return;
+
+	m_MeshDataRelativePath = StrToWStr(_componentValue["MeshDataRelativePath"].GetString());
+
+	// Mesh Load
+	Ptr<CMeshData> MeshData = CResMgr::GetInst()->FindRes<CMeshData>(m_MeshDataRelativePath);
+	assert(MeshData.Get());
+	SetBones(MeshData->GetMesh()->GetBones());
+
+	m_bRepeat = _componentValue["bRepeat"].GetBool();
+
+	const Value& mapAnimArray = _componentValue["mapAnim"];
+	for (size_t i = 0; i < mapAnimArray.Size(); ++i)
+	{
+		CAnim3D* pNewAnim = new CAnim3D;
+		
+		wstring AnimPath;
+		AnimPath = StrToWStr(mapAnimArray[i]["Anim3DRelativePath"].GetString());
+		pNewAnim->m_pOwner = this;
+		pNewAnim->Load(AnimPath);
+
+		m_mapAnim.insert(make_pair(pNewAnim->GetName(), pNewAnim));
+	}
+
+	wstring strCurAnimName;
+	strCurAnimName = StrToWStr(_componentValue["strCurAnimName"].GetString());
+	m_pCurAnim = FindAnim(strCurAnimName);
 }

@@ -103,20 +103,20 @@ void CreateTestLevel()
 	//SpawnGameObject(pObject, Vec3(0.f, 200.f, 300.f), 0);
 
 	// Anim2d Test Object
-	CGameObject* pObject3 = new CGameObject;
-	pObject3->SetName(L"Sphere Object");
-
-	pObject3->AddComponent(new CTransform);
-	pObject3->AddComponent(new CMeshRender);
-	pObject3->AddComponent(new CAnimator2D);
-	pObject3->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 300.f));
-
-	pObject3->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	pObject3->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DAnimMtrl"), 0);
-	pObject3->MeshRender()->SetDynamicShadow(true);
-	pObject3->MeshRender()->SetBounding(150.f);
-
-	SpawnGameObject(pObject3, Vec3(0.f, 200.f, 300.f), 0);
+	//CGameObject* pObject3 = new CGameObject;
+	//pObject3->SetName(L"Sphere Object");
+	//
+	//pObject3->AddComponent(new CTransform);
+	//pObject3->AddComponent(new CMeshRender);
+	//pObject3->AddComponent(new CAnimator2D);
+	//pObject3->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 300.f));
+	//
+	//pObject3->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	//pObject3->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DAnimMtrl"), 0);
+	//pObject3->MeshRender()->SetDynamicShadow(true);
+	//pObject3->MeshRender()->SetBounding(150.f);
+	//
+	//SpawnGameObject(pObject3, Vec3(0.f, 200.f, 300.f), 0);
 
 	//// LandScape Object
 	//CGameObject* pLandScape = new CGameObject;
@@ -137,16 +137,16 @@ void CreateTestLevel()
 	// FBX Loading
 	// ============	
 	{
-		//Ptr<CMeshData> pMeshData = nullptr;
-		//CGameObject* pObj = nullptr;
-		//
-		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Zilean.fbx");
-		//
-		//pObj = pMeshData->Instantiate();
-		//pObj->SetName(L"Zilean"); 
-		//pObj->Animator3D()->Play(L"Zilean-Zilean_AllAnim", true, 0.5f);
-		//SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
-		//
+		Ptr<CMeshData> pMeshData = nullptr;
+		CGameObject* pObj = nullptr;
+		
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Zilean.fbx");
+		
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"Zilean"); 
+		pObj->Animator3D()->Play(L"Zilean-Zilean_AllAnim", true, 0.5f);
+		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
+		
 		//Ptr<CMeshData> pMeshData1 = nullptr;
 		//CGameObject* pObj1 = nullptr;
 		//pMeshData1 = CResMgr::GetInst()->LoadFBX(L"fbx\\amumu.fbx");

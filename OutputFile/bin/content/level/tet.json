@@ -57,7 +57,7 @@
                                 "z": 800.0
                             },
                             "vRelativeRot": {
-                                "x": 0.6154797673225403,
+                                "x": 2.640054941177368,
                                 "y": 0.7853981256484985,
                                 "z": 0.0
                             },
@@ -93,9 +93,9 @@
                                     "w": 0.0
                                 },
                                 "vWorldDir": {
-                                    "x": 0.5773501992225647,
-                                    "y": -0.5773503184318542,
-                                    "z": 0.5773502588272095,
+                                    "x": -0.6200224757194519,
+                                    "y": -0.48077452182769775,
+                                    "z": -0.6200225949287415,
                                     "w": 0.0
                                 },
                                 "LightType": 0,
@@ -172,19 +172,19 @@
                     "children": []
                 },
                 {
-                    "ObjName": "Sphere Object",
+                    "ObjName": "Zilean",
                     "components": [
                         {
                             "TRANSFORM": 0,
                             "vRelativePos": {
                                 "x": 0.0,
-                                "y": 200.0,
-                                "z": 300.0
+                                "y": 0.0,
+                                "z": 0.0
                             },
                             "vRelativeScale": {
-                                "x": 300.0,
-                                "y": 300.0,
-                                "z": 300.0
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
@@ -194,49 +194,33 @@
                             "bAbsolute": false
                         },
                         {
-                            "ANIMATOR2D": 3,
+                            "ANIMATOR3D": 4,
+                            "IsEmpty": false,
+                            "MeshDataRelativePath": "meshdata\\Zilean.mdat",
                             "bRepeat": false,
-                            "tOriginalTransform": {
-                                "OriginalPos": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                },
-                                "OriginalScale": {
-                                    "x": 1.0,
-                                    "y": 1.0,
-                                    "z": 1.0
-                                },
-                                "OriginalRot": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0
-                                }
-                            },
                             "mapAnim": [
                                 {
-                                    "AnimName": "link",
-                                    "AnimRelativePath": "anim2d\\link.anim2d"
+                                    "Anim3DRelativePath": "animation\\Zilean\\Zilean-Zilean_AllAnim.anim3d"
                                 }
                             ],
-                            "strCurAnimName": "link"
+                            "strCurAnimName": "Zilean-Zilean_AllAnim"
                         },
                         {
                             "MESHRENDER": 9,
                             "Mesh": {
                                 "IsNull": false,
-                                "Key": "RectMesh",
-                                "RelativePath": ""
+                                "Key": "mesh\\Zilean.mesh",
+                                "RelativePath": "mesh\\Zilean.mesh"
                             },
                             "MtrlCount": 1,
                             "vecMtrls[0]SharedMtrl": {
                                 "IsNull": false,
-                                "Key": "Std2DAnimMtrl",
-                                "RelativePath": ""
+                                "Key": "material\\MAT_zilean.mtrl",
+                                "RelativePath": "material\\MAT_zilean.mtrl"
                             },
-                            "fBounding": 150.0,
+                            "fBounding": 500.0,
                             "bFrustumCheck": true,
-                            "bDynamicShadow": true
+                            "bDynamicShadow": false
                         },
                         15
                     ],

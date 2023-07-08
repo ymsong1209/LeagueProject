@@ -106,8 +106,44 @@ void CTileMap::LoadFromLevelFile(FILE* _File)
 
 void CTileMap::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
 {
+	CRenderComponent::SaveToLevelJsonFile(_objValue, allocator);
+
+	_objValue.AddMember("iTileCountX", m_iTileCountX, allocator);
+	_objValue.AddMember("iTileCountY", m_iTileCountY, allocator);
+	_objValue.AddMember("vSliceSize", SaveVec2Json(m_vSliceSize, allocator), allocator);
+
+	// m_vecTile
+	Value vecTileArray(kArrayType);
+	for (const auto& pair : m_vecTile)
+	{
+		Value TileObject(kObjectType);
+
+		TileObject.AddMember("vLeftTop", SaveVec2Json(pair.vLeftTop, allocator), allocator);
+		TileObject.AddMember("vSlice", SaveVec2Json(pair.vSlice, allocator), allocator);
+	
+		vecTileArray.PushBack(TileObject, allocator);
+	}
+	_objValue.AddMember("vecTile",vecTileArray, allocator);
+
 }
 
 void CTileMap::LoadFromLevelJsonFile(const Value& _componentValue)
 {
+	CRenderComponent::LoadFromLevelJsonFile(_componentValue);
+
+	m_iTileCountX = _componentValue["iTileCountX"].GetUint();
+	m_iTileCountY = _componentValue["iTileCountY"].GetUint();
+	m_vSliceSize = LoadVec2Json(_componentValue["vSliceSize"]);
+
+	SetTileCount(m_iTileCountX, m_iTileCountY);
+
+	const Value& vecTileArray = _componentValue["vecTile"];
+	for (size_t i = 0; i < vecTileArray.Size(); ++i)
+	{
+		tTile newTile = {};
+		newTile.vLeftTop = LoadVec2Json(vecTileArray[i]["vLeftTop"]);
+		newTile.vSlice = LoadVec2Json(vecTileArray[i]["vSlice"]);
+
+		m_vecTile.push_back(newTile);
+	}
 }

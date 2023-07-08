@@ -254,7 +254,7 @@ void CAnimator2D::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType&
 	
 		// 애니메이션 경로 저장
 		wstring RelativePath = (pair.second)->GetRelativePath();
-		AnimObject.AddMember("AnimRelativePath",SaveWStringJson(RelativePath, allocator), allocator);
+		AnimObject.AddMember("Anim2DRelativePath",SaveWStringJson(RelativePath, allocator), allocator);
 		
 		// AnimObject를 animArray에 추가
 		animArray.PushBack(AnimObject,allocator);
