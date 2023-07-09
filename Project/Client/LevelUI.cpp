@@ -65,7 +65,7 @@ int LevelUI::render_update()
 					item_current_idx = n;
 
 					// Level 불러오기
-					CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevel(m_vecLevelName[n]);
+					CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevelFromJson(m_vecLevelName[n]);
 
 					tEvent evn = {};
 					evn.Type = EVENT_TYPE::LEVEL_CHANGE;

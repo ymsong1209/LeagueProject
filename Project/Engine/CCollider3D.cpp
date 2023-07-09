@@ -121,3 +121,19 @@ void CCollider3D::LoadFromLevelFile(FILE* _File)
 	fread(&m_bAbsolute, sizeof(bool), 1, _File);
 	fread(&m_Shape, sizeof(UINT), 1, _File);
 }
+
+void CCollider3D::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
+{
+	_objValue.AddMember("vOffsetPos", SaveVec3Json(m_vOffsetPos, allocator) , allocator);
+	_objValue.AddMember("vOffsetScale", SaveVec3Json(m_vOffsetScale, allocator), allocator);
+	_objValue.AddMember("bAbsolute", m_bAbsolute, allocator);
+	_objValue.AddMember("Shape", (UINT)m_Shape, allocator);
+}
+
+void CCollider3D::LoadFromLevelJsonFile(const Value& _componentValue)
+{
+	m_vOffsetPos = LoadVec3Json(_componentValue["vOffsetPos"]);
+	m_vOffsetScale = LoadVec3Json(_componentValue["vOffsetScale"]);
+	m_bAbsolute = _componentValue["bAbsolute"].GetBool();
+	m_Shape = (COLLIDER3D_TYPE)_componentValue["Shape"].GetUint();
+}

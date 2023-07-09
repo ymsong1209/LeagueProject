@@ -73,6 +73,26 @@ void CSkyBox::LoadFromLevelFile(FILE* _File)
 	SetType(m_Type);
 }
 
+void CSkyBox::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
+{
+	CRenderComponent::SaveToLevelJsonFile(_objValue, allocator);
+
+	_objValue.AddMember("Type", (UINT)m_Type, allocator);
+
+	string key = "SkyTex";
+	Value keyName(kStringType);
+	keyName.SetString(key.c_str(), key.length(), allocator);
+	_objValue.AddMember(keyName, SaveResRefJson(m_SkyTex.Get(), allocator), allocator);
+}
+
+void CSkyBox::LoadFromLevelJsonFile(const Value& _componentValue)
+{
+	CRenderComponent::LoadFromLevelJsonFile(_componentValue);
+
+	m_Type = (SKYBOX_TYPE)_componentValue["Type"].GetUint();
+	LoadResRefJson(m_SkyTex, _componentValue["SkyTex"]);
+	SetType(m_Type);
+}
 
 
 void CSkyBox::SetType(SKYBOX_TYPE _Type)
@@ -92,3 +112,4 @@ void CSkyBox::SetType(SKYBOX_TYPE _Type)
 	SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"SkyBoxMtrl"),0);
 	GetMaterial(0)->SetScalarParam(INT_0, &m_Type);
 }
+

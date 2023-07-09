@@ -62,6 +62,9 @@ public:
     virtual void SaveToLevelFile(FILE* _File) override;
     virtual void LoadFromLevelFile(FILE* _File) override;
 
+    virtual void SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)override;
+    virtual void LoadFromLevelJsonFile(const Value& _componentValue)override;
+
 
 public:
     CRenderComponent(COMPONENT_TYPE _type);

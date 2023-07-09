@@ -23,7 +23,7 @@ CLandScape::CLandScape()
 	, m_iWeightWidth(0)
 	, m_iWeightHeight(0)
 	, m_iWeightIdx(1)
-	, m_eMod(LANDSCAPE_MOD::SPLAT)
+	, m_eMod(LANDSCAPE_MOD::NONE)
 	, m_bIsClicking(false)
 	, m_rstype(RS_TYPE::CULL_BACK)
 {	
@@ -268,6 +268,14 @@ void CLandScape::LoadFromLevelFile(FILE* _File)
 	//생성자 시점에서는 m_ifacex가 0로 설정되어있음.
 	SetFace(m_iFaceX, m_iFaceZ);
 	//GetMaterial()->SetTexParam(TEX_2, m_pHeightMap);
+}
+
+void CLandScape::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
+{
+}
+
+void CLandScape::LoadFromLevelJsonFile(const Value& _componentValue)
+{
 }
 
 

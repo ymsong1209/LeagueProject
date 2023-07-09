@@ -172,3 +172,69 @@ void CLight3D::LoadFromLevelFile(FILE* _File)
 	fread(&m_bShowDebug, sizeof(bool), 1, _File);
 }
 
+void CLight3D::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
+{
+	// tLightInfo
+	Value vLightInfoValue(kObjectType);
+
+	// tLightColor
+	Value lightColorValue(kObjectType);
+	lightColorValue.AddMember("vDiffuse", SaveVec4Json(m_LightInfo.Color.vDiffuse, allocator), allocator);
+	lightColorValue.AddMember("vAmbient", SaveVec4Json(m_LightInfo.Color.vAmbient, allocator), allocator);
+	lightColorValue.AddMember("vSpecular", SaveVec4Json(m_LightInfo.Color.vSpecular, allocator), allocator);
+	
+	vLightInfoValue.AddMember("Color", lightColorValue, allocator);
+
+	vLightInfoValue.AddMember("vWorldPos", SaveVec4Json(m_LightInfo.vWorldPos, allocator), allocator);
+	vLightInfoValue.AddMember("vWorldDir", SaveVec4Json(m_LightInfo.vWorldDir, allocator), allocator);
+	vLightInfoValue.AddMember("LightType", m_LightInfo.LightType, allocator);
+	vLightInfoValue.AddMember("Radius", m_LightInfo.Radius, allocator);
+	vLightInfoValue.AddMember("Angle", m_LightInfo.Angle, allocator);
+	vLightInfoValue.AddMember("InnerAngle", m_LightInfo.InnerAngle, allocator);
+	_objValue.AddMember("LightInfo", vLightInfoValue, allocator);
+
+	// m_VolumeMesh
+	string key = "VolumeMesh";
+	Value keyName(kStringType);
+	keyName.SetString(key.c_str(), key.length(), allocator);
+	_objValue.AddMember(keyName, SaveResRefJson(m_VolumeMesh.Get(), allocator), allocator);
+
+	// m_LightMtrl
+	key = "LightMtrl";
+	keyName.SetString(key.c_str(), key.length(), allocator);
+	_objValue.AddMember(keyName, SaveResRefJson(m_LightMtrl.Get(), allocator), allocator);
+
+	// m_iLightIdx
+	_objValue.AddMember("iLightIdx", m_iLightIdx, allocator);
+
+	// m_bShowDebug
+	_objValue.AddMember("bShowDebug", m_bShowDebug, allocator);
+}
+
+void CLight3D::LoadFromLevelJsonFile(const Value& _componentValue)
+{
+	// tLightInfo
+
+	// tLightColor
+	const Value& colorValue = _componentValue["LightInfo"]["Color"];
+	m_LightInfo.Color.vDiffuse = LoadVec4Json(_componentValue["LightInfo"]["Color"]["vDiffuse"]);
+	m_LightInfo.Color.vAmbient = LoadVec4Json(_componentValue["LightInfo"]["Color"]["vAmbient"]);
+	m_LightInfo.Color.vSpecular = LoadVec4Json(_componentValue["LightInfo"]["Color"]["vSpecular"]);
+
+	m_LightInfo.vWorldPos = LoadVec4Json(_componentValue["LightInfo"]["vWorldPos"]);
+	m_LightInfo.vWorldDir = LoadVec4Json(_componentValue["LightInfo"]["vWorldDir"]);
+	m_LightInfo.LightType = _componentValue["LightInfo"]["LightType"].GetUint();
+	m_LightInfo.Radius = _componentValue["LightInfo"]["Radius"].GetFloat();
+	m_LightInfo.Angle = _componentValue["LightInfo"]["Angle"].GetFloat();
+	m_LightInfo.InnerAngle = _componentValue["LightInfo"]["InnerAngle"].GetFloat();
+
+	// m_VolumeMesh
+	LoadResRefJson(m_VolumeMesh, _componentValue["VolumeMesh"]);
+	// m_LightMtrl
+	LoadResRefJson(m_LightMtrl, _componentValue["LightMtrl"]);
+	// m_iLightIdx
+	m_iLightIdx = _componentValue["iLightIdx"].GetUint();
+	// m_bShowDebug
+	m_bShowDebug = _componentValue["bShowDebug"].GetBool();
+}
+

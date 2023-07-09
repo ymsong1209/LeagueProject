@@ -19,15 +19,16 @@ CAnimator3D::CAnimator3D()
 	: m_mapAnim()
 	, m_pVecBones(nullptr)
 	, m_pCurAnim(nullptr)
-	, m_pAnimAfterBlend(nullptr)
 	, m_bRepeat(false)
 	, m_pBoneFinalMatBuffer(nullptr)
 	, m_bBlend(false)
 	, m_bRepeatBlend(false)
+	, m_bRepeatBlending(false)
 	, m_fCurBlendTime(0.f)
 	, m_fMaxBlendTime(0.f)
 	, m_iBlendStartFrm(0)
-	, m_iBlendEndFrm(0)
+	, m_iStartFrm(0)
+	, m_iNextFrm(0)
 	, m_fBlendRatio(0)
 	, m_bDebugAnimator(false)
 	, m_vecFinalBoneMat()
@@ -41,7 +42,6 @@ CAnimator3D::CAnimator3D(const CAnimator3D& _origin)
 	: m_mapAnim()
 	, m_pVecBones(_origin.m_pVecBones)
 	, m_pCurAnim(nullptr)
-	, m_pAnimAfterBlend(nullptr)
 	, m_bRepeat(_origin.m_bRepeat)
 	, m_pBoneFinalMatBuffer(nullptr)
 	, m_bBlend(_origin.m_bBlend)
@@ -49,7 +49,8 @@ CAnimator3D::CAnimator3D(const CAnimator3D& _origin)
 	, m_fCurBlendTime(_origin.m_fCurBlendTime)
 	, m_fMaxBlendTime(_origin.m_fCurBlendTime)
 	, m_iBlendStartFrm(_origin.m_iBlendStartFrm)
-	, m_iBlendEndFrm(_origin.m_iBlendEndFrm)
+	, m_iStartFrm(_origin.m_iStartFrm)
+	, m_iNextFrm(_origin.m_iNextFrm)
 	, m_fBlendRatio(_origin.m_fBlendRatio)
 	, m_bDebugAnimator(_origin.m_bDebugAnimator)
 	, m_vecFinalBoneMat(_origin.m_vecFinalBoneMat)
@@ -69,11 +70,6 @@ CAnimator3D::CAnimator3D(const CAnimator3D& _origin)
 		map<wstring, CAnim3D*>::iterator iter = m_mapAnim.find(_origin.m_pCurAnim->GetName());
 		m_pCurAnim = iter->second;
 	}
-
-	if (_origin.m_pAnimAfterBlend) {
-		map<wstring, CAnim3D*>::iterator iter = m_mapAnim.find(_origin.m_pAnimAfterBlend->GetName());
-		m_pCurAnim = iter->second;
-	}
 }
 
 CAnimator3D::~CAnimator3D()
@@ -89,7 +85,7 @@ void CAnimator3D::finaltick()
 {
 	if (nullptr != m_pCurAnim)
 	{
-		//blend 옵션 켜졌으면 blend 애니메이션 먼저 재생
+		//blend 옵션 켜졌으면 애니메이션이 blend되면서 재생
 		//애니메이션1 -> 애니메이션2로 재생중
 		if (m_bBlend) {
 			if (m_bDebugAnimator) {
@@ -98,27 +94,26 @@ void CAnimator3D::finaltick()
 			else {
 				m_fCurBlendTime += DT;
 			}
-			m_iBlendStartFrm = m_pCurAnim->GetCurFrameIdx();
-			m_iBlendEndFrm = m_pAnimAfterBlend->GetClipList().iStartFrame;
 			m_fBlendRatio = m_fCurBlendTime / m_fMaxBlendTime;
 
 			if (m_fBlendRatio >= 1.f) {
 				m_bBlend = false;
-				m_pCurAnim->Reset();
-				m_pCurAnim = m_pAnimAfterBlend;
-				m_pAnimAfterBlend = nullptr;
 				m_fCurBlendTime = 0.f;
-				m_pCurAnim->Reset();
-				m_pCurAnim->Play();
+				m_fBlendRatio = 0.f;
 			}
 		}
 		else {
 			//반복재생
-			if (m_bRepeat && m_pCurAnim->IsFinish())
+			if (m_bRepeat)
 			{
+				if (m_pCurAnim->IsFinish()) {
+					m_pCurAnim->Reset();
+					if (m_bRepeatBlend) {
+						m_bRepeatBlending = true;
+					}
+				}
 				//처음 프레임으로 blend해서 돌아오기
-				if (m_bRepeatBlend) {
-
+				if (m_bRepeatBlending) {
 
 					if (m_bDebugAnimator) {
 						m_fCurBlendTime += EditorDT;
@@ -127,22 +122,18 @@ void CAnimator3D::finaltick()
 						m_fCurBlendTime += DT;
 					}
 					m_iBlendStartFrm = m_pCurAnim->GetClipList().iEndFrame;
-					m_iBlendEndFrm = m_pCurAnim->GetClipList().iStartFrame;
 					m_fBlendRatio = m_fCurBlendTime / m_fMaxBlendTime;
 
 					if (m_fBlendRatio >= 1.f) {
-						m_pCurAnim->Reset();
 						m_fCurBlendTime = 0.f;
 						m_fBlendRatio = 0.f;
+						m_bRepeatBlending = false;
 					}
 				}
-				//blend 없이 바로 처음으로 돌아옴
-				else {
-					m_pCurAnim->Reset();
-				}
 			}
-			m_pCurAnim->finaltick();
 		}
+
+		m_pCurAnim->finaltick();
 	}
 }
 
@@ -150,12 +141,12 @@ void CAnimator3D::UpdateData()
 {
 	if (!m_pCurAnim) return;
 
-	if (!m_pCurAnim->GetFinalMatUpdate())
-	{
+	//if (!m_pCurAnim->GetFinalMatUpdate())
+	//{
 
 
-		m_pCurAnim->SetFinalMatUpdate(true);
-	}
+	//	m_pCurAnim->SetFinalMatUpdate(true);
+	//}
 
 	// Animation3D Update Compute Shader
 	CAnimation3DShader* pUpdateShader = (CAnimation3DShader*)CResMgr::GetInst()->FindRes<CComputeShader>(L"Animation3DUpdateCS").Get();
@@ -170,9 +161,11 @@ void CAnimator3D::UpdateData()
 
 	UINT iBoneCount = (UINT)m_pVecBones->size();
 	pUpdateShader->SetBoneCount(iBoneCount);
-	pUpdateShader->SetFrameIndex(m_iBlendStartFrm);
-	pUpdateShader->SetNextFrameIdx(m_iBlendEndFrm);
-	pUpdateShader->SetFrameRatio(m_fBlendRatio);
+	pUpdateShader->SetFrameIndex(m_iStartFrm);
+	pUpdateShader->SetNextFrameIdx(m_iNextFrm);
+	pUpdateShader->SetBlendFrameIdx(m_iBlendStartFrm);
+	pUpdateShader->SetFrameRatio(m_fFrameRatio);
+	pUpdateShader->SetBlendRatio(m_fBlendRatio);
 
 	// 업데이트 쉐이더 실행
 	pUpdateShader->Execute();
@@ -214,8 +207,6 @@ void CAnimator3D::Play(const wstring& _strName, bool _bRepeat, bool _RepeatBlend
 			m_fCurBlendTime = 0.f;
 			m_fMaxBlendTime = _blendtime;
 			m_iBlendStartFrm = GetCurAnim()->GetCurFrameIdx();
-			m_iBlendEndFrm = pAnim->GetClipList().iStartFrame;
-			m_pAnimAfterBlend = pAnim;
 		}
 		//현재 애니메이션이 없을 경우에는 blend 옵션 없이 그대로 재생
 		else {
@@ -243,22 +234,14 @@ void CAnimator3D::Play(const wstring& _strName, bool _blend, float _blendtime)
 	if (_blend) {
 		//현재 애니메이션이 있음
 		if (GetCurAnim()) {
-			//animation이 play상태임
-			if (!m_pCurAnim->IsPause() || m_pCurAnim->IsFinish()) {
-				m_pCurAnim->Reset();
-				m_bBlend = true;
-				m_fCurBlendTime = 0.f;
-				m_fMaxBlendTime = _blendtime;
-				m_iBlendStartFrm = GetCurAnim()->GetCurFrameIdx();
-				m_iBlendEndFrm = pAnim->GetClipList().iStartFrame;
-				m_pAnimAfterBlend = pAnim;
-			}
-			//animation이 pause상태임
-			else {
-				m_pCurAnim = pAnim;
-				m_pCurAnim->Reset();
-				m_pCurAnim->Play();
-			}
+			m_pCurAnim->Reset();
+			m_bBlend = true;
+			m_fCurBlendTime = 0.f;
+			m_fMaxBlendTime = _blendtime;
+			m_iBlendStartFrm = GetCurAnim()->GetCurFrameIdx();
+			m_pCurAnim = pAnim;
+			m_pCurAnim->Reset();
+			m_pCurAnim->Play();
 		}
 		//현재 애니메이션이 없을 경우에는 blend 옵션 없이 그대로 재생
 		else {
@@ -302,8 +285,9 @@ void CAnimator3D::Stop()
 	if (m_pCurAnim) {
 		m_pCurAnim->Reset();
 		m_pCurAnim->Pause();
+		m_iStartFrm = m_pCurAnim->GetClipList().iStartFrame;
 		m_iBlendStartFrm = m_pCurAnim->GetClipList().iStartFrame;
-		m_iBlendEndFrm = m_pCurAnim->GetClipList().iStartFrame;
+		m_fFrameRatio = 0.f;
 		m_fBlendRatio = 0.f;
 	}
 }
@@ -425,6 +409,8 @@ void CAnimator3D::check_mesh(Ptr<CMesh> _pMesh)
 
 void CAnimator3D::SaveToLevelFile(FILE* _pFile)
 {
+	// 빈 애니메이터는 저장 안함
+	// 빈 애니메이터는 meshdata path가 저장안되어있음
 	bool isEmpty = false;
 	if (m_MeshDataRelativePath == L"") {
 		isEmpty = true;
@@ -489,4 +475,12 @@ void CAnimator3D::LoadFromLevelFile(FILE* _pFile)
 	LoadWString(strCurAnimName, _pFile);
 
 	m_pCurAnim = FindAnim(strCurAnimName);
+}
+
+void CAnimator3D::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
+{
+}
+
+void CAnimator3D::LoadFromLevelJsonFile(const Value& _componentValue)
+{
 }

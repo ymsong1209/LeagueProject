@@ -67,6 +67,9 @@ public:
     virtual void SaveToLevelFile(FILE* _File) override {}
     virtual void LoadFromLevelFile(FILE* _FILE) override {}
 
+    virtual void SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)override {}
+    virtual void LoadFromLevelJsonFile(const Value& _componentValue)override {}
+
 protected:
     void AddScriptParam(SCRIPT_PARAM eParam, void* _pData, const string& _Desc);
     void AddScriptTexParam(Ptr<CTexture>& Tex, const string& _Desc);

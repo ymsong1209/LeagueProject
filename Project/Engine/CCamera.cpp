@@ -447,3 +447,28 @@ void CCamera::LoadFromLevelFile(FILE* _File)
 	fread(&m_bShowFrustumDebug, sizeof(bool), 1, _File);
 	SetCameraIndex(m_iCamIdx);
 }
+
+void CCamera::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
+{
+	_objValue.AddMember("fAspectRatio", m_fAspectRatio, allocator);
+	_objValue.AddMember("fScale", m_fScale, allocator);
+	_objValue.AddMember("ProjType", (UINT)m_ProjType, allocator);
+	_objValue.AddMember("iLayerMask", m_iLayerMask, allocator);
+	_objValue.AddMember("iCamIdx", m_iCamIdx, allocator);
+	_objValue.AddMember("fFar", m_fFar, allocator);
+	_objValue.AddMember("bShowFrustumDebug", m_bShowFrustumDebug, allocator);
+
+}
+
+void CCamera::LoadFromLevelJsonFile(const Value& _componentValue)
+{
+	m_fAspectRatio = _componentValue["fAspectRatio"].GetFloat();
+	m_fScale = _componentValue["fScale"].GetFloat();
+	m_ProjType = (PROJ_TYPE)_componentValue["ProjType"].GetUint();
+	m_iLayerMask = _componentValue["iLayerMask"].GetUint();
+	m_iCamIdx = _componentValue["iCamIdx"].GetInt();
+	m_iLayerMask = _componentValue["fFar"].GetFloat();
+	m_bShowFrustumDebug = _componentValue["bShowFrustumDebug"].GetBool();
+
+	SetCameraIndex(m_iCamIdx);
+}

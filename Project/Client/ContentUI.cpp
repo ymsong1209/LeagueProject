@@ -76,7 +76,7 @@ void ContentUI::Reload()
 			wchar_t szExt[50] = {};
 			_wsplitpath_s(m_vecResPath[i].c_str(), 0, 0, 0, 0, 0, 0, szExt, 50);
 			wstring strExt = szExt;
-			if (L".lv" == strExt) {
+			if (L".json" == strExt) {
 				levelui->m_vecLevelName.push_back(m_vecResPath[i]);
 			}
 			else {

@@ -213,3 +213,188 @@ void CParticleSystem::LoadFromLevelFile(FILE* _File)
 		m_UpdateCS = (CParticleUpdateShader*)CResMgr::GetInst()->FindRes<CComputeShader>(strKey).Get();
 	}
 }
+
+void CParticleSystem::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
+{
+	CRenderComponent::SaveToLevelJsonFile(_objValue, allocator);
+
+	// tParticleModule 저장
+	Value tModuelVal(kObjectType);
+
+	// Spawn 모듈
+	tModuelVal.AddMember("vSpawnColor",SaveVec4Json(m_ModuleData.vSpawnColor, allocator), allocator);
+	tModuelVal.AddMember("vSpawnScaleMin", SaveVec4Json(m_ModuleData.vSpawnScaleMin, allocator), allocator);
+	tModuelVal.AddMember("vSpawnScaleMax", SaveVec4Json(m_ModuleData.vSpawnScaleMax, allocator), allocator);
+	tModuelVal.AddMember("vBoxShapeScale", SaveVec3Json(m_ModuleData.vBoxShapeScale, allocator), allocator);
+	tModuelVal.AddMember("fSphereShapeRadius", m_ModuleData.fSphereShapeRadius, allocator);
+	tModuelVal.AddMember("SpawnShapeType", m_ModuleData.SpawnShapeType, allocator);
+	tModuelVal.AddMember("SpawnRate", m_ModuleData.SpawnRate, allocator);
+	tModuelVal.AddMember("Space", m_ModuleData.Space, allocator);
+	tModuelVal.AddMember("MinLifeTime", m_ModuleData.MinLifeTime, allocator);
+	tModuelVal.AddMember("MaxLifeTime", m_ModuleData.MaxLifeTime, allocator);
+	
+	// spawnpad 배열을 저장
+	Value spawnpadArray(kArrayType);
+	for (int i = 0; i < 3; ++i) {
+		spawnpadArray.PushBack(m_ModuleData.spawnpad[i], allocator);
+	}
+	tModuelVal.AddMember("spawnpad[3]", spawnpadArray, allocator);
+
+	// Color Change 모듈
+	tModuelVal.AddMember("vStartColor", SaveVec4Json(m_ModuleData.vStartColor, allocator), allocator);
+	tModuelVal.AddMember("vEndColor", SaveVec4Json(m_ModuleData.vEndColor, allocator), allocator);
+
+	// Scale Change 모듈
+	tModuelVal.AddMember("StartScale", m_ModuleData.StartScale, allocator);
+	tModuelVal.AddMember("EndScale", m_ModuleData.EndScale, allocator);
+
+	// 버퍼 최대크기
+	tModuelVal.AddMember("iMaxParticleCount", m_ModuleData.iMaxParticleCount, allocator);
+	tModuelVal.AddMember("ipad", m_ModuleData.ipad, allocator);
+
+	// Add Velocity 모듈
+	tModuelVal.AddMember("vVelocityDir", SaveVec4Json(m_ModuleData.vVelocityDir, allocator), allocator);
+	tModuelVal.AddMember("AddVelocityType", m_ModuleData.AddVelocityType, allocator);
+	tModuelVal.AddMember("OffsetAngle", m_ModuleData.OffsetAngle, allocator);
+	tModuelVal.AddMember("Speed", m_ModuleData.Speed, allocator);
+	tModuelVal.AddMember("addvpad", m_ModuleData.addvpad, allocator);
+
+	// Drag 모듈 - 속도 제한
+	tModuelVal.AddMember("StartDrag", m_ModuleData.StartDrag, allocator);
+	tModuelVal.AddMember("EndDrag", m_ModuleData.EndDrag, allocator);
+
+	// NoiseForce 모듈 - 랜덤 힘 적용	
+	tModuelVal.AddMember("fNoiseTerm", m_ModuleData.fNoiseTerm, allocator);
+	tModuelVal.AddMember("fNoiseForce", m_ModuleData.fNoiseForce, allocator);
+
+	// Gravity 모듈 - 중력 추가
+	tModuelVal.AddMember("fGravityForce", m_ModuleData.fGravityForce, allocator);
+
+	// GravityPad 배열을 저장
+	Value GravityPadArray(kArrayType);
+	for (int i = 0; i < 3; ++i) {
+		GravityPadArray.PushBack(m_ModuleData.GravityPad[i], allocator);
+	}
+	tModuelVal.AddMember("GravityPad[3]", GravityPadArray, allocator);
+
+	// Render 모듈
+	tModuelVal.AddMember("VelocityAlignment", m_ModuleData.VelocityAlignment, allocator);
+	tModuelVal.AddMember("VelocityScale", m_ModuleData.VelocityScale, allocator);
+	tModuelVal.AddMember("AnimationUse", m_ModuleData.AnimationUse, allocator);
+	tModuelVal.AddMember("AnimationLoop", m_ModuleData.AnimationLoop, allocator);
+	tModuelVal.AddMember("bRotate", m_ModuleData.bRotate, allocator);
+
+	tModuelVal.AddMember("vMaxSpeed", m_ModuleData.vMaxSpeed, allocator);
+	tModuelVal.AddMember("fRotationAngle", m_ModuleData.fRotationAngle, allocator);
+	tModuelVal.AddMember("fRotateSpeed", m_ModuleData.fRotateSpeed, allocator);
+	tModuelVal.AddMember("vMaxVelocityScale", SaveVec4Json(m_ModuleData.vMaxVelocityScale, allocator), allocator);
+
+	tModuelVal.AddMember("iAnimXCount", m_ModuleData.iAnimXCount, allocator);
+	tModuelVal.AddMember("iAnimYCount", m_ModuleData.iAnimYCount, allocator);
+	tModuelVal.AddMember("fAnimFrmTime", m_ModuleData.fAnimFrmTime, allocator);
+
+	tModuelVal.AddMember("renderpad", m_ModuleData.renderpad, allocator);
+
+	// Module Check  배열을 저장
+	Value ModuleCheckArray(kArrayType);
+	for (int i = 0; i < (UINT)PARTICLE_MODULE::END; ++i) {
+		ModuleCheckArray.PushBack(m_ModuleData.ModuleCheck[i], allocator);
+	}
+	tModuelVal.AddMember("ModuleCheck[PARTICLE_MODULE]", ModuleCheckArray, allocator);
+	_objValue.AddMember("ParticleModule", tModuelVal, allocator);
+	// tParticleModule 저장 끝
+
+	// m_UpdateCS 
+	string key = "UpdateCS";
+	Value keyName(kStringType);
+	keyName.SetString(key.c_str(), key.length(), allocator);
+	_objValue.AddMember(keyName, SaveResRefJson(m_UpdateCS.Get(), allocator), allocator);
+}
+
+void CParticleSystem::LoadFromLevelJsonFile(const Value& _componentValue)
+{
+	CRenderComponent::LoadFromLevelJsonFile(_componentValue);
+
+	// 스폰 모듈
+	m_ModuleData.vSpawnColor = LoadVec4Json(_componentValue["ParticleModule"]["vSpawnColor"]);
+	m_ModuleData.vSpawnScaleMin = LoadVec4Json(_componentValue["ParticleModule"]["vSpawnScaleMin"]);
+	m_ModuleData.vSpawnScaleMax = LoadVec4Json(_componentValue["ParticleModule"]["vSpawnScaleMax"]);
+	m_ModuleData.vBoxShapeScale = LoadVec3Json(_componentValue["ParticleModule"]["vBoxShapeScale"]);
+	m_ModuleData.fSphereShapeRadius = _componentValue["ParticleModule"]["fSphereShapeRadius"].GetFloat();
+	m_ModuleData.SpawnShapeType = _componentValue["ParticleModule"]["SpawnShapeType"].GetInt();
+	m_ModuleData.SpawnRate = _componentValue["ParticleModule"]["SpawnRate"].GetInt();
+	m_ModuleData.Space = _componentValue["ParticleModule"]["Space"].GetInt();
+	m_ModuleData.MinLifeTime = _componentValue["ParticleModule"]["MinLifeTime"].GetFloat();
+	m_ModuleData.MaxLifeTime = _componentValue["ParticleModule"]["MaxLifeTime"].GetFloat();
+	
+	// pad는 안쓰니 Load 안해둠
+	// m_ModuleData.spawnpad[3];
+	
+	// Color Change 모듈
+	m_ModuleData.vStartColor = LoadVec4Json(_componentValue["ParticleModule"]["vStartColor"]);
+	m_ModuleData.vEndColor = LoadVec4Json(_componentValue["ParticleModule"]["vEndColor"]);
+	
+	// Scale Change 모듈
+	m_ModuleData.StartScale = _componentValue["ParticleModule"]["StartScale"].GetFloat();
+	m_ModuleData.EndScale = _componentValue["ParticleModule"]["EndScale"].GetFloat();
+
+	// 버퍼 최대크기
+	m_ModuleData.iMaxParticleCount = _componentValue["ParticleModule"]["iMaxParticleCount"].GetInt();
+	//m_ModuleData.ipad = _componentValue["ParticleModule"]["ipad"].GetInt();
+
+	// Add Velocity 모듈
+	m_ModuleData.vVelocityDir = LoadVec4Json(_componentValue["ParticleModule"]["vVelocityDir"]);
+	m_ModuleData.AddVelocityType = _componentValue["ParticleModule"]["AddVelocityType"].GetInt();
+	m_ModuleData.OffsetAngle = _componentValue["ParticleModule"]["OffsetAngle"].GetFloat();
+	m_ModuleData.Speed = _componentValue["ParticleModule"]["Speed"].GetFloat();
+	//m_ModuleData.addvpad = _componentValue["ParticleModule"]["addvpad"].GetInt();
+
+	// Drag 모듈 - 속도 제한
+	m_ModuleData.StartDrag = _componentValue["ParticleModule"]["StartDrag"].GetFloat();
+	m_ModuleData.EndDrag = _componentValue["ParticleModule"]["EndDrag"].GetFloat();
+
+	// NoiseForce 모듈 - 랜덤 힘 적용	
+	m_ModuleData.fNoiseTerm = _componentValue["ParticleModule"]["fNoiseTerm"].GetFloat();
+	m_ModuleData.fNoiseForce = _componentValue["ParticleModule"]["fNoiseForce"].GetFloat();
+
+	// Gravity 모듈 - 중력 추가
+	m_ModuleData.fGravityForce = _componentValue["ParticleModule"]["fGravityForce"].GetFloat();
+	// pad는 안쓰니 Load 안해둠
+	// float	GravityPad[3];
+
+	// Render 모듈
+	m_ModuleData.VelocityAlignment = _componentValue["ParticleModule"]["VelocityAlignment"].GetInt();
+	m_ModuleData.VelocityScale = _componentValue["ParticleModule"]["VelocityScale"].GetInt();
+	m_ModuleData.AnimationUse = _componentValue["ParticleModule"]["AnimationUse"].GetInt();
+	m_ModuleData.AnimationLoop = _componentValue["ParticleModule"]["AnimationLoop"].GetInt();
+	m_ModuleData.bRotate = _componentValue["ParticleModule"]["bRotate"].GetInt();
+
+	m_ModuleData.vMaxSpeed = _componentValue["ParticleModule"]["vMaxSpeed"].GetFloat();
+	m_ModuleData.fRotationAngle = _componentValue["ParticleModule"]["fRotationAngle"].GetFloat();
+	m_ModuleData.fRotateSpeed = _componentValue["ParticleModule"]["fRotateSpeed"].GetFloat();
+	m_ModuleData.vMaxVelocityScale = LoadVec4Json(_componentValue["ParticleModule"]["vMaxVelocityScale"]);
+
+	m_ModuleData.iAnimXCount = _componentValue["ParticleModule"]["iAnimXCount"].GetInt();
+	m_ModuleData.iAnimYCount = _componentValue["ParticleModule"]["iAnimYCount"].GetInt();
+	m_ModuleData.fAnimFrmTime = _componentValue["ParticleModule"]["fAnimFrmTime"].GetFloat();
+	//m_ModuleData.renderpad = _componentValue["ParticleModule"]["renderpad"].GetInt();
+	
+	// Module Check
+	const Value& moduleCheckArray = _componentValue["ParticleModule"]["ModuleCheck[PARTICLE_MODULE]"];
+	size_t moduleCheckSize = moduleCheckArray.Size();
+	for (size_t i = 0; i < moduleCheckSize; ++i) {
+		m_ModuleData.ModuleCheck[i] = moduleCheckArray[i].GetUint();
+	}
+	// tParticleModule 로드 끝
+	
+
+	// m_UpdateCS
+	if (_componentValue["UpdateCS"]["IsNull"].GetBool())
+	{
+		wstring strKey, strRelativePath;
+		strKey = StrToWStr(_componentValue["UpdateCS"]["Key"].GetString());
+		strRelativePath = StrToWStr(_componentValue["UpdateCS"]["RelativePath"].GetString());
+
+		m_UpdateCS = (CParticleUpdateShader*)CResMgr::GetInst()->FindRes<CComputeShader>(strKey).Get();
+	}
+}

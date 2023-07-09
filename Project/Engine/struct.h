@@ -85,8 +85,13 @@ struct tAnim2DFrm
 {
 	Vec2	LeftTopUV;
 	Vec2	SliceUV;
-	Vec2	Offset;
+	Vec2	OffsetUV;
 	float	fDuration;
+
+	// DynamicTransform
+	Vec3	DynamicPos;
+	Vec3	DynamicScale;
+	Vec3	DynamicRot;
 };
 
 

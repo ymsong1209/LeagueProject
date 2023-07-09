@@ -14,16 +14,18 @@ class CAnimator3D :
 {
 private:
     map<wstring, CAnim3D*>      m_mapAnim;          // Animation 목록
-    CAnim3D* m_pCurAnim;         // 현재 재생중인 Animation
-    CAnim3D* m_pAnimAfterBlend;  // Blend완료후 CurAnim으로 세팅되어야함.
+    CAnim3D*                    m_pCurAnim;         // 현재 재생중인 Animation
     bool                        m_bRepeat;          // 반복
     bool                        m_bBlend;           // 애니메이션 사이 Blend 옵션
     bool                        m_bRepeatBlend;     // 반복재생할시 처음 프레임으로 blend할것인지 옵션
+    bool                        m_bRepeatBlending;  // 애니메이션이 blend하면서 반복재생중임
     float                       m_fCurBlendTime;
     float                       m_fMaxBlendTime;
     int                         m_iBlendStartFrm;
-    int                         m_iBlendEndFrm;
-    float                       m_fBlendRatio;
+    int                         m_iStartFrm;
+    int                         m_iNextFrm;
+    float                       m_fFrameRatio;      
+    float                       m_fBlendRatio;       //애니메이션 전환시에 적용되는 blend값
     bool                        m_bDebugAnimator;    //True일 경우, level이 stop이여도 애니메이션 재생됨.dt가 아니라 editdt사용, Anim3dEditorUI에서 만든 object만 사용됨
 
     const vector<tMTBone>* m_pVecBones;
@@ -79,8 +81,10 @@ public:
     void SetDebugAnimator(bool _bool) { m_bDebugAnimator = _bool; }
     bool IsDebugAnimator() { return m_bDebugAnimator; }
     void SetStartBlendFrm(int _frm) { m_iBlendStartFrm = _frm; }
-    void SetEndBlendFrm(int _frm) { m_iBlendEndFrm = _frm; }
+    void SetCurFrm(int _frm) { m_iStartFrm = _frm; }
+    void SetNextFrame(int _frm) { m_iNextFrm = _frm; }
     void SetBlendRatio(float _ratio) { m_fBlendRatio = _ratio; }
+    void SetFrameRatio(float _ratio) { m_fFrameRatio = _ratio; }
 
     CAnim3D* FindAnim(const wstring& _strName);
     CAnim3D* LoadAnim(const wstring& _strRelativePath);
@@ -97,6 +101,10 @@ private:
 public:
     virtual void SaveToLevelFile(FILE* _pFile) override;
     virtual void LoadFromLevelFile(FILE* _pFile) override;
+    
+    virtual void SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)override;
+    virtual void LoadFromLevelJsonFile(const Value& _componentValue)override;
+
     CLONE(CAnimator3D);
 
 public:

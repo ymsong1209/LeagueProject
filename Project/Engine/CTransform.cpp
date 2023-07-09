@@ -126,3 +126,19 @@ void CTransform::LoadFromLevelFile(FILE* _FILE)
 	fread(&m_vRelativeRot, sizeof(Vec3), 1, _FILE);
 	fread(&m_bAbsolute, sizeof(bool), 1, _FILE);
 }
+
+void CTransform::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
+{
+	_objValue.AddMember("vRelativePos", SaveVec3Json(m_vRelativePos, allocator), allocator);
+	_objValue.AddMember("vRelativeScale", SaveVec3Json(m_vRelativeScale, allocator), allocator);
+	_objValue.AddMember("vRelativeRot", SaveVec3Json(m_vRelativeRot, allocator), allocator);
+	_objValue.AddMember("bAbsolute", m_bAbsolute, allocator);
+}
+
+void CTransform::LoadFromLevelJsonFile(const Value& _componentValue)
+{
+	m_vRelativePos = LoadVec3Json(_componentValue["vRelativePos"]);
+	m_vRelativeScale = LoadVec3Json(_componentValue["vRelativeScale"]);
+	m_vRelativeRot = LoadVec3Json(_componentValue["vRelativeRot"]);
+	m_bAbsolute = _componentValue["bAbsolute"].GetBool();
+}

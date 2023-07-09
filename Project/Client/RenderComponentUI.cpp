@@ -56,6 +56,15 @@ int RenderComponentUI::render_update()
 
 		pRenderCom->SetBounding(bounding);
 	}
+
+	//Dynamic Shadow check
+	ImGui::Text("Dynamic Shdaow Use : ");
+	ImGui::SameLine();
+	bool DynamicShadow = pRenderCom->IsDynamicShadow();
+	if (ImGui::Checkbox("##DynaicShadowRenderComUI", &DynamicShadow)) {
+		pRenderCom->SetDynamicShadow(DynamicShadow);
+	}
+
     return 0;
 }
 

@@ -48,6 +48,9 @@ public:
 
     Ptr<CMeshData> LoadFBX(const wstring& _strPath);
 
+    void DeleteTexture(const wstring& _strKey);
+    void DeleteTexture(Ptr<CTexture> _Tex);
+
     bool IsResourceChanged() { return m_Changed; }
 
     template<typename T>

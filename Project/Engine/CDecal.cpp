@@ -82,3 +82,33 @@ void CDecal::LoadFromLevelFile(FILE* _File)
 	fread(&m_iLayerCheck, sizeof(int), 1, _File);
 	fread(&m_BSType, sizeof(BS_TYPE), 1, _File);
 }
+
+void CDecal::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
+{
+	CRenderComponent::SaveToLevelJsonFile(_objValue, allocator);
+	
+	string key = "DecalTex";
+	Value keyName(kStringType);
+	keyName.SetString(key.c_str(), key.length(), allocator);
+	_objValue.AddMember(keyName, SaveResRefJson(m_DecalTex.Get(), allocator), allocator);
+
+	_objValue.AddMember("Light", m_Light, allocator);
+	_objValue.AddMember("vLightDiffuse", SaveVec4Json(m_vLightDiffuse,allocator), allocator);
+	_objValue.AddMember("bShowDebug", m_bShowDebug, allocator);
+	_objValue.AddMember("iLayerCheck", m_iLayerCheck, allocator);
+	_objValue.AddMember("BSType", (UINT)m_BSType, allocator);
+}
+
+void CDecal::LoadFromLevelJsonFile(const Value& _componentValue)
+{
+	CRenderComponent::LoadFromLevelJsonFile(_componentValue);
+
+	LoadResRefJson(m_DecalTex, _componentValue["DecalTex"]);
+
+	m_Light = _componentValue["Light"].GetInt();
+	m_vLightDiffuse = LoadVec4Json(_componentValue["vLightDiffuse"]);
+	m_bShowDebug = _componentValue["bShowDebug"].GetBool();
+	m_iLayerCheck = _componentValue["iLayerCheck"].GetInt();
+	m_BSType = (BS_TYPE)_componentValue["BSType"].GetUint();
+}
+

@@ -353,3 +353,104 @@ wstring ReplacePipeCharacter(const std::wstring& _mywstring)
 	}
 	return replacedFileName;
 }
+
+string wStrToStr(wstring _before)
+{
+	return string(_before.begin(), _before.end());
+}
+
+wstring StrToWStr(string _before)
+{
+	std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
+	return converter.from_bytes(_before);
+}
+
+Value SaveVec2Json(Vec2 _input, Document::AllocatorType& allocator)
+{
+	Value vTemp(kObjectType);
+
+	vTemp.AddMember("x", _input.x, allocator);
+	vTemp.AddMember("y", _input.y, allocator);
+
+	return vTemp;
+}
+
+Value SaveVec3Json(Vec3 _input, Document::AllocatorType& allocator)
+{
+	Value vTemp(kObjectType);
+
+	vTemp.AddMember("x", _input.x, allocator);
+	vTemp.AddMember("y", _input.y, allocator);
+	vTemp.AddMember("z", _input.z, allocator);
+
+	return vTemp;
+}
+
+Value SaveVec4Json(Vec4 _input, Document::AllocatorType& allocator)
+{
+	Value vTemp(kObjectType);
+
+	vTemp.AddMember("x", _input.x, allocator);
+	vTemp.AddMember("y", _input.y, allocator);
+	vTemp.AddMember("z", _input.z, allocator);
+	vTemp.AddMember("w", _input.w, allocator);
+
+	return vTemp;
+}
+
+Vec2 LoadVec2Json(const Value& _vec2Value)
+{
+	Vec2 vTemp;
+
+	if (_vec2Value.IsObject())
+	{
+		vTemp.x = _vec2Value["x"].GetFloat();
+		vTemp.y = _vec2Value["y"].GetFloat();
+	}
+	return vTemp;
+}
+
+Vec3 LoadVec3Json(const Value& _vec3Value)
+{
+	Vec3 vTemp;
+
+	if (_vec3Value.IsObject())
+	{
+		vTemp.x = _vec3Value["x"].GetFloat();
+		vTemp.y = _vec3Value["y"].GetFloat();
+		vTemp.z = _vec3Value["z"].GetFloat();
+	}
+	return vTemp;
+}
+
+Vec4 LoadVec4Json(const Value& _vec4Value)
+{
+	Vec4 vTemp;
+
+	if (_vec4Value.IsObject())
+	{
+		vTemp.x = _vec4Value["x"].GetFloat();
+		vTemp.y = _vec4Value["y"].GetFloat();
+		vTemp.z = _vec4Value["z"].GetFloat();
+		vTemp.w = _vec4Value["w"].GetFloat();
+	}
+	return vTemp;
+}
+
+Value& SaveResRefJson(Ptr<CRes> _Res, Document::AllocatorType& allocator)
+{
+
+	Value vTemp(kObjectType);
+
+	if (nullptr == _Res)
+	{
+		vTemp.AddMember("IsNull", true, allocator);
+	}
+	else
+	{
+		vTemp.AddMember("IsNull", false, allocator);
+		vTemp.AddMember("Key", Value(wStrToStr(_Res->GetKey()).c_str(), allocator).Move(), allocator);
+		vTemp.AddMember("RelativePath", Value(wStrToStr(_Res->GetRelativePath()).c_str(), allocator).Move(), allocator);
+	}
+	return vTemp;
+}

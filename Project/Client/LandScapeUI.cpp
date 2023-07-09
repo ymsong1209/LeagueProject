@@ -43,6 +43,7 @@ int LandScapeUI::render_update()
 	return TRUE;
 }
 
+
 void LandScapeUI::SetFace()
 {
 	ImGui::Text("Face X : ");

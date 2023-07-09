@@ -20,7 +20,7 @@ CAnim3D::CAnim3D()
 	, m_iFrameIdx(0)
 	, m_iNextFrameIdx(0)
 	, m_fRatio(0.f)
-	, m_bFinalMatUpdate(false)
+	//, m_bFinalMatUpdate(false)
 	, m_bFinish(false)
 	, m_bPause(false)
 	, m_RelativePath(L"")
@@ -38,7 +38,7 @@ CAnim3D::CAnim3D(const CAnim3D& _other)
 	, m_iFrameIdx(_other.m_iFrameIdx)
 	, m_iNextFrameIdx(_other.m_iFrameIdx)
 	, m_fRatio(_other.m_fRatio)
-	, m_bFinalMatUpdate(_other.m_iFrameIdx)
+	//, m_bFinalMatUpdate(_other.m_iFrameIdx)
 	, m_bFinish(_other.m_bFinish)
 	, m_bPause(_other.m_bPause)
 	, m_RelativePath(_other.m_RelativePath)
@@ -87,12 +87,10 @@ void CAnim3D::finaltick()
 	// 프레임간의 시간에 따른 비율을 구해준다.
 	m_fRatio = (float)(dFrameIdx - (double)m_iFrameIdx);
 
-	m_pOwner->SetStartBlendFrm(m_iFrameIdx);
-	m_pOwner->SetEndBlendFrm(m_iNextFrameIdx);
-	m_pOwner->SetBlendRatio(m_fRatio);
+	m_pOwner->SetCurFrm(m_iFrameIdx);
+	m_pOwner->SetNextFrame(m_iNextFrameIdx);
+	m_pOwner->SetFrameRatio(m_fRatio);
 
-	// 컴퓨트 쉐이더 연산여부
-	m_bFinalMatUpdate = false;
 }
 
 void CAnim3D::Create(const tMTAnimClip& _OriginalVecClip, const wstring& _AnimName)

@@ -103,3 +103,11 @@ void CTileMap::LoadFromLevelFile(FILE* _File)
 
 	fread(m_vecTile.data(), sizeof(tTile), m_iTileCountX * m_iTileCountY, _File);
 }
+
+void CTileMap::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
+{
+}
+
+void CTileMap::LoadFromLevelJsonFile(const Value& _componentValue)
+{
+}

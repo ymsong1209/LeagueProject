@@ -34,6 +34,9 @@ public:
     virtual void SaveToLevelFile(FILE* _File) = 0;
     virtual void LoadFromLevelFile(FILE* _FILE) = 0;
 
+    virtual void SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator) = 0;
+    virtual void LoadFromLevelJsonFile(const Value& _componentValue) = 0;
+
 public:
     GET_OTHER_COMPONENT(Transform);
     GET_OTHER_COMPONENT(MeshRender);
