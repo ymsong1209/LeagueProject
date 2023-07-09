@@ -3,6 +3,7 @@
 
 #include "CResMgr.h"
 #include "CTransform.h"
+#include "CAnimator3D.h"
 
 CRenderComponent::CRenderComponent(COMPONENT_TYPE _type)
 	: CComponent(_type)
@@ -22,11 +23,35 @@ void CRenderComponent::render_depthmap()
 
 	Ptr<CMaterial> pMtrl = CResMgr::GetInst()->FindRes<CMaterial>(L"DepthMapMtrl");
 
+	if (GetOwner()->Animator3D() != nullptr)
+	{
+		GetOwner()->Animator3D()->GetFinalBoneMat()->UpdateData(30, PIPELINE_STAGE::PS_VERTEX);
+		pMtrl->SetAnim3D(true);
+	}
+
+	else
+	{
+		pMtrl->SetAnim3D(false);
+	}
+
 	// 사용할 재질 업데이트
 	pMtrl->UpdateData();
 
-	// 사용할 메쉬 업데이트 및 렌더링
-	GetMesh()->render(0);
+	UINT iSubsetCount = GetMesh()->GetSubsetCount();
+
+	for (UINT i = 0; i < iSubsetCount; ++i)
+	{
+		if (nullptr != GetMaterial(i))
+		{
+			// 사용할 재질 업데이트
+			//GetMaterial(i)->UpdateData();
+
+			// 사용할 메쉬 업데이트 및 렌더링
+			GetMesh()->render(i);
+		}
+	}
+
+	GetOwner()->Animator3D()->GetFinalBoneMat()->Clear();
 
 }
 

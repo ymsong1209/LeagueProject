@@ -8,7 +8,8 @@
  
 #include "CResMgr.h"
 
- 
+#include "CLevelMgr.h"
+#include "CLevel.h"
  
 #include "CAnimator3D.h"
  
@@ -66,10 +67,24 @@ CMeshRender::~CMeshRender()
 
 void CMeshRender::finaltick()
 {
+	LEVEL_STATE CurLevelState = CLevelMgr::GetInst()->GetCurLevel()->GetState();
+	float SmallTime = 0.f;
+
+	if (CurLevelState == LEVEL_STATE::PAUSE)
+	{
+		SmallTime = GlobalData.tEditDT;
+	}
+	else
+	{
+		SmallTime = GlobalData.tDT;
+	}
+
+
 	// vector에 있는 Texture들에 대해서
 	// 어떤 움직임을 취하고 있는지 찾아서
 	// 참조해야할 UV Offset 값을 계산해준다.
 	int MovingUse = 0;
+
 
 	for (int i = 0; i < m_vMovingVec.size(); ++i)
 	{
@@ -86,13 +101,13 @@ void CMeshRender::finaltick()
 		case eTexMovingStyle::HORIZONTAL:
 		{
 			// FuncValue.x : dx / dt
-			PreviousPos.x += GlobalData.tEditDT * FuncValue.x;
+			PreviousPos.x += SmallTime * FuncValue.x;
 		}
 			break;
 		case eTexMovingStyle::VERTICAL:
 		{
 			// FuncValue.x : dy / dt
-			PreviousPos.y += GlobalData.tEditDT * FuncValue.x;
+			PreviousPos.y += SmallTime * FuncValue.x;
 		}
 			break;
 		case eTexMovingStyle::LINEAR:
@@ -100,7 +115,7 @@ void CMeshRender::finaltick()
 			// FuncValue.x : dx / dt
 			// FuncValue.y : x 계수
 			// FuncValue.z : y 절편
-			PreviousPos.x += GlobalData.tEditDT * FuncValue.x;
+			PreviousPos.x += SmallTime * FuncValue.x;
 			PreviousPos.y = FuncValue.y * PreviousPos.x + FuncValue.z;
 		}
 			break;
@@ -110,7 +125,7 @@ void CMeshRender::finaltick()
 			// FuncValue.y : x^2 계수
 			// FuncValye.z : x 계수
 			// FuncValue.w : y 절편
-			PreviousPos.x += GlobalData.tEditDT * FuncValue.x;
+			PreviousPos.x += SmallTime * FuncValue.x;
 			PreviousPos.y = FuncValue.y * PreviousPos.x * PreviousPos.x + FuncValue.z * PreviousPos.x + FuncValue.w;
 		}
 			break;
@@ -120,7 +135,7 @@ void CMeshRender::finaltick()
 			// FuncValue.y : sin 계수
 			// FuncValue.z : 주파수
 			// FuncValue.w : y절편
-			PreviousPos.x += GlobalData.tEditDT * FuncValue.x;
+			PreviousPos.x += SmallTime * FuncValue.x;
 			PreviousPos.y = FuncValue.y * sin(FuncValue.z * PreviousPos.x) + FuncValue.w;
 		}
 			break;
@@ -130,7 +145,7 @@ void CMeshRender::finaltick()
 			// FuncValue.y : cos 계수
 			// FuncValue.z : 주파수
 			// FuncValue.w : y절편
-			PreviousPos.x += GlobalData.tEditDT * FuncValue.x;
+			PreviousPos.x += SmallTime * FuncValue.x;
 			PreviousPos.y = FuncValue.y * cos(FuncValue.z * PreviousPos.x) + FuncValue.w;
 		}
 			break;

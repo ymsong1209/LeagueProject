@@ -60,7 +60,7 @@ void CAnim3D::finaltick()
 			m_fClipUpdateTime += EditorDT;
 		}
 		else {
-			m_fClipUpdateTime += DT;
+			m_fClipUpdateTime += EditorDT;
 		}
 	}
 
