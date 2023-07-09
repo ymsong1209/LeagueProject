@@ -166,7 +166,10 @@ void CMeshRender::finaltick()
 
 	int a = MovingUse;
 
-	GetMaterial(0)->SetScalarParam(SCALAR_PARAM::INT_1, &MovingUse);
+	if (GetMaterial(0) != nullptr)
+	{
+		GetMaterial(0)->SetScalarParam(SCALAR_PARAM::INT_1, &MovingUse);
+	}
 
 
 }
