@@ -140,11 +140,11 @@ void CreateTestLevel()
 		//Ptr<CMeshData> pMeshData = nullptr;
 		//CGameObject* pObj = nullptr;
 		//
-		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Zilean.fbx");
+		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\tristana.fbx");
 		//
 		//pObj = pMeshData->Instantiate();
-		//pObj->SetName(L"Zilean"); 
-		//pObj->Animator3D()->Play(L"Zilean-Zilean_AllAnim", true, 0.5f);
+		//pObj->SetName(L"tristana"); 
+		////pObj->Animator3D()->Play(L"Zilean-Zilean_AllAnim", true, 0.5f);
 		//SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
 		
 		//Ptr<CMeshData> pMeshData1 = nullptr;
