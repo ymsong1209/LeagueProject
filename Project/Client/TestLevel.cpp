@@ -137,15 +137,15 @@ void CreateTestLevel()
 	// FBX Loading
 	// ============	
 	{
-		//Ptr<CMeshData> pMeshData = nullptr;
-		//CGameObject* pObj = nullptr;
-		//
-		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\tristana.fbx");
-		//
-		//pObj = pMeshData->Instantiate();
-		//pObj->SetName(L"tristana"); 
-		////pObj->Animator3D()->Play(L"Zilean-Zilean_AllAnim", true, 0.5f);
-		//SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
+		Ptr<CMeshData> pMeshData = nullptr;
+		CGameObject* pObj = nullptr;
+		
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Lux3.fbx");
+		
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"Lux3"); 
+		//pObj->Animator3D()->Play(L"Zilean-Zilean_AllAnim", true, 0.5f);
+		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
 		
 		//Ptr<CMeshData> pMeshData1 = nullptr;
 		//CGameObject* pObj1 = nullptr;
