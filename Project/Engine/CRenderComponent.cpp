@@ -134,7 +134,7 @@ void CRenderComponent::SaveToLevelFile(FILE* _File)
 
 	bool IsDynamicMtrlExist = false;
 
-	// µ¿Àû ÀçÁúÀ» »ç¿ëÇÏ´Â °æ¿ì ÀÌ¿¡ ´ëÇÑ Á¤º¸ ÀúÀå
+	// ë™ì  ì¬ì§ˆì„ ì‚¬ìš©í•˜ëŠ” ê²½ìš° ì´ì— ëŒ€í•œ ì •ë³´ ì €ì¥
 	for (UINT i = 0; i < iMtrlCount; ++i)
 	{
 		if (m_vecMtrls[i].pDynamicMtrl != nullptr)
@@ -142,13 +142,13 @@ void CRenderComponent::SaveToLevelFile(FILE* _File)
 			IsDynamicMtrlExist = true;
 			fwrite(&IsDynamicMtrlExist, sizeof(bool), 1, _File);
 
-			// µ¿Àû ÀçÁúÀÌ Á¸ÀçÇÑ´Ù¸é ±×¿¡´ëÇÑ Á¤º¸¸¦ ÀúÀåÇØ Áà¾ßÇÔ
+			// ë™ì  ì¬ì§ˆì´ ì¡´ì¬í•œë‹¤ë©´ ê·¸ì—ëŒ€í•œ ì •ë³´ë¥¼ ì €ì¥í•´ ì¤˜ì•¼í•¨
 
-			// Const Á¤º¸ ÀúÀå
+			// Const ì •ë³´ ì €ì¥
 			tMtrlConst SaveConstMtrlData = m_vecMtrls[i].pDynamicMtrl->GetMtrlConst();
 			fwrite(&SaveConstMtrlData, sizeof(tMtrlConst), 1, _File);
 
-			// Texture Á¤º¸ ÀúÀå
+			// Texture ì •ë³´ ì €ì¥
 			//Ptr<CTexture> GetTexParam(TEX_PARAM _param) { return m_arrTex[(UINT)_param]; }
 
 			for (UINT j = 0; j < (UINT)TEX_PARAM::TEX_END ;  ++j)
@@ -164,7 +164,7 @@ void CRenderComponent::SaveToLevelFile(FILE* _File)
 			IsDynamicMtrlExist = false;
 			fwrite(&IsDynamicMtrlExist, sizeof(bool), 1, _File);
 
-			// µ¿Àû ÀçÁúÀÌ Á¸ÀçÇÏÁö ¾Ê¾Ò´Ù¸é ´õÀÌ»ó ÀúÀåÇÒ Á¤º¸´Â ¾øÀ½
+			// ë™ì  ì¬ì§ˆì´ ì¡´ì¬í•˜ì§€ ì•Šì•˜ë‹¤ë©´ ë”ì´ìƒ ì €ì¥í•  ì •ë³´ëŠ” ì—†ìŒ
 
 		}
 	}
@@ -193,27 +193,27 @@ void CRenderComponent::LoadFromLevelFile(FILE* _File)
 	fread(&m_bDynamicShadow, sizeof(bool), 1, _File);
 
 	
-	// µ¿Àû ÀçÁú¿¡ ´ëÇÑ Á¤º¸¸¦ °¡Á®¿Í¾ß µÇ´ÂÁö È®ÀÎ
+	// ë™ì  ì¬ì§ˆì— ëŒ€í•œ ì •ë³´ë¥¼ ê°€ì ¸ì™€ì•¼ ë˜ëŠ”ì§€ í™•ì¸
 	for (UINT i = 0; i < iMtrlCount; ++i)
 	{
 		bool IsDynamicMtrlExist;
 
 		fread(&IsDynamicMtrlExist, sizeof(bool), 1, _File);
 
-		// ¸¸¾à¿¡ µ¿Àû ÀçÁúÀÌ Á¸ÀçÇß¾úÀ¸¸é µ¿ÀûÀçÁúÀ» ¸¸µé°í, ±×¿¡´ëÇÑ Á¤º¸¸¦ ºÒ·¯¿Í¾ßÇÔ
+		// ë§Œì•½ì— ë™ì  ì¬ì§ˆì´ ì¡´ì¬í–ˆì—ˆìœ¼ë©´ ë™ì ì¬ì§ˆì„ ë§Œë“¤ê³ , ê·¸ì—ëŒ€í•œ ì •ë³´ë¥¼ ë¶ˆëŸ¬ì™€ì•¼í•¨
 		if (IsDynamicMtrlExist == true)
 		{
-			// Dynamic Material »ı¼º¸ÕÀúÇÑ´Ù
+			// Dynamic Material ìƒì„±ë¨¼ì €í•œë‹¤
 			GetDynamicMaterial(i);
 
 
-			// ConstMtrl Data ºÒ·¯¿À±â
+			// ConstMtrl Data ë¶ˆëŸ¬ì˜¤ê¸°
 			tMtrlConst LoadConstMtrlData;
 			fread(&LoadConstMtrlData, sizeof(tMtrlConst), 1, _File);
 			m_vecMtrls[i].pDynamicMtrl->SetMtrlConst(LoadConstMtrlData);
 
 
-			// Texture Á¤º¸ ºÒ·¯¿À±â
+			// Texture ì •ë³´ ë¶ˆëŸ¬ì˜¤ê¸°
 			for (UINT j = 0; j < (UINT)TEX_PARAM::TEX_END; ++j)
 			{
 				Ptr<CTexture> LoadTextureData;
@@ -233,9 +233,14 @@ void CRenderComponent::SaveToLevelJsonFile(Value& _objValue, Document::Allocator
 	keyName.SetString(key.c_str(), key.length(), allocator);
 	_objValue.AddMember(keyName, SaveResRefJson(m_pMesh.Get(), allocator), allocator);
 
-	UINT iMtrlCount = GetMtrlCount();
-	_objValue.AddMember("MtrlCount", iMtrlCount, allocator);
+	_objValue.AddMember("fBounding", m_fBounding, allocator);
+	_objValue.AddMember("bFrustumCheck", m_bFrustumCheck, allocator);
+	_objValue.AddMember("bDynamicShadow", m_bDynamicShadow, allocator);
 
+	UINT iMtrlCount = GetMtrlCount();
+	_objValue.AddMember("iMtrlCount", iMtrlCount, allocator);
+
+	// SharedMtrl
 	for (UINT i = 0; i < m_vecMtrls.size(); ++i)
 	{
 		string key = "vecMtrls[" + std::to_string(i) + "]SharedMtrl";
@@ -244,27 +249,109 @@ void CRenderComponent::SaveToLevelJsonFile(Value& _objValue, Document::Allocator
 		_objValue.AddMember(keyName, SaveResRefJson(m_vecMtrls[i].pSharedMtrl.Get(), allocator), allocator);
 	}
 
-	_objValue.AddMember("fBounding", m_fBounding, allocator);
-	_objValue.AddMember("bFrustumCheck", m_bFrustumCheck, allocator);
-	_objValue.AddMember("bDynamicShadow", m_bDynamicShadow, allocator);
+	// ë™ì  ì¬ì§ˆì„ ì‚¬ìš©í•˜ëŠ” ê²½ìš° ì´ì— ëŒ€í•œ ì •ë³´ ì €ì¥
+	// DynamicMtrl
+	bool IsDynamicMtrlExist = false;
+	
+	Value DynamicMtrlsArray(kArrayType);
+	for (UINT i = 0; i < m_vecMtrls.size(); ++i)
+	{
+		Value dynamicMtrlValue(kObjectType);
+	
+		// ê°€ë…ì„±ìš©
+		string key = "vecMtrls[" + std::to_string(i) + "]DynamicMtrl";
+		Value keyName(kStringType);
+		keyName.SetString(key.c_str(), key.length(), allocator);
+		dynamicMtrlValue.AddMember(keyName, Value(kNullType), allocator); 
+	
+		if (m_vecMtrls[i].pDynamicMtrl != nullptr)
+		{
+			IsDynamicMtrlExist = true;
+			dynamicMtrlValue.AddMember("IsDynamicMtrlExist", IsDynamicMtrlExist, allocator);
+	
+			// ë™ì  ì¬ì§ˆì´ ì¡´ì¬í•œë‹¤ë©´, ì •ë³´ ì €ì¥
+	
+			// Const ì •ë³´ ì €ì¥(tMtrlConst)
+			tMtrlConst SaveConstMtrlData = m_vecMtrls[i].pDynamicMtrl->GetMtrlConst();
+			dynamicMtrlValue.AddMember("ConstMtrlData", SavetMtrlConst(SaveConstMtrlData, allocator), allocator);
+	
+			// Texture ì •ë³´ ì €ì¥
+			for (UINT j = 0; j < (UINT)TEX_PARAM::TEX_END; ++j)
+			{
+				Ptr<CTexture> TextureData = m_vecMtrls[i].pDynamicMtrl->GetTexParam(TEX_PARAM(j));
+	
+				string key = "TEX_PARAM[" + std::to_string(j) + "]";
+				Value keyName(kStringType);
+				keyName.SetString(key.c_str(), key.length(), allocator);
+				dynamicMtrlValue.AddMember(keyName, SaveResRefJson(TextureData.Get(), allocator), allocator);
+			}
+		}
+		else
+		{
+			IsDynamicMtrlExist = false;
+			dynamicMtrlValue.AddMember("IsDynamicMtrlExist", IsDynamicMtrlExist, allocator);
 
+			// ë™ì  ì¬ì§ˆì´ ì¡´ì¬í•˜ì§€ ì•Šì•˜ë‹¤ë©´, ì •ë³´ ì €ì¥ X
+		}
+		DynamicMtrlsArray.PushBack(dynamicMtrlValue, allocator);
+	}
+	_objValue.AddMember("DynamicMtrls", DynamicMtrlsArray, allocator);
 }
 
 void CRenderComponent::LoadFromLevelJsonFile(const Value& _componentValue)
 {
 	LoadResRefJson(m_pMesh, _componentValue["Mesh"]);
-
-	UINT iMtrlCount = _componentValue["MtrlCount"].GetUint();
-	m_vecMtrls.resize(iMtrlCount);
-	for (UINT i = 0; i < m_vecMtrls.size(); ++i)
-	{
-		string key = "vecMtrls[" + std::to_string(i) + "]SharedMtrl";
-		Value keyName(kStringType);
-		keyName.SetString(key.c_str(), key.length());
-		LoadResRefJson(m_vecMtrls[i].pSharedMtrl, _componentValue[keyName]);
-	}
+	SetMesh(m_pMesh);
 
 	m_fBounding = _componentValue["fBounding"].GetFloat();
 	m_bFrustumCheck = _componentValue["bFrustumCheck"].GetBool();
 	m_bDynamicShadow = _componentValue["bDynamicShadow"].GetBool();
+
+	UINT iMtrlCount = _componentValue["iMtrlCount"].GetUint();
+	m_vecMtrls.resize(iMtrlCount);
+
+	for (UINT i = 0; i < m_vecMtrls.size(); ++i)
+	{
+		Ptr<CMaterial> pMtrl;
+		string key = "vecMtrls[" + std::to_string(i) + "]SharedMtrl";
+		Value keyName(kStringType);
+		keyName.SetString(key.c_str(), key.length());
+		LoadResRefJson(pMtrl, _componentValue[keyName]);
+
+		SetMaterial(pMtrl, i);
+	}
+
+	// ë™ì  ì¬ì§ˆì— ëŒ€í•œ ì •ë³´ë¥¼ ê°€ì ¸ì™€ì•¼ ë˜ëŠ”ì§€ í™•ì¸
+	const Value& DynamicMtrlsArray = _componentValue["DynamicMtrls"];
+	for (UINT i = 0; i < DynamicMtrlsArray.Size(); ++i)
+	{
+		bool IsDynamicMtrlExist;
+		IsDynamicMtrlExist = DynamicMtrlsArray[i]["IsDynamicMtrlExist"].GetBool();
+
+		// trueì¼ê²½ìš°, ë™ì ì¬ì§ˆì„ ë§Œë“¤ê³ , ì •ë³´ Load
+		if (IsDynamicMtrlExist == true)
+		{
+			// Dynamic Material ìƒì„±ë¨¼ì €í•œë‹¤
+			GetDynamicMaterial(i);
+
+			// ConstMtrl Data ë¶ˆëŸ¬ì˜¤ê¸°
+			tMtrlConst LoadConstMtrlData;
+			LoadConstMtrlData = LoadtMtrlConst(DynamicMtrlsArray[i]["ConstMtrlData"]);
+			m_vecMtrls[i].pDynamicMtrl->SetMtrlConst(LoadConstMtrlData);
+
+			// Texture ì •ë³´ ë¶ˆëŸ¬ì˜¤ê¸°
+			for (UINT j = 0; j < (UINT)TEX_PARAM::TEX_END; ++j)
+			{
+				string key = "TEX_PARAM[" + std::to_string(j) + "]";
+				Value keyName(kStringType);
+				keyName.SetString(key.c_str(), key.length());
+
+				Ptr<CTexture> LoadTextureData;
+				LoadResRefJson(LoadTextureData, DynamicMtrlsArray[i][keyName]);
+
+				m_vecMtrls[i].pDynamicMtrl->SetTexParam((TEX_PARAM)j, LoadTextureData);
+
+			}
+		}
+	}
 }

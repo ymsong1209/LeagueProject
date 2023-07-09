@@ -84,10 +84,15 @@ Value SaveWStringJson(wstring _before, Document::AllocatorType& allocator);
 Value SaveVec2Json(Vec2 _input, Document::AllocatorType& allocator);
 Value SaveVec3Json(Vec3 _input, Document::AllocatorType& allocator);
 Value SaveVec4Json(Vec4 _input, Document::AllocatorType& allocator);
+Value SaveMatrixJson(Matrix& _input, Document::AllocatorType& allocator);
 
 Vec2 LoadVec2Json(const Value& _vec2Value);
 Vec3 LoadVec3Json(const Value& _vec3Value);
 Vec4 LoadVec4Json(const Value& _vec4Value);
+Matrix LoadMatrixJson(const Value& _MatrixValue);
+
+Value	   SavetMtrlConst(tMtrlConst _constData, Document::AllocatorType& allocator);
+tMtrlConst LoadtMtrlConst(const Value& _tMtrlConstValue);
 
 Value& SaveResRefJson(Ptr<CRes> _Res, Document::AllocatorType& allocator);
 
@@ -103,10 +108,6 @@ void LoadResRefJson(Ptr<T>& _Res, const Value& _value)
 		_Res = CResMgr::GetInst()->Load<T>(strKey, strRelativePath);
 	}
 }
-
-
-
-
 
 
 template<typename T, UINT Size>

@@ -407,6 +407,31 @@ Value SaveVec4Json(Vec4 _input, Document::AllocatorType& allocator)
 	return vTemp;
 }
 
+Value SaveMatrixJson(Matrix& _input, Document::AllocatorType& allocator)
+{
+	Value matrixObject(kObjectType);
+
+	// 각 요소를 저장
+	matrixObject.AddMember("m00", _input._11, allocator);
+	matrixObject.AddMember("m01", _input._12, allocator);
+	matrixObject.AddMember("m02", _input._13, allocator);
+	matrixObject.AddMember("m03", _input._14, allocator);
+	matrixObject.AddMember("m10", _input._21, allocator);
+	matrixObject.AddMember("m11", _input._22, allocator);
+	matrixObject.AddMember("m12", _input._23, allocator);
+	matrixObject.AddMember("m13", _input._24, allocator);
+	matrixObject.AddMember("m20", _input._31, allocator);
+	matrixObject.AddMember("m21", _input._32, allocator);
+	matrixObject.AddMember("m22", _input._33, allocator);
+	matrixObject.AddMember("m23", _input._34, allocator);
+	matrixObject.AddMember("m30", _input._41, allocator);
+	matrixObject.AddMember("m31", _input._42, allocator);
+	matrixObject.AddMember("m32", _input._43, allocator);
+	matrixObject.AddMember("m33", _input._44, allocator);
+
+	return matrixObject;
+}
+
 Vec2 LoadVec2Json(const Value& _vec2Value)
 {
 	Vec2 vTemp;
@@ -444,6 +469,234 @@ Vec4 LoadVec4Json(const Value& _vec4Value)
 		vTemp.w = _vec4Value["w"].GetFloat();
 	}
 	return vTemp;
+}
+
+Matrix LoadMatrixJson(const Value& _MatrixValue)
+{
+	Matrix matrix;
+
+	matrix._11 = _MatrixValue["m00"].GetFloat();
+	matrix._12 = _MatrixValue["m01"].GetFloat();
+	matrix._13 = _MatrixValue["m02"].GetFloat();
+	matrix._14 = _MatrixValue["m03"].GetFloat();
+	matrix._21 = _MatrixValue["m10"].GetFloat();
+	matrix._22 = _MatrixValue["m11"].GetFloat();
+	matrix._23 = _MatrixValue["m12"].GetFloat();
+	matrix._24 = _MatrixValue["m13"].GetFloat();
+	matrix._31 = _MatrixValue["m20"].GetFloat();
+	matrix._32 = _MatrixValue["m21"].GetFloat();
+	matrix._33 = _MatrixValue["m22"].GetFloat();
+	matrix._34 = _MatrixValue["m23"].GetFloat();
+	matrix._41 = _MatrixValue["m30"].GetFloat();
+	matrix._42 = _MatrixValue["m31"].GetFloat();
+	matrix._43 = _MatrixValue["m32"].GetFloat();
+	matrix._44 = _MatrixValue["m33"].GetFloat();
+
+	return matrix;
+}
+
+Value SavetMtrlConst(tMtrlConst _constData, Document::AllocatorType& allocator)
+{
+	Value vTemp(kObjectType);
+
+	// tMtrlData mtrl
+	Value tMtrlDataValue(kObjectType);
+	tMtrlDataValue.AddMember("vDiff", SaveVec4Json(_constData.mtrl.vDiff, allocator), allocator);
+	tMtrlDataValue.AddMember("vSpec", SaveVec4Json(_constData.mtrl.vSpec, allocator), allocator);
+	tMtrlDataValue.AddMember("vAmb", SaveVec4Json(_constData.mtrl.vAmb, allocator), allocator);
+	tMtrlDataValue.AddMember("vEmv", SaveVec4Json(_constData.mtrl.vEmv, allocator), allocator);
+	vTemp.AddMember("mtrl", tMtrlDataValue, allocator);
+
+	// int arrInt[4];
+	Value arrIntArray(kArrayType);
+	for (int i = 0; i < 4; ++i)
+	{
+		Value ArrIntValue(kObjectType);
+		string key = "arrInt[" + std::to_string(i) + "]";
+		Value keyName(kStringType);
+		keyName.SetString(key.c_str(), key.length(), allocator);
+		ArrIntValue.AddMember(keyName, _constData.arrInt[i], allocator);
+
+		arrIntArray.PushBack(ArrIntValue, allocator);
+	}
+	vTemp.AddMember("arrInt[4]s", arrIntArray, allocator);
+
+	// float arrFloat[4];
+	Value arrFloatArray(kArrayType);
+	for (int i = 0; i < 4; ++i)
+	{
+		Value ArrFloatValue(kObjectType);
+		string key = "arrFloat[" + std::to_string(i) + "]";
+		Value keyName(kStringType);
+		keyName.SetString(key.c_str(), key.length(), allocator);
+		ArrFloatValue.AddMember(keyName, _constData.arrFloat[i], allocator);
+
+		arrFloatArray.PushBack(ArrFloatValue, allocator);
+	}
+	vTemp.AddMember("arrFloat[4]s", arrFloatArray, allocator);
+
+	// Vec2 arrV2[4];
+	Value arrV2Array(kArrayType);
+	for (int i = 0; i < 4; ++i)
+	{
+		Value ArrV2Value(kObjectType);
+		string key = "arrV2[" + std::to_string(i) + "]";
+		Value keyName(kStringType);
+		keyName.SetString(key.c_str(), key.length(), allocator);
+		ArrV2Value.AddMember(keyName, SaveVec2Json(_constData.arrV2[i],allocator), allocator);
+
+		arrV2Array.PushBack(ArrV2Value, allocator);
+	}
+	vTemp.AddMember("arrV2[4]s", arrV2Array, allocator);
+
+	// Vec4 arrV4[4];
+	Value arrV4Array(kArrayType);
+	for (int i = 0; i < 4; ++i)
+	{
+		Value ArrV4Value(kObjectType);
+		string key = "arrV4[" + std::to_string(i) + "]";
+		Value keyName(kStringType);
+		keyName.SetString(key.c_str(), key.length(), allocator);
+		ArrV4Value.AddMember(keyName, SaveVec4Json(_constData.arrV4[i], allocator), allocator);
+
+		arrV4Array.PushBack(ArrV4Value, allocator);
+	}
+	vTemp.AddMember("arrV4[4]s", arrV4Array, allocator);
+
+	// Matrix arrMat[4];
+	Value arrMatArray(kArrayType);
+	for (int i = 0; i < 4; ++i)
+	{
+		Value ArrMatValue(kObjectType);
+		string key = "arrMat[" + std::to_string(i) + "]";
+		Value keyName(kStringType);
+		keyName.SetString(key.c_str(), key.length(), allocator);
+		ArrMatValue.AddMember(keyName, SaveMatrixJson(_constData.arrMat[i], allocator), allocator);
+
+		arrMatArray.PushBack(ArrMatValue, allocator);
+	}
+	vTemp.AddMember("arrMat[4]s", arrMatArray, allocator);
+
+	// int arrTex[(UINT)TEX_PARAM::TEX_END];
+	Value arrTexArray(kArrayType);
+	for (int i = 0; i < (UINT)TEX_PARAM::TEX_END; ++i)
+	{
+		Value ArrTexValue(kObjectType);
+		string key = "arrTex[" + std::to_string(i) + "]";
+		Value keyName(kStringType);
+		keyName.SetString(key.c_str(), key.length(), allocator);
+		ArrTexValue.AddMember(keyName, _constData.arrTex[i], allocator);
+
+		arrTexArray.PushBack(ArrTexValue, allocator);
+	}
+	vTemp.AddMember("arrTex[(UINT)TEX_PARAM::TEX_END]s", arrTexArray, allocator);
+	
+	// int	arrAnimData[4];
+	Value arrAnimDataArray(kArrayType);
+	for (int i = 0; i < 4; ++i)
+	{
+		Value ArrAnimDataValue(kObjectType);
+		string key = "arrAnimData[" + std::to_string(i) + "]";
+		Value keyName(kStringType);
+		keyName.SetString(key.c_str(), key.length(), allocator);
+		ArrAnimDataValue.AddMember(keyName, _constData.arrAnimData[i], allocator);
+
+		arrAnimDataArray.PushBack(ArrAnimDataValue, allocator);
+	}
+	vTemp.AddMember("arrAnimData[4]s", arrAnimDataArray, allocator);
+
+	return vTemp;
+}
+
+tMtrlConst LoadtMtrlConst(const Value& _tMtrlConstValue)
+{
+	tMtrlConst mtrlConst;
+
+	// tMtrlData mtrl
+	const Value& tMtrlDataValue = _tMtrlConstValue["mtrl"];
+	mtrlConst.mtrl.vDiff = LoadVec4Json(tMtrlDataValue["vDiff"]);
+	mtrlConst.mtrl.vSpec = LoadVec4Json(tMtrlDataValue["vSpec"]);
+	mtrlConst.mtrl.vAmb = LoadVec4Json(tMtrlDataValue["vAmb"]);
+	mtrlConst.mtrl.vEmv = LoadVec4Json(tMtrlDataValue["vEmv"]);
+
+	// int arrInt[4];
+	const Value& arrIntArray = _tMtrlConstValue["arrInt[4]s"];
+	for (int i = 0; i < arrIntArray.Size(); ++i)
+	{
+		string key = "arrInt[" + std::to_string(i) + "]";
+		Value keyName(kStringType);
+		keyName.SetString(key.c_str(), key.length());
+
+		mtrlConst.arrInt[i] = arrIntArray[i][keyName].GetInt();
+	}
+
+	// float arrFloat[4];
+	const Value& arrFloatArray = _tMtrlConstValue["arrFloat[4]s"];
+	for (int i = 0; i < arrFloatArray.Size(); ++i)
+	{
+		string key = "arrFloat[" + std::to_string(i) + "]";
+		Value keyName(kStringType);
+		keyName.SetString(key.c_str(), key.length());
+
+		mtrlConst.arrFloat[i] = arrFloatArray[i][keyName].GetFloat();
+	}
+
+	// Vec2 arrV2[4];
+	const Value& arrV2Array = _tMtrlConstValue["arrV2[4]s"];
+	for (int i = 0; i < arrV2Array.Size(); ++i)
+	{
+		string key = "arrV2[" + std::to_string(i) + "]";
+		Value keyName(kStringType);
+		keyName.SetString(key.c_str(), key.length());
+
+		mtrlConst.arrV2[i] = LoadVec2Json(arrV2Array[i][keyName]);
+	}
+
+	// Vec4 arrV4[4];
+	const Value& arrV4Array = _tMtrlConstValue["arrV4[4]s"];
+	for (int i = 0; i < arrV4Array.Size(); ++i)
+	{
+		string key = "arrV4[" + std::to_string(i) + "]";
+		Value keyName(kStringType);
+		keyName.SetString(key.c_str(), key.length());
+
+		mtrlConst.arrV4[i] = LoadVec4Json(arrV4Array[i][keyName]);
+	}
+
+	// Matrix arrMat[4];
+	const Value& arrMatArray = _tMtrlConstValue["arrMat[4]s"];
+	for (int i = 0; i < arrMatArray.Size(); ++i)
+	{
+		string key = "arrMat[" + std::to_string(i) + "]";
+		Value keyName(kStringType);
+		keyName.SetString(key.c_str(), key.length());
+
+		mtrlConst.arrMat[i] = LoadMatrixJson(arrMatArray[i][keyName]);
+	}
+
+	// int arrTex[(UINT)TEX_PARAM::TEX_END];
+	const Value& arrTexArray = _tMtrlConstValue["arrTex[(UINT)TEX_PARAM::TEX_END]s"];
+	for (int i = 0; i < arrTexArray.Size(); ++i)
+	{
+		string key = "arrTex[" + std::to_string(i) + "]";
+		Value keyName(kStringType);
+		keyName.SetString(key.c_str(), key.length());
+
+		mtrlConst.arrTex[i] = arrTexArray[i][keyName].GetInt();
+	}
+
+	// int arrAnimData[4];
+	const Value& arrAnimDataArray = _tMtrlConstValue["arrAnimData[4]s"];
+	for (int i = 0; i < arrAnimDataArray.Size(); ++i)
+	{
+		string key = "arrAnimData[" + std::to_string(i) + "]";
+		Value keyName(kStringType);
+		keyName.SetString(key.c_str(), key.length());
+
+		mtrlConst.arrAnimData[i] = arrAnimDataArray[i][keyName].GetInt();
+	}
+
+	return mtrlConst;
 }
 
 Value& SaveResRefJson(Ptr<CRes> _Res, Document::AllocatorType& allocator)

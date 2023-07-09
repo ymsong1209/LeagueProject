@@ -340,6 +340,7 @@ int CLevelSaveLoad::SaveLevelToJson(const wstring& levelPath, CLevel* level)
 	rapidjson::StringBuffer buffer;
 	rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer); // °¡µ¶¼º
 	//rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+
 	document.Accept(writer);
 	std::string jsonData = buffer.GetString();
 

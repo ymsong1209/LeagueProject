@@ -287,7 +287,7 @@ void CAnimator2D::LoadFromLevelJsonFile(const Value& _componentValue)
 	
 		// 애니메이션 경로 Load 후, 경로값으로 애니메이션 Load
 		wstring RelativePath;
-		RelativePath = StrToWStr(mapAnimArray[i]["AnimRelativePath"].GetString());
+		RelativePath = StrToWStr(mapAnimArray[i]["Anim2DRelativePath"].GetString());
 		pNewAnim->Load(RelativePath);
 	
 		// 애니메이션 맵에 등록

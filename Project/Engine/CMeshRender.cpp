@@ -275,3 +275,65 @@ void CMeshRender::LoadFromLevelFile(FILE* _File)
 	}
 	 
 }
+
+void CMeshRender::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
+{
+	CRenderComponent::SaveToLevelJsonFile(_objValue, allocator);
+
+	_objValue.AddMember("bIsUsingMovingVec", m_bIsUsingMovingVec, allocator);
+
+	// 만약에 MovingVec을 사용하고 있었다면 이에 대한 정보도 저장해줘야 한다.
+	if (m_bIsUsingMovingVec)
+	{
+		Value vMovingVecArray(kArrayType);
+		for (int i = 0; i < m_vMovingVec.size(); ++i)
+		{
+			// Struct MovingStruct
+			Value MovingStructValue(kObjectType);
+
+			// 가독성용
+			string key = "m_vMovingVec[" + std::to_string(i) + "]";
+			Value keyName(kStringType);
+			keyName.SetString(key.c_str(), key.length(), allocator);
+			MovingStructValue.AddMember(keyName, Value(kNullType), allocator);
+
+			MovingStructValue.AddMember("TargetTex", (UINT)m_vMovingVec[i].TargetTex, allocator);
+			MovingStructValue.AddMember("MovingStyle", (UINT)m_vMovingVec[i].MovingStyle, allocator);
+			MovingStructValue.AddMember("FuncValue", SaveVec4Json(m_vMovingVec[i].FuncValue,allocator), allocator);
+			MovingStructValue.AddMember("PreviousPos", SaveVec2Json(m_vMovingVec[i].PreviousPos, allocator), allocator);
+
+			vMovingVecArray.PushBack(MovingStructValue, allocator);
+		}
+		_objValue.AddMember("vMovingVec", vMovingVecArray, allocator);
+	}
+
+}
+
+void CMeshRender::LoadFromLevelJsonFile(const Value& _componentValue)
+{
+	CRenderComponent::LoadFromLevelJsonFile(_componentValue);
+
+	m_bIsUsingMovingVec = _componentValue["bIsUsingMovingVec"].GetBool();
+	
+	if (m_bIsUsingMovingVec)
+	{
+		SetUsingMovingVec(true);
+		int a = m_vMovingVec.size();
+		a;
+		const Value& vMovingVecArray = _componentValue["vMovingVec"];
+		for (int i = 0; i < vMovingVecArray.Size(); ++i)
+		{
+			MovingStruct newStruct = {};
+			newStruct.TargetTex = (eTargetTexture)vMovingVecArray[i]["TargetTex"].GetUint();
+			newStruct.MovingStyle = (eTexMovingStyle)vMovingVecArray[i]["MovingStyle"].GetUint();
+			newStruct.FuncValue = LoadVec4Json(vMovingVecArray[i]["FuncValue"]);
+			newStruct.PreviousPos = LoadVec2Json(vMovingVecArray[i]["PreviousPos"]);
+	
+			m_vMovingVec.push_back(newStruct);
+		}
+	}
+	else
+	{
+		SetUsingMovingVec(false);
+	}
+}
