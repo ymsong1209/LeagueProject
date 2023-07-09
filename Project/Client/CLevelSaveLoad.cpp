@@ -295,7 +295,8 @@ int CLevelSaveLoad::SaveLevelToJson(const wstring& levelPath, CLevel* level)
 	// 레벨 이름 저장
 	Value levelValue(kStringType);
 	levelValue.SetString(wStrToStr(levelPath).c_str(), wStrToStr(levelPath).length(), allocator);
-	document.AddMember("levelName", levelValue, allocator);
+	
+	document.AddMember("levelName", SaveWStringJson(levelPath,allocator), allocator);
 
 	// 레벨의 레이어들을 저장
 	Value layers(kArrayType);
@@ -305,7 +306,7 @@ int CLevelSaveLoad::SaveLevelToJson(const wstring& levelPath, CLevel* level)
 		Value layerValue(kObjectType);  // 레이어 정보
 
 		// 1. 레이어 이름
-		layerValue.AddMember("layerName", Value(wStrToStr(layer->GetName()).c_str(), allocator).Move(), allocator);
+		layerValue.AddMember("layerName", SaveWStringJson(layer->GetName(), allocator), allocator);
 
 		// 2. 레이어의 게임 오브젝트들 저장
 		const vector<CGameObject*>& gameObjects = layer->GetParentObject();
@@ -369,7 +370,7 @@ int CLevelSaveLoad::SaveGameObjectToJson(CGameObject* gameObject, Document::Allo
 {
 	// 이름 저장
 	Value gameObjectValue(kObjectType);
-	gameObjectValue.AddMember("ObjName", Value(wStrToStr(gameObject->GetName()).c_str(), allocator).Move(), allocator);
+	gameObjectValue.AddMember("ObjName", SaveWStringJson(gameObject->GetName(), allocator), allocator);
 
 	// 컴포넌트 저장
 	Value components(kArrayType);
@@ -400,14 +401,13 @@ int CLevelSaveLoad::SaveGameObjectToJson(CGameObject* gameObject, Document::Allo
 	gameObjectValue.AddMember("components", components, allocator);
 
 	// 스크립트 저장
-	// 기존에는 스크립트 개수를 처음에 저장하는데 json은 필요없겠지? 
 	const vector<CScript*>& scripts = gameObject->GetScripts();
 	Value scriptArray(kArrayType);
 	for (CScript* script : scripts) {
 		Value scriptValue(kObjectType);
 		wstring scriptName = CScriptMgr::GetScriptName(script);
 
-		scriptValue.AddMember("scriptName", Value(wStrToStr(scriptName).c_str(), allocator).Move(), allocator);
+		scriptValue.AddMember("scriptName", SaveWStringJson(scriptName,allocator), allocator);
 		script->SaveToLevelJsonFile(scriptValue, allocator);
 		scriptArray.PushBack(scriptValue, allocator);
 	}
@@ -419,8 +419,6 @@ int CLevelSaveLoad::SaveGameObjectToJson(CGameObject* gameObject, Document::Allo
 	size_t ChildCount = vecChild.size();
 
 	Value childObjectsArray(kArrayType);
-	//fwrite(&ChildCount, sizeof(size_t), 1, _File);
-
 	for (size_t i = 0; i < ChildCount; ++i)
 	{
 		SaveGameObjectToJson(vecChild[i], allocator, childObjectsArray);

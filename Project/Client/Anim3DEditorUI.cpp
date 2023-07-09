@@ -37,8 +37,10 @@ int Anim3DEditorUI::render_update()
 	SpawnTestObject(); ImGui::SameLine();
 	LoadFBX(); ImGui::SameLine();
 	LoadMeshdata(); ImGui::SameLine();
-	LoadAnim3D(); ImGui::SameLine();
-	LoadAnimFromFolder();
+	LoadAnim3D();
+	LoadAnimFromFolder(); ImGui::SameLine();
+	CreateAnimFromText();
+
 	SelectEditMode();
 
 	if (!FindTestObject()) return TRUE;
@@ -368,6 +370,52 @@ void Anim3DEditorUI::LoadAnimFromFolder()
 	
 }
 
+void Anim3DEditorUI::CreateAnimFromText()
+{
+	if (ImGui::Button("CreateAnimFromText##Anim3DEditorUI")) {
+		if (!FindTestObject()) {
+			wchar_t szStr[256] = {};
+			wsprintf(szStr, L"Anim3DEditorUI / TestObject가 없습니다. Spawn버튼을 누르십시요.");
+			MessageBox(nullptr, szStr, L"Anim3D 생성 실패.", MB_OK);
+			return;
+		}
+
+		// open a file name
+		OPENFILENAME ofn = {};
+
+		wstring strAnimationFolderPath = CPathMgr::GetInst()->GetContentPath();
+		strAnimationFolderPath += L"animation\\";
+
+		wchar_t szFilePath[256] = {};
+
+		ZeroMemory(&ofn, sizeof(ofn));
+		ofn.lStructSize = sizeof(ofn);
+		ofn.hwndOwner = NULL;
+		ofn.lpstrFile = szFilePath;
+		ofn.lpstrFile[0] = '\0';
+		ofn.nMaxFile = 256;
+		ofn.lpstrFilter = L"txt\0*.txt\0ALL\0*.*";
+		ofn.nFilterIndex = 1;
+		ofn.lpstrFileTitle = NULL;
+		ofn.nMaxFileTitle = 0;
+		ofn.lpstrInitialDir = strAnimationFolderPath.c_str();
+		ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+		if (false == GetOpenFileName(&ofn))
+			return;
+
+		szFilePath;
+		wstring filePath = wstring(szFilePath);
+		wstring targetPath = filePath.substr(filePath.find(L"animation\\"));
+		m_pTestObject->Animator3D()->CreateAnimFromText(targetPath);
+
+		//애니메이션이 로딩되면서 meshdata가 로딩되었을 수도 있다.
+		ContentUI* content = (ContentUI*)ImGuiMgr::GetInst()->FindUI("##Content");
+		content->ResetContent();
+
+	}
+}
+
 void Anim3DEditorUI::SelectEditMode()
 {
 	ImGui::RadioButton("Create Animation##Anim3DEditor", &m_iEditMode, 0); ImGui::SameLine();
@@ -608,7 +656,7 @@ void Anim3DEditorUI::SetCustomAnim()
 		clip.iFrameLength = m_iEndFrm - m_iStartFrm;
 		clip.eMode = m_pTestObject->Animator3D()->GetCurAnim()->GetClipList().eMode;
 		int frameRate = FbxTime::GetFrameRate(clip.eMode);	// 프레임 레이트
-		float TimePerFrm = 1.f / frameRate;
+		double TimePerFrm = 1.f / frameRate;
 		clip.dStartTime = TimePerFrm * m_iStartFrm;
 		clip.dEndTime = TimePerFrm * m_iEndFrm;
 		clip.dTimeLength = clip.dEndTime - clip.dStartTime;

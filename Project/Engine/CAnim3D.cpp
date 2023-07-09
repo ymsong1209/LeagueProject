@@ -20,7 +20,6 @@ CAnim3D::CAnim3D()
 	, m_iFrameIdx(0)
 	, m_iNextFrameIdx(0)
 	, m_fRatio(0.f)
-	//, m_bFinalMatUpdate(false)
 	, m_bFinish(false)
 	, m_bPause(false)
 	, m_RelativePath(L"")
@@ -38,7 +37,6 @@ CAnim3D::CAnim3D(const CAnim3D& _other)
 	, m_iFrameIdx(_other.m_iFrameIdx)
 	, m_iNextFrameIdx(_other.m_iFrameIdx)
 	, m_fRatio(_other.m_fRatio)
-	//, m_bFinalMatUpdate(_other.m_iFrameIdx)
 	, m_bFinish(_other.m_bFinish)
 	, m_bPause(_other.m_bPause)
 	, m_RelativePath(_other.m_RelativePath)
@@ -72,7 +70,7 @@ void CAnim3D::finaltick()
 		m_bFinish = true;
 	}
 
-	m_dCurTime = m_pClip.dStartTime + m_fClipUpdateTime;
+	m_dCurTime = m_pClip.dStartTime + (double)m_fClipUpdateTime;
 
 	// 현재 프레임 인덱스 구하기
 	double dFrameIdx = m_dCurTime * (double)m_iFrameRate;
@@ -120,7 +118,7 @@ void CAnim3D::Create(const tMTAnimClip& _OriginalVecClip, const wstring& _AnimNa
 	m_fClipUpdateTime = 0;
 }
 
-void CAnim3D::Save()
+void CAnim3D::Save(bool _nameincludesMeshPath)
 {
 	//경로가 설정되어있던 애니메이션들은 한번 저장되었던것들임
 	if (m_RelativePath != L"") return;
@@ -133,11 +131,14 @@ void CAnim3D::Save()
 	wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
 	wstring RelativePath;
 	RelativePath += L"animation\\";
-	//자동 세이브는 meshdata이름을 딴 폴더 안에 저장됨
 	wstring MeshDataPath = m_pOwner->GetMeshDataRelativePath();
-	filesystem::path meshpath = MeshDataPath;
-	wstring meshdataname = meshpath.stem();
-	RelativePath += meshdataname + L"\\";
+	if (_nameincludesMeshPath == false) {
+		//자동 세이브는 meshdata이름을 딴 폴더 안에 저장됨
+		
+		filesystem::path meshpath = MeshDataPath;
+		wstring meshdataname = meshpath.stem();
+		RelativePath += meshdataname + L"\\";
+	}
 	RelativePath += name + L".anim3d";
 	strFilePath += RelativePath;
 

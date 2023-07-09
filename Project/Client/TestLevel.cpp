@@ -87,50 +87,77 @@ void CreateTestLevel()
 	SpawnGameObject(pSkyBox, Vec3(0.f, 0.f, 0.f), 0);
 
 
-	// Shadow Test Object
-	CGameObject* pObject = new CGameObject;
-	pObject->SetName(L"Sphere Object");
+	//// Shadow Test Object
+	//CGameObject* pObject = new CGameObject;
+	//pObject->SetName(L"Sphere Object");
+	//
+	//pObject->AddComponent(new CTransform);
+	//pObject->AddComponent(new CMeshRender);
+	////pObject->AddComponent(new CAnimator2D);
+	//
+	//pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 300.f));
+	//
+	//pObject->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+	//pObject->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"),0);
+	//pObject->MeshRender()->SetDynamicShadow(true);
+	//pObject->MeshRender()->SetBounding(150.f);
+	//
+	//SpawnGameObject(pObject, Vec3(0.f, 200.f, 300.f), 0);
 
-	pObject->AddComponent(new CTransform);
-	pObject->AddComponent(new CMeshRender);
+	// Anim2d Test Object
+	//CGameObject* pObject3 = new CGameObject;
+	//pObject3->SetName(L"Sphere Object");
+	//
+	//pObject3->AddComponent(new CTransform);
+	//pObject3->AddComponent(new CMeshRender);
+	//pObject3->AddComponent(new CAnimator2D);
+	//pObject3->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 300.f));
+	//
+	//pObject3->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	//pObject3->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DAnimMtrl"), 0);
+	//pObject3->MeshRender()->SetDynamicShadow(true);
+	//pObject3->MeshRender()->SetBounding(150.f);
+	//
+	//SpawnGameObject(pObject3, Vec3(0.f, 200.f, 300.f), 0);
 
-	pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 300.f));
+	// LandScape Object
+	CGameObject* pLandScape = new CGameObject;
+	pLandScape->SetName(L"LandScape");
 
-	pObject->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
-	pObject->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"),0);
-	pObject->MeshRender()->SetDynamicShadow(true);
-	pObject->MeshRender()->SetBounding(150.f);
+	pLandScape->AddComponent(new CTransform);
+	pLandScape->AddComponent(new CLandScape);
 
-	SpawnGameObject(pObject, Vec3(0.f, 200.f, 300.f), 0);
+	pLandScape->Transform()->SetRelativeScale(Vec3(200.f, 1000.f, 200.f));
 
-	//// LandScape Object
-	//CGameObject* pLandScape = new CGameObject;
-	//pLandScape->SetName(L"LandScape");
+	pLandScape->LandScape()->SetFace(32, 32);
+	pLandScape->LandScape()->SetFrustumCheck(false);
 
-	//pLandScape->AddComponent(new CTransform);
-	//pLandScape->AddComponent(new CLandScape);
-
-	//pLandScape->Transform()->SetRelativeScale(Vec3(200.f, 1000.f, 200.f));
-
-	//pLandScape->LandScape()->SetFace(32, 32);
-	//pLandScape->LandScape()->SetFrustumCheck(false);
-
-	//SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 0.f), 0);
+	SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 0.f), 0);
 
 
 	// ============
 	// FBX Loading
 	// ============	
 	{
-		/*Ptr<CMeshData> pMeshData = nullptr;
-		CGameObject* pObj = nullptr;
+		//Ptr<CMeshData> pMeshData = nullptr;
+		//CGameObject* pObj = nullptr;
+		//
+		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Zilean.fbx");
+		//
+		//pObj = pMeshData->Instantiate();
+		//pObj->SetName(L"Zilean"); 
+		//pObj->Animator3D()->Play(L"Zilean-Zilean_AllAnim", true, 0.5f);
+		//SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
 		
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Monster.fbx");
-		
-		pObj = pMeshData->Instantiate();
-		pObj->SetName(L"Monster");*/
-
-	
+		//Ptr<CMeshData> pMeshData1 = nullptr;
+		//CGameObject* pObj1 = nullptr;
+		//pMeshData1 = CResMgr::GetInst()->LoadFBX(L"fbx\\amumu.fbx");
+		//
+		//pObj1 = pMeshData1->Instantiate();
+		//pObj1->SetName(L"amumu");		
+		//pObj1->Animator3D()->Play(L"Amumu-Amumu-Amumu-Amumu_AllAnim", true, 0.5f);
+		//SpawnGameObject(pObj1, Vec3(100.f, 0.f, 0.f), 0);
+ 
 		//단일재생
 		//pObj->Animator3D()->Play(L"Take 001");
 		//단일재생, 이전 애니메이션 0.5초 블렌딩 후 단일재생
@@ -234,7 +261,7 @@ void CreateTestLevel()
 	//pAnimTestObj->Animator2D()->SetCurAnim(CResMgr::GetInst()->FindRes<CAnim2D>(L"Link_Basic").Get());
 
 
-	SpawnGameObject(pAnimTestObj, Vec3(0.f, 0.f, 300.f), 0.f);
+	SpawnGameObject(pAnimTestObj, Vec3(-200.f, 0.f, 300.f), 0.f);
 
 
 

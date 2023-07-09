@@ -272,10 +272,105 @@ void CLandScape::LoadFromLevelFile(FILE* _File)
 
 void CLandScape::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
 {
+	// rendercomponent의 savetolevelfile은 mesh까지 저장을 한다.
+	// landscape의 mesh는 직접 생성할것이므로 key값이 저장이 안됨.
+	// 나머지 부분만 수동으로 저장
+	float bound = GetBounding();
+	bool frustumUse = IsUseFrustumCheck();
+	bool ShadowUse = IsDynamicShadow();
+
+	_objValue.AddMember("bound", bound, allocator);
+	_objValue.AddMember("frustumUse", frustumUse, allocator);
+	_objValue.AddMember("ShadowUse", ShadowUse, allocator);
+
+	//HeightMap은 자신의 id를 이름으로 한다.
+	if (m_pHeightMap->GetKey() == L"HeightMap") {
+		wstring HeightMapName = L"";
+		HeightMapName += L"HeightMap";
+		HeightMapName += std::to_wstring(m_pHeightMap->GetID());
+		m_pHeightMap->SetName(HeightMapName);
+	}
+
+	wstring strFolderPath = L"";
+	strFolderPath += L"texture\\LandScape\\";
+
+	//heightmap 파일로 저장
+	m_pHeightMap->SaveTextureAsDDS(strFolderPath);
+
+	//heightmap 이름 저장
+	wstring test = m_pHeightMap->GetName();
+	_objValue.AddMember("HeightMapName", SaveWStringJson(m_pHeightMap->GetName(), allocator), allocator);
+
+
+	//WeightMap 구조화버퍼 저장
+	_objValue.AddMember("WeightWidth", m_iWeightWidth, allocator);
+	_objValue.AddMember("WeightHeight", m_iWeightHeight, allocator);
+	_objValue.AddMember("WeightIdx", m_iWeightIdx, allocator);
+
+	UINT bufferSize = m_pWeightMapBuffer->GetBufferSize();
+	tWeight_4* data = new tWeight_4[bufferSize / sizeof(tWeight_4)];
+	m_pWeightMapBuffer->GetData((void*)data);
+	size_t numItems = bufferSize / sizeof(tWeight_4);
+
+	_objValue.AddMember("numItems", numItems, allocator);
+
+	// data (tweight_4) 구조체 저장
+	Value tweight4Value(kObjectType);
+	Value arrWeightArray(kArrayType);
+	for (int i = 0; i < 4; ++i) {
+		arrWeightArray.PushBack(data->arrWeight[i], allocator);
+	}
+	tweight4Value.AddMember("arrWeight[4]", arrWeightArray, allocator);
+	_objValue.AddMember("data", tweight4Value, allocator);
+	delete[] data;
+
+	_objValue.AddMember("iFaceX", m_iFaceX, allocator);
+	_objValue.AddMember("iFaceZ", m_iFaceZ, allocator);
 }
 
 void CLandScape::LoadFromLevelJsonFile(const Value& _componentValue)
 {
+	float bound;
+	bool frustumUse;
+	bool ShadowUse;
+
+	bound = _componentValue["bound"].GetFloat();
+	frustumUse = _componentValue["frustumUse"].GetBool();
+	ShadowUse = _componentValue["ShadowUse"].GetBool();
+	SetBounding(bound);
+	SetFrustumCheck(frustumUse);
+	SetDynamicShadow(ShadowUse);
+
+	//HeightMap 로딩
+	wstring HeighMaptexturepath;
+	HeighMaptexturepath = StrToWStr(_componentValue["HeightMapName"].GetString());
+	CopyFromLoadedTexture(HeighMaptexturepath);
+
+	//WeightMap 구조화버퍼 로딩
+	m_iWeightWidth = _componentValue["WeightWidth"].GetUint();
+	m_iWeightHeight = _componentValue["WeightHeight"].GetUint();
+	m_iWeightIdx = _componentValue["WeightIdx"].GetUint();
+
+	size_t numItems;
+	numItems = _componentValue["numItems"].GetUint64();
+
+	tWeight_4* data = new tWeight_4[numItems];
+	const Value& arrWeightArray = _componentValue["data"]["arrWeight[4]"];
+	for (int i = 0; i < arrWeightArray.Size(); ++i)
+	{
+		data->arrWeight[i] = arrWeightArray[i].GetFloat();
+	}
+
+	m_pWeightMapBuffer->SetData((void*)data, numItems * sizeof(tWeight_4));
+	delete[] data;
+	
+	m_iFaceX = _componentValue["iFaceX"].GetUint();
+	m_iFaceZ = _componentValue["iFaceZ"].GetUint();
+
+	//생성자 호출 후 LoadFromLevelFile실행
+	//생성자 시점에서는 m_ifacex가 0로 설정되어있음.
+	SetFace(m_iFaceX, m_iFaceZ);
+	//GetMaterial()->SetTexParam(TEX_2, m_pHeightMap);
 }
 
 

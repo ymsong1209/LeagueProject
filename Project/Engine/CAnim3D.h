@@ -31,7 +31,8 @@ public:
 
     void Create(const tMTAnimClip& _OriginalVecClip, const wstring& _AnimName = L"");
     //animator3d를 통해 자동저장
-    void Save();
+    //CreateAnimFromTxt일때만 bool값 true임
+    void Save(bool _nameincludesmeshpath = false);
     //수동저장
     void Save(const wstring& _strRelativePath);
     void Load(const wstring& _strRelativePath);
@@ -46,8 +47,6 @@ public:
     int GetFrameRate() { return m_iFrameRate; }
     void SetUpdateTime(float _time) { m_fClipUpdateTime = _time; }
     float GetRatio() { return m_fRatio; }
-    //bool GetFinalMatUpdate() { return m_bFinalMatUpdate; }
-    //void SetFinalMatUpdate(bool _set) { m_bFinalMatUpdate = _set; }
     wstring GetAnimRelativePath() { return m_RelativePath; }
 
     //blend 옵션을 줄때 강제로 적용할 것

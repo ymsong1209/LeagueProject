@@ -381,8 +381,7 @@ void CParticleSystem::LoadFromLevelJsonFile(const Value& _componentValue)
 	
 	// Module Check
 	const Value& moduleCheckArray = _componentValue["ParticleModule"]["ModuleCheck[PARTICLE_MODULE]"];
-	size_t moduleCheckSize = moduleCheckArray.Size();
-	for (size_t i = 0; i < moduleCheckSize; ++i) {
+	for (size_t i = 0; i < moduleCheckArray.Size(); ++i) {
 		m_ModuleData.ModuleCheck[i] = moduleCheckArray[i].GetUint();
 	}
 	// tParticleModule ·Îµå ³¡
