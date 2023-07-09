@@ -1,0 +1,17 @@
+amumu_taunt,0,85
+Attack1,86,104
+Attack2,105,123
+Channel,124,147
+Channel_Wndup,148,171
+Crit,172,190
+Dance,191,242
+Death,243,288
+Idle1,289,319
+Idle2,320,379
+Laugh,380,430
+Run,431,444
+Spell1,445,467
+Spell2,468,476
+Spell3,477,503
+Spell4,504,539
+Taunt,540,625
