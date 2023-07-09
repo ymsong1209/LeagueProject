@@ -13,6 +13,8 @@
 #include <Script\CPlayerScript.h>
 #include <Script\CMonsterScript.h>
 
+ 
+
 #include "CLevelSaveLoad.h"
 
 
@@ -212,6 +214,29 @@ void CreateTestLevel()
 	pRectFast2->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Dots.jpg"));
 
 	SpawnGameObject(pRectFast2, Vec3(-300.f, 0.f, 500.f), 0);
+
+
+	// Anim Test Object
+	CGameObject* pAnimTestObj = new CGameObject;
+	pAnimTestObj->SetName(L"AnimTestObj");
+
+	pAnimTestObj->AddComponent(new CMeshRender);
+	pAnimTestObj->AddComponent(new CAnimator2D);
+	pAnimTestObj->AddComponent(new CTransform);
+
+	pAnimTestObj->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	pAnimTestObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
+
+	pAnimTestObj->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 0.f));
+
+	// 테스트를 해보고 싶은데 FindRes 에 CAnim2D가 없어서 못해봤습니다..
+	// 추가할라고 마음 먹으면 할 수 있을 것 같긴한데, 너무 크게 바꾸는 것 같아 해보진 않았습니다.
+	//pAnimTestObj->Animator2D()->SetCurAnim(CResMgr::GetInst()->FindRes<CAnim2D>(L"Link_Basic").Get());
+
+
+	SpawnGameObject(pAnimTestObj, Vec3(0.f, 0.f, 300.f), 0.f);
+
+
 
 	// 충돌 시킬 레이어 짝 지정
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");	
