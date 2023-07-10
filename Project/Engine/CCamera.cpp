@@ -20,6 +20,9 @@
 #include "CResMgr.h"
 #include "CKeyMgr.h"
 
+#include "CCollider2D.h"
+
+
 
 CCamera::CCamera()
 	: CComponent(COMPONENT_TYPE::CAMERA)
@@ -76,6 +79,128 @@ void CCamera::finaltick()
 
 	// 마우스방향 직선 계산
 	CalRay();
+
+
+	// 수정 빌표요함
+	CLevel* CurLevel = CLevelMgr::GetInst()->GetCurLevel();
+
+	CGameObject* FinalRectObject = nullptr;
+	float fRectResult = FBXSDK_FLOAT_MAX;
+	vector<CGameObject*> TempEndOverlapRect;
+
+	for (int i = 0; i < MAX_LAYER; ++i)
+	{
+		CLayer* FocusLayer = CurLevel->GetLayer(i);
+		vector<CGameObject*> Objects = FocusLayer->GetObjects();
+
+		for (int j = 0; j < Objects.size(); ++j)
+		{
+			IntersectResult result = IsCollidingBtwRayRect(m_ray, Objects[j]);
+
+			// 만약 충돌중이 였다면 EndOverlap 후보군에 넣어야 함
+			if (Objects[j]->Collider2D())
+			{
+
+				if (Objects[j]->Collider2D()->IsCollidedFromRay() == true)
+				{
+					// 충돌중이였는데 이번프레임에서는 충돌해제가 되었음으로 End Ray Overlap을 호출해줌
+					if (result.bResult == false)
+					{
+						Objects[j]->Collider2D()->SetCollidedFromRay(false);
+						Objects[j]->Collider2D()->EndRayOverlap();
+					}
+
+					// 이경우는 계속 충돌중이지다. 하지만 가장 가까이 있는 물체가 아니라면 End Ray Overlap을 호출해야 하기에
+					// 후보군에 넣어준다.
+					else
+					{
+
+						TempEndOverlapRect.push_back(Objects[j]);
+					}
+				}
+
+				//if (result.vCrossPoint != Vec3(0.f, 0.f, 0.f))
+				if (result.bResult == true)
+				{
+					// 최단 거리에 있는 Object인지 확인해야 한다.
+					if (result.fResult < fRectResult)
+					{
+						fRectResult = result.fResult;
+						FinalRectObject = Objects[j];
+					}
+				}
+			}
+
+
+			//if (result.bResult == false)
+			//{
+			//	int  a = 10;
+
+			//	// End Ray Overlap을 해야한다.
+			//	if (Objects[j]->Collider2D() != nullptr)
+			//	{
+			//		if (Objects[j]->Collider2D()->IsCollidedFromRay())
+			//		{
+			//			Objects[j]->Collider2D()->SetCollidedFromRay(false);
+			//			Objects[j]->Collider2D()->EndRayOverlap();
+			//		}
+			//	}
+
+			//}
+
+			//else
+			//{
+			//	// On Ray Overlap을 해야한다.
+			//	if (Objects[j]->Collider2D()->IsCollidedFromRay())
+			//	{
+			//		Objects[j]->Collider2D()->OnRayOverlap();
+			//	}
+
+			//	// Begin Ray Overlap을 해야한다.
+			//	else
+			//	{
+			//		Objects[j]->Collider2D()->SetCollidedFromRay(true);
+			//		Objects[j]->Collider2D()->BeginRayOverlap();
+			//	}
+			//}
+		}
+	}
+
+	if (FinalRectObject != nullptr)
+	{
+		// 여기까지 왔으면 현재 충돌중이고 가장 가까운 단하나의 Rect Collider를 지닌 Object임
+		if (FinalRectObject->Collider2D()->IsCollidedFromRay())
+		{
+			FinalRectObject->Collider2D()->OnRayOverlap();
+		}
+
+		// Begin Ray Overlap을 해야한다.
+		else
+		{
+			FinalRectObject->Collider2D()->SetCollidedFromRay(true);
+			FinalRectObject->Collider2D()->BeginRayOverlap();
+		}
+
+		// TemObject들중에서 FinalObject가 아닌 Object들은 모두 EndRayOverlap을 호출해야한다.
+		for (int i = 0; i < TempEndOverlapRect.size(); ++i)
+		{
+			if (TempEndOverlapRect[i] != FinalRectObject)
+			{
+				TempEndOverlapRect[i]->Collider2D()->SetCollidedFromRay(false);
+				TempEndOverlapRect[i]->Collider2D()->EndRayOverlap();
+			}
+
+		}
+	}
+
+	TempEndOverlapRect.clear();
+
+
+
+
+
+
+
 }
 
 void CCamera::CalRay()
@@ -320,6 +445,11 @@ void CCamera::render()
 
 	// UI
 	render_ui();
+
+
+ 
+
+	
 }
 
 void CCamera::render_depthmap()
@@ -335,6 +465,95 @@ void CCamera::render_depthmap()
 	}
 }
 
+
+IntersectResult CCamera::IsCollidingBtwRayRect(tRay& _ray, CGameObject* _Object)
+{
+	// 만약에 Collider2D가 없거나 Rect모양이 아닌 경우 return
+	if (_Object->Collider2D() == nullptr)
+		return IntersectResult{ Vec3(0.f, 0.f, 0.f), 0.f, false };
+
+	int a = 10;
+
+	if (_Object->Collider2D()->GetColliderShape() != COLLIDER2D_TYPE::RECT)
+		return IntersectResult{ Vec3(0.f, 0.f, 0.f), 0.f, false };
+
+	int c = 20;
+
+	Matrix ColliderWorldMat = _Object->Collider2D()->GetColliderWorldMat();
+
+	// Local Rect의 4개 Pos에 대해서 World Pos 계산을 해준다.
+	Vec3 arrLocal[3] =
+	{
+		Vec3(-0.5f, -0.5f, 0.f),
+		Vec3(0.5f, -0.5f, 0.f),
+		Vec3(-0.5f, 0.5f, 0.f),
+		//(0.5f, 0.5f, 0.f),
+	};
+
+	for (int i = 0; i < 3; ++i)
+		arrLocal[i] = Vector4::Transform(Vec4(arrLocal[i], 1.f), ColliderWorldMat);
+ 
+
+	return IntersectsLay(arrLocal, m_ray);
+}
+
+IntersectResult CCamera::IntersectsLay(Vec3* _vertices, tRay _ray)
+{
+	IntersectResult result;
+	result.vCrossPoint = Vec3(0.f, 0.f, 0.f);
+	result.bResult = false;
+
+	Vec3 edge[2] = { Vec3(), Vec3() };
+	edge[0] = _vertices[1] - _vertices[0];
+	edge[1] = _vertices[2] - _vertices[0];
+
+	Vec3 normal = (edge[0].Cross(edge[1])).Normalize();
+	float b = normal.Dot(_ray.vDir);
+	 
+
+	Vec3 w0 = _ray.vStart - _vertices[0];
+	float a = -(normal.Dot(w0));
+	float t = a / b;
+
+	result.fResult = t;
+
+	Vec3 p = _ray.vStart + t * _ray.vDir;
+
+	result.vCrossPoint = p;
+
+	float uu, uv, vv, wu, wv, inverseD;
+	uu = edge[0].Dot(edge[0]);
+	uv = edge[0].Dot(edge[1]);
+	vv = edge[1].Dot(edge[1]);
+
+	Vec3 w = p - _vertices[0];
+	wu = w.Dot(edge[0]);
+	wv = w.Dot(edge[1]);
+	
+	inverseD = uv * uv - uu * vv;
+	inverseD = 1.0f / inverseD;
+
+	float u = (uv * wv - vv * wu) * inverseD;
+	if (u < 0.0f || u > 1.0f)
+	{
+		result.vCrossPoint = Vec3();
+		result.fResult = 0.0f;
+		result.bResult = false;
+		return result;
+	}
+
+	float v = (uv * wu - uu * wv) * inverseD;
+	if (v < 0.0f || v > 1.0f)
+	{
+		result.vCrossPoint = Vec3();
+		result.fResult = 0.0f;
+		result.bResult = false;
+		return result;
+	}
+
+	result.bResult = true;
+	return result;
+}
 
 void CCamera::clear()
 {

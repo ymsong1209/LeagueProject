@@ -101,6 +101,24 @@ void CCollider2D::EndOverlap(CCollider2D* _Other)
 	}
 }
 
+void CCollider2D::BeginRayOverlap()
+{
+	int a = 30;
+	GetOwner()->GetRenderComponent()->GetMaterial(0)->SetScalarParam(INT_2, &a);
+}
+
+void CCollider2D::OnRayOverlap()
+{
+	int a = 20;
+	GetOwner()->GetRenderComponent()->GetMaterial(0)->SetScalarParam(INT_2, &a);
+}
+
+void CCollider2D::EndRayOverlap()
+{
+	int b = 0;
+	GetOwner()->GetRenderComponent()->GetMaterial(0)->SetScalarParam(INT_2, &b);
+}
+
 void CCollider2D::SaveToLevelFile(FILE* _File)
 {
 	fwrite(&m_vOffsetPos, sizeof(Vec3), 1, _File);

@@ -209,6 +209,7 @@ void CreateTestLevel()
 
 	pRectFast->AddComponent(new CMeshRender);
 	pRectFast->AddComponent(new CTransform);
+	pRectFast->AddComponent(new CCollider2D);
 
 	pRectFast->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
 
@@ -221,8 +222,75 @@ void CreateTestLevel()
 	pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Base_e_Puncture.dds"));
 	pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_2, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Round.dds"));
 
+	pRectFast->Collider2D()->SetAbsolute(false);
+	pRectFast->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+	pRectFast->Collider2D()->SetOffsetPos(Vec2(0.f, 0.f));
+	pRectFast->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
+
 
 	SpawnGameObject(pRectFast, Vec3(-600.f, 0.f, 500.f), 0);
+
+
+
+	// Ray Test Object1
+	CGameObject* RayTestObj1 = new CGameObject;
+	RayTestObj1->SetName(L"RayTestObj1");
+
+	RayTestObj1->AddComponent(new CMeshRender);
+	RayTestObj1->AddComponent(new CTransform);
+	RayTestObj1->AddComponent(new CCollider2D);
+
+	RayTestObj1->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
+
+	RayTestObj1->MeshRender()->SetUsingMovingVec(true);
+
+	RayTestObj1->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	RayTestObj1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
+	RayTestObj1->MeshRender()->GetDynamicMaterial(0);
+	//pRectFast->MeshRender()->GetMaterial()->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Base_e.dds"));
+	RayTestObj1->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Fighter.bmp"));
+	RayTestObj1->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Base_e_Puncture.dds"));
+	RayTestObj1->MeshRender()->GetMaterial(0)->SetTexParam(TEX_2, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Round.dds"));
+
+	RayTestObj1->Collider2D()->SetAbsolute(false);
+	RayTestObj1->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+	RayTestObj1->Collider2D()->SetOffsetPos(Vec2(0.f, 0.f));
+	RayTestObj1->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
+
+
+	SpawnGameObject(RayTestObj1, Vec3(-600.f, 0.f, 600.f), 0);
+
+
+
+	// Ray Test Object2
+	CGameObject* RayTestObj2 = new CGameObject;
+	RayTestObj2->SetName(L"RayTestObj2");
+
+	RayTestObj2->AddComponent(new CMeshRender);
+	RayTestObj2->AddComponent(new CTransform);
+	RayTestObj2->AddComponent(new CCollider2D);
+
+	RayTestObj2->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
+
+	RayTestObj2->MeshRender()->SetUsingMovingVec(true);
+
+	RayTestObj2->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	RayTestObj2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
+	RayTestObj2->MeshRender()->GetDynamicMaterial(0);
+	//pRectFast->MeshRender()->GetMaterial()->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Base_e.dds"));
+	RayTestObj2->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Fighter.bmp"));
+	RayTestObj2->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Base_e_Puncture.dds"));
+	RayTestObj2->MeshRender()->GetMaterial(0)->SetTexParam(TEX_2, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Round.dds"));
+
+	RayTestObj2->Collider2D()->SetAbsolute(false);
+	RayTestObj2->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+	RayTestObj2->Collider2D()->SetOffsetPos(Vec2(0.f, 0.f));
+	RayTestObj2->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
+
+
+	SpawnGameObject(RayTestObj2, Vec3(-600.f, 0.f, 700.f), 0);
+
+
 
 
 

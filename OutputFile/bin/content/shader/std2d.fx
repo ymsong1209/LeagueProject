@@ -47,6 +47,11 @@ struct VS_OUT
 #define Puncture_Texture            g_tex_1
 #define Additive_Texture            g_tex_2
 #define Additive_Color              g_vec4_0
+
+
+
+// Ray Tex용 숫자
+#define RayTest          g_int_2
 // ============================
 VS_OUT VS_Std2D(VS_IN _in)
 {
@@ -63,6 +68,21 @@ float4 PS_Std2D(VS_OUT _in) : SV_Target
 {
  
     float4 vOutColor = float4(0.f, 0.f, 0.f, 1.f);
+
+
+    // Ray Test용 Code
+    if (RayTest == 30)
+    {
+        vOutColor = float4(0.f, 1.f, 0.f, 1.f);
+        return vOutColor;
+    }
+
+    else if (RayTest == 20)
+    {
+        vOutColor = float4(0.f, 0.f, 1.f, 1.f);
+        return vOutColor;
+    }
+
        
     // Sample Texture가 없는 경우
     // g_btex_0 값이 왜 0, 1 로 바뀔 수 있는 지 알기 위해선 

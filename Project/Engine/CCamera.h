@@ -2,6 +2,8 @@
 #include "CComponent.h"
 #include "CFrustum.h"
 
+class CGameObject;
+
 class CCamera :
     public CComponent
 {
@@ -80,6 +82,13 @@ public:
 
 protected:
     void CalRay();  // 마우스 방향으로 광선 연산
+
+
+
+// 내가 수정함
+public:
+    IntersectResult IsCollidingBtwRayRect(tRay& _ray, CGameObject* _Object);
+    IntersectResult IntersectsLay(Vec3* _vertices, tRay _ray);
 
 
 private:
