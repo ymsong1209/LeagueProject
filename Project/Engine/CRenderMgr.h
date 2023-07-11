@@ -29,10 +29,12 @@ private:
     vector<CLight3D*>           m_vecLight3D;    
     CStructuredBuffer*          m_Light3DBuffer;
 
+    CGameObject* m_GizMoTargetObject;  //기즈모가 생겨야할 타겟 오브젝트
 
     void (CRenderMgr::* RENDER_FUNC)(void);
 
     Ptr<CTexture>               m_RTCopyTex;
+
 
 public:
     void init();
@@ -65,6 +67,9 @@ public:
 
 
     const vector<CLight3D*> GetLight3D() { return m_vecLight3D; }
+
+    CGameObject* GetGizMoTargetObj() { return m_GizMoTargetObject; }   //기즈모가 생겨야할 타겟오브젝트 게터, 세터 함수
+    void SetGizMoTargetObj(CGameObject* _Object) { m_GizMoTargetObject = _Object; }
 
     void CopyRenderTarget();
 

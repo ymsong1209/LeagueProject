@@ -1,5 +1,5 @@
 {
-    "levelName": "level\\meshrendertest.json",
+    "levelName": "level\\gizTest.json",
     "layers": [
         {
             "layerName": "Default",
@@ -24,7 +24,9 @@
                                 "y": 0.0,
                                 "z": 0.0
                             },
-                            "bAbsolute": false
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 150.0
                         },
                         {
                             "CAMERA": 7,
@@ -61,7 +63,9 @@
                                 "y": 0.7853981256484985,
                                 "z": 0.0
                             },
-                            "bAbsolute": false
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 150.0
                         },
                         {
                             "LIGHT3D": 6,
@@ -132,16 +136,18 @@
                                 "z": 0.0
                             },
                             "vRelativeScale": {
-                                "x": 100.0,
+                                "x": 99.99998474121094,
                                 "y": 100.0,
-                                "z": 100.0
+                                "z": 99.99998474121094
                             },
                             "vRelativeRot": {
-                                "x": 0.0,
-                                "y": 1.5707963705062866,
-                                "z": 0.0
+                                "x": -3.1415908336639404,
+                                "y": 1.5707954168319702,
+                                "z": -3.1415908336639404
                             },
-                            "bAbsolute": false
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 150.0
                         },
                         {
                             "SKYBOX": 12,
@@ -197,7 +203,9 @@
                                 "y": 0.0,
                                 "z": 0.0
                             },
-                            "bAbsolute": false
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 150.0
                         },
                         {
                             "LANDSCAPE": 13,
@@ -226,6 +234,125 @@
                     "children": []
                 },
                 {
+                    "ObjName": "Blitz",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vRelativeScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 150.0
+                        },
+                        {
+                            "ANIMATOR3D": 4,
+                            "IsEmpty": false,
+                            "MeshDataRelativePath": "meshdata\\BlitzCrank.mdat",
+                            "bRepeat": true,
+                            "mapAnim": [
+                                {
+                                    "Anim3DRelativePath": "animation\\BlitzCrank\\BlitzCrank-BlitzCrank-Scene.anim3d"
+                                },
+                                {
+                                    "Anim3DRelativePath": "animation\\BlitzCrank\\Attack1.anim3d"
+                                },
+                                {
+                                    "Anim3DRelativePath": "animation\\BlitzCrank\\Attack2.anim3d"
+                                },
+                                {
+                                    "Anim3DRelativePath": "animation\\BlitzCrank\\Channel.anim3d"
+                                },
+                                {
+                                    "Anim3DRelativePath": "animation\\BlitzCrank\\Channel_Wndup.anim3d"
+                                },
+                                {
+                                    "Anim3DRelativePath": "animation\\BlitzCrank\\Crit.anim3d"
+                                },
+                                {
+                                    "Anim3DRelativePath": "animation\\BlitzCrank\\Dance.anim3d"
+                                },
+                                {
+                                    "Anim3DRelativePath": "animation\\BlitzCrank\\Death.anim3d"
+                                },
+                                {
+                                    "Anim3DRelativePath": "animation\\BlitzCrank\\Idle1.anim3d"
+                                },
+                                {
+                                    "Anim3DRelativePath": "animation\\BlitzCrank\\Idle2.anim3d"
+                                },
+                                {
+                                    "Anim3DRelativePath": "animation\\BlitzCrank\\Idle3.anim3d"
+                                },
+                                {
+                                    "Anim3DRelativePath": "animation\\BlitzCrank\\Laugh.anim3d"
+                                },
+                                {
+                                    "Anim3DRelativePath": "animation\\BlitzCrank\\Recall.anim3d"
+                                },
+                                {
+                                    "Anim3DRelativePath": "animation\\BlitzCrank\\Run.anim3d"
+                                },
+                                {
+                                    "Anim3DRelativePath": "animation\\BlitzCrank\\Spell1.anim3d"
+                                },
+                                {
+                                    "Anim3DRelativePath": "animation\\BlitzCrank\\Spell2.anim3d"
+                                },
+                                {
+                                    "Anim3DRelativePath": "animation\\BlitzCrank\\Spell3.anim3d"
+                                },
+                                {
+                                    "Anim3DRelativePath": "animation\\BlitzCrank\\Spell4.anim3d"
+                                },
+                                {
+                                    "Anim3DRelativePath": "animation\\BlitzCrank\\Taunt.anim3d"
+                                }
+                            ],
+                            "strCurAnimName": "BlitzCrank\\Attack1"
+                        },
+                        {
+                            "MESHRENDER": 9,
+                            "Mesh": {
+                                "IsNull": false,
+                                "Key": "mesh\\BlitzCrank.mesh",
+                                "RelativePath": "mesh\\BlitzCrank.mesh"
+                            },
+                            "fBounding": 500.0,
+                            "bFrustumCheck": true,
+                            "bDynamicShadow": false,
+                            "iMtrlCount": 1,
+                            "vecMtrls[0]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "material\\BlitzCrankMtrl.mtrl",
+                                "RelativePath": "material\\BlitzCrankMtrl.mtrl"
+                            },
+                            "DynamicMtrls": [
+                                {
+                                    "vecMtrls[0]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                }
+                            ],
+                            "bIsUsingMovingVec": false
+                        },
+                        15
+                    ],
+                    "scripts": [],
+                    "children": []
+                },
+                {
                     "ObjName": "ReftFast",
                     "components": [
                         {
@@ -236,16 +363,18 @@
                                 "z": 500.0
                             },
                             "vRelativeScale": {
-                                "x": 200.0,
+                                "x": 199.99981689453125,
                                 "y": 200.0,
-                                "z": 0.0
+                                "z": 0.0010000001639127731
                             },
                             "vRelativeRot": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
+                                "x": -3.1415908336639404,
+                                "y": 1.0376194715499878,
+                                "z": -3.1415908336639404
                             },
-                            "bAbsolute": false
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 150.0
                         },
                         {
                             "MESHRENDER": 9,
@@ -343,8 +472,8 @@
                                             },
                                             {
                                                 "arrV2[3]": {
-                                                    "x": 22.60118865966797,
-                                                    "y": -0.4098125398159027
+                                                    "x": 0.0,
+                                                    "y": 0.5
                                                 }
                                             }
                                         ],
@@ -587,8 +716,8 @@
                                         "w": 0.0
                                     },
                                     "PreviousPos": {
-                                        "x": 22.60118865966797,
-                                        "y": -0.4098125398159027
+                                        "x": 0.0,
+                                        "y": 0.5
                                     }
                                 }
                             ]
@@ -610,15 +739,17 @@
                             },
                             "vRelativeScale": {
                                 "x": 200.0,
-                                "y": 200.0,
-                                "z": 0.0
+                                "y": 199.9999542236328,
+                                "z": 0.001000000280328095
                             },
                             "vRelativeRot": {
-                                "x": 0.0,
-                                "y": 0.0,
+                                "x": 1.374531626701355,
+                                "y": -0.0,
                                 "z": 0.0
                             },
-                            "bAbsolute": false
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 150.0
                         },
                         {
                             "MESHRENDER": 9,
@@ -716,8 +847,8 @@
                                             },
                                             {
                                                 "arrV2[3]": {
-                                                    "x": 22.60118865966797,
-                                                    "y": -0.4098125398159027
+                                                    "x": 0.0,
+                                                    "y": 0.5
                                                 }
                                             }
                                         ],
@@ -960,8 +1091,8 @@
                                         "w": 0.0
                                     },
                                     "PreviousPos": {
-                                        "x": 22.60118865966797,
-                                        "y": -0.4098125398159027
+                                        "x": 0.0,
+                                        "y": 0.5
                                     }
                                 }
                             ]
@@ -991,11 +1122,13 @@
                                 "y": 0.0,
                                 "z": 0.0
                             },
-                            "bAbsolute": false
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 150.0
                         },
                         {
                             "ANIMATOR2D": 3,
-                            "bRepeat": true,
+                            "bRepeat": false,
                             "tOriginalTransform": {
                                 "OriginalPos": {
                                     "x": 0.0,
@@ -1013,13 +1146,8 @@
                                     "z": 0.0
                                 }
                             },
-                            "mapAnim": [
-                                {
-                                    "AnimName": "link",
-                                    "Anim2DRelativePath": "anim2d\\link.anim2d"
-                                }
-                            ],
-                            "strCurAnimName": "link"
+                            "mapAnim": [],
+                            "strCurAnimName": ""
                         },
                         {
                             "MESHRENDER": 9,

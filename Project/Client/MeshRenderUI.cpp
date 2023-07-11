@@ -133,9 +133,6 @@ int MeshRenderUI::render_update()
 	}
 	
 
- 
-
-
 	
 
 	ImGui::Separator();
@@ -143,7 +140,10 @@ int MeshRenderUI::render_update()
 
 
 	int isUseMovingVec = (int)(GetTarget()->MeshRender()->IsUsingMovingVec());
-
+	if (isUseMovingVec)
+		SetSize(0.f, 400.f);
+	else
+		SetSize(0.f, 150.f);
 
 	ImGui::Text("Moving Vec Use :"); ImGui::SameLine();
 	if (ImGui::RadioButton("Use##MovingVec", &isUseMovingVec, 1))
