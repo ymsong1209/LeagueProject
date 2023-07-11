@@ -473,7 +473,7 @@ void CCamera::LoadFromLevelJsonFile(const Value& _componentValue)
 	m_ProjType = (PROJ_TYPE)_componentValue["ProjType"].GetUint();
 	m_iLayerMask = _componentValue["iLayerMask"].GetUint();
 	m_iCamIdx = _componentValue["iCamIdx"].GetInt();
-	m_iLayerMask = _componentValue["fFar"].GetFloat();
+	m_fFar = _componentValue["fFar"].GetFloat();
 	m_bShowFrustumDebug = _componentValue["bShowFrustumDebug"].GetBool();
 
 	SetCameraIndex(m_iCamIdx);

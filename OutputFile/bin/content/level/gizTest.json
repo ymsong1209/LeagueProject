@@ -1,5 +1,5 @@
 {
-    "levelName": "level\\testlevel.json",
+    "levelName": "level\\gizTest.json",
     "layers": [
         {
             "layerName": "Default",
@@ -24,7 +24,9 @@
                                 "y": 0.0,
                                 "z": 0.0
                             },
-                            "bAbsolute": false
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 150.0
                         },
                         {
                             "CAMERA": 7,
@@ -61,7 +63,9 @@
                                 "y": 0.7853981256484985,
                                 "z": 0.0
                             },
-                            "bAbsolute": false
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 150.0
                         },
                         {
                             "LIGHT3D": 6,
@@ -141,7 +145,9 @@
                                 "y": 1.5707954168319702,
                                 "z": -3.1415908336639404
                             },
-                            "bAbsolute": false
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 150.0
                         },
                         {
                             "SKYBOX": 12,
@@ -197,7 +203,9 @@
                                 "y": 0.0,
                                 "z": 0.0
                             },
-                            "bAbsolute": false
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 150.0
                         },
                         {
                             "LANDSCAPE": 13,
@@ -245,7 +253,9 @@
                                 "y": 0.0,
                                 "z": 0.0
                             },
-                            "bAbsolute": false
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 150.0
                         },
                         {
                             "ANIMATOR3D": 4,
@@ -353,16 +363,18 @@
                                 "z": 500.0
                             },
                             "vRelativeScale": {
-                                "x": 200.0,
+                                "x": 199.99981689453125,
                                 "y": 200.0,
-                                "z": 0.0
+                                "z": 0.0010000001639127731
                             },
                             "vRelativeRot": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
+                                "x": -3.1415908336639404,
+                                "y": 1.0376194715499878,
+                                "z": -3.1415908336639404
                             },
-                            "bAbsolute": false
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 150.0
                         },
                         {
                             "MESHRENDER": 9,
@@ -727,15 +739,17 @@
                             },
                             "vRelativeScale": {
                                 "x": 200.0,
-                                "y": 200.0,
-                                "z": 0.0
+                                "y": 199.9999542236328,
+                                "z": 0.001000000280328095
                             },
                             "vRelativeRot": {
-                                "x": 0.0,
-                                "y": 0.0,
+                                "x": 1.374531626701355,
+                                "y": -0.0,
                                 "z": 0.0
                             },
-                            "bAbsolute": false
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 150.0
                         },
                         {
                             "MESHRENDER": 9,
@@ -1108,7 +1122,9 @@
                                 "y": 0.0,
                                 "z": 0.0
                             },
-                            "bAbsolute": false
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 150.0
                         },
                         {
                             "ANIMATOR2D": 3,

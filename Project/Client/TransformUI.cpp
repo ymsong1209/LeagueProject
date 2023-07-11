@@ -15,6 +15,7 @@ static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::TRANSLATE);
 
 TransformUI::TransformUI()
 	: ComponentUI("##Transform", COMPONENT_TYPE::TRANSFORM)
+	, b_IsWindowMode(false)
 {
 	SetName("Transform");
 }
@@ -28,6 +29,10 @@ int TransformUI::render_update()
 	if (FALSE == ComponentUI::render_update())
 		return FALSE;
 
+	if (b_IsWindowMode)
+		SetSize(0.f, 50.f);
+	else
+		SetSize(0.f, 350.f);
 
 	//ImGui 렌더전에 기즈모 렌더를 해야함 ! (타겟오브젝트가 있을경우)
 	if (CRenderMgr::GetInst()->GetGizMoTargetObj())
@@ -40,7 +45,7 @@ int TransformUI::render_update()
 		}
 	}
 
-	bool b_IsWindowMode = ImGuiMgr::GetInst()->GetGizmoEditor_WindowMode();
+	b_IsWindowMode = ImGuiMgr::GetInst()->GetGizmoEditor_WindowMode();
 	if (!b_IsWindowMode)
 	{
 		ImGui::Checkbox("Window Mode", &b_IsWindowMode);
@@ -146,7 +151,7 @@ void TransformUI::RenderGizmo()
 
 		if (ImGuiMgr::GetInst()->GetGizmoEditor_WindowMode())
 		{
-			bool b_IsWindowMode = ImGuiMgr::GetInst()->GetGizmoEditor_WindowMode();
+			b_IsWindowMode = ImGuiMgr::GetInst()->GetGizmoEditor_WindowMode();
 			ImGui::Checkbox("Window Mode", &b_IsWindowMode);
 			if (b_IsWindowMode)
 				ImGuiMgr::GetInst()->SetGizmoEditor_WindowMode(true);
