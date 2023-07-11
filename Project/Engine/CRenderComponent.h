@@ -22,11 +22,10 @@ private:
     vector<tMtrlSet>        m_vecMtrls;     // 재질    
 
 
- 
     float                   m_fBounding;        // FrustumCheck 용도 경계범위
     bool                    m_bFrustumCheck;    // 절두체 컬링 체크 유무
     bool                    m_bDynamicShadow;   // 동적 그림자 사용 유무
- 
+    bool                    m_bShowDebugBoundShape; /// bounding 범위 선 보기 유무
 
 
 public:
@@ -49,7 +48,9 @@ public:
     bool IsUseFrustumCheck() { return m_bFrustumCheck; }
     void SetBounding(float _fBounding) { m_fBounding = _fBounding; }
     float GetBounding() { return m_fBounding; }
- 
+    bool IsShowDebugBound() { return m_bShowDebugBoundShape; }
+    void SetShowDebugBound(bool _bShow) { m_bShowDebugBoundShape = _bShow; }
+
 
     bool IsDynamicMtrlEmpty(UINT _idx) { return (nullptr == m_vecMtrls[_idx].pDynamicMtrl); }
     void ClearDynamicMtrl(UINT _idx);

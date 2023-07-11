@@ -49,6 +49,22 @@ int RenderComponentUI::render_update()
 
 	if (useFrustum)
 	{
+		// Show Debug bound sphere
+		ImGui::Text("Show Debug Bound");
+		ImGui::SameLine(); 
+		bool bShowDebugBound = pRenderCom->IsShowDebugBound();
+		if (ImGui::Checkbox("##showDebugBound", &bShowDebugBound))
+		{
+			if (bShowDebugBound) { // 眉农等 版快
+				pRenderCom->SetShowDebugBound(true);
+				
+			}
+			else { // 眉农 秦力 等 版快
+				pRenderCom->SetShowDebugBound(false);
+			}
+		}
+
+		// Bounding Scale
 		ImGui::Text("Bounding Scale");
 		ImGui::SameLine();
 		float bounding = pRenderCom->GetBounding();
