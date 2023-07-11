@@ -51,7 +51,10 @@ void CRenderComponent::render_depthmap()
 		}
 	}
 
-	GetOwner()->Animator3D()->GetFinalBoneMat()->Clear();
+	if (GetOwner()->GetComponent(COMPONENT_TYPE::ANIMATOR3D)) {
+		GetOwner()->Animator3D()->GetFinalBoneMat()->Clear();
+	}
+	
 
 }
 
