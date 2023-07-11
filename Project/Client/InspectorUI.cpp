@@ -29,6 +29,9 @@
 #include "DecalUI.h"
 #include "LandScapeUI.h"
 #include "RenderComponentUI.h"
+#include <Engine\CRenderMgr.h>
+#include "OutlinerUI.h"
+#include "TreeUI.h"
 
 
 InspectorUI::InspectorUI()
@@ -44,7 +47,7 @@ InspectorUI::InspectorUI()
 	AddChildUI(m_RenderComUI);
 
 	m_arrComUI[(UINT)COMPONENT_TYPE::TRANSFORM] = new TransformUI;
-	m_arrComUI[(UINT)COMPONENT_TYPE::TRANSFORM]->SetSize(0.f, 150.f);	
+	m_arrComUI[(UINT)COMPONENT_TYPE::TRANSFORM]->SetSize(0.f, 450.f);	
 	AddChildUI(m_arrComUI[(UINT)COMPONENT_TYPE::TRANSFORM]);
 
 	m_arrComUI[(UINT)COMPONENT_TYPE::MESHRENDER] = new MeshRenderUI;
@@ -143,7 +146,22 @@ void InspectorUI::tick()
 
 int InspectorUI::render_update()
 {
-	
+	//기즈모 관련 처리 - 화면에 눌린 오브젝트를 타겟 오브젝트로 변경
+	if (CRenderMgr::GetInst()->GetGizMoTargetObj() != nullptr) //기즈모 오브젝트가 있는상태라면
+	{
+		CGameObject* GizMoTargetObj = CRenderMgr::GetInst()->GetGizMoTargetObj();
+		if (m_pTargetObj != GizMoTargetObj) //현재 타겟오브젝트와 기즈모 오브젝트 비교해서 다르다면 기즈모 오브젝트로 변경
+		{
+			SetTargetObject(GizMoTargetObj);
+			OutlinerUI* OutLiner = (OutlinerUI*)ImGuiMgr::GetInst()->FindUI("##Outliner");
+
+			// 화면상에서 눌린 오브젝트가 인스펙터의 선택된 오브젝트로 되도록 해주어야함! 그래서 타겟 오브젝트로 변경한후에 아웃라이너에도 이것을 알려줌
+			OutLiner->GetTreeOutliner()->SetExteriorLbtnNode(true);
+			bool a = OutLiner->GetTreeOutliner()->GetSelectedNode((DWORD_PTR)GizMoTargetObj);
+			OutLiner->GetTreeOutliner()->SetExteriorLbtnNode(false);
+		}
+	}
+
 	return TRUE;
 }
 

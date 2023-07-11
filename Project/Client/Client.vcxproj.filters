@@ -131,6 +131,9 @@
     <Filter Include="UI\InspectorUI\ComponentUI\14. LandScapeUI">
       <UniqueIdentifier>{0e85020b-01da-45b7-9584-5378d8d31520}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ImGui\ImGizmo">
+      <UniqueIdentifier>{db6dcd79-eb16-4354-8c8c-0e0cee42b062}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -280,6 +283,9 @@
     </ClInclude>
     <ClInclude Include="LandScapeUI.h">
       <Filter>UI\InspectorUI\ComponentUI\14. LandScapeUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\External\Include\ImGuizmo-master\ImGuizmo.h">
+      <Filter>ImGui\ImGizmo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -438,6 +444,9 @@
     </ClCompile>
     <ClCompile Include="LandScapeUI.cpp">
       <Filter>UI\InspectorUI\ComponentUI\14. LandScapeUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\External\Library\ImGuizmo-master\ImGuizmo.cpp">
+      <Filter>ImGui\ImGizmo</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

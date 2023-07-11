@@ -8,6 +8,9 @@ class TransformUI :
 {
 public:
     virtual int render_update() override;
+    void EditTransform(float* cameraView, float* cameraProjection, float* matrix, bool editTransformDecomposition);
+
+    void RenderGizmo();
 
 public:
     TransformUI();

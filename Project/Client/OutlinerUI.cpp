@@ -96,6 +96,8 @@ void OutlinerUI::SetTargetToInspector(DWORD_PTR _SelectedNode)
 	// Inspector 에 선택된 GameObject 를 알려준다.	
 	InspectorUI* pInspector = (InspectorUI*)ImGuiMgr::GetInst()->FindUI("##Inspector");
 	pInspector->SetTargetObject(pSelectObject);
+
+	CRenderMgr::GetInst()->SetGizMoTargetObj(pSelectObject); //아웃라이너에서 눌린것도 기즈모의 타겟 오브젝트가 되어야함
 }
 
 

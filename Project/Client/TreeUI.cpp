@@ -137,6 +137,7 @@ TreeUI::TreeUI()
     , m_SelectFunc(nullptr)    
     , m_DragDropInst(nullptr)
     , m_DragDropFunc(nullptr)
+    , m_bExteriorLbtnNode(false)
 {   
     m_strDragDropID = "PayLoad";
 }
@@ -243,7 +244,7 @@ TreeNode* TreeUI::AddItem(const string& _strNodeName, DWORD_PTR _Data, TreeNode*
 void TreeUI::SetSelectedNode(TreeNode* _Node)
 {
     // 마우스를 누른 노드와 뗀 노드가 일치해야 함
-    if (m_LbtDownNode != _Node)
+    if (m_LbtDownNode != _Node && m_bExteriorLbtnNode == false)
     {
         m_LbtDownNode = nullptr;
         return;
