@@ -217,12 +217,15 @@ void CCamera::SortObject()
 				{
 					Vec3 vWorldPos = vecObject[j]->Transform()->GetWorldPos();
 
-					// Bounding Debug Shape 그리기
-					tDebugBoundingInfo info = {};
-					info.vWorldPos = vWorldPos;
-					info.fBounding = pRenderCom->GetBounding();
-					info.fMaxTime = 0.f;
-					CRenderMgr::GetInst()->AddDebugBoundingInfo(info);
+					if (pRenderCom->IsShowDebugBound())
+					{
+						// Bounding Debug Shape 그리기
+						tDebugBoundingInfo info = {};
+						info.vWorldPos = vWorldPos;
+						info.fBounding = pRenderCom->GetBounding();
+						info.fMaxTime = 0.f;
+						CRenderMgr::GetInst()->AddDebugBoundingInfo(info);
+					}
 
 					if (false == m_Frustum.FrustumCheckBySphere(vWorldPos, pRenderCom->GetBounding()))
 						continue;
