@@ -7,9 +7,10 @@
 
 CRenderComponent::CRenderComponent(COMPONENT_TYPE _type)
 	: CComponent(_type)
-	, m_fBounding(500.f)
+	, m_fBounding(150.f)
 	, m_bFrustumCheck(true)
 	, m_bDynamicShadow(false)
+	, m_bShowDebugBoundShape(false)
 {
 }
 
@@ -264,6 +265,7 @@ void CRenderComponent::SaveToLevelJsonFile(Value& _objValue, Document::Allocator
 	_objValue.AddMember("fBounding", m_fBounding, allocator);
 	_objValue.AddMember("bFrustumCheck", m_bFrustumCheck, allocator);
 	_objValue.AddMember("bDynamicShadow", m_bDynamicShadow, allocator);
+	_objValue.AddMember("bShowDebugBoundShape" , m_bShowDebugBoundShape, allocator);
 
 	UINT iMtrlCount = GetMtrlCount();
 	_objValue.AddMember("iMtrlCount", iMtrlCount, allocator);
@@ -334,6 +336,7 @@ void CRenderComponent::LoadFromLevelJsonFile(const Value& _componentValue)
 	m_fBounding = _componentValue["fBounding"].GetFloat();
 	m_bFrustumCheck = _componentValue["bFrustumCheck"].GetBool();
 	m_bDynamicShadow = _componentValue["bDynamicShadow"].GetBool();
+	m_bShowDebugBoundShape = _componentValue["bShowDebugBoundShape"].GetBool();
 
 	UINT iMtrlCount = _componentValue["iMtrlCount"].GetUint();
 	m_vecMtrls.resize(iMtrlCount);

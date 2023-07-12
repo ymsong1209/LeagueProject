@@ -81,18 +81,23 @@ void UI::finaltick()
 	// 자식 UI
 	else
 	{
-		ImGui::BeginChild(strFullName.c_str(), m_vSize);
+		// 자식UI들이 스크롤바로 볼 수 있도록 ScrollbleChild UI에 넣는다.
+		ImGui::BeginChild("ScrollableChild", ImVec2(0, 1000), true, ImGuiWindowFlags_HorizontalScrollbar);
 
-		render_update();
+			ImGui::BeginChild(strFullName.c_str(), m_vSize);
 
-		for (size_t i = 0; i < m_vecChildUI.size(); ++i)
-		{
-			m_vecChildUI[i]->finaltick();
+			render_update();
 
-			if (i != m_vecChildUI.size() - 1)
-				ImGui::Separator();
-		}
+			for (size_t i = 0; i < m_vecChildUI.size(); ++i)
+			{
+				m_vecChildUI[i]->finaltick();
 
-		ImGui::EndChild();
+				if (i != m_vecChildUI.size() - 1)
+					ImGui::Separator();
+			}
+
+			ImGui::EndChild();
+
+		ImGui::EndChild(); // ScrollableChild End
 	}
 }

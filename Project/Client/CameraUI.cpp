@@ -29,8 +29,8 @@ int CameraUI::render_update()
 	ImGui::SameLine();
 	int CameraIdx = GetTarget()->Camera()->GetCameraIndex();
 	ImGui::SetNextItemWidth(200.f);
-	if (ImGui::InputInt("##CameraIndex", &m_iCameraIdx)) {
-
+	if (ImGui::InputInt("##CameraIndex", &m_iCameraIdx)) 
+	{
 	}
 
 	////SetMainCam--------//
@@ -40,16 +40,17 @@ int CameraUI::render_update()
 	}
 
 	//ShowDebug---------//
-	bool ShowDebug = GetTarget()->Camera()->GetShowDebug();
 	ImGui::Text("ShowDebug");
 	ImGui::SameLine();
+	bool ShowDebug = GetTarget()->Camera()->GetShowDebug();
 	if (ImGui::Checkbox("##ShowDebugCameraUI", &ShowDebug)) {
+
 		GetTarget()->Camera()->SetShowDebug(ShowDebug);
 	}
 	//SetFar--------//
-	float CamFar = GetTarget()->Camera()->GetFar();
 	ImGui::Text("Far");
 	ImGui::SameLine();
+	float CamFar = GetTarget()->Camera()->GetFar();
 	if (ImGui::DragFloat("##CameraFarCameraUI", &CamFar)) {
 		if (CamFar <= 2.0f) {
 			CamFar = 2.0f;

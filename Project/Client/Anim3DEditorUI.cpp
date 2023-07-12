@@ -462,7 +462,7 @@ void Anim3DEditorUI::SetRepeatBlendTime()
 		}
 		if (repeatblend) {
 			ImGui::SetNextItemWidth(100.f);
-			if (ImGui::InputFloat("##RepeatTimeAnimation3DUI", &m_fBlendTime)) {
+			if (ImGui::InputFloat("##RepeatTimeAnimation3DEditorUI", &m_fBlendTime)) {
 				m_pTestObject->Animator3D()->SetRepeatBlend(repeatblend, m_fBlendTime);
 			}
 		}

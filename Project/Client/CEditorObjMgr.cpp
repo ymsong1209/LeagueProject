@@ -79,7 +79,6 @@ void CEditorObjMgr::init()
 	m_vecEditorObj.push_back(pEditorCamObj);
 	CRenderMgr::GetInst()->RegisterEditorCamera(pEditorCamObj->Camera());
 
-
 	// Editor BoundingObject »ý¼º
 	m_DebugBounding = new CGameObjectEx;
 	m_DebugBounding->AddComponent(new CTransform);
@@ -155,8 +154,8 @@ void CEditorObjMgr::render()
 			break;
 		case SHAPE_TYPE::FRUSTUM:
 		{
-			pShapeObj = m_DebugShape[(UINT)SHAPE_TYPE::FRUSTUM];
 			CreateFrustumDebugMesh();
+			pShapeObj = m_DebugShape[(UINT)SHAPE_TYPE::FRUSTUM];
 			break;
 		}
 		}
@@ -257,6 +256,7 @@ void CEditorObjMgr::CreateFrustumDebugMesh()
 	pMesh->Create(vecVtx.data(), (UINT)vecVtx.size(), vecIdx.data(), (UINT)vecIdx.size());
 
 	m_DebugShape[(UINT)SHAPE_TYPE::FRUSTUM]->MeshRender()->SetMesh(pMesh);
+	m_DebugShape[(UINT)SHAPE_TYPE::FRUSTUM]->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"DebugShapeMtrl"), 0);
 
 	vecVtx.clear();
 	vecIdx.clear();

@@ -67,9 +67,6 @@
     <FxCompile Include="animation3d.fx">
       <Filter>Source\08. ShaderCode\03. Compute\Animation\AnimationUpdate</Filter>
     </FxCompile>
-    <FxCompile Include="worldmap.fx">
-      <Filter>Source\08. ShaderCode\02. Render\3D</Filter>
-    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CRes.cpp">
