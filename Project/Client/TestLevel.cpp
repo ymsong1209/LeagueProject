@@ -139,20 +139,20 @@ void CreateTestLevel()
 	// FBX Loading
 	// ============	
 	{
-		Ptr<CMeshData> pMeshData = nullptr;
-		CGameObject* pObj = nullptr;
-		
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\LoLMap.fbx");
-		
-		pObj = pMeshData->Instantiate();
-		pObj->SetName(L"LoLMap"); 
-		//pObj->Animator3D()->LoadAnim(L"animation\\BlitzCrank\\Attack1.anim3d");
-		//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\BlitzCrank");
-		//pObj->Animator3D()->Play(L"BlitzCrank\\Attack1", true, 0.5f);
-		//pObj->Animator3D()->SetRepeat(true);
-		pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-90.f), 0.f, 0.f));
-		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
+		//Ptr<CMeshData> pMeshData = nullptr;
+		//CGameObject* pObj = nullptr;
+		//
+		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\LoLMap.fbx");
+		//
+		//pObj = pMeshData->Instantiate();
+		//pObj->SetName(L"LoLMap"); 
+		////pObj->Animator3D()->LoadAnim(L"animation\\BlitzCrank\\Attack1.anim3d");
+		////pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\BlitzCrank");
+		////pObj->Animator3D()->Play(L"BlitzCrank\\Attack1", true, 0.5f);
+		////pObj->Animator3D()->SetRepeat(true);
+		//pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-90.f), 0.f, 0.f));
+		//pObj->GetRenderComponent()->SetFrustumCheck(false);
+		//SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
 		
 		//Ptr<CMeshData> pMeshData1 = nullptr;
 		//CGameObject* pObj1 = nullptr;

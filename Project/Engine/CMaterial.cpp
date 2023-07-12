@@ -56,13 +56,29 @@ void CMaterial::SetScalarParam(SCALAR_PARAM _Param, const void* _Src)
 	case INT_0:
 	case INT_1:
 	case INT_2:
-	case INT_3:		
+	case INT_3:
+	case INT_4:
+	case INT_5:
+	case INT_6:
+	case INT_7:
+	case INT_8:
+	case INT_9:
+	case INT_10:
+	case INT_11:
 		m_Const.arrInt[_Param] = *((int*)_Src);
 		break;
 	case FLOAT_0:
 	case FLOAT_1:
 	case FLOAT_2:
 	case FLOAT_3:
+	case FLOAT_4:
+	case FLOAT_5:
+	case FLOAT_6:
+	case FLOAT_7:
+	case FLOAT_8:
+	case FLOAT_9:
+	case FLOAT_10:
+	case FLOAT_11:
 		m_Const.arrFloat[_Param - FLOAT_0] = *((float*)_Src);
 		break;
 
@@ -70,6 +86,14 @@ void CMaterial::SetScalarParam(SCALAR_PARAM _Param, const void* _Src)
 	case VEC2_1:
 	case VEC2_2:
 	case VEC2_3:
+	case VEC2_4:
+	case VEC2_5:
+	case VEC2_6:
+	case VEC2_7:
+	case VEC2_8:
+	case VEC2_9:
+	case VEC2_10:
+	case VEC2_11:
 		m_Const.arrV2[_Param - VEC2_0] = *((Vec2*)_Src);
 		break;
 
@@ -77,6 +101,14 @@ void CMaterial::SetScalarParam(SCALAR_PARAM _Param, const void* _Src)
 	case VEC4_1:
 	case VEC4_2:
 	case VEC4_3:
+	case VEC4_4:
+	case VEC4_5:
+	case VEC4_6:
+	case VEC4_7:
+	case VEC4_8:
+	case VEC4_9:
+	case VEC4_10:
+	case VEC4_11:
 		m_Const.arrV4[_Param - VEC4_0] = *((Vec4*)_Src);
 		break;
 
@@ -101,7 +133,15 @@ void CMaterial::GetScalarParam(SCALAR_PARAM _param, void* _pData)
 	case INT_0:
 	case INT_1:
 	case INT_2:
-	case INT_3:		
+	case INT_3:
+	case INT_4:
+	case INT_5:
+	case INT_6:
+	case INT_7:
+	case INT_8:
+	case INT_9:
+	case INT_10:
+	case INT_11:
 	{
 		int idx = (UINT)_param - (UINT)INT_0;
 		*((int*)_pData) = m_Const.arrInt[idx];
@@ -111,6 +151,14 @@ void CMaterial::GetScalarParam(SCALAR_PARAM _param, void* _pData)
 	case FLOAT_1:
 	case FLOAT_2:
 	case FLOAT_3:
+	case FLOAT_4:
+	case FLOAT_5:
+	case FLOAT_6:
+	case FLOAT_7:
+	case FLOAT_8:
+	case FLOAT_9:
+	case FLOAT_10:
+	case FLOAT_11:
 	{
 		int idx = (UINT)_param - (UINT)FLOAT_0;
 		*((float*)_pData) = m_Const.arrFloat[idx];
@@ -121,6 +169,14 @@ void CMaterial::GetScalarParam(SCALAR_PARAM _param, void* _pData)
 	case VEC2_1:
 	case VEC2_2:
 	case VEC2_3:
+	case VEC2_4:
+	case VEC2_5:
+	case VEC2_6:
+	case VEC2_7:
+	case VEC2_8:
+	case VEC2_9:
+	case VEC2_10:
+	case VEC2_11:
 	{
 		int idx = (UINT)_param - (UINT)VEC2_0;
 		*((Vec2*)_pData) = m_Const.arrV2[idx];
@@ -131,6 +187,14 @@ void CMaterial::GetScalarParam(SCALAR_PARAM _param, void* _pData)
 	case VEC4_1:
 	case VEC4_2:
 	case VEC4_3:
+	case VEC4_4:
+	case VEC4_5:
+	case VEC4_6:
+	case VEC4_7:
+	case VEC4_8:
+	case VEC4_9:
+	case VEC4_10:
+	case VEC4_11:
 	{
 		int idx = (UINT)_param - (UINT)VEC4_0;
 		*((Vec4*)_pData) = m_Const.arrV4[idx];
