@@ -19,6 +19,9 @@ void CRenderMgr::init()
     m_Light3DBuffer = new CStructuredBuffer;
     m_Light3DBuffer->Create(sizeof(tLightInfo), 10, SB_TYPE::READ_ONLY, true);
 
+    // CamFrustumBuffer 备炼拳 滚欺 积己
+    m_CamFrustumBuffer = new CStructuredBuffer;
+    m_CamFrustumBuffer->Create(sizeof(Vec4), 10, SB_TYPE::READ_ONLY, true);
 
     // ==================
     // SwapChain MRT 积己

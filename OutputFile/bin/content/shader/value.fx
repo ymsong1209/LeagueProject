@@ -97,6 +97,7 @@ Texture2DArray g_texarr_1 : register(t11);
 
 StructuredBuffer<tLightInfo> g_Light2DBuffer : register(t12);
 StructuredBuffer<tLightInfo> g_Light3DBuffer : register(t13);
+StructuredBuffer<float4> g_CamFrustumBuffer : register(t14);
 
 // Animation3D Bone Matrix Buffer
 StructuredBuffer<Matrix> g_arrBoneMat : register(t30);

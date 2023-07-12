@@ -42,6 +42,9 @@ CRenderMgr::~CRenderMgr()
     if (nullptr != m_Light3DBuffer)
         delete m_Light3DBuffer;
 
+    if (nullptr != m_CamFrustumBuffer)
+        delete m_CamFrustumBuffer;
+
     Safe_Del_Array(m_MRT);
 }
 
@@ -223,6 +226,20 @@ void CRenderMgr::UpdateData()
     m_Light3DBuffer->UpdateData(13, PIPELINE_STAGE::PS_PIXEL);
 
 
+
+    // ==== Frustum data =====================
+    vector<Vec4> vecFrustumInfo;
+    vecFrustumInfo.clear();
+
+    CFrustum MainCamFrustum = GetMainCam()->GetFrustum();
+    for (size_t i = 0; i < (UINT)FT_END; ++i)
+    {
+        vecFrustumInfo.push_back(MainCamFrustum.GetFrustumArrFace(i));
+    }
+    m_CamFrustumBuffer->SetData(vecFrustumInfo.data(), sizeof(Vec4) * (UINT)vecFrustumInfo.size());
+    m_CamFrustumBuffer->UpdateData(14, PIPELINE_STAGE::PS_GEOMETRY);
+
+    //========================================
 
     // 전역 상수 데이터 바인딩
     CConstBuffer* pGlobalBuffer = CDevice::GetInst()->GetConstBuffer(CB_TYPE::GLOBAL);

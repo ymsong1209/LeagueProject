@@ -29,6 +29,8 @@ private:
     vector<CLight3D*>           m_vecLight3D;    
     CStructuredBuffer*          m_Light3DBuffer;
 
+    CStructuredBuffer*           m_CamFrustumBuffer;
+
     CGameObject* m_GizMoTargetObject;  //기즈모가 생겨야할 타겟 오브젝트
 
     void (CRenderMgr::* RENDER_FUNC)(void);

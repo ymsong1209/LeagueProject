@@ -29,6 +29,7 @@ public:
     bool FrustumCheckByPoint(Vec3 _vWorldPos);
     bool FrustumCheckBySphere(Vec3 _vWorldPos, float _fRadius);
 
+    Vec4 GetFrustumArrFace(int _i) { return m_arrFace[_i]; }
 
 public:
     CLONE(CFrustum);

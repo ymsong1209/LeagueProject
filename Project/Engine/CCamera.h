@@ -84,6 +84,7 @@ public:
 
     bool RayIntersectsSphere(Vec3 _SphereTrans, float _SphereRadius);
 
+    CFrustum GetFrustum() { return m_Frustum; }
 public:
     void SortObject();
     void SortShadowObject();
