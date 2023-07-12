@@ -21,7 +21,7 @@ void CResMgr::InitSound()
 		assert(nullptr);
 	}
 
-	// 32ê°œ ì±„ë„ ìƒì„±
+	// 32°³ Ã¤³Î »ı¼º
 	CSound::g_pFMOD->init(32, FMOD_DEFAULT, nullptr);
 }
 
@@ -36,7 +36,7 @@ void CResMgr::CreateDefaultMesh()
 	Ptr<CMesh> pMesh = nullptr;
 
 	// ==============
-	// PointMesh ìƒì„±
+	// PointMesh »ı¼º
 	// ==============
 	v.vPos = Vec3(0.f, 0.f, 0.f);
 	v.vUV = Vec2(0.f, 0.f);
@@ -50,7 +50,7 @@ void CResMgr::CreateDefaultMesh()
 
 
 	// =============
-	// RectMesh ìƒì„±
+	// RectMesh »ı¼º
 	// =============
 	// 0 --- 1 
 	// |  \  |
@@ -113,14 +113,14 @@ void CResMgr::CreateDefaultMesh()
 	//      3 
 	//   4     2
 	//  5 --0-- 1	
-	// ë°˜ì§€ë¦„
+	// ¹İÁö¸§
 	float fRadius = 0.5f;
 
-	// ê°ë„
+	// °¢µµ
 	UINT Slice = 40;
 	float fTheta = XM_2PI / (float)Slice;
 
-	// ì¤‘ì‹¬ì 
+	// Áß½ÉÁ¡
 	v.vPos = Vec3(0.f, 0.f, 0.f);
 	v.vColor = Vec4(1.f, 1.f, 1.f, 1.f);
 	v.vUV = Vec2(0.5f, 0.5f);
@@ -131,7 +131,7 @@ void CResMgr::CreateDefaultMesh()
 
 	vecVtx.push_back(v);
 
-	// ì •ì  ìœ„ì¹˜ ì§€ì •
+	// Á¤Á¡ À§Ä¡ ÁöÁ¤
 	for (UINT i = 0; i < Slice; ++i)
 	{
 		v.vPos = Vec3(fRadius * cosf(fTheta * (float)i), fRadius * sinf(fTheta * (float)i), 0.f);
@@ -139,7 +139,7 @@ void CResMgr::CreateDefaultMesh()
 		vecVtx.push_back(v);
 	}
 
-	// ì¸ë±ìŠ¤ ì„¤ì •
+	// ÀÎµ¦½º ¼³Á¤
 	for (UINT i = 0; i < Slice - 1; ++i)
 	{
 		vecIdx.push_back(0);
@@ -147,7 +147,7 @@ void CResMgr::CreateDefaultMesh()
 		vecIdx.push_back(i + 1);
 	}
 
-	// ë§ˆì§€ë§‰ ì‚¼ê°í˜•
+	// ¸¶Áö¸· »ï°¢Çü
 	vecIdx.push_back(0);
 	vecIdx.push_back(1);
 	vecIdx.push_back(Slice);
@@ -176,7 +176,7 @@ void CResMgr::CreateDefaultMesh()
 	// =========
 
 	Vtx arrCube[24] = {};
-	// ìœ—ë©´
+	// À­¸é
 	arrCube[0].vPos = Vec3(-0.5f, 0.5f, 0.5f);
 	arrCube[0].vColor = Vec4(1.f, 1.f, 1.f, 1.f);
 	arrCube[0].vUV = Vec2(0.f, 0.f);
@@ -198,7 +198,7 @@ void CResMgr::CreateDefaultMesh()
 	arrCube[3].vNormal = Vec3(0.f, 1.f, 0.f);
 
 
-	// ì•„ë« ë©´	
+	// ¾Æ·§ ¸é	
 	arrCube[4].vPos = Vec3(-0.5f, -0.5f, -0.5f);
 	arrCube[4].vColor = Vec4(1.f, 0.f, 0.f, 1.f);
 	arrCube[4].vUV = Vec2(0.f, 0.f);
@@ -219,7 +219,7 @@ void CResMgr::CreateDefaultMesh()
 	arrCube[7].vUV = Vec2(0.f, 0.f);
 	arrCube[7].vNormal = Vec3(0.f, -1.f, 0.f);
 
-	// ì™¼ìª½ ë©´
+	// ¿ŞÂÊ ¸é
 	arrCube[8].vPos = Vec3(-0.5f, 0.5f, 0.5f);
 	arrCube[8].vColor = Vec4(0.f, 1.f, 0.f, 1.f);
 	arrCube[8].vUV = Vec2(0.f, 0.f);
@@ -240,7 +240,7 @@ void CResMgr::CreateDefaultMesh()
 	arrCube[11].vUV = Vec2(0.f, 0.f);
 	arrCube[11].vNormal = Vec3(-1.f, 0.f, 0.f);
 
-	// ì˜¤ë¥¸ìª½ ë©´
+	// ¿À¸¥ÂÊ ¸é
 	arrCube[12].vPos = Vec3(0.5f, 0.5f, -0.5f);
 	arrCube[12].vColor = Vec4(0.f, 0.f, 1.f, 1.f);
 	arrCube[12].vUV = Vec2(0.f, 0.f);
@@ -261,7 +261,7 @@ void CResMgr::CreateDefaultMesh()
 	arrCube[15].vUV = Vec2(0.f, 0.f);
 	arrCube[15].vNormal = Vec3(1.f, 0.f, 0.f);
 
-	// ë’· ë©´
+	// µŞ ¸é
 	arrCube[16].vPos = Vec3(0.5f, 0.5f, 0.5f);
 	arrCube[16].vColor = Vec4(1.f, 1.f, 0.f, 1.f);
 	arrCube[16].vUV = Vec2(0.f, 0.f);
@@ -282,7 +282,7 @@ void CResMgr::CreateDefaultMesh()
 	arrCube[19].vUV = Vec2(0.f, 0.f);
 	arrCube[19].vNormal = Vec3(0.f, 0.f, 1.f);
 
-	// ì• ë©´
+	// ¾Õ ¸é
 	arrCube[20].vPos = Vec3(-0.5f, 0.5f, -0.5f);;
 	arrCube[20].vColor = Vec4(1.f, 0.f, 1.f, 1.f);
 	arrCube[20].vUV = Vec2(0.f, 0.f);
@@ -303,7 +303,7 @@ void CResMgr::CreateDefaultMesh()
 	arrCube[23].vUV = Vec2(0.f, 0.f);
 	arrCube[23].vNormal = Vec3(0.f, 0.f, -1.f);
 
-	// ì¸ë±ìŠ¤
+	// ÀÎµ¦½º
 	for (int i = 0; i < 12; i += 2)
 	{
 		vecIdx.push_back(i * 2);
@@ -321,11 +321,11 @@ void CResMgr::CreateDefaultMesh()
 	vecIdx.clear();
 
 	///
-	//ìœ—ë©´
+	//À­¸é
 	//0--1
 	//|  |
 	//3--2
-	//ì•„ë«ë©´
+	//¾Æ·§¸é
 	//7---6
 	//|   |
 	//10--15
@@ -369,8 +369,8 @@ void CResMgr::CreateDefaultMesh()
 	vecVtx.push_back(v);
 
 	// Body
-	UINT iStackCount = 40; // ê°€ë¡œ ë¶„í•  ê°œìˆ˜
-	UINT iSliceCount = 40; // ì„¸ë¡œ ë¶„í•  ê°œìˆ˜
+	UINT iStackCount = 40; // °¡·Î ºĞÇÒ °³¼ö
+	UINT iSliceCount = 40; // ¼¼·Î ºĞÇÒ °³¼ö
 
 	float fStackAngle = XM_PI / iStackCount;
 	float fSliceAngle = XM_2PI / iSliceCount;
@@ -417,8 +417,8 @@ void CResMgr::CreateDefaultMesh()
 	v.vBinormal = Vec3(0.f, 0.f, -1.f);
 	vecVtx.push_back(v);
 
-	// ì¸ë±ìŠ¤
-	// ë¶ê·¹ì 
+	// ÀÎµ¦½º
+	// ºÏ±ØÁ¡
 	for (UINT i = 0; i < iSliceCount; ++i)
 	{
 		vecIdx.push_back(0);
@@ -426,7 +426,7 @@ void CResMgr::CreateDefaultMesh()
 		vecIdx.push_back(i + 1);
 	}
 
-	// ëª¸í†µ
+	// ¸öÅë
 	for (UINT i = 0; i < iStackCount - 2; ++i)
 	{
 		for (UINT j = 0; j < iSliceCount; ++j)
@@ -447,7 +447,7 @@ void CResMgr::CreateDefaultMesh()
 		}
 	}
 
-	// ë‚¨ê·¹ì 
+	// ³²±ØÁ¡
 	UINT iBottomIdx = (UINT)vecVtx.size() - 1;
 	for (UINT i = 0; i < iSliceCount; ++i)
 	{
@@ -1255,30 +1255,6 @@ void CResMgr::CreateDefaultGraphicsShader()
 
 	AddRes<CGraphicsShader>(L"DepthMapShader", pShader);
 
-
-	// ============================
-	// worldmap Shader
-	// RS_TYPE : CULL_BACK
-	// DS_TYPE : LESS
-	// BS_TYPE : ALPHA_BLEND	 
-	// Domain : DOMAIN_DEFERRED
-	// ============================
-	pShader = new CGraphicsShader;
-	pShader->SetKey(L"worldmapShader");
-	pShader->CreateVertexShader(L"shader\\worldmap.fx", "VS_worldmap_Deferred");
-	pShader->CreatePixelShader(L"shader\\worldmap.fx", "PS_worldmap_Deferred");
-
-	pShader->SetRSType(RS_TYPE::CULL_BACK);
-	pShader->SetDSType(DS_TYPE::LESS);
-	pShader->SetBSType(BS_TYPE::ALPHA_BLEND);
-
-	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_DEFERRED);
-
-	// Param	
-	pShader->AddTexParam(TEX_0, "Output Texture");
-	pShader->AddTexParam(TEX_1, "Normal Texture");
-
-	AddRes(pShader->GetKey(), pShader);
 }
 
 
@@ -1292,19 +1268,19 @@ void CResMgr::CreateDefaultComputeShader()
 {
 	Ptr<CComputeShader> pCS = nullptr;
 
-	// Texture ìƒ‰ìƒ ë³€ê²½ ì‰ì´ë”
+	// Texture »ö»ó º¯°æ ½¦ÀÌ´õ
 	pCS = new CSetColorShader(32, 32, 1);
 	pCS->SetKey(L"SetColorCS");
 	pCS->CreateComputeShader(L"shader\\setcolor.fx", "CS_SetColor");
 	AddRes(pCS->GetKey(), pCS);
 
-	// Particle Update ì‰ì´ë”
+	// Particle Update ½¦ÀÌ´õ
 	pCS = new CParticleUpdateShader(128, 1, 1);
 	pCS->SetKey(L"ParticleUpdateCS");
 	pCS->CreateComputeShader(L"shader\\particle_update.fx", "CS_ParticleUpdate");
 	AddRes(pCS->GetKey(), pCS);
 
-	// Animation Matrix Update ì‰ì´ë”
+	// Animation Matrix Update ½¦ÀÌ´õ
 	pCS = new CAnimation3DShader(256, 1, 1);
 	pCS->SetKey(L"Animation3DUpdateCS");
 	pCS->CreateComputeShader(L"shader\\animation3d.fx", "CS_Animation3D");
