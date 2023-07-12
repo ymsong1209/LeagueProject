@@ -29,7 +29,7 @@ void UI::finaltick()
 		// 모달리스
 		if (!m_Modal)
 		{
-			ImGui::Begin(strFullName.c_str(), &m_Active);
+			ImGui::Begin(strFullName.c_str(), &m_Active, ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_AlwaysVerticalScrollbar);
 
 			render_update();
 
@@ -77,22 +77,27 @@ void UI::finaltick()
 			}
 		}
 	}
-
 	// 자식 UI
 	else
 	{
-		ImGui::BeginChild(strFullName.c_str(), m_vSize);
+		// 자식 UI들을 스크롤바로 볼 수 있도록 스크롤 자식 UI에 넣는다.
+		ImGui::BeginChild("ScrollableChild", ImVec2(0, 1000), true, ImGuiWindowFlags_HorizontalScrollbar);
 
-		render_update();
+			ImGui::BeginChild(strFullName.c_str(), m_vSize);
 
-		for (size_t i = 0; i < m_vecChildUI.size(); ++i)
-		{
-			m_vecChildUI[i]->finaltick();
+			render_update();
 
-			if (i != m_vecChildUI.size() - 1)
-				ImGui::Separator();
-		}
+			for (size_t i = 0; i < m_vecChildUI.size(); ++i)
+			{
+				m_vecChildUI[i]->finaltick();
+
+				if (i != m_vecChildUI.size() - 1)
+					ImGui::Separator();
+			}
+
+			ImGui::EndChild();
 
 		ImGui::EndChild();
 	}
+
 }
