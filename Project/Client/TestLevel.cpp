@@ -63,8 +63,8 @@ void CreateTestLevel()
 
 
 	pLightObj->Light3D()->SetLightDiffuse(Vec3(1.f, 1.f, 1.f));
-	pLightObj->Light3D()->SetLightSpecular(Vec3(0.3f, 0.3f, 0.3f));
-	pLightObj->Light3D()->SetLightAmbient(Vec3(0.15f, 0.15f, 0.15f));	
+	pLightObj->Light3D()->SetLightSpecular(Vec3(0.f, 0.f, 0.f));
+	pLightObj->Light3D()->SetLightAmbient(Vec3(1.f, 1.f, 1.f));
 
 	pLightObj->Light3D()->SetRadius(400.f);
 
@@ -142,14 +142,15 @@ void CreateTestLevel()
 		Ptr<CMeshData> pMeshData = nullptr;
 		CGameObject* pObj = nullptr;
 		
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\BlitzCrank.fbx");
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\LoLMap.fbx");
 		
 		pObj = pMeshData->Instantiate();
-		pObj->SetName(L"Blitz"); 
-		pObj->Animator3D()->LoadAnim(L"animation\\BlitzCrank\\Attack1.anim3d");
-		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\BlitzCrank");
-		pObj->Animator3D()->Play(L"BlitzCrank\\Attack1", true, 0.5f);
-		pObj->Animator3D()->SetRepeat(true);
+		pObj->SetName(L"LoLMap");
+		pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-90.f), 0.f, 0.f));
+		//pObj->Animator3D()->LoadAnim(L"animation\\BlitzCrank\\Attack1.anim3d");
+		//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\BlitzCrank");
+		//pObj->Animator3D()->Play(L"BlitzCrank\\Attack1", true, 0.5f);
+		//pObj->Animator3D()->SetRepeat(true);
 		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
 		
 		//Ptr<CMeshData> pMeshData1 = nullptr;

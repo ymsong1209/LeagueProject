@@ -1261,8 +1261,8 @@ void CResMgr::CreateDefaultGraphicsShader()
 	// worldmap Shader
 	// RS_TYPE : CULL_BACK
 	// DS_TYPE : LESS
-	// BS_TYPE : DEFAULT	 
-	// Domain : DOMAIN_UNDEFINED
+	// BS_TYPE : ALPHA_BLEND	 
+	// Domain : DOMAIN_DEFERRED
 	// ============================
 	pShader = new CGraphicsShader;
 	pShader->SetKey(L"worldmapShader");
