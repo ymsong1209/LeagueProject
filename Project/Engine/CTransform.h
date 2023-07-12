@@ -20,6 +20,10 @@ private:
 
     Matrix  m_matWorld; // 크기, 회전, 이동 정보를 합쳐놓음
     Matrix  m_matWorldInv; // 월드 역행렬
+
+    float   f_GizmoBounding_Radius; //기즈모한테 클릭될 바운딩 범위(구체 반지름값)
+    bool    b_NoGizmoObj; // 기즈모한테 선택되지 않아야하는 오브젝트일 경우 true
+
 public:
     void SetRelativePos(Vec3 _vPos) { m_vRelativePos = _vPos; }
     void SetRelativeScale(Vec3 _vScale) { m_vRelativeScale = _vScale; }
@@ -50,6 +54,15 @@ public:
     const Matrix& GetWorldMatInv() const { return m_matWorldInv; }
 
     void SetWorldMat(const Matrix& _mat) { m_matWorld = _mat; }
+
+    void SetGizmoBounding(float _Bounding) { f_GizmoBounding_Radius = _Bounding; }
+    float GetGizmoBounding() { return f_GizmoBounding_Radius; }
+    //기즈모한테 클릭될 바운딩 범위(구체 반지름값)
+
+    void SetNoGizmoObj(bool _IsNoGizmoObj) { b_NoGizmoObj = _IsNoGizmoObj; }
+    bool GetNogizmoObj() { return b_NoGizmoObj; }
+    // 기즈모한테 선택되지 않아야하는 오브젝트일 경우 true
+
 public:
     virtual void finaltick() override;
     void UpdateData();

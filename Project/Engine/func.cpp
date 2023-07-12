@@ -507,9 +507,9 @@ Value SavetMtrlConst(tMtrlConst _constData, Document::AllocatorType& allocator)
 	tMtrlDataValue.AddMember("vEmv", SaveVec4Json(_constData.mtrl.vEmv, allocator), allocator);
 	vTemp.AddMember("mtrl", tMtrlDataValue, allocator);
 
-	// int arrInt[4];
+	// int arrInt[12];
 	Value arrIntArray(kArrayType);
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i < 12; ++i)
 	{
 		Value ArrIntValue(kObjectType);
 		string key = "arrInt[" + std::to_string(i) + "]";
@@ -519,11 +519,11 @@ Value SavetMtrlConst(tMtrlConst _constData, Document::AllocatorType& allocator)
 
 		arrIntArray.PushBack(ArrIntValue, allocator);
 	}
-	vTemp.AddMember("arrInt[4]s", arrIntArray, allocator);
+	vTemp.AddMember("arrInt[12]s", arrIntArray, allocator);
 
-	// float arrFloat[4];
+	// float arrFloat[12];
 	Value arrFloatArray(kArrayType);
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i < 12; ++i)
 	{
 		Value ArrFloatValue(kObjectType);
 		string key = "arrFloat[" + std::to_string(i) + "]";
@@ -533,11 +533,11 @@ Value SavetMtrlConst(tMtrlConst _constData, Document::AllocatorType& allocator)
 
 		arrFloatArray.PushBack(ArrFloatValue, allocator);
 	}
-	vTemp.AddMember("arrFloat[4]s", arrFloatArray, allocator);
+	vTemp.AddMember("arrFloat[12]s", arrFloatArray, allocator);
 
-	// Vec2 arrV2[4];
+	// Vec2 arrV2[12];
 	Value arrV2Array(kArrayType);
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i < 12; ++i)
 	{
 		Value ArrV2Value(kObjectType);
 		string key = "arrV2[" + std::to_string(i) + "]";
@@ -547,11 +547,11 @@ Value SavetMtrlConst(tMtrlConst _constData, Document::AllocatorType& allocator)
 
 		arrV2Array.PushBack(ArrV2Value, allocator);
 	}
-	vTemp.AddMember("arrV2[4]s", arrV2Array, allocator);
+	vTemp.AddMember("arrV2[12]s", arrV2Array, allocator);
 
-	// Vec4 arrV4[4];
+	// Vec4 arrV4[12];
 	Value arrV4Array(kArrayType);
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i < 12; ++i)
 	{
 		Value ArrV4Value(kObjectType);
 		string key = "arrV4[" + std::to_string(i) + "]";
@@ -561,11 +561,11 @@ Value SavetMtrlConst(tMtrlConst _constData, Document::AllocatorType& allocator)
 
 		arrV4Array.PushBack(ArrV4Value, allocator);
 	}
-	vTemp.AddMember("arrV4[4]s", arrV4Array, allocator);
+	vTemp.AddMember("arrV4[12]s", arrV4Array, allocator);
 
 	// Matrix arrMat[4];
 	Value arrMatArray(kArrayType);
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i <4; ++i)
 	{
 		Value ArrMatValue(kObjectType);
 		string key = "arrMat[" + std::to_string(i) + "]";
@@ -619,8 +619,8 @@ tMtrlConst LoadtMtrlConst(const Value& _tMtrlConstValue)
 	mtrlConst.mtrl.vAmb = LoadVec4Json(tMtrlDataValue["vAmb"]);
 	mtrlConst.mtrl.vEmv = LoadVec4Json(tMtrlDataValue["vEmv"]);
 
-	// int arrInt[4];
-	const Value& arrIntArray = _tMtrlConstValue["arrInt[4]s"];
+	// int arrInt[12];
+	const Value& arrIntArray = _tMtrlConstValue["arrInt[12]s"];
 	for (int i = 0; i < arrIntArray.Size(); ++i)
 	{
 		string key = "arrInt[" + std::to_string(i) + "]";
@@ -630,8 +630,8 @@ tMtrlConst LoadtMtrlConst(const Value& _tMtrlConstValue)
 		mtrlConst.arrInt[i] = arrIntArray[i][keyName].GetInt();
 	}
 
-	// float arrFloat[4];
-	const Value& arrFloatArray = _tMtrlConstValue["arrFloat[4]s"];
+	// float arrFloat[12];
+	const Value& arrFloatArray = _tMtrlConstValue["arrFloat[12]s"];
 	for (int i = 0; i < arrFloatArray.Size(); ++i)
 	{
 		string key = "arrFloat[" + std::to_string(i) + "]";
@@ -641,8 +641,8 @@ tMtrlConst LoadtMtrlConst(const Value& _tMtrlConstValue)
 		mtrlConst.arrFloat[i] = arrFloatArray[i][keyName].GetFloat();
 	}
 
-	// Vec2 arrV2[4];
-	const Value& arrV2Array = _tMtrlConstValue["arrV2[4]s"];
+	// Vec2 arrV2[12];
+	const Value& arrV2Array = _tMtrlConstValue["arrV2[12]s"];
 	for (int i = 0; i < arrV2Array.Size(); ++i)
 	{
 		string key = "arrV2[" + std::to_string(i) + "]";
@@ -652,8 +652,8 @@ tMtrlConst LoadtMtrlConst(const Value& _tMtrlConstValue)
 		mtrlConst.arrV2[i] = LoadVec2Json(arrV2Array[i][keyName]);
 	}
 
-	// Vec4 arrV4[4];
-	const Value& arrV4Array = _tMtrlConstValue["arrV4[4]s"];
+	// Vec4 arrV4[12];
+	const Value& arrV4Array = _tMtrlConstValue["arrV4[12]s"];
 	for (int i = 0; i < arrV4Array.Size(); ++i)
 	{
 		string key = "arrV4[" + std::to_string(i) + "]";

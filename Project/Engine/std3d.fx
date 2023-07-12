@@ -9,11 +9,24 @@
 // ========================
 // Std3D Shader
 //
+// g_btex_0 : Color Texture가 있는지 판별
+// g_btex_1 : Normal Texture가 있는지 판별
 // g_tex_0 : Color Texture
 // g_tex_1 : Normal Texture
 // 
 // // Ray Tex용 숫자
-#define RayTest          g_int_2
+#define RayTest                     g_int_2
+=======
+// MeshRender관련
+#define TexMove                     g_int_1
+#define OutputTexMoveOffset         g_vec2_4
+#define PunctureTexMoveOffset       g_vec2_5
+#define IsOutputTextureExist        g_btex_0
+#define IsAdditiveTextureExist      g_btex_2
+#define IsPunctureTextureExist      g_btex_3
+#define Additive_Texture            g_tex_2
+#define Puncture_Texture            g_tex_3
+#define Additive_Color              g_vec4_0
 // ========================
 
 

@@ -381,7 +381,14 @@ void CAnimator3D::LoadEveryAnimFromFolder(const std::wstring& _strRelativePath) 
 			CAnim3D* pNewAnim = new CAnim3D;
 			pNewAnim->m_pOwner = this;
 			pNewAnim->Load(animRelativePath);
-			m_mapAnim.insert(make_pair(pNewAnim->GetName(), pNewAnim));
+			auto it = m_mapAnim.find(pNewAnim->GetName());
+			if (it != m_mapAnim.end()) {
+				//동일 key값 존재
+				delete pNewAnim;
+			}
+			else {
+				m_mapAnim.insert(make_pair(pNewAnim->GetName(), pNewAnim));
+			}
 		}
 	} while (FindNextFile(hFind, &findFileData) != 0);
 	FindClose(hFind);

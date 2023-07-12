@@ -75,6 +75,7 @@ private:
 
     string          m_strDragDropID;
 
+    bool            m_bExteriorLbtnNode;
 
 public:
     virtual int render_update() override;
@@ -103,6 +104,8 @@ public:
     }
 
     void SetDragDropID(const string& _strID) { m_strDragDropID = _strID; }
+
+    void SetExteriorLbtnNode(bool _State) { m_bExteriorLbtnNode = _State; }
 
 
 private:

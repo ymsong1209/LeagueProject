@@ -7,9 +7,10 @@
 
 CRenderComponent::CRenderComponent(COMPONENT_TYPE _type)
 	: CComponent(_type)
-	, m_fBounding(500.f)
+	, m_fBounding(150.f)
 	, m_bFrustumCheck(true)
 	, m_bDynamicShadow(false)
+	, m_bShowDebugBoundShape(false)
 {
 }
 
@@ -51,7 +52,10 @@ void CRenderComponent::render_depthmap()
 		}
 	}
 
-	GetOwner()->Animator3D()->GetFinalBoneMat()->Clear();
+	if (GetOwner()->GetComponent(COMPONENT_TYPE::ANIMATOR3D)) {
+		GetOwner()->Animator3D()->GetFinalBoneMat()->Clear();
+	}
+	
 
 }
 
@@ -73,6 +77,11 @@ void CRenderComponent::SetMesh(Ptr<CMesh> _Mesh)
 
 void CRenderComponent::SetMaterial(Ptr<CMaterial> _Mtrl, UINT _idx)
 {
+	// Mesh가 먼저 지정되어 있지 않으면 , m_vecMtrls의 크기가 0이기 때문에 오류가 발생합니다.
+	// SetMesh함수를 참고하시고 이와 관련해 얘기할 것이 있으면 장건희를 호출하세요
+	if (_idx >= m_vecMtrls.size())
+		assert(false, "CRenderComponent::SetMaterial 오류");
+
 	m_vecMtrls[_idx].pSharedMtrl = _Mtrl;
 	m_vecMtrls[_idx].pCurMtrl = _Mtrl;
 }
@@ -81,6 +90,9 @@ Ptr<CMaterial> CRenderComponent::GetMaterial(UINT _idx)
 {
 	//Camera에서 sortobject할때 getmaterial로 판정함. 이때 mtrl이 없으면 nullptr반환
 	if (m_vecMtrls.size() == 0) return nullptr;
+
+	if (_idx >= m_vecMtrls.size())
+		return nullptr;
 
 	if (nullptr == m_vecMtrls[_idx].pCurMtrl)
 	{
@@ -92,6 +104,9 @@ Ptr<CMaterial> CRenderComponent::GetMaterial(UINT _idx)
 
 Ptr<CMaterial> CRenderComponent::GetSharedMaterial(UINT _idx)
 {
+	if (_idx >= m_vecMtrls.size())
+		return nullptr;
+
 	m_vecMtrls[_idx].pCurMtrl = m_vecMtrls[_idx].pSharedMtrl;
 
 	if (m_vecMtrls[_idx].pDynamicMtrl.Get())
@@ -104,6 +119,9 @@ Ptr<CMaterial> CRenderComponent::GetSharedMaterial(UINT _idx)
 
 Ptr<CMaterial> CRenderComponent::GetDynamicMaterial(UINT _idx)
 {
+	if (_idx >= m_vecMtrls.size())
+		return nullptr;
+
 	// 원본 재질이 없다 -> Nullptr 반환
 	if (nullptr == m_vecMtrls[_idx].pSharedMtrl)
 	{
@@ -121,8 +139,19 @@ Ptr<CMaterial> CRenderComponent::GetDynamicMaterial(UINT _idx)
 	return m_vecMtrls[_idx].pCurMtrl;
 }
 
+bool CRenderComponent::IsDynamicMtrlEmpty(UINT _idx)
+{
+	if (_idx >= m_vecMtrls.size())
+		assert(false, "CRenderComponenp::IsDynamicMtrlEmpty 오류");
+
+	return (nullptr == m_vecMtrls[_idx].pDynamicMtrl);
+}
+
 void CRenderComponent::ClearDynamicMtrl(UINT _idx)
 {
+	if (_idx >= m_vecMtrls.size())
+		return;
+
 	if (m_vecMtrls[_idx].pCurMtrl   ==  m_vecMtrls[_idx].pDynamicMtrl)
 	{
 		if ( m_vecMtrls[_idx].pSharedMtrl != nullptr)
@@ -261,6 +290,7 @@ void CRenderComponent::SaveToLevelJsonFile(Value& _objValue, Document::Allocator
 	_objValue.AddMember("fBounding", m_fBounding, allocator);
 	_objValue.AddMember("bFrustumCheck", m_bFrustumCheck, allocator);
 	_objValue.AddMember("bDynamicShadow", m_bDynamicShadow, allocator);
+	_objValue.AddMember("bShowDebugBoundShape" , m_bShowDebugBoundShape, allocator);
 
 	UINT iMtrlCount = GetMtrlCount();
 	_objValue.AddMember("iMtrlCount", iMtrlCount, allocator);
@@ -331,6 +361,7 @@ void CRenderComponent::LoadFromLevelJsonFile(const Value& _componentValue)
 	m_fBounding = _componentValue["fBounding"].GetFloat();
 	m_bFrustumCheck = _componentValue["bFrustumCheck"].GetBool();
 	m_bDynamicShadow = _componentValue["bDynamicShadow"].GetBool();
+	m_bShowDebugBoundShape = _componentValue["bShowDebugBoundShape"].GetBool();
 
 	UINT iMtrlCount = _componentValue["iMtrlCount"].GetUint();
 	m_vecMtrls.resize(iMtrlCount);

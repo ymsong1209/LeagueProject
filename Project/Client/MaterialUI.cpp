@@ -63,6 +63,14 @@ int MaterialUI::render_update()
         case INT_1:
         case INT_2:
         case INT_3:
+        case INT_4:
+        case INT_5:
+        case INT_6:
+        case INT_7:
+        case INT_8:
+        case INT_9:
+        case INT_10:
+        case INT_11:
         {
             // 현재 머티리얼에 세팅된 값을 전달   
             int data = 0;
@@ -78,6 +86,14 @@ int MaterialUI::render_update()
         case FLOAT_1:
         case FLOAT_2:
         case FLOAT_3:
+        case FLOAT_4:
+        case FLOAT_5:
+        case FLOAT_6:
+        case FLOAT_7:
+        case FLOAT_8:
+        case FLOAT_9:
+        case FLOAT_10:
+        case FLOAT_11:
         {
             // 현재 머티리얼에 세팅된 값을 전달   
             float data = 0;
@@ -93,6 +109,14 @@ int MaterialUI::render_update()
         case VEC2_1:
         case VEC2_2:
         case VEC2_3:
+        case VEC2_4:
+        case VEC2_5:
+        case VEC2_6:
+        case VEC2_7:
+        case VEC2_8:
+        case VEC2_9:
+        case VEC2_10:
+        case VEC2_11:
         {
             // 현재 머티리얼에 세팅된 값을 전달   
             Vec2 data;
@@ -108,6 +132,14 @@ int MaterialUI::render_update()
         case VEC4_1:
         case VEC4_2:
         case VEC4_3:
+        case VEC4_4:
+        case VEC4_5:
+        case VEC4_6:
+        case VEC4_7:
+        case VEC4_8:
+        case VEC4_9:
+        case VEC4_10:
+        case VEC4_11:
         {
             // 현재 머티리얼에 세팅된 값을 전달   
             Vec4 data;

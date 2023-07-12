@@ -63,8 +63,8 @@ void CreateTestLevel()
 
 
 	pLightObj->Light3D()->SetLightDiffuse(Vec3(1.f, 1.f, 1.f));
-	pLightObj->Light3D()->SetLightSpecular(Vec3(0.3f, 0.3f, 0.3f));
-	pLightObj->Light3D()->SetLightAmbient(Vec3(0.15f, 0.15f, 0.15f));	
+	pLightObj->Light3D()->SetLightSpecular(Vec3(0.f, 0.f, 0.f));
+	pLightObj->Light3D()->SetLightAmbient(Vec3(1.f, 1.f, 1.f));
 
 	pLightObj->Light3D()->SetRadius(400.f);
 
@@ -139,18 +139,35 @@ void CreateTestLevel()
 	// FBX Loading
 	// ============	
 	{
-		Ptr<CMeshData> pMeshData = nullptr;
-		CGameObject* pObj = nullptr;
-		
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\BlitzCrank.fbx");
-		
-		pObj = pMeshData->Instantiate();
-		pObj->SetName(L"Blitz"); 
-		//pObj->Animator3D()->LoadAnim(L"animation\\BlitzCrank\\Attack1.anim3d");
-		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\BlitzCrank");
-		pObj->Animator3D()->Play(L"BlitzCrank\\Attack1", true, 0.5f);
-		pObj->Animator3D()->SetRepeat(true);
-		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
+
+		//Ptr<CMeshData> pMeshData = nullptr;
+		//CGameObject* pObj = nullptr;
+		//
+		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\BlitzCrank.fbx");
+		//
+		//pObj = pMeshData->Instantiate();
+		//pObj->SetName(L"Blitz"); 
+		////pObj->Animator3D()->LoadAnim(L"animation\\BlitzCrank\\Attack1.anim3d");
+		//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\BlitzCrank");
+		//pObj->Animator3D()->Play(L"BlitzCrank\\Attack1", true, 0.5f);
+		//pObj->Animator3D()->SetRepeat(true);
+		//SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
+
+		//Ptr<CMeshData> pMeshData = nullptr;
+		//CGameObject* pObj = nullptr;
+		//
+		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\LoLMap.fbx");
+		//
+		//pObj = pMeshData->Instantiate();
+		//pObj->SetName(L"LoLMap"); 
+		////pObj->Animator3D()->LoadAnim(L"animation\\BlitzCrank\\Attack1.anim3d");
+		////pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\BlitzCrank");
+		////pObj->Animator3D()->Play(L"BlitzCrank\\Attack1", true, 0.5f);
+		////pObj->Animator3D()->SetRepeat(true);
+		//pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-90.f), 0.f, 0.f));
+		//pObj->GetRenderComponent()->SetFrustumCheck(false);
+		//SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
+
 		
 		//Ptr<CMeshData> pMeshData1 = nullptr;
 		//CGameObject* pObj1 = nullptr;
@@ -219,7 +236,7 @@ void CreateTestLevel()
 	pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
 	pRectFast->MeshRender()->GetDynamicMaterial(0);
 	//pRectFast->MeshRender()->GetMaterial()->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Base_e.dds"));
-	pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Base_e_Puncture.dds"));
+	pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_3, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Base_e_Puncture.dds"));
 	pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_2, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Round.dds"));
 
 	pRectFast->Collider2D()->SetAbsolute(false);
@@ -378,7 +395,7 @@ void CreateTestLevel()
 	pRectFast2->MeshRender()->GetDynamicMaterial(0);
 
 	pRectFast2->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Fighter.bmp"));
-	pRectFast2->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Dots.jpg"));
+	pRectFast2->MeshRender()->GetMaterial(0)->SetTexParam(TEX_3, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Dots.jpg"));
 
 	SpawnGameObject(pRectFast2, Vec3(-300.f, 0.f, 500.f), 0);
 

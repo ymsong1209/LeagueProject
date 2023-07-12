@@ -13,7 +13,18 @@
 // g_float_0 : LayerNum
 // 
 // // Ray Tex용 숫자
-#define RayTest          g_int_2
+#define RayTest                     g_int_2
+
+// MeshRender관련
+#define TexMove                     g_int_1
+#define OutputTexMoveOffset         g_vec2_4
+#define PunctureTexMoveOffset       g_vec2_5
+#define IsOutputTextureExist        g_btex_0
+#define IsAdditiveTextureExist      g_btex_2
+#define IsPunctureTextureExist      g_btex_3
+#define Additive_Texture            g_tex_2
+#define Puncture_Texture            g_tex_3
+#define Additive_Color              g_vec4_0
 // ========================
 
 

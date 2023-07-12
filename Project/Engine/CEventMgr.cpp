@@ -106,6 +106,9 @@ void CEventMgr::tick()
 				}
 			}
 
+			CRenderMgr::GetInst()->SetGizMoTargetObj(nullptr);
+			//·¹º§ ¹Ù²ð¶§ ±âÁî¸ð Å¸°Ùµµ null·Î ¹Ù²ãÁÜ
+
 			CLevelMgr::GetInst()->ChangeLevel(Level);
 			m_LevelChanged = true;
 

@@ -302,10 +302,10 @@ struct tMtrlConst
 {
 	tMtrlData mtrl;
 
-	int arrInt[4];
-	float arrFloat[4];
-	Vec2 arrV2[4];
-	Vec4 arrV4[4];
+	int arrInt[12];
+	float arrFloat[12];
+	Vec2 arrV2[12];
+	Vec4 arrV4[12];
 	Matrix arrMat[4];
 
 	int arrTex[(UINT)TEX_PARAM::TEX_END];

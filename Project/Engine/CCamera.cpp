@@ -353,6 +353,10 @@ void CCamera::SortObject()
 			CLayer* pLayer = pCurLevel->GetLayer(i);
 			const vector<CGameObject*>& vecObject = pLayer->GetObjects();
 
+			m_LayMinDistance = GetFar();//기즈모 테스트 :레이캐스트 할때 겹쳐있는 오브젝트 체크하는데 겹쳐있는 오브젝트중 카메라의 거리가 가장 작은 값을 기록하는 변수.
+			//이는 오브젝트 검사할때마다 한번씩 초기화를 해주어야함.
+
+
 			for (size_t j = 0; j < vecObject.size(); ++j)
 			{
 				CRenderComponent* pRenderCom = vecObject[j]->GetRenderComponent();
@@ -370,16 +374,21 @@ void CCamera::SortObject()
 				{
 					Vec3 vWorldPos = vecObject[j]->Transform()->GetWorldPos();
 
-					// Bounding Debug Shape 그리기
-					tDebugBoundingInfo info = {};
-					info.vWorldPos = vWorldPos;
-					info.fBounding = pRenderCom->GetBounding();
-					info.fMaxTime = 0.f;
-					CRenderMgr::GetInst()->AddDebugBoundingInfo(info);
+					if (pRenderCom->IsShowDebugBound())
+					{
+						// Bounding Debug Shape 그리기
+						tDebugBoundingInfo info = {};
+						info.vWorldPos = vWorldPos;
+						info.fBounding = pRenderCom->GetBounding();
+						info.fMaxTime = 0.f;
+						CRenderMgr::GetInst()->AddDebugBoundingInfo(info);
+					}
 
 					if (false == m_Frustum.FrustumCheckBySphere(vWorldPos, pRenderCom->GetBounding()))
 						continue;
 				}
+
+				GizmoClickCheck(vecObject[j], pCurLevel); //기즈모 클릭 체크
 
 				// 쉐이더 도메인에 따른 분류
 				SHADER_DOMAIN eDomain = pRenderCom->GetMaterial(0)->GetShader()->GetDomain();
@@ -761,8 +770,84 @@ void CCamera::LoadFromLevelJsonFile(const Value& _componentValue)
 	m_ProjType = (PROJ_TYPE)_componentValue["ProjType"].GetUint();
 	m_iLayerMask = _componentValue["iLayerMask"].GetUint();
 	m_iCamIdx = _componentValue["iCamIdx"].GetInt();
-	m_iLayerMask = _componentValue["fFar"].GetFloat();
+	m_fFar = _componentValue["fFar"].GetFloat();
 	m_bShowFrustumDebug = _componentValue["bShowFrustumDebug"].GetBool();
 
 	SetCameraIndex(m_iCamIdx);
+}
+
+
+
+void CCamera::GizmoClickCheck(CGameObject* _CheckTargetObj, CLevel* _CurLevel)
+{
+	Vec3 vWorldPos = _CheckTargetObj->Transform()->GetWorldPos();
+	Vec3 Rot = _CheckTargetObj->Transform()->GetRelativeRot();
+
+	if (_CurLevel->GetState() != LEVEL_STATE::PLAY) // 플레이 모드에서는 기즈모 작동하지 않음
+	{
+		if (KEY_TAP(KEY::RBTN)) // 클릭되었을경우만
+		{
+			if (RayIntersectsSphere(vWorldPos, _CheckTargetObj->Transform()->GetGizmoBounding()) && !_CheckTargetObj->Transform()->GetNogizmoObj())  //오브젝트 구체 콜리전 - 레이 클릭 체크
+			{
+				// 가장 깊이가 작은경우의 오브젝트를 선택하게됨 SetGizMoTargetObj 함수자체는 여러번 호출되지만. 오브젝트 개수만큼 반복문을 통해 결국 마지막엔 가장 작은 깊이를 가진 오브젝트가 기즈모 타겟  오브젝트로 세팅되어있을 것임
+				if (!_CheckTargetObj->IsDead())
+					CRenderMgr::GetInst()->SetGizMoTargetObj(_CheckTargetObj); //위의 if문에서 레이인터섹트 스피어 (현재 구체위에 마우스가 있음) 상태고 마우스를 눌렀다면, 그것을 기즈모 오브젝트로 지정해둠
+
+			}
+		}
+
+		if (b_ViewGizmoBounding && !_CheckTargetObj->Transform()->GetNogizmoObj()) //기즈모 클릭범위를 보여달라고 요청했다면(트랜스폼ui에서) 보여주기
+		{
+			// Bounding Debug Shape 그리기
+			tDebugBoundingInfo info = {};
+			info.vWorldPos = vWorldPos;
+			info.fBounding = _CheckTargetObj->Transform()->GetGizmoBounding();
+			info.fMaxTime = 0.f;
+			CRenderMgr::GetInst()->AddDebugBoundingInfo(info);
+		}
+
+	}
+}
+
+
+bool CCamera::RayIntersectsSphere(Vec3 _SphereTrans, float _SphereRadius)
+{
+	tRay ray = m_ray;
+	// 레이의 원점에서 구의 중심까지의 벡터를 계산합니다.
+	Vec3 m = ray.vStart - _SphereTrans;
+
+	// 레이의 방향과 m 벡터의 내적을 계산합니다.
+	float b = m.x * ray.vDir.x + m.y * ray.vDir.y + m.z * ray.vDir.z;
+
+	// m 벡터의 제곱과 구의 반지름의 제곱의 차를 계산합니다.
+	float c = (m.x * m.x + m.y * m.y + m.z * m.z) - _SphereRadius * _SphereRadius;
+
+	// 레이의 원점이 구의 외부에 있고 (c > 0), 레이가 구를 향하고 있지 않으면 (b > 0) false를 반환합니다.
+	if (c > 0.0f && b > 0.0f) return false;
+
+	// 판별식을 계산합니다. 판별식이 음수이면 레이가 구를 놓치는 것을 의미합니다.
+	float discr = b * b - c;
+
+	// 판별식이 음수이면 레이가 구를 놓친 것이므로 false를 반환합니다.
+	if (discr < 0.0f) return false;
+
+	// 이제 레이가 구와 교차하는 것이 확인되었으므로, 교차점의 가장 작은 t 값을 계산합니다.
+	float t = -b - sqrt(discr);
+
+	// 만약 t가 음수이면 레이가 구 내부에서 시작된 것이므로 t를 0으로 설정합니다.
+	if (t < 0.0f) t = 0.0f;
+
+	// 레이와 교차한 깊이값을 계산합니다.
+	float depth = XMVectorGetX(XMVector3Length(ray.vDir) * t);
+
+	if (m_LayMinDistance > depth) //현재 길이값보다 더 작다면 더앞에있는 오브젝트
+	{
+		m_LayMinDistance = depth;  //현재 디스탠스 값으로 업데이트
+		return true;
+	}
+	else
+		return false;
+
+	// 이 시점에서 레이가 구와 교차하는 것이 확인되었으므로 true를 반환합니다.
+
 }

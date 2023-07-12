@@ -12,6 +12,8 @@ CTransform::CTransform()
 		  Vec3(1.f, 0.f, 0.f)
 		, Vec3(0.f, 1.f, 0.f)
 		, Vec3(0.f, 0.f, 1.f)}	
+	, f_GizmoBounding_Radius(150.f)
+	, b_NoGizmoObj(false)
 {
 	SetName(L"Transform");
 }
@@ -116,7 +118,10 @@ void CTransform::SaveToLevelFile(FILE* _File)
 	fwrite(&m_vRelativePos	, sizeof(Vec3), 1, _File);
 	fwrite(&m_vRelativeScale, sizeof(Vec3), 1, _File);
 	fwrite(&m_vRelativeRot	, sizeof(Vec3), 1, _File);
-	fwrite(&m_bAbsolute, sizeof(bool), 1, _File);	    
+	fwrite(&m_bAbsolute, sizeof(bool), 1, _File);
+
+	fwrite(&b_NoGizmoObj, sizeof(bool), 1, _File);
+	fwrite(&f_GizmoBounding_Radius, sizeof(float), 1, _File);
 }
 
 void CTransform::LoadFromLevelFile(FILE* _FILE)
@@ -125,6 +130,9 @@ void CTransform::LoadFromLevelFile(FILE* _FILE)
 	fread(&m_vRelativeScale, sizeof(Vec3), 1, _FILE);
 	fread(&m_vRelativeRot, sizeof(Vec3), 1, _FILE);
 	fread(&m_bAbsolute, sizeof(bool), 1, _FILE);
+	
+	fread(&b_NoGizmoObj, sizeof(bool), 1, _FILE);
+	fread(&f_GizmoBounding_Radius, sizeof(float), 1, _FILE);
 }
 
 void CTransform::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
@@ -133,6 +141,9 @@ void CTransform::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& 
 	_objValue.AddMember("vRelativeScale", SaveVec3Json(m_vRelativeScale, allocator), allocator);
 	_objValue.AddMember("vRelativeRot", SaveVec3Json(m_vRelativeRot, allocator), allocator);
 	_objValue.AddMember("bAbsolute", m_bAbsolute, allocator);
+
+	_objValue.AddMember("IsNoGizmoObj", b_NoGizmoObj, allocator);
+	_objValue.AddMember("GizmoBounding_Radius", f_GizmoBounding_Radius, allocator);
 }
 
 void CTransform::LoadFromLevelJsonFile(const Value& _componentValue)
@@ -141,4 +152,7 @@ void CTransform::LoadFromLevelJsonFile(const Value& _componentValue)
 	m_vRelativeScale = LoadVec3Json(_componentValue["vRelativeScale"]);
 	m_vRelativeRot = LoadVec3Json(_componentValue["vRelativeRot"]);
 	m_bAbsolute = _componentValue["bAbsolute"].GetBool();
+
+	b_NoGizmoObj = _componentValue["IsNoGizmoObj"].GetBool();
+	f_GizmoBounding_Radius = _componentValue["GizmoBounding_Radius"].GetFloat();
 }
