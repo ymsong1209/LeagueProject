@@ -152,6 +152,7 @@
     <ClInclude Include="..\..\External\Include\ImGuizmo-master\ImGuizmo.h" />
     <ClInclude Include="Anim3DEditorUI.h" />
     <ClInclude Include="Animator2DUI.h" />
+    <ClInclude Include="Animator3DUI.h" />
     <ClInclude Include="CameraUI.h" />
     <ClInclude Include="CEditorObjMgr.h" />
     <ClInclude Include="CGameObjectEx.h" />
@@ -205,6 +206,7 @@
     <ClCompile Include="..\..\External\Library\ImGuizmo-master\ImGuizmo.cpp" />
     <ClCompile Include="Anim3DEditorUI.cpp" />
     <ClCompile Include="Animator2DUI.cpp" />
+    <ClCompile Include="Animator3DUI.cpp" />
     <ClCompile Include="CameraUI.cpp" />
     <ClCompile Include="CEditorObjMgr.cpp" />
     <ClCompile Include="CGameObjectEx.cpp" />
