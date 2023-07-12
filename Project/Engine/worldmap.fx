@@ -76,16 +76,18 @@ struct GS_OUT
 // 판단 함수: 점이 카메라 절두체 내부에 있는지 확인
 bool IsPointInsideFrustum(float3 vPoint)
 {
-   float3 vNormal = g_CamFrustumBuffer[i].xyz;
-   vNormal = normalize(vNormal);
-   
-	// 임의의 점과 해당 평면의 법선벡터와 내적
-   float fDot = dot(vNormal, vPoint);
-   
-	//내적한 값과 원점에서 해당 평면까지의 최단거리(D) 와 비교
-   if (fDot + g_CamFrustumBuffer[i].w > 0) 
-       return false; // 프러스텀 외부-> 정점 버림
-  
+    for (int i = 0; i < 6; ++i)
+    {
+        float3 vNormal = g_CamFrustumBuffer[i].xyz;
+        vNormal = normalize(vNormal);
+        
+		// 임의의 점과 해당 평면의 법선벡터와 내적
+        float fDot = dot(vNormal, vPoint);
+        
+		//내적한 값과 원점에서 해당 평면까지의 최단거리(D) 와 비교
+        if (fDot + g_CamFrustumBuffer[i].w > 0) 
+            return false; // 프러스텀 외부-> 정점 버림
+    }
     return true;
 }
 [maxvertexcount(3)]
