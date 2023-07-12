@@ -21,31 +21,24 @@ struct VS_OUT
 // RasterizerState      : None
 // BlendState           : Mask
 // DepthStencilState    : Less
-//
-#define bAnimUse        g_int_0
-#define LeftTop         g_vec2_0
-#define Slice           g_vec2_1
-#define Offset          g_vec2_2
-#define BackSize        g_vec2_3
 
-// Parameter
-// g_int_0              : AnimUse
-// g_int_1              : TexMove
-// g_vec2_0             : AnimAtlas LeftTop
-// g_vec2_1             : AnimAtlas Slice
-//
-// g_tex_0              : Output   Texture
-// g_tex_1              : Puncture Texture
-// g_tex_2              : Additive Texture
-// g_vec4_0             : Additive Color
-// g_vec2_2             : Output Tex Move Offset
-// g_vec2_3             : Puncture Tex Move Offset
+// Animation 관련
+#define bAnimUse                    g_int_0    // Anim Use
+#define LeftTop                     g_vec2_0   // AnimAtlas LeftTop
+#define Slice                       g_vec2_1   // AnimAtlas Slice
+#define Offset                      g_vec2_2
+#define BackSize                    g_vec2_3
+
+// MeshRender관련
+#define TexMove                     g_int_1
+#define OutputTexMoveOffset         g_vec2_4
+#define PunctureTexMoveOffset       g_vec2_5
 #define IsOutputTextureExist        g_btex_0
-#define IsPunctureTextureExist      g_btex_1
 #define IsAdditiveTextureExist      g_btex_2
-#define Output_Texture              g_tex_0 
-#define Puncture_Texture            g_tex_1
+#define IsPunctureTextureExist      g_btex_3
+#define Output_Texture              g_tex_0
 #define Additive_Texture            g_tex_2
+#define Puncture_Texture            g_tex_3
 #define Additive_Color              g_vec4_0
 // ============================
 VS_OUT VS_Std2D(VS_IN _in)
@@ -61,7 +54,6 @@ VS_OUT VS_Std2D(VS_IN _in)
 
 float4 PS_Std2D(VS_OUT _in) : SV_Target
 {
- 
     float4 vOutColor = float4(0.f, 0.f, 0.f, 1.f);
        
     // Sample Texture가 없는 경우
@@ -82,10 +74,13 @@ float4 PS_Std2D(VS_OUT _in) : SV_Target
             }
             else
             {
-                // UV를 초과한 바깥 부분은 버린다.
-               // vOutColor = float4(1.f, 1.f, 0.f, 1.f);
+                // UV를 초과한 바깥 부분은 버린다. (BackSize관련)
                 discard;
             }
+
+            // 알파값이 0인 부분은 버린다
+            if (vOutColor.w == 0.f)
+                discard;
         }
 
         else
@@ -99,7 +94,7 @@ float4 PS_Std2D(VS_OUT _in) : SV_Target
 
             if (!assist_bit)
             {
-                Offset = g_vec2_2;
+                Offset = g_vec2_4;
             }
 
             vOutColor = Output_Texture.Sample(g_sam_0, _in.vUV + Offset);
@@ -122,9 +117,8 @@ float4 PS_Std2D(VS_OUT _in) : SV_Target
 
         if (!assist_bit)
         {
-            Offset = g_vec2_3;
+            Offset = g_vec2_5;
         }
-
 
         float4 vPunctureSample = Puncture_Texture.Sample(g_sam_0, _in.vUV + Offset);
 
@@ -143,12 +137,8 @@ float4 PS_Std2D(VS_OUT _in) : SV_Target
                                 vOutColor.y + saturate(Additive_Color.y) * vAdditiveSample.y * vOutColor.w * vAdditiveSample.w,
                                 vOutColor.z + saturate(Additive_Color.z) * vAdditiveSample.z * vOutColor.w * vAdditiveSample.w,
                                 vOutColor.w);
-        }
-
-       
+        }  
     }
-    
- 
     return vOutColor;
 }
 

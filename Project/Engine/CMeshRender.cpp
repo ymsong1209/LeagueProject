@@ -12,6 +12,7 @@
 #include "CLevel.h"
  
 #include "CAnimator3D.h"
+#include "CMaterial.h"
  
 
 CMeshRender::CMeshRender()
@@ -67,10 +68,13 @@ CMeshRender::~CMeshRender()
 
 void CMeshRender::finaltick()
 {
+	if (nullptr == GetMesh() || nullptr == GetMaterial(0))
+		return;
+
 	LEVEL_STATE CurLevelState = CLevelMgr::GetInst()->GetCurLevel()->GetState();
 	float SmallTime = 0.f;
 
-	if (CurLevelState == LEVEL_STATE::PAUSE)
+	if (CurLevelState == LEVEL_STATE::STOP)
 	{
 		SmallTime = GlobalData.tEditDT;
 	}
@@ -83,8 +87,8 @@ void CMeshRender::finaltick()
 	// vector에 있는 Texture들에 대해서
 	// 어떤 움직임을 취하고 있는지 찾아서
 	// 참조해야할 UV Offset 값을 계산해준다.
+	 
 	int MovingUse = 0;
-
 
 	for (int i = 0; i < m_vMovingVec.size(); ++i)
 	{
@@ -159,12 +163,12 @@ void CMeshRender::finaltick()
 		{
 		case eTargetTexture::OUTPUT:
 		{
-			GetMaterial(0)->SetScalarParam(VEC2_2, &PreviousPos);
+			GetMaterial(0)->SetScalarParam(VEC2_4, &PreviousPos);
 		}
 			break;
 		case eTargetTexture::PUNCTURE:
 		{
-			GetMaterial(0)->SetScalarParam(VEC2_3, &PreviousPos);
+			GetMaterial(0)->SetScalarParam(VEC2_5, &PreviousPos);
 		}
 			break;
 		case eTargetTexture::END:
@@ -177,16 +181,12 @@ void CMeshRender::finaltick()
 		m_vMovingVec[i].PreviousPos = PreviousPos;
 
 	}
-	// Texture가 Moving을 Option을 쓰는지 전달 (int_1 에 지정되어 있음 (Std2dMtrl기준))
-
-	int a = MovingUse;
+	// Texture가 Moving을 Option을 쓰는지 전달  
 
 	if (GetMaterial(0) != nullptr)
 	{
 		GetMaterial(0)->SetScalarParam(SCALAR_PARAM::INT_1, &MovingUse);
 	}
-
-
 }
 
 void CMeshRender::render()
@@ -218,7 +218,6 @@ void CMeshRender::render()
 		}
 	}
 
-
 	// 렌더
 	UINT iSubsetCount = GetMesh()->GetSubsetCount();
 
@@ -234,23 +233,31 @@ void CMeshRender::render()
 		}
 	}
 
-	// 선생님의 코드로 기존의 것 대체 (note1 start)
-	//for (UINT i = 0; i < GetMesh()->GetSubsetCount(); ++i) {
-	//	//재질 업데이트
-	//	GetMaterial(i)->UpdateData();
-
-	//	//렌더
-	//	GetMesh()->render(i);
-	//}
-	// (note1 end)
-
-
 	// Animation 관련 정보 제거
 	if (Animator2D())
 		Animator2D()->Clear();
 
 	if (Animator3D())
 		Animator3D()->ClearData();
+}
+
+ 
+void CMeshRender::SetOutputTexture(Ptr<CTexture> _Tex)
+{
+	if (GetMesh() != nullptr) 
+		GetMaterial(0)->SetTexParam(TEX_0, _Tex);
+}
+
+void CMeshRender::SetPunctureTexture(Ptr<CTexture> _Tex)
+{
+	if (GetMesh() != nullptr) 
+		GetMaterial(0)->SetTexParam(TEX_3, _Tex);
+}
+
+void CMeshRender::SetAdditiveTexture(Ptr<CTexture> _Tex)
+{
+	if (GetMesh() != nullptr)  
+		GetMaterial(0)->SetTexParam(TEX_2, _Tex);
 }
 
 void CMeshRender::SaveToLevelFile(FILE* _File)

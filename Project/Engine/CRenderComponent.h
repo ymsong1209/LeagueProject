@@ -52,7 +52,7 @@ public:
     void SetShowDebugBound(bool _bShow) { m_bShowDebugBoundShape = _bShow; }
 
 
-    bool IsDynamicMtrlEmpty(UINT _idx) { return (nullptr == m_vecMtrls[_idx].pDynamicMtrl); }
+    bool IsDynamicMtrlEmpty(UINT _idx);
     void ClearDynamicMtrl(UINT _idx);
 
  

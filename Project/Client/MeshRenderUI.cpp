@@ -31,8 +31,7 @@ int MeshRenderUI::render_update()
 	char szBuff[50] = {};
 
 	Ptr<CMesh> pMesh = GetTarget()->MeshRender()->GetMesh();
-	Ptr<CMaterial> pMtrl = GetTarget()->MeshRender()->GetMaterial(0);
-		
+
 	ImGui::Text("Mesh    ");
 	ImGui::SameLine();	
 	GetResKey(pMesh.Get(), szBuff, 50);
@@ -52,9 +51,15 @@ int MeshRenderUI::render_update()
 				GetTarget()->MeshRender()->SetMesh((CMesh*)pRes);
 			}
 		}
-
 		ImGui::EndDragDropTarget();
 	}
+
+	// Mesh가 선택 안되어 있을 경우 Mesh만 선택할 수 있도록 해주고 Skip
+	// Mesh가 선택 되어 있으면 최소한 Material(0)번은 체워지게 된다.
+	if (pMesh == nullptr)
+		return true;
+
+	Ptr<CMaterial> pMtrl = GetTarget()->MeshRender()->GetMaterial(0);
 
 
 	ImGui::SameLine();
@@ -88,20 +93,14 @@ int MeshRenderUI::render_update()
 			CRes* pRes = (CRes*)pNode->GetData();
 			if (RES_TYPE::MATERIAL == pRes->GetType())
 			{
- 
 				GetTarget()->MeshRender()->SetMaterial(((CMaterial*)pRes), 0);
 
+				// Mtrl을 새로 선택한경우 Dynamic Mtrl을 지워준다.
 				GetTarget()->MeshRender()->ClearDynamicMtrl(0);
-
-				/*SelectMaterial((DWORD_PTR))(pRes->GetKey());
-				GetTarget()->MeshRender()->SetMesh((CMesh*)pRes);*/
- 
 			}
 		}
-
 		ImGui::EndDragDropTarget();
 	}
-
 
 	ImGui::SameLine();
 
@@ -130,9 +129,8 @@ int MeshRenderUI::render_update()
 	if (ImGui::RadioButton("Not Use", &isDynamicMtrlUse, 1))
 	{
 		GetTarget()->MeshRender()->ClearDynamicMtrl(0);
+		GetTarget()->MeshRender()->SetUsingMovingVec(false);
 	}
-	
-
 	
 
 	ImGui::Separator();
@@ -157,10 +155,6 @@ int MeshRenderUI::render_update()
 	}
 
 
-
-	
-	 
-
 	// Std2DMtrl_Dynamic Mtrl을 쓰고 있는 경우
 	if (GetTarget()->MeshRender()->IsUsingMovingVec())
 	{
@@ -169,11 +163,8 @@ int MeshRenderUI::render_update()
 		for (int i = 0; i < MovingVec.size(); ++i)
 		{
 			MovingStruct UpdateMovingStruct;
-
-
 			Vec4 FunctionValue = MovingVec[i].FuncValue;
 			Vec2 UpdateOffsetValue = MovingVec[i].PreviousPos;
-
 
 			// 무슨 역할의 Texture인지 이름을 알려줌
 			switch (MovingVec[i].TargetTex)
@@ -190,11 +181,14 @@ int MeshRenderUI::render_update()
 			break;
 			}
 
-
 			// Texture선택할 수 있도록 해줌
 			ImGui::SameLine();
-			GetResKey(pMtrl->GetTexParam((TEX_PARAM(i))).Get(), szBuff, 50);
-
+ 
+			if (MovingVec[i].TargetTex == eTargetTexture::OUTPUT)
+				GetResKey(pMtrl->GetTexParam((TEX_PARAM(0))).Get(), szBuff, 50);
+			else if (MovingVec[i].TargetTex == eTargetTexture::PUNCTURE)
+				GetResKey(pMtrl->GetTexParam((TEX_PARAM(3))).Get(), szBuff, 50);
+		 
 			string TexName = "##TexName" + std::to_string(i);
 			ImGui::InputText(TexName.c_str(), szBuff, 50, ImGuiInputTextFlags_ReadOnly);
 
@@ -208,10 +202,12 @@ int MeshRenderUI::render_update()
 					CRes* pRes = (CRes*)pNode->GetData();
 					if (RES_TYPE::TEXTURE == pRes->GetType())
 					{
-						GetTarget()->MeshRender()->GetMaterial(0)->SetTexParam(TEX_PARAM(i), (CTexture*)pRes);  
+						if (MovingVec[i].TargetTex == eTargetTexture::OUTPUT)
+							GetTarget()->MeshRender()->SetOutputTexture((CTexture*)pRes);
+						else if (MovingVec[i].TargetTex == eTargetTexture::PUNCTURE)
+							GetTarget()->MeshRender()->SetPunctureTexture((CTexture*)pRes);
 					}
 				}
-
 				ImGui::EndDragDropTarget();
 			}
 
@@ -221,9 +217,11 @@ int MeshRenderUI::render_update()
 			string TexClearButton = "Clear##" +  std::to_string(i);
 			if (ImGui::Button(TexClearButton.c_str(), ImVec2(50.f, 20.f)))
 			{
-				GetTarget()->MeshRender()->GetMaterial(0)->SetTexParam(TEX_PARAM(i), (CTexture*)nullptr);
+				if (MovingVec[i].TargetTex == eTargetTexture::OUTPUT)
+					GetTarget()->MeshRender()->SetOutputTexture((CTexture*)nullptr);
+				else if (MovingVec[i].TargetTex == eTargetTexture::PUNCTURE)
+					GetTarget()->MeshRender()->SetPunctureTexture((CTexture*)nullptr);
 			}
-
 
 
 			// 해당 Texture의 움직이는 함수를 알려줌
@@ -247,16 +245,9 @@ int MeshRenderUI::render_update()
 					bool is_selected = (item_current_idx == n);
 					if (ImGui::Selectable(items[n], is_selected))
 						item_current_idx = n;
-
-					// Set the initial focus when opening the combo (scrolling + keyboard navigation focus)
-				/*	if (is_selected)
-						ImGui::SetItemDefaultFocus();*/
 				}
 				ImGui::EndCombo();
 			}
-
-
-
 
 			switch (MovingVec[i].MovingStyle)
 			{
@@ -342,7 +333,7 @@ int MeshRenderUI::render_update()
 		}
 
 
-		// Texture를 비울 수 있도록 해줌
+		// Texture를 비울 수 있도록 해줌 (Additive Texture)
 		ImGui::SameLine();
 		string TexClearButton = "Clear##" + std::to_string(3);
 		if (ImGui::Button(TexClearButton.c_str(), ImVec2(50.f, 20.f)))
@@ -375,9 +366,6 @@ int MeshRenderUI::render_update()
 		}
 	}
 	 
-
-	
-
 	return TRUE;
 }
 
@@ -394,8 +382,5 @@ void MeshRenderUI::SelectMaterial(DWORD_PTR _Key)
 	Ptr<CMaterial> pMtrl = CResMgr::GetInst()->FindRes<CMaterial>(wstring(strKey.begin(), strKey.end()));
 
 	GetTarget()->MeshRender()->SetMaterial(pMtrl, 0);
- 
-
 	GetTarget()->MeshRender()->ClearDynamicMtrl(0);
- 
 }
