@@ -49,6 +49,7 @@ VS_OUT VS_worldmap_Deferred(VS_IN _in)
     }
         
     output.vPosition = mul(float4(_in.vPos, 1.f), g_matWVP);
+    output.vPosition = float4(_in.vPos, 1.f);
     output.vUV = _in.vUV;
     
     output.vViewPos = mul(float4(_in.vPos, 1.f), g_matWV);
@@ -58,6 +59,82 @@ VS_OUT VS_worldmap_Deferred(VS_IN _in)
     
     return output;
 }
+
+// GeometryShader 사용
+struct GS_OUT
+{
+    float4 vPosition : SV_Position;
+    float2 vUV : TEXCOORD;
+    
+    float3 vViewPos : POSITION;
+    
+    float3 vViewTangent : TANGENT;
+    float3 vViewNormal : NORMAL;
+    float3 vViewBinormal : BINORMAL;
+};
+
+// 판단 함수: 점이 카메라 절두체 내부에 있는지 확인
+bool IsPointInsideFrustum(float3 vPoint)
+{
+    // 카메라 절두체 판단 로직을 구현하여 점이 절두체 내부에 있는지 확인하는 로직 작성
+    // ...
+    for (int i = 0; i < 6; ++i)
+    {
+        float3 vNormal = g_CamFrustumBuffer[i].xyz;
+        vNormal = normalize(vNormal);
+        
+		// 임의의 점과 해당 평면의 법선벡터와 내적
+        float fDot = dot(vNormal, vPoint);
+        
+		//내적한 값과 원점에서 해당 평면까지의 최단거리(D) 와 비교
+        if (fDot + g_CamFrustumBuffer[i].w > 0) 
+            return false; // 프러스텀 외부-> 정점 버림
+    }
+    // 예시: 절두체 내부에 있다고 가정
+    return true;
+}
+[maxvertexcount(3)]
+void GS_worldmap_Deferred(triangle VS_OUT _in[3], inout TriangleStream<GS_OUT> _outstream)
+{
+    float3 vPos0 = mul(_in[0].vPosition, g_matWorld).xyz;
+    float3 vPos1 = mul(_in[1].vPosition, g_matWorld).xyz;
+    float3 vPos2 = mul(_in[2].vPosition, g_matWorld).xyz;
+
+    // 패치 내의 정점들을 내부 판단하여 3개의 정점으로 변환
+    if (IsPointInsideFrustum(vPos0) ||
+        IsPointInsideFrustum(vPos1) ||
+        IsPointInsideFrustum(vPos2))
+    {
+        GS_OUT vertex;
+
+        vertex.vPosition = mul(_in[0].vPosition, g_matWVP);
+        vertex.vUV = _in[0].vUV;
+        vertex.vViewPos = _in[0].vViewPos;
+        vertex.vViewTangent = _in[0].vViewTangent;
+        vertex.vViewNormal = _in[0].vViewNormal;
+        vertex.vViewBinormal = _in[0].vViewBinormal;
+        _outstream.Append(vertex);
+
+        vertex.vPosition = mul(_in[1].vPosition, g_matWVP);
+        vertex.vUV = _in[1].vUV;
+        vertex.vViewPos = _in[1].vViewPos;
+        vertex.vViewTangent = _in[1].vViewTangent;
+        vertex.vViewNormal = _in[1].vViewNormal;
+        vertex.vViewBinormal = _in[1].vViewBinormal;
+        _outstream.Append(vertex);
+
+        vertex.vPosition = mul(_in[2].vPosition, g_matWVP);
+        vertex.vUV = _in[2].vUV;
+        vertex.vViewPos = _in[2].vViewPos;
+        vertex.vViewTangent = _in[2].vViewTangent;
+        vertex.vViewNormal = _in[2].vViewNormal;
+        vertex.vViewBinormal = _in[2].vViewBinormal;
+        _outstream.Append(vertex);
+    }
+    else
+        return;
+}
+
 
 // Rasterizer
 
@@ -70,7 +147,7 @@ struct PS_OUT
     float4 vEmissive : SV_Target4;
 };
 
-PS_OUT PS_worldmap_Deferred(VS_OUT _in) : SV_Target
+PS_OUT PS_worldmap_Deferred(GS_OUT _in) : SV_Target
 {
     float4 vObjectColor = float4(0.4f, 0.4f, 0.4f, 1.f);
     float4 vOutColor = float4(0.f, 0.f, 0.f, 1.f);
@@ -104,7 +181,7 @@ PS_OUT PS_worldmap_Deferred(VS_OUT _in) : SV_Target
     {
         discard;
     }
-    
+  
     output.vColor = float4(vObjectColor.xyz, 1.f);
     output.vNormal = float4(vViewNormal.xyz, 1.f);
     output.vPosition = float4(_in.vViewPos.xyz, 1.f);
@@ -124,7 +201,8 @@ PS_OUT PS_worldmap_Deferred(VS_OUT _in) : SV_Target
     }
     output.vEmissive = float4(0.f, 0.f, 0.f, 1.f);
         
-    return output;
-}
+   return output;
+   
 
+}
 #endif

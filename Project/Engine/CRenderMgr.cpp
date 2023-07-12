@@ -230,7 +230,7 @@ void CRenderMgr::UpdateData()
     // ==== Frustum data =====================
     vector<Vec4> vecFrustumInfo;
     vecFrustumInfo.clear();
-
+   
     CFrustum MainCamFrustum = GetMainCam()->GetFrustum();
     for (size_t i = 0; i < (UINT)FT_END; ++i)
     {
@@ -240,6 +240,8 @@ void CRenderMgr::UpdateData()
     m_CamFrustumBuffer->UpdateData(14, PIPELINE_STAGE::PS_GEOMETRY);
 
     //========================================
+
+
 
     // 전역 상수 데이터 바인딩
     CConstBuffer* pGlobalBuffer = CDevice::GetInst()->GetConstBuffer(CB_TYPE::GLOBAL);

@@ -82,7 +82,7 @@ void CreateTestLevel()
 	pSkyBox->Transform()->SetRelativeRot(Vec3(0.f, XM_PI / 2.f, 0.f));
 
 	pSkyBox->SkyBox()->SetType(SKYBOX_TYPE::CUBE);
-	pSkyBox->SkyBox()->SetSkyTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\skybox\\SkyWater.dds"));
+	pSkyBox->SkyBox()->SetSkyTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\skybox\\riots_sru_skybox_cubemap.dds"));
 
 	SpawnGameObject(pSkyBox, Vec3(0.f, 0.f, 0.f), 0);
 
@@ -120,19 +120,19 @@ void CreateTestLevel()
 	//
 	//SpawnGameObject(pObject3, Vec3(0.f, 200.f, 300.f), 0);
 
-	// LandScape Object
-	CGameObject* pLandScape = new CGameObject;
-	pLandScape->SetName(L"LandScape");
-
-	pLandScape->AddComponent(new CTransform);
-	pLandScape->AddComponent(new CLandScape);
-
-	pLandScape->Transform()->SetRelativeScale(Vec3(200.f, 1000.f, 200.f));
-
-	pLandScape->LandScape()->SetFace(32, 32);
-	pLandScape->LandScape()->SetFrustumCheck(false);
-
-	SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 0.f), 0);
+	//// LandScape Object
+	//CGameObject* pLandScape = new CGameObject;
+	//pLandScape->SetName(L"LandScape");
+	//
+	//pLandScape->AddComponent(new CTransform);
+	//pLandScape->AddComponent(new CLandScape);
+	//
+	//pLandScape->Transform()->SetRelativeScale(Vec3(200.f, 1000.f, 200.f));
+	//
+	//pLandScape->LandScape()->SetFace(32, 32);
+	//pLandScape->LandScape()->SetFrustumCheck(false);
+	//
+	//SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 0.f), 0);
 
 
 	// ============
@@ -142,32 +142,33 @@ void CreateTestLevel()
 		Ptr<CMeshData> pMeshData = nullptr;
 		CGameObject* pObj = nullptr;
 		
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\LoLMap.fbx");
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\LoLMapRot19.fbx");
 		
 		pObj = pMeshData->Instantiate();
-		pObj->SetName(L"LoLMap"); 
+		pObj->SetName(L"LoLMapRot19"); 
 		//pObj->Animator3D()->LoadAnim(L"animation\\BlitzCrank\\Attack1.anim3d");
 		//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\BlitzCrank");
 		//pObj->Animator3D()->Play(L"BlitzCrank\\Attack1", true, 0.5f);
 		//pObj->Animator3D()->SetRepeat(true);
-		pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-90.f), 0.f, 0.f));
+		//pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-90.f), 0.f, 0.f));
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
+		SpawnGameObject(pObj, Vec3(0.f, 0.f, 100.f), 0);
 		
 
-		// 통맵 프레임 체크
-		Ptr<CMeshData> pMeshData1 = nullptr;
-		CGameObject* pObj1 = nullptr;
-
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\BlitzCrank.fbx");
-
-		pObj = pMeshData->Instantiate();
-		pObj->SetName(L"Blitz");
-		pObj->Animator3D()->LoadAnim(L"animation\\BlitzCrank\\Attack1.anim3d");
-		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\BlitzCrank");
-		pObj->Animator3D()->Play(L"BlitzCrank\\Attack1", true, 0.5f);
-		pObj->Animator3D()->SetRepeat(true);
-		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
+		//Ptr<CMeshData> pMeshData1 = nullptr;
+		//CGameObject* pObj1 = nullptr;
+		//
+		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\BlitzCrank.fbx");
+		//
+		//pObj = pMeshData->Instantiate();
+		//pObj->SetName(L"Blitz");
+		//pObj->Animator3D()->LoadAnim(L"animation\\BlitzCrank\\Attack1.anim3d");
+		//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\BlitzCrank");
+		//pObj->Animator3D()->Play(L"BlitzCrank\\Attack1", true, 0.5f);
+		//pObj->Animator3D()->SetRepeat(true);
+		//SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
+		// 
+		// 
 		//Ptr<CMeshData> pMeshData1 = nullptr;
 		//CGameObject* pObj1 = nullptr;
 		//pMeshData1 = CResMgr::GetInst()->LoadFBX(L"fbx\\amumu.fbx");
