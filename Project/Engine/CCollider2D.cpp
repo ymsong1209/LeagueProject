@@ -10,6 +10,7 @@ CCollider2D::CCollider2D()
 	, m_Shape(COLLIDER2D_TYPE::RECT)
 	, m_bAbsolute(false)
 	, m_iCollisionCount(0)
+	, m_bIsCollidedFromRay(false)
 {
 	SetName(L"Collider2D");
 }

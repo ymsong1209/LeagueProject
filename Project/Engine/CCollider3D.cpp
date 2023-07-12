@@ -8,6 +8,7 @@ CCollider3D::CCollider3D()
 	, m_Shape(COLLIDER3D_TYPE::SPHERE)
 	, m_bAbsolute(false)
 	, m_iCollisionCount(0)
+	, m_bIsCollidedFromRay(false)
 {
 }
 
@@ -17,6 +18,7 @@ CCollider3D::CCollider3D(const CCollider3D& _other)
 	, m_vOffsetScale(_other.m_vOffsetScale)
 	, m_bAbsolute(_other.m_bAbsolute)
 	, m_Shape(_other.m_Shape)
+	, m_bIsCollidedFromRay(false)
 {
 
 }
@@ -104,6 +106,24 @@ void CCollider3D::EndOverlap(CCollider3D* _Other)
 	{
 		vecScript[i]->EndOverlap(_Other);
 	}
+}
+
+void CCollider3D::BeginRayOverlap()
+{
+	int a = 30;
+	GetOwner()->GetRenderComponent()->GetMaterial(0)->SetScalarParam(INT_2, &a);
+}
+
+void CCollider3D::OnRayOverlap()
+{
+	int a = 20;
+	GetOwner()->GetRenderComponent()->GetMaterial(0)->SetScalarParam(INT_2, &a);
+}
+
+void CCollider3D::EndRayOverlap()
+{
+	int b = 0;
+	GetOwner()->GetRenderComponent()->GetMaterial(0)->SetScalarParam(INT_2, &b);
 }
 
 void CCollider3D::SaveToLevelFile(FILE* _File)

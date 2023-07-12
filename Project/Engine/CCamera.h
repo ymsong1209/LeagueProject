@@ -83,11 +83,13 @@ public:
 protected:
     void CalRay();  // 마우스 방향으로 광선 연산
 
+    void CollideRay(); // Rect 충돌과 Cube충돌 진행
 
 
-// 내가 수정함
+
 public:
     IntersectResult IsCollidingBtwRayRect(tRay& _ray, CGameObject* _Object);
+    IntersectResult IsCollidingBtwRayCube(tRay& _ray, CGameObject* _Object);
     IntersectResult IntersectsLay(Vec3* _vertices, tRay _ray);
 
 

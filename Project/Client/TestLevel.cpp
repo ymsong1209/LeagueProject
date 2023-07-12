@@ -146,7 +146,7 @@ void CreateTestLevel()
 		
 		pObj = pMeshData->Instantiate();
 		pObj->SetName(L"Blitz"); 
-		pObj->Animator3D()->LoadAnim(L"animation\\BlitzCrank\\Attack1.anim3d");
+		//pObj->Animator3D()->LoadAnim(L"animation\\BlitzCrank\\Attack1.anim3d");
 		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\BlitzCrank");
 		pObj->Animator3D()->Play(L"BlitzCrank\\Attack1", true, 0.5f);
 		pObj->Animator3D()->SetRepeat(true);
@@ -289,6 +289,75 @@ void CreateTestLevel()
 
 
 	SpawnGameObject(RayTestObj2, Vec3(-600.f, 0.f, 700.f), 0);
+
+
+
+	// Ray Cube Test Object 1
+	CGameObject* RayCubeTestObj1 = new CGameObject;
+	RayCubeTestObj1->SetName(L"RayCubeTestObj1");
+
+	RayCubeTestObj1->AddComponent(new CMeshRender);
+	RayCubeTestObj1->AddComponent(new CTransform);
+	RayCubeTestObj1->AddComponent(new CCollider3D);
+
+	RayCubeTestObj1->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
+	RayCubeTestObj1->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
+	RayCubeTestObj1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3DMtrl"), 0);
+	RayCubeTestObj1->MeshRender()->GetDynamicMaterial(0);
+
+	RayCubeTestObj1->Collider3D()->SetAbsolute(false);
+	RayCubeTestObj1->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
+	RayCubeTestObj1->Collider3D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+	RayCubeTestObj1->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::CUBE);
+
+
+	SpawnGameObject(RayCubeTestObj1, Vec3(-600.f, -450.f, 700.f), 0);
+
+
+	// Ray Cube Test Object 2
+	CGameObject* RayCubeTestObj2 = new CGameObject;
+	RayCubeTestObj2->SetName(L"RayCubeTestObj1");
+
+	RayCubeTestObj2->AddComponent(new CMeshRender);
+	RayCubeTestObj2->AddComponent(new CTransform);
+	RayCubeTestObj2->AddComponent(new CCollider3D);
+
+	RayCubeTestObj2->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
+	RayCubeTestObj2->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
+	RayCubeTestObj2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3DMtrl"), 0);
+	RayCubeTestObj2->MeshRender()->GetDynamicMaterial(0);
+
+	RayCubeTestObj2->Collider3D()->SetAbsolute(false);
+	RayCubeTestObj2->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
+	RayCubeTestObj2->Collider3D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+	RayCubeTestObj2->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::CUBE);
+
+
+	SpawnGameObject(RayCubeTestObj2, Vec3(-600.f, -450.f, 960.f), 0);
+
+
+	// Ray Cube Test Object 3
+	CGameObject* RayCubeTestObj3 = new CGameObject;
+	RayCubeTestObj3->SetName(L"RayCubeTestObj1");
+
+	RayCubeTestObj3->AddComponent(new CMeshRender);
+	RayCubeTestObj3->AddComponent(new CTransform);
+	RayCubeTestObj3->AddComponent(new CCollider3D);
+
+	RayCubeTestObj3->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
+	RayCubeTestObj3->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
+	RayCubeTestObj3->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3DMtrl"), 0);
+	RayCubeTestObj3->MeshRender()->GetDynamicMaterial(0);
+
+	RayCubeTestObj3->Collider3D()->SetAbsolute(false);
+	RayCubeTestObj3->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
+	RayCubeTestObj3->Collider3D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+	RayCubeTestObj3->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::CUBE);
+
+
+	SpawnGameObject(RayCubeTestObj3, Vec3(-600.f, -450.f, 1220.f), 0);
+
+
 
 
 
