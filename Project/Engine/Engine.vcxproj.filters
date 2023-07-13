@@ -267,6 +267,27 @@
     <ClCompile Include="CAnim3D.cpp">
       <Filter>Source\06.Component\6.Animator3D</Filter>
     </ClCompile>
+    <ClCompile Include="Detour\DetourAlloc.cpp">
+      <Filter>NaviMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Detour\DetourAssert.cpp">
+      <Filter>NaviMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Detour\DetourCommon.cpp">
+      <Filter>NaviMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Detour\DetourNavMesh.cpp">
+      <Filter>NaviMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Detour\DetourNavMeshBuilder.cpp">
+      <Filter>NaviMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Detour\DetourNavMeshQuery.cpp">
+      <Filter>NaviMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Detour\DetourNode.cpp">
+      <Filter>NaviMesh</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="components.h">
@@ -583,6 +604,33 @@
     </ClInclude>
     <ClInclude Include="rapidjson\writer.h">
       <Filter>Default\rapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="Detour\DetourCommon.h">
+      <Filter>NaviMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Detour\DetourMath.h">
+      <Filter>NaviMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Detour\DetourNavMesh.h">
+      <Filter>NaviMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Detour\DetourNavMeshBuilder.h">
+      <Filter>NaviMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Detour\DetourNavMeshQuery.h">
+      <Filter>NaviMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Detour\DetourNode.h">
+      <Filter>NaviMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Detour\DetourStatus.h">
+      <Filter>NaviMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Detour\DetourAlloc.h">
+      <Filter>NaviMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Detour\DetourAssert.h">
+      <Filter>NaviMesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
