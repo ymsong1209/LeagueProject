@@ -128,8 +128,8 @@ void CPlayerScript::tick()
 		navQuery->init(navMesh, 4866);
 		Vec3 Pos = Transform()->GetRelativePos();
 		// 시작 위치와 끝 위치를 설정합니다.
-		float startpos[3] = { Pos.x, Pos.y, Pos.z }; // 시작 위치`
-		float endpos[3] = { 100.f, 0, 0.f }; // 끝 위치
+		float startpos[3] = {0.f, 0.f, 0.f }; // 시작 위치`
+		float endpos[3] = { 100.f, 0.f, -100.f}; // 끝 위치
 
 		dtPolyRef startRef, endRef;
 		float polyPickExt[3] = { 6000,6000,6000 }; // 범위를 제한하기 위한 벡터
@@ -188,7 +188,7 @@ void CPlayerScript::tick()
 			//XMStoreFloat4(&rot, rotQuat);
 
 			// 오브젝트에 위치, 크기, 회전 설정
-			Transform()->SetRelativePos(x, y, z);
+			Transform()->SetRelativePos(x, y, -z);
 		}
 	}
 	

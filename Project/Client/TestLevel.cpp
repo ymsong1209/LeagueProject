@@ -248,7 +248,7 @@ void CreateTestLevel()
 	pRectFast2->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Fighter.bmp"));
 	pRectFast2->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Dots.jpg"));
 
-	SpawnGameObject(pRectFast2, Vec3(221.f, 0.f, 225.f), 0);
+	SpawnGameObject(pRectFast2, Vec3(0.f, 0.f, 0.f), 0);
 
 
 	// Anim Test Object
