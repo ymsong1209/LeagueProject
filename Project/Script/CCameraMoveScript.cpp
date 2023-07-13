@@ -5,6 +5,8 @@
 #include <Engine\CCamera.h>
 #include <Engine/CLevelMgr.h>
 #include <Engine/CLevel.h>
+#include <Engine/CEngine.h>
+
 CCameraMoveScript::CCameraMoveScript()
 	: CScript((UINT)SCRIPT_TYPE::CAMERAMOVESCRIPT)
 	, m_fCamSpeed(100.f)
@@ -69,6 +71,9 @@ void CCameraMoveScript::Camera3DMove()
 	Vec3 vRight = Transform()->GetRelativeDir(DIR_TYPE::RIGHT);
 
 	float fSpeed = m_fCamSpeed;
+
+
+
 
 	if (KEY_PRESSED(KEY::LSHIFT))
 		fSpeed *= 5.f;

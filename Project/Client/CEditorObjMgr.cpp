@@ -10,6 +10,7 @@
 #include <Engine\CKeyMgr.h>
 
 #include <Script\CCameraMoveScript.h>
+#include <Script\CInGameCameraScript.h>
 
 CEditorObjMgr::CEditorObjMgr()
 	: m_DebugShape{}
@@ -71,6 +72,7 @@ void CEditorObjMgr::init()
 	pEditorCamObj->AddComponent(new CTransform);
 	pEditorCamObj->AddComponent(new CCamera);
 	pEditorCamObj->AddComponent(new CCameraMoveScript);
+	pEditorCamObj->AddComponent(new CInGameCameraScript);
 
 	pEditorCamObj->Camera()->SetLayerMaskAll(true);
 	pEditorCamObj->Camera()->SetProjType(PROJ_TYPE::PERSPECTIVE);
@@ -166,7 +168,7 @@ void CEditorObjMgr::render()
 		}
 		else
 		{
-			pShapeObj->Transform()->SetRelativePos(iter->vWorldPos);
+			pShapeObj->Transform()->SetRelativePos(iter->vWorldPos); 
 			pShapeObj->Transform()->SetRelativeScale(iter->vWorldScale);
 			pShapeObj->Transform()->SetRelativeRot(iter->vWorldRotation);
 			pShapeObj->finaltick();
