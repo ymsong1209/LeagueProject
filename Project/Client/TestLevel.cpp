@@ -152,6 +152,7 @@ void CreateTestLevel()
 		//pObj->Animator3D()->SetRepeat(true);
 		//pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-90.f), 0.f, 0.f));
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
+
 		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
 		
 		//Ptr<CMeshData> pMeshData1 = nullptr;
@@ -234,6 +235,7 @@ void CreateTestLevel()
 
 	pRectFast2->AddComponent(new CMeshRender);
 	pRectFast2->AddComponent(new CTransform);
+	pRectFast2->AddComponent(new CPlayerScript);
 
 	pRectFast2->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
 	pRectFast2->MeshRender()->SetUsingMovingVec(true);
@@ -242,31 +244,32 @@ void CreateTestLevel()
 	pRectFast2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
 	pRectFast2->MeshRender()->GetDynamicMaterial(0);
 
+
 	pRectFast2->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Fighter.bmp"));
 	pRectFast2->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Dots.jpg"));
 
-	SpawnGameObject(pRectFast2, Vec3(-300.f, 0.f, 500.f), 0);
+	SpawnGameObject(pRectFast2, Vec3(221.f, 0.f, 225.f), 0);
 
 
 	// Anim Test Object
-	CGameObject* pAnimTestObj = new CGameObject;
-	pAnimTestObj->SetName(L"AnimTestObj");
+	//CGameObject* pAnimTestObj = new CGameObject;
+	//pAnimTestObj->SetName(L"AnimTestObj");
 
-	pAnimTestObj->AddComponent(new CMeshRender);
-	pAnimTestObj->AddComponent(new CAnimator2D);
-	pAnimTestObj->AddComponent(new CTransform);
+	//pAnimTestObj->AddComponent(new CMeshRender);
+	//pAnimTestObj->AddComponent(new CAnimator2D);
+	//pAnimTestObj->AddComponent(new CTransform);
 
-	pAnimTestObj->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	pAnimTestObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
+	//pAnimTestObj->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	//pAnimTestObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
 
-	pAnimTestObj->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 0.f));
+	//pAnimTestObj->Transform()->SetRelativeScale(Vec3(0.f, 0.f, 0.f));
 
 	// 테스트를 해보고 싶은데 FindRes 에 CAnim2D가 없어서 못해봤습니다..
 	// 추가할라고 마음 먹으면 할 수 있을 것 같긴한데, 너무 크게 바꾸는 것 같아 해보진 않았습니다.
 	//pAnimTestObj->Animator2D()->SetCurAnim(CResMgr::GetInst()->FindRes<CAnim2D>(L"Link_Basic").Get());
 
 
-	SpawnGameObject(pAnimTestObj, Vec3(-200.f, 0.f, 300.f), 0.f);
+	//SpawnGameObject(pAnimTestObj, Vec3(0.f, 0.f, 0.f), 0.f);
 
 
 
