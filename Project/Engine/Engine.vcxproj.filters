@@ -781,6 +781,9 @@
     <Filter Include="Default\rapidJson">
       <UniqueIdentifier>{d08c7c66-7921-40fa-9acd-5c4562cb9377}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NaviMesh">
+      <UniqueIdentifier>{3f52a28d-9903-4f95-af53-05a176fce088}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="SimpleMath.inl">
