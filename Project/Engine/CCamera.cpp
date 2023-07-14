@@ -128,8 +128,8 @@ void CCamera::CalRay()
 
 		Vec2 MousePos = CKeyMgr::GetInst()->GetMousePos() - CamPos;
 
-		Vec3 Addx = MousePos.x * Transform()->GetWorldDir(DIR_TYPE::RIGHT);
-		Vec3 Addy = MousePos.y * Transform()->GetWorldDir(DIR_TYPE::UP);
+		Vec3 Addx = MousePos.x * Transform()->GetWorldDir(DIR_TYPE::RIGHT) * (1.f / m_fScale) ;
+		Vec3 Addy = MousePos.y * Transform()->GetWorldDir(DIR_TYPE::UP) * ( 1.f / m_fScale);
 
 		// Add앞에 -를 붙여야 하는 이유는 DirectX의 y축과 화면에서의 y축의 증가 방향이
 		// 반대이기 때문이다.
