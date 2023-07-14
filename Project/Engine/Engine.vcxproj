@@ -209,6 +209,8 @@ call EngineCopy.bat</Command>
     <ClInclude Include="components.h" />
     <ClInclude Include="CParticleSystem.h" />
     <ClInclude Include="CParticleUpdateShader.h" />
+    <ClInclude Include="CPathFinder.h" />
+    <ClInclude Include="CPathFindMgr.h" />
     <ClInclude Include="CPathMgr.h" />
     <ClInclude Include="CPrefab.h" />
     <ClInclude Include="CRaycastShader.h" />
@@ -328,6 +330,8 @@ call EngineCopy.bat</Command>
     <ClCompile Include="CMRT.cpp" />
     <ClCompile Include="CParticleSystem.cpp" />
     <ClCompile Include="CParticleUpdateShader.cpp" />
+    <ClCompile Include="CPathFinder.cpp" />
+    <ClCompile Include="CPathFindMgr.cpp" />
     <ClCompile Include="CPathMgr.cpp" />
     <ClCompile Include="CPrefab.cpp" />
     <ClCompile Include="CRaycastShader.cpp" />
@@ -376,6 +380,8 @@ call EngineCopy.bat</Command>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </ObjectFileOutput>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="debugshape.fx">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>

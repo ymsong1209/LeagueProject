@@ -16,6 +16,7 @@
 #define EditorDT CTimeMgr::GetInst()->GetEditorDeltaTime()
 
 #define MAX_LAYER 32
+#define NaN std::numeric_limits<float>::quiet_NaN()
 
 #define SINGLE(type) private: type(); ~type(); friend class CSingleton<type>;
 
@@ -45,6 +46,7 @@ enum class COMPONENT_TYPE
 	LIGHT3D,		// 3차원 광원
 	CAMERA,			// Camera
 	FSM,
+	PATHFINDER,		// 길찾기
 
 	// render
 	MESHRENDER,		// 기본적인 렌더링

@@ -368,6 +368,9 @@ void MenuUI::AddComponent(COMPONENT_TYPE _type)
     case COMPONENT_TYPE::FSM:
         pSelectedObject->AddComponent(new CFsm);
         break;
+    case COMPONENT_TYPE::PATHFINDER:
+        pSelectedObject->AddComponent(new CPathFinder);
+        break;
     }
 
     // Inspector 에 새롭게 추가된 컴포넌트를 알리기 위해서 타겟을 다시 알려준다.

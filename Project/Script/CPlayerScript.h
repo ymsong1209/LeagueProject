@@ -8,6 +8,7 @@ class CPlayerScript :
 {
 private:
     float       m_fSpeed;
+    Vec3        m_vTargetPosTest;
 
 public:
     virtual void begin() override;

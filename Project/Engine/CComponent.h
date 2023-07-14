@@ -53,6 +53,7 @@ public:
     GET_OTHER_COMPONENT(ParticleSystem);
     GET_OTHER_COMPONENT(LandScape);
     GET_OTHER_COMPONENT(Fsm);
+    GET_OTHER_COMPONENT(PathFinder);
 
 public:
     CComponent(COMPONENT_TYPE _Type);

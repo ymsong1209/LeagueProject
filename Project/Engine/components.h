@@ -9,6 +9,7 @@
 #include "CCamera.h"
 #include "CAnimator2D.h"
 #include "CFsm.h"
+#include "CPathFinder.h"
 
 #include "CMeshRender.h"
 #include "CTileMap.h"

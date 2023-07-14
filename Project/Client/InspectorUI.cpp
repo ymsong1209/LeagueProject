@@ -17,6 +17,7 @@
 #include "Light3DUI.h"
 #include "FsmUI.h"
 #include "ParticleSystemUI.h"
+#include "PathFinderUI.h"
 
 #include "MeshDataUI.h"
 #include "TextureUI.h"
@@ -98,6 +99,10 @@ InspectorUI::InspectorUI()
 	m_arrComUI[(UINT)COMPONENT_TYPE::LANDSCAPE] = new LandScapeUI;
 	m_arrComUI[(UINT)COMPONENT_TYPE::LANDSCAPE]->SetSize(0.f, 600.f);
 	AddChildUI(m_arrComUI[(UINT)COMPONENT_TYPE::LANDSCAPE]);
+
+	m_arrComUI[(UINT)COMPONENT_TYPE::PATHFINDER] = new PathFinderUI;
+	m_arrComUI[(UINT)COMPONENT_TYPE::PATHFINDER]->SetSize(0.f, 150.f);
+	AddChildUI(m_arrComUI[(UINT)COMPONENT_TYPE::PATHFINDER]);
 
 
 	// ResUI
