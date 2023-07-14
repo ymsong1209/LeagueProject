@@ -66,6 +66,7 @@ public:
     CLONE(CMeshRender);
 public:
     CMeshRender();
+    CMeshRender(const CMeshRender& _other);
     ~CMeshRender();
 };
 

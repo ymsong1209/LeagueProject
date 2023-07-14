@@ -53,6 +53,7 @@ public:
     CLONE(CCollider2D);
 public:
     CCollider2D();
+    CCollider2D(const CCollider2D& _other);
     ~CCollider2D();
 };
 

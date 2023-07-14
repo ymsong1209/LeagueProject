@@ -10,8 +10,22 @@ CFsm::CFsm()
 
 CFsm::CFsm(const CFsm& _other)
 	: CComponent(_other)
-	, m_pCurState(_other.m_pCurState)
+	, m_pCurState(nullptr)
 {
+	//_other.m_mapAnim의 객체들을 반복문을 돌며 깊은 복사하여 복사할 맵에 넣어준다.
+	map<wstring, CState*>::const_iterator iter = _other.m_mapState.begin();
+	for (; iter != _other.m_mapState.end(); iter++)
+	{
+		//State Clone
+		CState* pState = iter->second->Clone();
+		//복사한 애니메이션 맵에 새로 만든 애니메이션 삽입
+		m_mapState.insert(make_pair(iter->first, pState));
+	}
+
+	//복사가 끝나면 원본 State와 같은 State로 맞춰둔다.
+	if (_other.m_pCurState) {
+		m_pCurState = m_mapState.find(_other.m_pCurState->GetName())->second;
+	}
 }
 
 CFsm::~CFsm()

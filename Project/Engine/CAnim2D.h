@@ -96,6 +96,7 @@ public:
     CLONE(CAnim2D);
 public:
     CAnim2D();
+    CAnim2D(const CAnim2D& _other);
     ~CAnim2D();
 
     friend class CAnimator2D;

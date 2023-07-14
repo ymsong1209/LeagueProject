@@ -12,8 +12,20 @@ CTransform::CTransform()
 		  Vec3(1.f, 0.f, 0.f)
 		, Vec3(0.f, 1.f, 0.f)
 		, Vec3(0.f, 0.f, 1.f)}	
-	, f_GizmoBounding_Radius(150.f)
-	, b_NoGizmoObj(false)
+	, m_fGizmoBounding_Radius(150.f)
+	, m_bGizmoObjExcept(false)
+{
+	SetName(L"Transform");
+}
+
+CTransform::CTransform(const CTransform& _other)
+	: CComponent(COMPONENT_TYPE::TRANSFORM)
+	, m_vRelativeScale(_other.m_vRelativeScale)
+	, m_vRelativePos(_other.m_vRelativePos)
+	, m_vRelativeRot(_other.m_vRelativeRot)
+	, m_bAbsolute(_other.m_bAbsolute)
+	, m_fGizmoBounding_Radius(_other.m_fGizmoBounding_Radius)
+	, m_bGizmoObjExcept(_other.m_bGizmoObjExcept)
 {
 	SetName(L"Transform");
 }
@@ -98,21 +110,6 @@ void CTransform::UpdateData()
 }
 
 
-Matrix CTransform::GetWorldRotMat()
-{
-	Matrix matWorldRot = m_matWorldRot;
-
-	CGameObject* pParent = GetOwner()->GetParent();
-
-	while (pParent)
-	{
-		matWorldRot *= pParent->Transform()->m_matWorldRot;
-		pParent = pParent->GetParent();
-	}
-
-	return matWorldRot;
-}
-
 void CTransform::SaveToLevelFile(FILE* _File)
 {
 	fwrite(&m_vRelativePos	, sizeof(Vec3), 1, _File);
@@ -120,8 +117,8 @@ void CTransform::SaveToLevelFile(FILE* _File)
 	fwrite(&m_vRelativeRot	, sizeof(Vec3), 1, _File);
 	fwrite(&m_bAbsolute, sizeof(bool), 1, _File);
 
-	fwrite(&b_NoGizmoObj, sizeof(bool), 1, _File);
-	fwrite(&f_GizmoBounding_Radius, sizeof(float), 1, _File);
+	fwrite(&m_bGizmoObjExcept, sizeof(bool), 1, _File);
+	fwrite(&m_fGizmoBounding_Radius, sizeof(float), 1, _File);
 }
 
 void CTransform::LoadFromLevelFile(FILE* _FILE)
@@ -131,8 +128,8 @@ void CTransform::LoadFromLevelFile(FILE* _FILE)
 	fread(&m_vRelativeRot, sizeof(Vec3), 1, _FILE);
 	fread(&m_bAbsolute, sizeof(bool), 1, _FILE);
 	
-	fread(&b_NoGizmoObj, sizeof(bool), 1, _FILE);
-	fread(&f_GizmoBounding_Radius, sizeof(float), 1, _FILE);
+	fread(&m_bGizmoObjExcept, sizeof(bool), 1, _FILE);
+	fread(&m_fGizmoBounding_Radius, sizeof(float), 1, _FILE);
 }
 
 void CTransform::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
@@ -142,8 +139,8 @@ void CTransform::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& 
 	_objValue.AddMember("vRelativeRot", SaveVec3Json(m_vRelativeRot, allocator), allocator);
 	_objValue.AddMember("bAbsolute", m_bAbsolute, allocator);
 
-	_objValue.AddMember("IsNoGizmoObj", b_NoGizmoObj, allocator);
-	_objValue.AddMember("GizmoBounding_Radius", f_GizmoBounding_Radius, allocator);
+	_objValue.AddMember("IsNoGizmoObj", m_bGizmoObjExcept, allocator);
+	_objValue.AddMember("GizmoBounding_Radius", m_fGizmoBounding_Radius, allocator);
 }
 
 void CTransform::LoadFromLevelJsonFile(const Value& _componentValue)
@@ -153,6 +150,6 @@ void CTransform::LoadFromLevelJsonFile(const Value& _componentValue)
 	m_vRelativeRot = LoadVec3Json(_componentValue["vRelativeRot"]);
 	m_bAbsolute = _componentValue["bAbsolute"].GetBool();
 
-	b_NoGizmoObj = _componentValue["IsNoGizmoObj"].GetBool();
-	f_GizmoBounding_Radius = _componentValue["GizmoBounding_Radius"].GetFloat();
+	m_bGizmoObjExcept = _componentValue["IsNoGizmoObj"].GetBool();
+	m_fGizmoBounding_Radius = _componentValue["GizmoBounding_Radius"].GetFloat();
 }

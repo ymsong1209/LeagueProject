@@ -16,12 +16,14 @@ CLight3D::CLight3D()
 	m_pLightCam = new CGameObject;
 	m_pLightCam->AddComponent(new CTransform);
 	m_pLightCam->AddComponent(new CCamera);
+	SetLightType(LIGHT_TYPE::DIRECTIONAL);
 }
 
 CLight3D::CLight3D(const CLight3D& _other)
 	: CComponent(_other)
 	, m_LightInfo(_other.m_LightInfo)
 	, m_pLightCam(nullptr)
+	, m_bShowDebug(_other.m_bShowDebug)
 {
 	m_pLightCam = _other.m_pLightCam->Clone();
 	SetLightType(static_cast<LIGHT_TYPE>(_other.m_LightInfo.LightType));

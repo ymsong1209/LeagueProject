@@ -9,7 +9,7 @@
 #include "ImGuiMgr.h"
 #include "InspectorUI.h"
 #include "LevelUI.h"
-
+#include "CLevelSaveLoad.h"
 
 ContentUI::ContentUI()
     : UI("##Content")
@@ -93,7 +93,25 @@ void ContentUI::Reload()
 			CResMgr::GetInst()->Load<CMaterial>(m_vecResPath[i], m_vecResPath[i]);
 			break;
 		case RES_TYPE::PREFAB:
+		{
+			FILE* pFile = nullptr;
+			wstring path = strContentPath + m_vecResPath[i].c_str();
 
+			_wfopen_s(&pFile, path.c_str(), L"rb");
+
+			Ptr<CPrefab> pRes = CResMgr::GetInst()->FindRes<CPrefab>(m_vecResPath[i]).Get();
+
+			// 이미 해당 키로 리소스가 있다면, break;
+			if (nullptr != pRes) break;
+
+			pRes = new CPrefab;
+			//상대경로 지정
+			pRes.Get()->Load(m_vecResPath[i]);
+			CGameObject* prefabobject = CLevelSaveLoad::LoadGameObject(pFile);
+			pRes.Get()->RegisterProtoObject(prefabobject);
+			CResMgr::GetInst()->AddRes(m_vecResPath[i], pRes);
+			fclose(pFile);
+		}
 			break;
 		case RES_TYPE::MESH:
 
@@ -210,7 +228,7 @@ RES_TYPE ContentUI::GetResTypeByExt(const wstring& _relativepath)
 		
 	if (L".mdat" == strExt)
 		return RES_TYPE::MESHDATA;
-	else if (L".pref" == strExt)
+	else if (L".prefab" == strExt)
 		return RES_TYPE::PREFAB;
 	else if (L".mesh" == strExt)
 		return RES_TYPE::MESH;

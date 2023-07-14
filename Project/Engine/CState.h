@@ -14,7 +14,7 @@ public:
     friend class CFsm;
 
 public:
-    CLONE_DISABLE(CState);
+    CLONE(CState);
 
 private:
     CFsm*        m_pOwnerFSM;   // 본인을 소유한 FSM 컴포넌트

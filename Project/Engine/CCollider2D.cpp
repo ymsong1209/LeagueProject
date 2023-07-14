@@ -14,6 +14,17 @@ CCollider2D::CCollider2D()
 	SetName(L"Collider2D");
 }
 
+CCollider2D::CCollider2D(const CCollider2D& _other)
+	: CComponent(COMPONENT_TYPE::COLLIDER2D)
+	, m_vOffsetPos(_other.m_vOffsetPos)
+	, m_vOffsetScale(_other.m_vOffsetScale)
+	, m_bAbsolute(_other.m_bAbsolute)
+	, m_Shape(_other.m_Shape)
+
+{
+
+}
+
 CCollider2D::~CCollider2D()
 {
 }

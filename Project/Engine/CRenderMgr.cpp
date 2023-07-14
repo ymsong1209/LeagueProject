@@ -129,6 +129,9 @@ void CRenderMgr::render_dynamic_shadowdepth()
 
 int CRenderMgr::RegisterCamera(CCamera* _Cam, int _idx)
 {
+    //새로 생성, 혹은 Clone을 한 Camera는 인덱스가 -1임
+    if (_idx < 0) return _idx;
+
     if (m_vecCam.size() <= _idx)
     {
         m_vecCam.resize(_idx + 1);

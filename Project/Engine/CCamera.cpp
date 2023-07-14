@@ -34,6 +34,7 @@ CCamera::CCamera()
 	, m_iLayerMask(0)
 	, m_iCamIdx(-1)
 	, m_bShowFrustumDebug(false)
+	, m_bViewGizmoBounding(false)
 {
 	SetName(L"Camera");
 
@@ -48,12 +49,14 @@ CCamera::CCamera(const CCamera& _Other)
 	, m_fWidth(_Other.m_fWidth)
 	, m_fAspectRatio(_Other.m_fAspectRatio)
 	, m_fScale(_Other.m_fScale)
-	, m_fFar(50000.f)
+	, m_fFar(_Other.m_fFar)
 	, m_ProjType(_Other.m_ProjType)
 	, m_iLayerMask(_Other.m_iLayerMask)
 	, m_iCamIdx(-1)
 	, m_bShowFrustumDebug(_Other.m_bShowFrustumDebug)
+	, m_bViewGizmoBounding(_Other.m_bViewGizmoBounding)
 {
+	SetName(L"Camera");
 }
 
 CCamera::~CCamera()
@@ -439,35 +442,41 @@ void CCamera::render_ui()
 void CCamera::SaveToLevelFile(FILE* _File)
 {
 	fwrite(&m_fAspectRatio, sizeof(float), 1, _File);
+	fwrite(&m_fWidth, sizeof(float), 1, _File);
 	fwrite(&m_fScale, sizeof(float), 1, _File);
 	fwrite(&m_ProjType, sizeof(UINT), 1, _File);
 	fwrite(&m_iLayerMask, sizeof(UINT), 1, _File);
 	fwrite(&m_iCamIdx, sizeof(int), 1, _File);
 	fwrite(&m_fFar, sizeof(float), 1, _File);
 	fwrite(&m_bShowFrustumDebug, sizeof(bool), 1, _File);
+	fwrite(&m_bViewGizmoBounding, sizeof(bool), 1, _File);
 }
 
 void CCamera::LoadFromLevelFile(FILE* _File)
 {
 	fread(&m_fAspectRatio, sizeof(float), 1, _File);
+	fread(&m_fWidth, sizeof(float), 1, _File);
 	fread(&m_fScale, sizeof(float), 1, _File);
 	fread(&m_ProjType, sizeof(UINT), 1, _File);
 	fread(&m_iLayerMask, sizeof(UINT), 1, _File);
 	fread(&m_iCamIdx, sizeof(int), 1, _File);
 	fread(&m_fFar, sizeof(float), 1, _File);
 	fread(&m_bShowFrustumDebug, sizeof(bool), 1, _File);
+	fread(&m_bViewGizmoBounding, sizeof(bool), 1, _File);
 	SetCameraIndex(m_iCamIdx);
 }
 
 void CCamera::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
 {
 	_objValue.AddMember("fAspectRatio", m_fAspectRatio, allocator);
+	_objValue.AddMember("fWidth", m_fWidth, allocator);
 	_objValue.AddMember("fScale", m_fScale, allocator);
 	_objValue.AddMember("ProjType", (UINT)m_ProjType, allocator);
 	_objValue.AddMember("iLayerMask", m_iLayerMask, allocator);
 	_objValue.AddMember("iCamIdx", m_iCamIdx, allocator);
 	_objValue.AddMember("fFar", m_fFar, allocator);
 	_objValue.AddMember("bShowFrustumDebug", m_bShowFrustumDebug, allocator);
+	_objValue.AddMember("bViewGizmoBounding", m_bViewGizmoBounding, allocator);
 
 }
 
@@ -480,7 +489,7 @@ void CCamera::LoadFromLevelJsonFile(const Value& _componentValue)
 	m_iCamIdx = _componentValue["iCamIdx"].GetInt();
 	m_fFar = _componentValue["fFar"].GetFloat();
 	m_bShowFrustumDebug = _componentValue["bShowFrustumDebug"].GetBool();
-
+	m_bViewGizmoBounding = _componentValue["bViewGizmoBounding"].GetBool();
 	SetCameraIndex(m_iCamIdx);
 }
 
@@ -495,7 +504,7 @@ void CCamera::GizmoClickCheck(CGameObject* _CheckTargetObj, CLevel* _CurLevel)
 	{
 		if (KEY_TAP(KEY::RBTN)) // 클릭되었을경우만
 		{
-			if (RayIntersectsSphere(vWorldPos, _CheckTargetObj->Transform()->GetGizmoBounding()) && !_CheckTargetObj->Transform()->GetNogizmoObj())  //오브젝트 구체 콜리전 - 레이 클릭 체크
+			if (RayIntersectsSphere(vWorldPos, _CheckTargetObj->Transform()->GetGizmoBounding()) && !_CheckTargetObj->Transform()->GetGizmoObjExcept())  //오브젝트 구체 콜리전 - 레이 클릭 체크
 			{
 				// 가장 깊이가 작은경우의 오브젝트를 선택하게됨 SetGizMoTargetObj 함수자체는 여러번 호출되지만. 오브젝트 개수만큼 반복문을 통해 결국 마지막엔 가장 작은 깊이를 가진 오브젝트가 기즈모 타겟  오브젝트로 세팅되어있을 것임
 				if (!_CheckTargetObj->IsDead())
@@ -507,7 +516,7 @@ void CCamera::GizmoClickCheck(CGameObject* _CheckTargetObj, CLevel* _CurLevel)
 			}
 		}
 
-		if (b_ViewGizmoBounding && !_CheckTargetObj->Transform()->GetNogizmoObj()) //기즈모 클릭범위를 보여달라고 요청했다면(트랜스폼ui에서) 보여주기
+		if (m_bViewGizmoBounding && !_CheckTargetObj->Transform()->GetGizmoObjExcept()) //기즈모 클릭범위를 보여달라고 요청했다면(트랜스폼ui에서) 보여주기
 		{
 			// Bounding Debug Shape 그리기
 			tDebugBoundingInfo info = {};
