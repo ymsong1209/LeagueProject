@@ -152,8 +152,12 @@ void InspectorUI::tick()
 int InspectorUI::render_update()
 {
 	//기즈모 관련 처리 - 화면에 눌린 오브젝트를 타겟 오브젝트로 변경
-	if (CRenderMgr::GetInst()->GetGizMoTargetObj() != nullptr) //기즈모 오브젝트가 있는상태라면
+	
+
+	if (CRenderMgr::GetInst()->GetGizmoObjectChanged() && CRenderMgr::GetInst()->GetGizMoTargetObj() != nullptr) //기즈모 오브젝트가 있는상태라면
 	{
+
+
 		CGameObject* GizMoTargetObj = CRenderMgr::GetInst()->GetGizMoTargetObj();
 		if (m_pTargetObj != GizMoTargetObj) //현재 타겟오브젝트와 기즈모 오브젝트 비교해서 다르다면 기즈모 오브젝트로 변경
 		{

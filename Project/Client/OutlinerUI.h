@@ -27,7 +27,7 @@ public:
     {
         m_dwSelectedData = _data;
     }
-
+     
     void RightClickFunction(DWORD_PTR _RightClickedNode);
 
     TreeUI* GetTreeOutliner() { return m_Tree; }

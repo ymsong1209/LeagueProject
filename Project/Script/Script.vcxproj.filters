@@ -13,11 +13,11 @@
     <Filter Include="Script\testCharacter">
       <UniqueIdentifier>{528cd190-3cb9-457c-9a96-9cd6e2c5d4ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Script\Camera">
+      <UniqueIdentifier>{32d883af-2023-4c4a-b8f9-cf58b8644879}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CCameraMoveScript.h">
-      <Filter>Script</Filter>
-    </ClInclude>
     <ClInclude Include="CMissileScript.h">
       <Filter>Script</Filter>
     </ClInclude>
@@ -42,11 +42,14 @@
     <ClInclude Include="CTestIdleState.h">
       <Filter>Script\testCharacter</Filter>
     </ClInclude>
+    <ClInclude Include="CInGameCameraScript.h">
+      <Filter>Script\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CCameraMoveScript.h">
+      <Filter>Script\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CCameraMoveScript.cpp">
-      <Filter>Script</Filter>
-    </ClCompile>
     <ClCompile Include="CMissileScript.cpp">
       <Filter>Script</Filter>
     </ClCompile>
@@ -70,6 +73,12 @@
     </ClCompile>
     <ClCompile Include="CTestIdleState.cpp">
       <Filter>Script\testCharacter</Filter>
+    </ClCompile>
+    <ClCompile Include="CInGameCameraScript.cpp">
+      <Filter>Script\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CCameraMoveScript.cpp">
+      <Filter>Script\Camera</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

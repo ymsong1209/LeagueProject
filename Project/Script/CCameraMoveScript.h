@@ -1,6 +1,7 @@
 #pragma once
 #include <Engine\CScript.h>
 
+
 class CCameraMoveScript :
     public CScript
 {
