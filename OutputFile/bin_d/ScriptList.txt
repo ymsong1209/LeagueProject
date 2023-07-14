@@ -4,4 +4,3 @@ CInGameCameraScript
 CMissileScript
 CMonsterScript
 CPlayerScript
-InGameCameraScript

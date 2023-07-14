@@ -22,6 +22,7 @@
 
 #include "CCollider2D.h"
 #include "CCollider3D.h"
+#include "CEngine.h"
 
 
 
@@ -78,12 +79,18 @@ void CCamera::finaltick()
 
 	CalcProjMat();
 
+
+	// Play상태일때 아래의 내용들은 Main Camera에서만 수행하도록 함.
+	if (CLevelMgr::GetInst()->GetCurLevel()->GetState() == LEVEL_STATE::PLAY &&
+		CRenderMgr::GetInst()->GetPlayMainCam() != this)
+		return;
+
 	m_Frustum.finaltick();
 
 	// 마우스방향 직선 계산
 	CalRay();
 
-	CollideRay();
+	//CollideRay();
 
 }
 
@@ -97,17 +104,38 @@ void CCamera::CalRay()
 	//  현재 마우스 좌표
 	Vec2 vMousePos = CKeyMgr::GetInst()->GetMousePos();
 
-	// 직선은 카메라의 좌표를 반드시 지난다.
-	m_ray.vStart = Transform()->GetWorldPos();
 
-	// view space 에서의 방향
-	m_ray.vDir.x = ((((vMousePos.x - tVP.TopLeftX) * 2.f / tVP.Width) - 1.f) - m_matProj._31) / m_matProj._11;
-	m_ray.vDir.y = (-(((vMousePos.y - tVP.TopLeftY) * 2.f / tVP.Height) - 1.f) - m_matProj._32) / m_matProj._22;
-	m_ray.vDir.z = 1.f;
+	if (m_ProjType == PROJ_TYPE::PERSPECTIVE)
+	{
+		// 직선은 카메라의 좌표를 반드시 지난다.
+		m_ray.vStart = Transform()->GetWorldPos();
 
-	// world space 에서의 방향
-	m_ray.vDir = XMVector3TransformNormal(m_ray.vDir, m_matViewInv);
-	m_ray.vDir.Normalize();
+		// view space 에서의 방향
+		m_ray.vDir.x = ((((vMousePos.x - tVP.TopLeftX) * 2.f / tVP.Width) - 1.f) - m_matProj._31) / m_matProj._11;
+		m_ray.vDir.y = (-(((vMousePos.y - tVP.TopLeftY) * 2.f / tVP.Height) - 1.f) - m_matProj._32) / m_matProj._22;
+		m_ray.vDir.z = 1.f;
+
+		// world space 에서의 방향
+		m_ray.vDir = XMVector3TransformNormal(m_ray.vDir, m_matViewInv);
+		m_ray.vDir.Normalize();
+	}
+
+	else if (m_ProjType == PROJ_TYPE::ORTHOGRAPHIC)
+	{
+		Vec2 CamPos = CEngine::GetInst()->GetWindowResolution();
+		CamPos.x = CamPos.x / 2.f;
+		CamPos.y = CamPos.y / 2.f;
+
+		Vec2 MousePos = CKeyMgr::GetInst()->GetMousePos() - CamPos;
+
+		Vec3 Addx = MousePos.x * Transform()->GetWorldDir(DIR_TYPE::RIGHT);
+		Vec3 Addy = MousePos.y * Transform()->GetWorldDir(DIR_TYPE::UP);
+
+		// Add앞에 -를 붙여야 하는 이유는 DirectX의 y축과 화면에서의 y축의 증가 방향이
+		// 반대이기 때문이다.
+		m_ray.vStart = Transform()->GetWorldPos() + Addx - Addy;
+		m_ray.vDir = Transform()->GetWorldDir(DIR_TYPE::FRONT);
+	}
 }
 
 void CCamera::CollideRay()
@@ -391,6 +419,8 @@ void CCamera::SortObject()
 				}
 
 				GizmoClickCheck(vecObject[j], pCurLevel); //기즈모 클릭 체크
+
+				CollideRay();
 
 				// 쉐이더 도메인에 따른 분류
 				SHADER_DOMAIN eDomain = pRenderCom->GetMaterial(0)->GetShader()->GetDomain();

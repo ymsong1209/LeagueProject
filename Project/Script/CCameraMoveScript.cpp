@@ -6,6 +6,7 @@
 #include <Engine/CLevelMgr.h>
 #include <Engine/CLevel.h>
 #include <Engine/CEngine.h>
+#include <Engine/CRenderMgr.h>
 
 CCameraMoveScript::CCameraMoveScript()
 	: CScript((UINT)SCRIPT_TYPE::CAMERAMOVESCRIPT)
@@ -19,7 +20,9 @@ CCameraMoveScript::~CCameraMoveScript()
 
 void CCameraMoveScript::tick()
 {
-	if (CLevelMgr::GetInst()->GetCurLevel()->GetState() == LEVEL_STATE::PLAY) {
+	// Editor Camera에서의 Play 상태에서의 Tick을 주지 않기 위함 
+	if (CLevelMgr::GetInst()->GetCurLevel()->GetState() == LEVEL_STATE::PLAY &&
+		CRenderMgr::GetInst()->GetMainCam() != this->GetOwner()->Camera()) {
 		return;
 	}
 

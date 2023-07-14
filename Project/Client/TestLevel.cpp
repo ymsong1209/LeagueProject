@@ -12,6 +12,7 @@
 
 #include <Script\CPlayerScript.h>
 #include <Script\CMonsterScript.h>
+#include <Script\CCameraMoveScript.h>
 
  
 
@@ -42,8 +43,10 @@ void CreateTestLevel()
 
 	pMainCam->AddComponent(new CTransform);
 	pMainCam->AddComponent(new CCamera);
+	pMainCam->AddComponent(new CCameraMoveScript);
 
-	pMainCam->Camera()->SetProjType(PROJ_TYPE::PERSPECTIVE);
+	pMainCam->Camera()->SetProjType(PROJ_TYPE::ORTHOGRAPHIC);
+	pMainCam->Transform()->SetRelativeRot(0.f, 0.f, 0.f);
 	pMainCam->Camera()->SetCameraIndex(0);		// MainCamera 로 설정
 	pMainCam->Camera()->SetLayerMaskAll(true);	// 모든 레이어 체크
 	pMainCam->Camera()->SetLayerMask(31, false);// UI Layer 는 렌더링하지 않는다.
@@ -121,18 +124,31 @@ void CreateTestLevel()
 	//SpawnGameObject(pObject3, Vec3(0.f, 200.f, 300.f), 0);
 
 	// LandScape Object
-	CGameObject* pLandScape = new CGameObject;
-	pLandScape->SetName(L"LandScape");
+	//CGameObject* pLandScape = new CGameObject;
+	//pLandScape->SetName(L"LandScape");
 
-	pLandScape->AddComponent(new CTransform);
-	pLandScape->AddComponent(new CLandScape);
+	//pLandScape->AddComponent(new CTransform);
+	//pLandScape->AddComponent(new CLandScape);
 
-	pLandScape->Transform()->SetRelativeScale(Vec3(200.f, 1000.f, 200.f));
+	//pLandScape->Transform()->SetRelativeScale(Vec3(200.f, 1000.f, 200.f));
 
-	pLandScape->LandScape()->SetFace(32, 32);
-	pLandScape->LandScape()->SetFrustumCheck(false);
+	//pLandScape->LandScape()->SetFace(32, 32);
+	//pLandScape->LandScape()->SetFrustumCheck(false);
 
-	SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 0.f), 0);
+	//SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 0.f), 0);
+
+	
+
+	// LoL Map
+	//Ptr<CMeshData> pMeshData = nullptr;
+	//CGameObject* pObj = nullptr;
+	//	
+	//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\LoLMap50.fbx");
+	//	
+	//pObj = pMeshData->Instantiate();
+	//pObj->MeshRender()->SetFrustumCheck(false);
+	//pObj->SetName(L"LoLMap"); 
+	//SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
 
 
 	// ============
