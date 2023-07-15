@@ -12,8 +12,8 @@
 
 #include <Script\CPlayerScript.h>
 #include <Script\CMonsterScript.h>
+#include <Engine\CPathFindMgr.h>
 
- 
 
 #include "CLevelSaveLoad.h"
 
@@ -50,7 +50,7 @@ void CreateTestLevel()
 
 	SpawnGameObject(pMainCam, Vec3(0.f, 0.f, 0.f), 0);
 
-	
+
 	// 광원 추가
 	CGameObject* pLightObj = new CGameObject;
 	pLightObj->SetName(L"Directional Light");
@@ -72,7 +72,7 @@ void CreateTestLevel()
 
 
 	// SkyBox
-	CGameObject* pSkyBox  = new CGameObject;
+	CGameObject* pSkyBox = new CGameObject;
 	pSkyBox->SetName(L"SkyBox");
 
 	pSkyBox->AddComponent(new CTransform);
@@ -141,29 +141,40 @@ void CreateTestLevel()
 	{
 		Ptr<CMeshData> pMeshData = nullptr;
 		CGameObject* pObj = nullptr;
-		
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\LoLMapRot19.fbx");
-		
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\LoLMapRot19Size30.fbx");
 		pObj = pMeshData->Instantiate();
-		pObj->SetName(L"LoLMapRot19"); 
-		//pObj->Animator3D()->LoadAnim(L"animation\\BlitzCrank\\Attack1.anim3d");
-		//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\BlitzCrank");
-		//pObj->Animator3D()->Play(L"BlitzCrank\\Attack1", true, 0.5f);
-		//pObj->Animator3D()->SetRepeat(true);
-		//pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-90.f), 0.f, 0.f));
+		pObj->SetName(L"LoLMapRot19Size30");
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
-
 		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
-		
+
+		// 마우스 피킹 이동을 위한 맵 콜리전 - 따로 오브젝트로 빼준 이유는 렉트메쉬콜리전을 회전시켜야하는데 맵도 같이 회전되면 안돼서 따로 오브젝트로 뺐음
+		// 맵은 이동된다는 가정을 하지않음, 크기,회전,이동을 해버리면 네브메쉬랑 좌표값이 안맞게 되어버린다.
+		// 맵이 있으면 맵 콜리전도 있어야함!
+		CGameObject* MapCollision = new CGameObject;
+		MapCollision->SetName(L"MapCollision");
+		MapCollision->AddComponent(new CCollider2D);
+		MapCollision->AddComponent(new CTransform);
+		MapCollision->Collider2D()->SetAbsolute(true);
+		MapCollision->Collider2D()->SetOffsetScale(Vec2(2700.f, 2700.f));
+		MapCollision->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+		SpawnGameObject(MapCollision, Vec3(1125.f, 16.f, 1200.f), 0);
+		CPathFindMgr::GetInst()->SetMapCollision(MapCollision); //마우스 피킹 진행할 맵 콜리전으로 지정
+
+
+
+		//--------------------------------
 		//Ptr<CMeshData> pMeshData1 = nullptr;
 		//CGameObject* pObj1 = nullptr;
-		//pMeshData1 = CResMgr::GetInst()->LoadFBX(L"fbx\\amumu.fbx");
+		//pMeshData1 = CResMgr::GetInst()->LoadFBX(L"fbx\\BlitzCrank.fbx");
 		//
 		//pObj1 = pMeshData1->Instantiate();
-		//pObj1->SetName(L"amumu");		
-		//pObj1->Animator3D()->Play(L"Amumu-Amumu-Amumu-Amumu_AllAnim", true, 0.5f);
+		//pObj1->SetName(L"BlitzCrank");		
+		//pObj1->Animator3D()->Play(L"BlitzCrank-BlitzCrank-Scene", true, 0.5f);
+		//pObj1->AddComponent(new CPlayerScript);
+		//pObj1->AddComponent(new CPathFinder);
 		//SpawnGameObject(pObj1, Vec3(100.f, 0.f, 0.f), 0);
- 
+		//--------------------------------
+
 		//단일재생
 		//pObj->Animator3D()->Play(L"Take 001");
 		//단일재생, 이전 애니메이션 0.5초 블렌딩 후 단일재생
@@ -175,7 +186,7 @@ void CreateTestLevel()
 		//반복재생, AnimA->Take001로 0.5초동안 애니메이션 blend하고 take001재생,take001마지막프레임->첫프레임 돌아오면서 blend 0.5초동안 하기
 		//pObj->Animator3D()->Play(L"Take001", true, true, true, 0.5f);
 		//사용 예시
-		
+
 		//IdleAnimation 반복재생 blend안함
 		//pObj->animator3d()->play(L"IdleAnimation",true,false);
 		//공격버튼 누르면 공격 애니메이션 단일재생, blending 0.2초
@@ -189,8 +200,8 @@ void CreateTestLevel()
 		////Attack->Idle 0.2초 blend주고, idle animation 재생, idle anim은 마지막프레임->첫프레임 이동시 blend없음 
 		//pobj->animator3d()->play(L"IdleAnimation",true,false,true,0.2f); 
 		//}
-		
-		
+
+
 
 
 		//SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
@@ -209,7 +220,6 @@ void CreateTestLevel()
 	// TestFastForward
 	CGameObject* pRectFast = new CGameObject;
 	pRectFast->SetName(L"ReftFast");
-
 	pRectFast->AddComponent(new CMeshRender);
 	pRectFast->AddComponent(new CTransform);
 
@@ -236,17 +246,10 @@ void CreateTestLevel()
 	pRectFast2->AddComponent(new CMeshRender);
 	pRectFast2->AddComponent(new CTransform);
 	pRectFast2->AddComponent(new CPlayerScript);
-
-	pRectFast2->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
-	pRectFast2->MeshRender()->SetUsingMovingVec(true);
-
-	pRectFast2->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	pRectFast2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
-	pRectFast2->MeshRender()->GetDynamicMaterial(0);
-
-
-	pRectFast2->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Fighter.bmp"));
-	pRectFast2->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Dots.jpg"));
+	pRectFast2->AddComponent(new CPathFinder);
+	pRectFast2->Transform()->SetRelativeScale(Vec3(45.f, 45.f, 45.f));
+	pRectFast2->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+	pRectFast2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
 
 	SpawnGameObject(pRectFast2, Vec3(0.f, 0.f, 0.f), 0);
 
@@ -274,5 +277,5 @@ void CreateTestLevel()
 
 
 	// 충돌 시킬 레이어 짝 지정
-	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");	
+	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");
 }

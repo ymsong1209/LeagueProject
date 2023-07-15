@@ -3,6 +3,8 @@
 #include "CPathFindMgr.h"
 
 #include "CTransform.h"
+#include "CCamera.h"
+#include "CRenderMgr.h"
 
 CPathFinder::CPathFinder()
 	: CComponent(COMPONENT_TYPE::PATHFINDER)
@@ -43,13 +45,28 @@ void CPathFinder::FindNextPath()
 	m_iCurPathIdx++;
 
 	// 다음 경로가 있다면 그 위치를 반환하고, 경로 인덱스 증가시킴
-	if (m_iCurPathIdx != -1 && m_iCurPathIdx < m_iPathCount) 
-	{	
-		m_vNextPos =  Vec3(m_vecPath[m_iCurPathIdx].x, m_vecPath[m_iCurPathIdx].y, m_vecPath[m_iCurPathIdx].z);
+	if (m_iCurPathIdx != -1 && m_iCurPathIdx < m_iPathCount)
+	{
+		m_vNextPos = Vec3(m_vecPath[m_iCurPathIdx].x, m_vecPath[m_iCurPathIdx].y, m_vecPath[m_iCurPathIdx].z);
 	}
 	// 다음 경로가 없다면 갈 수 없는 위치 반환
-	else 
+	else
 	{
 		m_vNextPos = Vec3(NaN, NaN, NaN);
 	}
 }
+
+void CPathFinder::FindPathMousePicking()  //현재 카메라에서 레이를 가져오고, 맵콜리전과의 교차점을 endPos로 지정해서 FindPath 호출.(마우스 피킹 이동)
+{
+	CGameObject* MapCollision = CPathFindMgr::GetInst()->GetMapCollision();
+	if (MapCollision != nullptr && !MapCollision->IsDead())  //맵 콜리전이 정상적으로 존재할경우만 호출
+	{
+		CCamera* MainCam = CRenderMgr::GetInst()->GetMainCam();
+		tRay ray = MainCam->GetRay();
+		IntersectResult result = MainCam->IsCollidingBtwRayRect(ray, MapCollision);
+		Vec3 EndPos = result.vCrossPoint;
+		FindPath(EndPos);
+	}
+}
+
+

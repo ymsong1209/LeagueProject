@@ -9,7 +9,7 @@
 
 CPlayerScript::CPlayerScript()
 	: CScript((UINT)SCRIPT_TYPE::PLAYERSCRIPT)
-	, m_fSpeed(0.f)
+	, m_fSpeed(200.f)
 	, m_vTargetPosTest(Vec3(0.f, 0.f, 0.f))
 {
 	AddScriptParam(SCRIPT_PARAM::FLOAT, &m_fSpeed, "Speed");
@@ -27,10 +27,10 @@ void CPlayerScript::begin()
 
 void CPlayerScript::tick()
 {
-	if (KEY_TAP(KEY::U))
+	if (KEY_TAP(KEY::LBTN))
 	{
-		// 이부분을 클릭으로 마우스피킹해온 값을 넣어주는 식으로 대체하면 될 것 같습니닷
-		GetOwner()->PathFinder()->FindPath(Vec3(m_vTargetPosTest.x, m_vTargetPosTest.y, m_vTargetPosTest.z));
+		GetOwner()->PathFinder()->FindPathMousePicking();
+		//마우스 피킹지점과 길찾기 경로 까지만 알려줌! 이동은 밑의 코드에서 해줌!
 	}
 
 	if (GetOwner()->PathFinder() != nullptr)

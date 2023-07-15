@@ -82,8 +82,10 @@ public:
     bool GetViewGizmoBounding() { return b_ViewGizmoBounding; }
     void GizmoClickCheck(CGameObject* _CheckTargetObj, CLevel* _CurLevel);
 
-    bool RayIntersectsSphere(Vec3 _SphereTrans, float _SphereRadius);
 
+    bool RayIntersectsSphere(Vec3 _SphereTrans, float _SphereRadius);
+    IntersectResult IsCollidingBtwRayRect(tRay& _ray, CGameObject* _Object);
+    IntersectResult IntersectsLay(Vec3* _vertices, tRay _ray);
 public:
     void SortObject();
     void SortShadowObject();

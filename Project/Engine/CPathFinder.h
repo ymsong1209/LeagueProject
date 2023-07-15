@@ -26,8 +26,11 @@ public:
     void FindPath(Vec3 endPos);
     void FindNextPath();
 
+    void FindPathMousePicking(); //현재 맵콜리전과 마우스 피킹지점의 교차점을 return
+
 public:
     Vec3 GetNextPos() { return m_vNextPos; }
+
 
 public:
     virtual void SaveToLevelFile(FILE* _File) override {};
