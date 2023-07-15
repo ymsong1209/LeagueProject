@@ -209,6 +209,16 @@ struct tRaycastOut
 	int  bSuccess;
 };
 
+
+// Intersect 결과 받을 구조체 (Custom)
+struct IntersectResult
+{
+	Vec3  vCrossPoint;
+	float fResult;
+	bool  bResult;
+};
+
+
 struct tWeight_4
 {
 	float arrWeight[4];

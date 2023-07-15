@@ -16,9 +16,14 @@
 
 #include "CMRT.h"
 #include "CLight3D.h"
-
+ 
 #include "CResMgr.h"
 #include "CKeyMgr.h"
+
+#include "CCollider2D.h"
+#include "CCollider3D.h"
+#include "CEngine.h"
+
 
 
 
@@ -77,10 +82,19 @@ void CCamera::finaltick()
 
 	CalcProjMat();
 
+
+	// Play상태일때 아래의 내용들은 Main Camera에서만 수행하도록 함.
+	if (CLevelMgr::GetInst()->GetCurLevel()->GetState() == LEVEL_STATE::PLAY &&
+		CRenderMgr::GetInst()->GetPlayMainCam() != this)
+		return;
+
 	m_Frustum.finaltick();
 
 	// 마우스방향 직선 계산
 	CalRay();
+
+	//CollideRay();
+
 }
 
 void CCamera::CalRay()
@@ -93,17 +107,188 @@ void CCamera::CalRay()
 	//  현재 마우스 좌표
 	Vec2 vMousePos = CKeyMgr::GetInst()->GetMousePos();
 
-	// 직선은 카메라의 좌표를 반드시 지난다.
-	m_ray.vStart = Transform()->GetWorldPos();
 
-	// view space 에서의 방향
-	m_ray.vDir.x = ((((vMousePos.x - tVP.TopLeftX) * 2.f / tVP.Width) - 1.f) - m_matProj._31) / m_matProj._11;
-	m_ray.vDir.y = (-(((vMousePos.y - tVP.TopLeftY) * 2.f / tVP.Height) - 1.f) - m_matProj._32) / m_matProj._22;
-	m_ray.vDir.z = 1.f;
+	if (m_ProjType == PROJ_TYPE::PERSPECTIVE)
+	{
+		// 직선은 카메라의 좌표를 반드시 지난다.
+		m_ray.vStart = Transform()->GetWorldPos();
 
-	// world space 에서의 방향
-	m_ray.vDir = XMVector3TransformNormal(m_ray.vDir, m_matViewInv);
-	m_ray.vDir.Normalize();
+		// view space 에서의 방향
+		m_ray.vDir.x = ((((vMousePos.x - tVP.TopLeftX) * 2.f / tVP.Width) - 1.f) - m_matProj._31) / m_matProj._11;
+		m_ray.vDir.y = (-(((vMousePos.y - tVP.TopLeftY) * 2.f / tVP.Height) - 1.f) - m_matProj._32) / m_matProj._22;
+		m_ray.vDir.z = 1.f;
+
+		// world space 에서의 방향
+		m_ray.vDir = XMVector3TransformNormal(m_ray.vDir, m_matViewInv);
+		m_ray.vDir.Normalize();
+	}
+
+	else if (m_ProjType == PROJ_TYPE::ORTHOGRAPHIC)
+	{
+		Vec2 CamPos = CEngine::GetInst()->GetWindowResolution();
+		CamPos.x = CamPos.x / 2.f;
+		CamPos.y = CamPos.y / 2.f;
+
+		Vec2 MousePos = CKeyMgr::GetInst()->GetMousePos() - CamPos;
+
+		Vec3 Addx = MousePos.x * Transform()->GetWorldDir(DIR_TYPE::RIGHT) * (1.f / m_fScale) ;
+		Vec3 Addy = MousePos.y * Transform()->GetWorldDir(DIR_TYPE::UP) * ( 1.f / m_fScale);
+
+		// Add앞에 -를 붙여야 하는 이유는 DirectX의 y축과 화면에서의 y축의 증가 방향이
+		// 반대이기 때문이다.
+		m_ray.vStart = Transform()->GetWorldPos() + Addx - Addy;
+		m_ray.vDir = Transform()->GetWorldDir(DIR_TYPE::FRONT);
+	}
+}
+
+void CCamera::CollideRay()
+{
+	CLevel* CurLevel = CLevelMgr::GetInst()->GetCurLevel();
+
+	CGameObject* FinalRectObject = nullptr;
+	CGameObject* FinalCubeObject = nullptr;
+
+	float fRectResult = FBXSDK_FLOAT_MAX;
+	float fCubeResult = FBXSDK_FLOAT_MAX;
+
+	vector<CGameObject*> TempEndOverlapRect;
+	vector<CGameObject*> TempEndOverlapCube;
+
+
+	for (int i = 0; i < MAX_LAYER; ++i)
+	{
+		vector<CGameObject*> Objects = CurLevel->GetLayer(i)->GetObjects();
+
+
+		for (int j = 0; j < Objects.size(); ++j)
+		{
+			IntersectResult result = IsCollidingBtwRayRect(m_ray, Objects[j]);
+			IntersectResult CubeResult = IsCollidingBtwRayCube(m_ray, Objects[j]);
+
+			// 만약 충돌중이 였다면 EndOverlap 후보군에 넣어야 함 (Ray - Rect를 말하는 것임)
+			if (Objects[j]->Collider2D())
+			{
+				if (Objects[j]->Collider2D()->IsCollidedFromRay() == true)
+				{
+					// 충돌중이였는데 이번프레임에서는 충돌해제가 되었음으로 End Ray Overlap을 호출해줌
+					if (result.bResult == false)
+					{
+						Objects[j]->Collider2D()->SetCollidedFromRay(false);
+						Objects[j]->Collider2D()->EndRayOverlap();
+					}
+
+					// 이경우는 계속 충돌중이지다. 하지만 가장 가까이 있는 물체가 아니라면 End Ray Overlap을 호출해야 하기에
+					// 후보군에 넣어준다.
+					else
+					{
+
+						TempEndOverlapRect.push_back(Objects[j]);
+					}
+				}
+
+				//if (result.vCrossPoint != Vec3(0.f, 0.f, 0.f))
+				if (result.bResult == true)
+				{
+					// 최단 거리에 있는 Object인지 확인해야 한다.
+					if (result.fResult < fRectResult)
+					{
+						fRectResult = result.fResult;
+						FinalRectObject = Objects[j];
+					}
+				}
+			}
+
+			else if (Objects[j]->Collider3D())
+			{
+				if (Objects[j]->Collider3D()->IsCollidedFromRay() == true)
+				{
+					// 충돌중이였는데 이번프레임에서는 충돌해제가 되었음으로 End Ray Overlap을 호출해줌
+					if (CubeResult.bResult == false)
+					{
+						Objects[j]->Collider3D()->SetCollidedFromRay(false);
+						Objects[j]->Collider3D()->EndRayOverlap();
+					}
+
+					// 이경우는 계속 충돌중이지다. 하지만 가장 가까이 있는 물체가 아니라면 End Ray Overlap을 호출해야 하기에
+					// 후보군에 넣어준다.
+					else
+					{
+
+						TempEndOverlapCube.push_back(Objects[j]);
+					}
+				}
+
+				//if (result.vCrossPoint != Vec3(0.f, 0.f, 0.f))
+				if (CubeResult.bResult == true)
+				{
+					// 최단 거리에 있는 Object인지 확인해야 한다.
+					if (CubeResult.fResult < fCubeResult)
+					{
+						fCubeResult = CubeResult.fResult;
+						FinalCubeObject = Objects[j];
+					}
+				}
+			}
+
+		}
+	}
+
+	if (FinalRectObject != nullptr)
+	{
+		// 여기까지 왔으면 현재 충돌중이고 가장 가까운 단하나의 Rect Collider를 지닌 Object임
+		if (FinalRectObject->Collider2D()->IsCollidedFromRay())
+		{
+			FinalRectObject->Collider2D()->OnRayOverlap();
+		}
+
+		// Begin Ray Overlap을 해야한다.
+		else
+		{
+			FinalRectObject->Collider2D()->SetCollidedFromRay(true);
+			FinalRectObject->Collider2D()->BeginRayOverlap();
+		}
+
+		// TemObject들중에서 FinalObject가 아닌 Object들은 모두 EndRayOverlap을 호출해야한다.
+		for (int i = 0; i < TempEndOverlapRect.size(); ++i)
+		{
+			if (TempEndOverlapRect[i] != FinalRectObject)
+			{
+				TempEndOverlapRect[i]->Collider2D()->SetCollidedFromRay(false);
+				TempEndOverlapRect[i]->Collider2D()->EndRayOverlap();
+			}
+
+		}
+	}
+
+	if (FinalCubeObject != nullptr)
+	{
+		// 여기까지 왔으면 현재 충돌중이고 가장 가까운 단하나의 Cube Collider를 지닌 Object임
+		if (FinalCubeObject->Collider3D()->IsCollidedFromRay())
+		{
+			FinalCubeObject->Collider3D()->OnRayOverlap();
+		}
+
+		// Begin Ray Overlap을 해야한다.
+		else
+		{
+			FinalCubeObject->Collider3D()->SetCollidedFromRay(true);
+			FinalCubeObject->Collider3D()->BeginRayOverlap();
+		}
+
+		// TemObject들중에서 FinalObject가 아닌 Object들은 모두 EndRayOverlap을 호출해야한다.
+		for (int i = 0; i < TempEndOverlapCube.size(); ++i)
+		{
+			if (TempEndOverlapCube[i] != FinalCubeObject)
+			{
+				TempEndOverlapCube[i]->Collider3D()->SetCollidedFromRay(false);
+				TempEndOverlapCube[i]->Collider3D()->EndRayOverlap();
+			}
+
+		}
+	}
+
+	TempEndOverlapRect.clear();
+	TempEndOverlapCube.clear();
 }
 
 void CCamera::CalcViewMat()
@@ -238,6 +423,8 @@ void CCamera::SortObject()
 
 				GizmoClickCheck(vecObject[j], pCurLevel); //기즈모 클릭 체크
 
+				CollideRay();
+
 				// 쉐이더 도메인에 따른 분류
 				SHADER_DOMAIN eDomain = pRenderCom->GetMaterial(0)->GetShader()->GetDomain();
 				switch (eDomain)
@@ -334,6 +521,11 @@ void CCamera::render()
 
 	// UI
 	render_ui();
+
+
+ 
+
+	
 }
 
 void CCamera::render_depthmap()
@@ -349,6 +541,138 @@ void CCamera::render_depthmap()
 	}
 }
 
+
+IntersectResult CCamera::IsCollidingBtwRayRect(tRay& _ray, CGameObject* _Object)
+{
+	// 만약에 Collider2D가 없거나 Rect모양이 아닌 경우 return
+	if (_Object->Collider2D() == nullptr || _Object->Collider2D()->GetColliderShape() != COLLIDER2D_TYPE::RECT)
+		return IntersectResult{ Vec3(0.f, 0.f, 0.f), 0.f, false };
+
+	Matrix ColliderWorldMat = _Object->Collider2D()->GetColliderWorldMat();
+
+	// Local Rect의 3개의 Pos에 대해서 World Pos 계산을 해준다.
+	// 점 4개까지 필요없고 3개만 있으면 됨
+	// 아래의 정점들의 순서는 의미가 있음
+	// IntersectsLay함수에서 특정 정점의 순서에서만 올바르게 계산하도록 함
+	Vec3 arrLocal[3] =
+	{
+		Vec3(-0.5f, -0.5f, 0.f),
+		Vec3(0.5f, -0.5f, 0.f),
+		Vec3(-0.5f, 0.5f, 0.f),
+	};
+
+	for (int i = 0; i < 3; ++i)
+		arrLocal[i] = Vector4::Transform(Vec4(arrLocal[i], 1.f), ColliderWorldMat);
+ 
+
+	return IntersectsLay(arrLocal, m_ray);
+}
+
+IntersectResult CCamera::IsCollidingBtwRayCube(tRay& _ray, CGameObject* _Object)
+{
+	// 만약에 Collider3D가 없거나 Cube모양이 아닌 경우 return
+	if (_Object->Collider3D() == nullptr || _Object->Collider3D()->GetCollider3DType() != COLLIDER3D_TYPE::CUBE)
+		return IntersectResult{ Vec3(0.f, 0.f, 0.f), 0.f, false };
+
+	Matrix ColliderWorldMat = _Object->Collider3D()->GetColliderWorldMat();
+
+	// 위의 IsCollidingBtwRayRect함수와 같은 알고리즘으로 계산
+	// 단 Cube는 면이 6개이기 때문에 6번 계산해 줘야 하는 것임
+	Vec3 arrLocal[6][3] =
+	{
+		{Vec3(-0.5f, 0.5f, -0.5f),  Vec3(0.5f, 0.5f, -0.5f),  Vec3(-0.5f, 0.5f, 0.5f)},	 // 윗면
+		{Vec3(-0.5f, -0.5f, -0.5f), Vec3(0.5f, -0.5f, -0.5f), Vec3(-0.5f, -0.5f, 0.5f)}, // 밑면
+		{Vec3(-0.5f, -0.5f, -0.5f), Vec3(0.5f, -0.5f, -0.5f), Vec3(-0.5f, 0.5f, -0.5f)}, // 앞면
+		{Vec3(-0.5f, -0.5f, 0.5f),  Vec3(0.5f, -0.5f, 0.5f),  Vec3(-0.5f, 0.5f, 0.5f)},  // 뒷면
+		{Vec3(-0.5f, 0.5f, -0.5f),  Vec3(-0.5f, -0.5f, -0.5f),Vec3(-0.5f, 0.5f, 0.5f)},  // 왼쪽면
+		{Vec3(0.5f, 0.5f, -0.5f),   Vec3(0.5f, -0.5f, -0.5f), Vec3(0.5f, 0.5f, 0.5f)},   // 오른쪽면
+	};
+
+	for (int i = 0; i < 6; ++i)
+		for (int j = 0; j < 3; ++j)
+			arrLocal[i][j] = Vec4::Transform(Vec4(arrLocal[i][j], 1.f), ColliderWorldMat);
+
+	IntersectResult Final = IntersectResult{ Vec3(0.f, 0.f, 0.f), 0.f, false };
+	IntersectResult Temp;
+
+	for (int i = 0; i < 6; ++i)
+	{
+		Temp = IntersectsLay(arrLocal[i], m_ray);
+
+		if (Temp.bResult == true)
+		{
+			if (Final.bResult == false)
+			{
+				Final = Temp;
+			}
+			else
+			{
+				if (Temp.fResult < Final.fResult)
+					Final = Temp;
+			}
+		}
+	}
+
+	return Final;
+}
+
+IntersectResult CCamera::IntersectsLay(Vec3* _vertices, tRay _ray)
+{
+	IntersectResult result;
+	result.vCrossPoint = Vec3(0.f, 0.f, 0.f);
+	result.bResult = false;
+
+	Vec3 edge[2] = { Vec3(), Vec3() };
+	edge[0] = _vertices[1] - _vertices[0];
+	edge[1] = _vertices[2] - _vertices[0];
+
+	Vec3 normal = (edge[0].Cross(edge[1])).Normalize();
+	float b = normal.Dot(_ray.vDir);
+	 
+
+	Vec3 w0 = _ray.vStart - _vertices[0];
+	float a = -(normal.Dot(w0));
+	float t = a / b;
+
+	result.fResult = t;
+
+	Vec3 p = _ray.vStart + t * _ray.vDir;
+
+	result.vCrossPoint = p;
+
+	float uu, uv, vv, wu, wv, inverseD;
+	uu = edge[0].Dot(edge[0]);
+	uv = edge[0].Dot(edge[1]);
+	vv = edge[1].Dot(edge[1]);
+
+	Vec3 w = p - _vertices[0];
+	wu = w.Dot(edge[0]);
+	wv = w.Dot(edge[1]);
+	
+	inverseD = uv * uv - uu * vv;
+	inverseD = 1.0f / inverseD;
+
+	float u = (uv * wv - vv * wu) * inverseD;
+	if (u < 0.0f || u > 1.0f)
+	{
+		result.vCrossPoint = Vec3();
+		result.fResult = 0.0f;
+		result.bResult = false;
+		return result;
+	}
+
+	float v = (uv * wu - uu * wv) * inverseD;
+	if (v < 0.0f || v > 1.0f)
+	{
+		result.vCrossPoint = Vec3();
+		result.fResult = 0.0f;
+		result.bResult = false;
+		return result;
+	}
+
+	result.bResult = true;
+	return result;
+}
 
 void CCamera::clear()
 {

@@ -16,6 +16,8 @@ private:
 
     Matrix          m_matCollider3D;    // Collider 의 월드행렬
     int             m_iCollisionCount;  // 충돌 횟수
+
+    bool            m_bIsCollidedFromRay;
 public:
     virtual void finaltick() override;
 
@@ -37,6 +39,9 @@ public:
 
     const int& GetCollisionCount() { return m_iCollisionCount; }
 
+    bool  IsCollidedFromRay() { return m_bIsCollidedFromRay; }
+    void  SetCollidedFromRay(bool _state) { m_bIsCollidedFromRay = _state; }
+
 
 
 
@@ -44,6 +49,10 @@ public:
     void BeginOverlap(CCollider3D* _Other);
     void OnOverlap(CCollider3D* _Other);
     void EndOverlap(CCollider3D* _Other);
+
+    void BeginRayOverlap();
+    void OnRayOverlap();
+    void EndRayOverlap();
 
     virtual void SaveToLevelFile(FILE* _File) override;
     virtual void LoadFromLevelFile(FILE* _File) override;

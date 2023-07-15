@@ -72,7 +72,7 @@ void CEditorObjMgr::init()
 	pEditorCamObj->AddComponent(new CTransform);
 	pEditorCamObj->AddComponent(new CCamera);
 	pEditorCamObj->AddComponent(new CCameraMoveScript);
-	pEditorCamObj->AddComponent(new CInGameCameraScript);
+	//pEditorCamObj->AddComponent(new CInGameCameraScript);
 
 	pEditorCamObj->Camera()->SetLayerMaskAll(true);
 	pEditorCamObj->Camera()->SetProjType(PROJ_TYPE::PERSPECTIVE);
