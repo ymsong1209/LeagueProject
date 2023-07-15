@@ -25,7 +25,7 @@
 #include "CEngine.h"
 
 #include "CStructuredBuffer.h"
-#include "CFogOfWarShader.h"
+
 
 
 
@@ -43,8 +43,7 @@ CCamera::CCamera()
 	, m_iCamIdx(-1)
 	, m_bShowFrustumDebug(false)
 	, m_bViewGizmoBounding(false)
-	, m_WallBuffer(nullptr)
-	, m_RayBuffer(nullptr)
+	
 {
 	SetName(L"Camera");
 
@@ -52,9 +51,6 @@ CCamera::CCamera()
 	m_fWidth = vRenderResol.x;
 	m_fAspectRatio = vRenderResol.x / vRenderResol.y;
 
-	m_WallBuffer = new CStructuredBuffer;
-	m_RayBuffer = new CStructuredBuffer;	
-	m_FogOfWarShader = (CFogOfWarShader*)CResMgr::GetInst()->FindRes<CComputeShader>(L"FogOfWarShader").Get();
 }
 
 CCamera::CCamera(const CCamera& _Other)
@@ -71,18 +67,11 @@ CCamera::CCamera(const CCamera& _Other)
 	, m_bViewGizmoBounding(_Other.m_bViewGizmoBounding)
 {
 	SetName(L"Camera");
-	m_WallBuffer = new CStructuredBuffer;
-	m_RayBuffer = new CStructuredBuffer;
-	m_FogOfWarShader = (CFogOfWarShader*)CResMgr::GetInst()->FindRes<CComputeShader>(L"FogOfWarShader").Get();
 }
 
 CCamera::~CCamera()
 {	
-	if (m_WallBuffer)
-		delete m_WallBuffer;
-
-	if (m_RayBuffer)
-		delete m_RayBuffer;
+	
 }
 
 void CCamera::begin()
@@ -556,60 +545,6 @@ void CCamera::render_depthmap()
 	{
 		m_vecDynamicShadow[i]->GetRenderComponent()->render_depthmap();
 	}
-}
-
-void CCamera::CalcFog()
-{
-	CRenderMgr::GetInst()->GetMRT(MRT_TYPE::FOGOFWAR);
-	m_vecWallObject.clear();
-	m_vecRayObject.clear();
-	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
-
-	for (UINT i = 0; i < MAX_LAYER; ++i)
-	{
-		CLayer* pLayer = pCurLevel->GetLayer(i);
-		const vector<CGameObject*>& vecObj = pLayer->GetObjects();
-
-		for (size_t j = 0; j < vecObj.size(); ++j)
-		{
-			if (vecObj[j]->Collider3D() && vecObj[j]->Collider3D()->IsWall()) {
-				ColliderStruct collidebuff;
-				collidebuff.m_ColliderFinalMat = vecObj[j]->Collider3D()->GetColliderWorldMat();
-				collidebuff.m_ColliderType = (UINT)vecObj[j]->Collider3D()->GetColliderShape();
-
-				m_vecWallObject.push_back(collidebuff);
-			}
-
-			if (vecObj[j]->Transform() && vecObj[j]->Transform()->GetIsShootingRay()) {
-				RayStruct raybuff;
-				raybuff.m_vRayPos = vecObj[j]->Transform()->GetWorldPos();
-				raybuff.m_iRayCount = vecObj[j]->Transform()->GetRayCount();
-
-				m_vecRayObject.push_back(raybuff);
-			}
-		}
-	}
-	UINT WallSize = (UINT)m_vecWallObject.size();
-	m_WallBuffer->Create(sizeof(ColliderStruct), WallSize, SB_TYPE::READ_WRITE, false, m_vecWallObject.data());
-	UINT RayBuffSize = (UINT)m_vecRayObject.size();
-	m_RayBuffer->Create(sizeof(RayStruct), RayBuffSize, SB_TYPE::READ_WRITE, false, m_vecRayObject.data());
-
-	UINT RWCount = 0;
-	for (size_t i = 0; i < m_vecRayObject.size(); ++i) {
-		RWCount += m_vecRayObject[i].m_iRayCount;
-	}
-
-	m_RWBuffer->Create(sizeof(RWStruct), RWCount, SB_TYPE::READ_WRITE, true);
-
-	// 전장의 안개 계산 버퍼
-	m_FogOfWarShader->SetWallBuffer(m_WallBuffer);
-	m_FogOfWarShader->SetRayBuffer(m_RayBuffer);
-	m_FogOfWarShader->SetRWBuffer(m_RWBuffer);
-
-	m_FogOfWarShader->Execute();
-	
-
-	
 }
 
 

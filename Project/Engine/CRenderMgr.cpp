@@ -7,21 +7,23 @@
 
 #include "CLevelMgr.h"
 #include "CLevel.h"
+#include "CLayer.h"
 
-#include "CCamera.h"
-#include "CLight2D.h"
-#include "CTransform.h"
+#include "components.h"
 
 #include "CResMgr.h"
 #include "CMRT.h"
 
-#include "CLight2D.h"
-#include "CLight3D.h"
+#include "CFogOfWarShader.h"
+
 
 CRenderMgr::CRenderMgr()
     : m_Light2DBuffer(nullptr)
     , RENDER_FUNC(nullptr)
     , m_pEditorCam(nullptr)
+    , m_WallBuffer(nullptr)
+    , m_RayBuffer(nullptr)
+    , m_RWBuffer(nullptr)
 {
     Vec2 vResolution = CDevice::GetInst()->GetRenderResolution();
     m_RTCopyTex = CResMgr::GetInst()->CreateTexture(L"RTCopyTex"
@@ -32,6 +34,10 @@ CRenderMgr::CRenderMgr()
     CResMgr::GetInst()->FindRes<CMaterial>(L"GrayMtrl")->SetTexParam(TEX_0, m_RTCopyTex);
 
     CResMgr::GetInst()->FindRes<CMaterial>(L"DistortionMtrl")->SetTexParam(TEX_0, m_RTCopyTex);
+
+    m_WallBuffer = new CStructuredBuffer;
+    m_RayBuffer = new CStructuredBuffer;
+    m_FogOfWarShader = (CFogOfWarShader*)CResMgr::GetInst()->FindRes<CComputeShader>(L"FogOfWarShader").Get();
 }
 
 CRenderMgr::~CRenderMgr()
@@ -41,6 +47,15 @@ CRenderMgr::~CRenderMgr()
 
     if (nullptr != m_Light3DBuffer)
         delete m_Light3DBuffer;
+
+    if (nullptr != m_WallBuffer)
+        delete m_WallBuffer;
+
+    if (nullptr != m_RayBuffer)
+        delete m_RayBuffer;
+
+    if (nullptr != m_RWBuffer)
+        delete m_RWBuffer;
 
     Safe_Del_Array(m_MRT);
 }
@@ -83,11 +98,8 @@ void CRenderMgr::render_play()
 {    
     // Directional 광원 시점에서 Shadow맵핑을 위한 DepthMap 생성
     render_dynamic_shadowdepth();
-    //1번 카메라가 이제 Map전체를 찍는 역할을 해준다.
-    if (m_vecCam[1]) {
-        m_vecCam[1]->CalcFog();
-    }
-
+    // ComputeShader에 Wall, Ray 정보 전달, 연산
+    CalcRayForFog();
 
     // 카메라 기준 렌더링
     for (size_t i = 0; i < m_vecCam.size(); ++i)
@@ -104,10 +116,9 @@ void CRenderMgr::render_editor()
 {   
     // Directional 광원 시점에서 Shadow맵핑을 위한 DepthMap 생성
     render_dynamic_shadowdepth();
-    //1번 카메라가 이제 Map전체를 찍는 역할을 해준다.
-    if (m_vecCam[1]) {
-        m_vecCam[1]->CalcFog();
-    }
+    // ComputeShader에 Wall, Ray 정보 전달, 연산
+    CalcRayForFog();
+   
     m_pEditorCam->SortObject();
     m_pEditorCam->render();    
 
@@ -133,6 +144,58 @@ void CRenderMgr::render_dynamic_shadowdepth()
         if (LIGHT_TYPE::DIRECTIONAL == (LIGHT_TYPE)m_vecLight3D[i]->GetLightInfo().LightType)
             m_vecLight3D[i]->render_depthmap();
     }
+}
+
+void CRenderMgr::CalcRayForFog()
+{
+    m_vecWallObject.clear();
+    m_vecRayObject.clear();
+    CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
+
+    for (UINT i = 0; i < MAX_LAYER; ++i)
+    {
+        CLayer* pLayer = pCurLevel->GetLayer(i);
+        const vector<CGameObject*>& vecObj = pLayer->GetObjects();
+
+        for (size_t j = 0; j < vecObj.size(); ++j)
+        {
+            if (vecObj[j]->Collider3D() && vecObj[j]->Collider3D()->IsWall()) {
+                ColliderStruct collidebuff;
+                collidebuff.m_ColliderFinalMat = vecObj[j]->Collider3D()->GetColliderWorldMat();
+                collidebuff.m_ColliderType = (UINT)vecObj[j]->Collider3D()->GetColliderShape();
+
+                m_vecWallObject.push_back(collidebuff);
+            }
+
+            if (vecObj[j]->Transform() && vecObj[j]->Transform()->GetIsShootingRay()) {
+                RayStruct raybuff;
+                raybuff.m_vRayPos = vecObj[j]->Transform()->GetWorldPos();
+                raybuff.m_iRayCount = vecObj[j]->Transform()->GetRayCount();
+
+                m_vecRayObject.push_back(raybuff);
+            }
+        }
+    }
+    UINT WallSize = (UINT)m_vecWallObject.size();
+    m_WallBuffer->Create(sizeof(ColliderStruct), WallSize, SB_TYPE::READ_WRITE, false, m_vecWallObject.data());
+    UINT RayBuffSize = (UINT)m_vecRayObject.size();
+    m_RayBuffer->Create(sizeof(RayStruct), RayBuffSize, SB_TYPE::READ_WRITE, false, m_vecRayObject.data());
+
+    UINT RWCount = 0;
+    for (size_t i = 0; i < m_vecRayObject.size(); ++i) {
+        RWCount += m_vecRayObject[i].m_iRayCount;
+    }
+
+    m_RWBuffer->Create(sizeof(RWStruct), RWCount, SB_TYPE::READ_WRITE, true);
+
+    // 전장의 안개 계산 버퍼
+    m_FogOfWarShader->SetWallBuffer(m_WallBuffer);
+    m_FogOfWarShader->SetRayBuffer(m_RayBuffer);
+    m_FogOfWarShader->SetRWBuffer(m_RWBuffer);
+
+    m_FogOfWarShader->Execute();
+
+
 }
 
 int CRenderMgr::RegisterCamera(CCamera* _Cam, int _idx)

@@ -10,6 +10,25 @@ class CLight3D;
 class CStructuredBuffer;
 class CMRT;
 
+
+//-----------전장의 안개에 전달해줄 구조체---------------------//
+struct ColliderStruct{
+    Matrix      m_ColliderFinalMat;
+    int         m_ColliderType;//0 : Sphere, 1 : Cube;
+    int         padding[3];
+};
+
+struct RayStruct {
+    Vec3        m_vRayPos;
+    int         m_iRayCount;
+};
+
+struct RWStruct {
+    Vec4        m_vCrossPos;        //Ray랑 사각형이 부딪힌 지점.
+};
+//------------------------------------------------------------//
+
+
 class CRenderMgr :
     public CSingleton<CRenderMgr>
 {
@@ -34,6 +53,13 @@ private:
 
     Ptr<CTexture>               m_RTCopyTex;
 
+    Ptr<CFogOfWarShader>        m_FogOfWarShader;   //전장의 안개 ComputeShader
+    vector<ColliderStruct>      m_vecWallObject;    //Ray에 충돌될 가능성이 있는 벽 오브젝트
+    vector<RayStruct>           m_vecRayObject;     //Ray를 쏘는 object player, 와드 등
+    CStructuredBuffer*          m_WallBuffer;
+    CStructuredBuffer*          m_RayBuffer;
+    CStructuredBuffer*          m_RWBuffer;         // ComputeShader 계산 후 받아올 버퍼 
+
 
     void (CRenderMgr::* RENDER_FUNC)(void);
 
@@ -45,6 +71,7 @@ public:
 private:
     void render_clear();
     void render_dynamic_shadowdepth();
+    void CalcRayForFog();
 
 public:
     CMRT* GetMRT(MRT_TYPE _type) { return m_MRT[(UINT)_type]; }
