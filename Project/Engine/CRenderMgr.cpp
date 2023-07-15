@@ -83,6 +83,11 @@ void CRenderMgr::render_play()
 {    
     // Directional 광원 시점에서 Shadow맵핑을 위한 DepthMap 생성
     render_dynamic_shadowdepth();
+    //1번 카메라가 이제 Map전체를 찍는 역할을 해준다.
+    if (m_vecCam[1]) {
+        m_vecCam[1]->CalcFog();
+    }
+
 
     // 카메라 기준 렌더링
     for (size_t i = 0; i < m_vecCam.size(); ++i)
@@ -99,7 +104,10 @@ void CRenderMgr::render_editor()
 {   
     // Directional 광원 시점에서 Shadow맵핑을 위한 DepthMap 생성
     render_dynamic_shadowdepth();
-
+    //1번 카메라가 이제 Map전체를 찍는 역할을 해준다.
+    if (m_vecCam[1]) {
+        m_vecCam[1]->CalcFog();
+    }
     m_pEditorCam->SortObject();
     m_pEditorCam->render();    
 
@@ -171,6 +179,7 @@ CCamera* CRenderMgr::GetPlayMainCam()
 
     return m_vecCam[0];
 }
+
 
 void CRenderMgr::CopyRenderTarget()
 {

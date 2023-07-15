@@ -9,6 +9,7 @@ CCollider3D::CCollider3D()
 	, m_bAbsolute(false)
 	, m_iCollisionCount(0)
 	, m_bIsCollidedFromRay(false)
+	, m_bIsWall(false)
 {
 }
 
@@ -19,6 +20,7 @@ CCollider3D::CCollider3D(const CCollider3D& _other)
 	, m_bAbsolute(_other.m_bAbsolute)
 	, m_Shape(_other.m_Shape)
 	, m_bIsCollidedFromRay(false)
+	, m_bIsWall(_other.m_bIsWall)
 {
 
 }

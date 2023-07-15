@@ -24,6 +24,9 @@ private:
     float   m_fGizmoBounding_Radius; //기즈모한테 클릭될 바운딩 범위(구체 반지름값)
     bool    m_bGizmoObjExcept; // 기즈모한테 선택되지 않아야하는 오브젝트일 경우 true
 
+    bool    m_bIsShootingRay;  // 와드,Player는 Ray를 쏜다.
+    int     m_iRayCount;
+
 public:
     void SetRelativePos(Vec3 _vPos) { m_vRelativePos = _vPos; }
     void SetRelativeScale(Vec3 _vScale) { m_vRelativeScale = _vScale; }
@@ -62,6 +65,15 @@ public:
     void SetGizmoObjExcept(bool _IsNoGizmoObj) { m_bGizmoObjExcept = _IsNoGizmoObj; }
     bool GetGizmoObjExcept() { return m_bGizmoObjExcept; }
     // 기즈모한테 선택되지 않아야하는 오브젝트일 경우 true
+
+
+    
+    void SetIsShootingRay(bool _ray) { m_bIsShootingRay = _ray; }
+    bool GetIsShootingRay() { return m_bIsShootingRay; }
+
+    void SetRayCount(int _count) { m_iRayCount = _count; }
+    int  GetRayCount() { return m_iRayCount; }
+
 
 public:
     virtual void finaltick() override;

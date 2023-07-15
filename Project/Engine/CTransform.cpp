@@ -14,6 +14,8 @@ CTransform::CTransform()
 		, Vec3(0.f, 0.f, 1.f)}	
 	, m_fGizmoBounding_Radius(150.f)
 	, m_bGizmoObjExcept(false)
+	, m_bIsShootingRay(false)
+	, m_iRayCount(20)
 {
 	SetName(L"Transform");
 }
@@ -26,6 +28,8 @@ CTransform::CTransform(const CTransform& _other)
 	, m_bAbsolute(_other.m_bAbsolute)
 	, m_fGizmoBounding_Radius(_other.m_fGizmoBounding_Radius)
 	, m_bGizmoObjExcept(_other.m_bGizmoObjExcept)
+	, m_bIsShootingRay(_other.m_bIsShootingRay)
+	, m_iRayCount(_other.m_iRayCount)
 {
 	SetName(L"Transform");
 }

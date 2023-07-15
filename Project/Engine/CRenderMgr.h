@@ -71,6 +71,7 @@ public:
 
     const vector<CLight3D*> GetLight3D() { return m_vecLight3D; }
 
+
 public:
     CGameObject* GetGizMoTargetObj() { return m_GizMoTargetObject; }   //기즈모가 생겨야할 타겟오브젝트 게터, 세터 함수
     void SetGizMoTargetObj(CGameObject* _Object) { m_GizMoTargetObject = _Object; }
