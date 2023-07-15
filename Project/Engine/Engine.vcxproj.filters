@@ -70,6 +70,9 @@
     <FxCompile Include="worldmap.fx">
       <Filter>Source\08. ShaderCode\02. Render\3D</Filter>
     </FxCompile>
+    <FxCompile Include="fogofwarshader.fx">
+      <Filter>Source\08. ShaderCode\03. Compute\FogOfWar</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CRes.cpp">
@@ -266,6 +269,9 @@
     </ClCompile>
     <ClCompile Include="CAnim3D.cpp">
       <Filter>Source\06.Component\6.Animator3D</Filter>
+    </ClCompile>
+    <ClCompile Include="CFogOfWarShader.cpp">
+      <Filter>Source\08. ShaderCode\03. Compute\FogOfWar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -584,6 +590,9 @@
     <ClInclude Include="rapidjson\writer.h">
       <Filter>Default\rapidJson</Filter>
     </ClInclude>
+    <ClInclude Include="CFogOfWarShader.h">
+      <Filter>Source\08. ShaderCode\03. Compute\FogOfWar</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -780,6 +789,9 @@
     </Filter>
     <Filter Include="Default\rapidJson">
       <UniqueIdentifier>{d08c7c66-7921-40fa-9acd-5c4562cb9377}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\08. ShaderCode\03. Compute\FogOfWar">
+      <UniqueIdentifier>{35cb819a-9625-4918-9331-dca35a82856c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
