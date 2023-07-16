@@ -1,11 +1,6 @@
 #pragma once
 
-struct IntersectResult
-{
-	Vec3  vCrossPoint;
-	float fResult;
-	bool  bResult;
-};
+
 
 struct tVertex
 {

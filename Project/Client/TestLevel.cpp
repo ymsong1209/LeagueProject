@@ -378,18 +378,13 @@ void CreateTestLevel()
 	RayCubeTestObj3->Collider3D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
 	RayCubeTestObj3->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::CUBE);
 
-
 	SpawnGameObject(RayCubeTestObj3, Vec3(-600.f, -450.f, 1220.f), 0);
-
-
-
-
 
 
 
 	// TestFastForward
 	CGameObject* pRectFast2 = new CGameObject;
-	pRectFast2->SetName(L"Sphere");
+	pRectFast2->SetName(L"MoveSphere");
 	pRectFast2->AddComponent(new CMeshRender);
 	pRectFast2->AddComponent(new CTransform);
 	pRectFast2->AddComponent(new CPlayerScript);
