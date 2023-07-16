@@ -1,0 +1,16 @@
+Attack1,0,48
+Attack2,49,97
+Attack3,98,146
+Dance,147,316
+Death,317,436
+Idle1_Base,437,461
+Run,462,493
+sru_blue_idle_a2n,494,558
+sru_blue_idle_aggro2,559,623
+sru_blue_idle_aggro3,624,704
+sru_blue_idle_aggro,705,745
+sru_blue_idle_lookat_l,746,746
+sru_blue_idle_lookat_m,747,747
+sru_blue_idle_lookat_r,748,748
+sru_blue_idle_n2a,749,805
+sru_blue_spawn,806,942

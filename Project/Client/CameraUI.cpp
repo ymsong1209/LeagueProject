@@ -58,6 +58,14 @@ int CameraUI::render_update()
 		GetTarget()->Camera()->SetFar(CamFar);
 	}
 
+	//SetScale--------//
+	ImGui::Text("SetScale");
+	ImGui::SameLine();
+	float CamScale = GetTarget()->Camera()->GetScale();
+	if (ImGui::DragFloat("##SetScale", &CamScale)) {
+		GetTarget()->Camera()->SetScale(CamScale);
+	}
+
 	//Proj Type------------//
 	ImGui::Text("Proj Type : ");
 	ImGui::SameLine();

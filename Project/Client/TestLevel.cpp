@@ -12,6 +12,7 @@
 
 #include <Script\CPlayerScript.h>
 #include <Script\CMonsterScript.h>
+#include <Script\CCameraMoveScript.h>
 #include <Engine\CPathFindMgr.h>
 
 
@@ -42,13 +43,13 @@ void CreateTestLevel()
 
 	pMainCam->AddComponent(new CTransform);
 	pMainCam->AddComponent(new CCamera);
-
-	pMainCam->Camera()->SetProjType(PROJ_TYPE::PERSPECTIVE);
+	pMainCam->AddComponent(new CCameraMoveScript);
+	pMainCam->Camera()->SetProjType(PROJ_TYPE::ORTHOGRAPHIC);
 	pMainCam->Camera()->SetCameraIndex(0);		// MainCamera 로 설정
 	pMainCam->Camera()->SetLayerMaskAll(true);	// 모든 레이어 체크
 	pMainCam->Camera()->SetLayerMask(31, false);// UI Layer 는 렌더링하지 않는다.
-
-	SpawnGameObject(pMainCam, Vec3(0.f, 0.f, 0.f), 0);
+	pMainCam->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(45.f), 0.f, 0.f));
+	SpawnGameObject(pMainCam, Vec3(0.f, 480.f, 0.f), 0);
 
 
 	// 광원 추가
@@ -161,7 +162,15 @@ void CreateTestLevel()
 		CPathFindMgr::GetInst()->SetMapCollision(MapCollision); //마우스 피킹 진행할 맵 콜리전으로 지정
 
 
-
+		pMeshData = nullptr;
+		pObj = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\jungle_blue.fbx");
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"jungle_blue");
+		pObj->GetRenderComponent()->SetFrustumCheck(false);
+		pObj->Animator3D()->Play(L"jungle_blue-jungle_blue_AllAnim", true, 0.5f);
+		pObj->Transform()->SetRelativeScale(Vec3(0.3, 0.3, 0.3));
+		SpawnGameObject(pObj, Vec3(190.f, 0.f, 607.f), 0);
 		//--------------------------------
 		//Ptr<CMeshData> pMeshData1 = nullptr;
 		//CGameObject* pObj1 = nullptr;

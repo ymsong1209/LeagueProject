@@ -39,7 +39,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     }
 
     // CEngine 초기화
-    if (FAILED(CEngine::GetInst()->init(g_hWnd, 1280, 768)))
+    if (FAILED(CEngine::GetInst()->init(g_hWnd, 1600, 1000)))
     {
         return 0;
     }

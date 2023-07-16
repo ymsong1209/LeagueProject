@@ -17,9 +17,9 @@ CCameraMoveScript::~CCameraMoveScript()
 
 void CCameraMoveScript::tick()
 {
-	if (CLevelMgr::GetInst()->GetCurLevel()->GetState() == LEVEL_STATE::PLAY) {
-		return;
-	}
+	//if (CLevelMgr::GetInst()->GetCurLevel()->GetState() == LEVEL_STATE::PLAY) {
+	//	return;
+	//}
 
 	if (PROJ_TYPE::ORTHOGRAPHIC == Camera()->GetProjType())
 		Camera2DMove();
@@ -38,12 +38,12 @@ void CCameraMoveScript::Camera2DMove()
 
 	if (KEY_PRESSED(KEY::W))
 	{
-		vPos.y += EditorDT * fSpeed;
+		vPos.z += EditorDT * fSpeed;
 	}
 
 	if (KEY_PRESSED(KEY::S))
 	{
-		vPos.y -= EditorDT * fSpeed;
+		vPos.z -= EditorDT * fSpeed;
 	}
 
 	if (KEY_PRESSED(KEY::A))
