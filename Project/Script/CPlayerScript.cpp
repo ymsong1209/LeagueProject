@@ -3,15 +3,17 @@
 
 #include <Engine\CMeshRender.h>
 #include <Engine\CMaterial.h>
+#include <Engine\CPathFinder.h>
 
-#include "CMissileScript.h"
-
+#include <fstream>
 
 CPlayerScript::CPlayerScript()
 	: CScript((UINT)SCRIPT_TYPE::PLAYERSCRIPT)
-	, m_fSpeed(0.f)
+	, m_fSpeed(200.f)
+	, m_vTargetPosTest(Vec3(0.f, 0.f, 0.f))
 {
 	AddScriptParam(SCRIPT_PARAM::FLOAT, &m_fSpeed, "Speed");
+	AddScriptParam(SCRIPT_PARAM::VEC4, &m_vTargetPosTest, "TargetPos");
 }
 
 CPlayerScript::~CPlayerScript()
@@ -21,78 +23,54 @@ CPlayerScript::~CPlayerScript()
 
 void CPlayerScript::begin()
 {
-	MeshRender()->GetDynamicMaterial(0);
 }
 
 void CPlayerScript::tick()
 {
-	Vec3 vCurPos = Transform()->GetRelativePos();
-
-	if (KEY_PRESSED(KEY::UP))
+	if (KEY_TAP(KEY::LBTN))
 	{
-		for (int i = 0; i < 4; ++i)
+		GetOwner()->PathFinder()->FindPathMousePicking();
+		//마우스 피킹지점과 길찾기 경로 까지만 알려줌! 이동은 밑의 코드에서 해줌!
+	}
+
+	if (GetOwner()->PathFinder() != nullptr)
+	{
+		Vec3 NextPos = GetOwner()->PathFinder()->GetNextPos();
+
+		// NextPos가 유효한 값이라면
+		if (!isnan(NextPos.x))
 		{
-			vCurPos.y += DT * m_fSpeed;
+			// 현재 위치
+			Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
+
+			// 가야할 방향 구하기
+			Vec3 Dir = (NextPos - CurPos).Normalize();
+
+			Vec3 NewPos = CurPos + (Dir * m_fSpeed * EditorDT);
+
+			// Pos 반영
+			GetOwner()->Transform()->SetRelativePos(NewPos);
+
+			// 목표지점에 도착했다면
+			if ((NewPos - NextPos).Length() < m_fSpeed * EditorDT)
+			{
+				// 다음 위치 갱신하라고 요청
+				GetOwner()->PathFinder()->FindNextPath();
+			}
 		}
 	}
-
-	if (KEY_PRESSED(KEY::DOWN))
-	{
-		for (int i = 0; i < 4; ++i)
-		{
-			vCurPos.y -= DT * m_fSpeed;
-		}
-	}
-
-	if (KEY_PRESSED(KEY::LEFT))
-	{
-		for (int i = 0; i < 4; ++i)
-		{
-			vCurPos.x -= DT * m_fSpeed;
-		}
-	}
-
-	if (KEY_PRESSED(KEY::RIGHT))
-	{
-		for (int i = 0; i < 4; ++i)
-		{
-			vCurPos.x += DT * m_fSpeed;
-		}
-	}
-
-	if (KEY_PRESSED(KEY::Z))
-	{
-		Vec3 vRot = Transform()->GetRelativeRot();
-		vRot.z += DT * XM_PI;
-		Transform()->SetRelativeRot(vRot);
-	}
-
-	Transform()->SetRelativePos(vCurPos);			
-
-	if (KEY_TAP(KEY::SPACE))
-	{
-		DrawDebugCircle(Transform()->GetWorldPos(), 500.f, Vec4(0.f, 0.f, 1.f, 1.f), Vec3(0.f, 0.f, 0.f), 2.f);
-
-		Shoot();
-	}	
 }
 
 void CPlayerScript::Shoot()
 {
-	// 미사일 프리팹 참조
-	Ptr<CPrefab> pMissilePrefab = CResMgr::GetInst()->FindRes<CPrefab>(L"MissilePrefab");
-	Vec3 vMissilePos = Transform()->GetRelativePos() + Vec3(0.f, 0.5f, 0.f) * Transform()->GetRelativeScale();
-	CGameObject* pCloneMissile = pMissilePrefab->Instantiate();
 
-	// 레벨에 추가
-	SpawnGameObject(pCloneMissile, vMissilePos, L"PlayerProjectile");
 }
 
 
 
 void CPlayerScript::BeginOverlap(CCollider2D* _Other)
 {
-	
+
 }
 
 
@@ -118,3 +96,70 @@ void CPlayerScript::LoadFromLevelJsonFile(const Value& _componentValue)
 {
 	m_fSpeed = _componentValue["fSpeed"].GetFloat();
 }
+
+
+//
+//dtNavMesh* loadNavMeshFromBinFile(const char* path)
+//{
+//    const char* path = "your/path/here";
+//    std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
+//    std::wstring wpath = converter.from_bytes(path);
+//    wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
+//    strFilePath += wpath;
+//
+//    FILE* fp = nullptr;
+//    errno_t err = _wfopen_s(&fp, strFilePath.c_str(), L"rb");
+//    if (err != 0 || !fp)
+//    {
+//        return 0;
+//    }
+//
+//    // Read header.
+//    NavMeshSetHeader header;
+//    fread(&header, sizeof(NavMeshSetHeader), 1, fp);
+//    if (header.magic != NAVMESHSET_MAGIC)
+//    {
+//        fclose(fp);
+//        return 0;
+//    }
+//    if (header.version != NAVMESHSET_VERSION)
+//    {
+//        fclose(fp);
+//        return 0;
+//    }
+//
+//    dtNavMesh* navMesh = dtAllocNavMesh();
+//    if (!navMesh)
+//    {
+//        fclose(fp);
+//        return 0;
+//    }
+//
+//    dtStatus status = navMesh->init(&header.params);
+//    if (dtStatusFailed(status))
+//    {
+//        fclose(fp);
+//        return 0;
+//    }
+//
+//    // Read tiles.
+//    for (int i = 0; i < header.numTiles; ++i)
+//    {
+//        NavMeshTileHeader tileHeader;
+//        fread(&tileHeader, sizeof(tileHeader), 1, fp);
+//        if (!tileHeader.tileRef || !tileHeader.dataSize)
+//            break;
+//
+//        unsigned char* data = (unsigned char*)dtAlloc(tileHeader.dataSize, DT_ALLOC_PERM);
+//        if (!data) break;
+//        memset(data, 0, tileHeader.dataSize);
+//        fread(data, tileHeader.dataSize, 1, fp);
+//
+//        navMesh->addTile(data, tileHeader.dataSize, DT_TILE_FREE_DATA, tileHeader.tileRef, 0);
+//    }
+//
+//    fclose(fp);
+//
+//    return navMesh;
+//}
+//

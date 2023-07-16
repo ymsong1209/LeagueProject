@@ -209,6 +209,8 @@ call EngineCopy.bat</Command>
     <ClInclude Include="components.h" />
     <ClInclude Include="CParticleSystem.h" />
     <ClInclude Include="CParticleUpdateShader.h" />
+    <ClInclude Include="CPathFinder.h" />
+    <ClInclude Include="CPathFindMgr.h" />
     <ClInclude Include="CPathMgr.h" />
     <ClInclude Include="CPrefab.h" />
     <ClInclude Include="CRaycastShader.h" />
@@ -230,6 +232,15 @@ call EngineCopy.bat</Command>
     <ClInclude Include="CTransform.h" />
     <ClInclude Include="CWeightMapShader.h" />
     <ClInclude Include="define.h" />
+    <ClInclude Include="Detour\DetourAlloc.h" />
+    <ClInclude Include="Detour\DetourAssert.h" />
+    <ClInclude Include="Detour\DetourCommon.h" />
+    <ClInclude Include="Detour\DetourMath.h" />
+    <ClInclude Include="Detour\DetourNavMesh.h" />
+    <ClInclude Include="Detour\DetourNavMeshBuilder.h" />
+    <ClInclude Include="Detour\DetourNavMeshQuery.h" />
+    <ClInclude Include="Detour\DetourNode.h" />
+    <ClInclude Include="Detour\DetourStatus.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="func.h" />
     <ClInclude Include="global.h" />
@@ -319,6 +330,8 @@ call EngineCopy.bat</Command>
     <ClCompile Include="CMRT.cpp" />
     <ClCompile Include="CParticleSystem.cpp" />
     <ClCompile Include="CParticleUpdateShader.cpp" />
+    <ClCompile Include="CPathFinder.cpp" />
+    <ClCompile Include="CPathFindMgr.cpp" />
     <ClCompile Include="CPathMgr.cpp" />
     <ClCompile Include="CPrefab.cpp" />
     <ClCompile Include="CRaycastShader.cpp" />
@@ -340,6 +353,13 @@ call EngineCopy.bat</Command>
     <ClCompile Include="CTimeMgr.cpp" />
     <ClCompile Include="CTransform.cpp" />
     <ClCompile Include="CWeightMapShader.cpp" />
+    <ClCompile Include="Detour\DetourAlloc.cpp" />
+    <ClCompile Include="Detour\DetourAssert.cpp" />
+    <ClCompile Include="Detour\DetourCommon.cpp" />
+    <ClCompile Include="Detour\DetourNavMesh.cpp" />
+    <ClCompile Include="Detour\DetourNavMeshBuilder.cpp" />
+    <ClCompile Include="Detour\DetourNavMeshQuery.cpp" />
+    <ClCompile Include="Detour\DetourNode.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="extern.cpp" />
     <ClCompile Include="func.cpp" />
@@ -360,6 +380,8 @@ call EngineCopy.bat</Command>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </ObjectFileOutput>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="debugshape.fx">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>

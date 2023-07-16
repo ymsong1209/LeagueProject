@@ -11,6 +11,7 @@
 #include "CRenderMgr.h"
 #include "CEventMgr.h"
 #include "CFontMgr.h"
+#include "CPathFindMgr.h"
 
 CEngine::CEngine()
 	: m_hWnd(nullptr)
@@ -58,7 +59,7 @@ int CEngine::init(HWND _hWnd, UINT _iWidth, UINT _iHeight)
 
 	CLevelMgr::GetInst()->init();		
 	
-
+	CPathFindMgr::GetInst()->init();
 
 	return S_OK;
 }

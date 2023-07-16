@@ -13,6 +13,7 @@ class CLight2D;
 class CLight3D;
 class CCamera;
 class CFsm;
+class CPathFinder;
 class CRenderComponent;
 class CScript;
 class CTileMap;
@@ -74,6 +75,7 @@ public:
     GET_COMPONENT(Decal, DECAL);
     GET_COMPONENT(LandScape, LANDSCAPE);
     GET_COMPONENT(Fsm, FSM);
+    GET_COMPONENT(PathFinder, PATHFINDER);
 
     CRenderComponent* GetRenderComponent() const {  return m_RenderCom; }
 

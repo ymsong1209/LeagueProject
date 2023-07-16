@@ -1,11 +1,14 @@
 #pragma once
 #include <Engine\CScript.h>
 
+class dtNavMesh;
+
 class CPlayerScript :
     public CScript
 {
 private:
     float       m_fSpeed;
+    Vec3        m_vTargetPosTest;
 
 public:
     virtual void begin() override;
@@ -22,6 +25,8 @@ public:
 
     virtual void SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)override;
     virtual void LoadFromLevelJsonFile(const Value& _componentValue)override;
+
+    dtNavMesh* loadNavMeshFromBinFile(const char* path);
 
     CLONE(CPlayerScript);
 public:

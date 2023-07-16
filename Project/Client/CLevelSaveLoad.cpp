@@ -10,8 +10,9 @@
 #include <Engine\CScript.h>
 
 #include <Script\CScriptMgr.h>
-#include <Engine/CCollisionMgr.h>
-#include <Engine/CRenderMgr.h>
+#include <Engine\CCollisionMgr.h>
+#include <Engine\CRenderMgr.h>
+#include <Engine\CPathFinder.h>
 
 
 int CLevelSaveLoad::SaveLevel(const wstring& _LevelPath, CLevel* _Level)
@@ -30,7 +31,7 @@ int CLevelSaveLoad::SaveLevel(const wstring& _LevelPath, CLevel* _Level)
 
 	_wfopen_s(&pFile, strPath.c_str(), L"wb");
 
-	if (nullptr == pFile)	
+	if (nullptr == pFile)
 		return E_FAIL;
 
 	// 레벨 이름 저장
@@ -51,7 +52,7 @@ int CLevelSaveLoad::SaveLevel(const wstring& _LevelPath, CLevel* _Level)
 		// 오브젝트 개수 저장
 		size_t objCount = vecParent.size();
 		fwrite(&objCount, sizeof(size_t), 1, pFile);
-		
+
 		// 각 게임오브젝트
 		for (size_t i = 0; i < objCount; ++i)
 		{
@@ -76,10 +77,10 @@ int CLevelSaveLoad::SaveGameObject(CGameObject* _Object, FILE* _File)
 {
 	// 이름
 	SaveWString(_Object->GetName(), _File);
-	
+
 	// 컴포넌트
 	for (UINT i = 0; i <= (UINT)COMPONENT_TYPE::END; ++i)
-	{		
+	{
 		if (i == (UINT)COMPONENT_TYPE::END)
 		{
 			// 컴포넌트 타입 저장
@@ -118,7 +119,7 @@ int CLevelSaveLoad::SaveGameObject(CGameObject* _Object, FILE* _File)
 
 	for (size_t i = 0; i < ChildCount; ++i)
 	{
-		SaveGameObject(vecChild[i], _File);		
+		SaveGameObject(vecChild[i], _File);
 	}
 
 	return 0;
@@ -135,7 +136,7 @@ CLevel* CLevelSaveLoad::LoadLevel(const wstring& _LevelPath)
 
 	if (nullptr == pFile)
 		return nullptr;
-	
+
 	//Camera의 생성자에서 RenderMgr에 등록할라면 먼저 기존에 RenderMgr가 초기화되어야함
 	CRenderMgr::GetInst()->ClearCamera();
 	CLevel* NewLevel = new CLevel;
@@ -167,7 +168,7 @@ CLevel* CLevelSaveLoad::LoadLevel(const wstring& _LevelPath)
 		}
 	}
 
-	
+
 	UINT matrix[MAX_LAYER];
 	fread(&matrix, sizeof(UINT), 32, pFile);
 	CCollisionMgr::GetInst()->SetMatrix(matrix);
@@ -233,7 +234,7 @@ CGameObject* CLevelSaveLoad::LoadGameObject(FILE* _File)
 		case COMPONENT_TYPE::TILEMAP:
 			Component = new CTileMap;
 			break;
-		case COMPONENT_TYPE::LANDSCAPE:			
+		case COMPONENT_TYPE::LANDSCAPE:
 			Component = new CLandScape;
 			break;
 		case COMPONENT_TYPE::DECAL:
@@ -244,6 +245,9 @@ CGameObject* CLevelSaveLoad::LoadGameObject(FILE* _File)
 			break;
 		case COMPONENT_TYPE::FSM:
 			Component = new CFsm;
+			break;
+		case COMPONENT_TYPE::PATHFINDER:
+			Component = new CPathFinder;
 			break;
 		}
 
@@ -278,7 +282,7 @@ CGameObject* CLevelSaveLoad::LoadGameObject(FILE* _File)
 	return pObject;
 }
 
-int CLevelSaveLoad::SaveLevelToJson(const wstring& levelPath, CLevel* level) 
+int CLevelSaveLoad::SaveLevelToJson(const wstring& levelPath, CLevel* level)
 {
 	if (level->GetState() != LEVEL_STATE::STOP) {
 		wchar_t szStr[256] = {};
@@ -295,8 +299,8 @@ int CLevelSaveLoad::SaveLevelToJson(const wstring& levelPath, CLevel* level)
 	// 레벨 이름 저장
 	Value levelValue(kStringType);
 	levelValue.SetString(wStrToStr(levelPath).c_str(), wStrToStr(levelPath).length(), allocator);
-	
-	document.AddMember("levelName", SaveWStringJson(levelPath,allocator), allocator);
+
+	document.AddMember("levelName", SaveWStringJson(levelPath, allocator), allocator);
 
 	// 레벨의 레이어들을 저장
 	Value layers(kArrayType);
@@ -408,7 +412,7 @@ int CLevelSaveLoad::SaveGameObjectToJson(CGameObject* gameObject, Document::Allo
 		Value scriptValue(kObjectType);
 		wstring scriptName = CScriptMgr::GetScriptName(script);
 
-		scriptValue.AddMember("scriptName", SaveWStringJson(scriptName,allocator), allocator);
+		scriptValue.AddMember("scriptName", SaveWStringJson(scriptName, allocator), allocator);
 		script->SaveToLevelJsonFile(scriptValue, allocator);
 		scriptArray.PushBack(scriptValue, allocator);
 	}
@@ -581,7 +585,7 @@ CGameObject* CLevelSaveLoad::LoadGameObjectFromJson(const Value& _gameObjectValu
 						break;
 
 					CComponent* Component = nullptr;
-					
+
 					switch ((COMPONENT_TYPE)ComponentType)
 					{
 					case COMPONENT_TYPE::TRANSFORM:
@@ -628,6 +632,9 @@ CGameObject* CLevelSaveLoad::LoadGameObjectFromJson(const Value& _gameObjectValu
 						break;
 					case COMPONENT_TYPE::FSM:
 						Component = new CFsm;
+						break;
+					case COMPONENT_TYPE::PATHFINDER:
+						Component = new CPathFinder;
 						break;
 					}
 

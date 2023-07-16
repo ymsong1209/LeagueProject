@@ -267,6 +267,33 @@
     <ClCompile Include="CAnim3D.cpp">
       <Filter>Source\06.Component\6.Animator3D</Filter>
     </ClCompile>
+    <ClCompile Include="Detour\DetourAlloc.cpp">
+      <Filter>NaviMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Detour\DetourAssert.cpp">
+      <Filter>NaviMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Detour\DetourCommon.cpp">
+      <Filter>NaviMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Detour\DetourNavMesh.cpp">
+      <Filter>NaviMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Detour\DetourNavMeshBuilder.cpp">
+      <Filter>NaviMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Detour\DetourNavMeshQuery.cpp">
+      <Filter>NaviMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Detour\DetourNode.cpp">
+      <Filter>NaviMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="CPathFindMgr.cpp">
+      <Filter>Source\03. Manager\10. PathFindMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CPathFinder.cpp">
+      <Filter>Source\06.Component\10. PathFinder</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="components.h">
@@ -584,6 +611,39 @@
     <ClInclude Include="rapidjson\writer.h">
       <Filter>Default\rapidJson</Filter>
     </ClInclude>
+    <ClInclude Include="Detour\DetourCommon.h">
+      <Filter>NaviMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Detour\DetourMath.h">
+      <Filter>NaviMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Detour\DetourNavMesh.h">
+      <Filter>NaviMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Detour\DetourNavMeshBuilder.h">
+      <Filter>NaviMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Detour\DetourNavMeshQuery.h">
+      <Filter>NaviMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Detour\DetourNode.h">
+      <Filter>NaviMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Detour\DetourStatus.h">
+      <Filter>NaviMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Detour\DetourAlloc.h">
+      <Filter>NaviMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Detour\DetourAssert.h">
+      <Filter>NaviMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="CPathFindMgr.h">
+      <Filter>Source\03. Manager\10. PathFindMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CPathFinder.h">
+      <Filter>Source\06.Component\10. PathFinder</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -780,6 +840,15 @@
     </Filter>
     <Filter Include="Default\rapidJson">
       <UniqueIdentifier>{d08c7c66-7921-40fa-9acd-5c4562cb9377}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NaviMesh">
+      <UniqueIdentifier>{3f52a28d-9903-4f95-af53-05a176fce088}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\03. Manager\10. PathFindMgr">
+      <UniqueIdentifier>{103dfcab-064f-4950-9bc5-efe18c289caf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\06.Component\10. PathFinder">
+      <UniqueIdentifier>{e5784bd0-20e1-4f60-87de-f3b849a7ac8a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

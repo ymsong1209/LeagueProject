@@ -20,7 +20,8 @@ CCameraMoveScript::~CCameraMoveScript()
 
 void CCameraMoveScript::tick()
 {
-	// Editor Camera¿¡¼­ÀÇ Play »óÅÂ¿¡¼­ÀÇ TickÀ» ÁÖÁö ¾Ê±â À§ÇÔ 
+
+	// Editor Cameraì—ì„œì˜ Play ìƒíƒœì—ì„œì˜ Tickì„ ì£¼ì§€ ì•Šê¸° ìœ„í•¨ 
 	if (CLevelMgr::GetInst()->GetCurLevel()->GetState() == LEVEL_STATE::PLAY &&
 		CRenderMgr::GetInst()->GetMainCam() != this->GetOwner()->Camera()) {
 		return;
@@ -34,7 +35,7 @@ void CCameraMoveScript::tick()
 
 void CCameraMoveScript::Camera2DMove()
 {
-	// Å° ÀÔ·Â¿¡ µû¸¥ Ä«¸Þ¶ó ÀÌµ¿
+	// í‚¤ ìž…ë ¥ì— ë”°ë¥¸ ì¹´ë©”ë¼ ì´ë™
 	Vec3 vPos = Transform()->GetRelativePos();
 
 	float fSpeed = m_fCamSpeed;
@@ -43,12 +44,12 @@ void CCameraMoveScript::Camera2DMove()
 
 	if (KEY_PRESSED(KEY::W))
 	{
-		vPos.y += EditorDT * fSpeed;
+		vPos.z += EditorDT * fSpeed;
 	}
 
 	if (KEY_PRESSED(KEY::S))
 	{
-		vPos.y -= EditorDT * fSpeed;
+		vPos.z -= EditorDT * fSpeed;
 	}
 
 	if (KEY_PRESSED(KEY::A))

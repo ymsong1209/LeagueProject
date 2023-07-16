@@ -1,0 +1,15 @@
+Attack1,0,40
+Attack2,41,81
+Attack3,82,122
+Death,123,188
+Idle_Lookat_0,189,213
+Idle_Lookat_L45,214,238
+Idle_Lookat_R45,239,263
+Run,264,289
+sru_red_idle1_aggro2,290,351
+sru_red_idle1_aggro,352,380
+sru_red_idle1,381,444
+sru_red_idle2,445,585
+sru_red_idle_a2n,586,610
+sru_red_idle_n2a,611,679
+sru_red_spawn,680,775
