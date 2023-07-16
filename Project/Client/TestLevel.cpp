@@ -261,7 +261,7 @@ void CreateTestLevel()
 
 	// TestFastForward
 	CGameObject* pRectFast2 = new CGameObject;
-	pRectFast2->SetName(L"Jinx");
+	pRectFast2->SetName(L"Sphere");
 	pRectFast2->AddComponent(new CMeshRender);
 	pRectFast2->AddComponent(new CTransform);
 	pRectFast2->AddComponent(new CPlayerScript);
