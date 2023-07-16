@@ -188,6 +188,7 @@ call EngineCopy.bat</Command>
     <ClInclude Include="CEntity.h" />
     <ClInclude Include="CEventMgr.h" />
     <ClInclude Include="CFBXLoader.h" />
+    <ClInclude Include="CFogOfWarShader.h" />
     <ClInclude Include="CFontMgr.h" />
     <ClInclude Include="CFrustum.h" />
     <ClInclude Include="CFsm.h" />
@@ -299,6 +300,7 @@ call EngineCopy.bat</Command>
     <ClCompile Include="CEntity.cpp" />
     <ClCompile Include="CEventMgr.cpp" />
     <ClCompile Include="CFBXLoader.cpp" />
+    <ClCompile Include="CFogOfWarShader.cpp" />
     <ClCompile Include="CFontMgr.cpp" />
     <ClCompile Include="CFrustum.cpp" />
     <ClCompile Include="CFsm.cpp" />
@@ -400,6 +402,14 @@ call EngineCopy.bat</Command>
       </ObjectFileOutput>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Effect</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="fogofwarshader.fx">
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="func.fx">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>
