@@ -37,11 +37,17 @@ void CCollider2D::finaltick()
 	assert(0 <= m_iCollisionCount);
 	m_matColliderScale = XMMatrixIdentity();
 	m_matColliderScale = XMMatrixScaling(m_vOffsetScale.x, m_vOffsetScale.y, m_vOffsetScale.z);
+	
+	m_matColliderRot = XMMatrixIdentity();
+	m_matColliderRot = XMMatrixRotationX(m_vOffsetRot.x);
+	m_matColliderRot *= XMMatrixRotationY(m_vOffsetRot.y);
+	m_matColliderRot *= XMMatrixRotationZ(m_vOffsetRot.z);
+	
 	m_matColliderPos = XMMatrixIdentity();
 	m_matColliderPos = XMMatrixTranslation(m_vOffsetPos.x, m_vOffsetPos.y, m_vOffsetPos.z);
 
-
 	m_matCollider2D = XMMatrixScaling(m_vOffsetScale.x, m_vOffsetScale.y, m_vOffsetScale.z);
+	m_matCollider2D *= m_matColliderRot;
 	m_matCollider2D *= XMMatrixTranslation(m_vOffsetPos.x, m_vOffsetPos.y, m_vOffsetPos.z);
 	//크기 X 회전 X 이동 (회전은 안함)
 	const Matrix& matWorld = Transform()->GetWorldMat(); //최종 월드 행렬

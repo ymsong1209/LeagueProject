@@ -27,6 +27,8 @@ int Collider2DUI::render_update()
 
 	Vec3					vOffsetPos = GetTarget()->Collider2D()->GetOffsetPos();
 	Vec3					vOffsetScale = GetTarget()->Collider2D()->GetOffsetScale();
+	Vec3					vOffsetRot = GetTarget()->Collider2D()->GetOffsetRot();
+	vOffsetRot = (vOffsetRot / XM_PI) * 180.f;
 	bool					bAbsolute = GetTarget()->Collider2D()->GetColliderAbsolute();
 
 	int						iCollisionCount = GetTarget()->Collider2D()->GetCollisionCount();  // Ãæµ¹ È½¼ö
@@ -39,16 +41,23 @@ int Collider2DUI::render_update()
 
 	ImGui::Text("OffsetPos");
 	ImGui::SameLine();
-	if (ImGui::InputFloat3("##ColliderOffsetPos", vOffsetPos)) {
+	if (ImGui::DragFloat3("##ColliderOffsetPos", vOffsetPos)) {
 		Vec2 pos = Vec2(vOffsetPos.x, vOffsetPos.y);
 		GetTarget()->Collider2D()->SetOffsetPos(pos);
 	}
 
 	ImGui::Text("OffsetScale");
 	ImGui::SameLine();
-	if (ImGui::InputFloat3("##ColliderOffsetScale", vOffsetScale)) {
+	if (ImGui::DragFloat3("##ColliderOffsetScale", vOffsetScale)) {
 		Vec2 scale = Vec2(vOffsetScale.x, vOffsetScale.y);
 		GetTarget()->Collider2D()->SetOffsetScale(scale);
+	}
+
+	ImGui::Text("OffsetRot");
+	ImGui::SameLine();
+	if (ImGui::DragFloat3("##ColliderOffsetRot", vOffsetRot)) {
+		Vec3 rot = (vOffsetRot / 180.f) * XM_PI;
+		GetTarget()->Collider2D()->SetOffsetRot(rot);
 	}
 
 	ImGui::Text("CollisionCount : %d", iCollisionCount);
