@@ -123,6 +123,9 @@ void CTransform::SaveToLevelFile(FILE* _File)
 
 	fwrite(&m_bGizmoObjExcept, sizeof(bool), 1, _File);
 	fwrite(&m_fGizmoBounding_Radius, sizeof(float), 1, _File);
+
+	fwrite(&m_bIsShootingRay, sizeof(bool), 1, _File);
+	fwrite(&m_fRayRange, sizeof(float), 1, _File);
 }
 
 void CTransform::LoadFromLevelFile(FILE* _FILE)
@@ -134,6 +137,9 @@ void CTransform::LoadFromLevelFile(FILE* _FILE)
 	
 	fread(&m_bGizmoObjExcept, sizeof(bool), 1, _FILE);
 	fread(&m_fGizmoBounding_Radius, sizeof(float), 1, _FILE);
+
+	fread(&m_bIsShootingRay, sizeof(bool), 1, _FILE);
+	fread(&m_fRayRange, sizeof(float), 1, _FILE);
 }
 
 void CTransform::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
@@ -145,6 +151,9 @@ void CTransform::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& 
 
 	_objValue.AddMember("IsNoGizmoObj", m_bGizmoObjExcept, allocator);
 	_objValue.AddMember("GizmoBounding_Radius", m_fGizmoBounding_Radius, allocator);
+
+	_objValue.AddMember("IsShootingRay", m_bIsShootingRay, allocator);
+	_objValue.AddMember("RayRange", m_fRayRange, allocator);
 }
 
 void CTransform::LoadFromLevelJsonFile(const Value& _componentValue)
@@ -156,4 +165,7 @@ void CTransform::LoadFromLevelJsonFile(const Value& _componentValue)
 
 	m_bGizmoObjExcept = _componentValue["IsNoGizmoObj"].GetBool();
 	m_fGizmoBounding_Radius = _componentValue["GizmoBounding_Radius"].GetFloat();
+
+	m_bIsShootingRay = _componentValue["IsShootingRay"].GetBool();
+	m_fRayRange = _componentValue["RayRange"].GetFloat();
 }

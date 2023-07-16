@@ -146,9 +146,7 @@ struct tColliderInfo
 {
     row_major matrix mColliderFinalMat;
     int              iColliderType;
-    int              iPad1;    
-    int              iPad2;
-    int              iPad3;
+    int              iPad[3];    
 };
 
 struct tRayLightInfo
@@ -156,9 +154,7 @@ struct tRayLightInfo
     float3 vRayLightCenterPos;
     int    iRayLightCount;
     float  fRayRange;
-    int    iPad1;
-    int    iPad2;
-    int    iPad3;
+    int    iPad[3];
 };
 
 struct tRayIntersect

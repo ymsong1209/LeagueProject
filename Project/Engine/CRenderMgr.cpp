@@ -24,6 +24,7 @@ CRenderMgr::CRenderMgr()
     , m_WallBuffer(nullptr)
     , m_RayBuffer(nullptr)
     , m_RWBuffer(nullptr)
+    , m_iRayCount(20)
 {
     Vec2 vResolution = CDevice::GetInst()->GetRenderResolution();
     m_RTCopyTex = CResMgr::GetInst()->CreateTexture(L"RTCopyTex"
@@ -185,7 +186,7 @@ void CRenderMgr::CalcRayForFog()
 
     UINT RWCount = 0;
     for (size_t i = 0; i < m_vecRayObject.size(); ++i) {
-        RWCount += m_vecRayObject[i].m_iRayCount;
+        RWCount += m_iRayCount;
     }
 
     m_RWBuffer->Create(sizeof(RWStruct), RWCount, SB_TYPE::READ_WRITE, true);
@@ -201,7 +202,20 @@ void CRenderMgr::CalcRayForFog()
     m_FogOfWarShader->UpdateData();
     m_FogOfWarShader->Execute();
 
+    auto a = m_RWBuffer[0];
 
+    UINT bufferSize = m_RWBuffer->GetBufferSize();
+    RWStruct* data = new RWStruct[bufferSize / sizeof(RWStruct)];
+    m_RWBuffer->GetData((void*)data);
+
+    if (data && bufferSize > 5) {
+        RWStruct test = data[0];
+        RWStruct test2 = data[1];
+        RWStruct test3 = data[2];
+        RWStruct test4 = data[3];
+    }
+  
+    delete data;
 }
 
 int CRenderMgr::RegisterCamera(CCamera* _Cam, int _idx)
