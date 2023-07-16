@@ -5,6 +5,9 @@
 #include <Engine\CCamera.h>
 #include <Engine/CLevelMgr.h>
 #include <Engine/CLevel.h>
+#include <Engine/CEngine.h>
+#include <Engine/CRenderMgr.h>
+
 CCameraMoveScript::CCameraMoveScript()
 	: CScript((UINT)SCRIPT_TYPE::CAMERAMOVESCRIPT)
 	, m_fCamSpeed(100.f)
@@ -17,9 +20,12 @@ CCameraMoveScript::~CCameraMoveScript()
 
 void CCameraMoveScript::tick()
 {
-	//if (CLevelMgr::GetInst()->GetCurLevel()->GetState() == LEVEL_STATE::PLAY) {
-	//	return;
-	//}
+
+	// Editor Camera에서의 Play 상태에서의 Tick을 주지 않기 위함 
+	if (CLevelMgr::GetInst()->GetCurLevel()->GetState() == LEVEL_STATE::PLAY &&
+		CRenderMgr::GetInst()->GetMainCam() != this->GetOwner()->Camera()) {
+		return;
+	}
 
 	if (PROJ_TYPE::ORTHOGRAPHIC == Camera()->GetProjType())
 		Camera2DMove();
@@ -29,7 +35,7 @@ void CCameraMoveScript::tick()
 
 void CCameraMoveScript::Camera2DMove()
 {
-	// Ű �Է¿� ���� ī�޶� �̵�
+	// 키 입력에 따른 카메라 이동
 	Vec3 vPos = Transform()->GetRelativePos();
 
 	float fSpeed = m_fCamSpeed;
@@ -69,6 +75,9 @@ void CCameraMoveScript::Camera3DMove()
 	Vec3 vRight = Transform()->GetRelativeDir(DIR_TYPE::RIGHT);
 
 	float fSpeed = m_fCamSpeed;
+
+
+
 
 	if (KEY_PRESSED(KEY::LSHIFT))
 		fSpeed *= 5.f;

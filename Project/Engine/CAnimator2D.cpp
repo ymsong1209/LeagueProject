@@ -21,7 +21,7 @@ CAnimator2D::CAnimator2D()
 
 CAnimator2D::CAnimator2D(const CAnimator2D& _Other)
 	: CComponent(_Other)
-	, m_pCurAnim(_Other.m_pCurAnim)
+	, m_pCurAnim(nullptr)
 	, m_bRepeat(_Other.m_bRepeat)
 	, m_bPause(_Other.m_bPause)
 	, m_tOriginalTransform(_Other.m_tOriginalTransform)
@@ -34,14 +34,12 @@ CAnimator2D::CAnimator2D(const CAnimator2D& _Other)
 		CAnim2D* pAnim = iter->second->Clone();
 		//애니메이션의 소유 애니메이터를 자신으로 설정
 		pAnim->m_pOwner = this;
-		//애니메이션 프레임 정보 등을 리셋
-		pAnim->Reset();
 		//복사한 애니메이션 맵에 새로 만든 애니메이션 삽입
 		m_mapAnim.insert(make_pair(iter->first, pAnim));
 	}
 
 	//복사가 끝나면 원본 애니메이터와 같은 애니메이션을 재생시킨다
-	if (m_pCurAnim != nullptr)
+	if (_Other.m_pCurAnim)
 		Play(_Other.m_pCurAnim->GetName(), m_bRepeat);
 }
 
@@ -223,7 +221,7 @@ void CAnimator2D::LoadFromLevelFile(FILE* _File)
 		m_pCurAnim = FindAnim(strCurAnimName);
 
 		// 불러온 애니메이션이 Dynamic Transform 옵션을 사용한다면
-		if (m_pCurAnim->IsUsingDynamicTransform())
+		if (m_pCurAnim && m_pCurAnim->IsUsingDynamicTransform())
 		{
 			// 현재 Transform값을 Original Transform 값으로 설정
 			if (GetOwner())

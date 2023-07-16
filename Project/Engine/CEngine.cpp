@@ -76,6 +76,18 @@ void CEngine::progress()
 
 void CEngine::tick()
 {
+	// 마우스가 화면 바깥으로 나가지 않도록 함
+	//RECT windowRect;
+
+	//GetWindowRect(m_hWnd, &windowRect);
+
+	//windowRect.left = 20;
+	//windowRect.right = CEngine::GetInst()->GetWindowResolution().x - 100;
+	//windowRect.top = 20;
+	//windowRect.bottom = CEngine::GetInst()->GetWindowResolution().y - 100;
+
+	//ClipCursor(&windowRect);
+
 	// Manager Tick
 	CResMgr::GetInst()->tick();
 	CTimeMgr::GetInst()->tick();

@@ -20,8 +20,20 @@ CMeshRender::CMeshRender()
 	, m_bIsUsingMovingVec(false)
 {
 
+}
+
+CMeshRender::CMeshRender(const CMeshRender& _other)
+	: CRenderComponent(_other)
+	, m_vMovingVec(_other.m_vMovingVec)
+	, m_bIsUsingMovingVec(_other.m_bIsUsingMovingVec)
+{
 
 }
+
+CMeshRender::~CMeshRender()
+{
+}
+
 
 void CMeshRender::SetUsingMovingVec(bool _use)
 {
@@ -62,9 +74,6 @@ void CMeshRender::SetUsingMovingVec(bool _use)
 }
 
 
-CMeshRender::~CMeshRender()
-{
-}
 
 void CMeshRender::finaltick()
 {
@@ -270,6 +279,10 @@ void CMeshRender::SaveToLevelFile(FILE* _File)
 	// 만약에 MovingVec을 사용하고 있었다면 이에 대한 정보도 저장해줘야 하낟.
 	if (m_bIsUsingMovingVec)
 	{
+		//movingvec size 저장
+		int vecsize = m_vMovingVec.size();
+		fwrite(&vecsize, sizeof(int), 1, _File);
+
 		for (int i = 0; i < m_vMovingVec.size(); ++i)
 		{
 			fwrite(&m_vMovingVec[i], sizeof(MovingStruct), 1, _File);
@@ -289,9 +302,15 @@ void CMeshRender::LoadFromLevelFile(FILE* _File)
 	{
 		SetUsingMovingVec(true);
 
-		for (int i = 0; i < m_vMovingVec.size(); ++i)
+		//movingvec size 읽기
+		int vecsize;
+		fread(&vecsize, sizeof(int), 1, _File);
+
+		for (int i = 0; i < vecsize; ++i)
 		{
-			fread(&m_vMovingVec[i], sizeof(MovingStruct), 1, _File);
+			MovingStruct movestruct;
+			fread(&movestruct, sizeof(MovingStruct), 1, _File);
+			m_vMovingVec.push_back(movestruct);
 		}		
 	}
 	else

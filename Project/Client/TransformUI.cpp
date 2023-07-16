@@ -40,7 +40,7 @@ int TransformUI::render_update()
 		CGameObject* TargetObj = CRenderMgr::GetInst()->GetGizMoTargetObj();
 		if (TargetObj->Transform())// 트랜스폼을 가지고있다면
 		{
-			if (!TargetObj->Transform()->GetNogizmoObj()) //기즈모를 배치할수 있는 오브젝트라면
+			if (!TargetObj->Transform()->GetGizmoObjExcept()) //기즈모를 배치할수 있는 오브젝트라면
 				RenderGizmo();  //기즈모 렌더 처리
 		}
 	}

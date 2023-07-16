@@ -13,6 +13,21 @@ CAnim2D::CAnim2D()
 {
 }
 
+CAnim2D::CAnim2D(const CAnim2D& _other)
+	: m_pOwner(nullptr)
+	, m_vecFrm(_other.m_vecFrm)
+	, m_AtlasTex(_other.m_AtlasTex)
+	, m_strRelativePath(_other.m_strRelativePath)
+	, m_iCurFrm(_other.m_iCurFrm)
+	, m_fTime(_other.m_fTime)
+	, m_iFPS(_other.m_iFPS)
+	, m_vBackSizeUV(_other.m_vBackSizeUV)
+	, m_bFinish(_other.m_bFinish)
+	, m_bDynamicTransform(_other.m_bDynamicTransform)
+{
+
+}
+
 CAnim2D::~CAnim2D()
 {
 }

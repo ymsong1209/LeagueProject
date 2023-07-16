@@ -85,6 +85,15 @@ int CameraUI::render_update()
 		}
 	}
 
+	// Orthogonal일 경우 Scale정할 수 있도록 함
+	if (GetTarget()->Camera()->GetProjType() == PROJ_TYPE::ORTHOGRAPHIC)
+	{
+		float Scale = GetTarget()->Camera()->GetScale();
+		ImGui::Text("Camera Scale");
+		ImGui::InputFloat("##OrthogonalScale", &Scale);
+		GetTarget()->Camera()->SetScale(Scale);
+	}
+
 	//LayerMask---------------//
 	UINT layermask = GetTarget()->Camera()->GetLayerMask();
 	ImGui::Text("SetLayerMaskAll");
@@ -161,6 +170,8 @@ int CameraUI::render_update()
 		}
 
 	}
+
+	
 
 	SetSize(0.f, ImGui::GetTextLineHeight() * (scale + 10));
    

@@ -19,6 +19,7 @@
 #include "ImGuiMgr.h"
 #include "ContentUI.h"
 #include "TreeUI.h"
+#include "CLevelSaveLoad.h"
 
 OutlinerUI::OutlinerUI()
     : UI("##Outliner")
@@ -138,7 +139,20 @@ void OutlinerUI::RightClickFunction(DWORD_PTR _RightClickedNode)
 		CGameObject* PrefabObject = pSelectObject->Clone(); // Clone을 해서 LayerIdx를 -1로 만듬
 		NewPrefab->RegisterProtoObject(PrefabObject);
 
-		CResMgr::GetInst()->AddRes<CPrefab>(objectName, NewPrefab);
+		wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
+		strFilePath = strFilePath + L"prefab\\" + PrefabObject->GetName() + L".prefab";
+
+		FILE* pFile = nullptr;
+		_wfopen_s(&pFile, strFilePath.c_str(), L"wb");
+
+		CLevelSaveLoad::SaveGameObject(PrefabObject, pFile);
+
+		fclose(pFile);
+
+		wchar_t szStr[256] = {};
+		wsprintf(szStr, L"Prefab 저장됨.");
+		MessageBox(nullptr, szStr, L"Prefab Save 성공.", MB_OK);
+
 		ContentUI* content = (ContentUI*)ImGuiMgr::GetInst()->FindUI("##Content");
 		content->ResetContent();
 

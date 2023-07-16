@@ -36,6 +36,8 @@
 #include "TreeUI.h"
 
 
+#include <Engine/CPrefab.h>
+
 InspectorUI::InspectorUI()
 	: UI("##Inspector")
 	, m_pTargetObj(nullptr)
@@ -43,10 +45,16 @@ InspectorUI::InspectorUI()
 	, m_arrResUI{}
 {
 	SetName("Inspector");
+	//Prefab
+	m_arrResUI[(UINT)RES_TYPE::PREFAB] = new PrefabUI;
+	m_arrResUI[(UINT)RES_TYPE::PREFAB]->SetSize(0.f, 0.f);
+	AddChildUI(m_arrResUI[(UINT)RES_TYPE::PREFAB]);
+
 
 	m_RenderComUI = new RenderComponentUI;
 	m_RenderComUI->SetSize(0.f, 150.f);
 	AddChildUI(m_RenderComUI);
+	//Component
 
 	m_arrComUI[(UINT)COMPONENT_TYPE::TRANSFORM] = new TransformUI;
 	m_arrComUI[(UINT)COMPONENT_TYPE::TRANSFORM]->SetSize(0.f, 350.f);
@@ -126,9 +134,7 @@ InspectorUI::InspectorUI()
 	m_arrResUI[(UINT)RES_TYPE::COMPUTE_SHADER]->SetSize(0.f, 0.f);
 	AddChildUI(m_arrResUI[(UINT)RES_TYPE::COMPUTE_SHADER]);
 
-	m_arrResUI[(UINT)RES_TYPE::PREFAB] = new PrefabUI;
-	m_arrResUI[(UINT)RES_TYPE::PREFAB]->SetSize(0.f, 0.f);
-	AddChildUI(m_arrResUI[(UINT)RES_TYPE::PREFAB]);
+	
 
 	m_arrResUI[(UINT)RES_TYPE::MATERIAL] = new MaterialUI;
 	m_arrResUI[(UINT)RES_TYPE::MATERIAL]->SetSize(0.f, 0.f);
@@ -156,9 +162,36 @@ void InspectorUI::tick()
 
 int InspectorUI::render_update()
 {
-	//기즈모 관련 처리 - 화면에 눌린 오브젝트를 타겟 오브젝트로 변경
-	
+	if (m_pTargetObj) {
+		CLevel* level = CLevelMgr::GetInst()->GetCurLevel();
+		if (level == nullptr) return TRUE;
 
+		int layernum = m_pTargetObj->GetLayerIndex();
+
+		ImGui::Text("Cur LayerNum : ");
+		ImGui::SameLine();
+		ImGui::Text("%d", layernum);
+
+		ImGui::Text("Cur LayerName : ");
+		ImGui::SameLine();
+		if (layernum == -1) {
+			ImGui::Text("Prefab");
+		}
+		else {
+			CLayer* layer = level->GetLayer(layernum);
+			string name = string(layer->GetName().begin(), layer->GetName().end());
+			if (name.empty()) {
+				ImGui::Text("Untitled Layer");
+			}
+			else {
+				ImGui::Text(name.c_str());
+			}
+
+		}
+	}
+
+
+	//기즈모 관련 처리 - 화면에 눌린 오브젝트를 타겟 오브젝트로 변경
 	if (CRenderMgr::GetInst()->GetGizmoObjectChanged() && CRenderMgr::GetInst()->GetGizMoTargetObj() != nullptr) //기즈모 오브젝트가 있는상태라면
 	{
 

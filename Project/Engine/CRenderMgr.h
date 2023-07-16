@@ -66,6 +66,7 @@ public:
 
     CCamera* GetMainCam();      // 상태에 따라 MainCam을 가져온다
     CCamera* GetPlayMainCam();  // PLAY 상태의 MainCam을 가져온다
+    CCamera* GetEditorCam() { return m_pEditorCam; }
 
 
     const vector<CLight3D*> GetLight3D() { return m_vecLight3D; }

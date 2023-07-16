@@ -2,8 +2,9 @@
 #include "CComponent.h"
 #include "CFrustum.h"
 
-
+class CGameObject;
 class CLevel;
+
 
 class CCamera :
     public CComponent
@@ -44,7 +45,7 @@ private:
     float                   m_LayMinDistance;  // 오브젝트가 여러개 겹쳐있을때 마우스 클릭하는 것을 대비해서 오브젝트들중에 깊이가(길이) 가장 작은
     //오브젝트의 길이값을 기억해두고 그 오브젝트를 최종 선택오브젝트로 세팅
 
-    bool                    b_ViewGizmoBounding; //기즈모 클릭범위(바운딩콜리전) 를 보여줘야하는경우 true, 안보여줘도 되는경우 false
+    bool                    m_bViewGizmoBounding; //기즈모 클릭범위(바운딩콜리전) 를 보여줘야하는경우 true, 안보여줘도 되는경우 false
 
 
 public:
@@ -77,9 +78,9 @@ public:
     const Matrix& GetProjMat() { return m_matProj; }
     const Matrix& GetProjMatInv() { return m_matProjInv; }
 
-    void SetViewGizmoBounding(bool _IsView) { b_ViewGizmoBounding = _IsView; }
+    void SetViewGizmoBounding(bool _IsView) { m_bViewGizmoBounding = _IsView; }
     //기즈모 바운딩 범위를 보여줄것인가?
-    bool GetViewGizmoBounding() { return b_ViewGizmoBounding; }
+    bool GetViewGizmoBounding() { return m_bViewGizmoBounding; }
     void GizmoClickCheck(CGameObject* _CheckTargetObj, CLevel* _CurLevel);
 
 
@@ -98,6 +99,15 @@ public:
 
 protected:
     void CalRay();  // 마우스 방향으로 광선 연산
+
+    void CollideRay(); // Rect 충돌과 Cube충돌 진행
+
+
+
+public:
+    IntersectResult IsCollidingBtwRayRect(tRay& _ray, CGameObject* _Object);
+    IntersectResult IsCollidingBtwRayCube(tRay& _ray, CGameObject* _Object);
+    IntersectResult IntersectsLay(Vec3* _vertices, tRay _ray);
 
 
 private:

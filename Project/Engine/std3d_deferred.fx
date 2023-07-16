@@ -12,6 +12,9 @@
 // g_tex_1 : Normal Texture
 // g_float_0 : LayerNum
 // 
+// // Ray Tex용 숫자
+#define RayTest                     g_int_2
+
 // MeshRender관련
 #define TexMove                     g_int_1
 #define OutputTexMoveOffset         g_vec2_4
@@ -87,6 +90,32 @@ PS_OUT PS_Std3D_Deferred(VS_OUT _in) : SV_Target
     float4 vOutColor = float4(0.f, 0.f, 0.f, 1.f);
     
     float3 vViewNormal = _in.vViewNormal;
+
+    // Ray Test용 Code
+    if (RayTest == 30)
+    {
+
+        PS_OUT TempOut = (PS_OUT)0.f;
+
+        TempOut.vColor = float4(0.f, 1.f, 0.f, 1.f);
+        TempOut.vNormal = float4(vViewNormal.xyz, 1.f);
+        TempOut.vPosition = float4(_in.vViewPos.xyz, 1.f);
+ 
+        return TempOut;
+    }
+
+    else if (RayTest == 20)
+    {
+        PS_OUT TempOut = (PS_OUT)0.f;
+
+        TempOut.vColor = float4(0.f, 0.f, 1.f, 1.f);
+        TempOut.vNormal = float4(vViewNormal.xyz, 1.f);
+        TempOut.vPosition = float4(_in.vViewPos.xyz, 1.f);
+
+        return TempOut;
+ 
+    }
+
      
     // 텍스쳐가 있으면, 해당 색상을 사용한다.
     if (g_btex_0)

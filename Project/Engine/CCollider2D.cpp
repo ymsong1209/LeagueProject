@@ -10,8 +10,20 @@ CCollider2D::CCollider2D()
 	, m_Shape(COLLIDER2D_TYPE::RECT)
 	, m_bAbsolute(false)
 	, m_iCollisionCount(0)
+	, m_bIsCollidedFromRay(false)
 {
 	SetName(L"Collider2D");
+}
+
+CCollider2D::CCollider2D(const CCollider2D& _other)
+	: CComponent(COMPONENT_TYPE::COLLIDER2D)
+	, m_vOffsetPos(_other.m_vOffsetPos)
+	, m_vOffsetScale(_other.m_vOffsetScale)
+	, m_bAbsolute(_other.m_bAbsolute)
+	, m_Shape(_other.m_Shape)
+
+{
+
 }
 
 CCollider2D::~CCollider2D()
@@ -99,6 +111,24 @@ void CCollider2D::EndOverlap(CCollider2D* _Other)
 	{
 		vecScript[i]->EndOverlap(_Other);
 	}
+}
+
+void CCollider2D::BeginRayOverlap()
+{
+	int a = 30;
+	GetOwner()->GetRenderComponent()->GetMaterial(0)->SetScalarParam(INT_2, &a);
+}
+
+void CCollider2D::OnRayOverlap()
+{
+	int a = 20;
+	GetOwner()->GetRenderComponent()->GetMaterial(0)->SetScalarParam(INT_2, &a);
+}
+
+void CCollider2D::EndRayOverlap()
+{
+	int b = 0;
+	GetOwner()->GetRenderComponent()->GetMaterial(0)->SetScalarParam(INT_2, &b);
 }
 
 void CCollider2D::SaveToLevelFile(FILE* _File)
