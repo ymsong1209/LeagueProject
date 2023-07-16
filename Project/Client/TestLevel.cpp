@@ -161,7 +161,6 @@ void CreateTestLevel()
 		SpawnGameObject(MapCollision, Vec3(1125.f, 16.f, 1200.f), 0);
 		CPathFindMgr::GetInst()->SetMapCollision(MapCollision); //마우스 피킹 진행할 맵 콜리전으로 지정
 
-
 		pMeshData = nullptr;
 		pObj = nullptr;
 		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\jungle_blue.fbx");
@@ -171,7 +170,19 @@ void CreateTestLevel()
 		pObj->Animator3D()->Play(L"jungle_blue-jungle_blue_AllAnim", true, 0.5f);
 		pObj->Transform()->SetRelativeScale(Vec3(0.3, 0.3, 0.3));
 		SpawnGameObject(pObj, Vec3(190.f, 0.f, 607.f), 0);
+
+		pMeshData = nullptr;
+		pObj = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"Jinx");
+		pObj->GetRenderComponent()->SetFrustumCheck(false);
+		//pObj->Animator3D()->Play(L"jungle_blue-jungle_blue_AllAnim", true, 0.5f);
+		pObj->Transform()->SetRelativeScale(Vec3(0.3, 0.3, 0.3));
+		SpawnGameObject(pObj, Vec3(0, 0, 0), 0);
+
 		//--------------------------------
+		// 
 		//Ptr<CMeshData> pMeshData1 = nullptr;
 		//CGameObject* pObj1 = nullptr;
 		//pMeshData1 = CResMgr::GetInst()->LoadFBX(L"fbx\\BlitzCrank.fbx");
@@ -250,8 +261,7 @@ void CreateTestLevel()
 
 	// TestFastForward
 	CGameObject* pRectFast2 = new CGameObject;
-	pRectFast2->SetName(L"ReftFast2");
-
+	pRectFast2->SetName(L"Jinx");
 	pRectFast2->AddComponent(new CMeshRender);
 	pRectFast2->AddComponent(new CTransform);
 	pRectFast2->AddComponent(new CPlayerScript);
@@ -261,6 +271,9 @@ void CreateTestLevel()
 	pRectFast2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
 
 	SpawnGameObject(pRectFast2, Vec3(0.f, 0.f, 0.f), 0);
+
+
+
 
 
 	// Anim Test Object
