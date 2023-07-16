@@ -34,16 +34,17 @@ IntersectResult IntersectRay(float3 _Vertices0, float3 _Vertices1, float3 _Verti
     IntersectResult result;
     result.vCrossPoint = float3(0.f, 0.f, 0.f);
     result.bResult = false;
+    result.fResult = 1000000.f;
 
-    float3 edge[2] = { float3(0, 0, 0), float3(0, 0, 0) };
+    float3 edge[2] = { float3(0.f, 0.f, 0.f), float3(0.f, 0.f, 0.f) };
     edge[0] = _Vertices1.xyz - _Vertices0.xyz;
     edge[1] = _Vertices2.xyz - _Vertices0.xyz;
     
     float3 normal = normalize(cross(edge[0], edge[1]));
     float b = dot(normal, _ray.vDir);
 
-    float3 w0 = _ray.vStart - _Vertices0;
-    float a = -(dot(normal, w0));
+    float3 w0 = _ray.vStart - _Vertices0.xyz;
+    float a = -dot(normal, w0);
     float t = a / b;
 
     result.fResult = t;
@@ -141,9 +142,18 @@ IntersectResult CalculateBtwRayCube(tRay Ray, row_major matrix WorldMat)
                 if (Final1.fResult < Temp.fResult)
                 {
                     IntersectResult SwapTemp;
-                    SwapTemp = Final1;
-                    Final1 = Temp;
-                    Final2 = SwapTemp;
+                    SwapTemp.bResult = Final1.bResult;
+                    SwapTemp.fResult = Final1.fResult;
+                    SwapTemp.vCrossPoint = Final1.vCrossPoint;
+                    
+                    Final1.bResult = Temp.bResult;
+                    Final1.fResult = Temp.fResult;
+                    Final1.vCrossPoint = Temp.vCrossPoint;
+                    
+                    Final2.bResult = SwapTemp.bResult;
+                    Final2.fResult = SwapTemp.fResult;
+                    Final2.vCrossPoint = SwapTemp.vCrossPoint;
+             
                 }
                 
                 else
@@ -176,10 +186,10 @@ IntersectResult CalculateBtwRayCube(tRay Ray, row_major matrix WorldMat)
 
 StructuredBuffer<tRayLightInfo> RAYINFO : register(t16); // Ray에 대한 정보들 (CenterPos 이용할 것임)
 StructuredBuffer<tColliderInfo> COLLIDERINFO : register(t17); // Collider에 대한 정보들
-RWStructuredBuffer< tRayOutput> RAYOUTPUT : register(u0); // Unordered Access
+RWStructuredBuffer<tRayOutput> RAYOUTPUT : register(u0); // Unordered Access
 
 #define SourceLightCount        g_int_0
-#define SourceLightPerRay       g_int_1
+#define RayCountperObject       g_int_1
 #define ColliderVecCount        g_int_2
 
 
@@ -187,8 +197,8 @@ RWStructuredBuffer< tRayOutput> RAYOUTPUT : register(u0); // Unordered Access
 void  CS_FogOfWarShader(int3 _iThreadID : SV_DispatchThreadID)
 {
     // 이부분에 대해서 확신이 없음... 팀원들에게 물어봐야 할듯 
-    // SourceLightCount, SourceLightPerRay 변수가 정의되어 있어야 함. (#define 문 쓰면 될듯 상수버퍼에 바인딩해서)
-    if (SourceLightCount  <= _iThreadID.x || SourceLightPerRay <= _iThreadID.y)
+    // SourceLightCount, RayCountperObject 변수가 정의되어 있어야 함. (#define 문 쓰면 될듯 상수버퍼에 바인딩해서)
+    if (SourceLightCount  <= _iThreadID.x || RayCountperObject <= _iThreadID.y)
         return;
 
     
@@ -209,11 +219,14 @@ void  CS_FogOfWarShader(int3 _iThreadID : SV_DispatchThreadID)
     float3 BaseDir = { 1.f, 0.f, 0.f };
 
 
-    float MainRayAngle = (2 * 3.1415926535f / SourceLightPerRay) * _iThreadID.y;
-    float SupportRayAngle = (2 * 3.1415926535f / SourceLightPerRay) * _iThreadID.y;
+    float MainRayAngle = (2 * 3.1415926535f / RayCountperObject) * _iThreadID.y;
+    float SupportRayAngle = (2 * 3.1415926535f / RayCountperObject) * (_iThreadID.y + 1);
 
     MainRay.vDir = RotateVec3Y(BaseDir, MainRayAngle);
     SupportRay.vDir = RotateVec3Y(BaseDir, SupportRayAngle);
+    
+    MainRay.vDir = normalize(MainRay.vDir);
+    SupportRay.vDir = normalize(SupportRay.vDir);
 
 
     IntersectResult FinalMainRayIntersect;
@@ -270,14 +283,14 @@ void  CS_FogOfWarShader(int3 _iThreadID : SV_DispatchThreadID)
             }
         }
 
-        if (FinalSupportRayIntersect.bResult == false)
+        if (FinalSupportRayIntersect.bResult == false && TempSupportRayIntersect.bResult == true)
         {
             FinalSupportRayIntersect = TempSupportRayIntersect;
         }
 
         else if (FinalSupportRayIntersect.bResult == true)
         {
-            if (TempSupportRayIntersect.fResult <= FinalSupportRayIntersect.fResult)
+            if (TempSupportRayIntersect.bResult == true && TempSupportRayIntersect.fResult <= FinalSupportRayIntersect.fResult)
             {
                 FinalSupportRayIntersect = TempSupportRayIntersect;
             }
@@ -294,7 +307,7 @@ void  CS_FogOfWarShader(int3 _iThreadID : SV_DispatchThreadID)
 
         // Sight Radius는 Ray를 쏘는 광원의 반지름 값임
         InitialRayPos.x = InitialRayPos.x + RAYINFO[_iThreadID.x].fRayRange * MainRay.vDir.x;
-        InitialRayPos.y = 10.f;
+        InitialRayPos.y = 100.f;
         InitialRayPos.z = InitialRayPos.z + RAYINFO[_iThreadID.x].fRayRange * MainRay.vDir.z;
 
         FinalMainRayIntersect.vCrossPoint.xyz = InitialRayPos.xyz;
@@ -308,7 +321,7 @@ void  CS_FogOfWarShader(int3 _iThreadID : SV_DispatchThreadID)
 
         // Sight Radius는 Ray를 쏘는 광원의 반지름 값임
         InitialRayPos.x = InitialRayPos.x + RAYINFO[_iThreadID.x].fRayRange * SupportRay.vDir.x;
-        InitialRayPos.y = 10.f;
+        InitialRayPos.y = 100.f;
         InitialRayPos.z = InitialRayPos.z + RAYINFO[_iThreadID.x].fRayRange * SupportRay.vDir.z;
 
         FinalSupportRayIntersect.vCrossPoint.xyz = InitialRayPos.xyz;
@@ -318,21 +331,23 @@ void  CS_FogOfWarShader(int3 _iThreadID : SV_DispatchThreadID)
 
     InterpolateIntersect.fResult = (FinalMainRayIntersect.fResult + FinalSupportRayIntersect.fResult) / 2.f;
 
-    float3 RayObjCenterPos = MainRay.vStart;
-    RayObjCenterPos.x = RayObjCenterPos.x + InterpolateIntersect.fResult * MainRay.vDir.x;
-    RayObjCenterPos.y = 10.f;
-    RayObjCenterPos.z = RayObjCenterPos.z + InterpolateIntersect.fResult * MainRay.vDir.z;
+    float3 CrossPointFinalPos = MainRay.vStart;
+    CrossPointFinalPos.x = CrossPointFinalPos.x + InterpolateIntersect.fResult * MainRay.vDir.x;
+    CrossPointFinalPos.y = (FinalMainRayIntersect.vCrossPoint.y + FinalSupportRayIntersect.vCrossPoint.y) / 2.f;
+    CrossPointFinalPos.z = CrossPointFinalPos.z + InterpolateIntersect.fResult * MainRay.vDir.z;
+    
 
-    InterpolateIntersect.vCrossPoint.xyz = RayObjCenterPos.xyz;
+    InterpolateIntersect.vCrossPoint.xyz = CrossPointFinalPos.xyz;
 
     // Read Write구조체에 담아서 값을 반환해줘야함.
     tRayOutput OutputResult;
     OutputResult.IntersectPos.xyz = InterpolateIntersect.vCrossPoint.xyz;
     OutputResult.Radius = InterpolateIntersect.fResult;
-    OutputResult.CenterPos = RayObjCenterPos;
-    OutputResult.NthRay = (int)((uint)_iThreadID.x % (uint)SourceLightPerRay);
+    OutputResult.CenterPos = MainRay.vStart;
+    OutputResult.NthRay = _iThreadID.y;
+  
 
-    RAYOUTPUT[_iThreadID.x * SourceLightPerRay + _iThreadID.y] = OutputResult;
+    RAYOUTPUT[_iThreadID.x * RayCountperObject + _iThreadID.y] = OutputResult;
 }
 
 #endif

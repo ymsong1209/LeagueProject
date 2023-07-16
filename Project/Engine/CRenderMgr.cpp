@@ -213,9 +213,25 @@ void CRenderMgr::CalcRayForFog()
         RWStruct test2 = data[1];
         RWStruct test3 = data[2];
         RWStruct test4 = data[3];
+        RWStruct test5 = data[4];
+        RWStruct test6 = data[5];
+        RWStruct test7 = data[6];
+        RWStruct test8 = data[7];
+        RWStruct test9 = data[8];
+        RWStruct test10 = data[9];
+        RWStruct test11 = data[10];
+        RWStruct test12 = data[11];
+        RWStruct test13 = data[12];
+        RWStruct test14 = data[13];
+        RWStruct test15 = data[14];
+        RWStruct test16 = data[15];
+        RWStruct test17 = data[16];
+        RWStruct test18 = data[17];
+        RWStruct test19 = data[18];
+        RWStruct test20 = data[19];
     }
   
-    delete data;
+    delete[] data;
 }
 
 int CRenderMgr::RegisterCamera(CCamera* _Cam, int _idx)

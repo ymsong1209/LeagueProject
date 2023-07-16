@@ -157,11 +157,6 @@ struct tRayLightInfo
     int    iPad[3];
 };
 
-struct tRayIntersect
-{
-    float4  vCrossPoint;
-};
-
 struct tRayOutput
 {
     float3   IntersectPos;

@@ -16,9 +16,9 @@ private:
 	int                m_iColliderVecCount;         // Compute Shader에 전달해주는 Collider들의 총 개수              (g_int_2)
 
 public:
-	void SetSourceLightCount(int _iSourceLightCount) { m_Const.arrInt[0] = _iSourceLightCount; }
-	void SetSourceLightPerRay(int _iSourceLightPerRay) { m_Const.arrInt[1] = _iSourceLightPerRay; }
-	void SetColliderVecCount(int _iColliderVecCount) { m_Const.arrInt[2] = _iColliderVecCount; }
+	void SetSourceLightCount(int _iSourceLightCount) { m_iSourceLightCount = _iSourceLightCount; m_Const.arrInt[0] = _iSourceLightCount; }
+	void SetSourceLightPerRay(int _iSourceLightPerRay) { m_iSourceLightPerRay = _iSourceLightPerRay; m_Const.arrInt[1] = _iSourceLightPerRay; }
+	void SetColliderVecCount(int _iColliderVecCount) { m_iColliderVecCount = _iColliderVecCount; m_Const.arrInt[2] = _iColliderVecCount; }
 
 	void SetRayBuffer(CStructuredBuffer* _buffer) { m_pRayBuffer = _buffer; }
 	void SetWallBuffer(CStructuredBuffer* _buffer) { m_pWallBuffer = _buffer; }
