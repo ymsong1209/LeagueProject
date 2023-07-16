@@ -233,6 +233,12 @@ void CRenderMgr::CalcRayForFog()
         RWStruct test19 = data[18];
         RWStruct test20 = data[19];
 
+        RWStruct test48 = data[47];
+        RWStruct test49 = data[48];
+        RWStruct test50 = data[49];
+        RWStruct test51 = data[50];
+        RWStruct test52 = data[51];
+
         if (CKeyMgr::GetInst()->GetKeyState(KEY::Q) == KEY_STATE::TAP)
             m_bIsQClicked = true;
 
@@ -241,7 +247,7 @@ void CRenderMgr::CalcRayForFog()
         {
             CGameObject* TestObj;
 
-            for (int i = 0; i < m_iRayCount; ++i)
+            for (int i = 0; i < m_iRayCount * m_vecRayObject.size(); ++i)
             {
                 TestObj = new CGameObject;
                 TestObj->SetName(L"HI!");

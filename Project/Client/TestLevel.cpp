@@ -156,13 +156,13 @@ void CreateTestLevel()
 	// ============	
 	{
 
-		Ptr<CMeshData> pMeshData = nullptr;
+		/*Ptr<CMeshData> pMeshData = nullptr;
 		CGameObject* pObj = nullptr;
 		
 		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\land16_fin.fbx");
 		
 		pObj = pMeshData->Instantiate();
-		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
+		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);*/
 
 		//Ptr<CMeshData> pMeshData = nullptr;
 		//CGameObject* pObj = nullptr;
