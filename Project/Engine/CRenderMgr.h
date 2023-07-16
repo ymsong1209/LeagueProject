@@ -33,7 +33,8 @@ struct RWStruct {
     int         m_iRayCount;        //몇번째 Ray인지
 
     int         m_iCheck;
-    int         pad[3];
+    int         m_iCheck2;
+    int         pad[2];
 };
 //------------------------------------------------------------//
 
@@ -70,6 +71,7 @@ private:
     CStructuredBuffer*          m_RayBuffer;
     CStructuredBuffer*          m_RWBuffer;         // ComputeShader 계산 후 받아올 버퍼 
     int                         m_iRayCount;         // 물체 하나가 쏠 Ray개수
+    bool                        m_bIsQClicked;
    
 
 

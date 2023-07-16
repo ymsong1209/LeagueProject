@@ -15,6 +15,7 @@
 #include "CMRT.h"
 
 #include "CFogOfWarShader.h"
+#include "CKeyMgr.h"
 
 
 CRenderMgr::CRenderMgr()
@@ -24,7 +25,8 @@ CRenderMgr::CRenderMgr()
     , m_WallBuffer(nullptr)
     , m_RayBuffer(nullptr)
     , m_RWBuffer(nullptr)
-    , m_iRayCount(20)
+    , m_iRayCount(100)
+    , m_bIsQClicked(false)
 {
     Vec2 vResolution = CDevice::GetInst()->GetRenderResolution();
     m_RTCopyTex = CResMgr::GetInst()->CreateTexture(L"RTCopyTex"
@@ -205,10 +207,11 @@ void CRenderMgr::CalcRayForFog()
     auto a = m_RWBuffer[0];
 
     UINT bufferSize = m_RWBuffer->GetBufferSize();
+    size_t size = sizeof(RWStruct);
     RWStruct* data = new RWStruct[bufferSize / sizeof(RWStruct)];
     m_RWBuffer->GetData((void*)data);
 
-    if (data && bufferSize > 5) {
+    if (data && bufferSize > 30) {
         RWStruct test = data[0];
         RWStruct test2 = data[1];
         RWStruct test3 = data[2];
@@ -229,8 +232,36 @@ void CRenderMgr::CalcRayForFog()
         RWStruct test18 = data[17];
         RWStruct test19 = data[18];
         RWStruct test20 = data[19];
+
+        if (CKeyMgr::GetInst()->GetKeyState(KEY::Q) == KEY_STATE::TAP)
+            m_bIsQClicked = true;
+
+
+        if (m_bIsQClicked == true)
+        {
+            CGameObject* TestObj;
+
+            for (int i = 0; i < m_iRayCount; ++i)
+            {
+                TestObj = new CGameObject;
+                TestObj->SetName(L"HI!");
+                TestObj->AddComponent(new CMeshRender);
+                TestObj->AddComponent(new CTransform);
+                TestObj->Transform()->SetRelativeScale(Vec3(10.f, 10.f, 10.f));
+                TestObj->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
+                TestObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3DMtrl"), 0);
+
+
+                SpawnGameObject(TestObj, data[i].m_vCrossPos, 0);
+
+
+            }
+
+            m_bIsQClicked = false;
+        }
     }
   
+
     delete[] data;
 }
 

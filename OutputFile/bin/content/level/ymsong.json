@@ -220,7 +220,7 @@
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 150.0,
                             "IsShootingRay": true,
-                            "RayRange": 20000.0
+                            "RayRange": 500.0
                         },
                         {
                             "MESHRENDER": 9,
@@ -258,7 +258,7 @@
                         {
                             "TRANSFORM": 0,
                             "vRelativePos": {
-                                "x": -272.208251953125,
+                                "x": -250.0,
                                 "y": 0.0,
                                 "z": 0.0
                             },
@@ -325,19 +325,19 @@
                     "children": []
                 },
                 {
-                    "ObjName": "testblitz",
+                    "ObjName": "New Object62801036",
                     "components": [
                         {
                             "TRANSFORM": 0,
                             "vRelativePos": {
                                 "x": 0.0,
                                 "y": 0.0,
-                                "z": 0.0
+                                "z": -250.0
                             },
                             "vRelativeScale": {
-                                "x": 1.0,
-                                "y": 1.0,
-                                "z": 1.0
+                                "x": 100.0,
+                                "y": 100.0,
+                                "z": 100.0
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
@@ -351,20 +351,44 @@
                             "RayRange": 20.0
                         },
                         {
-                            "ANIMATOR3D": 4,
-                            "IsEmpty": true
+                            "COLLIDER3D": 2,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "bAbsolute": false,
+                            "Shape": 1,
+                            "bWall": true
                         },
                         {
                             "MESHRENDER": 9,
                             "Mesh": {
-                                "IsNull": true
+                                "IsNull": false,
+                                "Key": "CubeMesh",
+                                "RelativePath": ""
                             },
                             "fBounding": 150.0,
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
-                            "iMtrlCount": 0,
-                            "DynamicMtrls": [],
+                            "iMtrlCount": 1,
+                            "vecMtrls[0]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "Std3D_DeferredMtrl",
+                                "RelativePath": ""
+                            },
+                            "DynamicMtrls": [
+                                {
+                                    "vecMtrls[0]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                }
+                            ],
                             "bIsUsingMovingVec": false
                         },
                         15

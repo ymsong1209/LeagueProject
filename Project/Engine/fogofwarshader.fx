@@ -29,61 +29,110 @@ float3 RotateVec3Y(float3 _InitialDir, float _Angle)
 }
 
 //IntersectResult IntersectRay(float3* _Vertices, tRay _ray)
+//IntersectResult IntersectRay(float3 _Vertices0, float3 _Vertices1, float3 _Vertices2, tRay _ray)
+//{
+//    IntersectResult result;
+//    result.vCrossPoint = float3(0.f, 0.f, 0.f);
+//    result.bResult = false;
+//    result.fResult = 1000000.f;
+
+//    float3 edge[2] = { float3(0.f, 0.f, 0.f), float3(0.f, 0.f, 0.f) };
+//    edge[0] = _Vertices1.xyz - _Vertices0.xyz;
+//    edge[1] = _Vertices2.xyz - _Vertices0.xyz;
+    
+//    float3 normal = normalize(cross(edge[0], edge[1]));
+//    float b = dot(normal, _ray.vDir);
+
+//    float3 w0 = _ray.vStart - _Vertices0.xyz;
+//    float a = -dot(normal, w0);
+//    float t = a / b;
+
+//    result.fResult = t;
+
+//    float3 p = _ray.vStart + t * _ray.vDir;
+
+//    result.vCrossPoint = p;
+
+//    float uu, uv, vv, wu, wv, inverseD;
+//    uu = dot(edge[0], edge[0]);
+//    uv = dot(edge[0], edge[1]);
+//    vv = dot(edge[1], edge[1]);
+
+//    float3 w = p - _Vertices0;
+//    wu = dot(w, edge[0]);
+//    wv = dot(w, edge[1]);
+
+//    inverseD = uv * uv - uu * vv;
+//    inverseD = 1.0f / inverseD;
+
+//    float u = (uv * wv - vv * wu) * inverseD;
+//    if (u < 0.0f || u > 1.0f)
+//    {
+//        result.vCrossPoint = float3(0.f, 0.f, 0.f);
+//        result.fResult = 0.0f;
+//        result.bResult = false;
+//        return result;
+//    }
+
+//    float v = (uv * wu - uu * wv) * inverseD;
+//    if (v < 0.0f || v > 1.0f)
+//    {
+//        result.vCrossPoint = float3(0.f, 0.f, 0.f);
+//        result.fResult = 0.0f;
+//        result.bResult = false;
+//        return result;
+//    }
+
+//    result.bResult = true;
+//    return result;
+//}
+
 IntersectResult IntersectRay(float3 _Vertices0, float3 _Vertices1, float3 _Vertices2, tRay _ray)
 {
     IntersectResult result;
     result.vCrossPoint = float3(0.f, 0.f, 0.f);
+    result.fResult = 0.f;
     result.bResult = false;
-    result.fResult = 1000000.f;
 
-    float3 edge[2] = { float3(0.f, 0.f, 0.f), float3(0.f, 0.f, 0.f) };
-    edge[0] = _Vertices1.xyz - _Vertices0.xyz;
-    edge[1] = _Vertices2.xyz - _Vertices0.xyz;
-    
-    float3 normal = normalize(cross(edge[0], edge[1]));
-    float b = dot(normal, _ray.vDir);
+    float3 edge[2] = { _Vertices1 - _Vertices0, _Vertices2 - _Vertices0 };
+    float3 pvec = cross(_ray.vDir, edge[1]);
+    float det = dot(edge[0], pvec);
 
-    float3 w0 = _ray.vStart - _Vertices0.xyz;
-    float a = -dot(normal, w0);
-    float t = a / b;
+    // 이 값이 작으면 ray와 triangle이 평행
+    if (abs(det) < 0.000001f)
+    {
+        return result;
+    }
 
-    result.fResult = t;
+    float invDet = 1.0f / det;
+    float3 tvec = _ray.vStart - _Vertices0;
+    float u = dot(tvec, pvec) * invDet;
 
-    float3 p = _ray.vStart + t * _ray.vDir;
-
-    result.vCrossPoint = p;
-
-    float uu, uv, vv, wu, wv, inverseD;
-    uu = dot(edge[0], edge[0]);
-    uv = dot(edge[0], edge[1]);
-    vv = dot(edge[1], edge[1]);
-
-    float3 w = p - _Vertices0;
-    wu = dot(w, edge[0]);
-    wv = dot(w, edge[1]);
-
-    inverseD = uv * uv - uu * vv;
-    inverseD = 1.0f / inverseD;
-
-    float u = (uv * wv - vv * wu) * inverseD;
     if (u < 0.0f || u > 1.0f)
     {
-        result.vCrossPoint = float3(0.f, 0.f, 0.f);
-        result.fResult = 0.0f;
-        result.bResult = false;
         return result;
     }
 
-    float v = (uv * wu - uu * wv) * inverseD;
-    if (v < 0.0f || v > 1.0f)
+    float3 qvec = cross(tvec, edge[0]);
+    float v = dot(_ray.vDir, qvec) * invDet;
+
+    if (v < 0.0f || u + v > 1.0f)
     {
-        result.vCrossPoint = float3(0.f, 0.f, 0.f);
-        result.fResult = 0.0f;
-        result.bResult = false;
         return result;
     }
 
+    float t = dot(edge[1], qvec) * invDet;
+   
+    
+    // 성공적인 교차점을 찾았다면 결과를 저장
+    result.vCrossPoint = _ray.vStart + _ray.vDir * t;
+    result.fResult = t;
     result.bResult = true;
+    
+     
+    if (t < 0)
+        result.bResult = false;
+    
     return result;
 }
 
@@ -247,7 +296,8 @@ void  CS_FogOfWarShader(int3 _iThreadID : SV_DispatchThreadID)
     FinalSupportRayIntersect.fResult = 0.f;
     FinalSupportRayIntersect.bResult = false;
 
-    int check = 0;
+    int check1 = 0;
+    int check2 = 0;
 
     // Int 값이 1 일경우 Box, Int 값이 0 일경우 Sphere
     // #define 으로 전체 몇개의 Collider를 계산해야하는지 상수버퍼에 받아와야함
@@ -267,8 +317,8 @@ void  CS_FogOfWarShader(int3 _iThreadID : SV_DispatchThreadID)
         if (COLLIDERINFO[i].iColliderType == 1)
         {
             // 구조화 버퍼 어딘가에서 Radius에 대한 정보 받아와야 할 것 같음
-            TempMainRayIntersect = CalculateBtwRayCube(MainRay, COLLIDERINFO[i].mColliderFinalMat, check);
-            TempSupportRayIntersect = CalculateBtwRayCube(SupportRay, COLLIDERINFO[i].mColliderFinalMat, check);
+            TempMainRayIntersect = CalculateBtwRayCube(MainRay, COLLIDERINFO[i].mColliderFinalMat, check1);
+            TempSupportRayIntersect = CalculateBtwRayCube(SupportRay, COLLIDERINFO[i].mColliderFinalMat, check2);
         }
 
         else if (COLLIDERINFO[i].iColliderType == 0)
@@ -316,7 +366,7 @@ void  CS_FogOfWarShader(int3 _iThreadID : SV_DispatchThreadID)
 
         // Sight Radius는 Ray를 쏘는 광원의 반지름 값임
         InitialRayPos.x = InitialRayPos.x + RAYINFO[_iThreadID.x].fRayRange * MainRay.vDir.x;
-        InitialRayPos.y = 100.f;
+        InitialRayPos.y = 10.f;
         InitialRayPos.z = InitialRayPos.z + RAYINFO[_iThreadID.x].fRayRange * MainRay.vDir.z;
 
         FinalMainRayIntersect.vCrossPoint.xyz = InitialRayPos.xyz;
@@ -330,7 +380,7 @@ void  CS_FogOfWarShader(int3 _iThreadID : SV_DispatchThreadID)
 
         // Sight Radius는 Ray를 쏘는 광원의 반지름 값임
         InitialRayPos.x = InitialRayPos.x + RAYINFO[_iThreadID.x].fRayRange * SupportRay.vDir.x;
-        InitialRayPos.y = 100.f;
+        InitialRayPos.y = 10.f;
         InitialRayPos.z = InitialRayPos.z + RAYINFO[_iThreadID.x].fRayRange * SupportRay.vDir.z;
 
         FinalSupportRayIntersect.vCrossPoint.xyz = InitialRayPos.xyz;
@@ -338,7 +388,8 @@ void  CS_FogOfWarShader(int3 _iThreadID : SV_DispatchThreadID)
         FinalSupportRayIntersect.bResult = true;
     }
 
-    InterpolateIntersect.fResult = (FinalMainRayIntersect.fResult + FinalSupportRayIntersect.fResult) / 2.f;
+    InterpolateIntersect.fResult = FinalMainRayIntersect.fResult;
+    //(FinalMainRayIntersect.fResult + FinalSupportRayIntersect.fResult) / 2.f;
 
     float3 CrossPointFinalPos = MainRay.vStart;
     CrossPointFinalPos.x = CrossPointFinalPos.x + InterpolateIntersect.fResult * MainRay.vDir.x;
@@ -354,10 +405,10 @@ void  CS_FogOfWarShader(int3 _iThreadID : SV_DispatchThreadID)
     OutputResult.Radius = InterpolateIntersect.fResult;
     OutputResult.CenterPos = MainRay.vStart;
     OutputResult.NthRay = _iThreadID.y;
-    OutputResult.check = check;
+    OutputResult.check1 = check1;
+    OutputResult.check2 = check2;
     OutputResult.pad[0] = 0.f;
     OutputResult.pad[1] = 0.f;
-    OutputResult.pad[2] = 0.f;
     
  
 
