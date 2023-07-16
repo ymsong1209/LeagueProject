@@ -323,6 +323,54 @@
                     ],
                     "scripts": [],
                     "children": []
+                },
+                {
+                    "ObjName": "testblitz",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vRelativeScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": -0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 150.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0
+                        },
+                        {
+                            "ANIMATOR3D": 4,
+                            "IsEmpty": true
+                        },
+                        {
+                            "MESHRENDER": 9,
+                            "Mesh": {
+                                "IsNull": true
+                            },
+                            "fBounding": 150.0,
+                            "bFrustumCheck": true,
+                            "bDynamicShadow": false,
+                            "bShowDebugBoundShape": false,
+                            "iMtrlCount": 0,
+                            "DynamicMtrls": [],
+                            "bIsUsingMovingVec": false
+                        },
+                        15
+                    ],
+                    "scripts": [],
+                    "children": []
                 }
             ]
         },
