@@ -7,7 +7,7 @@ class CFogOfWarShader :
 	public CComputeShader
 {
 private:
-	CStructuredBuffer* m_pRayBuffer;					// 레이를 쏘는 Object의 개수가 곧 Buffer의 개수임                (t16)
+	CStructuredBuffer* m_pRayBuffer;				// 레이를 쏘는 Object의 개수가 곧 Buffer의 개수임                (t16)
 	CStructuredBuffer* m_pWallBuffer;				// 충돌 검사를 진행해야하는 Object의 개수가 곧 Buffer의 개수임   (t17)
 	CStructuredBuffer* m_pOutputBuffer;				// OutputBuffer / ReadWrite                                      (u0)
 

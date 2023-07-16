@@ -37,6 +37,11 @@ void CStructuredBuffer::Create(UINT _iElementSize, UINT _iElementCount
 	// 상수버퍼 생성
 	m_tDesc.ByteWidth = iBufferSize;				// 버퍼 크기
 	m_tDesc.StructureByteStride = m_iElementSize;	// 데이터 간격
+	//빈 구조체를 만들려는 경우 bytewidth 자동으로 세팅
+	if (m_tDesc.ByteWidth == 0)
+	{
+		m_tDesc.ByteWidth = m_tDesc.StructureByteStride;
+	}
 
 	if (SB_TYPE::READ_ONLY == m_Type)
 	{
@@ -50,6 +55,8 @@ void CStructuredBuffer::Create(UINT _iElementSize, UINT _iElementCount
 	m_tDesc.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;	// 구조화 버퍼 체크
 	m_tDesc.Usage = D3D11_USAGE_DEFAULT;
 	m_tDesc.CPUAccessFlags = 0;	
+
+	
 
 	if (nullptr == _pSysMem)
 	{
@@ -75,7 +82,10 @@ void CStructuredBuffer::Create(UINT _iElementSize, UINT _iElementCount
 	D3D11_SHADER_RESOURCE_VIEW_DESC	m_SRVDesc = {};
 
 	m_SRVDesc.ViewDimension = D3D_SRV_DIMENSION_BUFFEREX;
-	m_SRVDesc.BufferEx.NumElements = m_iElementCount;
+	//m_SRVDesc.BufferEx.NumElements = m_iElementCount;
+
+	//비어있는 구조화버퍼를 통해 srv를 만들라면 요소가 하나라도 있어야함
+	m_SRVDesc.BufferEx.NumElements = (m_iElementCount == 0) ? 1 : m_iElementCount;
 
 	if (FAILED(DEVICE->CreateShaderResourceView(m_SB.Get(), &m_SRVDesc, m_SRV.GetAddressOf())))
 	{
@@ -87,7 +97,10 @@ void CStructuredBuffer::Create(UINT _iElementSize, UINT _iElementCount
 
 		D3D11_UNORDERED_ACCESS_VIEW_DESC m_UABDesc = {};
 		m_UABDesc.ViewDimension = D3D11_UAV_DIMENSION_BUFFER;
-		m_UABDesc.Buffer.NumElements = m_iElementCount;
+		//m_UABDesc.Buffer.NumElements = m_iElementCount;
+		
+		//비어있는 구조화버퍼를 통해 UAV를 만들때 강제로 1로 설정
+		m_UABDesc.Buffer.NumElements = (m_iElementCount == 0) ? 1 : m_iElementCount;
 
 		if (FAILED(DEVICE->CreateUnorderedAccessView(m_SB.Get(), &m_UABDesc, m_UAV.GetAddressOf())))
 		{

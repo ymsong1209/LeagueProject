@@ -1287,6 +1287,7 @@ void CResMgr::CreateDefaultGraphicsShader()
 #include "CHeightMapShader.h"
 #include "CRaycastShader.h"
 #include "CAnimation3DShader.h"
+#include "CFogOfWarShader.h"
 
 void CResMgr::CreateDefaultComputeShader()
 {
@@ -1318,6 +1319,11 @@ void CResMgr::CreateDefaultComputeShader()
 	pCS = new CRaycastShader(32, 32, 1);
 	pCS->SetKey(L"RaycastShader");
 	pCS->CreateComputeShader(L"shader\\raycast.fx", "CS_Raycast");
+	AddRes(pCS->GetKey(), pCS);
+
+	pCS = new CFogOfWarShader(16, 64, 1);
+	pCS->SetKey(L"FogOfWarShader");
+	pCS->CreateComputeShader(L"shader\\fogofwarshader.fx", "CS_FogOfWarShader");
 	AddRes(pCS->GetKey(), pCS);
 }
 

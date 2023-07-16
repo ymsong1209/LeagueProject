@@ -15,6 +15,10 @@ CFogOfWarShader::CFogOfWarShader(UINT _iGroupPerThreadX, UINT _iGroupPerThreadY,
 	m_iGroupPerThreadZ = _iGroupPerThreadZ;
 }
 
+CFogOfWarShader::~CFogOfWarShader()
+{
+}
+
 
 void CFogOfWarShader::UpdateData()
 {

@@ -9,6 +9,7 @@ class CLight2D;
 class CLight3D;
 class CStructuredBuffer;
 class CMRT;
+class CFogOfWarShader;
 
 
 //-----------전장의 안개에 전달해줄 구조체---------------------//
@@ -26,7 +27,10 @@ struct RayStruct {
 };
 
 struct RWStruct {
-    Vec4        m_vCrossPos;        //Ray랑 사각형이 부딪힌 지점.
+    Vec3        m_vCrossPos;        //Ray랑 사각형이 부딪힌 지점.
+    float       m_vCrossRadius;     //Ray랑 교차된 지점의 좌표, 교차가 안되면 최대 반지름이 들어옴
+    Vec3        m_vCenterPos;       //Ray의 중앙 지점
+    int         m_iRayCount;        //몇번째 Ray인지
 };
 //------------------------------------------------------------//
 
@@ -55,12 +59,15 @@ private:
 
     Ptr<CTexture>               m_RTCopyTex;
 
+
     Ptr<CFogOfWarShader>        m_FogOfWarShader;   //전장의 안개 ComputeShader
     vector<ColliderStruct>      m_vecWallObject;    //Ray에 충돌될 가능성이 있는 벽 오브젝트
     vector<RayStruct>           m_vecRayObject;     //Ray를 쏘는 object player, 와드 등
     CStructuredBuffer*          m_WallBuffer;
     CStructuredBuffer*          m_RayBuffer;
     CStructuredBuffer*          m_RWBuffer;         // ComputeShader 계산 후 받아올 버퍼 
+    int                         m_iRayCount;         // 물체 하나가 쏠 Ray개수
+   
 
 
     void (CRenderMgr::* RENDER_FUNC)(void);
@@ -74,6 +81,9 @@ private:
     void render_clear();
     void render_dynamic_shadowdepth();
     void CalcRayForFog();
+
+    void SetRayCount(int _ray) { m_iRayCount = _ray; }
+    int  GetRayCount() { return m_iRayCount; }
 
 public:
     CMRT* GetMRT(MRT_TYPE _type) { return m_MRT[(UINT)_type]; }

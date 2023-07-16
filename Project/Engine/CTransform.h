@@ -25,7 +25,6 @@ private:
     bool    m_bGizmoObjExcept; // 기즈모한테 선택되지 않아야하는 오브젝트일 경우 true
 
     bool    m_bIsShootingRay;  // 와드,Player는 Ray를 쏜다.
-    int     m_iRayCount;
     float   m_fRayRange;
 
 public:
@@ -71,9 +70,6 @@ public:
     
     void SetIsShootingRay(bool _ray) { m_bIsShootingRay = _ray; }
     bool GetIsShootingRay() { return m_bIsShootingRay; }
-
-    void SetRayCount(int _count) { m_iRayCount = _count; }
-    int  GetRayCount() { return m_iRayCount; }
 
     void SetRayRange(float _Range) { m_fRayRange = _Range; }
     int  GetRayRange() { return m_fRayRange; }
