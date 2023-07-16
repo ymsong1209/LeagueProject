@@ -14,8 +14,7 @@
 // =========================
 
 StructuredBuffer<tParticle>         ParticleBuffer : register(t20);
-StructuredBuffer<tParticleModule>   
-    : register(t21);
+StructuredBuffer<tParticleModule>   ParticleModuleData : register(t21);
 #define ModuleData                  ParticleModuleData[0]
 
 struct VS_IN

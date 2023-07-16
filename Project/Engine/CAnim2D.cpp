@@ -229,8 +229,7 @@ void CAnim2D::Save()
 
 	// 저장할 anim2d 이름에 .anim2d가 없다면 자동으로 확장자 붙여줌
 	wstring filePath = wstring(szFilePath);
-	int 
-		= filePath.length();
+	int length = filePath.length();
 	if (length < 7 || filePath.substr(length - 7) != L".anim2d") 
 		filePath.append(L".anim2d");
 

@@ -140,4 +140,28 @@ struct tSkinningInfo
     float3 vNormal;
 };
 
+// FogOfWar Shader에서 필요한 구조체들
+
+struct tColliderInfo
+{
+    row_major matrix mColliderFinalMat;
+    int              iColliderType;
+    int              iPad1;    
+    int              iPad2;
+    int              iPad3;
+};
+
+struct tRayLightInfo
+{
+    float3 vRayLightCenterPos;
+    int    iRayLightCount;
+    
+};
+
+struct tRayIntersect
+{
+    float4  vCrossPoint;
+};
+
+
 #endif

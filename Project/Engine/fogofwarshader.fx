@@ -1,4 +1,9 @@
-#define PI 3.1415926535
+#ifndef _FOG_OF_WAR
+#define _FOG_OF_WAR
+
+#include "value.fx"
+#include "struct.fx"
+#include "func.fx"
 
 struct tRay
 {
@@ -13,187 +18,225 @@ struct IntersectResult
 	bool   bResult;
 };
 
-float3 RotateVec3Y(float3 _InitialDirection, float  _rotationAtngle)
+float3 RotateVec3Y(float3 _InitialDir, float _Angle)
 {
-	float CosAngle = cos(_rotationAngle);
-	float SinAngle = sin(_rotationAngle);
+	float CosTheta = cos(_Angle);
+	float SinTheta = sin(_Angle);
 
-	float3 RotatedDir;
-	
-	RotatedDir.x = _InitialDirection.x * CosAngle + _InitialDirection.z * SinAngle;
-	RotatedDir.y = _InitialDirection.y;
-	RotatedDir.z = _InitialDirection.z;
+	float3x3 RotationMatrix = float3x3 {
+			CosTheta, 0.0, SinTheta,
+			0.0, 1.0, 0.0,
+			-SinTheta, 0.0, CosTheta
+	};
 
-	return RotatedDir;
+	return mul(_InitialDir, RotationMatrix);
 }
 
-IntersectResult IntersectsLay(float3* _Vertices, tRay _ray)
+IntersectResult IntersectRay(float3* _Vertices, tRay _ray)
 {
-	IntersectResult result;
-	result.vCrossPoint =  float3(0.f, 0.f, 0.f);
-	result.bResult = false;
+    IntersectResult result;
+    result.vCrossPoint = float3(0.f, 0.f, 0.f);
+    result.bResult = false;
 
-	float3 edge[2] = { float3(), float3() };
-	edge[0] = _vertices[1].xyz - _vertices[0].xyz;
-	edge[1] = _vertices[2].xyz - _vertices[0].xyz;
+    float3 edge[2] = { float3(), float3() };
+    edge[0] = _Vertices[1].xyz - _Vertices[0].xyz;
+    edge[1] = _Vertices[2].xyz - _Vertices[0].xyz;
 
-	Vec3 normal = (edge[0].Cross(edge[1])).Normalize();
-	float b = normal.Dot(_ray.vDir);
+    float3 normal = cross(edge[0], edge[1]).normalize();
+    float b = dot(normal, _ray.vDir);
 
+    float3 w0 = _ray.vStart - _Vertices[0];
+    float a = -(dot(normal, w0));
+    float t = a / b;
 
-	Vec3 w0 = _ray.vStart - _vertices[0];
-	float a = -(normal.Dot(w0));
-	float t = a / b;
+    result.fResult = t;
 
-	result.fResult = t;
+    float3 p = _ray.vStart + t * _ray.vDir;
 
-	Vec3 p = _ray.vStart + t * _ray.vDir;
+    result.vCrossPoint = p;
 
-	result.vCrossPoint = p;
+    float uu, uv, vv, wu, wv, inverseD;
+    uu = dot(edge[0], edge[0]);
+    uv = dot(edge[0], edge[1]);
+    vv = dot(edge[1], edge[1]);
 
-	float uu, uv, vv, wu, wv, inverseD;
-	uu = edge[0].Dot(edge[0]);
-	uv = edge[0].Dot(edge[1]);
-	vv = edge[1].Dot(edge[1]);
+    float3 w = p - _Vertices[0];
+    wu = dot(w, edge[0]);
+    wv = dot(w, edge[1]);
 
-	Vec3 w = p - _vertices[0];
-	wu = w.Dot(edge[0]);
-	wv = w.Dot(edge[1]);
+    inverseD = uv * uv - uu * vv;
+    inverseD = 1.0f / inverseD;
 
-	inverseD = uv * uv - uu * vv;
-	inverseD = 1.0f / inverseD;
+    float u = (uv * wv - vv * wu) * inverseD;
+    if (u < 0.0f || u > 1.0f)
+    {
+        result.vCrossPoint = float3(0.f, 0.f, 0.f);
+        result.fResult = 0.0f;
+        result.bResult = false;
+        return result;
+    }
 
-	float u = (uv * wv - vv * wu) * inverseD;
-	if (u < 0.0f || u > 1.0f)
-	{
-		result.vCrossPoint = Vec3();
-		result.fResult = 0.0f;
-		result.bResult = false;
-		return result;
-	}
+    float v = (uv * wu - uu * wv) * inverseD;
+    if (v < 0.0f || v > 1.0f)
+    {
+        result.vCrossPoint = float3(0.f, 0.f, 0.f);
+        result.fResult = 0.0f;
+        result.bResult = false;
+        return result;
+    }
 
-	float v = (uv * wu - uu * wv) * inverseD;
-	if (v < 0.0f || v > 1.0f)
-	{
-		result.vCrossPoint = Vec3();
-		result.fResult = 0.0f;
-		result.bResult = false;
-		return result;
-	}
-
-	result.bResult = true;
-	return result;
-}
-
-
-void IsCollidingBtwRayCube(tRay& Ray, row_major matrix WorldMat, int _OutputIndex, CStructuredBuffer* _OutPutBuffer)
-{
-	float3 arrLocal[6][3] =
-	{
-		{float3(-0.5f, 0.5f, -0.5f),  float3(0.5f, 0.5f, -0.5f),  float3(-0.5f, 0.5f, 0.5f)},	 // 윗면
-		{float3(-0.5f, -0.5f, -0.5f), float3(0.5f, -0.5f, -0.5f), float3(-0.5f, -0.5f, 0.5f)}, // 밑면
-		{float3(-0.5f, -0.5f, -0.5f), float3(0.5f, -0.5f, -0.5f), float3(-0.5f, 0.5f, -0.5f)}, // 앞면
-		{float3(-0.5f, -0.5f, 0.5f),  float3(0.5f, -0.5f, 0.5f),  float3(-0.5f, 0.5f, 0.5f)},  // 뒷면
-		{float3(-0.5f, 0.5f, -0.5f),  float3(-0.5f, -0.5f, -0.5f),float3(-0.5f, 0.5f, 0.5f)},  // 왼쪽면
-		{float3(0.5f, 0.5f, -0.5f),   float3(0.5f, -0.5f, -0.5f), float3(0.5f, 0.5f, 0.5f)},   // 오른쪽면
-	}
-
-	for (int i = 0; i < 6; ++i)
-		for (int j = 0; j < 3; ++ + j)
-			arrLocal[i][j] = mul(float4(arrLocal[i][j], 1.f), WorldMat).xyz;
-
-	IntersectResult Final1 = IntersectResult { float3(0.f, 0.f, 0.f), 0.f, false };
-	IntersectResult Final2 = IntersectResult { float3(0.f, 0.f, 0.f), 0.f, false };
-	IntersectResult Temp;
-
-	for (int i = 0; i < 6; ++i)
-	{
-		Temp = IntersecsLay(arrLocal[i], m_ray);
-
-		if (Temp.bResult == true)
-		{
-			// 첫번째로 충돌된경우
-			if (Final1.bResult == false)
-			{
-				Final1 = Temp;
-			}
-
-			else if (Final1.bResult == true && Final2.bResult == false)
-			{
-				// 2개의 교점이 들어온 상황이며, 이제 가까운것이 먼저 오도록 순서를 바꿔야 함
-				if (Final1.fResult <= Temp.fResult)
-				{
-					Final2 = Temp;
-				}
-
-				else
-				{
-					IntersectResult SwapTemp;
-					SwapTemp = Final1;
-					Final1 = Temp;
-					Final2 = SwapTemp;
-				}
-			}
-		}
-	}
-
-
-	_OutputBuffer[_OutputIndex].FirstCrossPoint = Final1;
-	_OutputBuffer[_OutputIndex].SecondCrossPoint = Final2;
+    result.bResult = true;
+    return result;
 }
 
 
-[numthreads(256, 1, 1)]
-void CS_FogOfShader(int3 _iThreadIdx : SV_DispatchThreadID)
+// 여기서 N은 0부터 시작한다. 0 <= _NthRay < _RayCountPerObj
+void CalculateBtwRayCube(tRay& Ray, row_major matrix WorldMat, int _NthRay, int _NthObj, 
+    int _RayCountPerObj, float _SightRadius,  CStructuredBuffer* _OutputBuffer)
 {
-	if (RayCount <= _iThreadIdx.x)		// RayCount 라는 변수를 상수버퍼에서 지정해 줘야 함.
-		return;							// IThreadIdx.x 로 몇번째 레이인지 알 수 있음 
+    float3 arrLocal[6][3] =
+    {
+        {float3(-0.5f, 0.5f, -0.5f),  float3(0.5f, 0.5f, -0.5f),  float3(-0.5f, 0.5f, 0.5f)},	 // 윗면
+        {float3(-0.5f, -0.5f, -0.5f), float3(0.5f, -0.5f, -0.5f), float3(-0.5f, -0.5f, 0.5f)}, // 밑면
+        {float3(-0.5f, -0.5f, -0.5f), float3(0.5f, -0.5f, -0.5f), float3(-0.5f, 0.5f, -0.5f)}, // 앞면
+        {float3(-0.5f, -0.5f, 0.5f),  float3(0.5f, -0.5f, 0.5f),  float3(-0.5f, 0.5f, 0.5f)},  // 뒷면
+        {float3(-0.5f, 0.5f, -0.5f),  float3(-0.5f, -0.5f, -0.5f),float3(-0.5f, 0.5f, 0.5f)},  // 왼쪽면
+        {float3(0.5f, 0.5f, -0.5f),   float3(0.5f, -0.5f, -0.5f), float3(0.5f, 0.5f, 0.5f)},   // 오른쪽면
+    };
+
+    for (int i = 0; i < 6; ++i)
+        for (int j = 0; j < 3; ++j)
+            arrLocal[i][j] = mul(float4(arrLocal[i][j], 1.f), WorldMat).xyz;
+
+    IntersectResult Final1 = IntersectResult{ float3(0.f, 0.f, 0.f), 0.f, false };
+    IntersectResult Final2 = IntersectResult{ float3(0.f, 0.f, 0.f), 0.f, false };
+    IntersectResult Temp;
+
+    for (int i = 0; i < 6; ++i)
+    {
+        Temp = IntersectRay(arrLocal[i], Ray);
+
+        if (Temp.bResult == true)
+        {
+            // 첫번째로 충돌된 경우
+            if (Final1.bResult == false)
+                Final1 = Temp;
+            else if (Final1.bResult == true && Final2.bResult == false)
+            {
+                // Ray와 Cube의 두면에서 교점이 생긴 상황이며, 이제 멀리있는 것이 Final1이 되도록
+                // 순서를 바꿔야 한다.
+                // 왜냐하면, Final1에 있는 정보들이 중요한데, 시야 판단의 기준이 되기 때문이다.
+                if (Final1.fResult < Temp.fResult)
+                {
+                    IntersectResult SwapTemp;
+                    SwapTemp = Final1;
+                    Final1 = Temp;
+                    Final2 = SwapTemp;
+                }
+
+                else
+                {
+                    Final2 = Temp;
+                }
+            }
+        }
+    }
+
+    // 만약에 교점이 하나도 없었던 경우,
+    // 가장자리에 있는 점으로 교점의 좌표를 세팅해준다.
+    if (Final1.bResult = false)
+    {
+        float3 InitialRayPos = Ray.vStart;
+
+        InitialRayPos.x = InitialRayPos.x + _SightRadius * Ray.vDir.x;
+        InitialRayPos.y = InitialRayPos.y + _SightRadius * Ray.vDir.y;
+        InitialRayPos.z = InitialRayPos.z + _SightRadius * Ray.vDir.z;
+
+        Final1.vCrossPoint.xyz = InitialRayPos.xyz;
+    }
+
+    //_OutputBuffer[_NthObj][_NthRay] = Final1.vCrossPoint;
+    _OutputBuffer[_RayCountPerObj * _NthObj + _NthRay] = Final1.vCrossPoint;
+}
 
 
-	tRay FirstRay;
-	tRay SecondRay;
-
-	// Ray 시작점의 좌표는 Ray를 쏠 Object의 좌표에서 y값만 10으로 고정
-	FirstRay.vStart.x = ObjectPos.x;	// ObjectPos라는 변수를 상수버퍼에서 지정해줘야함
-	FirstRay.vStart.y = 10.f;
-	FirstRay.vStart.z = ObjectPos.z;
-
-	SecondRay.vStart.x = ObjectPos.x;
-	SecondRay.vStart.y = 10.f;
-	SecondRay.vStart.z = ObjectPos.z;
+// #define 으로 정의 안된 상수버퍼에 있는 값들 변수로 바꿔줘야 함
+// ex) #define LightCount = g_int_1
 
 
-	float3 BaseDir = { 1.f, 0.f, 0.f };
-
-	float FirstRayAngle = (PI / RayCount) * _iThreadIdx.x;
-	float SecondRayAngle = (PI / RayCoutn) * (_iThreadIdx.x + 1);
-
-	FirstRay.vDir = RotateVec3Y(BaseDir, FirstRayAngle);
-	SecondRay.vDir = RotateVec3Y(BaseDir, SecondRayAngle);
+// 참고자료. FogForwardShader에서 쓰일 내용아님
+//RWStructuredBuffer<tWeight_4> WEIGHT_MAP : register(u0); // unordered acess
+//StructuredBuffer<tRaycastOut> LOCATION : register(t16); // 브러쉬 위치(좌상단 기준)
 
 
-	// Collider Type 값을 Int형식으로 반환받아 올 수 있어야 함
-	// Int 0 : Box ,  Int 1 : Sphere
-	for (int i = 0;  i <  RayCount; ++i)
-	{
-		// m_vEssentialInfoBuffer에서는 무슨 타입인지 확인을 할 수 있어야함.
-		if (m_vEssentialInfoBuffer[_iThreadIdx].iColliderType == 0)    // .iColliderType 이 0이라면 Box
-		{
-
-		}
-
-		else if (m_vEssentialInfoBuffer[_iThreadIdx].iColliderType == 1) // .iColliderType 이 1이라면 Sphere
-		{
-
-		}
-	}
+StructuredBuffer<tRayLightInfo> RAYINFO : register(t16); // Ray에 대한 정보들 (CenterPos 이용할 것임)
+StructuredBuffer< tColliderInfo> COLLIDERINFO : register(t17); // Collider에 대한 정보들
 
 
+[numthreads(16, 64, 1)]
+void  CS_FogOfWarShader(int3 _iThreadID : SV_DispatchThreadID)
+{
+
+    // 참고자료. 어떤 쓰레드가 쓸모 없는 쓰레드인지 확인하기위해서 weightmap.fx에서 가져왔음
+    /*  if (WIDTH <= _iThreadID.x || HEIGHT <= _iThreadID.y || !LOCATION[0].success)
+    {
+        return;
+    }*/
+
+    // 이부분에 대해서 확신이 없음... 팀원들에게 물어봐야 할듯 
+    // SourceLightCount, SourceLightPerRay 변수가 정의되어 있어야 함. (#define 문 쓰면 될듯 상수버퍼에 바인딩해서)
+    if (SourceLightCount * SourceLightPerRay <= _iThreadID.x || SourceLightPerRay <= _iThreadID.y)
+        return;
+
+    
+    tRay MainRay;
+    tRay SupportRay;
+
+    // Ray 시작점의 좌표는 Ray를 쏠 Object의 좌표에서 y값만 10으로 고정
+    MainRay.vStart.x = RAYINFO[(UINT)_iThreadID.x / (UINT)SourceLightPerRay].vRayLightCenterPos.x;
+    MainRay.vStart.y = 10.f;
+    MainRay.vStart.z = RAYINFO[(UINT)_iThreadID.x / (UINT)SourceLightPerRay].vRayLightCenterPos.z;
 
 
+    SupportRay.vStart.x = RAYINFO[(UINT)_iThreadID.x / (UINT)SourceLightPerRay].vRayLightCenterPos.x;
+    SupportRay.vStart.y = 10.f;
+    SupportRay.vStart.z = RAYINFO[(UINT)_iThreadID.x / (UINT)SourceLightPerRay].vRayLightCenterPos.z;
+
+    
+    float3 BaseDir = { 1.f, 0.f, 0.f };
 
 
-	
+    float MainRayAngle = (2 * 3.1415926535f / SourceLightPerRay) * ((UINT)_iThreadID.x % (UINT)SourceLightPerRay);
+    float SupportRayAngle = (2 * 3.1415926535f / SourceLightPerRay) * ((UINT)(_iThreadID.x + 1) % (UINT)SourceLightPerRay);
 
+    MainRay.vDir = RotateVec3Y(BaseDir, MainRayAngle);
+    SupportRay.vDir = RotateVec3Y(BaseDir, SupportRayAngle);
 
+    // Int 값이 1 일경우 Box, Int 값이 0 일경우 Sphere
+    // #define 으로 전체 몇개의 Collider를 계산해야하는지 상수버퍼에 받아와야함
+    for (int i = 0; i < ColliderVecCount; ++i)
+    {
+        float3 MainRayIntersectResult[][];
+        float3 SupportRayIntersectResult[][];
+
+        // Box인 경우
+        if (COLLIDERINFO[i].iColliderType == 1)
+        {
+            // 구조화 버퍼 어딘가에서 Radius에 대한 정보 받아와야 할 것 같음
+            CalculateBtwRayCube(MainRay, COLLIDERINFO[i].mColliderFinalMat, (int)((UINT)_iThreadID.x % (UINT)SourceLightPerRay),
+                (int)((UINT)_iThreadID.x / (UINT)SourceLightPerRay), SourceLightPerRay, SightRadius, MainRayIntersectResult);
+
+            CalculateBtwRayCube(SupportRay, COLLIDERINFO[i].mColliderFinalMat, (int)((UINT)_iThreadID.x % (UINT)SourceLightPerRay),
+                (int)((UINT)_iThreadID.x / (UINT)SourceLightPerRay), SourceLightPerRay, SightRadius, SupportRayIntersectResult);
+        }
+
+        else if (COLLIDERINFO[i].iColliderType == 0)
+        {
+
+        }
+
+        // Return할 OutputBuffer에 MainRayIntersectResult와 SupportRayIntersectResult의 중간값을 계산해서 
+        // 좌표로 전달해야한다
+
+    }
 }
