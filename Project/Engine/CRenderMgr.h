@@ -14,13 +14,15 @@ class CMRT;
 //-----------전장의 안개에 전달해줄 구조체---------------------//
 struct ColliderStruct{
     Matrix      m_ColliderFinalMat;
-    int         m_ColliderType;//0 : Sphere, 1 : Cube;
+    int         m_ColliderType;     //0 : Sphere, 1 : Cube;
     int         padding[3];
 };
 
 struct RayStruct {
     Vec3        m_vRayPos;
     int         m_iRayCount;
+    float       m_fRayRange;
+    int         padding[3];
 };
 
 struct RWStruct {

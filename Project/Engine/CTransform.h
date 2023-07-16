@@ -26,6 +26,7 @@ private:
 
     bool    m_bIsShootingRay;  // 와드,Player는 Ray를 쏜다.
     int     m_iRayCount;
+    float   m_fRayRange;
 
 public:
     void SetRelativePos(Vec3 _vPos) { m_vRelativePos = _vPos; }
@@ -73,6 +74,9 @@ public:
 
     void SetRayCount(int _count) { m_iRayCount = _count; }
     int  GetRayCount() { return m_iRayCount; }
+
+    void SetRayRange(float _Range) { m_fRayRange = _Range; }
+    int  GetRayRange() { return m_fRayRange; }
 
 
 public:

@@ -16,6 +16,7 @@ CTransform::CTransform()
 	, m_bGizmoObjExcept(false)
 	, m_bIsShootingRay(false)
 	, m_iRayCount(20)
+	, m_fRayRange(20)
 {
 	SetName(L"Transform");
 }
@@ -30,6 +31,7 @@ CTransform::CTransform(const CTransform& _other)
 	, m_bGizmoObjExcept(_other.m_bGizmoObjExcept)
 	, m_bIsShootingRay(_other.m_bIsShootingRay)
 	, m_iRayCount(_other.m_iRayCount)
+	, m_fRayRange(_other.m_fRayRange)
 {
 	SetName(L"Transform");
 }

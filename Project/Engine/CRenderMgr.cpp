@@ -171,7 +171,7 @@ void CRenderMgr::CalcRayForFog()
                 RayStruct raybuff;
                 raybuff.m_vRayPos = vecObj[j]->Transform()->GetWorldPos();
                 raybuff.m_iRayCount = vecObj[j]->Transform()->GetRayCount();
-
+                raybuff.m_fRayRange = vecObj[j]->Transform()->GetRayRange();
                 m_vecRayObject.push_back(raybuff);
             }
         }
