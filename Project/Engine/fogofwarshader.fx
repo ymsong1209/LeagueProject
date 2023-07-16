@@ -89,7 +89,7 @@ IntersectResult IntersectRay(float3 _Vertices0, float3 _Vertices1, float3 _Verti
 
 
 // 여기서 N은 0부터 시작한다. 0 <= _NthRay < _RayCountPerObj
-IntersectResult CalculateBtwRayCube(tRay Ray, row_major matrix WorldMat)
+IntersectResult CalculateBtwRayCube(tRay Ray, row_major matrix WorldMat, inout int _check)
 {
     float3 arrLocal[6][3] =
     {
@@ -161,6 +161,14 @@ IntersectResult CalculateBtwRayCube(tRay Ray, row_major matrix WorldMat)
                     Final2 = Temp;
                 }
             }
+            else if (Final1.bResult == true && Final2.bResult == true)
+            {
+                _check += 1000;
+            }
+        }
+        else
+        {
+            _check += 100;
         }
     }
 
@@ -239,7 +247,7 @@ void  CS_FogOfWarShader(int3 _iThreadID : SV_DispatchThreadID)
     FinalSupportRayIntersect.fResult = 0.f;
     FinalSupportRayIntersect.bResult = false;
 
-
+    int check = 0;
 
     // Int 값이 1 일경우 Box, Int 값이 0 일경우 Sphere
     // #define 으로 전체 몇개의 Collider를 계산해야하는지 상수버퍼에 받아와야함
@@ -259,8 +267,8 @@ void  CS_FogOfWarShader(int3 _iThreadID : SV_DispatchThreadID)
         if (COLLIDERINFO[i].iColliderType == 1)
         {
             // 구조화 버퍼 어딘가에서 Radius에 대한 정보 받아와야 할 것 같음
-            TempMainRayIntersect = CalculateBtwRayCube(MainRay, COLLIDERINFO[i].mColliderFinalMat);
-            TempSupportRayIntersect = CalculateBtwRayCube(SupportRay, COLLIDERINFO[i].mColliderFinalMat);
+            TempMainRayIntersect = CalculateBtwRayCube(MainRay, COLLIDERINFO[i].mColliderFinalMat, check);
+            TempSupportRayIntersect = CalculateBtwRayCube(SupportRay, COLLIDERINFO[i].mColliderFinalMat, check);
         }
 
         else if (COLLIDERINFO[i].iColliderType == 0)
@@ -299,6 +307,7 @@ void  CS_FogOfWarShader(int3 _iThreadID : SV_DispatchThreadID)
 
     // 보간점을 찾을려고 작성하는 코드
     IntersectResult InterpolateIntersect;
+   
 
     // 교점이 없었다는 뜻임. 이렇게되면 반지름의 경계와 Ray가 만나는 지점으로 교점의 좌표를 잡아 줄 것이다.
     if (FinalMainRayIntersect.bResult == false)
@@ -345,7 +354,12 @@ void  CS_FogOfWarShader(int3 _iThreadID : SV_DispatchThreadID)
     OutputResult.Radius = InterpolateIntersect.fResult;
     OutputResult.CenterPos = MainRay.vStart;
     OutputResult.NthRay = _iThreadID.y;
-  
+    OutputResult.check = check;
+    OutputResult.pad[0] = 0.f;
+    OutputResult.pad[1] = 0.f;
+    OutputResult.pad[2] = 0.f;
+    
+ 
 
     RAYOUTPUT[_iThreadID.x * RayCountperObject + _iThreadID.y] = OutputResult;
 }

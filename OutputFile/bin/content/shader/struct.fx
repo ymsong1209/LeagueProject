@@ -163,6 +163,9 @@ struct tRayOutput
     float    Radius;
     float3   CenterPos;
     int      NthRay;
+    
+    int check;
+    int pad[3];
 };
 
 

@@ -31,6 +31,9 @@ struct RWStruct {
     float       m_vCrossRadius;     //Ray랑 교차된 지점의 좌표, 교차가 안되면 최대 반지름이 들어옴
     Vec3        m_vCenterPos;       //Ray의 중앙 지점
     int         m_iRayCount;        //몇번째 Ray인지
+
+    int         m_iCheck;
+    int         pad[3];
 };
 //------------------------------------------------------------//
 
