@@ -17,6 +17,7 @@ private:
     int                 m_iCurPathIdx;
 
     Vec3                m_vNextPos;      // 향해야 할 다음 위치
+    Vec3                m_vPrevEndPos; //이전 목적지(같은지점 여러번 클릭할시 발생하는 떨림을 개선하기 위함 : 현재 목적지와 비교했을때 같은 위치거나 굉장히 가깝다면, 다시 길찾기를 진행하지 않음)
 
 public: 
     virtual void tick() override;

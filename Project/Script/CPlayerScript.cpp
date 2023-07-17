@@ -25,8 +25,10 @@ void CPlayerScript::begin()
 {
 }
 
+
 void CPlayerScript::tick()
 {
+
 	if (KEY_TAP(KEY::LBTN))
 	{
 		GetOwner()->PathFinder()->FindPathMousePicking();
@@ -34,31 +36,28 @@ void CPlayerScript::tick()
 	}
 
 	if (GetOwner()->PathFinder() != nullptr)
+		PathFindMove(90.f,true); //직접적으로 이동하도록 트랜스폼을 갱신시켜주는 로직 구현됨!!Script쪽에 구현.
+	
+	Vec3 Pos = GetOwner()->Transform()->GetRelativePos();
+	if(Pos == m_vPrevPos)
+		CurState = PLAYER_STATE::IDLE;
+	else
+		CurState = PLAYER_STATE::RUN;
+
+
+
+	if (PrevState != CurState)
 	{
-		Vec3 NextPos = GetOwner()->PathFinder()->GetNextPos();
+		if (CurState == PLAYER_STATE::RUN)
+			Animator3D()->Play(L"Jinx\\Run_Base", true, 0.15f);
 
-		// NextPos가 유효한 값이라면
-		if (!isnan(NextPos.x))
-		{
-			// 현재 위치
-			Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
-
-			// 가야할 방향 구하기
-			Vec3 Dir = (NextPos - CurPos).Normalize();
-
-			Vec3 NewPos = CurPos + (Dir * m_fSpeed * EditorDT);
-
-			// Pos 반영
-			GetOwner()->Transform()->SetRelativePos(NewPos);
-
-			// 목표지점에 도착했다면
-			if ((NewPos - NextPos).Length() < m_fSpeed * EditorDT)
-			{
-				// 다음 위치 갱신하라고 요청
-				GetOwner()->PathFinder()->FindNextPath();
-			}
-		}
+		else if (CurState == PLAYER_STATE::IDLE)
+			Animator3D()->Play(L"Jinx\\Idle1_Base", true, 0.1f);
 	}
+
+
+	m_vPrevPos = Pos;
+	PrevState = CurState;
 }
 
 void CPlayerScript::Shoot()

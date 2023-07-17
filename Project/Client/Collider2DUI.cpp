@@ -42,7 +42,7 @@ int Collider2DUI::render_update()
 	ImGui::Text("OffsetPos");
 	ImGui::SameLine();
 	if (ImGui::DragFloat3("##ColliderOffsetPos", vOffsetPos)) {
-		Vec2 pos = Vec2(vOffsetPos.x, vOffsetPos.y);
+		Vec3 pos = Vec3(vOffsetPos.x, vOffsetPos.y, vOffsetPos.z);
 		GetTarget()->Collider2D()->SetOffsetPos(pos);
 	}
 

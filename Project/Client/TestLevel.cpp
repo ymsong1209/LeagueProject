@@ -34,6 +34,8 @@ void CreateTestLevel()
 	pCurLevel->GetLayer(3)->SetName(L"Monster");
 	pCurLevel->GetLayer(4)->SetName(L"PlayerProjectile");
 	pCurLevel->GetLayer(5)->SetName(L"MonsterProjectile");
+	pCurLevel->GetLayer(6)->SetName(L"LoLMap");
+	//롤맵 레이어에는 롤맵만 넣을것!
 	pCurLevel->GetLayer(31)->SetName(L"ViewPort UI");
 
 
@@ -149,20 +151,27 @@ void CreateTestLevel()
 		pObj = pMeshData->Instantiate();
 		pObj->SetName(L"LoLMapRot19Size30");
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
+		pObj->AddComponent(new CCollider2D);
+		pObj->Collider2D()->SetAbsolute(true);
+
+		pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+		pObj->Collider2D()->SetOffsetScale(Vec2(2700.f, 2700.f));
+		pObj->Collider2D()->SetOffsetPos(Vec3(1125.f, 16.f, 1200.f));
+
+		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 6);
 
 		// 마우스 피킹 이동을 위한 맵 콜리전 - 따로 오브젝트로 빼준 이유는 렉트메쉬콜리전을 회전시켜야하는데 맵도 같이 회전되면 안돼서 따로 오브젝트로 뺐음
 		// 맵은 이동된다는 가정을 하지않음, 크기,회전,이동을 해버리면 네브메쉬랑 좌표값이 안맞게 되어버린다.
 		// 맵이 있으면 맵 콜리전도 있어야함!
-		CGameObject* MapCollision = new CGameObject;
-		MapCollision->SetName(L"MapCollision");
-		MapCollision->AddComponent(new CCollider2D);
-		MapCollision->AddComponent(new CTransform);
-		MapCollision->Collider2D()->SetAbsolute(true);
-		MapCollision->Collider2D()->SetOffsetScale(Vec2(2700.f, 2700.f));
-		MapCollision->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-		SpawnGameObject(MapCollision, Vec3(1125.f, 16.f, 1200.f), 0);
-		CPathFindMgr::GetInst()->SetMapCollision(MapCollision); //마우스 피킹 진행할 맵 콜리전으로 지정
+		//CGameObject* MapCollision = new CGameObject;
+		//MapCollision->SetName(L"MapCollision");
+		//MapCollision->AddComponent(new CCollider2D);
+		//MapCollision->AddComponent(new CTransform);
+		//MapCollision->Collider2D()->SetAbsolute(true);
+		//MapCollision->Collider2D()->SetOffsetScale(Vec2(2700.f, 2700.f));
+		//MapCollision->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+		//SpawnGameObject(MapCollision, Vec3(1125.f, 16.f, 1200.f), 0);
+		//CPathFindMgr::GetInst()->SetMapCollision(MapCollision); //마우스 피킹 진행할 맵 콜리전으로 지정
 
 		pMeshData = nullptr;
 		pObj = nullptr;
@@ -179,8 +188,13 @@ void CreateTestLevel()
 		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
 		pObj = pMeshData->Instantiate();
 		pObj->SetName(L"Jinx");
+		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
+		//pObj->Animator3D()->Play(L"Jinx\\Run_Base",true,0.5f);
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
+		pObj->AddComponent(new CPlayerScript);
+		pObj->AddComponent(new CPathFinder);
 		//pObj->Animator3D()->Play(L"jungle_blue-jungle_blue_AllAnim", true, 0.5f);
+		pObj->Animator3D()->SetRepeat(true);
 		pObj->Transform()->SetRelativeScale(Vec3(0.3, 0.3, 0.3));
 		SpawnGameObject(pObj, Vec3(0, 0, 0), 0);
 
@@ -247,7 +261,7 @@ void CreateTestLevel()
 
 	pRectFast->Collider2D()->SetAbsolute(false);
 	pRectFast->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
-	pRectFast->Collider2D()->SetOffsetPos(Vec2(0.f, 0.f));
+	pRectFast->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f,0.f));
 	pRectFast->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
 
 
@@ -277,7 +291,7 @@ void CreateTestLevel()
 
 	RayTestObj1->Collider2D()->SetAbsolute(false);
 	RayTestObj1->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
-	RayTestObj1->Collider2D()->SetOffsetPos(Vec2(0.f, 0.f));
+	RayTestObj1->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f,0.f));
 	RayTestObj1->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
 
 
@@ -307,7 +321,7 @@ void CreateTestLevel()
 
 	RayTestObj2->Collider2D()->SetAbsolute(false);
 	RayTestObj2->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
-	RayTestObj2->Collider2D()->SetOffsetPos(Vec2(0.f, 0.f));
+	RayTestObj2->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f,0.f));
 	RayTestObj2->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
 
 
@@ -386,8 +400,7 @@ void CreateTestLevel()
 	pRectFast2->SetName(L"MoveSphere");
 	pRectFast2->AddComponent(new CMeshRender);
 	pRectFast2->AddComponent(new CTransform);
-	pRectFast2->AddComponent(new CPlayerScript);
-	pRectFast2->AddComponent(new CPathFinder);
+
 	pRectFast2->Transform()->SetRelativeScale(Vec3(45.f, 45.f, 45.f));
 	pRectFast2->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
 	pRectFast2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
