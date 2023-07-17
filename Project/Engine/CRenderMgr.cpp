@@ -43,6 +43,7 @@ CRenderMgr::CRenderMgr()
     m_RayBuffer = new CStructuredBuffer;
     m_RWBuffer = new CStructuredBuffer;
     m_FogOfWarShader = (CFogOfWarShader*)CResMgr::GetInst()->FindRes<CComputeShader>(L"FogOfWarShader").Get();
+    m_FogFilterShader = (CFogFilterShader*)CResMgr::GetInst()->FindRes<CComputeShader>(L"FogFilterShader").Get();
 }
 
 CRenderMgr::~CRenderMgr()
@@ -213,9 +214,10 @@ void CRenderMgr::CalcRayForFog()
     int m_itHeight = 1024; // 구조화버퍼 생성 사이즈도 init에서 1024로 해둠
 
     m_FogFilterShader->SetCalcedFogInfo(m_RWBuffer);
-    m_FogFilterShader->SetFogFilterMap(m_FogFilterMapBuffer, m_iWidth, m_itHeight);
-    m_FogFilterShader->SetCountObject((int)m_vecRayObject.size());  // 총 시야 오브젝트가 몇개인지 사이즈 보낸다.
-    m_FogFilterShader->SetCountRayPerObj(m_iRayCount);
+    // m_FogFilterShader->SetFogFilterMap(m_FogFilterMapBuffer, m_iWidth, m_itHeight);
+    m_FogFilterShader->SetFogFilterMap(m_FogFilterMap);
+    m_FogFilterShader->SetCountObject((int)m_vecRayObject.size()); //시야 오브젝트가 개수
+    m_FogFilterShader->SetCountRayPerObj(m_iRayCount); // 오브젝트가 가지는 레이 개수
     m_FogFilterShader->UpdateData();
     m_FogFilterShader->Execute();
 

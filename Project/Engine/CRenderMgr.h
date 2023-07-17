@@ -76,8 +76,9 @@ private:
    
     // 전장의 안개 필터
     Ptr<CFogFilterShader>       m_FogFilterShader;  // 전장의 안개 필터맵 ComputeShader
-    CStructuredBuffer*          m_FogFilterMapBuffer; // ComputeShader 계산 후 받아올 버퍼 
-
+    
+    //CStructuredBuffer*          m_FogFilterMapBuffer; // ComputeShader 계산 후 받아올 버퍼 
+    Ptr<CTexture>               m_FogFilterMap; // 결과 안개 필터맵 텍스처
 
 
     void (CRenderMgr::* RENDER_FUNC)(void);

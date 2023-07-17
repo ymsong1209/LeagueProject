@@ -158,7 +158,14 @@ void CRenderMgr::init()
         m_MRT[(UINT)MRT_TYPE::FOGOFWAR]->Create(arrRTTex, arrClear, DSTex);
     }
 
-    // 전장의 안개 필터 맵 버퍼
-    m_FogFilterMapBuffer = new CStructuredBuffer;
-    m_FogFilterMapBuffer->Create(sizeof(int), 1024 * 1024, SB_TYPE::READ_WRITE, true);
+
+    // 전장의 안개 필터 맵 텍스처 생성
+    m_FogFilterMap = CResMgr::GetInst()->FindRes<CTexture>(L"FogFileterMap");
+    if (!m_FogFilterMap.Get()) {
+        m_FogFilterMap = CResMgr::GetInst()->CreateTexture(L"FogFileterMap"
+            , 2048, 2048
+            , DXGI_FORMAT_R32_FLOAT
+            , D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS
+            , D3D11_USAGE_DEFAULT);
+    }
 }

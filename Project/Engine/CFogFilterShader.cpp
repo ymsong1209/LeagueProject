@@ -6,9 +6,7 @@
 
 CFogFilterShader::CFogFilterShader(UINT _iGroupPerThreadX, UINT _iGroupPerThreadY, UINT _iGroupPerThreadZ)
 	: m_pCalcedFogInfo(nullptr)
-	, m_pOutputFogFilterMap(nullptr)
-	, m_iWidth(0)
-	, m_iHeight(0)
+	, m_pFogFilterMap(nullptr)
 	, m_iCntObjectsWithSight(0)
 	, m_iCntRayPerObject(360)
 {
@@ -24,27 +22,27 @@ CFogFilterShader::~CFogFilterShader()
 
 void CFogFilterShader::UpdateData()
 {
-	m_Const.arrInt[0] = (int)m_iWidth;
-	m_Const.arrInt[1] = (int)m_iHeight;
+	m_Const.arrInt[0] = (int)m_pFogFilterMap->Width();
+	m_Const.arrInt[1] = (int)m_pFogFilterMap->Height();
 	m_Const.arrInt[2] = m_iCntObjectsWithSight;
 	m_Const.arrInt[3] = m_iCntRayPerObject;
 
 
 	m_pCalcedFogInfo->UpdateData_CS(16, true);
-	m_pOutputFogFilterMap->UpdateData_CS(0, false);
+	m_pFogFilterMap->UpdateData_CS(0, false);
 
-	// 그룹 수 계산
-	m_iGroupX = (m_iWidth / m_iGroupPerThreadX) + 1;
-	m_iGroupY = (m_iHeight / m_iGroupPerThreadY) + 1;
+	// 실행 시킬 스레드 그룹 수 지정
+	m_iGroupX = ((UINT)m_pFogFilterMap->Width() / m_iGroupPerThreadX) + 1;
+	m_iGroupY = ((UINT)m_pFogFilterMap->Height() / m_iGroupPerThreadY) + 1;
 	m_iGroupZ = 1;
 }
 
 void CFogFilterShader::Clear()
 {
-	if (nullptr != m_pOutputFogFilterMap)
+	if (nullptr != m_pFogFilterMap)
 	{
-		m_pOutputFogFilterMap->Clear_CS(false);
-		m_pOutputFogFilterMap = nullptr;
+		m_pFogFilterMap->Clear_CS(false);
+		m_pFogFilterMap = nullptr;
 	}
 
 	if (nullptr != m_pCalcedFogInfo)
