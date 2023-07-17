@@ -24,6 +24,7 @@ void CLevelMgr::init()
 void CLevelMgr::tick()
 {
 	m_pCurLevel->clear();
+	m_pCurLevel->RegisterObject();
 
 	//if (LEVEL_STATE::PLAY == m_pCurLevel->GetState())
 	//{

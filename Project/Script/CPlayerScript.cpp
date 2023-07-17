@@ -27,6 +27,8 @@ void CPlayerScript::begin()
 
 void CPlayerScript::tick()
 {
+
+	CLevelMgr::GetInst()->GetCurLevel()->FindObjectByName(L"Test");
 	if (KEY_TAP(KEY::LBTN))
 	{
 		GetOwner()->PathFinder()->FindPathMousePicking();

@@ -46,6 +46,7 @@ private:
 
 public:
     void begin();       // 레벨이 시작될 때 호출 or 시작 된 레벨에 합류할 때
+    void RegisterObject(); //Layer에 자기자신 등록
     void tick();        
     virtual void finaltick();
     virtual void finaltick_module();
