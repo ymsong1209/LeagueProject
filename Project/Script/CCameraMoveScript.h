@@ -7,9 +7,10 @@ class CCameraMoveScript :
 {
 private:
     float       m_fCamSpeed;
-
+    
 public:
     virtual void tick() override;
+
 
 private:
     void Camera2DMove();

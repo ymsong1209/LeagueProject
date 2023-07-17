@@ -27,6 +27,9 @@ void CCameraMoveScript::tick()
 		return;
 	}
 
+	if (CRenderMgr::GetInst()->GetMainCam()->GetCameraMoveMode() == 2)  //2번은 오브젝트 전용모드이기때문에 카메라 무빙 x
+		return;
+
 	if (PROJ_TYPE::ORTHOGRAPHIC == Camera()->GetProjType())
 		Camera2DMove();
 	else

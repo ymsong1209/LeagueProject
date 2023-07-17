@@ -80,10 +80,9 @@ void CreateTestLevel()
 
 	pSkyBox->AddComponent(new CTransform);
 	pSkyBox->AddComponent(new CSkyBox);
-
 	pSkyBox->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 100.f));
 	pSkyBox->Transform()->SetRelativeRot(Vec3(0.f, XM_PI / 2.f, 0.f));
-
+	pSkyBox->Transform()->SetGizmoObjExcept(true);
 	pSkyBox->SkyBox()->SetType(SKYBOX_TYPE::CUBE);
 	pSkyBox->SkyBox()->SetSkyTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\skybox\\SkyWater.dds"));
 

@@ -8,6 +8,7 @@
 #include <Engine\CCamera.h>
 #include <Engine\CGameObject.h>
 #include <ImGuizmo-master/ImGuizmo.h>
+#include <Engine\CKeyMgr.h>
 
 // DirectXMath 헤더를 포함합니다.
 #include <DirectXMath.h>
@@ -53,7 +54,31 @@ int TransformUI::render_update()
 			ImGuiMgr::GetInst()->SetGizmoEditor_WindowMode(true);
 		else
 			ImGuiMgr::GetInst()->SetGizmoEditor_WindowMode(false);
+
+		int i_CameraMoveMode = CRenderMgr::GetInst()->GetMainCam()->GetCameraMoveMode();
+		//----------------------------------
+		if (ImGui::RadioButton("Default Mode", i_CameraMoveMode == 0))
+			CRenderMgr::GetInst()->GetMainCam()->SetCameraMoveMode(0);
+
+		ImGui::SameLine();
+		if (ImGui::RadioButton("Only Camera Move Mode", i_CameraMoveMode == 1))
+			CRenderMgr::GetInst()->GetMainCam()->SetCameraMoveMode(1);
+
+		ImGui::SameLine();
+		if (ImGui::RadioButton("Only Gizmo Click Mode", i_CameraMoveMode == 2))
+			CRenderMgr::GetInst()->GetMainCam()->SetCameraMoveMode(2);
+
+		ImGui::Text("ChangeMode To Key : (F1) , (F2) , (F3)");
+		ImGui::Text("");
+
 	}
+
+	if (KEY_TAP(KEY::F1))
+		CRenderMgr::GetInst()->GetMainCam()->SetCameraMoveMode(0);
+	if (KEY_TAP(KEY::F2))
+		CRenderMgr::GetInst()->GetMainCam()->SetCameraMoveMode(1);
+	if (KEY_TAP(KEY::F3))
+		CRenderMgr::GetInst()->GetMainCam()->SetCameraMoveMode(2);
 
 	return TRUE;
 }
@@ -99,7 +124,7 @@ void TransformUI::RenderGizmo()
 
 		// create a window and insert the inspector
 		ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_Appearing);
-		ImGui::SetNextWindowSize(ImVec2(320, 340), ImGuiCond_Appearing);
+		ImGui::SetNextWindowSize(ImVec2(495, 360), ImGuiCond_Appearing);
 
 		if (ImGuiMgr::GetInst()->GetGizmoEditor_WindowMode())
 			ImGui::Begin("Editor");
@@ -158,8 +183,27 @@ void TransformUI::RenderGizmo()
 			else
 				ImGuiMgr::GetInst()->SetGizmoEditor_WindowMode(false);
 
+			int i_CameraMoveMode = CRenderMgr::GetInst()->GetMainCam()->GetCameraMoveMode();
+			//----------------------------------
+			if (ImGui::RadioButton("Default Mode", i_CameraMoveMode == 0))
+				CRenderMgr::GetInst()->GetMainCam()->SetCameraMoveMode(0);
+
+			ImGui::SameLine();
+			if (ImGui::RadioButton("Only Camera Move Mode", i_CameraMoveMode == 1))
+				CRenderMgr::GetInst()->GetMainCam()->SetCameraMoveMode(1);
+
+			ImGui::SameLine();
+			if (ImGui::RadioButton("Only Gizmo Click Mode", i_CameraMoveMode == 2))
+				CRenderMgr::GetInst()->GetMainCam()->SetCameraMoveMode(2);
+
+			ImGui::Text("ChangeMode To Key : (F1) , (F2) , (F3)");
 			ImGui::End();
+
 		}
+
+
+
+
 
 	}
 

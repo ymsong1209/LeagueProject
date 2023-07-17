@@ -37,6 +37,7 @@ CCamera::CCamera()
 	, m_iCamIdx(-1)
 	, m_bShowFrustumDebug(false)
 	, m_bViewGizmoBounding(false)
+	, m_iCameraMoveMode(0)
 {
 	SetName(L"Camera");
 
@@ -418,7 +419,8 @@ void CCamera::SortObject()
 						continue;
 				}
 
-				GizmoClickCheck(vecObject[j], pCurLevel); //기즈모 클릭 체크
+				if(m_iCameraMoveMode == 0 || m_iCameraMoveMode == 2) //디폴트 모드거나, 오브젝트 무빙 전용 모드일때만 기즈모 클릭체크(모르겠다면 m_iCameraMoveMode 변수에 써놨음)
+					GizmoClickCheck(vecObject[j], pCurLevel); //기즈모 클릭 체크
 
 				CollideRay();
 
@@ -518,10 +520,6 @@ void CCamera::render()
 
 	// UI
 	render_ui();
-
-
- 
-
 	
 }
 

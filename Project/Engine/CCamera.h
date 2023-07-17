@@ -46,7 +46,8 @@ private:
     //오브젝트의 길이값을 기억해두고 그 오브젝트를 최종 선택오브젝트로 세팅
 
     bool                    m_bViewGizmoBounding; //기즈모 클릭범위(바운딩콜리전) 를 보여줘야하는경우 true, 안보여줘도 되는경우 false
-
+    
+    int        m_iCameraMoveMode; // 0: 디폴트 모드 (기즈모 오브젝트 클릭가능 + 카메라 움직임가능) 1: 카메라 전용 모드 (카메라만 움직일수있음) 2: 오브젝트 전용모드 (오브젝트만 움직일수있음)
 
 public:
     void SetProjType(PROJ_TYPE _Type) { m_ProjType = _Type; }
@@ -85,6 +86,10 @@ public:
 
 
     bool RayIntersectsSphere(Vec3 _SphereTrans, float _SphereRadius);
+
+    void SetCameraMoveMode(int _CameraMove) { m_iCameraMoveMode = _CameraMove; }
+    int GetCameraMoveMode() { return m_iCameraMoveMode; }
+
 public:
     void SortObject();
     void SortShadowObject();
