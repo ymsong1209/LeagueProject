@@ -158,4 +158,7 @@ void CRenderMgr::init()
         m_MRT[(UINT)MRT_TYPE::FOGOFWAR]->Create(arrRTTex, arrClear, DSTex);
     }
 
+    // 전장의 안개 필터 맵 버퍼
+    m_FogFilterMapBuffer = new CStructuredBuffer;
+    m_FogFilterMapBuffer->Create(sizeof(int), 1024 * 1024, SB_TYPE::READ_WRITE, true);
 }

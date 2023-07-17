@@ -10,6 +10,7 @@ class CLight3D;
 class CStructuredBuffer;
 class CMRT;
 class CFogOfWarShader;
+class CFogFilterShader;
 
 
 //-----------전장의 안개에 전달해줄 구조체---------------------//
@@ -63,7 +64,7 @@ private:
 
     Ptr<CTexture>               m_RTCopyTex;
 
-
+    // 전장의 안개
     Ptr<CFogOfWarShader>        m_FogOfWarShader;   //전장의 안개 ComputeShader
     vector<ColliderStruct>      m_vecWallObject;    //Ray에 충돌될 가능성이 있는 벽 오브젝트
     vector<RayStruct>           m_vecRayObject;     //Ray를 쏘는 object player, 와드 등
@@ -73,10 +74,13 @@ private:
     int                         m_iRayCount;         // 물체 하나가 쏠 Ray개수
     bool                        m_bIsQClicked;
    
+    // 전장의 안개 필터
+    Ptr<CFogFilterShader>       m_FogFilterShader;  // 전장의 안개 필터맵 ComputeShader
+    CStructuredBuffer*          m_FogFilterMapBuffer; // ComputeShader 계산 후 받아올 버퍼 
+
 
 
     void (CRenderMgr::* RENDER_FUNC)(void);
-
 
 public:
     void init();

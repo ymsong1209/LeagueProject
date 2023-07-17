@@ -73,6 +73,9 @@
     <FxCompile Include="fogofwarshader.fx">
       <Filter>Source\08. ShaderCode\03. Compute\FogOfWar</Filter>
     </FxCompile>
+    <FxCompile Include="fogfiltershader.fx">
+      <Filter>Source\08. ShaderCode\03. Compute\FogOfWar\FogFilter</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CRes.cpp">
@@ -272,6 +275,9 @@
     </ClCompile>
     <ClCompile Include="CFogOfWarShader.cpp">
       <Filter>Source\08. ShaderCode\03. Compute\FogOfWar</Filter>
+    </ClCompile>
+    <ClCompile Include="CFogFilterShader.cpp">
+      <Filter>Source\08. ShaderCode\03. Compute\FogOfWar\FogFilter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -593,6 +599,9 @@
     <ClInclude Include="CFogOfWarShader.h">
       <Filter>Source\08. ShaderCode\03. Compute\FogOfWar</Filter>
     </ClInclude>
+    <ClInclude Include="CFogFilterShader.h">
+      <Filter>Source\08. ShaderCode\03. Compute\FogOfWar\FogFilter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -792,6 +801,9 @@
     </Filter>
     <Filter Include="Source\08. ShaderCode\03. Compute\FogOfWar">
       <UniqueIdentifier>{35cb819a-9625-4918-9331-dca35a82856c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\08. ShaderCode\03. Compute\FogOfWar\FogFilter">
+      <UniqueIdentifier>{56c1e50b-7591-46d7-b08f-b5e72f6c12d8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

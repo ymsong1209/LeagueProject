@@ -15,6 +15,7 @@
 #include "CMRT.h"
 
 #include "CFogOfWarShader.h"
+#include "CFogFilterShader.h"
 #include "CKeyMgr.h"
 
 
@@ -191,6 +192,8 @@ void CRenderMgr::CalcRayForFog()
         RWCount += m_iRayCount;
     }
 
+    UINT  temp = sizeof(RWStruct);
+
     m_RWBuffer->Create(sizeof(RWStruct), RWCount, SB_TYPE::READ_WRITE, true);
 
     // 전장의 안개 계산 버퍼
@@ -203,6 +206,23 @@ void CRenderMgr::CalcRayForFog()
 
     m_FogOfWarShader->UpdateData();
     m_FogOfWarShader->Execute();
+
+
+    // 전장의 안개 필터 제작 컴퓨트 쉐이더
+    int m_iWidth = 1024;
+    int m_itHeight = 1024; // 구조화버퍼 생성 사이즈도 init에서 1024로 해둠
+
+    m_FogFilterShader->SetCalcedFogInfo(m_RWBuffer);
+    m_FogFilterShader->SetFogFilterMap(m_FogFilterMapBuffer, m_iWidth, m_itHeight);
+    m_FogFilterShader->SetCountObject((int)m_vecRayObject.size());  // 총 시야 오브젝트가 몇개인지 사이즈 보낸다.
+    m_FogFilterShader->SetCountRayPerObj(m_iRayCount);
+    m_FogFilterShader->UpdateData();
+    m_FogFilterShader->Execute();
+
+    // 렌더
+    // 안개 필터맵 구조화 버퍼 보냄
+    // 미니맵 해상도도 Vec2_1로 나중에 보냄
+    // 전장의 안개  
 
     auto a = m_RWBuffer[0];
 

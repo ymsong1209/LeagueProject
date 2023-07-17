@@ -188,6 +188,7 @@ call EngineCopy.bat</Command>
     <ClInclude Include="CEntity.h" />
     <ClInclude Include="CEventMgr.h" />
     <ClInclude Include="CFBXLoader.h" />
+    <ClInclude Include="CFogFilterShader.h" />
     <ClInclude Include="CFogOfWarShader.h" />
     <ClInclude Include="CFontMgr.h" />
     <ClInclude Include="CFrustum.h" />
@@ -300,6 +301,7 @@ call EngineCopy.bat</Command>
     <ClCompile Include="CEntity.cpp" />
     <ClCompile Include="CEventMgr.cpp" />
     <ClCompile Include="CFBXLoader.cpp" />
+    <ClCompile Include="CFogFilterShader.cpp" />
     <ClCompile Include="CFogOfWarShader.cpp" />
     <ClCompile Include="CFontMgr.cpp" />
     <ClCompile Include="CFrustum.cpp" />
@@ -362,6 +364,24 @@ call EngineCopy.bat</Command>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </ObjectFileOutput>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>
+    </FxCompile>
+    <FxCompile Include="fogfiltershader.fx">
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Effect</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Effect</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Effect</ShaderType>
     </FxCompile>
     <FxCompile Include="debugshape.fx">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>
