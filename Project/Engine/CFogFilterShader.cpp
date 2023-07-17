@@ -45,9 +45,9 @@ void CFogFilterShader::Clear()
 		m_pFogFilterMap = nullptr;
 	}
 
-	if (nullptr != m_pCalcedFogInfo)
-	{
-		m_pCalcedFogInfo->Clear();
-		m_pCalcedFogInfo = nullptr;
-	}
+	//if (nullptr != m_pCalcedFogInfo)
+	//{
+	//	m_pCalcedFogInfo->Clear();
+	//	m_pCalcedFogInfo = nullptr;
+	//}
 }

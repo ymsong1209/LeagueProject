@@ -124,18 +124,18 @@ void CreateTestLevel()
 	//SpawnGameObject(pObject3, Vec3(0.f, 200.f, 300.f), 0);
 
 	// LandScape Object
-	//CGameObject* pLandScape = new CGameObject;
-	//pLandScape->SetName(L"LandScape");
+	CGameObject* pLandScape = new CGameObject;
+	pLandScape->SetName(L"LandScape");
 
-	//pLandScape->AddComponent(new CTransform);
-	//pLandScape->AddComponent(new CLandScape);
+	pLandScape->AddComponent(new CTransform);
+	pLandScape->AddComponent(new CLandScape);
 
-	//pLandScape->Transform()->SetRelativeScale(Vec3(200.f, 1000.f, 200.f));
+	pLandScape->Transform()->SetRelativeScale(Vec3(200.f, 1000.f, 200.f));
 
-	//pLandScape->LandScape()->SetFace(32, 32);
-	//pLandScape->LandScape()->SetFrustumCheck(false);
+	pLandScape->LandScape()->SetFace(32, 32);
+	pLandScape->LandScape()->SetFrustumCheck(false);
 
-	//SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 0.f), 0);
+	SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 0.f), 0);
 
 	
 

@@ -14,6 +14,9 @@ StructuredBuffer<tRayOutput> RAYINFO : register(t16); // Ray에 대한 정보들 (Cent
 #define CntObject       g_int_2
 #define CntRayPerObject g_int_3
 
+#define LOLMAPWIDTH     3000
+#define LOLMAPHEIGHT    3000
+
 // CenterPos.xz는 월드 pos 로 되어 있다. 월드는 좌하단(0,0)부터 우상단으로(롤맵가로3000, 롤맵세로3000 가정) ↗
 // _iThreadId.x, _iThreradID.y는 필터맵 텍스처 내 좌표다. 좌상단(0,0)부터 우하단으로(2048,2048)↘
 // => 좌표축 일치x -> CenterPos를 _iThreadId.x, _iThreadId.y 좌표계로 변환하는 함수가 필요하다. 
@@ -23,11 +26,15 @@ float2 ConvertToThreadCoords(float2 centerPos, int threadWidth, int threadHeight
     float threadY = (1.0 - (centerPos.y / worldMapHeight)) * threadHeight;
     return float2(threadX, threadY);
 }
-float PI = 3.14159265358979323846;
+float PI = 3.141592;
 
 [numthreads(32, 32, 1)]
 void CS_FogFilterShader(int3 _iThreadID : SV_DispatchThreadID)
 {
+    // init
+    FILTER_MAP[_iThreadID.xy] = float4(0.f, 0.f, 0.f, 0.f);
+    
+    
     // 텍스처 크기 벗어나면 버림
     if (WIDTH <= _iThreadID.x || HEIGHT <= _iThreadID.y)
     {
@@ -63,18 +70,24 @@ void CS_FogFilterShader(int3 _iThreadID : SV_DispatchThreadID)
                 tRayOutput nThRayInfo = RAYINFO[i * CntRayPerObject + j];
                 tRayOutput nextThRayInfo = RAYINFO[i * CntRayPerObject + j + 1];
                 
-                // 2. 피자조각 내부인지, 상황에 따라 acos asin 합쳐서 판단
-                // 이게 이제 원을 360개로 쪼개서, 내적 외적을 쓴다....
+                // 2. 이제 원안에서 어디 피자조각 내부인지알아야 한다.
+                // 어디 피자조각 내부인지 알기 위해서는 
+                // 현재 픽셀이 몇도에 위치하는지, n번째 레이가 몇도인지, n+1번째 레이가 몇도인지 알아야한다.
+                // 현재 픽셀이 n+1 각도보다 작고, n 각도보다 크면 n번째 피자조각
+                
                 float pizzaTheta = 2*PI / CntRayPerObject; // 피자 한 조각의 각도
                 
-                float2 vectorA = normalize(curThreadPos - rayCenterPos);
+                float2 vectorA = normalize(curThreadPos - rayCenterPos); // center에서 픽셀을 향하는 벡터
                 float2 vectorB = float2(1, 0); // 0도 
                 
                 float cosCurTheta = dot(vectorA, vectorB); 
                 float curTheta = acos(cosCurTheta); // CenterPos를 기준으로 픽셀이 위치한 각도가 0~180인지 180~360인지 판단 불가능.
                 
-                float sinCurTheta = cross(float3(vectorA, 0), float3(vectorB, 0)); 
-                float sign = acos(cosCurTheta); // acos결과가 양수면 0~180도 사이고, 음수면 180~360도 사이다. 
+                // 외적한 결과의 길이가 sin(theta)
+                float3 sinCurTheta = cross(float3(vectorA, 0), float3(vectorB, 0)); 
+                sinCurTheta = length(sinCurTheta);
+                
+                float sign = asin(sinCurTheta); // asin결과가 양수면 0~180도 사이고, 음수면 180~360도 사이다. 
                 
                 if(sign < 0) // 음수면 360도에서 세타를 빼준다.
                     curTheta = 2 * PI - curTheta;
@@ -83,7 +96,8 @@ void CS_FogFilterShader(int3 _iThreadID : SV_DispatchThreadID)
                 float nTheta = j * pizzaTheta;
                 float nextTheta = (j + 1) * pizzaTheta;
                 
-                if( curTheta >= nTheta && curTheta <nextTheta) // 현재 각도가 어떤 ?번째 피자조각 내부일때, 
+                // 3. 현재 각도가 어떤 ?번째 피자조각 내부일때, nTheta <= curTheta < nextTheta
+                if (nTheta <= curTheta && curTheta < nextTheta) 
                 {
                     float rayRadiusUV = nThRayInfo.Radius / 3000 * WIDTH; // 해당 레이의 반지름도 텍스처 내 길이로 변경
                     
@@ -101,7 +115,10 @@ void CS_FogFilterShader(int3 _iThreadID : SV_DispatchThreadID)
     }
     
     // 필터맵 구조화 버퍼에 레이의 시야 여부를 기록
-    FILTER_MAP[_iThreadID.xy] = isVisible;
+    if(isVisible)
+        FILTER_MAP[_iThreadID.xy] = float4(255.0, 0.0, 0.0, 255.0);
+    else
+        FILTER_MAP[_iThreadID.xy] = float4(255.0, 255.0, 0.0, 255.0);
 }
 
 
