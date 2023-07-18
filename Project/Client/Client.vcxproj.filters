@@ -140,6 +140,9 @@
     <Filter Include="UI\InspectorUI\ComponentUI\15. PathFinderUI">
       <UniqueIdentifier>{2d2bdced-bad6-4d28-9777-5663ca8f0384}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PacketFunc">
+      <UniqueIdentifier>{b7251361-be1c-4899-a448-2604fe423e42}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -298,6 +301,9 @@
     </ClInclude>
     <ClInclude Include="PathFinderUI.h">
       <Filter>UI\InspectorUI\ComponentUI\15. PathFinderUI</Filter>
+    </ClInclude>
+    <ClInclude Include="packetFunc.h">
+      <Filter>PacketFunc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -465,6 +471,9 @@
     </ClCompile>
     <ClCompile Include="PathFinderUI.cpp">
       <Filter>UI\InspectorUI\ComponentUI\15. PathFinderUI</Filter>
+    </ClCompile>
+    <ClCompile Include="packetFunc.cpp">
+      <Filter>PacketFunc</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

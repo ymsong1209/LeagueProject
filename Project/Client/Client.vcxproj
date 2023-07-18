@@ -185,6 +185,7 @@
     <ClInclude Include="MeshRenderUI.h" />
     <ClInclude Include="MeshUI.h" />
     <ClInclude Include="OutlinerUI.h" />
+    <ClInclude Include="packetFunc.h" />
     <ClInclude Include="ParamUI.h" />
     <ClInclude Include="ParticleSystemUI.h" />
     <ClInclude Include="PathFinderUI.h" />
@@ -241,6 +242,7 @@
     <ClCompile Include="MeshRenderUI.cpp" />
     <ClCompile Include="MeshUI.cpp" />
     <ClCompile Include="OutlinerUI.cpp" />
+    <ClCompile Include="packetFunc.cpp" />
     <ClCompile Include="ParamUI.cpp" />
     <ClCompile Include="ParticleSystemUI.cpp" />
     <ClCompile Include="PathFinderUI.cpp" />
