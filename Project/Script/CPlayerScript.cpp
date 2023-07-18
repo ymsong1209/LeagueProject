@@ -40,6 +40,9 @@ void CPlayerScript::tick()
 		PathFindMove(90.f,true); //���������� �̵��ϵ��� Ʈ�������� ���Ž����ִ� ���� ������!!Script�ʿ� ����.
 	
 	Vec3 Pos = GetOwner()->Transform()->GetRelativePos();
+
+	// send info packet to Server
+	
 	if(Pos == m_vPrevPos)
 		CurState = PLAYER_STATE::IDLE;
 	else
