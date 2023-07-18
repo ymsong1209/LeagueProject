@@ -144,6 +144,8 @@ void CLight3D::render()
 		m_LightMtrl->SetTexParam(TEX_PARAM::TEX_3, CResMgr::GetInst()->FindRes<CTexture>(L"DepthMapTex"));
 	}
 	
+	m_LightMtrl->SetTexParam(TEX_PARAM::TEX_2, CResMgr::GetInst()->FindRes<CTexture>(L"FogFilterMap"));
+
 	
 	m_LightMtrl->UpdateData();
 

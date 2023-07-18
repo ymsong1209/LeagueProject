@@ -60,7 +60,7 @@ void CS_FogFilterShader(int3 _iThreadID : SV_DispatchThreadID)
         
         // ray 시야 범위도 World 길이 기준이니까 텍스처 내 길이로 변환
         // 지금 RayRange를 500으로 가정.
-        float radiusObjectVision = (500 / 3000.0) * WIDTH; // 혹은 HEIGHT 사용
+        float radiusObjectVision = (rayInfo.MaxRadius / 3000.0) * WIDTH; // 혹은 HEIGHT 사용
 
         // 1. 이 픽셀이 오브젝트의 시야 범위(시야 길이 반지름)보다 작으면 -> 원 안에 있음. (컬링용)
         if (length(curThreadPos - rayCenterPos) <= radiusObjectVision)
@@ -88,17 +88,7 @@ void CS_FogFilterShader(int3 _iThreadID : SV_DispatchThreadID)
             {
                 curTheta = 2 * 3.141592f - curTheta;
             }
-                
-                
-                
-                //// 외적한 결과의 길이가 sin(theta)
-                //float3 CrossResult = cross(float3(vectorA, 0), float3(vectorB, 0)); 
-                //float3 CrossResultLength = length(CrossResult);
-                
-                //float sign = asin(CrossResultLength); // asin결과가 양수면 0~180도 사이고, 음수면 180~360도 사이다. 
-                
-                //if(sign < 0) // 음수면 360도에서 세타를 빼준다.
-                //    curTheta = 2 * PI - curTheta;
+           
                 
             // 이제 우리는 피자조각 세타도 알고(PizzaTheta), 픽셀의 세타도 안다.(curTheta)
             int index = int(curTheta / pizzaTheta);
@@ -124,20 +114,11 @@ void CS_FogFilterShader(int3 _iThreadID : SV_DispatchThreadID)
     // 필터맵 구조화 버퍼에 레이의 시야 여부를 기록
     if (isVisible)
         FILTER_MAP[_iThreadID.xy] = 1.f;
-    //float4(255.0, 0.0, 0.0, 255.0);
+    
     else
         FILTER_MAP[_iThreadID.xy] = 0.f;
-    //float4(255.0, 255.0, 0.0, 255.0);
+   
     
-     
-    
-    //if ((_iThreadID.x > 500 && _iThreadID.x < 1000) && (_iThreadID.y > 500 && _iThreadID.y < 1000))
-    //{
-    //    FILTER_MAP[_iThreadID.xy] = float4(0.0, 0.0, 255.0, 255.0);
-    //}
-    //FILTER_MAP[_iThreadID.xy] = float4(0.0f / 255.0f, 0.0f / 255.0f, 255.0f / 255.0f, 255.0f / 255.0f);
-    //float4(1.0, 1.0, 0.0, 1.0);
-    //float4(100.0, 255.0, 0.0, 255.0);
 }
 
 

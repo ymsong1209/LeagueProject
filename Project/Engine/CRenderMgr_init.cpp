@@ -167,7 +167,7 @@ void CRenderMgr::init()
     // 전장의 안개 필터 맵 텍스처 생성
     m_FogFilterMap = CResMgr::GetInst()->FindRes<CTexture>(L"FogFilterMap");
     if (!m_FogFilterMap.Get()) {
-        m_FogFilterMap = CResMgr::GetInst()->CreateTexture(L"FogFiterMap"
+        m_FogFilterMap = CResMgr::GetInst()->CreateTexture(L"FogFilterMap"
             , 2048, 2048
             , DXGI_FORMAT_R8_UNORM
             , D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS

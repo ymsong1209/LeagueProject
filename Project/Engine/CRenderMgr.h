@@ -33,9 +33,8 @@ struct RWStruct {
     Vec3        m_vCenterPos;       //Ray의 중앙 지점
     int         m_iRayCount;        //몇번째 Ray인지
 
-    int         m_iCheck;
-    int         m_iCheck2;
-    float         pad[2];
+    float       m_fMaxRadius;       //Ray의 원본 범위
+    float       padding[3];
 };
 //------------------------------------------------------------//
 

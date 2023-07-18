@@ -65,9 +65,9 @@ void CreateTestLevel()
 	pLightObj->Light3D()->SetLightDirection(Vec3(1.f, -1.f, 1.f));
 
 
-	pLightObj->Light3D()->SetLightDiffuse(Vec3(1.f, 1.f, 1.f));
-	pLightObj->Light3D()->SetLightSpecular(Vec3(0.f, 0.f, 0.f));
-	pLightObj->Light3D()->SetLightAmbient(Vec3(1.f, 1.f, 1.f));
+	pLightObj->Light3D()->SetLightDiffuse(Vec4(1.f, 1.f, 1.f,1.f));
+	pLightObj->Light3D()->SetLightSpecular(Vec4(0.f, 0.f, 0.f,1.f));
+	pLightObj->Light3D()->SetLightAmbient(Vec4(1.f, 1.f, 1.f,1.f));
 
 	pLightObj->Light3D()->SetRadius(400.f);
 

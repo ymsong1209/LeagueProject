@@ -164,9 +164,8 @@ struct tRayOutput
     float3   CenterPos;
     int      NthRay;
     
-    int check1;
-    int check2;
-    float pad[2];
+    float   MaxRadius;
+    float pad[3];
 };
 
 
