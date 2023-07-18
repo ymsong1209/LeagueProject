@@ -31,6 +31,11 @@ bool Handle_S_LOGIN(PacketSessionRef& session, Protocol::S_LOGIN& pkt)
 	return true;
 }
 
+bool Handle_S_TEST(PacketSessionRef& session, Protocol::S_TEST& pkt)
+{
+	return false;
+}
+
 bool Handle_S_ENTER_GAME(PacketSessionRef& session, Protocol::S_ENTER_GAME& pkt)
 {
 	// TODO
