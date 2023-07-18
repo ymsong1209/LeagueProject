@@ -30,33 +30,33 @@ bool Handle_C_LOGIN(PacketSessionRef& session, Protocol::C_LOGIN& pkt)
 	// ID 발급 (DB 아이디가 아니고, 인게임 아이디)
 	static Atomic<uint64> idGenerator = 1;
 
-	{
-		auto player = loginPkt.add_players();
-		player->set_name(u8"DB에서긁어온이름1");
-		player->set_playertype(Protocol::PLAYER_TYPE_KNIGHT);
+	//{
+	//	auto player = loginPkt.add_players();
+	//	player->set_name(u8"DB에서긁어온이름1");
+	//	player->set_playertype(Protocol::PLAYER_TYPE_KNIGHT);
 
-		PlayerRef playerRef = MakeShared<Player>();
-		playerRef->playerId = idGenerator++;
-		playerRef->name = player->name();
-		playerRef->type = player->playertype();
-		playerRef->ownerSession = gameSession;
+	//	PlayerRef playerRef = MakeShared<Player>();
+	//	playerRef->playerId = idGenerator++;
+	//	playerRef->name = player->name();
+	//	playerRef->type = player->playertype();
+	//	playerRef->ownerSession = gameSession;
 
-		gameSession->_players.push_back(playerRef);
-	}
+	//	gameSession->_players.push_back(playerRef);
+	//}
 
-	{
-		auto player = loginPkt.add_players();
-		player->set_name(u8"DB에서긁어온이름2");
-		player->set_playertype(Protocol::PLAYER_TYPE_MAGE);
+	//{
+	//	auto player = loginPkt.add_players();
+	//	player->set_name(u8"DB에서긁어온이름2");
+	//	player->set_playertype(Protocol::PLAYER_TYPE_MAGE);
 
-		PlayerRef playerRef = MakeShared<Player>();
-		playerRef->playerId = idGenerator++;
-		playerRef->name = player->name();
-		playerRef->type = player->playertype();
-		playerRef->ownerSession = gameSession;
+	//	PlayerRef playerRef = MakeShared<Player>();
+	//	playerRef->playerId = idGenerator++;
+	//	playerRef->name = player->name();
+	//	playerRef->type = player->playertype();
+	//	playerRef->ownerSession = gameSession;
 
-		gameSession->_players.push_back(playerRef);
-	}
+	//	gameSession->_players.push_back(playerRef);
+	//}
 
 	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(loginPkt);
 	session->Send(sendBuffer);
@@ -81,6 +81,11 @@ bool Handle_C_ENTER_GAME(PacketSessionRef& session, Protocol::C_ENTER_GAME& pkt)
 	auto sendBuffer = ClientPacketHandler::MakeSendBuffer(enterGamePkt);
 	gameSession->_currentPlayer->ownerSession->Send(sendBuffer);
 
+	return true;
+}
+
+bool Handle_C_PLAYER_UPDATE(PacketSessionRef& session, Protocol::C_PLAYER_UPDATE& pkt)
+{
 	return true;
 }
 
