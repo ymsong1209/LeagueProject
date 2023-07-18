@@ -202,9 +202,9 @@
                         {
                             "TRANSFORM": 0,
                             "vRelativePos": {
-                                "x": 0.0,
+                                "x": 674.0,
                                 "y": 0.0,
-                                "z": 0.0
+                                "z": 200.0
                             },
                             "vRelativeScale": {
                                 "x": 100.0,
@@ -258,7 +258,7 @@
                         {
                             "TRANSFORM": 0,
                             "vRelativePos": {
-                                "x": -250.0,
+                                "x": 373.0,
                                 "y": 0.0,
                                 "z": 0.0
                             },
@@ -330,9 +330,9 @@
                         {
                             "TRANSFORM": 0,
                             "vRelativePos": {
-                                "x": 0.0,
+                                "x": 122.0,
                                 "y": 0.0,
-                                "z": -250.0
+                                "z": 339.0
                             },
                             "vRelativeScale": {
                                 "x": 100.0,

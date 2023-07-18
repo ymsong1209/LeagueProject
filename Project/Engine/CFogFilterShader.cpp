@@ -28,7 +28,7 @@ void CFogFilterShader::UpdateData()
 	m_Const.arrInt[3] = m_iCntRayPerObject;
 
 
-	m_pCalcedFogInfo->UpdateData_CS(16, true);
+	m_pCalcedFogInfo->UpdateData_CS(1, false);
 	m_pFogFilterMap->UpdateData_CS(0, false);
 
 	// 실행 시킬 스레드 그룹 수 지정
@@ -45,9 +45,9 @@ void CFogFilterShader::Clear()
 		m_pFogFilterMap = nullptr;
 	}
 
-	//if (nullptr != m_pCalcedFogInfo)
-	//{
-	//	m_pCalcedFogInfo->Clear();
-	//	m_pCalcedFogInfo = nullptr;
-	//}
+	if (nullptr != m_pCalcedFogInfo)
+	{
+		m_pCalcedFogInfo->Clear_CS(false);
+		m_pCalcedFogInfo = nullptr;
+	}
 }

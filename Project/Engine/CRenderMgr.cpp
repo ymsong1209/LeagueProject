@@ -214,13 +214,13 @@ void CRenderMgr::CalcRayForFog()
     m_FogFilterShader->SetCalcedFogInfo(m_RWBuffer);
     // m_FogFilterShader->SetFogFilterMap(m_FogFilterMapBuffer, m_iWidth, m_itHeight);
     m_FogFilterShader->SetFogFilterMap(m_FogFilterMap);
-    m_FogFilterShader->SetCountObject((int)m_vecRayObject.size()); // 시야 오브젝트가 개수
+    m_FogFilterShader->SetCountObject((int)m_vecRayObject.size()); // 시야 오브젝트의 개수
     m_FogFilterShader->SetCountRayPerObj(m_iRayCount); // 오브젝트가 가지는 레이 개수
     m_FogFilterShader->UpdateData();
     m_FogFilterShader->Execute();
 
 
-    if (KEY_PRESSED(KEY::K))
+    if (KEY_TAP(KEY::K))
     {
         wstring strFolderPath = L"";
         strFolderPath += L"texture\\";

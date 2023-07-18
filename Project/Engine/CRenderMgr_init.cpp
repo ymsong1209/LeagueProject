@@ -159,12 +159,17 @@ void CRenderMgr::init()
     }
 
 
+   /* CResMgr::GetInst()->CreateTexture(L"DataTargetTex"
+        , (UINT)vRenderResolotion.x, (UINT)vRenderResolotion.y
+        , DXGI_FORMAT_R32G32B32A32_FLOAT, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE
+        , D3D11_USAGE_DEFAULT),*/
+
     // 전장의 안개 필터 맵 텍스처 생성
-    m_FogFilterMap = CResMgr::GetInst()->FindRes<CTexture>(L"FogFileterMap");
+    m_FogFilterMap = CResMgr::GetInst()->FindRes<CTexture>(L"FogFilterMap");
     if (!m_FogFilterMap.Get()) {
-        m_FogFilterMap = CResMgr::GetInst()->CreateTexture(L"FogFileterMap"
+        m_FogFilterMap = CResMgr::GetInst()->CreateTexture(L"FogFiterMap"
             , 2048, 2048
-            , DXGI_FORMAT_R8G8B8A8_UNORM
+            , DXGI_FORMAT_R32G32B32A32_FLOAT
             , D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS
             , D3D11_USAGE_DEFAULT);
     }
