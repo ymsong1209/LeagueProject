@@ -169,7 +169,7 @@ void CRenderMgr::init()
     if (!m_FogFilterMap.Get()) {
         m_FogFilterMap = CResMgr::GetInst()->CreateTexture(L"FogFiterMap"
             , 2048, 2048
-            , DXGI_FORMAT_R32G32B32A32_FLOAT
+            , DXGI_FORMAT_R8_UNORM
             , D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS
             , D3D11_USAGE_DEFAULT);
     }

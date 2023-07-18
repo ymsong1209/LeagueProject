@@ -17,6 +17,7 @@
 #include "CFogOfWarShader.h"
 #include "CFogFilterShader.h"
 #include "CKeyMgr.h"
+#include "CTimeMgr.h"
 
 
 CRenderMgr::CRenderMgr()
@@ -28,6 +29,7 @@ CRenderMgr::CRenderMgr()
     , m_RWBuffer(nullptr)
     , m_iRayCount(100)
     , m_bIsQClicked(false)
+    , m_FogFilterTime(0.f)
 {
     Vec2 vResolution = CDevice::GetInst()->GetRenderResolution();
     m_RTCopyTex = CResMgr::GetInst()->CreateTexture(L"RTCopyTex"
@@ -207,17 +209,26 @@ void CRenderMgr::CalcRayForFog()
     m_FogOfWarShader->Execute();
 
 
-    // 전장의 안개 필터 제작 컴퓨트 쉐이더 -> 추후 0.1초에 한번하도록 변경
-    int m_iWidth = 1024;
-    int m_itHeight = 1024; // 구조화버퍼 생성 사이즈도 init에서 1024로 해둠
+    if (m_FogFilterTime < 0.1f) {
+        m_FogFilterTime += EditorDT;
+    }
+    else {
+        // 전장의 안개 필터 제작 컴퓨트 쉐이더 -> 추후 0.1초에 한번하도록 변경
+        int m_iWidth = 1024;
+        int m_itHeight = 1024; // 구조화버퍼 생성 사이즈도 init에서 1024로 해둠
 
-    m_FogFilterShader->SetCalcedFogInfo(m_RWBuffer);
-    // m_FogFilterShader->SetFogFilterMap(m_FogFilterMapBuffer, m_iWidth, m_itHeight);
-    m_FogFilterShader->SetFogFilterMap(m_FogFilterMap);
-    m_FogFilterShader->SetCountObject((int)m_vecRayObject.size()); // 시야 오브젝트의 개수
-    m_FogFilterShader->SetCountRayPerObj(m_iRayCount); // 오브젝트가 가지는 레이 개수
-    m_FogFilterShader->UpdateData();
-    m_FogFilterShader->Execute();
+        m_FogFilterShader->SetCalcedFogInfo(m_RWBuffer);
+        // m_FogFilterShader->SetFogFilterMap(m_FogFilterMapBuffer, m_iWidth, m_itHeight);
+        m_FogFilterShader->SetFogFilterMap(m_FogFilterMap);
+        m_FogFilterShader->SetCountObject((int)m_vecRayObject.size()); // 시야 오브젝트의 개수
+        m_FogFilterShader->SetCountRayPerObj(m_iRayCount); // 오브젝트가 가지는 레이 개수
+        m_FogFilterShader->UpdateData();
+        m_FogFilterShader->Execute();
+        m_FogFilterTime = 0.f;
+    }
+  
+    
+   
 
 
     if (KEY_TAP(KEY::K))
@@ -232,7 +243,7 @@ void CRenderMgr::CalcRayForFog()
     // 미니맵 해상도도 Vec2_1로 나중에 보냄
     // 전장의 안개  
 
-    auto a = m_RWBuffer[0];
+    /*auto a = m_RWBuffer[0];
 
     UINT bufferSize = m_RWBuffer->GetBufferSize();
     size_t size = sizeof(RWStruct);
@@ -296,7 +307,7 @@ void CRenderMgr::CalcRayForFog()
     }
   
 
-    delete[] data;
+    delete[] data;*/
 }
 
 int CRenderMgr::RegisterCamera(CCamera* _Cam, int _idx)

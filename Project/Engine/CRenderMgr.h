@@ -35,7 +35,7 @@ struct RWStruct {
 
     int         m_iCheck;
     int         m_iCheck2;
-    int         pad[2];
+    float         pad[2];
 };
 //------------------------------------------------------------//
 
@@ -79,6 +79,8 @@ private:
     
     //CStructuredBuffer*          m_FogFilterMapBuffer; // ComputeShader 계산 후 받아올 버퍼 
     Ptr<CTexture>               m_FogFilterMap; // 결과 안개 필터맵 텍스처
+
+    float                       m_FogFilterTime;
 
 
     void (CRenderMgr::* RENDER_FUNC)(void);

@@ -166,7 +166,7 @@ struct tRayOutput
     
     int check1;
     int check2;
-    int pad[2];
+    float pad[2];
 };
 
 

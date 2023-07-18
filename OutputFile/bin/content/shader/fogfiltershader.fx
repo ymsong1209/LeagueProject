@@ -6,7 +6,7 @@
 #include "func.fx"
 
 
-RWTexture2D<float4> FILTER_MAP : register(u0); // Unordered Access
+RWTexture2D<float> FILTER_MAP : register(u0); // Unordered Access
 RWStructuredBuffer<tRayOutput> RAYINFO : register(u1); // Ray에 대한 정보들 (CenterPos 이용할 것임)
 
 #define WIDTH           g_int_0
@@ -14,11 +14,8 @@ RWStructuredBuffer<tRayOutput> RAYINFO : register(u1); // Ray에 대한 정보들 (Cen
 #define CntObject       g_int_2
 #define CntRayPerObject g_int_3
 
-//실제 world의 scale을 가져와야함. 임시로 3000
-#define LOLMAPWIDTH     3000
-#define LOLMAPHEIGHT    3000
 
-float PI = 3.141592;
+
 // CenterPos.xz는 월드 pos 로 되어 있다. 월드는 좌하단(0,0)부터 우상단으로(롤맵가로3000, 롤맵세로3000 가정) ↗
 // _iThreadId.x, _iThreradID.y는 필터맵 텍스처 내 좌표다. 좌상단(0,0)부터 우하단으로(2048,2048)↘
 // => 좌표축 일치x -> CenterPos를 _iThreadId.x, _iThreadId.y 좌표계로 변환하는 함수가 필요하다. 
@@ -64,7 +61,7 @@ void CS_FogFilterShader(int3 _iThreadID : SV_DispatchThreadID)
 
         // 1. 이 픽셀이 오브젝트의 시야 범위(시야 길이 반지름)보다 작으면 -> 원 안에 있음. (컬링용)
         if (length(curThreadPos - rayCenterPos) <= radiusObjectVision)
-        {
+        {            
             for (int j = 0; j < CntRayPerObject; ++j)  // 오브젝트가 가진 레이 개수 -1만큼 돈다.
             {
                 // 이제 원 안에 있으니까, 360등분으로 쪼개서 360분의 1조각에서 반지름 길이보다 내부에 있는지 판단한다. 
@@ -75,10 +72,15 @@ void CS_FogFilterShader(int3 _iThreadID : SV_DispatchThreadID)
                 // 현재 픽셀이 몇도에 위치하는지, n번째 레이가 몇도인지, n+1번째 레이가 몇도인지 알아야한다.
                 // 현재 픽셀이 n+1 각도보다 작고, n 각도보다 크면 n번째 피자조각
                 
-                float pizzaTheta = 2*PI / CntRayPerObject; // 피자 한 조각의 각도
+                float pizzaTheta = 2.f * 3.141592f / (float) CntRayPerObject; // 피자 한 조각의 각도
+                
+                
+                RAYINFO[i * CntRayPerObject + j].pad[0] = degrees(pizzaTheta);
+               
+                
                 
                 float2 vectorA = normalize(curThreadPos - rayCenterPos); // center에서 픽셀을 향하는 벡터
-                float2 vectorB = float2(1, 0); // 0도 
+                float2 vectorB = float2(1.0f, 0.0f); // 0도 
                 
                 float cosCurTheta = dot(vectorA, vectorB); 
                 float curTheta = acos(cosCurTheta); // CenterPos를 기준으로 픽셀이 위치한 각도가 0~180인지 180~360인지 판단 불가능.
@@ -86,7 +88,7 @@ void CS_FogFilterShader(int3 _iThreadID : SV_DispatchThreadID)
                 //픽셀 위치를 통해 Acos을 한 각도에 PI를 더할지 판별
                 if (rayCenterPos.y < curThreadPos.y)
                 {
-                    curTheta += PI;
+                    curTheta = 2 * 3.141592f - curTheta;
                 }
                 
                 
@@ -107,7 +109,7 @@ void CS_FogFilterShader(int3 _iThreadID : SV_DispatchThreadID)
                 // 3. 현재 각도가 어떤 ?번째 피자조각 내부일때, nTheta <= curTheta < nextTheta
                 if (nTheta <= curTheta && curTheta < nextTheta) 
                 {
-                    float RadiusConvertedToTexture = nThRayInfo.Radius / LOLMAPWIDTH * WIDTH; // 해당 레이의 반지름도 텍스처 내 길이로 변경
+                    float RadiusConvertedToTexture = (float) nThRayInfo.Radius / 3000.f * (float) WIDTH; // 해당 레이의 반지름도 텍스처 내 길이로 변경
                     
                     // ?번째 피자가 가지는 시야범위 반지름 길이보다 내부에 있는지 판단
                     if (length(curThreadPos - rayCenterPos) <= RadiusConvertedToTexture)
@@ -124,14 +126,18 @@ void CS_FogFilterShader(int3 _iThreadID : SV_DispatchThreadID)
     
     // 필터맵 구조화 버퍼에 레이의 시야 여부를 기록
     if (isVisible)
-        FILTER_MAP[_iThreadID.xy] = float4(255.0, 0.0, 0.0, 255.0);
+        FILTER_MAP[_iThreadID.xy] = 1.f;
+    //float4(255.0, 0.0, 0.0, 255.0);
     else
-        FILTER_MAP[_iThreadID.xy] = float4(255.0, 255.0, 0.0, 255.0);
+        FILTER_MAP[_iThreadID.xy] = 0.f;
+    //float4(255.0, 255.0, 0.0, 255.0);
     
-    if ((_iThreadID.x > 500 && _iThreadID.x < 1000) && (_iThreadID.y > 500 && _iThreadID.y < 1000))
-    {
-        FILTER_MAP[_iThreadID.xy] = float4(0.0, 0.0, 255.0, 255.0);
-    }
+     
+    
+    //if ((_iThreadID.x > 500 && _iThreadID.x < 1000) && (_iThreadID.y > 500 && _iThreadID.y < 1000))
+    //{
+    //    FILTER_MAP[_iThreadID.xy] = float4(0.0, 0.0, 255.0, 255.0);
+    //}
     //FILTER_MAP[_iThreadID.xy] = float4(0.0f / 255.0f, 0.0f / 255.0f, 255.0f / 255.0f, 255.0f / 255.0f);
     //float4(1.0, 1.0, 0.0, 1.0);
     //float4(100.0, 255.0, 0.0, 255.0);
