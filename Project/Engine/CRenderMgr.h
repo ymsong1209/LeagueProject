@@ -80,6 +80,7 @@ private:
     //CStructuredBuffer*          m_FogFilterMapBuffer; // ComputeShader 계산 후 받아올 버퍼 
     Ptr<CTexture>               m_FogFilterMap; // 결과 안개 필터맵 텍스처
 
+    int                         m_iMaxRWSize;
     float                       m_FogFilterTime;
 
 

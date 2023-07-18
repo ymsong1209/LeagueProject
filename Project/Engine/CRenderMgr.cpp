@@ -27,8 +27,9 @@ CRenderMgr::CRenderMgr()
     , m_WallBuffer(nullptr)
     , m_RayBuffer(nullptr)
     , m_RWBuffer(nullptr)
-    , m_iRayCount(100)
+    , m_iRayCount(720)
     , m_bIsQClicked(false)
+    , m_iMaxRWSize(0)
     , m_FogFilterTime(0.f)
 {
     Vec2 vResolution = CDevice::GetInst()->GetRenderResolution();
@@ -195,24 +196,32 @@ void CRenderMgr::CalcRayForFog()
         RWCount += m_iRayCount;
     }
 
-    m_RWBuffer->Create(sizeof(RWStruct), RWCount, SB_TYPE::READ_WRITE, true);
+    if (RWCount > m_iMaxRWSize) {
+        m_RWBuffer->Create(sizeof(RWStruct), RWCount, SB_TYPE::READ_WRITE, true);
+        m_iMaxRWSize = RWCount;
+    }
+  
 
-    // 전장의 안개 계산 버퍼
-    m_FogOfWarShader->SetSourceLightCount((int)RayBuffSize);
-    m_FogOfWarShader->SetSourceLightPerRay(m_iRayCount);
-    m_FogOfWarShader->SetColliderVecCount((int)WallSize);
-    m_FogOfWarShader->SetWallBuffer(m_WallBuffer);
-    m_FogOfWarShader->SetRayBuffer(m_RayBuffer);
-    m_FogOfWarShader->SetOutputBuffer(m_RWBuffer);
-
-    m_FogOfWarShader->UpdateData();
-    m_FogOfWarShader->Execute();
+   
 
 
     if (m_FogFilterTime < 0.1f) {
         m_FogFilterTime += EditorDT;
     }
     else {
+
+        // 전장의 안개 ray/wall 충돌 연산
+        m_FogOfWarShader->SetSourceLightCount((int)RayBuffSize);
+        m_FogOfWarShader->SetSourceLightPerRay(m_iRayCount);
+        m_FogOfWarShader->SetColliderVecCount((int)WallSize);
+        m_FogOfWarShader->SetWallBuffer(m_WallBuffer);
+        m_FogOfWarShader->SetRayBuffer(m_RayBuffer);
+        m_FogOfWarShader->SetOutputBuffer(m_RWBuffer);
+
+        m_FogOfWarShader->UpdateData();
+        m_FogOfWarShader->Execute();
+
+
         // 전장의 안개 필터 제작 컴퓨트 쉐이더 -> 추후 0.1초에 한번하도록 변경
         int m_iWidth = 1024;
         int m_itHeight = 1024; // 구조화버퍼 생성 사이즈도 init에서 1024로 해둠

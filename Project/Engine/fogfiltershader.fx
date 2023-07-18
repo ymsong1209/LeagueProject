@@ -47,6 +47,9 @@ void CS_FogFilterShader(int3 _iThreadID : SV_DispatchThreadID)
     // 시야 판별
     for (int i = 0; i < CntObject; ++i) // 오브젝트 개수만큼 
     {
+        
+        if (isVisible)
+            break;
         // RAYINFO 버퍼에서 해당 인덱스 오브젝트 정보 읽어온다.
         tRayOutput rayInfo = RAYINFO[i * CntRayPerObject];
         
@@ -62,34 +65,29 @@ void CS_FogFilterShader(int3 _iThreadID : SV_DispatchThreadID)
         // 1. 이 픽셀이 오브젝트의 시야 범위(시야 길이 반지름)보다 작으면 -> 원 안에 있음. (컬링용)
         if (length(curThreadPos - rayCenterPos) <= radiusObjectVision)
         {            
-            for (int j = 0; j < CntRayPerObject; ++j)  // 오브젝트가 가진 레이 개수 -1만큼 돈다.
-            {
-                // 이제 원 안에 있으니까, 360등분으로 쪼개서 360분의 1조각에서 반지름 길이보다 내부에 있는지 판단한다. 
-                tRayOutput nThRayInfo = RAYINFO[i * CntRayPerObject + j];
+            
+             // 이제 원 안에 있으니까, 360등분으로 쪼개서 360분의 1조각에서 반지름 길이보다 내부에 있는지 판단한다. 
+           
                 
                 // 2. 이제 원안에서 어디 피자조각 내부인지알아야 한다.
                 // 어디 피자조각 내부인지 알기 위해서는 
                 // 현재 픽셀이 몇도에 위치하는지, n번째 레이가 몇도인지, n+1번째 레이가 몇도인지 알아야한다.
                 // 현재 픽셀이 n+1 각도보다 작고, n 각도보다 크면 n번째 피자조각
                 
-                float pizzaTheta = 2.f * 3.141592f / (float) CntRayPerObject; // 피자 한 조각의 각도
-                
-                
-                RAYINFO[i * CntRayPerObject + j].pad[0] = degrees(pizzaTheta);
+            float pizzaTheta = 2.f * 3.141592f / (float) CntRayPerObject; // 피자 한 조각의 각도
                
                 
+            float2 vectorA = normalize(curThreadPos - rayCenterPos); // center에서 픽셀을 향하는 벡터
+            float2 vectorB = float2(1.0f, 0.0f); // 0도 
                 
-                float2 vectorA = normalize(curThreadPos - rayCenterPos); // center에서 픽셀을 향하는 벡터
-                float2 vectorB = float2(1.0f, 0.0f); // 0도 
-                
-                float cosCurTheta = dot(vectorA, vectorB); 
-                float curTheta = acos(cosCurTheta); // CenterPos를 기준으로 픽셀이 위치한 각도가 0~180인지 180~360인지 판단 불가능.
+            float cosCurTheta = dot(vectorA, vectorB);
+            float curTheta = acos(cosCurTheta); // CenterPos를 기준으로 픽셀이 위치한 각도가 0~180인지 180~360인지 판단 불가능.
                 
                 //픽셀 위치를 통해 Acos을 한 각도에 PI를 더할지 판별
-                if (rayCenterPos.y < curThreadPos.y)
-                {
-                    curTheta = 2 * 3.141592f - curTheta;
-                }
+            if (rayCenterPos.y < curThreadPos.y)
+            {
+                curTheta = 2 * 3.141592f - curTheta;
+            }
                 
                 
                 
@@ -102,24 +100,23 @@ void CS_FogFilterShader(int3 _iThreadID : SV_DispatchThreadID)
                 //if(sign < 0) // 음수면 360도에서 세타를 빼준다.
                 //    curTheta = 2 * PI - curTheta;
                 
-                // 이제 우리는 피자조각 세타도 알고(PizzaTheta), 픽셀의 세타도 안다.(curTheta)
-                float nTheta = j * pizzaTheta;
-                float nextTheta = (j + 1) * pizzaTheta;
+            // 이제 우리는 피자조각 세타도 알고(PizzaTheta), 픽셀의 세타도 안다.(curTheta)
+            int index = int(curTheta / pizzaTheta);
+            float nTheta = index * pizzaTheta;
+            float nextTheta = (index + 1) * pizzaTheta;
                 
+            tRayOutput nThRayInfo = RAYINFO[i * CntRayPerObject + index];
                 // 3. 현재 각도가 어떤 ?번째 피자조각 내부일때, nTheta <= curTheta < nextTheta
-                if (nTheta <= curTheta && curTheta < nextTheta) 
-                {
-                    float RadiusConvertedToTexture = (float) nThRayInfo.Radius / 3000.f * (float) WIDTH; // 해당 레이의 반지름도 텍스처 내 길이로 변경
+            if (nTheta <= curTheta && curTheta < nextTheta)
+            {
+                float RadiusConvertedToTexture = (float) nThRayInfo.Radius / 3000.f * (float) WIDTH; // 해당 레이의 반지름도 텍스처 내 길이로 변경
                     
                     // ?번째 피자가 가지는 시야범위 반지름 길이보다 내부에 있는지 판단
-                    if (length(curThreadPos - rayCenterPos) <= RadiusConvertedToTexture)
-                    {
-                        isVisible = 1.f; // 레이가 시야 안에 있음 : 1 (나중에는 알파를 0으로 하도록 할까 고민중)
-                        break; // 한번이라도 시야 안에 있으면 더 이상 확인할 필요 없음
-                    }
+                if (length(curThreadPos - rayCenterPos) <= RadiusConvertedToTexture)
+                {
+                    isVisible = 1.f; // 레이가 시야 안에 있음 : 1 (나중에는 알파를 0으로 하도록 할까 고민중)
+                    break; // 한번이라도 시야 안에 있으면 더 이상 확인할 필요 없음
                 }
-         
-                
             }
         }
     }
