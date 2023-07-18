@@ -141,6 +141,7 @@ void CCollider2D::SaveToLevelFile(FILE* _File)
 {
 	fwrite(&m_vOffsetPos, sizeof(Vec3), 1, _File);
 	fwrite(&m_vOffsetScale, sizeof(Vec3), 1, _File);
+	fwrite(&m_vOffsetRot, sizeof(Vec3), 1, _File);
 	fwrite(&m_bAbsolute, sizeof(bool), 1, _File);
 	fwrite(&m_Shape, sizeof(UINT), 1, _File);
 }
@@ -149,6 +150,7 @@ void CCollider2D::LoadFromLevelFile(FILE* _File)
 {
 	fread(&m_vOffsetPos, sizeof(Vec3), 1, _File);
 	fread(&m_vOffsetScale, sizeof(Vec3), 1, _File);
+	fread(&m_vOffsetRot, sizeof(Vec3), 1, _File);
 	fread(&m_bAbsolute, sizeof(bool), 1, _File);
 	fread(&m_Shape, sizeof(UINT), 1, _File);
 }
@@ -157,6 +159,7 @@ void CCollider2D::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType&
 {
 	_objValue.AddMember("vOffsetPos", SaveVec3Json(m_vOffsetPos, allocator), allocator);
 	_objValue.AddMember("vOffsetScale", SaveVec3Json(m_vOffsetScale, allocator), allocator);
+	_objValue.AddMember("vOffsetRot", SaveVec3Json(m_vOffsetRot, allocator), allocator);
 	_objValue.AddMember("bAbsolute", m_bAbsolute, allocator);
 	_objValue.AddMember("Shape", (UINT)m_Shape, allocator);
 }
@@ -165,6 +168,7 @@ void CCollider2D::LoadFromLevelJsonFile(const Value& _componentValue)
 {
 	m_vOffsetPos = LoadVec3Json(_componentValue["vOffsetPos"]);
 	m_vOffsetScale = LoadVec3Json(_componentValue["vOffsetScale"]);
+	m_vOffsetRot = LoadVec3Json(_componentValue["vOffsetRot"]);
 	m_bAbsolute = _componentValue["bAbsolute"].GetBool();
 	m_Shape = (COLLIDER2D_TYPE)_componentValue["Shape"].GetUint();
 }

@@ -25,6 +25,7 @@ void CPlayerScript::begin()
 {
 }
 
+
 void CPlayerScript::tick()
 {
 
@@ -32,35 +33,32 @@ void CPlayerScript::tick()
 	if (KEY_TAP(KEY::LBTN))
 	{
 		GetOwner()->PathFinder()->FindPathMousePicking();
-		//¸¶¿ì½º ÇÇÅ·ÁöÁ¡°ú ±æÃ£±â °æ·Î ±îÁö¸¸ ¾Ë·ÁÁÜ! ÀÌµ¿Àº ¹ØÀÇ ÄÚµå¿¡¼­ ÇØÁÜ!
+		//ï¿½ï¿½ï¿½ì½º ï¿½ï¿½Å·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë·ï¿½ï¿½ï¿½! ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Úµå¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½!
 	}
 
 	if (GetOwner()->PathFinder() != nullptr)
+		PathFindMove(90.f,true); //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Ïµï¿½ï¿½ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Å½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½!!Scriptï¿½Ê¿ï¿½ ï¿½ï¿½ï¿½ï¿½.
+	
+	Vec3 Pos = GetOwner()->Transform()->GetRelativePos();
+	if(Pos == m_vPrevPos)
+		CurState = PLAYER_STATE::IDLE;
+	else
+		CurState = PLAYER_STATE::RUN;
+
+
+
+	if (PrevState != CurState)
 	{
-		Vec3 NextPos = GetOwner()->PathFinder()->GetNextPos();
+		if (CurState == PLAYER_STATE::RUN)
+			Animator3D()->Play(L"Jinx\\Run_Base", true, 0.15f);
 
-		// NextPos°¡ À¯È¿ÇÑ °ªÀÌ¶ó¸é
-		if (!isnan(NextPos.x))
-		{
-			// ÇöÀç À§Ä¡
-			Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
-
-			// °¡¾ßÇÒ ¹æÇâ ±¸ÇÏ±â
-			Vec3 Dir = (NextPos - CurPos).Normalize();
-
-			Vec3 NewPos = CurPos + (Dir * m_fSpeed * EditorDT);
-
-			// Pos ¹İ¿µ
-			GetOwner()->Transform()->SetRelativePos(NewPos);
-
-			// ¸ñÇ¥ÁöÁ¡¿¡ µµÂøÇß´Ù¸é
-			if ((NewPos - NextPos).Length() < m_fSpeed * EditorDT)
-			{
-				// ´ÙÀ½ À§Ä¡ °»½ÅÇÏ¶ó°í ¿äÃ»
-				GetOwner()->PathFinder()->FindNextPath();
-			}
-		}
+		else if (CurState == PLAYER_STATE::IDLE)
+			Animator3D()->Play(L"Jinx\\Idle1_Base", true, 0.1f);
 	}
+
+
+	m_vPrevPos = Pos;
+	PrevState = CurState;
 }
 
 void CPlayerScript::Shoot()

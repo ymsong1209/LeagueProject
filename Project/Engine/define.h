@@ -335,3 +335,10 @@ enum class LANDSCAPE_MOD
 	SPLAT,
 	NONE,
 };
+
+
+enum class PLAYER_STATE // 징크스 이동 테스트용 Run, Idle 상태 추가 (나중에 fsm 도입 후 사라질 예정)
+{
+	RUN,
+	IDLE,
+};

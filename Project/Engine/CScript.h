@@ -44,6 +44,8 @@ private:
     vector<tScriptParam>    m_vecParam;
     vector<tScriptTexParam> m_vecTexParam;
 
+    float                   m_fcurrentYaw;
+
 public:
     void Destroy() { DestroyObject(GetOwner()); }
     void SetLifeSpan(float _Time) { GetOwner()->SetLifeSpan(_Time); }
@@ -51,6 +53,8 @@ public:
     const vector<tScriptParam>& GetScritpParam() { return m_vecParam; }
     vector<tScriptTexParam>& GetScriptTexParam() { return m_vecTexParam; }
     void SetScriptTexParam(Ptr<CTexture> pCurTex, const string& _Desc);
+
+    void PathFindMove(float _fSpeed, bool _IsRotation); //직접적으로 길찾기 이동을 시켜주는 로직 두번째인자에는 이동하는 방향으로 오브젝트를 회전시킬것인지에 대한여부임!
 
 public:   
     virtual void finaltick() final {};
@@ -73,6 +77,7 @@ public:
 protected:
     void AddScriptParam(SCRIPT_PARAM eParam, void* _pData, const string& _Desc);
     void AddScriptTexParam(Ptr<CTexture>& Tex, const string& _Desc);
+
 
 public:
     CScript(UINT _iScriptType);
