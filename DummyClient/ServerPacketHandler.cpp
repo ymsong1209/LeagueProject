@@ -1,49 +1,130 @@
 #include "pch.h"
 #include "ServerPacketHandler.h"
+#include "BufferReader.h"
 
-PacketHandlerFunc GPacketHandler[UINT16_MAX];
-
-// 직접 컨텐츠 작업자
-
-bool Handle_INVALID(PacketSessionRef& session, BYTE* buffer, int32 len)
+void ServerPacketHandler::HandlePacket(BYTE* buffer, int32 len)
 {
-	PacketHeader* header = reinterpret_cast<PacketHeader*>(buffer);
-	// TODO : Log
-	return false;
+	BufferReader br(buffer, len);
+
+	PacketHeader header;
+	br >> header;
+
+	switch (header.id)
+	{
+	case S_TEST:
+		Handle_S_TEST(buffer, len);
+		break;
+	}
 }
 
-bool Handle_S_LOGIN(PacketSessionRef& session, Protocol::S_LOGIN& pkt)
-{
-	if (pkt.success() == false)
-		return true;
+#pragma pack(1)
 
-	if (pkt.players().size() == 0)
+// [ PKT_S_TEST ][BuffsListItem BuffsListItem BuffsListItem][ victim victim ] [victim victim]
+struct PKT_S_TEST
+{
+	struct BuffsListItem
 	{
-		// 캐릭터 생성창
+		uint64 buffId;
+		float remainTime;
+
+		uint16 victimsOffset;
+		uint16 victimsCount;
+
+		bool Validate(BYTE* packetStart, uint16 packetSize, OUT uint32& size)
+		{
+			if (victimsOffset + victimsCount * sizeof(uint64) > packetSize)
+				return false;
+
+			size += victimsCount * sizeof(uint64);
+			return true;
+		}
+	};
+
+	uint16 packetSize; // 공용 헤더
+	uint16 packetId; // 공용 헤더
+	uint64 id; // 8
+	uint32 hp; // 4
+	uint16 attack; // 2
+	uint16 buffsOffset;
+	uint16 buffsCount;
+
+	bool Validate()
+	{
+		uint32 size = 0;
+		size += sizeof(PKT_S_TEST);
+		if (packetSize < size)
+			return false;
+
+		if (buffsOffset + buffsCount * sizeof(BuffsListItem) > packetSize)
+			return false;
+
+		// Buffers 가변 데이터 크기 추가
+		size += buffsCount * sizeof(BuffsListItem);
+
+		BuffsList buffList = GetBuffsList();
+		for (int32 i = 0; i < buffList.Count(); i++)
+		{
+			if (buffList[i].Validate((BYTE*)this, packetSize, OUT size) == false)
+				return false;
+		}
+
+		// 최종 크기 비교
+		if (size != packetSize)
+			return false;		
+
+		return true;
 	}
 
-	// 입장 UI 버튼 눌러서 게임 입장
-	Protocol::C_ENTER_GAME enterGamePkt;
-	enterGamePkt.set_playerindex(0); // 첫번째 캐릭터로 입장
-	auto sendBuffer = ServerPacketHandler::MakeSendBuffer(enterGamePkt);
-	session->Send(sendBuffer);
+	using BuffsList = PacketList<PKT_S_TEST::BuffsListItem>;
+	using BuffsVictimsList = PacketList<uint64>;
 
-	return true;
-}
+	BuffsList GetBuffsList()
+	{
+		BYTE* data = reinterpret_cast<BYTE*>(this);
+		data += buffsOffset;
+		return BuffsList(reinterpret_cast<PKT_S_TEST::BuffsListItem*>(data), buffsCount);
+	}
 
-bool Handle_S_TEST(PacketSessionRef& session, Protocol::S_TEST& pkt)
+	BuffsVictimsList GetBuffsVictimList(BuffsListItem* buffsItem)
+	{
+		BYTE* data = reinterpret_cast<BYTE*>(this);
+		data += buffsItem->victimsOffset;
+		return BuffsVictimsList(reinterpret_cast<uint64*>(data), buffsItem->victimsCount);
+	}
+
+	//vector<BuffData> buffs;
+	//wstring name;
+};
+#pragma pack()
+
+// [ PKT_S_TEST ][BuffsListItem BuffsListItem BuffsListItem]
+void ServerPacketHandler::Handle_S_TEST(BYTE* buffer, int32 len)
 {
-	return false;
-}
+	BufferReader br(buffer, len);
 
-bool Handle_S_ENTER_GAME(PacketSessionRef& session, Protocol::S_ENTER_GAME& pkt)
-{
-	// TODO
-	return true;
-}
+	PKT_S_TEST* pkt = reinterpret_cast<PKT_S_TEST*>(buffer);
 
-bool Handle_S_CHAT(PacketSessionRef& session, Protocol::S_CHAT& pkt)
-{
-	std::cout << pkt.msg() << endl;
-	return true;
+	if (pkt->Validate() == false)
+		return;
+
+	//cout << "ID: " << id << " HP : " << hp << " ATT : " << attack << endl;
+
+	PKT_S_TEST::BuffsList buffs = pkt->GetBuffsList();
+	
+	cout << "BufCount : " << buffs.Count() << endl;
+
+	for (auto& buff : buffs)
+	{
+		cout << "BufInfo : " << buff.buffId << " " << buff.remainTime << endl;
+
+		PKT_S_TEST::BuffsVictimsList victims =  pkt->GetBuffsVictimList(&buff);
+
+		cout << "Victim Count : " << victims.Count() << endl;
+
+		for (auto& victim : victims)
+		{
+			cout << "Victim : " << victim << endl;
+		}
+
+	}
 }

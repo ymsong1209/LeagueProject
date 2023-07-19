@@ -1,5 +1,8 @@
 #pragma once
 #include "Allocator.h"
+#include <vector>
+
+using namespace std;
 
 class MemoryPool;
 

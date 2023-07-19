@@ -1,48 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Utils">
-      <UniqueIdentifier>{d97a3674-8f1b-4dd8-8e2a-434f60d28cb9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Network">
-      <UniqueIdentifier>{7867bbb1-a670-40f0-80c8-c4627543f484}</UniqueIdentifier>
+      <UniqueIdentifier>{44015ff7-f5fe-4ecb-9510-ba792e92d6c2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lock">
-      <UniqueIdentifier>{b3e4f5ee-fa0e-4134-a184-9398c5043f5b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lock\SpinLock">
-      <UniqueIdentifier>{58ec2b9a-1f35-4dae-88d4-de3ee5591fb3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lock\Sleep">
-      <UniqueIdentifier>{a3e2b48b-1ecf-439e-a65c-ef783b085b97}</UniqueIdentifier>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{1c94faf8-d38f-44b3-b3f3-39ba3c6951e1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Main">
-      <UniqueIdentifier>{48416e61-c2cf-4e11-85ad-b9e072f23384}</UniqueIdentifier>
+      <UniqueIdentifier>{c0b75513-7471-4500-a833-2626c5040f9c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Thread">
-      <UniqueIdentifier>{27fd1fee-0997-4422-8010-2ba0474fa5b7}</UniqueIdentifier>
+      <UniqueIdentifier>{0a8a1a96-3bcc-4f5b-ac25-3388457fad31}</UniqueIdentifier>
     </Filter>
     <Filter Include="Memory">
-      <UniqueIdentifier>{156e485e-df91-4f10-8624-37e1dc9b7271}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Job">
-      <UniqueIdentifier>{59186882-7639-48d1-9b91-b824a33d40ca}</UniqueIdentifier>
+      <UniqueIdentifier>{903143c9-12f7-436d-8004-490b4f0d31bf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CSpinLock.h">
-      <Filter>Lock\SpinLock</Filter>
-    </ClInclude>
-    <ClInclude Include="CSleep.h">
-      <Filter>Lock\Sleep</Filter>
-    </ClInclude>
-    <ClInclude Include="Types.h">
-      <Filter>Main</Filter>
-    </ClInclude>
     <ClInclude Include="CorePch.h">
       <Filter>Main</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Types.h">
       <Filter>Main</Filter>
     </ClInclude>
     <ClInclude Include="CoreMacro.h">
@@ -66,10 +48,10 @@
     <ClInclude Include="RefCounting.h">
       <Filter>Memory</Filter>
     </ClInclude>
-    <ClInclude Include="Memory.h">
+    <ClInclude Include="Allocator.h">
       <Filter>Memory</Filter>
     </ClInclude>
-    <ClInclude Include="Allocator.h">
+    <ClInclude Include="Memory.h">
       <Filter>Memory</Filter>
     </ClInclude>
     <ClInclude Include="Container.h">
@@ -84,16 +66,16 @@
     <ClInclude Include="TypeCast.h">
       <Filter>Memory</Filter>
     </ClInclude>
-    <ClInclude Include="SocketUtils.h">
-      <Filter>Network</Filter>
-    </ClInclude>
     <ClInclude Include="NetAddress.h">
       <Filter>Network</Filter>
     </ClInclude>
-    <ClInclude Include="IocpEvent.h">
+    <ClInclude Include="SocketUtils.h">
       <Filter>Network</Filter>
     </ClInclude>
     <ClInclude Include="IocpCore.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="IocpEvent.h">
       <Filter>Network</Filter>
     </ClInclude>
     <ClInclude Include="Listener.h">
@@ -117,29 +99,8 @@
     <ClInclude Include="BufferReader.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Job.h">
-      <Filter>Job</Filter>
-    </ClInclude>
-    <ClInclude Include="JobQueue.h">
-      <Filter>Job</Filter>
-    </ClInclude>
-    <ClInclude Include="LockQueue.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="GlobalQueue.h">
-      <Filter>Job</Filter>
-    </ClInclude>
-    <ClInclude Include="JobTimer.h">
-      <Filter>Job</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CSpinLock.cpp">
-      <Filter>Lock\SpinLock</Filter>
-    </ClCompile>
-    <ClCompile Include="CSleep.cpp">
-      <Filter>Lock\Sleep</Filter>
-    </ClCompile>
     <ClCompile Include="CorePch.cpp">
       <Filter>Main</Filter>
     </ClCompile>
@@ -171,9 +132,6 @@
       <Filter>Memory</Filter>
     </ClCompile>
     <ClCompile Include="MemoryPool.cpp">
-      <Filter>Memory</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjectPool.cpp">
       <Filter>Memory</Filter>
     </ClCompile>
     <ClCompile Include="NetAddress.cpp">
@@ -208,21 +166,6 @@
     </ClCompile>
     <ClCompile Include="BufferWriter.cpp">
       <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Job.cpp">
-      <Filter>Job</Filter>
-    </ClCompile>
-    <ClCompile Include="JobQueue.cpp">
-      <Filter>Job</Filter>
-    </ClCompile>
-    <ClCompile Include="LockQueue.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="GlobalQueue.cpp">
-      <Filter>Job</Filter>
-    </ClCompile>
-    <ClCompile Include="JobTimer.cpp">
-      <Filter>Job</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

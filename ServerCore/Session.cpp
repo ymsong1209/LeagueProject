@@ -33,7 +33,7 @@ void Session::Send(SendBufferRef sendBuffer)
 		if (_sendRegistered.exchange(true) == false)
 			registerSend = true;
 	}
-
+	
 	if (registerSend)
 		RegisterSend();
 }
@@ -144,7 +144,7 @@ void Session::RegisterRecv()
 
 	DWORD numOfBytes = 0;
 	DWORD flags = 0;
-	if (SOCKET_ERROR == ::WSARecv(_socket, &wsaBuf, 1, OUT & numOfBytes, OUT & flags, &_recvEvent, nullptr))
+	if (SOCKET_ERROR == ::WSARecv(_socket, &wsaBuf, 1, OUT &numOfBytes, OUT &flags, &_recvEvent, nullptr))
 	{
 		int32 errorCode = ::WSAGetLastError();
 		if (errorCode != WSA_IO_PENDING)
@@ -192,7 +192,7 @@ void Session::RegisterSend()
 	}
 
 	DWORD numOfBytes = 0;
-	if (SOCKET_ERROR == ::WSASend(_socket, wsaBufs.data(), static_cast<DWORD>(wsaBufs.size()), OUT & numOfBytes, 0, &_sendEvent, nullptr))
+	if (SOCKET_ERROR == ::WSASend(_socket, wsaBufs.data(), static_cast<DWORD>(wsaBufs.size()), OUT &numOfBytes, 0, &_sendEvent, nullptr))
 	{
 		int32 errorCode = ::WSAGetLastError();
 		if (errorCode != WSA_IO_PENDING)
@@ -252,7 +252,7 @@ void Session::ProcessRecv(int32 numOfBytes)
 		Disconnect(L"OnRead Overflow");
 		return;
 	}
-
+	
 	// 커서 정리
 	_recvBuffer.Clean();
 

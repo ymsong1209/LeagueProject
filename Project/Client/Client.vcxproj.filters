@@ -143,6 +143,9 @@
     <Filter Include="PacketFunc">
       <UniqueIdentifier>{b7251361-be1c-4899-a448-2604fe423e42}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ClientMain">
+      <UniqueIdentifier>{157ccfee-ae53-4453-970c-60967f1a6f16}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -304,6 +307,12 @@
     </ClInclude>
     <ClInclude Include="packetFunc.h">
       <Filter>PacketFunc</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerPacketHandler.h">
+      <Filter>ClientMain</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerSession.h">
+      <Filter>ClientMain</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -474,6 +483,12 @@
     </ClCompile>
     <ClCompile Include="packetFunc.cpp">
       <Filter>PacketFunc</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerPacketHandler.cpp">
+      <Filter>ClientMain</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerSession.cpp">
+      <Filter>ClientMain</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

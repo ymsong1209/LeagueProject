@@ -5,61 +5,68 @@
 #include "GameSession.h"
 #include "GameSessionManager.h"
 #include "BufferWriter.h"
-#include "ClientPacketHandler.h"
+#include "ServerPacketHandler.h"
 #include <tchar.h>
-#include "Protocol.pb.h"
-#include "Job.h"
-#include "Room.h"
-#include "Player.h"
 
-enum
-{
-	WORKER_TICK = 64
-};
-
-void DoWorkerJob(ServerServiceRef& service)
-{
-	while (true)
-	{
-		LEndTickCount = ::GetTickCount64() + WORKER_TICK;
-
-		// 네트워크 입출력 처리 -> 인게임 로직까지 (패킷 핸들러에 의해)
-		service->GetIocpCore()->Dispatch(10);
-
-		// 예약된 일감 처리
-		ThreadManager::DistributeReservedJobs();
-
-		// 글로벌 큐
-		ThreadManager::DoGlobalQueueWork();
-	}
-}
 
 int main()
 {
-	GRoom->DoTimer(1000, [] { cout << "Hello 1000" << endl; });
-	GRoom->DoTimer(2000, [] { cout << "Hello 2000" << endl; });
-	GRoom->DoTimer(3000, [] { cout << "Hello 3000" << endl; });
-
-	ClientPacketHandler::Init();
-
 	ServerServiceRef service = MakeShared<ServerService>(
-		NetAddress(L"0.0.0.0", 40000),
+		NetAddress(L"127.0.0.1", 7777),
 		MakeShared<IocpCore>(),
 		MakeShared<GameSession>, // TODO : SessionManager 등
-		1);
+		100);
 
 	ASSERT_CRASH(service->Start());
 
 	for (int32 i = 0; i < 5; i++)
 	{
-		GThreadManager->Launch([&service]()
+		GThreadManager->Launch([=]()
 			{
-				DoWorkerJob(service);
+				while (true)
+				{
+					service->GetIocpCore()->Dispatch();
+				}				
 			});
-	}
+	}	
 
-	// Main Thread
-	DoWorkerJob(service);
+	WCHAR sendData3[1000] = L"가"; // UTF16 = Unicode (한글/로마 2바이트)
+
+	while (true)
+	{
+		// [ PKT_S_TEST ]
+		PKT_S_TEST_WRITE pktWriter(1001, 100, 10);
+
+		// [ PKT_S_TEST ][BuffsListItem BuffsListItem BuffsListItem]
+		PKT_S_TEST_WRITE::BuffsList buffList = pktWriter.ReserveBuffsList(3);
+		buffList[0] = { 100, 1.5f };
+		buffList[1] = { 200, 2.3f };
+		buffList[2] = { 300, 0.7f };
+
+		PKT_S_TEST_WRITE::BuffsVictimsList vic0 = pktWriter.ReserveBuffsVictimsList(&buffList[0], 3);
+		{
+			vic0[0] = 1000;
+			vic0[1] = 2000;
+			vic0[2] = 3000;
+		}
+
+		PKT_S_TEST_WRITE::BuffsVictimsList vic1 = pktWriter.ReserveBuffsVictimsList(&buffList[1], 1);
+		{
+			vic1[0] = 1000;
+		}
+
+		PKT_S_TEST_WRITE::BuffsVictimsList vic2 = pktWriter.ReserveBuffsVictimsList(&buffList[2], 2);
+		{
+			vic2[0] = 3000;
+			vic2[1] = 5000;
+		}
+
+		SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+
+		GSessionManager.Broadcast(sendBuffer);
+
+		this_thread::sleep_for(250ms);
+	}
 
 	GThreadManager->Join();
 }
