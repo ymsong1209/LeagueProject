@@ -205,7 +205,7 @@ void CRenderMgr::CalcRayForFog()
    
 
 
-    if (m_FogFilterTime < 0.1f) {
+    if (m_FogFilterTime < 0.01f) {
         m_FogFilterTime += EditorDT;
     }
     else {
@@ -236,17 +236,44 @@ void CRenderMgr::CalcRayForFog()
         m_FogFilterTime = 0.f;
     }
   
-    
-   
-
-
-    if (KEY_TAP(KEY::K))
+    if (CKeyMgr::GetInst()->GetKeyState(KEY::Q) == KEY_STATE::TAP)
     {
-        wstring strFolderPath = L"";
-        strFolderPath += L"texture\\";
-        m_FogFilterMap->SaveTextureAsDDS(strFolderPath);
-    }
+        m_bIsQClicked = true;
+        UINT bufferSize = m_RWBuffer->GetBufferSize();
+        size_t size = sizeof(RWStruct);
+        RWStruct* data = new RWStruct[bufferSize / sizeof(RWStruct)];
+        m_RWBuffer->GetData((void*)data);
 
+        if (m_bIsQClicked == true)
+        {
+            CGameObject* TestObj;
+
+            for (int i = 0; i < m_iRayCount * m_vecRayObject.size(); ++i)
+            {
+                TestObj = new CGameObject;
+                TestObj->SetName(L"HI!");
+                TestObj->AddComponent(new CMeshRender);
+                TestObj->AddComponent(new CTransform);
+                TestObj->Transform()->SetRelativeScale(Vec3(10.f, 10.f, 10.f));
+                TestObj->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
+                TestObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3DMtrl"), 0);
+
+
+                SpawnGameObject(TestObj, data[i].m_vCrossPos, 0);
+
+
+            }
+
+            m_bIsQClicked = false;
+        }
+
+        delete[] data;
+    }
+      
+
+
+   
+  
     // 렌더
     // 안개 필터맵 구조화 버퍼 보냄
     // 미니맵 해상도도 Vec2_1로 나중에 보냄
@@ -287,32 +314,7 @@ void CRenderMgr::CalcRayForFog()
         RWStruct test51 = data[50];
         RWStruct test52 = data[51];
 
-        if (CKeyMgr::GetInst()->GetKeyState(KEY::Q) == KEY_STATE::TAP)
-            m_bIsQClicked = true;
-
-
-        if (m_bIsQClicked == true)
-        {
-            CGameObject* TestObj;
-
-            for (int i = 0; i < m_iRayCount * m_vecRayObject.size(); ++i)
-            {
-                TestObj = new CGameObject;
-                TestObj->SetName(L"HI!");
-                TestObj->AddComponent(new CMeshRender);
-                TestObj->AddComponent(new CTransform);
-                TestObj->Transform()->SetRelativeScale(Vec3(10.f, 10.f, 10.f));
-                TestObj->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
-                TestObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3DMtrl"), 0);
-
-
-                SpawnGameObject(TestObj, data[i].m_vCrossPos, 0);
-
-
-            }
-
-            m_bIsQClicked = false;
-        }
+       
     }
   
 

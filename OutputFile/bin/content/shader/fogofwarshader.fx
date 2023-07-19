@@ -183,14 +183,14 @@ IntersectResult CalculateBtwRayCube(tRay Ray, row_major matrix WorldMat, float M
         if (Temp.bResult == true )
         {
         // 첫번째로 충돌된 경우
-            if (Final1.bResult == false && Temp.fResult <= MaxRadius)
+            if (Final1.bResult == false)
                 Final1 = Temp;
             else if (Final1.bResult == true && Final2.bResult == false)
             {
             // Ray와 Cube의 두면에서 교점이 생긴 상황이며, 이제 멀리있는 것이 Final1이 되도록
             // 순서를 바꿔야 한다.
             // 왜냐하면, Final1에 있는 정보들이 중요한데, 시야 판단의 기준이 되기 때문이다.
-                if (Final1.fResult < Temp.fResult || Temp.fResult > MaxRadius)
+                if (Final1.fResult < Temp.fResult)
                 {
                     IntersectResult SwapTemp;
                     SwapTemp.bResult = Final1.bResult;
@@ -212,11 +212,13 @@ IntersectResult CalculateBtwRayCube(tRay Ray, row_major matrix WorldMat, float M
                     Final2 = Temp;
                 }
             }
+            // Ray, Cube 충돌이 3번 이상 일어남. 이건 일어나면 안됨
             else if (Final1.bResult == true && Final2.bResult == true)
             {
                 _check += 1000;
             }
         }
+        //Ray, Cube간 충돌이 한번도 안됨
         else
         {
             _check += 100;

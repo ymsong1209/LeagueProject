@@ -214,7 +214,6 @@ PS_OUT PS_SpotLightShader(VS_OUT _in)
 // g_tex_1 : DiffuseTarget
 // g_tex_2 : SpecularTarget
 // g_tex_3 : EmissiveTarget
-// g_tex_4 : FogMap
 // ========================
 VS_OUT VS_LightMerge(VS_IN _in)
 {
