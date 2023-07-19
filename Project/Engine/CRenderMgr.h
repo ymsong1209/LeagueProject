@@ -66,7 +66,8 @@ private:
     // 전장의 안개
     Ptr<CFogOfWarShader>        m_FogOfWarShader;   //전장의 안개 ComputeShader
     vector<ColliderStruct>      m_vecWallObject;    //Ray에 충돌될 가능성이 있는 벽 오브젝트
-    vector<RayStruct>           m_vecRayObject;     //Ray를 쏘는 object player, 와드 등
+    vector<CGameObject*>        m_vecRayObject;     //Ray를 쏘는 object player, 와드 등
+    vector<RayStruct>           m_vecRayStruct;     //RayObject를 통해 만들어진 RayStruct구조체 모음
     CStructuredBuffer*          m_WallBuffer;
     CStructuredBuffer*          m_RayBuffer;
     CStructuredBuffer*          m_RWBuffer;         // ComputeShader 계산 후 받아올 버퍼 
@@ -107,6 +108,7 @@ public:
     void RegisterLight2D(CLight2D* _Light2D) { m_vecLight2D.push_back(_Light2D); }
     UINT RegisterLight3D(CLight3D* _Light3D) { m_vecLight3D.push_back(_Light3D); return (UINT)m_vecLight3D.size() - 1; }
 
+
     void ClearCamera() { m_vecCam.clear(); }
 
     void AddDebugShapeInfo(const tDebugShapeInfo& _info) { m_vecShapeInfo.push_back(_info); }
@@ -129,6 +131,9 @@ public:
 
     void SetGizmoObjectChanged(bool _State) { m_bGizmoObjectChanged = _State; }
     bool GetGizmoObjectChanged() { return m_bGizmoObjectChanged; }
+
+    // 전장의 안개용 ray를 쏘고 있는 object모음집 return
+    vector<CGameObject*> GetRayObjectVec() { return m_vecRayObject; } 
 
     void CopyRenderTarget();
 

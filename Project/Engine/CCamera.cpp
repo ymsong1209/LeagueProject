@@ -19,6 +19,7 @@
  
 #include "CResMgr.h"
 #include "CKeyMgr.h"
+#include "CRenderMgr.h"
 
 #include "CCollider2D.h"
 #include "CCollider3D.h"
@@ -297,6 +298,36 @@ void CCamera::CollideRay()
 	TempEndOverlapCube.clear();
 }
 
+bool CCamera::CheckRayCollideBox(CGameObject* _object)
+{
+	vector<CGameObject*> RayVec = CRenderMgr::GetInst()->GetRayObjectVec();
+
+	bool result = false;
+
+	for (int i = 0; i < RayVec.size(); ++i) {
+		CGameObject* RayShootingObject = RayVec[i];
+
+		
+		float RayRadius = RayShootingObject->Transform()->GetRayRange();
+
+		//사거리 내에 object가 안들어오면 continue;
+		if () {
+			continue;
+		}
+
+		//사거리 내에 들어오면 rayobject->CurObject로 ray-box 충돌 검사를 함
+
+
+		//사이에 아무것도 없을 경우
+		result = true;
+		break;
+
+	}
+
+	return result;
+
+}
+
 void CCamera::CalcViewMat()
 {
 	// ==============
@@ -429,7 +460,13 @@ void CCamera::SortObject()
 
 				GizmoClickCheck(vecObject[j], pCurLevel); //기즈모 클릭 체크
 
+				
 				CollideRay();
+
+				//Ray를 쏘는 오브젝트랑 CurObject사이에 벽이 있음 or RayObject의 시야 범위 내에 CurObject가 안들어옴
+				if (false == CheckRayCollideBox(vecObject[j])) {
+					continue;
+				}
 
 				// 쉐이더 도메인에 따른 분류
 				SHADER_DOMAIN eDomain = pRenderCom->GetMaterial(0)->GetShader()->GetDomain();

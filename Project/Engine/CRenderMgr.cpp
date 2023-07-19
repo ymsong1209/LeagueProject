@@ -181,18 +181,19 @@ void CRenderMgr::CalcRayForFog()
                 raybuff.m_vRayPos = vecObj[j]->Transform()->GetWorldPos();
                 raybuff.m_iRayCount = m_iRayCount;
                 raybuff.m_fRayRange = vecObj[j]->Transform()->GetRayRange();
-                m_vecRayObject.push_back(raybuff);
+                m_vecRayObject.push_back(vecObj[j]);
+                m_vecRayStruct.push_back(raybuff);
             }
         }
     }
     UINT WallSize = (UINT)m_vecWallObject.size();
     m_WallBuffer->Create(sizeof(ColliderStruct), WallSize, SB_TYPE::READ_ONLY, false, m_vecWallObject.data());
 
-    UINT RayBuffSize = (UINT)m_vecRayObject.size();
-    m_RayBuffer->Create(sizeof(RayStruct), RayBuffSize, SB_TYPE::READ_ONLY, false, m_vecRayObject.data());
+    UINT RayBuffSize = (UINT)m_vecRayStruct.size();
+    m_RayBuffer->Create(sizeof(RayStruct), RayBuffSize, SB_TYPE::READ_ONLY, false, m_vecRayStruct.data());
 
     UINT RWCount = 0;
-    for (size_t i = 0; i < m_vecRayObject.size(); ++i) {
+    for (size_t i = 0; i < m_vecRayStruct.size(); ++i) {
         RWCount += m_iRayCount;
     }
 
@@ -272,12 +273,7 @@ void CRenderMgr::CalcRayForFog()
       
 
 
-   
-  
-    // 렌더
-    // 안개 필터맵 구조화 버퍼 보냄
-    // 미니맵 해상도도 Vec2_1로 나중에 보냄
-    // 전장의 안개  
+    //전장의 안개 디버깅용 코드. 나중에 지워도 됨
 
     /*auto a = m_RWBuffer[0];
 
