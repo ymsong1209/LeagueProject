@@ -4,6 +4,13 @@
 #include "pch.h"
 #include "Client.h"
 
+#include "ThreadManager.h"
+#include "Service.h"
+#include "Session.h"
+#include "BufferReader.h"
+#include "ServerPacketHandler.h"
+#include "ServerSession.h"
+
 #include <Engine\CDevice.h>
 #include "CEditorObjMgr.h"
 
@@ -56,6 +63,30 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CLIENT));
     MSG msg;
 
+    this_thread::sleep_for(1s);
+
+    ClientServiceRef service = MakeShared<ClientService>(
+        NetAddress(L"127.0.0.1", 7777),
+        MakeShared<IocpCore>(),
+        MakeShared<ServerSession>, // TODO : SessionManager 등
+        1);
+
+    ASSERT_CRASH(service->Start());
+
+    GThreadManager->SetFlags(1);
+    for (int32 i = 0; i < 2; i++)
+    {
+        GThreadManager->Launch([=]()
+        {
+            while (true)
+            {
+                service->GetIocpCore()->Dispatch(10);
+                if (GThreadManager->GetFlags() == 0)
+                    break;
+            }
+        });
+    }    
+
     while (true)
     {
         if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
@@ -83,7 +114,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }       
     }
 
-   
+    GThreadManager->Join();
 
     return (int) msg.wParam;
 }
@@ -182,6 +213,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
     case WM_DESTROY:
+        GThreadManager->SetFlags(0);
         PostQuitMessage(0);
         break;
 

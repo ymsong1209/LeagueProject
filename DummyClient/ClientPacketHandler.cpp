@@ -1,8 +1,8 @@
 #include "pch.h"
-#include "ServerPacketHandler.h"
+#include "ClientPacketHandler.h"
 #include "BufferReader.h"
 
-void ServerPacketHandler::HandlePacket(BYTE* buffer, int32 len)
+void ClientPacketHandler::HandlePacket(BYTE* buffer, int32 len)
 {
 	BufferReader br(buffer, len);
 
@@ -98,7 +98,7 @@ struct PKT_S_TEST
 #pragma pack()
 
 // [ PKT_S_TEST ][BuffsListItem BuffsListItem BuffsListItem]
-void ServerPacketHandler::Handle_S_TEST(BYTE* buffer, int32 len)
+void ClientPacketHandler::Handle_S_TEST(BYTE* buffer, int32 len)
 {
 	BufferReader br(buffer, len);
 
