@@ -20,6 +20,7 @@ int g_arrVK[(UINT)KEY::END]
 	 VK_TAB,
 
 	 VK_LBUTTON,
+	 VK_MBUTTON,
 	 VK_RBUTTON,
 
 	 VK_F1,

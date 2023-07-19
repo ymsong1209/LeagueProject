@@ -52,7 +52,7 @@ void CreateTestLevel()
 	pMainCam->Camera()->SetCameraIndex(0);		// MainCamera 로 설정
 	pMainCam->Camera()->SetLayerMaskAll(true);	// 모든 레이어 체크
 	pMainCam->Camera()->SetLayerMask(31, false);// UI Layer 는 렌더링하지 않는다.
-	pMainCam->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(45.f), 0.f, 0.f));
+	pMainCam->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(56.f),0.f, 0.f));
 	SpawnGameObject(pMainCam, Vec3(0.f, 480.f, 0.f), 0);
 
 
@@ -67,9 +67,9 @@ void CreateTestLevel()
 	pLightObj->Light3D()->SetLightDirection(Vec3(1.f, -1.f, 1.f));
 
 
-	pLightObj->Light3D()->SetLightDiffuse(Vec3(1.f, 1.f, 1.f));
+	pLightObj->Light3D()->SetLightDiffuse(Vec3(0.5f, 0.5f, 0.5f));
 	pLightObj->Light3D()->SetLightSpecular(Vec3(0.f, 0.f, 0.f));
-	pLightObj->Light3D()->SetLightAmbient(Vec3(1.f, 1.f, 1.f));
+	pLightObj->Light3D()->SetLightAmbient(Vec3(0.9f, 0.9f, 0.9f));
 
 	pLightObj->Light3D()->SetRadius(400.f);
 
@@ -195,7 +195,7 @@ void CreateTestLevel()
 		pObj->AddComponent(new CPathFinder);
 		//pObj->Animator3D()->Play(L"jungle_blue-jungle_blue_AllAnim", true, 0.5f);
 		pObj->Animator3D()->SetRepeat(true);
-		pObj->Transform()->SetRelativeScale(Vec3(0.3, 0.3, 0.3));
+		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
 		SpawnGameObject(pObj, Vec3(0, 0, 0), 0);
 
 
@@ -406,8 +406,6 @@ void CreateTestLevel()
 	pRectFast2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
 
 	SpawnGameObject(pRectFast2, Vec3(0.f, 0.f, 0.f), 0);
-
-
 
 
 

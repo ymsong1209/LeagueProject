@@ -30,14 +30,14 @@ CCamera::CCamera()
 	, m_Frustum(this)
 	, m_fWidth(0.f)
 	, m_fAspectRatio(1.f)
-	, m_fScale(3.4f)
+	, m_fScale(4.1f)
 	, m_fFar(50000.f)
 	, m_ProjType(PROJ_TYPE::ORTHOGRAPHIC)
 	, m_iLayerMask(0)
 	, m_iCamIdx(-1)
 	, m_bShowFrustumDebug(false)
 	, m_bViewGizmoBounding(false)
-	, m_iCameraMoveMode(0)
+	, m_isGizmoEditMode(1)
 {
 	SetName(L"Camera");
 
@@ -419,7 +419,7 @@ void CCamera::SortObject()
 						continue;
 				}
 
-				if(m_iCameraMoveMode == 0 || m_iCameraMoveMode == 2) //디폴트 모드거나, 오브젝트 무빙 전용 모드일때만 기즈모 클릭체크(모르겠다면 m_iCameraMoveMode 변수에 써놨음)
+				if(m_isGizmoEditMode == 1) //에디트 모드일때만 클릭체크
 					GizmoClickCheck(vecObject[j], pCurLevel); //기즈모 클릭 체크
 
 				CollideRay();
@@ -821,7 +821,7 @@ void CCamera::GizmoClickCheck(CGameObject* _CheckTargetObj, CLevel* _CurLevel)
 
 	if (_CurLevel->GetState() != LEVEL_STATE::PLAY) // 플레이 모드에서는 기즈모 작동하지 않음
 	{
-		if (KEY_TAP(KEY::RBTN)) // 클릭되었을경우만
+		if (KEY_TAP(KEY::LBTN)) // 클릭되었을경우만
 		{
 			if (RayIntersectsSphere(vWorldPos, _CheckTargetObj->Transform()->GetGizmoBounding()) && !_CheckTargetObj->Transform()->GetGizmoObjExcept())  //오브젝트 구체 콜리전 - 레이 클릭 체크
 			{

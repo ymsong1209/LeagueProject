@@ -55,30 +55,28 @@ int TransformUI::render_update()
 		else
 			ImGuiMgr::GetInst()->SetGizmoEditor_WindowMode(false);
 
-		int i_CameraMoveMode = CRenderMgr::GetInst()->GetMainCam()->GetCameraMoveMode();
+		int i_Mode = CRenderMgr::GetInst()->GetMainCam()->GetIsGizmoEditMode();
 		//----------------------------------
-		if (ImGui::RadioButton("Default Mode", i_CameraMoveMode == 0))
-			CRenderMgr::GetInst()->GetMainCam()->SetCameraMoveMode(0);
+		if (ImGui::RadioButton("Default Mode", i_Mode == 0))
+			CRenderMgr::GetInst()->GetMainCam()->SetIsGizmoEditMode(0);
 
 		ImGui::SameLine();
-		if (ImGui::RadioButton("Only Camera Move Mode", i_CameraMoveMode == 1))
-			CRenderMgr::GetInst()->GetMainCam()->SetCameraMoveMode(1);
+		if (ImGui::RadioButton("Gizmo Edit Mode", i_Mode == 1))
+			CRenderMgr::GetInst()->GetMainCam()->SetIsGizmoEditMode(1);
 
-		ImGui::SameLine();
-		if (ImGui::RadioButton("Only Gizmo Click Mode", i_CameraMoveMode == 2))
-			CRenderMgr::GetInst()->GetMainCam()->SetCameraMoveMode(2);
 
-		ImGui::Text("ChangeMode To Key : (F1) , (F2) , (F3)");
+		ImGui::Text("ChangeMode To Key (F1)");
 		ImGui::Text("");
 
 	}
 
 	if (KEY_TAP(KEY::F1))
-		CRenderMgr::GetInst()->GetMainCam()->SetCameraMoveMode(0);
-	if (KEY_TAP(KEY::F2))
-		CRenderMgr::GetInst()->GetMainCam()->SetCameraMoveMode(1);
-	if (KEY_TAP(KEY::F3))
-		CRenderMgr::GetInst()->GetMainCam()->SetCameraMoveMode(2);
+	{
+		if(CRenderMgr::GetInst()->GetMainCam()->GetIsGizmoEditMode() == 0)
+			CRenderMgr::GetInst()->GetMainCam()->SetIsGizmoEditMode(1);
+		else
+			CRenderMgr::GetInst()->GetMainCam()->SetIsGizmoEditMode(0);
+	}
 
 	return TRUE;
 }
@@ -124,11 +122,10 @@ void TransformUI::RenderGizmo()
 
 		// create a window and insert the inspector
 		ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_Appearing);
-		ImGui::SetNextWindowSize(ImVec2(495, 360), ImGuiCond_Appearing);
+		ImGui::SetNextWindowSize(ImVec2(370, 360), ImGuiCond_Appearing);
 
 		if (ImGuiMgr::GetInst()->GetGizmoEditor_WindowMode())
 			ImGui::Begin("Editor");
-
 
 		ImGui::Text("X: %f Y: %f", io.MousePos.x, io.MousePos.y);
 		if (ImGuizmo::IsUsing())
@@ -183,27 +180,19 @@ void TransformUI::RenderGizmo()
 			else
 				ImGuiMgr::GetInst()->SetGizmoEditor_WindowMode(false);
 
-			int i_CameraMoveMode = CRenderMgr::GetInst()->GetMainCam()->GetCameraMoveMode();
+			int i_Mode = CRenderMgr::GetInst()->GetMainCam()->GetIsGizmoEditMode();
 			//----------------------------------
-			if (ImGui::RadioButton("Default Mode", i_CameraMoveMode == 0))
-				CRenderMgr::GetInst()->GetMainCam()->SetCameraMoveMode(0);
+			if (ImGui::RadioButton("Default Mode", i_Mode == 0))
+				CRenderMgr::GetInst()->GetMainCam()->SetIsGizmoEditMode(0);
 
 			ImGui::SameLine();
-			if (ImGui::RadioButton("Only Camera Move Mode", i_CameraMoveMode == 1))
-				CRenderMgr::GetInst()->GetMainCam()->SetCameraMoveMode(1);
+			if (ImGui::RadioButton("Gizmo Edit Mode", i_Mode == 1))
+				CRenderMgr::GetInst()->GetMainCam()->SetIsGizmoEditMode(1);
 
-			ImGui::SameLine();
-			if (ImGui::RadioButton("Only Gizmo Click Mode", i_CameraMoveMode == 2))
-				CRenderMgr::GetInst()->GetMainCam()->SetCameraMoveMode(2);
-
-			ImGui::Text("ChangeMode To Key : (F1) , (F2) , (F3)");
+			ImGui::Text("ChangeMode To Key (F1)");
 			ImGui::End();
 
 		}
-
-
-
-
 
 	}
 
@@ -304,9 +293,13 @@ void TransformUI::EditTransform(float* cameraView, float* cameraProjection, floa
 
 	ImGuizmo::SetRect(windowX, windowY, io.DisplaySize.x, io.DisplaySize.y);
 
-	//기즈모 계산 수행
-	ImGuizmo::Manipulate(cameraView, cameraProjection, mCurrentGizmoOperation, mCurrentGizmoMode, matrix, NULL, useSnap ? &snap[0] : NULL, boundSizing ? bounds : NULL, boundSizingSnap ? boundsSnap : NULL);
-
+	int i_isEditMode = CRenderMgr::GetInst()->GetMainCam()->GetIsGizmoEditMode();
+	//에디트 모드일때만 기즈모 계산 수행 
+	if (i_isEditMode == 1)
+	{
+		ImGuizmo::Manipulate(cameraView, cameraProjection, mCurrentGizmoOperation, mCurrentGizmoMode, matrix, NULL, useSnap ? &snap[0] : NULL, boundSizing ? bounds : NULL, boundSizingSnap ? boundsSnap : NULL);
+	}
+	
 	//-------기즈모 결과값 세팅----------------------
 	CGameObject* GizTarget = CRenderMgr::GetInst()->GetGizMoTargetObj();
 	Matrix WorldMat = XMLoadFloat4x4(reinterpret_cast<const XMFLOAT4X4*>(matrix));
@@ -317,9 +310,8 @@ void TransformUI::EditTransform(float* cameraView, float* cameraProjection, floa
 
 	GizTarget->Transform()->SetRelativeScale(matrixScale[0], matrixScale[1], matrixScale[2]);
 	GizTarget->Transform()->SetRelativePos(matrixTranslation[0], matrixTranslation[1], matrixTranslation[2]);
-	GizTarget->Transform()->SetRelativeRot(XMConvertToRadians(matrixRotation[0]), XMConvertToRadians(matrixRotation[1]), XMConvertToRadians(matrixRotation[2])); 
+	GizTarget->Transform()->SetRelativeRot(XMConvertToRadians(matrixRotation[0]), XMConvertToRadians(matrixRotation[1]), XMConvertToRadians(matrixRotation[2]));
 
 	//월드행렬 조합
 	ImGuizmo::RecomposeMatrixFromComponents(matrixTranslation, matrixRotation, matrixScale, matrix);
-
 }

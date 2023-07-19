@@ -27,9 +27,6 @@ void CCameraMoveScript::tick()
 		return;
 	}
 
-	if (CRenderMgr::GetInst()->GetMainCam()->GetCameraMoveMode() == 2)  //2번은 오브젝트 전용모드이기때문에 카메라 무빙 x
-		return;
-
 	if (PROJ_TYPE::ORTHOGRAPHIC == Camera()->GetProjType())
 		Camera2DMove();
 	else
@@ -107,7 +104,7 @@ void CCameraMoveScript::Camera3DMove()
 
 
 
-	if (KEY_PRESSED(KEY::RBTN))
+	if (KEY_PRESSED(KEY::MBTN))
 	{
 		Vec2 vMouseDir = CKeyMgr::GetInst()->GetMouseDir();
 		vRot.y += EditorDT * vMouseDir.x * 5.f;
