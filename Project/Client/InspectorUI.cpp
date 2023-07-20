@@ -5,6 +5,7 @@
 #include <Engine\CTransform.h>
 #include <Engine\CLevelMgr.h>
 #include <Engine\CKeyMgr.h>
+#include <Engine/CEventMgr.h>
 
 #include "TransformUI.h"
 #include "MeshRenderUI.h"
@@ -157,7 +158,17 @@ void InspectorUI::init()
 
 void InspectorUI::tick()
 {
-	
+	if (CEventMgr::GetInst()->IsLevelChanged()) {
+		if (m_pTargetObj) {
+			vector<CGameObject*> GC = CEventMgr::GetInst()->GetGC();
+			vector<CGameObject*>::iterator iter = find(GC.begin(), GC.end(), m_pTargetObj);
+			if (iter != GC.end()) {
+				SetTargetObject(nullptr);
+			}
+		}
+	}
+
+
 }
 
 int InspectorUI::render_update()
