@@ -1,13 +1,12 @@
 #pragma once
 #include <Engine\CScript.h>
 
-
+class CSound;
 class CCameraMoveScript :
     public CScript
 {
 private:
     float       m_fCamSpeed;
-    
 public:
     virtual void tick() override;
 

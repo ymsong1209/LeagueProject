@@ -13,6 +13,7 @@
 #include <Script\CPlayerScript.h>
 #include <Script\CMonsterScript.h>
 #include <Script\CCameraMoveScript.h>
+#include <Script\CSoundTestScript.h>
 #include <Engine\CPathFindMgr.h>
 
 
@@ -39,7 +40,7 @@ void CreateTestLevel()
 	pCurLevel->GetLayer(31)->SetName(L"ViewPort UI");
 
 
-	// Main Camera Object 생성
+	 //Main Camera Object 생성
 	CGameObject* pMainCam = new CGameObject;
 	pMainCam->SetName(L"MainCamera");
 
@@ -429,8 +430,22 @@ void CreateTestLevel()
 
 	//SpawnGameObject(pAnimTestObj, Vec3(0.f, 0.f, 0.f), 0.f);
 
+	
+
+	CGameObject* pSoundTestObj = new CGameObject;
+	pSoundTestObj->SetName(L"pSoundTestObj");
+	
+	pSoundTestObj->AddComponent(new CMeshRender);
+	pSoundTestObj->AddComponent(new CTransform);
+	pSoundTestObj->AddComponent(new CSoundTestScript);
+
+	pSoundTestObj->Transform()->SetRelativeScale(Vec3(45.f, 45.f, 45.f));
+	pSoundTestObj->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+	pSoundTestObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
 
 
+	SpawnGameObject(pSoundTestObj, Vec3(0.f, 0.f, 0.f), 0.f);
+	 
 	// 충돌 시킬 레이어 짝 지정
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");
 }

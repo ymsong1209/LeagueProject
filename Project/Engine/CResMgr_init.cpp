@@ -22,7 +22,7 @@ void CResMgr::InitSound()
 	}
 
 	// 32개 채널 생성
-	CSound::g_pFMOD->init(32, FMOD_DEFAULT, nullptr);
+	CSound::g_pFMOD->init(32, FMOD_DEFAULT | FMOD_INIT_3D_RIGHTHANDED, nullptr);
 }
 
 
