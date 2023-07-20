@@ -308,10 +308,10 @@
     <ClInclude Include="packetFunc.h">
       <Filter>PacketFunc</Filter>
     </ClInclude>
-    <ClInclude Include="ServerPacketHandler.h">
+    <ClInclude Include="ServerSession.h">
       <Filter>ClientMain</Filter>
     </ClInclude>
-    <ClInclude Include="ServerSession.h">
+    <ClInclude Include="ServerPacketHandler.h">
       <Filter>ClientMain</Filter>
     </ClInclude>
   </ItemGroup>

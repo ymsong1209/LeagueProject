@@ -37,7 +37,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_ int       nCmdShow)
 {
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-    //_CrtSetBreakAlloc(1570);
+    //_CrtSetBreakAlloc(2807);
     MyRegisterClass(hInstance);
 
     // 애플리케이션 초기화를 수행합니다:
@@ -66,15 +66,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MSG msg;
 
     this_thread::sleep_for(1s);
-
+    
     ClientServiceRef service = MakeShared<ClientService>(
-        NetAddress(L"127.0.0.1", 7777),
+        NetAddress(L"221.148.206.199", 40000),
         MakeShared<IocpCore>(),
         MakeShared<ServerSession>, // TODO : SessionManager 등
         1);
-
+    
     ASSERT_CRASH(service->Start());
-
+    
     GThreadManager->SetFlags(1);
     for (int32 i = 0; i < 2; i++)
     {
@@ -93,16 +93,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     {
         if (KEY_TAP(KEY::SPACE) && service->GetCurrentSessionCount() > 0) {
             PKT_C_LOGIN_WRITE pktWriter;
-
-            wstring test = L"키요";
+            wstring test = L"KIYO";
             //문자 개수만큼 함수에 파라미터로 넣어주세요.
             PKT_C_LOGIN_WRITE::NickName nickNamePacket = pktWriter.ReserveNickName(test.size());
             for (int i = 0; i < test.size(); i++) {
                 nickNamePacket[i] = { test[i] };
             }
-
+        
             SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
-
+        
             service->Broadcast(sendBuffer);
         }
 

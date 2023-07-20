@@ -3,6 +3,8 @@
 #include "IocpCore.h"
 #include "Listener.h"
 #include <functional>
+#include "CoreMacro.h"
+#include "Lock.h"
 
 enum class ServiceType : uint8
 {

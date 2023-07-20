@@ -1,6 +1,7 @@
 #pragma once
 #include "BufferWriter.h"
 #include "BufferReader.h"
+#include "CoreMacro.h"
 
 enum
 {

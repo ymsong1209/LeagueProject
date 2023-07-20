@@ -1,5 +1,6 @@
 #pragma once
-
+#include <ws2def.h>
+#include <WinSock2.h>
 /*--------------
 	NetAddress
 ---------------*/
