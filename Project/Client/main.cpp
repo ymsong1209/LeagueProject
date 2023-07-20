@@ -19,6 +19,8 @@
 
 #include "TestLevel.h"
 
+#include <Engine/CKeyMgr.h>
+
 // 전역 변수:
 HINSTANCE   hInst;                                // 현재 인스턴스입니다.
 HWND        g_hWnd;
@@ -89,6 +91,21 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     while (true)
     {
+        if (KEY_TAP(KEY::SPACE) && service->GetCurrentSessionCount() > 0) {
+            PKT_C_LOGIN_WRITE pktWriter;
+
+            wstring test = L"키요";
+            //문자 개수만큼 함수에 파라미터로 넣어주세요.
+            PKT_C_LOGIN_WRITE::NickName nickNamePacket = pktWriter.ReserveNickName(test.size());
+            for (int i = 0; i < test.size(); i++) {
+                nickNamePacket[i] = { test[i] };
+            }
+
+            SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+
+            service->Broadcast(sendBuffer);
+        }
+
         if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
             if (WM_QUIT == msg.message)

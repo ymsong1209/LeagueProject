@@ -14,6 +14,9 @@ void ServerPacketHandler::HandlePacket(PacketSessionRef& session, BYTE* buffer, 
 	case S_TEST:
 		Handle_S_TEST(session, buffer, len);
 		break;
+	case S_LOGIN:
+		Handle_S_LOGIN(session, buffer, len);
+		break;
 	}
 }
 
@@ -47,4 +50,17 @@ void ServerPacketHandler::Handle_S_TEST(PacketSessionRef& session, BYTE* buffer,
 		}
 
 	}
+}
+
+void ServerPacketHandler::Handle_S_LOGIN(PacketSessionRef& session, BYTE* buffer, int32 len)
+{
+	BufferReader br(buffer, len);
+
+	PKT_S_LOGIN* pkt = reinterpret_cast<PKT_S_LOGIN*>(buffer);
+
+	if (pkt->Validate() == false)
+		return;
+
+	bool _Success = pkt->success;
+	uint64 _PlayerId = pkt->playerId;
 }

@@ -1,8 +1,12 @@
 #pragma once
+#include "BufferWriter.h"
+#include "BufferReader.h"
 
 enum
 {
-	S_TEST = 1
+	S_TEST = 0,
+	C_LOGIN = 1,
+	S_LOGIN = 2,
 };
 
 class ServerPacketHandler
@@ -11,6 +15,7 @@ public:
 	static void HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len);
 
 	static void Handle_S_TEST(PacketSessionRef& session, BYTE* buffer, int32 len);
+	static void Handle_S_LOGIN(PacketSessionRef& session, BYTE* buffer, int32 len);
 };
 
 
@@ -57,7 +62,6 @@ private:
 };
 
 #pragma pack(1)
-
 // [ PKT_S_TEST ][BuffsListItem BuffsListItem BuffsListItem][ victim victim ] [victim victim]
 struct PKT_S_TEST
 {
@@ -133,5 +137,117 @@ struct PKT_S_TEST
 
 	//vector<BuffData> buffs;
 	//wstring name;
+};
+#pragma pack()
+
+#pragma pack(1)
+struct PKT_C_LOGIN
+{	
+	struct NickNameStruct {
+		wchar_t nickname;
+	};
+
+	uint16 packetSize;
+	uint16 packetId;
+	uint16 nicknameOffset;
+	uint16 nicknameCount;
+
+	bool Validate()
+	{
+		uint32 size = 0;
+		size += sizeof(PKT_C_LOGIN);
+		if (packetSize < size)
+			return false;
+
+		if (nicknameOffset + nicknameCount * sizeof(BYTE)*2 > packetSize)
+			return false;
+
+		size += nicknameCount * sizeof(BYTE)*2;
+
+		NickName nickname = GetNickName();
+
+		if (size != packetSize)
+			return false;
+
+		return true;
+	}
+
+	using NickName = PacketList<NickNameStruct>;
+
+	NickName GetNickName()
+	{
+		BYTE* data = reinterpret_cast<BYTE*>(this);
+		data += nicknameOffset;
+		return NickName(reinterpret_cast<PKT_C_LOGIN::NickNameStruct*>(data), nicknameCount);
+	}
+};
+#pragma pack()
+
+#pragma pack(1)
+struct PKT_S_LOGIN
+{
+	uint16 packetSize;
+	uint16 packetId;
+	bool success;
+	uint64 playerId;
+
+	bool Validate()
+	{
+		uint32 size = 0;
+		size += sizeof(PKT_S_LOGIN);
+		if (packetSize < size)
+			return false;
+
+
+		if (size != packetSize)
+			return false;
+
+		return true;
+	}
+};
+#pragma pack()
+
+//===============================
+// 이 밑은 패킷 Write 클래스 모음입니다. |
+// ==============================
+
+#pragma pack(1)
+class PKT_C_LOGIN_WRITE 
+{
+public:
+	using NickNameStruct = PKT_C_LOGIN::NickNameStruct;
+	using NickName = PacketList<PKT_C_LOGIN::NickNameStruct>;
+
+	PKT_C_LOGIN_WRITE() {
+		_sendBuffer = GSendBufferManager->Open(4096);
+		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
+
+		_pkt = _bw.Reserve<PKT_C_LOGIN>();
+		_pkt->packetSize = 0;
+		_pkt->packetId = C_LOGIN;
+		_pkt->nicknameOffset = 0;
+		_pkt->nicknameCount = 0;
+	}
+
+	NickName ReserveNickName(uint16 buffCount) {
+		NickNameStruct* firstBuffsListItem = _bw.Reserve<NickNameStruct>(buffCount);
+		_pkt->nicknameOffset = (uint64)firstBuffsListItem - (uint64)_pkt;
+		_pkt->nicknameCount = buffCount;
+		return NickName(firstBuffsListItem, buffCount);
+	}
+
+	SendBufferRef CloseAndReturn()
+	{
+		// 패킷 사이즈 계산
+		_pkt->packetSize = _bw.WriteSize();
+
+		_sendBuffer->Close(_bw.WriteSize());
+		return _sendBuffer;
+	}
+
+private:
+	PKT_C_LOGIN* _pkt = nullptr;
+	SendBufferRef _sendBuffer;
+	BufferWriter _bw;
 };
 #pragma pack()
