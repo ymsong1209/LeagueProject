@@ -21,7 +21,11 @@ public:
 
 	virtual void OnRecvPacket(BYTE* buffer, int32 len) override
 	{
-		ServerPacketHandler::HandlePacket(buffer, len);
+		PacketSessionRef session = GetPacketSessionRef();
+		PacketHeader* header = reinterpret_cast<PacketHeader*>(buffer);
+
+
+		ServerPacketHandler::HandlePacket(session, buffer, len);
 	}
 
 	virtual void OnSend(int32 len) override
