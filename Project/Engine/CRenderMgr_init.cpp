@@ -92,6 +92,41 @@ void CRenderMgr::init()
     }
 
     // =========
+    // Contour MRT
+    // =========
+    {
+        Vec2 vRenderResolotion = CDevice::GetInst()->GetRenderResolution();
+
+        Ptr<CTexture> arrRTTex[8] = {
+        CResMgr::GetInst()->CreateTexture(L"ContourTargetTex"
+            , (UINT)vRenderResolotion.x, (UINT)vRenderResolotion.y
+            , DXGI_FORMAT_R32G32B32A32_FLOAT, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE
+            , D3D11_USAGE_DEFAULT),
+        };
+        Vec4          arrClear[8] = { Vec4(0.f, 0.f, 0.f, 1.f) , };
+
+        m_MRT[(UINT)MRT_TYPE::CONTOUR] = new CMRT;
+        m_MRT[(UINT)MRT_TYPE::CONTOUR]->Create(arrRTTex, arrClear, nullptr);
+
+    }
+
+    // =========
+    // DefaultContour MRT
+    // =========
+    {
+        Vec2 vRenderResolotion = CDevice::GetInst()->GetRenderResolution();
+        Ptr<CTexture> arrRTTex[8] = {
+            CResMgr::GetInst()->CreateTexture(L"DefaultContourTargetTex"
+                , (UINT)vRenderResolotion.x, (UINT)vRenderResolotion.y
+                , DXGI_FORMAT_R32G32B32A32_FLOAT, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE
+                , D3D11_USAGE_DEFAULT),
+        };
+        Vec4          arrClear[8] = { Vec4(0.f, 0.f, 0.f, 1.f) , };
+        m_MRT[(UINT)MRT_TYPE::DEFAULTCONTOUR] = new CMRT;
+        m_MRT[(UINT)MRT_TYPE::DEFAULTCONTOUR]->Create(arrRTTex, arrClear, nullptr);
+    }
+
+    // =========
     // Light MRT
     // =========
     {

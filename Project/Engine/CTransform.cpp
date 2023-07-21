@@ -12,8 +12,10 @@ CTransform::CTransform()
 		  Vec3(1.f, 0.f, 0.f)
 		, Vec3(0.f, 1.f, 0.f)
 		, Vec3(0.f, 0.f, 1.f)}	
-	, m_fGizmoBounding_Radius(150.f)
+	, m_fGizmoBounding_Radius(50.f)
 	, m_bGizmoObjExcept(false)
+	, m_bUseMouseOutLine(false)
+	, m_fOutlinethickness(0.12f)
 {
 	SetName(L"Transform");
 }
@@ -119,6 +121,9 @@ void CTransform::SaveToLevelFile(FILE* _File)
 
 	fwrite(&m_bGizmoObjExcept, sizeof(bool), 1, _File);
 	fwrite(&m_fGizmoBounding_Radius, sizeof(float), 1, _File);
+
+	fwrite(&m_bUseMouseOutLine, sizeof(bool), 1, _File);
+	fwrite(&m_fOutlinethickness, sizeof(float), 1, _File);
 }
 
 void CTransform::LoadFromLevelFile(FILE* _FILE)
@@ -130,6 +135,9 @@ void CTransform::LoadFromLevelFile(FILE* _FILE)
 	
 	fread(&m_bGizmoObjExcept, sizeof(bool), 1, _FILE);
 	fread(&m_fGizmoBounding_Radius, sizeof(float), 1, _FILE);
+
+	fread(&m_bUseMouseOutLine, sizeof(bool), 1, _FILE);
+	fread(&m_fOutlinethickness, sizeof(float), 1, _FILE);
 }
 
 void CTransform::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
@@ -141,6 +149,9 @@ void CTransform::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& 
 
 	_objValue.AddMember("IsNoGizmoObj", m_bGizmoObjExcept, allocator);
 	_objValue.AddMember("GizmoBounding_Radius", m_fGizmoBounding_Radius, allocator);
+
+	_objValue.AddMember("UseMouseOutLine", m_bUseMouseOutLine, allocator);
+	_objValue.AddMember("Outlinethickness", m_fOutlinethickness, allocator);
 }
 
 void CTransform::LoadFromLevelJsonFile(const Value& _componentValue)
@@ -152,4 +163,7 @@ void CTransform::LoadFromLevelJsonFile(const Value& _componentValue)
 
 	m_bGizmoObjExcept = _componentValue["IsNoGizmoObj"].GetBool();
 	m_fGizmoBounding_Radius = _componentValue["GizmoBounding_Radius"].GetFloat();
+
+	m_bUseMouseOutLine = _componentValue["UseMouseOutLine"].GetBool();
+	m_fOutlinethickness = _componentValue["Outlinethickness"].GetFloat();
 }

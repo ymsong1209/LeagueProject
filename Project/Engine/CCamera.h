@@ -42,6 +42,8 @@ private:
 
     vector<CGameObject*>    m_vecDynamicShadow;     // 동적 그림자 물체
 
+    vector<CGameObject*>    m_vecContour;
+
     float                   m_LayMinDistance;  // 오브젝트가 여러개 겹쳐있을때 마우스 클릭하는 것을 대비해서 오브젝트들중에 깊이가(길이) 가장 작은
     //오브젝트의 길이값을 기억해두고 그 오브젝트를 최종 선택오브젝트로 세팅
 
@@ -84,11 +86,13 @@ public:
     bool GetViewGizmoBounding() { return m_bViewGizmoBounding; }
     void GizmoClickCheck(CGameObject* _CheckTargetObj, CLevel* _CurLevel);
 
-
     bool RayIntersectsSphere(Vec3 _SphereTrans, float _SphereRadius);
 
     void SetIsGizmoEditMode(int _Mode) { m_isGizmoEditMode = _Mode; }
     int GetIsGizmoEditMode() { return m_isGizmoEditMode; }
+
+    bool OutlineCheck(CGameObject* _Obj);
+
 
 public:
     void SortObject();
@@ -116,6 +120,10 @@ public:
 private:
     void clear();
     void render_deferred();
+
+    void render_DefaultContourPaint();
+    void render_ContourPaint();
+
     void render_decal();
 
     void render_merge();
@@ -123,6 +131,7 @@ private:
     void render_opaque();
     void render_mask();
     void render_transparent();
+    void render_contour();
     void render_postprocess();
     void render_ui();
 

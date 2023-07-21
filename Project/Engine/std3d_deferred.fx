@@ -162,4 +162,106 @@ PS_OUT PS_Std3D_Deferred(VS_OUT _in) : SV_Target
     return output;
 }
 
+
+
+// ========================
+// ContourPaint Shader
+// ========================
+
+struct VS_ContourPaint_IN
+{
+    float3 vPos : POSITION;
+    float2 vUV : TEXCOORD;
+   
+    float3 vTangent : TANGENT;
+    float3 vNormal : NORMAL;
+    float3 vBinormal : BINORMAL;
+
+    float4 vWeights : BLENDWEIGHT;
+    float4 vIndices : BLENDINDICES;
+};
+
+struct VS_ContourPaint_OUT
+{
+    float4 vPosition : SV_Position;
+    float2 vUV : TEXCOORD;
+};
+
+VS_ContourPaint_OUT VS_ContourPaint_Deferred(VS_ContourPaint_IN _in)
+{
+    VS_ContourPaint_OUT output = (VS_ContourPaint_OUT) 0.f;
+    if (g_iAnim)
+    {
+        Skinning(_in.vPos, _in.vTangent, _in.vBinormal, _in.vNormal, _in.vWeights, _in.vIndices, 0);
+    }
+
+    output.vPosition = mul(float4(_in.vPos, 1.f), g_matWVP);
+    output.vUV = _in.vUV;
+    return output;
+}
+// Rasterizer
+
+struct PS_ContourPaint_OUT
+{
+    float4 vContour : SV_Target0;
+};
+
+PS_ContourPaint_OUT PS_ContourPaint_Deferred(VS_ContourPaint_OUT _in) : SV_Target
+{
+    PS_ContourPaint_OUT output = (PS_ContourPaint_OUT) 0.f;
+    output.vContour = float4(1.f, 0.f, 0.f, 1.f);
+        
+    return output;
+}
+
+
+
+// ========================
+// DefaultObjWrite Shader
+// ========================
+
+struct VS_DefaultObjWrite_IN
+{
+    float3 vPos : POSITION;
+    float2 vUV : TEXCOORD;
+    float3 vTangent : TANGENT;
+    float3 vNormal : NORMAL;
+    float3 vBinormal : BINORMAL;
+    float4 vWeights : BLENDWEIGHT;
+    float4 vIndices : BLENDINDICES;
+};
+
+struct VS_DefaultObjWrite_OUT
+{
+    float4 vPosition : SV_Position;
+    float2 vUV : TEXCOORD;
+};
+
+VS_DefaultObjWrite_OUT VS_DefaultTexWrite(VS_DefaultObjWrite_IN _in)
+{
+    VS_DefaultObjWrite_OUT output = (VS_DefaultObjWrite_OUT) 0.f;
+    if (g_iAnim)
+    {
+        Skinning(_in.vPos, _in.vTangent, _in.vBinormal, _in.vNormal, _in.vWeights, _in.vIndices, 0);
+    }
+
+    output.vPosition = mul(float4(_in.vPos, 1.f), g_matWVP);
+    output.vUV = _in.vUV;
+    return output;
+}
+// Rasterizer
+
+struct PS_DefaultObjWrite_OUT
+{
+    float4 vDefaultContour : SV_Target0;
+};
+
+PS_DefaultObjWrite_OUT PS_DefaultObjWrite(VS_DefaultObjWrite_OUT _in) : SV_Target
+{
+    PS_DefaultObjWrite_OUT output = (PS_DefaultObjWrite_OUT) 0.f;
+    output.vDefaultContour = float4(1.f, 0.f, 0.f, 1.f);
+    return output;
+}
+
+
 #endif

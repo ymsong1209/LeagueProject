@@ -9,6 +9,7 @@ CCollider3D::CCollider3D()
 	, m_bAbsolute(false)
 	, m_iCollisionCount(0)
 	, m_bIsCollidedFromRay(false)
+	, m_bDrawCollision(true)
 {
 }
 
@@ -19,6 +20,7 @@ CCollider3D::CCollider3D(const CCollider3D& _other)
 	, m_bAbsolute(_other.m_bAbsolute)
 	, m_Shape(_other.m_Shape)
 	, m_bIsCollidedFromRay(false)
+	, m_bDrawCollision(_other.m_bDrawCollision)
 {
 
 }
@@ -68,10 +70,13 @@ void CCollider3D::finaltick()
 		vColor = Vec4(1.f, 0.f, 0.f, 1.f);
 
 	// 마지막에 0.f로 설정해 GameObject가 사라지면 Collider도 사라진다.
-	if (COLLIDER3D_TYPE::SPHERE == m_Shape)
-		DrawDebugSphere(m_matCollider3D, vColor, 0.f);
-	else
-		DrawDebugCube(m_matCollider3D, vColor, 0.f);
+	if (m_bDrawCollision)
+	{
+		if (COLLIDER3D_TYPE::SPHERE == m_Shape)
+			DrawDebugSphere(m_matCollider3D, vColor, 0.f);
+		else
+			DrawDebugCube(m_matCollider3D, vColor, 0.f);
+	}
 }
 
 void CCollider3D::BeginOverlap(CCollider3D* _Other)
@@ -132,6 +137,7 @@ void CCollider3D::SaveToLevelFile(FILE* _File)
 	fwrite(&m_vOffsetScale, sizeof(Vec3), 1, _File);
 	fwrite(&m_bAbsolute, sizeof(bool), 1, _File);
 	fwrite(&m_Shape, sizeof(UINT), 1, _File);
+	fwrite(&m_bDrawCollision, sizeof(bool), 1, _File);
 }
 
 void CCollider3D::LoadFromLevelFile(FILE* _File)
@@ -140,6 +146,7 @@ void CCollider3D::LoadFromLevelFile(FILE* _File)
 	fread(&m_vOffsetScale, sizeof(Vec3), 1, _File);
 	fread(&m_bAbsolute, sizeof(bool), 1, _File);
 	fread(&m_Shape, sizeof(UINT), 1, _File);
+	fread(&m_bDrawCollision, sizeof(bool), 1, _File);
 }
 
 void CCollider3D::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
@@ -148,6 +155,7 @@ void CCollider3D::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType&
 	_objValue.AddMember("vOffsetScale", SaveVec3Json(m_vOffsetScale, allocator), allocator);
 	_objValue.AddMember("bAbsolute", m_bAbsolute, allocator);
 	_objValue.AddMember("Shape", (UINT)m_Shape, allocator);
+	_objValue.AddMember("DrawCollision", m_bDrawCollision, allocator);
 }
 
 void CCollider3D::LoadFromLevelJsonFile(const Value& _componentValue)
@@ -156,4 +164,5 @@ void CCollider3D::LoadFromLevelJsonFile(const Value& _componentValue)
 	m_vOffsetScale = LoadVec3Json(_componentValue["vOffsetScale"]);
 	m_bAbsolute = _componentValue["bAbsolute"].GetBool();
 	m_Shape = (COLLIDER3D_TYPE)_componentValue["Shape"].GetUint();
+	m_bDrawCollision = _componentValue["DrawCollision"].GetBool();
 }

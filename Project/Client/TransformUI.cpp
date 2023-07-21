@@ -171,6 +171,17 @@ void TransformUI::RenderGizmo()
 		ImGui::DragFloat("##ClickBound", &f_GizBound);
 		GetTarget()->Transform()->SetGizmoBounding(f_GizBound);
 
+		bool bUseMouseOutLine = GetTarget()->Transform()->GetUseMouseOutline();
+		float OutlineThickness = GetTarget()->Transform()->GetOutlineThickness();
+		if (bUseMouseOutLine)
+		{
+			ImGui::Text("Outline Thickness :");
+			ImGui::SameLine();
+			ImGui::SetNextItemWidth(100.f);
+			ImGui::DragFloat("##OutlineThick", &OutlineThickness,0.001f,0.0f,0.2f);
+			GetTarget()->Transform()->SetOutlineThickness(OutlineThickness);
+		}
+
 		if (ImGuiMgr::GetInst()->GetGizmoEditor_WindowMode())
 		{
 			b_IsWindowMode = ImGuiMgr::GetInst()->GetGizmoEditor_WindowMode();
