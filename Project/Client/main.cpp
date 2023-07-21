@@ -47,6 +47,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
+    SetProcessDPIAware();
     // CEngine 초기화
     if (FAILED(CEngine::GetInst()->init(g_hWnd, 1600, 1000)))
     {
