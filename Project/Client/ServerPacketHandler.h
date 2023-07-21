@@ -3,20 +3,11 @@
 #include "BufferReader.h"
 #include "CoreMacro.h"
 
-#include "ServerFunc.h"
 enum
 {
 	S_TEST = 0,
-
 	C_LOGIN = 1,
 	S_LOGIN = 2,
-	C_PICK_FACTION = 3,
-	S_PICK_FACTION = 4,
-	C_PICK_CHAMPION_AND_START = 5,
-	S_PICK_CHAMPION_AND_START = 6,
-
-	C_PLAYER_UPDATE = 7,
-	S_PLAYER_UPDATE = 8,
 };
 
 class ServerPacketHandler
@@ -26,8 +17,6 @@ public:
 
 	static void Handle_S_TEST(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_LOGIN(PacketSessionRef& session, BYTE* buffer, int32 len);
-	static void Handle_S_PICK_FACTION(PacketSessionRef& session, BYTE* buffer, int32 len);
-	static void Handle_S_PICK_CHAMPION_AND_START(PacketSessionRef& session, BYTE* buffer, int32 len);
 };
 
 
@@ -195,37 +184,13 @@ struct PKT_C_LOGIN
 };
 #pragma pack()
 
-
 #pragma pack(1)
 struct PKT_S_LOGIN
 {
-	struct PlayerListItem
-	{
-		uint64 playerId;
-
-		uint16 nickNameOffset;
-		uint16 nickNameCount;
-
-		bool Validate(BYTE* packetStart, uint16 packetSize, OUT uint32& size)
-		{
-			if (nickNameOffset + nickNameCount * sizeof(BYTE) * 2 > packetSize)
-				return false;
-
-			size += nickNameCount * sizeof(uint64);
-			return true;
-		}
-	};
-
-	struct NickNameStruct {
-		wchar_t nickname;
-	};
-
 	uint16 packetSize;
 	uint16 packetId;
 	bool success;
 	uint64 playerId;
-	uint16 playerListoffset;
-	uint16 playerListcount;
 
 	bool Validate()
 	{
@@ -234,57 +199,6 @@ struct PKT_S_LOGIN
 		if (packetSize < size)
 			return false;
 
-		if (playerListoffset + playerListcount * sizeof(PlayerListItem) > packetSize)
-			return false;
-
-		size += playerListcount * sizeof(PlayerListItem);
-
-		PlayerList playerList = GetPlayerList();
-		for (int32 i = 0; i < playerList.Count(); i++)
-		{
-			if (playerList[i].Validate((BYTE*)this, packetSize, OUT size) == false)
-				return false;
-		}
-
-		if (size != packetSize)
-			return false;
-
-		return true;
-	}
-
-	using PlayerList = PacketList<PKT_S_LOGIN::PlayerListItem>;
-	using NickNameList = PacketList<PKT_S_LOGIN::NickNameStruct>;
-
-	PlayerList GetPlayerList()
-	{
-		BYTE* data = reinterpret_cast<BYTE*>(this);
-		data += playerListoffset;
-		return PlayerList(reinterpret_cast<PKT_S_LOGIN::PlayerListItem*>(data), playerListcount);
-	}
-
-	NickNameList  GetNickNameList(PlayerListItem* playerList)
-	{
-		BYTE* data = reinterpret_cast<BYTE*>(this);
-		data += playerList->nickNameOffset;
-		return NickNameList(reinterpret_cast<PKT_S_LOGIN::NickNameStruct*>(data), playerList->nickNameCount);
-	}
-
-};
-#pragma pack()
-
-#pragma pack(1)
-struct PKT_C_PICK_FACTION
-{
-	uint16 packetSize;
-	uint16 packetId;
-	FactionType faction; // 선택한 진영
-
-	bool Validate()
-	{
-		uint32 size = 0;
-		size += sizeof(PKT_C_PICK_FACTION);
-		if (packetSize < size)
-			return false;
 
 		if (size != packetSize)
 			return false;
@@ -294,79 +208,9 @@ struct PKT_C_PICK_FACTION
 };
 #pragma pack()
 
-#pragma pack(1)
-struct PKT_S_PICK_FACTION
-{
-	uint16 packetSize;
-	uint16 packetId;
-	bool success;
-	WaitingStatus waiting;
-
-	bool Validate()
-	{
-		uint32 size = 0;
-		size += sizeof(PKT_S_PICK_FACTION);
-		if (packetSize < size)
-			return false;
-
-		if (size != packetSize)
-			return false;
-
-		return true;
-	}
-};
-#pragma pack()
-
-
-#pragma pack(1)
-struct PKT_C_PICK_CHAMPION_AND_START
-{
-	uint16 packetSize;
-	uint16 packetId;
-	ChampionType champion;
-
-	bool Validate()
-	{
-		uint32 size = 0;
-		size += sizeof(PKT_C_PICK_CHAMPION_AND_START);
-		if (packetSize < size)
-			return false;
-
-		if (size != packetSize)
-			return false;
-
-		return true;
-	}
-};
-#pragma pack()
-
-#pragma pack(1)
-struct PKT_S_PICK_CHAMPION_AND_START
-{
-	uint16 packetSize;
-	uint16 packetId;
-	bool success;
-	WaitingStatus waiting;
-
-	bool Validate()
-	{
-		uint32 size = 0;
-		size += sizeof(PKT_S_PICK_CHAMPION_AND_START);
-		if (packetSize < size)
-			return false;
-
-		if (size != packetSize)
-			return false;
-
-		return true;
-	}
-};
-#pragma pack()
-
-
-//=====================================
+//===============================
 // 이 밑은 패킷 Write 클래스 모음입니다. |
-//=====================================
+// ==============================
 
 #pragma pack(1)
 class PKT_C_LOGIN_WRITE 
@@ -404,67 +248,6 @@ public:
 
 private:
 	PKT_C_LOGIN* _pkt = nullptr;
-	SendBufferRef _sendBuffer;
-	BufferWriter _bw;
-};
-#pragma pack()
-
-
-#pragma pack(1)
-class PKT_C_PICK_FACTION_WRITE
-{
-public:
-	PKT_C_PICK_FACTION_WRITE(FactionType _faction) {
-		_sendBuffer = GSendBufferManager->Open(4096);
-		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
-
-		_pkt = _bw.Reserve<PKT_C_PICK_FACTION>();
-		_pkt->packetSize = 0;
-		_pkt->packetId = C_PICK_FACTION;
-		_pkt->faction = _faction;
-	}
-	SendBufferRef CloseAndReturn()
-	{
-		// 패킷 사이즈 계산
-		_pkt->packetSize = _bw.WriteSize();
-
-		_sendBuffer->Close(_bw.WriteSize());
-		return _sendBuffer;
-	}
-
-private:
-	PKT_C_PICK_FACTION* _pkt = nullptr;
-	SendBufferRef _sendBuffer;
-	BufferWriter _bw;
-};
-#pragma pack()
-
-
-#pragma pack(1)
-class PKT_C_PICK_PICK_CHAMPION_AND_START_WRITE
-{
-public:
-	PKT_C_PICK_PICK_CHAMPION_AND_START_WRITE(ChampionType _champion) {
-		_sendBuffer = GSendBufferManager->Open(4096);
-		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
-
-		_pkt = _bw.Reserve<PKT_C_PICK_CHAMPION_AND_START>();
-		_pkt->packetSize = 0;
-		_pkt->packetId = C_PICK_CHAMPION_AND_START;
-		_pkt->champion = _champion;
-	}
-
-	SendBufferRef CloseAndReturn()
-	{
-		// 패킷 사이즈 계산
-		_pkt->packetSize = _bw.WriteSize();
-
-		_sendBuffer->Close(_bw.WriteSize());
-		return _sendBuffer;
-	}
-
-private:
-	PKT_C_PICK_CHAMPION_AND_START* _pkt = nullptr;
 	SendBufferRef _sendBuffer;
 	BufferWriter _bw;
 };
