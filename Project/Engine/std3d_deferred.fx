@@ -253,7 +253,12 @@ VS_DefaultObjWrite_OUT VS_DefaultTexWrite(VS_DefaultObjWrite_IN _in)
 
 struct PS_DefaultObjWrite_OUT
 {
-    float4 vDefaultContour : SV_Target0;
+    float4 vColor : SV_Target0;
+    float4 vNormal : SV_Target1;
+    float4 vPosition : SV_Target2;
+    float4 vData : SV_Target3;
+    float4 vEmissive : SV_Target4;
+    float4 vDefaultContour : SV_Target5;
 };
 
 PS_DefaultObjWrite_OUT PS_DefaultObjWrite(VS_DefaultObjWrite_OUT _in) : SV_Target
@@ -262,6 +267,5 @@ PS_DefaultObjWrite_OUT PS_DefaultObjWrite(VS_DefaultObjWrite_OUT _in) : SV_Targe
     output.vDefaultContour = float4(1.f, 0.f, 0.f, 1.f);
     return output;
 }
-
 
 #endif

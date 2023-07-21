@@ -530,8 +530,6 @@ void CCamera::render()
 	// Deferred Object
 	CRenderMgr::GetInst()->GetMRT(MRT_TYPE::DEFERRED)->OMSet();
 	render_deferred();
-
-	CRenderMgr::GetInst()->GetMRT(MRT_TYPE::DEFAULTCONTOUR)->OMSet();
 	render_DefaultContourPaint();
 
 	//Contour
@@ -741,8 +739,6 @@ void CCamera::render_deferred()
 		}
 		m_vecDeferred[i]->render();
 	}
-
-
 }
 
 void CCamera::render_decal()
@@ -956,7 +952,6 @@ void CCamera::render_DefaultContourPaint()
 			Obj->GetRenderComponent()->GetMaterial(j)->SetShader(CResMgr::GetInst()->FindRes<CGraphicsShader>(L"DefaultObjWriteShader"));
 		}
 		Obj->render();
-
 		for (UINT z = 0; z < MtrlNum; ++z)
 			Obj->GetRenderComponent()->GetMaterial(z)->SetShader(VecShader[z]);
 	}
@@ -977,17 +972,17 @@ void CCamera::render_ContourPaint()
 			VecShader.push_back(DefaultShader);
 			Obj->GetRenderComponent()->GetMaterial(j)->SetShader(CResMgr::GetInst()->FindRes<CGraphicsShader>(L"ContourPaintShader"));
 		}
-
-		float fThickness = Obj->Transform()->GetOutlineThickness();
-		Vec3 DefaultScale = Obj->Transform()->GetRelativeScale();
+		CTransform* Transform = Obj->Transform();
+		float fThickness = Transform->GetOutlineThickness();
+		Vec3 DefaultScale = Transform->GetRelativeScale();
 		Vec3 vThickness = Vec3(DefaultScale.x * fThickness, DefaultScale.y * fThickness, DefaultScale.z * fThickness);
 		vThickness.y /= 4.f;
 
-		Obj->Transform()->SetRelativeScale(Vec3(DefaultScale.x + vThickness.x, DefaultScale.y + vThickness.y, DefaultScale.z + vThickness.z));
-		Obj->Transform()->finaltick(); //트랜스폼 렌더 전 바로 업데이트
+		Transform->SetRelativeScale(Vec3(DefaultScale.x + vThickness.x, DefaultScale.y + vThickness.y, DefaultScale.z + vThickness.z));
+		Transform->finaltick(); //트랜스폼 렌더 전 바로 업데이트
 		Obj->render();
-		Obj->Transform()->SetRelativeScale(DefaultScale);
-		Obj->Transform()->finaltick(); //이거해줘야함
+		Transform->SetRelativeScale(DefaultScale);
+		Transform->finaltick(); //이거해줘야함
 
 		for (UINT z = 0; z < MtrlNum; ++z)
 			Obj->GetRenderComponent()->GetMaterial(z)->SetShader(VecShader[z]);
