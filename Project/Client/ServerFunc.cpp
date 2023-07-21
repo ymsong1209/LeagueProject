@@ -9,9 +9,10 @@
 #include "ServerSession.h"
 
 
-void SendCLogin(ClientServiceRef _service, wstring _userName)
+void Send_CLogin(ClientServiceRef _service, wstring _userName)
 {
-    std::cout << "Client send Login packet to Server" << std::endl;
+    std::cout << "C_LOGIN Pakcet" << endl;
+    std::cout << _userName << std::endl;
 
     PKT_C_LOGIN_WRITE pktWriter;
 
@@ -23,6 +24,46 @@ void SendCLogin(ClientServiceRef _service, wstring _userName)
 
     SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
     _service->Broadcast(sendBuffer);
+
+    std::cout << "===============================" << endl;
+}
+
+void Send_CPickFaction(ClientServiceRef _service)
+{
+    std::cout << "C_PICK_FACTION Pakcet" << endl;
+
+    PKT_C_PICK_FACTION_WRITE pktWriter;
+
+    std::cout << "   Empty     " << endl;
+    SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+    _service->Broadcast(sendBuffer);
+
+    std::cout << "===============================" << endl;
+}
+
+void Send_CPickChampionAndStart(ClientServiceRef _service, ChampionType _championType)
+{
+    std::cout << "C_PICK_CHAMPION_AND_START Pakcet" << endl;
+
+    PKT_C_PICK_CHAMPION_AND_START_WRITE pktWriter(_championType);
+
+    SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+    _service->Broadcast(sendBuffer);
+
+    std::cout << "===============================" << endl;
+}
+
+void Send_CMove(ClientServiceRef _service, PlayerMove _move)
+{
+    std::cout << "C_MOVE Pakcet" << endl;
+
+    PKT_C_MOVE_WRITE pktWriter(_move);
+
+    SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+    _service->Broadcast(sendBuffer);
+
+    std::cout << "===============================" << endl;
 }
 
 PlayerInfo MyPlayer = {};
+wstring MyPlayerNickName = L"";

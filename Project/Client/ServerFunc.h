@@ -2,11 +2,11 @@
 
 
 
-enum class FactionType
-{
-    BLUE = 0,
-    RED = 1,
-};
+//enum class FactionType
+//{
+//    BLUE = 0,
+//    RED = 1,
+//};
 
 enum WaitingStatus
 {
@@ -21,29 +21,72 @@ enum ChampionType
     MALPHITE,
 };
 
-struct PositionInfo
+struct PlayerMove
 {
-    // State
-    // Direction
+    enum PlayerState
+    {
+        IDLE = 0,
+        MOVE = 1,
+    };
 
-    int32 posX;
-    int32 posY;
-    int32 posZ;
+    struct MoveDir
+    {
+        float x;
+        float y;
+        float z;
+    };
+
+    struct Pos
+    {
+        float x;
+        float y;
+        float z;
+    };
+
+    PlayerState state;
+    MoveDir moveDir;
+    Pos pos;
 };
 
 struct PlayerInfo
 {
+    uint64  id;
     wstring nickname;
+    FactionType faction;
+    ChampionType champion;
+
+    PlayerMove posInfo;
+};
+struct PlayerInfoPacket
+{
     uint64  id;
     FactionType faction;
     ChampionType champion;
 
-    PositionInfo posInfo;
+    PlayerMove posInfo;
 
-    // Vec3 Pos;
+    uint16 nickNameOffset;
+    uint16 nickNameCount;
+
+    struct NickNameItem {
+        wchar_t nickname;
+    };
+
+    bool Validate(BYTE* packetStart, uint16 packetSize, OUT uint32& size) {
+        if (nickNameOffset + nickNameCount * sizeof(NickNameItem) > packetSize)
+            return false;
+
+        size += nickNameCount * sizeof(NickNameItem);
+        return true;
+    }
 };
+
+
+
 
 extern PlayerInfo MyPlayer;
 
-void SendCLogin(ClientServiceRef _service, wstring _userName);
-
+void Send_CLogin(ClientServiceRef _service, wstring _userName);
+void Send_CPickFaction(ClientServiceRef _service);
+void Send_CPickChampionAndStart(ClientServiceRef _service, ChampionType _championType);
+void Send_CMove(ClientServiceRef _service, PlayerMove _move);

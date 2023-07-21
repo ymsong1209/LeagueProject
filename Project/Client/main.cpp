@@ -38,7 +38,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_ int       nCmdShow)
 {
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-    //_CrtSetBreakAlloc(2807);
+    //_CrtSetBreakAlloc(322850);
     MyRegisterClass(hInstance);
 
     // 애플리케이션 초기화를 수행합니다:
@@ -47,7 +47,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
-    SetProcessDPIAware();
     // CEngine 초기화
     if (FAILED(CEngine::GetInst()->init(g_hWnd, 1600, 1000)))
     {
@@ -61,7 +60,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     ImGuiMgr::GetInst()->init(g_hWnd);
 
     // 테스트 용 레벨 생성
-    CreateTestLevel();
+    //CreateTestLevel();
     //CreateLoginLevel();
 
 
@@ -69,10 +68,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CLIENT));
     MSG msg;
 
+    // 해상도 수정
+    SetProcessDPIAware();
 
-    //AllocConsole();
-    //// 표준 출력을 콘솔 창으로 리디렉션
-    //freopen("CONOUT$", "w", stdout);
+    AllocConsole();
+    // 표준 출력을 콘솔 창으로 리디렉션
+    freopen("CONOUT$", "w", stdout);
 
 
 
@@ -117,10 +118,29 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         {
             if (KEY_TAP(KEY::SPACE) && service->GetCurrentSessionCount() > 0)
             {
-                SendCLogin(service, L"KIYO");
-                MyPlayer.nickname = L"KIYO";
+                Send_CLogin(service, L"KIYO");
             }
+            else if (KEY_TAP(KEY::NUM_1))
+            {
+                Send_CPickFaction(service);
+            }
+            else if (KEY_TAP(KEY::NUM_2))
+            {
+                Send_CPickChampionAndStart(service,ChampionType::JINX);
+            }
+            else if (KEY_TAP(KEY::NUM_3))
+            {
+                PlayerMove move = {};
+                move.moveDir.x = 1.f;
+                move.moveDir.y = 2.f;
+                move.moveDir.z = 3.f;
+                move.pos.x = 10.f;
+                move.pos.y = 20.f;
+                move.pos.z = 30.f;
+                move.state = PlayerMove::PlayerState::IDLE;
 
+                Send_CMove(service, move);
+            }
 
 
             CEngine::GetInst()->progress();
@@ -140,8 +160,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     GThreadManager->Join();
 
     // 콘솔 창 닫기
-    //fclose(stdout);
-    //FreeConsole();
+    fclose(stdout);
+    FreeConsole();
 
 
     return (int) msg.wParam;

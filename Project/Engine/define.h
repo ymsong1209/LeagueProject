@@ -21,6 +21,12 @@
 #define SINGLE(type) private: type(); ~type(); friend class CSingleton<type>;
 
 
+enum class FactionType
+{
+	BLUE = 0,
+	RED = 1,
+};
+
 
 enum class MRT_TYPE
 {

@@ -17,6 +17,9 @@ enum
 
 	C_PLAYER_UPDATE = 7,
 	S_PLAYER_UPDATE = 8,
+
+	C_MOVE = 9,
+	S_MOVE = 10,
 };
 
 class ServerPacketHandler
@@ -28,6 +31,10 @@ public:
 	static void Handle_S_LOGIN(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_PICK_FACTION(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_PICK_CHAMPION_AND_START(PacketSessionRef& session, BYTE* buffer, int32 len);
+	static void Handle_S_MOVE(PacketSessionRef& session, BYTE* buffer, int32 len);
+
+private:
+	USE_LOCK;
 };
 
 
@@ -195,13 +202,13 @@ struct PKT_C_LOGIN
 };
 #pragma pack()
 
-
 #pragma pack(1)
 struct PKT_S_LOGIN
 {
 	struct PlayerListItem
 	{
 		uint64 playerId;
+		FactionType playerFaction;
 
 		uint16 nickNameOffset;
 		uint16 nickNameCount;
@@ -211,7 +218,7 @@ struct PKT_S_LOGIN
 			if (nickNameOffset + nickNameCount * sizeof(BYTE) * 2 > packetSize)
 				return false;
 
-			size += nickNameCount * sizeof(uint64);
+			size += nickNameCount * sizeof(BYTE) * 2;
 			return true;
 		}
 	};
@@ -277,7 +284,6 @@ struct PKT_C_PICK_FACTION
 {
 	uint16 packetSize;
 	uint16 packetId;
-	FactionType faction; // 선택한 진영
 
 	bool Validate()
 	{
@@ -345,13 +351,91 @@ struct PKT_S_PICK_CHAMPION_AND_START
 {
 	uint16 packetSize;
 	uint16 packetId;
-	bool success;
-	WaitingStatus waiting;
+	bool   success;
+	uint16 playerInfoOffset;
+	uint16 playerInfoCount;
 
 	bool Validate()
 	{
 		uint32 size = 0;
 		size += sizeof(PKT_S_PICK_CHAMPION_AND_START);
+		if (packetSize < size)
+			return false;
+
+		if (playerInfoOffset + playerInfoCount * sizeof(PlayerInfoPacket) > packetSize)
+			return false;
+
+		size += playerInfoCount * sizeof(PlayerInfoPacket);
+
+		PlayerInfoList playerInfoList = GetPlayerInfoList();
+		for (int32 i = 0; i < playerInfoList.Count(); i++)
+		{
+			if (playerInfoList[i].Validate((BYTE*)this, packetSize, OUT size) == false)
+				return false;
+		}
+
+
+		if (size != packetSize)
+			return false;
+
+		return true;
+	}
+
+	using PlayerInfoList = PacketList<PlayerInfoPacket>;
+	using NickNameList = PacketList<PlayerInfoPacket::NickNameItem>;
+
+	PlayerInfoList GetPlayerInfoList()
+	{
+		BYTE* data = reinterpret_cast<BYTE*>(this);
+		data += playerInfoOffset;
+		return PlayerInfoList(reinterpret_cast<PlayerInfoPacket*>(data), playerInfoCount);
+	}
+
+	NickNameList GetNickNameList(PlayerInfoPacket* playerInfoPacket)
+	{
+		BYTE* data = reinterpret_cast<BYTE*>(this);
+		data += playerInfoPacket->nickNameOffset;
+		return NickNameList(reinterpret_cast<PlayerInfoPacket::NickNameItem*>(data), playerInfoPacket->nickNameCount);
+	}
+};
+#pragma pack()
+
+
+
+#pragma pack(1)
+struct PKT_C_MOVE
+{
+	uint16 packetSize;
+	uint16 packetId;
+	PlayerMove playerMove;
+
+	bool Validate()
+	{
+		uint32 size = 0;
+		size += sizeof(PKT_C_MOVE);
+		if (packetSize < size)
+			return false;
+
+		if (size != packetSize)
+			return false;
+
+		return true;
+	}
+};
+#pragma pack()
+
+#pragma pack(1)
+struct PKT_S_MOVE
+{
+	uint16 packetSize;
+	uint16 packetId;
+	uint64 playerId;
+	PlayerMove playerMove;
+
+	bool Validate()
+	{
+		uint32 size = 0;
+		size += sizeof(PKT_S_MOVE);
 		if (packetSize < size)
 			return false;
 
@@ -409,19 +493,17 @@ private:
 };
 #pragma pack()
 
-
 #pragma pack(1)
 class PKT_C_PICK_FACTION_WRITE
 {
 public:
-	PKT_C_PICK_FACTION_WRITE(FactionType _faction) {
+	PKT_C_PICK_FACTION_WRITE() {
 		_sendBuffer = GSendBufferManager->Open(4096);
 		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
 
 		_pkt = _bw.Reserve<PKT_C_PICK_FACTION>();
 		_pkt->packetSize = 0;
 		_pkt->packetId = C_PICK_FACTION;
-		_pkt->faction = _faction;
 	}
 	SendBufferRef CloseAndReturn()
 	{
@@ -439,12 +521,11 @@ private:
 };
 #pragma pack()
 
-
 #pragma pack(1)
-class PKT_C_PICK_PICK_CHAMPION_AND_START_WRITE
+class PKT_C_PICK_CHAMPION_AND_START_WRITE
 {
 public:
-	PKT_C_PICK_PICK_CHAMPION_AND_START_WRITE(ChampionType _champion) {
+	PKT_C_PICK_CHAMPION_AND_START_WRITE(ChampionType _champion) {
 		_sendBuffer = GSendBufferManager->Open(4096);
 		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
 
@@ -465,6 +546,37 @@ public:
 
 private:
 	PKT_C_PICK_CHAMPION_AND_START* _pkt = nullptr;
+	SendBufferRef _sendBuffer;
+	BufferWriter _bw;
+};
+#pragma pack()
+
+#pragma pack(1)
+class PKT_C_MOVE_WRITE
+{
+public:
+	PKT_C_MOVE_WRITE(PlayerMove _playerMove) {
+		_sendBuffer = GSendBufferManager->Open(4096);
+		// 초기화
+		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
+
+		_pkt = _bw.Reserve<PKT_C_MOVE>();
+		_pkt->packetSize = 0; // To Fill
+		_pkt->packetId = C_MOVE;
+		_pkt->playerMove = _playerMove;
+	}
+
+	SendBufferRef CloseAndReturn()
+	{
+		// 패킷 사이즈 계산
+		_pkt->packetSize = _bw.WriteSize();
+
+		_sendBuffer->Close(_bw.WriteSize());
+		return _sendBuffer;
+	}
+
+private:
+	PKT_C_MOVE* _pkt = nullptr;
 	SendBufferRef _sendBuffer;
 	BufferWriter _bw;
 };

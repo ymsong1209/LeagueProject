@@ -5,7 +5,7 @@
 #include "Session.h"
 #include "BufferReader.h"
 #include "ServerPacketHandler.h"
-
+#include "GameObjMgr.h"
 class ServerSession : public PacketSession
 {
 public:
