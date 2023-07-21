@@ -20,9 +20,10 @@
 #include "TestLevel.h"
 
 #include <Engine/CKeyMgr.h>
+#include <iostream>
 
 // 전역 변수:
-HINSTANCE   hInst;                                // 현재 인스턴스입니다.
+HINSTANCE   hInst;    // 현재 인스턴스입니다.
 HWND        g_hWnd;
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
@@ -60,10 +61,19 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // 테스트 용 레벨 생성
     CreateTestLevel();
+    //CreateLoginLevel();
+
 
     // 메세지 루프
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CLIENT));
     MSG msg;
+
+
+    //AllocConsole();
+    //// 표준 출력을 콘솔 창으로 리디렉션
+    //freopen("CONOUT$", "w", stdout);
+
+
 
     this_thread::sleep_for(1s);
     
@@ -89,22 +99,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         });
     }    
 
-    while (true)
+    while (true) 
     {
-        if (KEY_TAP(KEY::SPACE) && service->GetCurrentSessionCount() > 0) {
-            PKT_C_LOGIN_WRITE pktWriter;
-            wstring test = L"KIYO";
-            //문자 개수만큼 함수에 파라미터로 넣어주세요.
-            PKT_C_LOGIN_WRITE::NickName nickNamePacket = pktWriter.ReserveNickName(test.size());
-            for (int i = 0; i < test.size(); i++) {
-                nickNamePacket[i] = { test[i] };
-            }
-        
-            SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
-        
-            service->Broadcast(sendBuffer);
-        }
-
         if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
             if (WM_QUIT == msg.message)
@@ -116,9 +112,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                 DispatchMessage(&msg);
             }
         }
-
         else
         {
+            if (KEY_TAP(KEY::SPACE) && service->GetCurrentSessionCount() > 0)
+            {
+                SendCLogin(service, L"KIYO");
+                MyPlayer.nickname = L"KIYO";
+            }
+
+
+
             CEngine::GetInst()->progress();
 
             CEditorObjMgr::GetInst()->progress();
@@ -128,9 +131,17 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             // 렌더 종료
             CDevice::GetInst()->Present();
         }       
+
+
+
     }
 
     GThreadManager->Join();
+
+    // 콘솔 창 닫기
+    //fclose(stdout);
+    //FreeConsole();
+
 
     return (int) msg.wParam;
 }

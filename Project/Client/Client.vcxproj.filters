@@ -140,11 +140,11 @@
     <Filter Include="UI\InspectorUI\ComponentUI\15. PathFinderUI">
       <UniqueIdentifier>{2d2bdced-bad6-4d28-9777-5663ca8f0384}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PacketFunc">
-      <UniqueIdentifier>{b7251361-be1c-4899-a448-2604fe423e42}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ClientMain">
       <UniqueIdentifier>{157ccfee-ae53-4453-970c-60967f1a6f16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjMgr">
+      <UniqueIdentifier>{0cc43779-28e7-4de9-becc-90cd6f7a0e78}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -305,14 +305,17 @@
     <ClInclude Include="PathFinderUI.h">
       <Filter>UI\InspectorUI\ComponentUI\15. PathFinderUI</Filter>
     </ClInclude>
-    <ClInclude Include="packetFunc.h">
-      <Filter>PacketFunc</Filter>
-    </ClInclude>
     <ClInclude Include="ServerSession.h">
       <Filter>ClientMain</Filter>
     </ClInclude>
     <ClInclude Include="ServerPacketHandler.h">
       <Filter>ClientMain</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerFunc.h">
+      <Filter>ClientMain</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjMgr.h">
+      <Filter>GameObjMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -481,14 +484,17 @@
     <ClCompile Include="PathFinderUI.cpp">
       <Filter>UI\InspectorUI\ComponentUI\15. PathFinderUI</Filter>
     </ClCompile>
-    <ClCompile Include="packetFunc.cpp">
-      <Filter>PacketFunc</Filter>
-    </ClCompile>
     <ClCompile Include="ServerPacketHandler.cpp">
       <Filter>ClientMain</Filter>
     </ClCompile>
     <ClCompile Include="ServerSession.cpp">
       <Filter>ClientMain</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerFunc.cpp">
+      <Filter>ClientMain</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjMgr.cpp">
+      <Filter>GameObjMgr</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
