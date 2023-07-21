@@ -159,6 +159,8 @@ void CRenderMgr::CalcRayForFog()
 {
     m_vecWallObject.clear();
     m_vecRayObject.clear();
+    m_vecRayStruct.clear();
+
     CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
 
     for (UINT i = 0; i < MAX_LAYER; ++i)

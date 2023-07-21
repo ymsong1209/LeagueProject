@@ -4,6 +4,7 @@
 
 class CGameObject;
 class CLevel;
+struct ColliderStruct;
 
 class CCamera :
     public CComponent
@@ -113,6 +114,10 @@ public:
     IntersectResult IsCollidingBtwRayCube(tRay& _ray, CGameObject* _Object);
     IntersectResult IntersectsLay(Vec3* _vertices, tRay _ray);
 
+    IntersectResult IntersecrRayFog(Vec3 _Vertices0, Vec3 _Vertices1, Vec3 _Vertices2, tRay _Ray);
+
+
+    bool IsCollidingBtwRayWall(Vec2& RayObjPos, Vec2& _CollideObjPos, float& _Raidus, float& _RayObjRadius, ColliderStruct& _ColliderData);
 
 private:
     void clear();

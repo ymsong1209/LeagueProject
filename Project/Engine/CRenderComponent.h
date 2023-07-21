@@ -28,6 +28,9 @@ private:
     bool                    m_bShowDebugBoundShape; /// bounding 범위 선 보기 유무
 
 
+    bool                    m_bRaySightCulling;     // Ray 광원에 의한 Culling 체크
+
+
 public:
     virtual void render() = 0;
     virtual void render_depthmap();
@@ -50,6 +53,9 @@ public:
     float GetBounding() { return m_fBounding; }
     bool IsShowDebugBound() { return m_bShowDebugBoundShape; }
     void SetShowDebugBound(bool _bShow) { m_bShowDebugBoundShape = _bShow; }
+
+    void SetRaySightCulling(bool _bUse) { m_bRaySightCulling = _bUse; }
+    bool IsUsingRaySightCulling() { return m_bRaySightCulling; }
 
 
     bool IsDynamicMtrlEmpty(UINT _idx);

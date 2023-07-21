@@ -11,6 +11,7 @@ CRenderComponent::CRenderComponent(COMPONENT_TYPE _type)
 	, m_bFrustumCheck(true)
 	, m_bDynamicShadow(false)
 	, m_bShowDebugBoundShape(false)
+	, m_bRaySightCulling(true)
 {
 }
 

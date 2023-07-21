@@ -134,6 +134,7 @@ public:
 
     // 전장의 안개용 ray를 쏘고 있는 object모음집 return
     vector<CGameObject*> GetRayObjectVec() { return m_vecRayObject; } 
+    vector<ColliderStruct> GetWallObjectVec() { return m_vecWallObject; }
 
     void CopyRenderTarget();
 
