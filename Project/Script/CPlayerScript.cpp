@@ -4,6 +4,7 @@
 #include <Engine\CMeshRender.h>
 #include <Engine\CMaterial.h>
 #include <Engine\CPathFinder.h>
+#include <Engine\CRenderMgr.h>
 
 #include <fstream>
 
@@ -28,9 +29,9 @@ void CPlayerScript::begin()
 
 void CPlayerScript::tick()
 {
-
+	//ImGui::IsWindowHovered()
 	CLevelMgr::GetInst()->GetCurLevel()->FindObjectByName(L"Test");
-	if (KEY_TAP(KEY::RBTN))
+	if (KEY_TAP(KEY::RBTN) && !CRenderMgr::GetInst()->GetIsImGuiHovered())
 	{
 		GetOwner()->PathFinder()->FindPathMousePicking();
 	}

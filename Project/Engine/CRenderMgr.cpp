@@ -22,6 +22,7 @@ CRenderMgr::CRenderMgr()
     : m_Light2DBuffer(nullptr)
     , RENDER_FUNC(nullptr)
     , m_pEditorCam(nullptr)
+    , b_IsImGuiHovered(false)
 {
     Vec2 vResolution = CDevice::GetInst()->GetRenderResolution();
     m_RTCopyTex = CResMgr::GetInst()->CreateTexture(L"RTCopyTex"
@@ -64,7 +65,6 @@ void CRenderMgr::render()
 
     // 광원 및 전역 데이터 업데이트 및 바인딩
     UpdateData();
-
 
     // 기즈모 선택된 상태 정리
     m_bGizmoObjectChanged = false;
