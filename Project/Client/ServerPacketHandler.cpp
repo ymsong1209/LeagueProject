@@ -1,6 +1,10 @@
 #include "pch.h"
 #include "ServerPacketHandler.h"
 #include "BufferReader.h"
+#include "ServerSession.h"
+
+#include "ServerFunc.h"
+#include "GameObjMgr.h"
 
 void ServerPacketHandler::HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
@@ -17,7 +21,17 @@ void ServerPacketHandler::HandlePacket(PacketSessionRef& session, BYTE* buffer, 
 	case S_LOGIN:
 		Handle_S_LOGIN(session, buffer, len);
 		break;
+	case S_PICK_FACTION:
+		Handle_S_PICK_FACTION(session, buffer, len);
+		break;
+	case S_PICK_CHAMPION_AND_START:
+		Handle_S_PICK_CHAMPION_AND_START(session, buffer, len);
+		break;
+	//case S_PLAYER_UPDATE:
+	//	Handle_S_PLAYER_UPDATE(session, buffer, len);
+	//	break;
 	}
+
 }
 
 // [ PKT_S_TEST ][BuffsListItem BuffsListItem BuffsListItem]
@@ -61,6 +75,46 @@ void ServerPacketHandler::Handle_S_LOGIN(PacketSessionRef& session, BYTE* buffer
 	if (pkt->Validate() == false)
 		return;
 
+	//ServerSessionRef GameSession = static_pointer_cast<ServerSession>(session);
+
 	bool _Success = pkt->success;
 	uint64 _PlayerId = pkt->playerId;
+
+	MyPlayer.id = _PlayerId;
+}
+
+void ServerPacketHandler::Handle_S_PICK_FACTION(PacketSessionRef& session, BYTE* buffer, int32 len)
+{
+	BufferReader br(buffer, len);
+
+	PKT_S_PICK_FACTION* pkt = reinterpret_cast<PKT_S_PICK_FACTION*>(buffer);
+
+	if (pkt->Validate() == false)
+		return;
+
+	bool _Success = pkt->success;
+	WaitingStatus waiting = pkt->waiting;
+}
+
+void ServerPacketHandler::Handle_S_PICK_CHAMPION_AND_START(PacketSessionRef& session, BYTE* buffer, int32 len)
+{
+	BufferReader br(buffer, len);
+
+	PKT_S_PICK_CHAMPION_AND_START* pkt = reinterpret_cast<PKT_S_PICK_CHAMPION_AND_START*>(buffer);
+
+	if (pkt->Validate() == false)
+		return;
+
+	bool _Success = pkt->success;
+	WaitingStatus waiting = pkt->waiting;
+
+
+	// 내 플레이어 생성
+	GameObjMgr::GetInst()->AddPlayer(MyPlayer, true);
+
+	// 다른 플레이어 생성
+	//auto (playerlist.size)
+	//{
+	//	AddPlayer(playerlist.info, false)
+	//}
 }

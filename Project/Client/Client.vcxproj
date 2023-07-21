@@ -166,6 +166,7 @@
     <ClInclude Include="DecalUI.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="FsmUI.h" />
+    <ClInclude Include="GameObjMgr.h" />
     <ClInclude Include="GraphicsShaderUI.h" />
     <ClInclude Include="ImGuiMgr.h" />
     <ClInclude Include="ImGui\imconfig.h" />
@@ -185,7 +186,6 @@
     <ClInclude Include="MeshRenderUI.h" />
     <ClInclude Include="MeshUI.h" />
     <ClInclude Include="OutlinerUI.h" />
-    <ClInclude Include="packetFunc.h" />
     <ClInclude Include="ParamUI.h" />
     <ClInclude Include="ParticleSystemUI.h" />
     <ClInclude Include="PathFinderUI.h" />
@@ -195,6 +195,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResUI.h" />
     <ClInclude Include="ScriptUI.h" />
+    <ClInclude Include="ServerFunc.h" />
     <ClInclude Include="ServerPacketHandler.h" />
     <ClInclude Include="ServerSession.h" />
     <ClInclude Include="SoundUI.h" />
@@ -222,6 +223,7 @@
     <ClCompile Include="ContentUI.cpp" />
     <ClCompile Include="DecalUI.cpp" />
     <ClCompile Include="FsmUI.cpp" />
+    <ClCompile Include="GameObjMgr.cpp" />
     <ClCompile Include="GraphicsShaderUI.cpp" />
     <ClCompile Include="ImGuiMgr.cpp" />
     <ClCompile Include="ImGui\imgui.cpp" />
@@ -244,7 +246,6 @@
     <ClCompile Include="MeshRenderUI.cpp" />
     <ClCompile Include="MeshUI.cpp" />
     <ClCompile Include="OutlinerUI.cpp" />
-    <ClCompile Include="packetFunc.cpp" />
     <ClCompile Include="ParamUI.cpp" />
     <ClCompile Include="ParticleSystemUI.cpp" />
     <ClCompile Include="PathFinderUI.cpp" />
@@ -256,6 +257,7 @@
     <ClCompile Include="RenderComponentUI.cpp" />
     <ClCompile Include="ResUI.cpp" />
     <ClCompile Include="ScriptUI.cpp" />
+    <ClCompile Include="ServerFunc.cpp" />
     <ClCompile Include="ServerPacketHandler.cpp" />
     <ClCompile Include="ServerSession.cpp" />
     <ClCompile Include="SoundUI.cpp" />
