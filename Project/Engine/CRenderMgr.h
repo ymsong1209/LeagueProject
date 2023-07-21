@@ -32,8 +32,9 @@ private:
     CGameObject*                m_GizMoTargetObject;  //기즈모가 생겨야할 타겟 오브젝트
     bool                        m_bGizmoObjectChanged;
 
+    bool                        b_IsImGuiHovered; //Imgui와 상호작용중인 상태라면 특정 키를 안먹히도록 하는데 사용
+   
     Ptr<CTexture>               m_RTCopyTex;
-
 
     void (CRenderMgr::* RENDER_FUNC)(void);
 
@@ -70,6 +71,9 @@ public:
 
 
     const vector<CLight3D*> GetLight3D() { return m_vecLight3D; }
+
+    bool GetIsImGuiHovered() { return b_IsImGuiHovered; }
+    void SetIsImGuiHovered(bool _IsHovered) { b_IsImGuiHovered = _IsHovered; }
 
 public:
     CGameObject* GetGizMoTargetObj() { return m_GizMoTargetObject; }   //기즈모가 생겨야할 타겟오브젝트 게터, 세터 함수
