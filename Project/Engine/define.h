@@ -29,7 +29,6 @@ enum class MRT_TYPE
 	DECAL,
 	LIGHT,
 	SHADOW,
-	CONTOUR,
 	END,
 };
 

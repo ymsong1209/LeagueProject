@@ -1293,7 +1293,7 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->CreateVertexShader(L"shader\\std3d_deferred.fx", "VS_ContourPaint_Deferred");
 	pShader->CreatePixelShader(L"shader\\std3d_deferred.fx", "PS_ContourPaint_Deferred");
 	pShader->SetRSType(RS_TYPE::CULL_BACK);
-	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetDSType(DS_TYPE::LESS); // 업스케일 오브젝트는 가려지는것까지 고려해야함
 	pShader->SetBSType(BS_TYPE::MASK);
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_CONTOURPAINT);
 
@@ -1313,7 +1313,7 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->CreateVertexShader(L"shader\\std3d_deferred.fx", "VS_DefaultTexWrite");
 	pShader->CreatePixelShader(L"shader\\std3d_deferred.fx", "PS_DefaultObjWrite");
 	pShader->SetRSType(RS_TYPE::CULL_BACK);
-	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE); //원본 오브젝트값을 텍스쳐에 기록할땐 원본 그대로를 기록해야하므로 다른물체에 가려지지 않도록함(가려질경우 0이 들어가게되고 테두리 연산이 잘못됨)
 	pShader->SetBSType(BS_TYPE::ALPHA_BLEND);
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_CONTOURPAINT);
 

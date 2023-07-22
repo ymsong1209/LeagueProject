@@ -307,7 +307,7 @@ float4 PS_ContourMerge(VS_OUT _in) : SV_Target0
     // contour Target 
     float3 Contour = g_tex_1.Sample(g_sam_0, _in.vUV).xyz;
     
-    if (DefaultScale.x != 1.f && Contour.x == 1.f)
+    if (DefaultScale.y != 1.f && Contour.z == 1.f)
         vOutColor = float4(1.f, 0.f, 0.f, 0.7f);
     else
         discard;

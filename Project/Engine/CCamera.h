@@ -121,8 +121,10 @@ private:
     void clear();
     void render_deferred();
 
+    void render_Outline();
     void render_DefaultContourPaint();
     void render_ContourPaint();
+    void render_contour();
 
     void render_decal();
 
@@ -131,7 +133,6 @@ private:
     void render_opaque();
     void render_mask();
     void render_transparent();
-    void render_contour();
     void render_postprocess();
     void render_ui();
 
