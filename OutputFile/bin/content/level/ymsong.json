@@ -21,7 +21,7 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": 0.0,
+                                "y": -0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
@@ -172,6 +172,7 @@
                             "bFrustumCheck": false,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
                             "iMtrlCount": 1,
                             "vecMtrls[0]SharedMtrl": {
                                 "IsNull": false,
@@ -233,6 +234,7 @@
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
+                            "bRaySightCulling": true,
                             "iMtrlCount": 1,
                             "vecMtrls[0]SharedMtrl": {
                                 "IsNull": false,
@@ -305,6 +307,7 @@
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
+                            "bRaySightCulling": true,
                             "iMtrlCount": 1,
                             "vecMtrls[0]SharedMtrl": {
                                 "IsNull": false,
@@ -377,6 +380,7 @@
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
+                            "bRaySightCulling": true,
                             "iMtrlCount": 1,
                             "vecMtrls[0]SharedMtrl": {
                                 "IsNull": false,
@@ -445,6 +449,7 @@
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
+                            "bRaySightCulling": true,
                             "iMtrlCount": 1,
                             "vecMtrls[0]SharedMtrl": {
                                 "IsNull": false,
@@ -501,6 +506,7 @@
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
                             "iMtrlCount": 1,
                             "vecMtrls[0]SharedMtrl": {
                                 "IsNull": false,
