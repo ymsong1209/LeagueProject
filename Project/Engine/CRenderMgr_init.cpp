@@ -64,6 +64,7 @@ void CRenderMgr::init()
 				, DXGI_FORMAT_R32G32B32A32_FLOAT, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE
 				, D3D11_USAGE_DEFAULT),
 
+			//포맷은 일단 DXGI_FORMAT_R32G32B32A32_FLOAT로 해뒀는데 추후 변경가능(값안쓰면 변경해도됨)
 			CResMgr::GetInst()->CreateTexture(L"DefaultContourTargetTex"
 				, (UINT)vRenderResolotion.x, (UINT)vRenderResolotion.y
 				, DXGI_FORMAT_R32G32B32A32_FLOAT, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE

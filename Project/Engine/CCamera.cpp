@@ -553,12 +553,12 @@ void CCamera::render()
 	render_mask();
 	render_transparent();
 
-	// Outline :포스트 프로세스 단계에 넣어도 상관은없지만 정리를 위해 따로.
-	render_Outline();
+	// Outline :포스트 프로세스 단계에 넣어도 상관은없지만 정리를 위해 따로. 테두리는 깊이 모두 기록된후에 마지막에 진행
+	if(m_vecContour.size() > 0) //아웃라인을 출력해야하는 오브젝트가 있을경우에만 시행
+		render_Outline();
 
 	// PostProcess
 	render_postprocess();
-
 	// UI
 	render_ui();
 
@@ -933,24 +933,24 @@ bool CCamera::RayIntersectsSphere(Vec3 _SphereTrans, float _SphereRadius)
 }
 
 
-
 void CCamera::render_DefaultContourPaint()
 {
-	//외곽선 필요한 오브젝트 텍스쳐에 기록
+	//외곽선 필요한 오브젝트 렌더타겟에 기록
 	for (size_t i = 0; i < m_vecContour.size(); ++i)
 	{
 		CGameObject* Obj = m_vecContour[i];
 		UINT MtrlNum = Obj->GetRenderComponent()->GetMtrlCount();
 		vector<Ptr<CGraphicsShader>> VecShader;
 
-		for (UINT j = 0; j < MtrlNum; ++j)
+		for (UINT j = 0; j < MtrlNum; ++j) //렌더타겟 출력위한 셰이더 변경
 		{
 			Ptr<CGraphicsShader> DefaultShader = Obj->GetRenderComponent()->GetMaterial(j)->GetShader();
 			VecShader.push_back(DefaultShader);
 			Obj->GetRenderComponent()->GetMaterial(j)->SetShader(CResMgr::GetInst()->FindRes<CGraphicsShader>(L"DefaultObjWriteShader"));
 		}
 		Obj->render();
-		for (UINT z = 0; z < MtrlNum; ++z)
+
+		for (UINT z = 0; z < MtrlNum; ++z) //기존셰이더 장착
 			Obj->GetRenderComponent()->GetMaterial(z)->SetShader(VecShader[z]);
 	}
 }
@@ -958,34 +958,38 @@ void CCamera::render_DefaultContourPaint()
 
 void CCamera::render_ContourPaint()
 {
+	//업스케일 오브젝트 기록
 	for (size_t i = 0; i < m_vecContour.size(); ++i)
 	{
 		UINT MtrlNum = m_vecContour[i]->GetRenderComponent()->GetMtrlCount();
 		vector<Ptr<CGraphicsShader>> VecShader;
 		CGameObject* Obj = m_vecContour[i];
 
-		for (UINT j = 0; j < MtrlNum; ++j)
+		for (UINT j = 0; j < MtrlNum; ++j) 
 		{
+			//렌더타겟 기록을 위한 셰이더 변경 (모든 머터리얼에 적용)
 			Ptr<CGraphicsShader> DefaultShader = Obj->GetRenderComponent()->GetMaterial(j)->GetShader();
 			VecShader.push_back(DefaultShader);
 			Obj->GetRenderComponent()->GetMaterial(j)->SetShader(CResMgr::GetInst()->FindRes<CGraphicsShader>(L"ContourPaintShader"));
 		}
+
 		CTransform* Transform = Obj->Transform();
 		float fThickness = Transform->GetOutlineThickness();
 		Vec3 DefaultScale = Transform->GetRelativeScale();
 
-		//두께
+		//두께계산-----
 		Vec3 vThickness = Vec3(DefaultScale.x * fThickness, DefaultScale.y * fThickness, DefaultScale.z * fThickness);
 		vThickness.y /= 4.f; //y는 조금더 작은값으로 해줘야 자연스러움
 		Transform->SetRelativeScale(Vec3(DefaultScale.x + vThickness.x, DefaultScale.y + vThickness.y, DefaultScale.z + vThickness.z));
-		Transform->finaltick(); //트랜스폼 렌더 전 값을 바로 업데이트
+		Transform->finaltick(); //렌더 전 월드행렬 계산
+		//---------------
 
 		Obj->render();
 
 		Transform->SetRelativeScale(DefaultScale);
-		Transform->finaltick(); //이거해줘야함
+		Transform->finaltick(); //해줘야함! 바로 다음함수가 기본 오브젝트 기록이기때문에 바로 변경된 스케일 적용
 
-		//기존 셰이더 다시 장착
+		//기존 셰이더 다시 장착 (모든 머터리얼에 적용함)
 		for (UINT z = 0; z < MtrlNum; ++z)
 			Obj->GetRenderComponent()->GetMaterial(z)->SetShader(VecShader[z]);
 	}
@@ -1005,17 +1009,23 @@ void CCamera::render_contour()
 
 void CCamera::render_Outline()
 {
-	//Contour
-	CRenderMgr::GetInst()->GetMRT(MRT_TYPE::DEFERRED)->OMSet(); //디퍼드 mrt의 DefaultContourTargetTex,ContourTargetTex 에 값 기록
+	CMRT* DefferedMrt = CRenderMgr::GetInst()->GetMRT(MRT_TYPE::DEFERRED);
+	//디퍼드에 담겨있는 ContourTargetTex,DefaultContourTargetTex를 렌더타겟으로 쓰기전에, 스왑체인에 그려내면서 셰이더 리소스 역할로 되어있던것들을 해제
+	UINT RTCount = DefferedMrt->GetRTCount();
+	for (UINT i = 0; i < RTCount; ++i)
+		DefferedMrt->GetRTAtIndex(i)->Clear();
+
+	//해제한후 렌더타겟으로 지정
+	DefferedMrt->OMSet();
 	//하나의 텍스쳐에 원래 오브젝트, 업스케일 오브젝트의 값을 같이 기록할수 없음. 이유는 두개의 물체가 겹쳐있는 부분은 나중에 그려지는 쪽의 rgba값으로 초기화됨.
 	//결국 하나의 텍스쳐에 업스케일 오브젝트의 값만 있거나, 디폴트 오브젝트의 값만 있어서 나중에 테두리 부분만 추출할수없음.
-	
+
 	//서로 다른 도화지가 있을때 하나의 도화지엔 업스케일 오브젝트, 두번째 도화지엔 디폴트 오브젝트를 그려놓고 render_contour단계에서 값을 비교해 테두리 부분을 추출.
-	//만약 같은텍스쳐를 사용하면서 기존에 그려진 부분에 +1 하는 이런방식을 생각한다면 그려지는곳을 텍스쳐로써 사용하는것이므로 안됨
-	render_ContourPaint(); 
+	//처음에 생각했던 방식인 같은렌더타겟을 사용하여 기존에 그려진 픽셀에 +1 하는방법은 그려지는곳을 텍스쳐로써 사용하는것이므로 안됨
+	render_ContourPaint();
 	render_DefaultContourPaint();
 
-	//mrt를 다시 스왑체인으로 변경하고 테두리 출력 진행
+	//mrt를 다시 스왑체인으로 변경하고 테두리 검출,출력 진행
 	CRenderMgr::GetInst()->GetMRT(MRT_TYPE::SWAPCHAIN)->OMSet();
 	render_contour();
 }
