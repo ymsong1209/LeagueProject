@@ -109,9 +109,10 @@ void CRenderMgr::init()
 			, D3D11_USAGE_DEFAULT),
 		};
 		Vec4          arrClear[8] = { Vec4(0.f, 0.f, 0.f, 1.f) , };
+		Ptr<CTexture> DSTex = CResMgr::GetInst()->FindRes<CTexture>(L"DepthStencilTex");
 
 		m_MRT[(UINT)MRT_TYPE::CONTOUR] = new CMRT;
-		m_MRT[(UINT)MRT_TYPE::CONTOUR]->Create(arrRTTex, arrClear, nullptr);
+		m_MRT[(UINT)MRT_TYPE::CONTOUR]->Create(arrRTTex, arrClear, DSTex);
 
 	}
 

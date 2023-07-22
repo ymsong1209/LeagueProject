@@ -406,21 +406,21 @@ void CreateTestLevel()
 
 
 	// TestFastForward
-	CGameObject* pRectFast2 = new CGameObject;
-	pRectFast2->SetName(L"MoveSphere");
-	pRectFast2->AddComponent(new CMeshRender);
-	pRectFast2->AddComponent(new CTransform);
-	pRectFast2->AddComponent(new CCollider3D);
-	pRectFast2->Transform()->SetUseMouseOutline(true);
+	//CGameObject* pRectFast2 = new CGameObject;
+	//pRectFast2->SetName(L"MoveSphere");
+	//pRectFast2->AddComponent(new CMeshRender);
+	//pRectFast2->AddComponent(new CTransform);
+	//pRectFast2->AddComponent(new CCollider3D);
+	//pRectFast2->Transform()->SetUseMouseOutline(true);
 
-	pRectFast2->Transform()->SetRelativeScale(Vec3(45.f, 45.f, 45.f));
-	pRectFast2->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
-	pRectFast2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
-	pRectFast2->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
-	pRectFast2->Collider3D()->SetAbsolute(false);
-	pRectFast2->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
-	pRectFast2->Collider3D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
-	SpawnGameObject(pRectFast2, Vec3(0.f, 0.f, 0.f), 0);
+	//pRectFast2->Transform()->SetRelativeScale(Vec3(45.f, 45.f, 45.f));
+	//pRectFast2->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+	//pRectFast2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
+	//pRectFast2->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+	//pRectFast2->Collider3D()->SetAbsolute(false);
+	//pRectFast2->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
+	//pRectFast2->Collider3D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+	//SpawnGameObject(pRectFast2, Vec3(0.f, 0.f, 0.f), 0);
 
 
 

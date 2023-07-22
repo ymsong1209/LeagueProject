@@ -15,7 +15,7 @@ CTransform::CTransform()
 	, m_fGizmoBounding_Radius(50.f)
 	, m_bGizmoObjExcept(false)
 	, m_bUseMouseOutLine(false)
-	, m_fOutlinethickness(0.12f)
+	, m_fOutlinethickness(0.072f)
 {
 	SetName(L"Transform");
 }
