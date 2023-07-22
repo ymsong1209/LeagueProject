@@ -35,47 +35,83 @@ int TransformUI::render_update()
 	else
 		SetSize(0.f, 350.f);
 
-	//ImGui 렌더전에 기즈모 렌더를 해야함 ! (타겟오브젝트가 있을경우)
-	if (CRenderMgr::GetInst()->GetGizMoTargetObj())
+	if (GetTarget()->GetParent()) //기즈모가 결과값을 애초에 완성된 월드행렬로 넘겨주는 과정에서 부모자식 계층간의 버그가 있습니다. 근데 지금 프로젝트가 급해서 자식은 그냥 원래 선생님이 만들어두셨던 트랜스폼 ui보여주도록 했어요(기즈모사용x)
 	{
-		CGameObject* TargetObj = CRenderMgr::GetInst()->GetGizMoTargetObj();
-		if (TargetObj->Transform())// 트랜스폼을 가지고있다면
-		{
-			if (!TargetObj->Transform()->GetGizmoObjExcept()) //기즈모를 배치할수 있는 오브젝트라면
-				RenderGizmo();  //기즈모 렌더 처리
-		}
-	}
-
-	b_IsWindowMode = ImGuiMgr::GetInst()->GetGizmoEditor_WindowMode();
-	if (!b_IsWindowMode)
-	{
-		ImGui::Checkbox("Window Mode", &b_IsWindowMode);
-		if (b_IsWindowMode)
-			ImGuiMgr::GetInst()->SetGizmoEditor_WindowMode(true);
+		bool bAbsolute = GetTarget()->Transform()->GetAbsolute();
+		ImGui::Checkbox("IsAbsolute", &bAbsolute);
+		if (bAbsolute)
+			GetTarget()->Transform()->SetAbsolute(true);
 		else
-			ImGuiMgr::GetInst()->SetGizmoEditor_WindowMode(false);
+			GetTarget()->Transform()->SetAbsolute(false);
 
-		int i_Mode = CRenderMgr::GetInst()->GetMainCam()->GetIsGizmoEditMode();
-		//----------------------------------
-		if (ImGui::RadioButton("Default Mode", i_Mode == 0))
-			CRenderMgr::GetInst()->GetMainCam()->SetIsGizmoEditMode(0);
+		Vec3 vPos = GetTarget()->Transform()->GetRelativePos();
+		Vec3 vScale = GetTarget()->Transform()->GetRelativeScale();
+		Vec3 vRotation = GetTarget()->Transform()->GetRelativeRot();
+		vRotation = (vRotation / XM_PI) * 180.f;
 
+		ImGui::Text("Position");
 		ImGui::SameLine();
-		if (ImGui::RadioButton("Gizmo Edit Mode", i_Mode == 1))
-			CRenderMgr::GetInst()->GetMainCam()->SetIsGizmoEditMode(1);
+		ImGui::DragFloat3("##Relative Position", vPos);
 
+		ImGui::Text("Scale   ");
+		ImGui::SameLine();
+		ImGui::DragFloat3("##Relative Scale", vScale);
 
-		ImGui::Text("ChangeMode To Key (F1)");
-		ImGui::Text("");
+		ImGui::Text("Rotation");
+		ImGui::SameLine();
+		ImGui::DragFloat3("##Relative Rotation", vRotation);
 
+		GetTarget()->Transform()->SetRelativePos(vPos);
+		GetTarget()->Transform()->SetRelativeScale(vScale);
+
+		vRotation = (vRotation / 180.f) * XM_PI;
+		GetTarget()->Transform()->SetRelativeRot(vRotation);
 	}
 
-	if (KEY_TAP(KEY::F1))
+	else
 	{
-		if(CRenderMgr::GetInst()->GetMainCam()->GetIsGizmoEditMode() == 0)
-			CRenderMgr::GetInst()->GetMainCam()->SetIsGizmoEditMode(1);
-		else
-			CRenderMgr::GetInst()->GetMainCam()->SetIsGizmoEditMode(0);
+		//ImGui 렌더전에 기즈모 렌더를 해야함 ! (타겟오브젝트가 있을경우)
+		if (CRenderMgr::GetInst()->GetGizMoTargetObj())
+		{
+			CGameObject* TargetObj = CRenderMgr::GetInst()->GetGizMoTargetObj();
+			if (TargetObj->Transform())// 트랜스폼을 가지고있다면
+			{
+				if (!TargetObj->Transform()->GetGizmoObjExcept()) //기즈모를 배치할수 있는 오브젝트라면
+					RenderGizmo();  //기즈모 렌더 처리
+			}
+		}
+
+		b_IsWindowMode = ImGuiMgr::GetInst()->GetGizmoEditor_WindowMode();
+		if (!b_IsWindowMode)
+		{
+			ImGui::Checkbox("Window Mode", &b_IsWindowMode);
+			if (b_IsWindowMode)
+				ImGuiMgr::GetInst()->SetGizmoEditor_WindowMode(true);
+			else
+				ImGuiMgr::GetInst()->SetGizmoEditor_WindowMode(false);
+
+			int i_Mode = CRenderMgr::GetInst()->GetMainCam()->GetIsGizmoEditMode();
+			//----------------------------------
+			if (ImGui::RadioButton("Default Mode", i_Mode == 0))
+				CRenderMgr::GetInst()->GetMainCam()->SetIsGizmoEditMode(0);
+
+			ImGui::SameLine();
+			if (ImGui::RadioButton("Gizmo Edit Mode", i_Mode == 1))
+				CRenderMgr::GetInst()->GetMainCam()->SetIsGizmoEditMode(1);
+
+
+			ImGui::Text("ChangeMode To Key (F1)");
+			ImGui::Text("");
+
+		}
+
+		if (KEY_TAP(KEY::F1))
+		{
+			if (CRenderMgr::GetInst()->GetMainCam()->GetIsGizmoEditMode() == 0)
+				CRenderMgr::GetInst()->GetMainCam()->SetIsGizmoEditMode(1);
+			else
+				CRenderMgr::GetInst()->GetMainCam()->SetIsGizmoEditMode(0);
+		}
 	}
 
 	return TRUE;

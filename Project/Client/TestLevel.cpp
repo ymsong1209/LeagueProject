@@ -285,7 +285,6 @@ void CreateTestLevel()
 
 	RayTestObj1->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
 	RayTestObj1->Transform()->SetUseMouseOutline(true);
-
 	RayTestObj1->MeshRender()->SetUsingMovingVec(true);
 
 	RayTestObj1->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
@@ -303,7 +302,6 @@ void CreateTestLevel()
 
 
 	SpawnGameObject(RayTestObj1, Vec3(-600.f, 0.f, 600.f), 0);
-
 
 
 	// Ray Test Object2
