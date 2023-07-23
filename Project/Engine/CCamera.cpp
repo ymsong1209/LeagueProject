@@ -733,7 +733,10 @@ void CCamera::render_deferred()
 			//layer는 0~31이지만 비트연산을 위해 한칸씩 옮김
 			//layernum = 1~32
 			float layernum = m_vecDeferred[i]->GetLayerIndex() + 1;
-			m_vecDeferred[i]->GetRenderComponent()->GetMaterial(0)->SetScalarParam(FLOAT_0, &layernum);
+			UINT matsize = m_vecDeferred[i]->GetRenderComponent()->GetMtrlCount();
+			for (UINT j = 0; j < matsize; ++j) {
+				m_vecDeferred[i]->GetRenderComponent()->GetMaterial(j)->SetScalarParam(FLOAT_0, &layernum);
+			}
 		}
 		m_vecDeferred[i]->render();
 	}
