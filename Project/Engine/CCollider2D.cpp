@@ -37,11 +37,17 @@ void CCollider2D::finaltick()
 	assert(0 <= m_iCollisionCount);
 	m_matColliderScale = XMMatrixIdentity();
 	m_matColliderScale = XMMatrixScaling(m_vOffsetScale.x, m_vOffsetScale.y, m_vOffsetScale.z);
+	
+	m_matColliderRot = XMMatrixIdentity();
+	m_matColliderRot = XMMatrixRotationX(m_vOffsetRot.x);
+	m_matColliderRot *= XMMatrixRotationY(m_vOffsetRot.y);
+	m_matColliderRot *= XMMatrixRotationZ(m_vOffsetRot.z);
+	
 	m_matColliderPos = XMMatrixIdentity();
 	m_matColliderPos = XMMatrixTranslation(m_vOffsetPos.x, m_vOffsetPos.y, m_vOffsetPos.z);
 
-
 	m_matCollider2D = XMMatrixScaling(m_vOffsetScale.x, m_vOffsetScale.y, m_vOffsetScale.z);
+	m_matCollider2D *= m_matColliderRot;
 	m_matCollider2D *= XMMatrixTranslation(m_vOffsetPos.x, m_vOffsetPos.y, m_vOffsetPos.z);
 	//크기 X 회전 X 이동 (회전은 안함)
 	const Matrix& matWorld = Transform()->GetWorldMat(); //최종 월드 행렬
@@ -116,25 +122,26 @@ void CCollider2D::EndOverlap(CCollider2D* _Other)
 void CCollider2D::BeginRayOverlap()
 {
 	int a = 30;
-	GetOwner()->GetRenderComponent()->GetMaterial(0)->SetScalarParam(INT_2, &a);
+	//GetOwner()->GetRenderComponent()->GetMaterial(0)->SetScalarParam(INT_2, &a);
 }
 
 void CCollider2D::OnRayOverlap()
 {
 	int a = 20;
-	GetOwner()->GetRenderComponent()->GetMaterial(0)->SetScalarParam(INT_2, &a);
+	//GetOwner()->GetRenderComponent()->GetMaterial(0)->SetScalarParam(INT_2, &a);
 }
 
 void CCollider2D::EndRayOverlap()
 {
 	int b = 0;
-	GetOwner()->GetRenderComponent()->GetMaterial(0)->SetScalarParam(INT_2, &b);
+	//GetOwner()->GetRenderComponent()->GetMaterial(0)->SetScalarParam(INT_2, &b);
 }
 
 void CCollider2D::SaveToLevelFile(FILE* _File)
 {
 	fwrite(&m_vOffsetPos, sizeof(Vec3), 1, _File);
 	fwrite(&m_vOffsetScale, sizeof(Vec3), 1, _File);
+	fwrite(&m_vOffsetRot, sizeof(Vec3), 1, _File);
 	fwrite(&m_bAbsolute, sizeof(bool), 1, _File);
 	fwrite(&m_Shape, sizeof(UINT), 1, _File);
 }
@@ -143,6 +150,7 @@ void CCollider2D::LoadFromLevelFile(FILE* _File)
 {
 	fread(&m_vOffsetPos, sizeof(Vec3), 1, _File);
 	fread(&m_vOffsetScale, sizeof(Vec3), 1, _File);
+	fread(&m_vOffsetRot, sizeof(Vec3), 1, _File);
 	fread(&m_bAbsolute, sizeof(bool), 1, _File);
 	fread(&m_Shape, sizeof(UINT), 1, _File);
 }
@@ -151,6 +159,7 @@ void CCollider2D::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType&
 {
 	_objValue.AddMember("vOffsetPos", SaveVec3Json(m_vOffsetPos, allocator), allocator);
 	_objValue.AddMember("vOffsetScale", SaveVec3Json(m_vOffsetScale, allocator), allocator);
+	_objValue.AddMember("vOffsetRot", SaveVec3Json(m_vOffsetRot, allocator), allocator);
 	_objValue.AddMember("bAbsolute", m_bAbsolute, allocator);
 	_objValue.AddMember("Shape", (UINT)m_Shape, allocator);
 }
@@ -159,6 +168,7 @@ void CCollider2D::LoadFromLevelJsonFile(const Value& _componentValue)
 {
 	m_vOffsetPos = LoadVec3Json(_componentValue["vOffsetPos"]);
 	m_vOffsetScale = LoadVec3Json(_componentValue["vOffsetScale"]);
+	m_vOffsetRot = LoadVec3Json(_componentValue["vOffsetRot"]);
 	m_bAbsolute = _componentValue["bAbsolute"].GetBool();
 	m_Shape = (COLLIDER2D_TYPE)_componentValue["Shape"].GetUint();
 }

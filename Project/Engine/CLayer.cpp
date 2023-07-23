@@ -21,6 +21,14 @@ void CLayer::begin()
 	}
 }
 
+void CLayer::RegisterObject()
+{
+	for (size_t i = 0; i < m_vecParentObj.size(); ++i)
+	{
+		m_vecParentObj[i]->RegisterObject();
+	}
+}
+
 void CLayer::tick()
 {
 	for (size_t i = 0; i < m_vecParentObj.size(); ++i)

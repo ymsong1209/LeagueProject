@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "TestLevel.h"
 
 #include <Engine\CLevelMgr.h>
@@ -13,8 +13,8 @@
 #include <Script\CPlayerScript.h>
 #include <Script\CMonsterScript.h>
 #include <Script\CCameraMoveScript.h>
+#include <Engine\CPathFindMgr.h>
 
- 
 
 #include "CLevelSaveLoad.h"
 
@@ -27,17 +27,19 @@ void CreateTestLevel()
 	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
 	pCurLevel->ChangeState(LEVEL_STATE::STOP);
 
-	// Layer ÀÌ¸§¼³Á¤
+	// Layer ì´ë¦„ì„¤ì •
 	pCurLevel->GetLayer(0)->SetName(L"Default");
 	pCurLevel->GetLayer(1)->SetName(L"Tile");
 	pCurLevel->GetLayer(2)->SetName(L"Player");
 	pCurLevel->GetLayer(3)->SetName(L"Monster");
 	pCurLevel->GetLayer(4)->SetName(L"PlayerProjectile");
 	pCurLevel->GetLayer(5)->SetName(L"MonsterProjectile");
+	pCurLevel->GetLayer(6)->SetName(L"LoLMap");
+	//ë¡¤ë§µ ë ˆì´ì–´ì—ëŠ” ë¡¤ë§µë§Œ ë„£ì„ê²ƒ!
 	pCurLevel->GetLayer(31)->SetName(L"ViewPort UI");
 
 
-	// Main Camera Object »ý¼º
+	// Main Camera Object ìƒì„±
 	CGameObject* pMainCam = new CGameObject;
 	pMainCam->SetName(L"MainCamera");
 
@@ -45,16 +47,16 @@ void CreateTestLevel()
 	pMainCam->AddComponent(new CCamera);
 	pMainCam->AddComponent(new CCameraMoveScript);
 
-	pMainCam->Camera()->SetProjType(PROJ_TYPE::ORTHOGRAPHIC);
-	pMainCam->Transform()->SetRelativeRot(0.f, 0.f, 0.f);
-	pMainCam->Camera()->SetCameraIndex(0);		// MainCamera ·Î ¼³Á¤
-	pMainCam->Camera()->SetLayerMaskAll(true);	// ¸ðµç ·¹ÀÌ¾î Ã¼Å©
-	pMainCam->Camera()->SetLayerMask(31, false);// UI Layer ´Â ·»´õ¸µÇÏÁö ¾Ê´Â´Ù.
+	pMainCam->Camera()->SetProjType(PROJ_TYPE::PERSPECTIVE);
 
-	SpawnGameObject(pMainCam, Vec3(0.f, 0.f, 0.f), 0);
+	pMainCam->Camera()->SetCameraIndex(0);		// MainCamera ë¡œ ì„¤ì •
+	pMainCam->Camera()->SetLayerMaskAll(true);	// ëª¨ë“  ë ˆì´ì–´ ì²´í¬
+	pMainCam->Camera()->SetLayerMask(31, false);// UI Layer ëŠ” ë Œë”ë§í•˜ì§€ ì•ŠëŠ”ë‹¤.
+	pMainCam->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(60.f),0.f, 0.f));
+	SpawnGameObject(pMainCam, Vec3(1386.f, 498.f, -9.f), 0);
 
-	
-	// ±¤¿ø Ãß°¡
+
+	// ê´‘ì› ì¶”ê°€
 	CGameObject* pLightObj = new CGameObject;
 	pLightObj->SetName(L"Directional Light");
 
@@ -65,9 +67,15 @@ void CreateTestLevel()
 	pLightObj->Light3D()->SetLightDirection(Vec3(1.f, -1.f, 1.f));
 
 
-	pLightObj->Light3D()->SetLightDiffuse(Vec4(1.f, 1.f, 1.f,1.f));
-	pLightObj->Light3D()->SetLightSpecular(Vec4(0.f, 0.f, 0.f,1.f));
-	pLightObj->Light3D()->SetLightAmbient(Vec4(1.f, 1.f, 1.f,1.f));
+
+	//pLightObj->Light3D()->SetLightDiffuse(Vec4(1.f, 1.f, 1.f,1.f));
+	//pLightObj->Light3D()->SetLightSpecular(Vec4(0.f, 0.f, 0.f,1.f));
+	//pLightObj->Light3D()->SetLightAmbient(Vec4(1.f, 1.f, 1.f,1.f));
+
+	pLightObj->Light3D()->SetLightDiffuse(Vec3(0.5f, 0.5f, 0.5f));
+	pLightObj->Light3D()->SetLightSpecular(Vec3(0.f, 0.f, 0.f));
+	pLightObj->Light3D()->SetLightAmbient(Vec3(0.9f, 0.9f, 0.9f));
+
 
 	pLightObj->Light3D()->SetRadius(400.f);
 
@@ -75,17 +83,17 @@ void CreateTestLevel()
 
 
 	// SkyBox
-	CGameObject* pSkyBox  = new CGameObject;
+	CGameObject* pSkyBox = new CGameObject;
 	pSkyBox->SetName(L"SkyBox");
 
 	pSkyBox->AddComponent(new CTransform);
 	pSkyBox->AddComponent(new CSkyBox);
-
 	pSkyBox->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 100.f));
 	pSkyBox->Transform()->SetRelativeRot(Vec3(0.f, XM_PI / 2.f, 0.f));
-
+	pSkyBox->Transform()->SetGizmoObjExcept(true);
 	pSkyBox->SkyBox()->SetType(SKYBOX_TYPE::CUBE);
 	pSkyBox->SkyBox()->SetSkyTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\skybox\\SkyWater.dds"));
+	pSkyBox->SkyBox()->SetRaySightCulling(false);
 
 	SpawnGameObject(pSkyBox, Vec3(0.f, 0.f, 0.f), 0);
 
@@ -127,6 +135,7 @@ void CreateTestLevel()
 	CGameObject* pLandScape = new CGameObject;
 	pLandScape->SetName(L"LandScape");
 
+
 	pLandScape->AddComponent(new CTransform);
 	pLandScape->AddComponent(new CLandScape);
 
@@ -137,25 +146,23 @@ void CreateTestLevel()
 
 	SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 0.f), 0);
 
-	
-
-	// LoL Map
-	//Ptr<CMeshData> pMeshData = nullptr;
-	//CGameObject* pObj = nullptr;
-	//	
-	//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\LoLMap50.fbx");
-	//	
-	//pObj = pMeshData->Instantiate();
-	//pObj->MeshRender()->SetFrustumCheck(false);
-	//pObj->SetName(L"LoLMap"); 
-	//SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
 
 
 	// ============
 	// FBX Loading
 	// ============	
 	{
+		Ptr<CMeshData> pMeshData = nullptr;
+		CGameObject* pObj = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\LoLMapRot19Size30.fbx");
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"LoLMapRot19Size30");
+		pObj->GetRenderComponent()->SetFrustumCheck(false);
+		pObj->AddComponent(new CCollider2D);
+		pObj->Collider2D()->SetAbsolute(true);
+		pObj->GetRenderComponent()->SetRaySightCulling(false);
 
+//<<<<<<< HEAD
 		/*Ptr<CMeshData> pMeshData = nullptr;
 		CGameObject* pObj = nullptr;
 		
@@ -163,59 +170,88 @@ void CreateTestLevel()
 		
 		pObj = pMeshData->Instantiate();
 		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);*/
+//=======
+		pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+		pObj->Collider2D()->SetOffsetScale(Vec2(2700.f, 2700.f));
+		pObj->Collider2D()->SetOffsetPos(Vec3(1125.f, 16.f, 1200.f));
+		pObj->Transform()->SetGizmoObjExcept(true);
+		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 6);
+//>>>>>>> dev
 
-		//Ptr<CMeshData> pMeshData = nullptr;
-		//CGameObject* pObj = nullptr;
-		//
-		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\LoLMap.fbx");
-		//
-		//pObj = pMeshData->Instantiate();
-		//pObj->SetName(L"LoLMap"); 
-		////pObj->Animator3D()->LoadAnim(L"animation\\BlitzCrank\\Attack1.anim3d");
-		////pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\BlitzCrank");
-		////pObj->Animator3D()->Play(L"BlitzCrank\\Attack1", true, 0.5f);
-		////pObj->Animator3D()->SetRepeat(true);
-		//pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-90.f), 0.f, 0.f));
-		//pObj->GetRenderComponent()->SetFrustumCheck(false);
-		//SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
+		// ë§ˆìš°ìŠ¤ í”¼í‚¹ ì´ë™ì„ ìœ„í•œ ë§µ ì½œë¦¬ì „ - ë”°ë¡œ ì˜¤ë¸Œì íŠ¸ë¡œ ë¹¼ì¤€ ì´ìœ ëŠ” ë ‰íŠ¸ë©”ì‰¬ì½œë¦¬ì „ì„ íšŒì „ì‹œì¼œì•¼í•˜ëŠ”ë° ë§µë„ ê°™ì´ íšŒì „ë˜ë©´ ì•ˆë¼ì„œ ë”°ë¡œ ì˜¤ë¸Œì íŠ¸ë¡œ ëºìŒ
+		// ë§µì€ ì´ë™ëœë‹¤ëŠ” ê°€ì •ì„ í•˜ì§€ì•ŠìŒ, í¬ê¸°,íšŒì „,ì´ë™ì„ í•´ë²„ë¦¬ë©´ ë„¤ë¸Œë©”ì‰¬ëž‘ ì¢Œí‘œê°’ì´ ì•ˆë§žê²Œ ë˜ì–´ë²„ë¦°ë‹¤.
+		// ë§µì´ ìžˆìœ¼ë©´ ë§µ ì½œë¦¬ì „ë„ ìžˆì–´ì•¼í•¨!
+		//CGameObject* MapCollision = new CGameObject;
+		//MapCollision->SetName(L"MapCollision");
+		//MapCollision->AddComponent(new CCollider2D);
+		//MapCollision->AddComponent(new CTransform);
+		//MapCollision->Collider2D()->SetAbsolute(true);
+		//MapCollision->Collider2D()->SetOffsetScale(Vec2(2700.f, 2700.f));
+		//MapCollision->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+		//SpawnGameObject(MapCollision, Vec3(1125.f, 16.f, 1200.f), 0);
+		//CPathFindMgr::GetInst()->SetMapCollision(MapCollision); //ë§ˆìš°ìŠ¤ í”¼í‚¹ ì§„í–‰í•  ë§µ ì½œë¦¬ì „ìœ¼ë¡œ ì§€ì •
 
-		
-		//Ptr<CMeshData> pMeshData1 = nullptr;
-		//CGameObject* pObj1 = nullptr;
-		//pMeshData1 = CResMgr::GetInst()->LoadFBX(L"fbx\\amumu.fbx");
-		//
-		//pObj1 = pMeshData1->Instantiate();
-		//pObj1->SetName(L"amumu");		
-		//pObj1->Animator3D()->Play(L"Amumu-Amumu-Amumu-Amumu_AllAnim", true, 0.5f);
-		//SpawnGameObject(pObj1, Vec3(100.f, 0.f, 0.f), 0);
- 
-		//´ÜÀÏÀç»ý
+		pMeshData = nullptr;
+		pObj = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\jungle_blue.fbx");
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"jungle_blue");
+		pObj->GetRenderComponent()->SetFrustumCheck(false);
+		pObj->Animator3D()->Play(L"jungle_blue-jungle_blue_AllAnim", true, 0.5f);
+		pObj->Transform()->SetRelativeScale(Vec3(0.3, 0.3, 0.3));
+		SpawnGameObject(pObj, Vec3(190.f, 0.f, 607.f), 0);
+
+		pMeshData = nullptr;
+		pObj = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"Jinx");
+		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
+		//pObj->Animator3D()->Play(L"Jinx\\Run_Base",true,0.5f);
+		pObj->GetRenderComponent()->SetFrustumCheck(false);
+		pObj->AddComponent(new CPlayerScript);
+		pObj->AddComponent(new CPathFinder);
+		pObj->AddComponent(new CCollider3D);
+
+		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+		pObj->Collider3D()->SetAbsolute(true);
+		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
+		pObj->Collider3D()->SetDrawCollision(false);
+		pObj->Animator3D()->SetRepeat(true);
+		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+
+		pObj->Transform()->SetUseMouseOutline(true);
+
+		SpawnGameObject(pObj, Vec3(0, 0, 0), 0);
+
+
+		//ë‹¨ì¼ìž¬ìƒ
 		//pObj->Animator3D()->Play(L"Take 001");
-		//´ÜÀÏÀç»ý, ÀÌÀü ¾Ö´Ï¸ÞÀÌ¼Ç 0.5ÃÊ ºí·»µù ÈÄ ´ÜÀÏÀç»ý
+		//ë‹¨ì¼ìž¬ìƒ, ì´ì „ ì• ë‹ˆë©”ì´ì…˜ 0.5ì´ˆ ë¸”ë Œë”© í›„ ë‹¨ì¼ìž¬ìƒ
 		//pObj->Animator3D()->Play(L"Take001", true, 0.5f);
-		//¹Ýº¹Àç»ý, ¸¶Áö¸·ÇÁ·¹ÀÓÈÄ Ã¹ÇÁ·¹ÀÓÀ¸·Î blend¾ÈÇÔ
+		//ë°˜ë³µìž¬ìƒ, ë§ˆì§€ë§‰í”„ë ˆìž„í›„ ì²«í”„ë ˆìž„ìœ¼ë¡œ blendì•ˆí•¨
 		//pObj->Animator3D()->Play(L"Take001", true, false);
-		//¹Ýº¹Àç»ý, AnimA->Take001·Î 0.5ÃÊµ¿¾È ¾Ö´Ï¸ÞÀÌ¼Ç blendÇÏ°í take001Àç»ý,take001¸¶Áö¸·ÇÁ·¹ÀÓ->Ã¹ÇÁ·¹ÀÓ µ¹¾Æ¿À¸é¼­ blend¾ÈÇÏ±â 
+		//ë°˜ë³µìž¬ìƒ, AnimA->Take001ë¡œ 0.5ì´ˆë™ì•ˆ ì• ë‹ˆë©”ì´ì…˜ blendí•˜ê³  take001ìž¬ìƒ,take001ë§ˆì§€ë§‰í”„ë ˆìž„->ì²«í”„ë ˆìž„ ëŒì•„ì˜¤ë©´ì„œ blendì•ˆí•˜ê¸° 
 		//pObj->Animator3D()->Play(L"Take001", true, false, true, 0.5f);
-		//¹Ýº¹Àç»ý, AnimA->Take001·Î 0.5ÃÊµ¿¾È ¾Ö´Ï¸ÞÀÌ¼Ç blendÇÏ°í take001Àç»ý,take001¸¶Áö¸·ÇÁ·¹ÀÓ->Ã¹ÇÁ·¹ÀÓ µ¹¾Æ¿À¸é¼­ blend 0.5ÃÊµ¿¾È ÇÏ±â
+		//ë°˜ë³µìž¬ìƒ, AnimA->Take001ë¡œ 0.5ì´ˆë™ì•ˆ ì• ë‹ˆë©”ì´ì…˜ blendí•˜ê³  take001ìž¬ìƒ,take001ë§ˆì§€ë§‰í”„ë ˆìž„->ì²«í”„ë ˆìž„ ëŒì•„ì˜¤ë©´ì„œ blend 0.5ì´ˆë™ì•ˆ í•˜ê¸°
 		//pObj->Animator3D()->Play(L"Take001", true, true, true, 0.5f);
-		//»ç¿ë ¿¹½Ã
-		
-		//IdleAnimation ¹Ýº¹Àç»ý blend¾ÈÇÔ
+		//ì‚¬ìš© ì˜ˆì‹œ
+
+		//IdleAnimation ë°˜ë³µìž¬ìƒ blendì•ˆí•¨
 		//pObj->animator3d()->play(L"IdleAnimation",true,false);
-		//°ø°Ý¹öÆ° ´©¸£¸é °ø°Ý ¾Ö´Ï¸ÞÀÌ¼Ç ´ÜÀÏÀç»ý, blending 0.2ÃÊ
+		//ê³µê²©ë²„íŠ¼ ëˆ„ë¥´ë©´ ê³µê²© ì• ë‹ˆë©”ì´ì…˜ ë‹¨ì¼ìž¬ìƒ, blending 0.2ì´ˆ
 		//if(key_pressed(key::lbtn){
 		//changestate(attack);
 		//pobj->animator3d()->play(L"AttackAnimation", true,0.2f);
 		//}
-		//°ø°Ý ¾Ö´Ô ³¡³ª¸é ´Ù½Ã idle·Î ÀüÈ¯
+		//ê³µê²© ì• ë‹˜ ëë‚˜ë©´ ë‹¤ì‹œ idleë¡œ ì „í™˜
 		//if(animator3d()->getcuranim()->isfinish()){
 		//changestate(idle)
-		////Attack->Idle 0.2ÃÊ blendÁÖ°í, idle animation Àç»ý, idle animÀº ¸¶Áö¸·ÇÁ·¹ÀÓ->Ã¹ÇÁ·¹ÀÓ ÀÌµ¿½Ã blend¾øÀ½ 
+		////Attack->Idle 0.2ì´ˆ blendì£¼ê³ , idle animation ìž¬ìƒ, idle animì€ ë§ˆì§€ë§‰í”„ë ˆìž„->ì²«í”„ë ˆìž„ ì´ë™ì‹œ blendì—†ìŒ 
 		//pobj->animator3d()->play(L"IdleAnimation",true,false,true,0.2f); 
 		//}
-		
-		
+
+
 
 
 		//SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
@@ -234,27 +270,25 @@ void CreateTestLevel()
 	// TestFastForward
 	CGameObject* pRectFast = new CGameObject;
 	pRectFast->SetName(L"ReftFast");
-
 	pRectFast->AddComponent(new CMeshRender);
 	pRectFast->AddComponent(new CTransform);
 	pRectFast->AddComponent(new CCollider2D);
 
 	pRectFast->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
 
-	pRectFast->MeshRender()->SetUsingMovingVec(true);
-
+	//pRectFast->MeshRender()->SetUsingMovingVec(true);
+	pRectFast->Transform()->SetUseMouseOutline(true);
 	pRectFast->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
 	pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
 	pRectFast->MeshRender()->GetDynamicMaterial(0);
 	//pRectFast->MeshRender()->GetMaterial()->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Base_e.dds"));
-	pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_3, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Base_e_Puncture.dds"));
+	pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Base_e_Puncture.dds"));
 	pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_2, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Round.dds"));
 
 	pRectFast->Collider2D()->SetAbsolute(false);
 	pRectFast->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
-	pRectFast->Collider2D()->SetOffsetPos(Vec2(0.f, 0.f));
+	pRectFast->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f,0.f));
 	pRectFast->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
-
 
 	SpawnGameObject(pRectFast, Vec3(-600.f, 0.f, 500.f), 0);
 
@@ -269,7 +303,7 @@ void CreateTestLevel()
 	RayTestObj1->AddComponent(new CCollider2D);
 
 	RayTestObj1->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
-
+	RayTestObj1->Transform()->SetUseMouseOutline(true);
 	RayTestObj1->MeshRender()->SetUsingMovingVec(true);
 
 	RayTestObj1->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
@@ -282,12 +316,11 @@ void CreateTestLevel()
 
 	RayTestObj1->Collider2D()->SetAbsolute(false);
 	RayTestObj1->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
-	RayTestObj1->Collider2D()->SetOffsetPos(Vec2(0.f, 0.f));
+	RayTestObj1->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f,0.f));
 	RayTestObj1->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
 
 
 	SpawnGameObject(RayTestObj1, Vec3(-600.f, 0.f, 600.f), 0);
-
 
 
 	// Ray Test Object2
@@ -299,6 +332,7 @@ void CreateTestLevel()
 	RayTestObj2->AddComponent(new CCollider2D);
 
 	RayTestObj2->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
+	RayTestObj2->Transform()->SetUseMouseOutline(true);
 
 	RayTestObj2->MeshRender()->SetUsingMovingVec(true);
 
@@ -312,7 +346,7 @@ void CreateTestLevel()
 
 	RayTestObj2->Collider2D()->SetAbsolute(false);
 	RayTestObj2->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
-	RayTestObj2->Collider2D()->SetOffsetPos(Vec2(0.f, 0.f));
+	RayTestObj2->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f,0.f));
 	RayTestObj2->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
 
 
@@ -327,10 +361,11 @@ void CreateTestLevel()
 	RayCubeTestObj1->AddComponent(new CMeshRender);
 	RayCubeTestObj1->AddComponent(new CTransform);
 	RayCubeTestObj1->AddComponent(new CCollider3D);
+	RayCubeTestObj1->Transform()->SetUseMouseOutline(true);
 
 	RayCubeTestObj1->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
 	RayCubeTestObj1->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
-	RayCubeTestObj1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3DMtrl"), 0);
+	RayCubeTestObj1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
 	RayCubeTestObj1->MeshRender()->GetDynamicMaterial(0);
 
 	RayCubeTestObj1->Collider3D()->SetAbsolute(false);
@@ -344,15 +379,16 @@ void CreateTestLevel()
 
 	// Ray Cube Test Object 2
 	CGameObject* RayCubeTestObj2 = new CGameObject;
-	RayCubeTestObj2->SetName(L"RayCubeTestObj1");
+	RayCubeTestObj2->SetName(L"RayCubeTestObj2");
 
 	RayCubeTestObj2->AddComponent(new CMeshRender);
 	RayCubeTestObj2->AddComponent(new CTransform);
 	RayCubeTestObj2->AddComponent(new CCollider3D);
+	RayCubeTestObj2->Transform()->SetUseMouseOutline(true);
 
 	RayCubeTestObj2->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
 	RayCubeTestObj2->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
-	RayCubeTestObj2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3DMtrl"), 0);
+	RayCubeTestObj2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
 	RayCubeTestObj2->MeshRender()->GetDynamicMaterial(0);
 
 	RayCubeTestObj2->Collider3D()->SetAbsolute(false);
@@ -366,15 +402,16 @@ void CreateTestLevel()
 
 	// Ray Cube Test Object 3
 	CGameObject* RayCubeTestObj3 = new CGameObject;
-	RayCubeTestObj3->SetName(L"RayCubeTestObj1");
+	RayCubeTestObj3->SetName(L"RayCubeTestOb31");
 
 	RayCubeTestObj3->AddComponent(new CMeshRender);
 	RayCubeTestObj3->AddComponent(new CTransform);
 	RayCubeTestObj3->AddComponent(new CCollider3D);
+	RayCubeTestObj3->Transform()->SetUseMouseOutline(true);
 
 	RayCubeTestObj3->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
 	RayCubeTestObj3->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
-	RayCubeTestObj3->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3DMtrl"), 0);
+	RayCubeTestObj3->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
 	RayCubeTestObj3->MeshRender()->GetDynamicMaterial(0);
 
 	RayCubeTestObj3->Collider3D()->SetAbsolute(false);
@@ -382,57 +419,50 @@ void CreateTestLevel()
 	RayCubeTestObj3->Collider3D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
 	RayCubeTestObj3->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::CUBE);
 
-
 	SpawnGameObject(RayCubeTestObj3, Vec3(-600.f, -450.f, 1220.f), 0);
 
 
-
-
-
-
-
 	// TestFastForward
-	CGameObject* pRectFast2 = new CGameObject;
-	pRectFast2->SetName(L"ReftFast2");
+	//CGameObject* pRectFast2 = new CGameObject;
+	//pRectFast2->SetName(L"MoveSphere");
+	//pRectFast2->AddComponent(new CMeshRender);
+	//pRectFast2->AddComponent(new CTransform);
+	//pRectFast2->AddComponent(new CCollider3D);
+	//pRectFast2->Transform()->SetUseMouseOutline(true);
 
-	pRectFast2->AddComponent(new CMeshRender);
-	pRectFast2->AddComponent(new CTransform);
+	//pRectFast2->Transform()->SetRelativeScale(Vec3(45.f, 45.f, 45.f));
+	//pRectFast2->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+	//pRectFast2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
+	//pRectFast2->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+	//pRectFast2->Collider3D()->SetAbsolute(false);
+	//pRectFast2->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
+	//pRectFast2->Collider3D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+	//SpawnGameObject(pRectFast2, Vec3(0.f, 0.f, 0.f), 0);
 
-	pRectFast2->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
-	pRectFast2->MeshRender()->SetUsingMovingVec(true);
-
-	pRectFast2->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	pRectFast2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
-	pRectFast2->MeshRender()->GetDynamicMaterial(0);
-
-	pRectFast2->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Fighter.bmp"));
-	pRectFast2->MeshRender()->GetMaterial(0)->SetTexParam(TEX_3, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Dots.jpg"));
-
-	SpawnGameObject(pRectFast2, Vec3(-300.f, 0.f, 500.f), 0);
 
 
 	// Anim Test Object
-	CGameObject* pAnimTestObj = new CGameObject;
-	pAnimTestObj->SetName(L"AnimTestObj");
+	//CGameObject* pAnimTestObj = new CGameObject;
+	//pAnimTestObj->SetName(L"AnimTestObj");
 
-	pAnimTestObj->AddComponent(new CMeshRender);
-	pAnimTestObj->AddComponent(new CAnimator2D);
-	pAnimTestObj->AddComponent(new CTransform);
+	//pAnimTestObj->AddComponent(new CMeshRender);
+	//pAnimTestObj->AddComponent(new CAnimator2D);
+	//pAnimTestObj->AddComponent(new CTransform);
 
-	pAnimTestObj->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	pAnimTestObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
+	//pAnimTestObj->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	//pAnimTestObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
 
-	pAnimTestObj->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 0.f));
+	//pAnimTestObj->Transform()->SetRelativeScale(Vec3(0.f, 0.f, 0.f));
 
-	// Å×½ºÆ®¸¦ ÇØº¸°í ½ÍÀºµ¥ FindRes ¿¡ CAnim2D°¡ ¾ø¾î¼­ ¸øÇØºÃ½À´Ï´Ù..
-	// Ãß°¡ÇÒ¶ó°í ¸¶À½ ¸ÔÀ¸¸é ÇÒ ¼ö ÀÖÀ» °Í °°±äÇÑµ¥, ³Ê¹« Å©°Ô ¹Ù²Ù´Â °Í °°¾Æ ÇØº¸Áø ¾Ê¾Ò½À´Ï´Ù.
+	// í…ŒìŠ¤íŠ¸ë¥¼ í•´ë³´ê³  ì‹¶ì€ë° FindRes ì— CAnim2Dê°€ ì—†ì–´ì„œ ëª»í•´ë´¤ìŠµë‹ˆë‹¤..
+	// ì¶”ê°€í• ë¼ê³  ë§ˆìŒ ë¨¹ìœ¼ë©´ í•  ìˆ˜ ìžˆì„ ê²ƒ ê°™ê¸´í•œë°, ë„ˆë¬´ í¬ê²Œ ë°”ê¾¸ëŠ” ê²ƒ ê°™ì•„ í•´ë³´ì§„ ì•Šì•˜ìŠµë‹ˆë‹¤.
 	//pAnimTestObj->Animator2D()->SetCurAnim(CResMgr::GetInst()->FindRes<CAnim2D>(L"Link_Basic").Get());
 
 
-	SpawnGameObject(pAnimTestObj, Vec3(-200.f, 0.f, 300.f), 0.f);
+	//SpawnGameObject(pAnimTestObj, Vec3(0.f, 0.f, 0.f), 0.f);
 
 
 
-	// Ãæµ¹ ½ÃÅ³ ·¹ÀÌ¾î Â¦ ÁöÁ¤
-	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");	
+	// ì¶©ëŒ ì‹œí‚¬ ë ˆì´ì–´ ì§ ì§€ì •
+	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");
 }

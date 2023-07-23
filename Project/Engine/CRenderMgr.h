@@ -61,8 +61,11 @@ private:
     CGameObject*                m_GizMoTargetObject;  //기즈모가 생겨야할 타겟 오브젝트
     bool                        m_bGizmoObjectChanged;
 
+    bool                        b_IsImGuiHovered; //Imgui와 상호작용중인 상태라면 특정 키를 안먹히도록 하는데 사용
+   
     Ptr<CTexture>               m_RTCopyTex;
 
+ 
     // 전장의 안개
     Ptr<CFogOfWarShader>        m_FogOfWarShader;   //전장의 안개 ComputeShader
     vector<ColliderStruct>      m_vecWallObject;    //Ray에 충돌될 가능성이 있는 벽 오브젝트
@@ -82,8 +85,7 @@ private:
 
     int                         m_iMaxRWSize;
     float                       m_FogFilterTime;
-
-
+ 
     void (CRenderMgr::* RENDER_FUNC)(void);
 
 public:
@@ -124,6 +126,10 @@ public:
 
     const vector<CLight3D*> GetLight3D() { return m_vecLight3D; }
 
+ 
+    bool GetIsImGuiHovered() { return b_IsImGuiHovered; }
+    void SetIsImGuiHovered(bool _IsHovered) { b_IsImGuiHovered = _IsHovered; }
+ 
 
 public:
     CGameObject* GetGizMoTargetObj() { return m_GizMoTargetObject; }   //기즈모가 생겨야할 타겟오브젝트 게터, 세터 함수

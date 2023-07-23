@@ -5,6 +5,7 @@
 #include <Engine\CTransform.h>
 #include <Engine\CLevelMgr.h>
 #include <Engine\CKeyMgr.h>
+#include <Engine/CEventMgr.h>
 
 #include "TransformUI.h"
 #include "MeshRenderUI.h"
@@ -18,6 +19,7 @@
 #include "Light3DUI.h"
 #include "FsmUI.h"
 #include "ParticleSystemUI.h"
+#include "PathFinderUI.h"
 
 #include "MeshDataUI.h"
 #include "TextureUI.h"
@@ -113,6 +115,10 @@ InspectorUI::InspectorUI()
 	m_arrComUI[(UINT)COMPONENT_TYPE::LANDSCAPE]->SetSize(0.f, 600.f);
 	AddChildUI(m_arrComUI[(UINT)COMPONENT_TYPE::LANDSCAPE]);
 
+	m_arrComUI[(UINT)COMPONENT_TYPE::PATHFINDER] = new PathFinderUI;
+	m_arrComUI[(UINT)COMPONENT_TYPE::PATHFINDER]->SetSize(0.f, 150.f);
+	AddChildUI(m_arrComUI[(UINT)COMPONENT_TYPE::PATHFINDER]);
+
 
 	// ResUI
 	m_arrResUI[(UINT)RES_TYPE::MESHDATA] = new MeshDataUI;
@@ -158,7 +164,17 @@ void InspectorUI::init()
 
 void InspectorUI::tick()
 {
-	
+	if (CEventMgr::GetInst()->IsLevelChanged()) {
+		if (m_pTargetObj) {
+			vector<CGameObject*> GC = CEventMgr::GetInst()->GetGC();
+			vector<CGameObject*>::iterator iter = find(GC.begin(), GC.end(), m_pTargetObj);
+			if (iter != GC.end()) {
+				SetTargetObject(nullptr);
+			}
+		}
+	}
+
+
 }
 
 int InspectorUI::render_update()

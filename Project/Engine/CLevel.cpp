@@ -31,6 +31,14 @@ void CLevel::begin()
 	}
 }
 
+void CLevel::RegisterObject()
+{
+	for (UINT i = 0; i < MAX_LAYER; ++i)
+	{
+		m_arrLayer[i]->RegisterObject();
+	}
+}
+
 void CLevel::tick()
 {
 	for (UINT i = 0; i < MAX_LAYER; ++i)

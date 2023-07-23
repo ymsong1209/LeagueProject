@@ -14,6 +14,7 @@ private:
 
 public:    
     void begin();
+    void RegisterObject();
     void tick();
     void finaltick(); 
 

@@ -1,0 +1,17 @@
+Crab_Dance,0,38
+Crab_Dash,39,42
+Crab_Dash_Out,43,47
+Crab_Flee_toRun,48,54
+Crab_Hide,55,79
+Crab_Idle_toRun,80,86
+Crab_Run_toFlee,87,93
+Crab_Spawn,94,133
+Crab_Stun,134,142
+Idle1,143,219
+Run,220,232
+sru_crab_flee2,233,271
+sru_crab_flee,272,310
+Turn_Left_180,311,335
+Turn_Left_45,336,360
+Turn_Right_180,361,385
+Turn_Right_45,386,410

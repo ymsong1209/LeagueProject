@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "CCamera.h"
 
 
@@ -16,7 +16,7 @@
 
 #include "CMRT.h"
 #include "CLight3D.h"
- 
+
 #include "CResMgr.h"
 #include "CKeyMgr.h"
 #include "CRenderMgr.h"
@@ -30,21 +30,20 @@
 
 
 
-
-
 CCamera::CCamera()
 	: CComponent(COMPONENT_TYPE::CAMERA)
 	, m_Frustum(this)
 	, m_fWidth(0.f)
 	, m_fAspectRatio(1.f)
-	, m_fScale(1.f)
+	, m_fScale(4.1f)
 	, m_fFar(50000.f)
 	, m_ProjType(PROJ_TYPE::ORTHOGRAPHIC)
 	, m_iLayerMask(0)
 	, m_iCamIdx(-1)
 	, m_bShowFrustumDebug(false)
 	, m_bViewGizmoBounding(false)
-	
+	, m_isGizmoEditMode(1)
+	, m_fFov(30.f)
 {
 	SetName(L"Camera");
 
@@ -66,13 +65,13 @@ CCamera::CCamera(const CCamera& _Other)
 	, m_iCamIdx(-1)
 	, m_bShowFrustumDebug(_Other.m_bShowFrustumDebug)
 	, m_bViewGizmoBounding(_Other.m_bViewGizmoBounding)
+	, m_fFov(_Other.m_fFov)
 {
 	SetName(L"Camera");
 }
 
 CCamera::~CCamera()
 {	
-	
 }
 
 void CCamera::begin()
@@ -90,14 +89,14 @@ void CCamera::finaltick()
 	CalcProjMat();
 
 
-	// Play»óÅÂÀÏ¶§ ¾Æ·¡ÀÇ ³»¿ëµéÀº Main Camera¿¡¼­¸¸ ¼öÇàÇÏµµ·Ï ÇÔ.
+	// Playìƒíƒœì¼ë•Œ ì•„ë˜ì˜ ë‚´ìš©ë“¤ì€ Main Cameraì—ì„œë§Œ ìˆ˜í–‰í•˜ë„ë¡ í•¨.
 	if (CLevelMgr::GetInst()->GetCurLevel()->GetState() == LEVEL_STATE::PLAY &&
 		CRenderMgr::GetInst()->GetPlayMainCam() != this)
 		return;
 
 	m_Frustum.finaltick();
 
-	// ¸¶¿ì½º¹æÇâ Á÷¼± °è»ê
+	// ë§ˆìš°ìŠ¤ë°©í–¥ ì§ì„  ê³„ì‚°
 	CalRay();
 
 	//CollideRay();
@@ -106,26 +105,25 @@ void CCamera::finaltick()
 
 void CCamera::CalRay()
 {
-	// ¸¶¿ì½º ¹æÇâÀ» ÇâÇÏ´Â Ray ±¸ÇÏ±â
-	// SwapChain Å¸°ÙÀÇ ViewPort Á¤º¸
+	// ë§ˆìš°ìŠ¤ ë°©í–¥ì„ í–¥í•˜ëŠ” Ray êµ¬í•˜ê¸°
+	// SwapChain íƒ€ê²Ÿì˜ ViewPort ì •ë³´
 	CMRT* pMRT = CRenderMgr::GetInst()->GetMRT(MRT_TYPE::SWAPCHAIN);
 	D3D11_VIEWPORT tVP = pMRT->GetViewPort();
 
-	//  ÇöÀç ¸¶¿ì½º ÁÂÇ¥
+	//  í˜„ì¬ ë§ˆìš°ìŠ¤ ì¢Œí‘œ
 	Vec2 vMousePos = CKeyMgr::GetInst()->GetMousePos();
-
 
 	if (m_ProjType == PROJ_TYPE::PERSPECTIVE)
 	{
-		// Á÷¼±Àº Ä«¸Ş¶óÀÇ ÁÂÇ¥¸¦ ¹İµå½Ã Áö³­´Ù.
+		// ì§ì„ ì€ ì¹´ë©”ë¼ì˜ ì¢Œí‘œë¥¼ ë°˜ë“œì‹œ ì§€ë‚œë‹¤.
 		m_ray.vStart = Transform()->GetWorldPos();
 
-		// view space ¿¡¼­ÀÇ ¹æÇâ
+		// view space ì—ì„œì˜ ë°©í–¥
 		m_ray.vDir.x = ((((vMousePos.x - tVP.TopLeftX) * 2.f / tVP.Width) - 1.f) - m_matProj._31) / m_matProj._11;
 		m_ray.vDir.y = (-(((vMousePos.y - tVP.TopLeftY) * 2.f / tVP.Height) - 1.f) - m_matProj._32) / m_matProj._22;
 		m_ray.vDir.z = 1.f;
 
-		// world space ¿¡¼­ÀÇ ¹æÇâ
+		// world space ì—ì„œì˜ ë°©í–¥
 		m_ray.vDir = XMVector3TransformNormal(m_ray.vDir, m_matViewInv);
 		m_ray.vDir.Normalize();
 	}
@@ -138,11 +136,11 @@ void CCamera::CalRay()
 
 		Vec2 MousePos = CKeyMgr::GetInst()->GetMousePos() - CamPos;
 
-		Vec3 Addx = MousePos.x * Transform()->GetWorldDir(DIR_TYPE::RIGHT) * (1.f / m_fScale) ;
-		Vec3 Addy = MousePos.y * Transform()->GetWorldDir(DIR_TYPE::UP) * ( 1.f / m_fScale);
+		Vec3 Addx = MousePos.x * Transform()->GetWorldDir(DIR_TYPE::RIGHT) * (1.f / m_fScale);
+		Vec3 Addy = MousePos.y * Transform()->GetWorldDir(DIR_TYPE::UP) * (1.f / m_fScale);
 
-		// Add¾Õ¿¡ -¸¦ ºÙ¿©¾ß ÇÏ´Â ÀÌÀ¯´Â DirectXÀÇ yÃà°ú È­¸é¿¡¼­ÀÇ yÃàÀÇ Áõ°¡ ¹æÇâÀÌ
-		// ¹İ´ëÀÌ±â ¶§¹®ÀÌ´Ù.
+		// Addì•ì— -ë¥¼ ë¶™ì—¬ì•¼ í•˜ëŠ” ì´ìœ ëŠ” DirectXì˜ yì¶•ê³¼ í™”ë©´ì—ì„œì˜ yì¶•ì˜ ì¦ê°€ ë°©í–¥ì´
+		// ë°˜ëŒ€ì´ê¸° ë•Œë¬¸ì´ë‹¤.
 		m_ray.vStart = Transform()->GetWorldPos() + Addx - Addy;
 		m_ray.vDir = Transform()->GetWorldDir(DIR_TYPE::FRONT);
 	}
@@ -166,29 +164,27 @@ void CCamera::CollideRay()
 	{
 		vector<CGameObject*> Objects = CurLevel->GetLayer(i)->GetObjects();
 
-
 		for (int j = 0; j < Objects.size(); ++j)
 		{
 			IntersectResult result = IsCollidingBtwRayRect(m_ray, Objects[j]);
 			IntersectResult CubeResult = IsCollidingBtwRayCube(m_ray, Objects[j]);
 
-			// ¸¸¾à Ãæµ¹ÁßÀÌ ¿´´Ù¸é EndOverlap ÈÄº¸±º¿¡ ³Ö¾î¾ß ÇÔ (Ray - Rect¸¦ ¸»ÇÏ´Â °ÍÀÓ)
+			// ë§Œì•½ ì¶©ëŒì¤‘ì´ ì˜€ë‹¤ë©´ EndOverlap í›„ë³´êµ°ì— ë„£ì–´ì•¼ í•¨ (Ray - Rectë¥¼ ë§í•˜ëŠ” ê²ƒì„)
 			if (Objects[j]->Collider2D())
 			{
 				if (Objects[j]->Collider2D()->IsCollidedFromRay() == true)
 				{
-					// Ãæµ¹ÁßÀÌ¿´´Âµ¥ ÀÌ¹øÇÁ·¹ÀÓ¿¡¼­´Â Ãæµ¹ÇØÁ¦°¡ µÇ¾úÀ½À¸·Î End Ray OverlapÀ» È£ÃâÇØÁÜ
+					// ì¶©ëŒì¤‘ì´ì˜€ëŠ”ë° ì´ë²ˆí”„ë ˆì„ì—ì„œëŠ” ì¶©ëŒí•´ì œê°€ ë˜ì—ˆìŒìœ¼ë¡œ End Ray Overlapì„ í˜¸ì¶œí•´ì¤Œ
 					if (result.bResult == false)
 					{
 						Objects[j]->Collider2D()->SetCollidedFromRay(false);
 						Objects[j]->Collider2D()->EndRayOverlap();
 					}
 
-					// ÀÌ°æ¿ì´Â °è¼Ó Ãæµ¹ÁßÀÌÁö´Ù. ÇÏÁö¸¸ °¡Àå °¡±îÀÌ ÀÖ´Â ¹°Ã¼°¡ ¾Æ´Ï¶ó¸é End Ray OverlapÀ» È£ÃâÇØ¾ß ÇÏ±â¿¡
-					// ÈÄº¸±º¿¡ ³Ö¾îÁØ´Ù.
+					// ì´ê²½ìš°ëŠ” ê³„ì† ì¶©ëŒì¤‘ì´ì§€ë‹¤. í•˜ì§€ë§Œ ê°€ì¥ ê°€ê¹Œì´ ìˆëŠ” ë¬¼ì²´ê°€ ì•„ë‹ˆë¼ë©´ End Ray Overlapì„ í˜¸ì¶œí•´ì•¼ í•˜ê¸°ì—
+					// í›„ë³´êµ°ì— ë„£ì–´ì¤€ë‹¤.
 					else
 					{
-
 						TempEndOverlapRect.push_back(Objects[j]);
 					}
 				}
@@ -196,7 +192,7 @@ void CCamera::CollideRay()
 				//if (result.vCrossPoint != Vec3(0.f, 0.f, 0.f))
 				if (result.bResult == true)
 				{
-					// ÃÖ´Ü °Å¸®¿¡ ÀÖ´Â ObjectÀÎÁö È®ÀÎÇØ¾ß ÇÑ´Ù.
+					// ìµœë‹¨ ê±°ë¦¬ì— ìˆëŠ” Objectì¸ì§€ í™•ì¸í•´ì•¼ í•œë‹¤.
 					if (result.fResult < fRectResult)
 					{
 						fRectResult = result.fResult;
@@ -209,18 +205,17 @@ void CCamera::CollideRay()
 			{
 				if (Objects[j]->Collider3D()->IsCollidedFromRay() == true)
 				{
-					// Ãæµ¹ÁßÀÌ¿´´Âµ¥ ÀÌ¹øÇÁ·¹ÀÓ¿¡¼­´Â Ãæµ¹ÇØÁ¦°¡ µÇ¾úÀ½À¸·Î End Ray OverlapÀ» È£ÃâÇØÁÜ
+					// ì¶©ëŒì¤‘ì´ì˜€ëŠ”ë° ì´ë²ˆí”„ë ˆì„ì—ì„œëŠ” ì¶©ëŒí•´ì œê°€ ë˜ì—ˆìŒìœ¼ë¡œ End Ray Overlapì„ í˜¸ì¶œí•´ì¤Œ
 					if (CubeResult.bResult == false)
 					{
 						Objects[j]->Collider3D()->SetCollidedFromRay(false);
 						Objects[j]->Collider3D()->EndRayOverlap();
 					}
 
-					// ÀÌ°æ¿ì´Â °è¼Ó Ãæµ¹ÁßÀÌÁö´Ù. ÇÏÁö¸¸ °¡Àå °¡±îÀÌ ÀÖ´Â ¹°Ã¼°¡ ¾Æ´Ï¶ó¸é End Ray OverlapÀ» È£ÃâÇØ¾ß ÇÏ±â¿¡
-					// ÈÄº¸±º¿¡ ³Ö¾îÁØ´Ù.
+					// ì´ê²½ìš°ëŠ” ê³„ì† ì¶©ëŒì¤‘ì´ì§€ë‹¤. í•˜ì§€ë§Œ ê°€ì¥ ê°€ê¹Œì´ ìˆëŠ” ë¬¼ì²´ê°€ ì•„ë‹ˆë¼ë©´ End Ray Overlapì„ í˜¸ì¶œí•´ì•¼ í•˜ê¸°ì—
+					// í›„ë³´êµ°ì— ë„£ì–´ì¤€ë‹¤.
 					else
 					{
-
 						TempEndOverlapCube.push_back(Objects[j]);
 					}
 				}
@@ -228,7 +223,7 @@ void CCamera::CollideRay()
 				//if (result.vCrossPoint != Vec3(0.f, 0.f, 0.f))
 				if (CubeResult.bResult == true)
 				{
-					// ÃÖ´Ü °Å¸®¿¡ ÀÖ´Â ObjectÀÎÁö È®ÀÎÇØ¾ß ÇÑ´Ù.
+					// ìµœë‹¨ ê±°ë¦¬ì— ìˆëŠ” Objectì¸ì§€ í™•ì¸í•´ì•¼ í•œë‹¤.
 					if (CubeResult.fResult < fCubeResult)
 					{
 						fCubeResult = CubeResult.fResult;
@@ -242,20 +237,20 @@ void CCamera::CollideRay()
 
 	if (FinalRectObject != nullptr)
 	{
-		// ¿©±â±îÁö ¿ÔÀ¸¸é ÇöÀç Ãæµ¹ÁßÀÌ°í °¡Àå °¡±î¿î ´ÜÇÏ³ªÀÇ Rect Collider¸¦ Áö´Ñ ObjectÀÓ
+		// ì—¬ê¸°ê¹Œì§€ ì™”ìœ¼ë©´ í˜„ì¬ ì¶©ëŒì¤‘ì´ê³  ê°€ì¥ ê°€ê¹Œìš´ ë‹¨í•˜ë‚˜ì˜ Rect Colliderë¥¼ ì§€ë‹Œ Objectì„
 		if (FinalRectObject->Collider2D()->IsCollidedFromRay())
 		{
 			FinalRectObject->Collider2D()->OnRayOverlap();
 		}
 
-		// Begin Ray OverlapÀ» ÇØ¾ßÇÑ´Ù.
+		// Begin Ray Overlapì„ í•´ì•¼í•œë‹¤.
 		else
 		{
 			FinalRectObject->Collider2D()->SetCollidedFromRay(true);
 			FinalRectObject->Collider2D()->BeginRayOverlap();
 		}
 
-		// TemObjectµéÁß¿¡¼­ FinalObject°¡ ¾Æ´Ñ ObjectµéÀº ¸ğµÎ EndRayOverlapÀ» È£ÃâÇØ¾ßÇÑ´Ù.
+		// TemObjectë“¤ì¤‘ì—ì„œ FinalObjectê°€ ì•„ë‹Œ Objectë“¤ì€ ëª¨ë‘ EndRayOverlapì„ í˜¸ì¶œí•´ì•¼í•œë‹¤.
 		for (int i = 0; i < TempEndOverlapRect.size(); ++i)
 		{
 			if (TempEndOverlapRect[i] != FinalRectObject)
@@ -269,20 +264,20 @@ void CCamera::CollideRay()
 
 	if (FinalCubeObject != nullptr)
 	{
-		// ¿©±â±îÁö ¿ÔÀ¸¸é ÇöÀç Ãæµ¹ÁßÀÌ°í °¡Àå °¡±î¿î ´ÜÇÏ³ªÀÇ Cube Collider¸¦ Áö´Ñ ObjectÀÓ
+		// ì—¬ê¸°ê¹Œì§€ ì™”ìœ¼ë©´ í˜„ì¬ ì¶©ëŒì¤‘ì´ê³  ê°€ì¥ ê°€ê¹Œìš´ ë‹¨í•˜ë‚˜ì˜ Cube Colliderë¥¼ ì§€ë‹Œ Objectì„
 		if (FinalCubeObject->Collider3D()->IsCollidedFromRay())
 		{
 			FinalCubeObject->Collider3D()->OnRayOverlap();
 		}
 
-		// Begin Ray OverlapÀ» ÇØ¾ßÇÑ´Ù.
+		// Begin Ray Overlapì„ í•´ì•¼í•œë‹¤.
 		else
 		{
 			FinalCubeObject->Collider3D()->SetCollidedFromRay(true);
 			FinalCubeObject->Collider3D()->BeginRayOverlap();
 		}
 
-		// TemObjectµéÁß¿¡¼­ FinalObject°¡ ¾Æ´Ñ ObjectµéÀº ¸ğµÎ EndRayOverlapÀ» È£ÃâÇØ¾ßÇÑ´Ù.
+		// TemObjectë“¤ì¤‘ì—ì„œ FinalObjectê°€ ì•„ë‹Œ Objectë“¤ì€ ëª¨ë‘ EndRayOverlapì„ í˜¸ì¶œí•´ì•¼í•œë‹¤.
 		for (int i = 0; i < TempEndOverlapCube.size(); ++i)
 		{
 			if (TempEndOverlapCube[i] != FinalCubeObject)
@@ -321,8 +316,7 @@ bool CCamera::CheckRayCollideBox(CGameObject* _object)
 
 		float DistBtwRayObj = Vec2::Distance(RayObjPos, CollideObjPos);
 
-
-		//»ç°Å¸® ³»¿¡ object°¡ ¾Èµé¾î¿À¸é continue;
+		// ì‚¬ê±°ë¦¬ ë‚´ì— objectê°€ ì•ˆë“¤ì–´ì˜¤ë©´ continue;
 		if (DistBtwRayObj > RayRadius)
 		{
 			continue;
@@ -330,8 +324,7 @@ bool CCamera::CheckRayCollideBox(CGameObject* _object)
 		}
 
 		
-
-		//»ç°Å¸® ³»¿¡ µé¾î¿À¸é rayobject->CurObject·Î ray-box Ãæµ¹ °Ë»ç¸¦ ÇÔ
+		// ì‚¬ê±°ë¦¬ ë‚´ì— ë“¤ì–´ì˜¤ë©´ rayobject->CurObjectë¡œ ray-box ì¶©ëŒ ê²€ì‚¬ë¥¼ í•¨.
 		for (int j = 0; j < WallVec.size(); ++j)
 		{
 			if (IsCollidingBtwRayWall(RayObjPos, CollideObjPos, RayRadius, DistBtwRayObj, WallVec[j]))
@@ -349,7 +342,7 @@ bool CCamera::CheckRayCollideBox(CGameObject* _object)
 		}
 
 
-		//»çÀÌ¿¡ ¾Æ¹«°Íµµ ¾øÀ» °æ¿ì
+		// ì‚¬ì´ì— ì•„ë¬´ê²ƒë„ ì—†ì„ ê²½ìš°
 		result = true;
 		break;
 
@@ -362,15 +355,15 @@ bool CCamera::CheckRayCollideBox(CGameObject* _object)
 void CCamera::CalcViewMat()
 {
 	// ==============
-	// View Çà·Ä °è»ê
+	// View í–‰ë ¬ ê³„ì‚°
 	// ==============
 	m_matView = XMMatrixIdentity();
 
-	// Ä«¸Ş¶ó ÁÂÇ¥¸¦ ¿øÁ¡À¸·Î ÀÌµ¿
+	// ì¹´ë©”ë¼ ì¢Œí‘œë¥¼ ì›ì ìœ¼ë¡œ ì´ë™
 	Vec3 vCamPos = Transform()->GetRelativePos();
 	Matrix matViewTrans = XMMatrixTranslation(-vCamPos.x, -vCamPos.y, -vCamPos.z);
 
-	// Ä«¸Ş¶ó°¡ ¹Ù¶óº¸´Â ¹æÇâÀ» Z Ãà°ú ÆòÇàÇÏ°Ô ¸¸µå´Â È¸Àü Çà·ÄÀ» Àû¿ë
+	// ì¹´ë©”ë¼ê°€ ë°”ë¼ë³´ëŠ” ë°©í–¥ì„ Z ì¶•ê³¼ í‰í–‰í•˜ê²Œ ë§Œë“œëŠ” íšŒì „ í–‰ë ¬ì„ ì ìš©
 	Matrix matViewRot = XMMatrixIdentity();
 
 	Vec3 vR = Transform()->GetWorldDir(DIR_TYPE::RIGHT);
@@ -388,23 +381,23 @@ void CCamera::CalcViewMat()
 void CCamera::CalcProjMat()
 {
 	// =============
-	// Åõ¿µ Çà·Ä °è»ê
+	// íˆ¬ì˜ í–‰ë ¬ ê³„ì‚°
 	// =============
 	m_matProj = XMMatrixIdentity();
-	
+
 	if (PROJ_TYPE::ORTHOGRAPHIC == m_ProjType)
 	{
-		// Á÷±³ Åõ¿µ
+		// ì§êµ íˆ¬ì˜
 		float fHeight = m_fWidth / m_fAspectRatio;
 		m_matProj = XMMatrixOrthographicLH(m_fWidth * (1.f / m_fScale), fHeight * (1.f / m_fScale), 1.f, m_fFar);
 	}
 	else
-	{	
-		// ¿ø±Ù Åõ¿µ
-		m_matProj = XMMatrixPerspectiveFovLH(XM_PI / 2.f, m_fAspectRatio, 1.f, m_fFar);
+	{
+		// ì›ê·¼ íˆ¬ì˜
+		m_matProj = XMMatrixPerspectiveFovLH(XMConvertToRadians(m_fFov), m_fAspectRatio, 1.f, m_fFar);
 	}
 
-	// Åõ¿µÇà·Ä ¿ªÇà·Ä
+	// íˆ¬ì˜í–‰ë ¬ ì—­í–‰ë ¬
 	m_matProjInv = XMMatrixInverse(nullptr, m_matProj);
 
 
@@ -438,31 +431,32 @@ void CCamera::SetCameraIndex(int _idx)
 	CRenderMgr::GetInst()->RegisterCamera(this, m_iCamIdx);
 }
 
+
+
 void CCamera::SortObject()
 {
-	// ÀÌÀü ÇÁ·¹ÀÓ ºĞ·ùÁ¤º¸ Á¦°Å
+	// ì´ì „ í”„ë ˆì„ ë¶„ë¥˜ì •ë³´ ì œê±°
 	clear();
 
-	// ÇöÀç ·¹º§ °¡Á®¿Í¼­ ºĞ·ù
+	// í˜„ì¬ ë ˆë²¨ ê°€ì ¸ì™€ì„œ ë¶„ë¥˜
 	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
 
 	for (UINT i = 0; i < MAX_LAYER; ++i)
 	{
-		// ·¹ÀÌ¾î ¸¶½ºÅ© È®ÀÎ
+		// ë ˆì´ì–´ ë§ˆìŠ¤í¬ í™•ì¸
 		if (m_iLayerMask & (1 << i))
 		{
 			CLayer* pLayer = pCurLevel->GetLayer(i);
 			const vector<CGameObject*>& vecObject = pLayer->GetObjects();
 
-			m_LayMinDistance = GetFar();//±âÁî¸ğ Å×½ºÆ® :·¹ÀÌÄ³½ºÆ® ÇÒ¶§ °ãÃÄÀÖ´Â ¿ÀºêÁ§Æ® Ã¼Å©ÇÏ´Âµ¥ °ãÃÄÀÖ´Â ¿ÀºêÁ§Æ®Áß Ä«¸Ş¶óÀÇ °Å¸®°¡ °¡Àå ÀÛÀº °ªÀ» ±â·ÏÇÏ´Â º¯¼ö.
-			//ÀÌ´Â ¿ÀºêÁ§Æ® °Ë»çÇÒ¶§¸¶´Ù ÇÑ¹ø¾¿ ÃÊ±âÈ­¸¦ ÇØÁÖ¾î¾ßÇÔ.
-
+			m_LayMinDistance = GetFar();//ê¸°ì¦ˆëª¨ í…ŒìŠ¤íŠ¸ :ë ˆì´ìºìŠ¤íŠ¸ í• ë•Œ ê²¹ì³ìˆëŠ” ì˜¤ë¸Œì íŠ¸ ì²´í¬í•˜ëŠ”ë° ê²¹ì³ìˆëŠ” ì˜¤ë¸Œì íŠ¸ì¤‘ ì¹´ë©”ë¼ì˜ ê±°ë¦¬ê°€ ê°€ì¥ ì‘ì€ ê°’ì„ ê¸°ë¡í•˜ëŠ” ë³€ìˆ˜.
+			//ì´ëŠ” ì˜¤ë¸Œì íŠ¸ ê²€ì‚¬í• ë•Œë§ˆë‹¤ í•œë²ˆì”© ì´ˆê¸°í™”ë¥¼ í•´ì£¼ì–´ì•¼í•¨.
 
 			for (size_t j = 0; j < vecObject.size(); ++j)
 			{
 				CRenderComponent* pRenderCom = vecObject[j]->GetRenderComponent();
 
-				// ·»´õ¸µ ±â´ÉÀÌ ¾ø´Â ¿ÀºêÁ§Æ®´Â Á¦¿Ü
+				// ë Œë”ë§ ê¸°ëŠ¥ì´ ì—†ëŠ” ì˜¤ë¸Œì íŠ¸ëŠ” ì œì™¸
 				if (nullptr == pRenderCom
 					|| nullptr == pRenderCom->GetMaterial(0))
 					continue;
@@ -477,7 +471,7 @@ void CCamera::SortObject()
 
 					if (pRenderCom->IsShowDebugBound())
 					{
-						// Bounding Debug Shape ±×¸®±â
+						// Bounding Debug Shape ê·¸ë¦¬ê¸°
 						tDebugBoundingInfo info = {};
 						info.vWorldPos = vWorldPos;
 						info.fBounding = pRenderCom->GetBounding();
@@ -489,12 +483,20 @@ void CCamera::SortObject()
 						continue;
 				}
 
-				GizmoClickCheck(vecObject[j], pCurLevel); //±âÁî¸ğ Å¬¸¯ Ã¼Å©
+				if (m_isGizmoEditMode == 1) //ì—ë””íŠ¸ ëª¨ë“œì¼ë•Œë§Œ í´ë¦­ì²´í¬
+					GizmoClickCheck(vecObject[j], pCurLevel); //ê¸°ì¦ˆëª¨ í´ë¦­ ì²´í¬
+
+				//ì•„ì›ƒë¼ì¸ ì¶œë ¥ ì˜¤ë¸Œì íŠ¸ í…ŒìŠ¤íŠ¸
+				if (vecObject[j]->Transform()->GetUseMouseOutline() == true)
+				{
+					if (OutlineCheck(vecObject[j]))
+						m_vecContour.push_back(vecObject[j]);
+				}
 
 				
 				CollideRay();
 
-				//Ray¸¦ ½î´Â ¿ÀºêÁ§Æ®¶û CurObject»çÀÌ¿¡ º®ÀÌ ÀÖÀ½ or RayObjectÀÇ ½Ã¾ß ¹üÀ§ ³»¿¡ CurObject°¡ ¾Èµé¾î¿È
+				//Rayë¥¼ ì˜ëŠ” ì˜¤ë¸Œì íŠ¸ë‘ CurObjectì‚¬ì´ì— ë²½ì´ ìˆìŒ or RayObjectì˜ ì‹œì•¼ ë²”ìœ„ ë‚´ì— CurObjectê°€ ì•ˆë“¤ì–´ì˜´
 
 				if (vecObject[j]->GetRenderComponent() != nullptr && vecObject[j]->GetRenderComponent()->IsUsingRaySightCulling() && vecObject[j]->Transform()->GetIsShootingRay() != true)
 				{
@@ -505,7 +507,7 @@ void CCamera::SortObject()
 			 
 				 
 
-				// ½¦ÀÌ´õ µµ¸ŞÀÎ¿¡ µû¸¥ ºĞ·ù
+				// ì‰ì´ë” ë„ë©”ì¸ì— ë”°ë¥¸ ë¶„ë¥˜
 				SHADER_DOMAIN eDomain = pRenderCom->GetMaterial(0)->GetShader()->GetDomain();
 				switch (eDomain)
 				{
@@ -529,7 +531,7 @@ void CCamera::SortObject()
 					break;
 				case SHADER_DOMAIN::DOMAIN_UI:
 					m_vecUI.push_back(vecObject[j]);
-					break;				
+					break;
 				}
 			}
 		}
@@ -559,15 +561,51 @@ void CCamera::SortShadowObject()
 	}
 }
 
+bool CCamera::OutlineCheck(CGameObject* _Obj)
+{
+	if (_Obj->Collider3D() != nullptr) //ì½œë¦¬ì „ì´ ìˆì„ê²½ìš°ì—ë§Œ ì•„ì›ƒë¼ì¸ ì¶œë ¥ê°€ëŠ¥(ë§ˆìš°ìŠ¤ì™€ êµì°¨ì  ì²´í¬ë¥¼ í•´ì•¼í•˜ê¸° ë•Œë¬¸)
+	{
+		//ìœ¤ê³½ì„  ì¶œë ¥ì€ ì½œë¦¬ì „ì´ ìŠ¤í”¼ì–´,íë¸Œ,ë ‰íŠ¸ì¼ë•Œë§Œ í•¨.(ë ˆì´ë‘ ì¶©ëŒì²´í¬ ê°€ëŠ¥í•œ ê²ƒë“¤ë§Œ)
+		COLLIDER3D_TYPE Type = _Obj->Collider3D()->GetCollider3DType();
+		if (Type == COLLIDER3D_TYPE::CUBE)
+		{
+			IntersectResult Result = IsCollidingBtwRayCube(m_ray, _Obj);
+			return Result.bResult;
+		}
+		else if (Type == COLLIDER3D_TYPE::SPHERE)
+		{ 
+			//ì¼ë‹¨ ì›ì˜ xì¶• ê¸¸ì´ë¥¼ ë°˜ì§€ë¦„ìœ¼ë¡œ ìƒê°í•˜ê³  ê³„ì‚°í•¨. í•˜ì§€ë§Œ íƒ€ì›ê³¼ ë ˆì´ ì¶©ëŒì€ ì¡°ê¸ˆë” ë³µì¡í•¨..
+			//RayIntersectsSphereëŠ” ì¼ë°˜ íƒ€ì›x ì¼ë°˜ êµ¬ì²´ ê¸°ì¤€ ì¶©ëŒì²´í¬ì„
+			Vec3 Pos = _Obj->Transform()->GetWorldPos();
+			Matrix scaleMatrix = _Obj->Collider3D()->GetColliderScaleMat();
+			Vec3 scale = {};
+			scale.x = scaleMatrix._11;
+			bool IsCollide = RayIntersectsSphere(Pos, scale.x);
+			return IsCollide;
+		}
+	}
+
+	else if (_Obj->Collider2D() != nullptr)
+	{
+		COLLIDER2D_TYPE Type = _Obj->Collider2D()->GetCollider2DType();
+		if (Type == COLLIDER2D_TYPE::RECT)
+		{
+			IntersectResult Result = IsCollidingBtwRayRect(m_ray, _Obj);
+			return Result.bResult;
+		}
+	}
+
+}
+
 void CCamera::render()
 {
-	// Çà·Ä ¾÷µ¥ÀÌÆ®
+	// í–‰ë ¬ ì—…ë°ì´íŠ¸
 	g_transform.matView = m_matView;
 	g_transform.matViewInv = m_matViewInv;
 	g_transform.matProj = m_matProj;
 
 	// =====================================
-	// ½¦ÀÌ´õ µµ¸ŞÀÎ¿¡ µû¶ó¼­ ¼øÂ÷ÀûÀ¸·Î ±×¸®±â
+	// ì‰ì´ë” ë„ë©”ì¸ì— ë”°ë¼ì„œ ìˆœì°¨ì ìœ¼ë¡œ ê·¸ë¦¬ê¸°
 	// =====================================
 	// Deferred Object
 	CRenderMgr::GetInst()->GetMRT(MRT_TYPE::DEFERRED)->OMSet();
@@ -579,7 +617,7 @@ void CCamera::render()
 
 	// Lighting
 	CRenderMgr::GetInst()->GetMRT(MRT_TYPE::LIGHT)->OMSet();
-	
+
 	const vector<CLight3D*> vecLight3D = CRenderMgr::GetInst()->GetLight3D();
 	for (size_t i = 0; i < vecLight3D.size(); ++i)
 	{
@@ -590,27 +628,25 @@ void CCamera::render()
 	CRenderMgr::GetInst()->GetMRT(MRT_TYPE::SWAPCHAIN)->OMSet();
 	render_merge();
 
-
 	// Forward Object	
 	render_opaque();
 	render_mask();
 	render_transparent();
 
+	// Outline :í¬ìŠ¤íŠ¸ í”„ë¡œì„¸ìŠ¤ ë‹¨ê³„ì— ë„£ì–´ë„ ìƒê´€ì€ì—†ì§€ë§Œ ì •ë¦¬ë¥¼ ìœ„í•´ ë”°ë¡œ. í…Œë‘ë¦¬ëŠ” ê¹Šì´ ëª¨ë‘ ê¸°ë¡ëœí›„ì— ë§ˆì§€ë§‰ì— ì§„í–‰
+	if(m_vecContour.size() > 0) //ì•„ì›ƒë¼ì¸ì„ ì¶œë ¥í•´ì•¼í•˜ëŠ” ì˜¤ë¸Œì íŠ¸ê°€ ìˆì„ê²½ìš°ì—ë§Œ ì‹œí–‰
+		render_Outline();
+
 	// PostProcess
 	render_postprocess();
-
 	// UI
 	render_ui();
 
-
- 
-
-	
 }
 
 void CCamera::render_depthmap()
 {
-	// ±¤¿ø Ä«¸Ş¶óÀÇ View, Proj ¼¼ÆÃ
+	// ê´‘ì› ì¹´ë©”ë¼ì˜ View, Proj ì„¸íŒ…
 	g_transform.matView = m_matView;
 	g_transform.matViewInv = m_matViewInv;
 	g_transform.matProj = m_matProj;
@@ -624,16 +660,16 @@ void CCamera::render_depthmap()
 
 IntersectResult CCamera::IsCollidingBtwRayRect(tRay& _ray, CGameObject* _Object)
 {
-	// ¸¸¾à¿¡ Collider2D°¡ ¾ø°Å³ª Rect¸ğ¾çÀÌ ¾Æ´Ñ °æ¿ì return
+	// ë§Œì•½ì— Collider2Dê°€ ì—†ê±°ë‚˜ Rectëª¨ì–‘ì´ ì•„ë‹Œ ê²½ìš° return
 	if (_Object->Collider2D() == nullptr || _Object->Collider2D()->GetColliderShape() != COLLIDER2D_TYPE::RECT)
 		return IntersectResult{ Vec3(0.f, 0.f, 0.f), 0.f, false };
 
 	Matrix ColliderWorldMat = _Object->Collider2D()->GetColliderWorldMat();
 
-	// Local RectÀÇ 3°³ÀÇ Pos¿¡ ´ëÇØ¼­ World Pos °è»êÀ» ÇØÁØ´Ù.
-	// Á¡ 4°³±îÁö ÇÊ¿ä¾ø°í 3°³¸¸ ÀÖÀ¸¸é µÊ
-	// ¾Æ·¡ÀÇ Á¤Á¡µéÀÇ ¼ø¼­´Â ÀÇ¹Ì°¡ ÀÖÀ½
-	// IntersectsLayÇÔ¼ö¿¡¼­ Æ¯Á¤ Á¤Á¡ÀÇ ¼ø¼­¿¡¼­¸¸ ¿Ã¹Ù¸£°Ô °è»êÇÏµµ·Ï ÇÔ
+	// Local Rectì˜ 3ê°œì˜ Posì— ëŒ€í•´ì„œ World Pos ê³„ì‚°ì„ í•´ì¤€ë‹¤.
+	// ì  4ê°œê¹Œì§€ í•„ìš”ì—†ê³  3ê°œë§Œ ìˆìœ¼ë©´ ë¨
+	// ì•„ë˜ì˜ ì •ì ë“¤ì˜ ìˆœì„œëŠ” ì˜ë¯¸ê°€ ìˆìŒ
+	// IntersectsLayí•¨ìˆ˜ì—ì„œ íŠ¹ì • ì •ì ì˜ ìˆœì„œì—ì„œë§Œ ì˜¬ë°”ë¥´ê²Œ ê³„ì‚°í•˜ë„ë¡ í•¨
 	Vec3 arrLocal[3] =
 	{
 		Vec3(-0.5f, -0.5f, 0.f),
@@ -643,29 +679,29 @@ IntersectResult CCamera::IsCollidingBtwRayRect(tRay& _ray, CGameObject* _Object)
 
 	for (int i = 0; i < 3; ++i)
 		arrLocal[i] = Vector4::Transform(Vec4(arrLocal[i], 1.f), ColliderWorldMat);
- 
+
 
 	return IntersectsLay(arrLocal, m_ray);
 }
 
 IntersectResult CCamera::IsCollidingBtwRayCube(tRay& _ray, CGameObject* _Object)
 {
-	// ¸¸¾à¿¡ Collider3D°¡ ¾ø°Å³ª Cube¸ğ¾çÀÌ ¾Æ´Ñ °æ¿ì return
+	// ë§Œì•½ì— Collider3Dê°€ ì—†ê±°ë‚˜ Cubeëª¨ì–‘ì´ ì•„ë‹Œ ê²½ìš° return
 	if (_Object->Collider3D() == nullptr || _Object->Collider3D()->GetCollider3DType() != COLLIDER3D_TYPE::CUBE)
 		return IntersectResult{ Vec3(0.f, 0.f, 0.f), 0.f, false };
 
 	Matrix ColliderWorldMat = _Object->Collider3D()->GetColliderWorldMat();
 
-	// À§ÀÇ IsCollidingBtwRayRectÇÔ¼ö¿Í °°Àº ¾Ë°í¸®ÁòÀ¸·Î °è»ê
-	// ´Ü Cube´Â ¸éÀÌ 6°³ÀÌ±â ¶§¹®¿¡ 6¹ø °è»êÇØ Áà¾ß ÇÏ´Â °ÍÀÓ
+	// ìœ„ì˜ IsCollidingBtwRayRectí•¨ìˆ˜ì™€ ê°™ì€ ì•Œê³ ë¦¬ì¦˜ìœ¼ë¡œ ê³„ì‚°
+	// ë‹¨ CubeëŠ” ë©´ì´ 6ê°œì´ê¸° ë•Œë¬¸ì— 6ë²ˆ ê³„ì‚°í•´ ì¤˜ì•¼ í•˜ëŠ” ê²ƒì„
 	Vec3 arrLocal[6][3] =
 	{
-		{Vec3(-0.5f, 0.5f, -0.5f),  Vec3(0.5f, 0.5f, -0.5f),  Vec3(-0.5f, 0.5f, 0.5f)},	 // À­¸é
-		{Vec3(-0.5f, -0.5f, -0.5f), Vec3(0.5f, -0.5f, -0.5f), Vec3(-0.5f, -0.5f, 0.5f)}, // ¹Ø¸é
-		{Vec3(-0.5f, -0.5f, -0.5f), Vec3(0.5f, -0.5f, -0.5f), Vec3(-0.5f, 0.5f, -0.5f)}, // ¾Õ¸é
-		{Vec3(-0.5f, -0.5f, 0.5f),  Vec3(0.5f, -0.5f, 0.5f),  Vec3(-0.5f, 0.5f, 0.5f)},  // µŞ¸é
-		{Vec3(-0.5f, 0.5f, -0.5f),  Vec3(-0.5f, -0.5f, -0.5f),Vec3(-0.5f, 0.5f, 0.5f)},  // ¿ŞÂÊ¸é
-		{Vec3(0.5f, 0.5f, -0.5f),   Vec3(0.5f, -0.5f, -0.5f), Vec3(0.5f, 0.5f, 0.5f)},   // ¿À¸¥ÂÊ¸é
+		{Vec3(-0.5f, 0.5f, -0.5f),  Vec3(0.5f, 0.5f, -0.5f),  Vec3(-0.5f, 0.5f, 0.5f)},	 // ìœ—ë©´
+		{Vec3(-0.5f, -0.5f, -0.5f), Vec3(0.5f, -0.5f, -0.5f), Vec3(-0.5f, -0.5f, 0.5f)}, // ë°‘ë©´
+		{Vec3(-0.5f, -0.5f, -0.5f), Vec3(0.5f, -0.5f, -0.5f), Vec3(-0.5f, 0.5f, -0.5f)}, // ì•ë©´
+		{Vec3(-0.5f, -0.5f, 0.5f),  Vec3(0.5f, -0.5f, 0.5f),  Vec3(-0.5f, 0.5f, 0.5f)},  // ë’·ë©´
+		{Vec3(-0.5f, 0.5f, -0.5f),  Vec3(-0.5f, -0.5f, -0.5f),Vec3(-0.5f, 0.5f, 0.5f)},  // ì™¼ìª½ë©´
+		{Vec3(0.5f, 0.5f, -0.5f),   Vec3(0.5f, -0.5f, -0.5f), Vec3(0.5f, 0.5f, 0.5f)},   // ì˜¤ë¥¸ìª½ë©´
 	};
 
 	for (int i = 0; i < 6; ++i)
@@ -699,7 +735,7 @@ IntersectResult CCamera::IsCollidingBtwRayCube(tRay& _ray, CGameObject* _Object)
 
 bool CCamera::IsCollidingBtwRayWall(Vec2& RayObjPos, Vec2& _CollideObjPos, float& _Raidus, float& _RayObjRadius, ColliderStruct& _ColliderData)
 {
-	// SphereÀÎÁö BoxÀÎÁö °ü°è¾øÀÌ º®°ú Source Ray »çÀÌÀÇ °Å¸®°¡ ¹İÁö¸§º¸´Ù ±æ °æ¿ì ¹Ù·Î false¹İÈ¯
+	// Sphereì¸ì§€ Boxì¸ì§€ ê´€ê³„ì—†ì´ ë²½ê³¼ Source Ray ì‚¬ì´ì˜ ê±°ë¦¬ê°€ ë°˜ì§€ë¦„ë³´ë‹¤ ê¸¸ ê²½ìš° ë°”ë¡œ false ë°˜í™˜
 	float WallPositionX =  _ColliderData.m_ColliderFinalMat._41;
 	float WallPositionZ = _ColliderData.m_ColliderFinalMat._43;
 
@@ -709,11 +745,11 @@ bool CCamera::IsCollidingBtwRayWall(Vec2& RayObjPos, Vec2& _CollideObjPos, float
 		return false;
 	}
 
-	// °Å¸® ¾È¿¡ ÀÖ´Â °æ¿ì·Î SphreÀÎÁö BoxÀÎÁö¿¡ µû¶ó °¥¸² 0 : Sphere, 1 : Box
+	// ê±°ë¦¬ ì•ˆì— ìˆëŠ” ê²½ìš°ë¡œ Sphereì¸ì§€ Boxì¸ì§€ì— ë”°ë¼ ê°ˆë¦¼ 0 : Sphere, 1 : Box
 	if (_ColliderData.m_ColliderType == 0)
 	{
-		// ÀÏ´Ü ÀÌ°æ¿ì´Â ·ÎÁ÷ ÀÛ¼º¾ÈÇØ³ùÀ½ ÃßÈÄ SphreÃæµ¹ÀÌ Ãß°¡µÇ¸é
-		// ÀÛ¼ºÇØ¾ßÇÔ
+		// ì¼ë‹¨ ì´ê²½ìš°ëŠ” ë¡œì§ ì‘ì„±ì•ˆí•´ë†”ã…ã…†ìŒ ì¶”í›„ Sphereì¶©ëŒì´ ì¶”ê°€ë˜ë©´
+		// ì‘ì„±í•´ì•¼í•¨
 		return false;
 	}
 
@@ -721,12 +757,12 @@ bool CCamera::IsCollidingBtwRayWall(Vec2& RayObjPos, Vec2& _CollideObjPos, float
 	{
 		Vec3 arrLocal[6][3] =
 		{
-			{Vec3(-0.5f, 0.5f, -0.5f),  Vec3(0.5f, 0.5f, -0.5f),  Vec3(-0.5f, 0.5f, 0.5f)},	 // À­¸é
-			{Vec3(-0.5f, -0.5f, -0.5f), Vec3(0.5f, -0.5f, -0.5f), Vec3(-0.5f, -0.5f, 0.5f)}, // ¹Ø¸é
-			{Vec3(-0.5f, -0.5f, -0.5f), Vec3(0.5f, -0.5f, -0.5f), Vec3(-0.5f, 0.5f, -0.5f)}, // ¾Õ¸é
-			{Vec3(-0.5f, -0.5f, 0.5f),  Vec3(0.5f, -0.5f, 0.5f),  Vec3(-0.5f, 0.5f, 0.5f)},  // µŞ¸é
-			{Vec3(-0.5f, 0.5f, -0.5f),  Vec3(-0.5f, -0.5f, -0.5f),Vec3(-0.5f, 0.5f, 0.5f)},  // ¿ŞÂÊ¸é
-			{Vec3(0.5f, 0.5f, -0.5f),   Vec3(0.5f, -0.5f, -0.5f), Vec3(0.5f, 0.5f, 0.5f)},   // ¿À¸¥ÂÊ¸é
+			{Vec3(-0.5f, 0.5f, -0.5f),  Vec3(0.5f, 0.5f, -0.5f),  Vec3(-0.5f, 0.5f, 0.5f)},	 // ï¿½ï¿½ï¿½ï¿½
+			{Vec3(-0.5f, -0.5f, -0.5f), Vec3(0.5f, -0.5f, -0.5f), Vec3(-0.5f, -0.5f, 0.5f)}, // ï¿½Ø¸ï¿½
+			{Vec3(-0.5f, -0.5f, -0.5f), Vec3(0.5f, -0.5f, -0.5f), Vec3(-0.5f, 0.5f, -0.5f)}, // ï¿½Õ¸ï¿½
+			{Vec3(-0.5f, -0.5f, 0.5f),  Vec3(0.5f, -0.5f, 0.5f),  Vec3(-0.5f, 0.5f, 0.5f)},  // ï¿½Ş¸ï¿½
+			{Vec3(-0.5f, 0.5f, -0.5f),  Vec3(-0.5f, -0.5f, -0.5f),Vec3(-0.5f, 0.5f, 0.5f)},  // ï¿½ï¿½ï¿½Ê¸ï¿½
+			{Vec3(0.5f, 0.5f, -0.5f),   Vec3(0.5f, -0.5f, -0.5f), Vec3(0.5f, 0.5f, 0.5f)},   // ï¿½ï¿½ï¿½ï¿½ï¿½Ê¸ï¿½
 		};
 
 		for (int i = 0; i < 6; ++i)
@@ -759,7 +795,7 @@ bool CCamera::IsCollidingBtwRayWall(Vec2& RayObjPos, Vec2& _CollideObjPos, float
 			}
 		}
 
-		// bResult°¡ TrueÀÎ°æ¿ì Wall°ú Ray°¡ Ãæµ¹µÈ °æ¿ìÀÓ
+		// bResultê°€ Trueì¸ ê²½ìš° Wallê³¼ Rayê°€ ì¶©ëŒí•œ ê²½ìš°ì„
 		if (Final.bResult == true)
 		{
 			if (Final.fResult < _RayObjRadius)
@@ -768,7 +804,7 @@ bool CCamera::IsCollidingBtwRayWall(Vec2& RayObjPos, Vec2& _CollideObjPos, float
 
 		else
 		{
-			// Wall°ú Ãæµ¹µÇÁö ¾ÊÀº °æ¿ì
+			// Wallê³¼ ì¶©ëŒí•˜ì§€ ì•Šì€ ê²½ìš°
 			return false;
 		}
 	}
@@ -791,7 +827,7 @@ IntersectResult CCamera::IntersectsLay(Vec3* _vertices, tRay _ray)
 
 	Vec3 normal = (edge[0].Cross(edge[1])).Normalize();
 	float b = normal.Dot(_ray.vDir);
-	 
+
 
 	Vec3 w0 = _ray.vStart - _vertices[0];
 	float a = -(normal.Dot(w0));
@@ -811,7 +847,7 @@ IntersectResult CCamera::IntersectsLay(Vec3* _vertices, tRay _ray)
 	Vec3 w = p - _vertices[0];
 	wu = w.Dot(edge[0]);
 	wv = w.Dot(edge[1]);
-	
+
 	inverseD = uv * uv - uu * vv;
 	inverseD = 1.0f / inverseD;
 
@@ -853,8 +889,7 @@ IntersectResult CCamera::IntersecrRayFog(Vec3 _Vertices0, Vec3 _Vertices1, Vec3 
 	Vec3 pvec = _Ray.vDir.Cross(edge[1]);
 	float det  = edge[0].Dot(pvec);
 
-
-	// ÀÌ °ªÀÌ ÀÛÀ¸¸é ray¿Í triangleÀÌ ÆòÇà
+	// ì´ ê°’ì´ ì‘ìœ¼ë©´ rayì™€ triangleì´ í‰í–‰
 	if (std::abs(det) < 0.000001f)
 	{
 		return result;
@@ -884,7 +919,7 @@ IntersectResult CCamera::IntersecrRayFog(Vec3 _Vertices0, Vec3 _Vertices1, Vec3 
 
 	float t = edge[1].Dot(qvec) * invDet;
 
-	// ¼º°øÀûÀÎ ±³Â÷Á¡À» Ã£¾Ò´Ù¸é °á°ú¸¦ ÀúÀå
+	// ì„±ê³µì ì¸ êµì°¨ì ì„ ì°¾ì•˜ë‹¤ë©´ ê²°ê³¼ë¥¼ ì €ì¥.
 	result.vCrossPoint = _Ray.vStart + _Ray.vDir * t;
 	result.fResult = t;
 	result.bResult = true;
@@ -904,6 +939,7 @@ void CCamera::clear()
 	m_vecOpaque.clear();
 	m_vecMask.clear();
 	m_vecTransparent.clear();
+	m_vecContour.clear();
 	m_vecPost.clear();
 	m_vecUI.clear();
 }
@@ -912,12 +948,15 @@ void CCamera::render_deferred()
 {
 	for (size_t i = 0; i < m_vecDeferred.size(); ++i)
 	{
-		//DataTex¿¡ ÀÚ½ÅÀÇ LayerNumÀ» Áı¾î³Ö´Â´Ù.
+		//DataTexì— ìì‹ ì˜ LayerNumì„ ì§‘ì–´ë„£ëŠ”ë‹¤.
 		if (m_vecDeferred[i]->GetLayerIndex() != -1) {
-			//layer´Â 0~31ÀÌÁö¸¸ ºñÆ®¿¬»êÀ» À§ÇØ ÇÑÄ­¾¿ ¿Å±è
+			//layerëŠ” 0~31ì´ì§€ë§Œ ë¹„íŠ¸ì—°ì‚°ì„ ìœ„í•´ í•œì¹¸ì”© ì˜®ê¹€
 			//layernum = 1~32
 			float layernum = m_vecDeferred[i]->GetLayerIndex() + 1;
-			m_vecDeferred[i]->GetRenderComponent()->GetMaterial(0)->SetScalarParam(FLOAT_0, &layernum);
+			UINT matsize = m_vecDeferred[i]->GetRenderComponent()->GetMtrlCount();
+			for (UINT j = 0; j < matsize; ++j) {
+				m_vecDeferred[i]->GetRenderComponent()->GetMaterial(j)->SetScalarParam(FLOAT_0, &layernum);
+			}
 		}
 		m_vecDeferred[i]->render();
 	}
@@ -997,6 +1036,7 @@ void CCamera::SaveToLevelFile(FILE* _File)
 	fwrite(&m_fFar, sizeof(float), 1, _File);
 	fwrite(&m_bShowFrustumDebug, sizeof(bool), 1, _File);
 	fwrite(&m_bViewGizmoBounding, sizeof(bool), 1, _File);
+	fwrite(&m_fFov, sizeof(float), 1, _File);
 }
 
 void CCamera::LoadFromLevelFile(FILE* _File)
@@ -1010,6 +1050,8 @@ void CCamera::LoadFromLevelFile(FILE* _File)
 	fread(&m_fFar, sizeof(float), 1, _File);
 	fread(&m_bShowFrustumDebug, sizeof(bool), 1, _File);
 	fread(&m_bViewGizmoBounding, sizeof(bool), 1, _File);
+	fread(&m_fFov, sizeof(float), 1, _File);
+
 	SetCameraIndex(m_iCamIdx);
 }
 
@@ -1024,7 +1066,7 @@ void CCamera::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& all
 	_objValue.AddMember("fFar", m_fFar, allocator);
 	_objValue.AddMember("bShowFrustumDebug", m_bShowFrustumDebug, allocator);
 	_objValue.AddMember("bViewGizmoBounding", m_bViewGizmoBounding, allocator);
-
+	_objValue.AddMember("fFov", m_fFov, allocator);
 }
 
 void CCamera::LoadFromLevelJsonFile(const Value& _componentValue)
@@ -1037,6 +1079,8 @@ void CCamera::LoadFromLevelJsonFile(const Value& _componentValue)
 	m_fFar = _componentValue["fFar"].GetFloat();
 	m_bShowFrustumDebug = _componentValue["bShowFrustumDebug"].GetBool();
 	m_bViewGizmoBounding = _componentValue["bViewGizmoBounding"].GetBool();
+	m_fFov = _componentValue["fFov"].GetFloat();
+
 	SetCameraIndex(m_iCamIdx);
 }
 
@@ -1047,25 +1091,24 @@ void CCamera::GizmoClickCheck(CGameObject* _CheckTargetObj, CLevel* _CurLevel)
 	Vec3 vWorldPos = _CheckTargetObj->Transform()->GetWorldPos();
 	Vec3 Rot = _CheckTargetObj->Transform()->GetRelativeRot();
 
-	if (_CurLevel->GetState() != LEVEL_STATE::PLAY) // ÇÃ·¹ÀÌ ¸ğµå¿¡¼­´Â ±âÁî¸ğ ÀÛµ¿ÇÏÁö ¾ÊÀ½
+	if (_CurLevel->GetState() != LEVEL_STATE::PLAY) // í”Œë ˆì´ ëª¨ë“œì—ì„œëŠ” ê¸°ì¦ˆëª¨ ì‘ë™í•˜ì§€ ì•ŠìŒ
 	{
-		if (KEY_TAP(KEY::RBTN)) // Å¬¸¯µÇ¾úÀ»°æ¿ì¸¸
+		if (KEY_TAP(KEY::LBTN) &&!_CheckTargetObj->Transform()->GetGizmoObjExcept() && !CRenderMgr::GetInst()->GetIsImGuiHovered())
 		{
-			if (RayIntersectsSphere(vWorldPos, _CheckTargetObj->Transform()->GetGizmoBounding()) && !_CheckTargetObj->Transform()->GetGizmoObjExcept())  //¿ÀºêÁ§Æ® ±¸Ã¼ Äİ¸®Àü - ·¹ÀÌ Å¬¸¯ Ã¼Å©
+			if (RayIntersectsSphere(vWorldPos, _CheckTargetObj->Transform()->GetGizmoBounding()))  //ì˜¤ë¸Œì íŠ¸ êµ¬ì²´ ì½œë¦¬ì „ - ë ˆì´ í´ë¦­ ì²´í¬
 			{
-				// °¡Àå ±íÀÌ°¡ ÀÛÀº°æ¿ìÀÇ ¿ÀºêÁ§Æ®¸¦ ¼±ÅÃÇÏ°ÔµÊ SetGizMoTargetObj ÇÔ¼öÀÚÃ¼´Â ¿©·¯¹ø È£ÃâµÇÁö¸¸. ¿ÀºêÁ§Æ® °³¼ö¸¸Å­ ¹İº¹¹®À» ÅëÇØ °á±¹ ¸¶Áö¸·¿£ °¡Àå ÀÛÀº ±íÀÌ¸¦ °¡Áø ¿ÀºêÁ§Æ®°¡ ±âÁî¸ğ Å¸°Ù  ¿ÀºêÁ§Æ®·Î ¼¼ÆÃµÇ¾îÀÖÀ» °ÍÀÓ
+				// ê°€ì¥ ê¹Šì´ê°€ ì‘ì€ê²½ìš°ì˜ ì˜¤ë¸Œì íŠ¸ë¥¼ ì„ íƒí•˜ê²Œë¨ SetGizMoTargetObj í•¨ìˆ˜ìì²´ëŠ” ì—¬ëŸ¬ë²ˆ í˜¸ì¶œë˜ì§€ë§Œ. ì˜¤ë¸Œì íŠ¸ ê°œìˆ˜ë§Œí¼ ë°˜ë³µë¬¸ì„ í†µí•´ ê²°êµ­ ë§ˆì§€ë§‰ì—” ê°€ì¥ ì‘ì€ ê¹Šì´ë¥¼ ê°€ì§„ ì˜¤ë¸Œì íŠ¸ê°€ ê¸°ì¦ˆëª¨ íƒ€ê²Ÿ  ì˜¤ë¸Œì íŠ¸ë¡œ ì„¸íŒ…ë˜ì–´ìˆì„ ê²ƒì„
 				if (!_CheckTargetObj->IsDead())
 				{
 					CRenderMgr::GetInst()->SetGizmoObjectChanged(true);
-					CRenderMgr::GetInst()->SetGizMoTargetObj(_CheckTargetObj); //À§ÀÇ if¹®¿¡¼­ ·¹ÀÌÀÎÅÍ¼½Æ® ½ºÇÇ¾î (ÇöÀç ±¸Ã¼À§¿¡ ¸¶¿ì½º°¡ ÀÖÀ½) »óÅÂ°í ¸¶¿ì½º¸¦ ´­·¶´Ù¸é, ±×°ÍÀ» ±âÁî¸ğ ¿ÀºêÁ§Æ®·Î ÁöÁ¤ÇØµÒ
+					CRenderMgr::GetInst()->SetGizMoTargetObj(_CheckTargetObj); //ìœ„ì˜ ifë¬¸ì—ì„œ ë ˆì´ì¸í„°ì„¹íŠ¸ ìŠ¤í”¼ì–´ (í˜„ì¬ êµ¬ì²´ìœ„ì— ë§ˆìš°ìŠ¤ê°€ ìˆìŒ) ìƒíƒœê³  ë§ˆìš°ìŠ¤ë¥¼ ëˆŒë €ë‹¤ë©´, ê·¸ê²ƒì„ ê¸°ì¦ˆëª¨ ì˜¤ë¸Œì íŠ¸ë¡œ ì§€ì •í•´ë‘ 
 				}
-
 			}
 		}
 
-		if (m_bViewGizmoBounding && !_CheckTargetObj->Transform()->GetGizmoObjExcept()) //±âÁî¸ğ Å¬¸¯¹üÀ§¸¦ º¸¿©´Ş¶ó°í ¿äÃ»Çß´Ù¸é(Æ®·£½ºÆûui¿¡¼­) º¸¿©ÁÖ±â
+		if (m_bViewGizmoBounding && !_CheckTargetObj->Transform()->GetGizmoObjExcept()) //ê¸°ì¦ˆëª¨ í´ë¦­ë²”ìœ„ë¥¼ ë³´ì—¬ë‹¬ë¼ê³  ìš”ì²­í–ˆë‹¤ë©´(íŠ¸ëœìŠ¤í¼uiì—ì„œ) ë³´ì—¬ì£¼ê¸°
 		{
-			// Bounding Debug Shape ±×¸®±â
+			// Bounding Debug Shape ê·¸ë¦¬ê¸°
 			tDebugBoundingInfo info = {};
 			info.vWorldPos = vWorldPos;
 			info.fBounding = _CheckTargetObj->Transform()->GetGizmoBounding();
@@ -1080,41 +1123,139 @@ void CCamera::GizmoClickCheck(CGameObject* _CheckTargetObj, CLevel* _CurLevel)
 bool CCamera::RayIntersectsSphere(Vec3 _SphereTrans, float _SphereRadius)
 {
 	tRay ray = m_ray;
-	// ·¹ÀÌÀÇ ¿øÁ¡¿¡¼­ ±¸ÀÇ Áß½É±îÁöÀÇ º¤ÅÍ¸¦ °è»êÇÕ´Ï´Ù.
+	// ë ˆì´ì˜ ì›ì ì—ì„œ êµ¬ì˜ ì¤‘ì‹¬ê¹Œì§€ì˜ ë²¡í„°ë¥¼ ê³„ì‚°í•©ë‹ˆë‹¤.
 	Vec3 m = ray.vStart - _SphereTrans;
 
-	// ·¹ÀÌÀÇ ¹æÇâ°ú m º¤ÅÍÀÇ ³»ÀûÀ» °è»êÇÕ´Ï´Ù.
+	// ë ˆì´ì˜ ë°©í–¥ê³¼ m ë²¡í„°ì˜ ë‚´ì ì„ ê³„ì‚°í•©ë‹ˆë‹¤.
 	float b = m.x * ray.vDir.x + m.y * ray.vDir.y + m.z * ray.vDir.z;
 
-	// m º¤ÅÍÀÇ Á¦°ö°ú ±¸ÀÇ ¹İÁö¸§ÀÇ Á¦°öÀÇ Â÷¸¦ °è»êÇÕ´Ï´Ù.
+	// m ë²¡í„°ì˜ ì œê³±ê³¼ êµ¬ì˜ ë°˜ì§€ë¦„ì˜ ì œê³±ì˜ ì°¨ë¥¼ ê³„ì‚°í•©ë‹ˆë‹¤.
 	float c = (m.x * m.x + m.y * m.y + m.z * m.z) - _SphereRadius * _SphereRadius;
 
-	// ·¹ÀÌÀÇ ¿øÁ¡ÀÌ ±¸ÀÇ ¿ÜºÎ¿¡ ÀÖ°í (c > 0), ·¹ÀÌ°¡ ±¸¸¦ ÇâÇÏ°í ÀÖÁö ¾ÊÀ¸¸é (b > 0) false¸¦ ¹İÈ¯ÇÕ´Ï´Ù.
+	// ë ˆì´ì˜ ì›ì ì´ êµ¬ì˜ ì™¸ë¶€ì— ìˆê³  (c > 0), ë ˆì´ê°€ êµ¬ë¥¼ í–¥í•˜ê³  ìˆì§€ ì•Šìœ¼ë©´ (b > 0) falseë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤.
 	if (c > 0.0f && b > 0.0f) return false;
 
-	// ÆÇº°½ÄÀ» °è»êÇÕ´Ï´Ù. ÆÇº°½ÄÀÌ À½¼öÀÌ¸é ·¹ÀÌ°¡ ±¸¸¦ ³õÄ¡´Â °ÍÀ» ÀÇ¹ÌÇÕ´Ï´Ù.
+	// íŒë³„ì‹ì„ ê³„ì‚°í•©ë‹ˆë‹¤. íŒë³„ì‹ì´ ìŒìˆ˜ì´ë©´ ë ˆì´ê°€ êµ¬ë¥¼ ë†“ì¹˜ëŠ” ê²ƒì„ ì˜ë¯¸í•©ë‹ˆë‹¤.
 	float discr = b * b - c;
 
-	// ÆÇº°½ÄÀÌ À½¼öÀÌ¸é ·¹ÀÌ°¡ ±¸¸¦ ³õÄ£ °ÍÀÌ¹Ç·Î false¸¦ ¹İÈ¯ÇÕ´Ï´Ù.
+	// íŒë³„ì‹ì´ ìŒìˆ˜ì´ë©´ ë ˆì´ê°€ êµ¬ë¥¼ ë†“ì¹œ ê²ƒì´ë¯€ë¡œ falseë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤.
 	if (discr < 0.0f) return false;
 
-	// ÀÌÁ¦ ·¹ÀÌ°¡ ±¸¿Í ±³Â÷ÇÏ´Â °ÍÀÌ È®ÀÎµÇ¾úÀ¸¹Ç·Î, ±³Â÷Á¡ÀÇ °¡Àå ÀÛÀº t °ªÀ» °è»êÇÕ´Ï´Ù.
+	// ì´ì œ ë ˆì´ê°€ êµ¬ì™€ êµì°¨í•˜ëŠ” ê²ƒì´ í™•ì¸ë˜ì—ˆìœ¼ë¯€ë¡œ, êµì°¨ì ì˜ ê°€ì¥ ì‘ì€ t ê°’ì„ ê³„ì‚°í•©ë‹ˆë‹¤.
 	float t = -b - sqrt(discr);
 
-	// ¸¸¾à t°¡ À½¼öÀÌ¸é ·¹ÀÌ°¡ ±¸ ³»ºÎ¿¡¼­ ½ÃÀÛµÈ °ÍÀÌ¹Ç·Î t¸¦ 0À¸·Î ¼³Á¤ÇÕ´Ï´Ù.
+	// ë§Œì•½ tê°€ ìŒìˆ˜ì´ë©´ ë ˆì´ê°€ êµ¬ ë‚´ë¶€ì—ì„œ ì‹œì‘ëœ ê²ƒì´ë¯€ë¡œ të¥¼ 0ìœ¼ë¡œ ì„¤ì •í•©ë‹ˆë‹¤.
 	if (t < 0.0f) t = 0.0f;
 
-	// ·¹ÀÌ¿Í ±³Â÷ÇÑ ±íÀÌ°ªÀ» °è»êÇÕ´Ï´Ù.
+	// ë ˆì´ì™€ êµì°¨í•œ ê¹Šì´ê°’ì„ ê³„ì‚°í•©ë‹ˆë‹¤.
 	float depth = XMVectorGetX(XMVector3Length(ray.vDir) * t);
 
-	if (m_LayMinDistance > depth) //ÇöÀç ±æÀÌ°ªº¸´Ù ´õ ÀÛ´Ù¸é ´õ¾Õ¿¡ÀÖ´Â ¿ÀºêÁ§Æ®
+	if (m_LayMinDistance > depth) //í˜„ì¬ ê¸¸ì´ê°’ë³´ë‹¤ ë” ì‘ë‹¤ë©´ ë”ì•ì—ìˆëŠ” ì˜¤ë¸Œì íŠ¸
 	{
-		m_LayMinDistance = depth;  //ÇöÀç µğ½ºÅÄ½º °ªÀ¸·Î ¾÷µ¥ÀÌÆ®
+		m_LayMinDistance = depth;  //í˜„ì¬ ë””ìŠ¤íƒ ìŠ¤ ê°’ìœ¼ë¡œ ì—…ë°ì´íŠ¸
 		return true;
 	}
 	else
 		return false;
 
-	// ÀÌ ½ÃÁ¡¿¡¼­ ·¹ÀÌ°¡ ±¸¿Í ±³Â÷ÇÏ´Â °ÍÀÌ È®ÀÎµÇ¾úÀ¸¹Ç·Î true¸¦ ¹İÈ¯ÇÕ´Ï´Ù.
+	// ì´ ì‹œì ì—ì„œ ë ˆì´ê°€ êµ¬ì™€ êµì°¨í•˜ëŠ” ê²ƒì´ í™•ì¸ë˜ì—ˆìœ¼ë¯€ë¡œ trueë¥¼ ë°˜í™˜í•©ë‹ˆë‹¤.
 
+}
+
+
+void CCamera::render_DefaultContourPaint()
+{
+	//ì™¸ê³½ì„  í•„ìš”í•œ ì˜¤ë¸Œì íŠ¸ ë Œë”íƒ€ê²Ÿì— ê¸°ë¡
+	for (size_t i = 0; i < m_vecContour.size(); ++i)
+	{
+		CGameObject* Obj = m_vecContour[i];
+		UINT MtrlNum = Obj->GetRenderComponent()->GetMtrlCount();
+		vector<Ptr<CGraphicsShader>> VecShader;
+
+		for (UINT j = 0; j < MtrlNum; ++j) //ë Œë”íƒ€ê²Ÿ ì¶œë ¥ìœ„í•œ ì…°ì´ë” ë³€ê²½
+		{
+			Ptr<CGraphicsShader> DefaultShader = Obj->GetRenderComponent()->GetMaterial(j)->GetShader();
+			VecShader.push_back(DefaultShader);
+			Obj->GetRenderComponent()->GetMaterial(j)->SetShader(CResMgr::GetInst()->FindRes<CGraphicsShader>(L"DefaultObjWriteShader"));
+		}
+		Obj->render();
+
+		for (UINT z = 0; z < MtrlNum; ++z) //ê¸°ì¡´ì…°ì´ë” ì¥ì°©
+			Obj->GetRenderComponent()->GetMaterial(z)->SetShader(VecShader[z]);
+	}
+}
+
+
+void CCamera::render_ContourPaint()
+{
+	//ì—…ìŠ¤ì¼€ì¼ ì˜¤ë¸Œì íŠ¸ ê¸°ë¡
+	for (size_t i = 0; i < m_vecContour.size(); ++i)
+	{
+		UINT MtrlNum = m_vecContour[i]->GetRenderComponent()->GetMtrlCount();
+		vector<Ptr<CGraphicsShader>> VecShader;
+		CGameObject* Obj = m_vecContour[i];
+
+		for (UINT j = 0; j < MtrlNum; ++j) 
+		{
+			//ë Œë”íƒ€ê²Ÿ ê¸°ë¡ì„ ìœ„í•œ ì…°ì´ë” ë³€ê²½ (ëª¨ë“  ë¨¸í„°ë¦¬ì–¼ì— ì ìš©)
+			Ptr<CGraphicsShader> DefaultShader = Obj->GetRenderComponent()->GetMaterial(j)->GetShader();
+			VecShader.push_back(DefaultShader);
+			Obj->GetRenderComponent()->GetMaterial(j)->SetShader(CResMgr::GetInst()->FindRes<CGraphicsShader>(L"ContourPaintShader"));
+		}
+
+		CTransform* Transform = Obj->Transform();
+		float fThickness = Transform->GetOutlineThickness();
+		Vec3 DefaultScale = Transform->GetRelativeScale();
+
+		//ë‘ê»˜ê³„ì‚°-----
+		Vec3 vThickness = Vec3(DefaultScale.x * fThickness, DefaultScale.y * fThickness, DefaultScale.z * fThickness);
+		vThickness.y /= 4.f; //yëŠ” ì¡°ê¸ˆë” ì‘ì€ê°’ìœ¼ë¡œ í•´ì¤˜ì•¼ ìì—°ìŠ¤ëŸ¬ì›€
+		Transform->SetRelativeScale(Vec3(DefaultScale.x + vThickness.x, DefaultScale.y + vThickness.y, DefaultScale.z + vThickness.z));
+		Transform->finaltick(); //ë Œë” ì „ ì›”ë“œí–‰ë ¬ ê³„ì‚°
+		//---------------
+
+		Obj->render();
+
+		Transform->SetRelativeScale(DefaultScale);
+		Transform->finaltick(); //í•´ì¤˜ì•¼í•¨! ë°”ë¡œ ë‹¤ìŒí•¨ìˆ˜ê°€ ê¸°ë³¸ ì˜¤ë¸Œì íŠ¸ ê¸°ë¡ì´ê¸°ë•Œë¬¸ì— ë°”ë¡œ ë³€ê²½ëœ ìŠ¤ì¼€ì¼ ì ìš©
+
+		//ê¸°ì¡´ ì…°ì´ë” ë‹¤ì‹œ ì¥ì°© (ëª¨ë“  ë¨¸í„°ë¦¬ì–¼ì— ì ìš©í•¨)
+		for (UINT z = 0; z < MtrlNum; ++z)
+			Obj->GetRenderComponent()->GetMaterial(z)->SetShader(VecShader[z]);
+	}
+}
+
+
+void CCamera::render_contour()
+{
+	Ptr<CMesh> pMesh = CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh");
+	Ptr<CMaterial> pMtrl = CResMgr::GetInst()->FindRes<CMaterial>(L"ContourMtrl");
+	pMtrl->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"DefaultContourTargetTex"));
+	pMtrl->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"ContourTargetTex"));
+
+	pMtrl->UpdateData();
+	pMesh->render(0);
+}
+
+void CCamera::render_Outline()
+{
+	CMRT* DefferedMrt = CRenderMgr::GetInst()->GetMRT(MRT_TYPE::DEFERRED);
+	//ë””í¼ë“œì— ë‹´ê²¨ìˆëŠ” ContourTargetTex,DefaultContourTargetTexë¥¼ ë Œë”íƒ€ê²Ÿìœ¼ë¡œ ì“°ê¸°ì „ì—, ìŠ¤ì™‘ì²´ì¸ì— ê·¸ë ¤ë‚´ë©´ì„œ ì…°ì´ë” ë¦¬ì†ŒìŠ¤ ì—­í• ë¡œ ë˜ì–´ìˆë˜ê²ƒë“¤ì„ í•´ì œ
+	UINT RTCount = DefferedMrt->GetRTCount();
+	for (UINT i = 0; i < RTCount; ++i)
+		DefferedMrt->GetRTAtIndex(i)->Clear();
+
+	//í•´ì œí•œí›„ ë Œë”íƒ€ê²Ÿìœ¼ë¡œ ì§€ì •
+	DefferedMrt->OMSet();
+	//í•˜ë‚˜ì˜ í…ìŠ¤ì³ì— ì›ë˜ ì˜¤ë¸Œì íŠ¸, ì—…ìŠ¤ì¼€ì¼ ì˜¤ë¸Œì íŠ¸ì˜ ê°’ì„ ê°™ì´ ê¸°ë¡í• ìˆ˜ ì—†ìŒ. ì´ìœ ëŠ” ë‘ê°œì˜ ë¬¼ì²´ê°€ ê²¹ì³ìˆëŠ” ë¶€ë¶„ì€ ë‚˜ì¤‘ì— ê·¸ë ¤ì§€ëŠ” ìª½ì˜ rgbaê°’ìœ¼ë¡œ ì´ˆê¸°í™”ë¨.
+	//ê²°êµ­ í•˜ë‚˜ì˜ í…ìŠ¤ì³ì— ì—…ìŠ¤ì¼€ì¼ ì˜¤ë¸Œì íŠ¸ì˜ ê°’ë§Œ ìˆê±°ë‚˜, ë””í´íŠ¸ ì˜¤ë¸Œì íŠ¸ì˜ ê°’ë§Œ ìˆì–´ì„œ ë‚˜ì¤‘ì— í…Œë‘ë¦¬ ë¶€ë¶„ë§Œ ì¶”ì¶œí• ìˆ˜ì—†ìŒ.
+
+	//ì„œë¡œ ë‹¤ë¥¸ ë„í™”ì§€ê°€ ìˆì„ë•Œ í•˜ë‚˜ì˜ ë„í™”ì§€ì—” ì—…ìŠ¤ì¼€ì¼ ì˜¤ë¸Œì íŠ¸, ë‘ë²ˆì§¸ ë„í™”ì§€ì—” ë””í´íŠ¸ ì˜¤ë¸Œì íŠ¸ë¥¼ ê·¸ë ¤ë†“ê³  render_contourë‹¨ê³„ì—ì„œ ê°’ì„ ë¹„êµí•´ í…Œë‘ë¦¬ ë¶€ë¶„ì„ ì¶”ì¶œ.
+	//ì²˜ìŒì— ìƒê°í–ˆë˜ ë°©ì‹ì¸ ê°™ì€ë Œë”íƒ€ê²Ÿì„ ì‚¬ìš©í•˜ì—¬ ê¸°ì¡´ì— ê·¸ë ¤ì§„ í”½ì…€ì— +1 í•˜ëŠ”ë°©ë²•ì€ ê·¸ë ¤ì§€ëŠ”ê³³ì„ í…ìŠ¤ì³ë¡œì¨ ì‚¬ìš©í•˜ëŠ”ê²ƒì´ë¯€ë¡œ ì•ˆë¨
+	render_ContourPaint();
+	render_DefaultContourPaint();
+
+	//mrtë¥¼ ë‹¤ì‹œ ìŠ¤ì™‘ì²´ì¸ìœ¼ë¡œ ë³€ê²½í•˜ê³  í…Œë‘ë¦¬ ê²€ì¶œ,ì¶œë ¥ ì§„í–‰
+	CRenderMgr::GetInst()->GetMRT(MRT_TYPE::SWAPCHAIN)->OMSet();
+	render_contour();
 }

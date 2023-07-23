@@ -36,19 +36,23 @@ private:
     vector<CGameObject*>    m_vecDecal;
     vector<CGameObject*>    m_vecOpaque;
     vector<CGameObject*>    m_vecMask;
-    vector<CGameObject*>    m_vecTransparent;    
+    vector<CGameObject*>    m_vecTransparent;
     vector<CGameObject*>    m_vecUI;
     vector<CGameObject*>    m_vecPost;
 
     vector<CGameObject*>    m_vecDynamicShadow;     // 동적 그림자 물체
    
 
-    // 오브젝트가 여러개 겹쳐있을때 마우스 클릭하는 것을 대비해서 오브젝트들중에 깊이가(길이) 가장 작은
-    //오브젝트의 길이값을 기억해두고 그 오브젝트를 최종 선택오브젝트로 세팅
-    float                   m_LayMinDistance;  
+    vector<CGameObject*>    m_vecContour;
+
+    float                   m_LayMinDistance;   // 오브젝트가 여러개 겹쳐있을때 마우스 클릭하는 것을 대비해서 오브젝트들중에 깊이가(길이) 가장 작은
+                                                //오브젝트의 길이값을 기억해두고 그 오브젝트를 최종 선택오브젝트로 세팅 
 
     bool                    m_bViewGizmoBounding; //기즈모 클릭범위(바운딩콜리전) 를 보여줘야하는경우 true, 안보여줘도 되는경우 false
 
+    int        m_isGizmoEditMode; // 0: 디폴트 모드 (기즈모x) 1: 에디트 모드 (기즈모o)  : 모드가 추가될수도 있으므로, bool대신 int로함
+
+    float       m_fFov; //fov값
 
    
 
@@ -90,6 +94,14 @@ public:
 
     bool RayIntersectsSphere(Vec3 _SphereTrans, float _SphereRadius);
 
+    void SetIsGizmoEditMode(int _Mode) { m_isGizmoEditMode = _Mode; }
+    int GetIsGizmoEditMode() { return m_isGizmoEditMode; }
+
+    bool OutlineCheck(CGameObject* _Obj);
+
+    float GetCameraFov() { return m_fFov; }
+    void SetCameraFov(float _Fov) { m_fFov = _Fov; }
+
 public:
     void SortObject();
     void SortShadowObject();
@@ -122,6 +134,12 @@ public:
 private:
     void clear();
     void render_deferred();
+
+    void render_Outline();
+    void render_DefaultContourPaint();
+    void render_ContourPaint();
+    void render_contour();
+
     void render_decal();
 
     void render_merge();
@@ -143,7 +161,7 @@ private:
     virtual void LoadFromLevelJsonFile(const Value& _componentValue)override;
 
     CLONE(CCamera);
-public:    
+public:
     CCamera();
     CCamera(const CCamera& _Other);
     ~CCamera();

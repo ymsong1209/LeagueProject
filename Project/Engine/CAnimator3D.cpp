@@ -92,7 +92,7 @@ void CAnimator3D::finaltick()
 				m_fCurBlendTime += EditorDT;
 			}
 			else {
-				m_fCurBlendTime += DT;
+				m_fCurBlendTime += EditorDT;
 			}
 			m_fBlendRatio = m_fCurBlendTime / m_fMaxBlendTime;
 
@@ -119,7 +119,7 @@ void CAnimator3D::finaltick()
 						m_fCurBlendTime += EditorDT;
 					}
 					else {
-						m_fCurBlendTime += DT;
+						m_fCurBlendTime += EditorDT;
 					}
 					m_iBlendStartFrm = m_pCurAnim->GetClipList().iEndFrame;
 					m_fBlendRatio = m_fCurBlendTime / m_fMaxBlendTime;

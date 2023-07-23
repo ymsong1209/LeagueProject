@@ -16,6 +16,7 @@
 #define EditorDT CTimeMgr::GetInst()->GetEditorDeltaTime()
 
 #define MAX_LAYER 32
+#define NaN std::numeric_limits<float>::quiet_NaN()
 
 #define SINGLE(type) private: type(); ~type(); friend class CSingleton<type>;
 
@@ -46,6 +47,7 @@ enum class COMPONENT_TYPE
 	LIGHT3D,		// 3차원 광원
 	CAMERA,			// Camera
 	FSM,
+	PATHFINDER,		// 길찾기
 
 	// render
 	MESHRENDER,		// 기본적인 렌더링
@@ -252,6 +254,7 @@ enum class SHADER_DOMAIN
 	DOMAIN_TRANSPARENT,	// 반투명
 	DOMAIN_POSTPROCESS, // 후 처리
 	DOMAIN_UI,
+	DOMAIN_CONTOURPAINT, // 아웃라인 페인팅
 	DOMAIN_UNDEFINED,	// 미정
 };
 
@@ -333,4 +336,11 @@ enum class LANDSCAPE_MOD
 	HEIGHT_MAP,
 	SPLAT,
 	NONE,
+};
+
+
+enum class PLAYER_STATE // 징크스 이동 테스트용 Run, Idle 상태 추가 (나중에 fsm 도입 후 사라질 예정)
+{
+	RUN,
+	IDLE,
 };

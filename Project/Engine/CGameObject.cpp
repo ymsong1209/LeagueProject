@@ -82,6 +82,17 @@ void CGameObject::begin()
 	}
 }
 
+void CGameObject::RegisterObject()
+{
+	// 레이어 등록
+	CLayer* pCurLayer = CLevelMgr::GetInst()->GetCurLevel()->GetLayer(m_iLayerIdx);
+	pCurLayer->RegisterObject(this);
+	for (size_t i = 0; i < m_vecChild.size(); ++i)
+	{
+		m_vecChild[i]->RegisterObject();
+	}
+}
+
 void CGameObject::tick()
 {
 	for (UINT i = 0; i < (UINT)COMPONENT_TYPE::END; ++i)
@@ -127,9 +138,9 @@ void CGameObject::finaltick()
 	// 소속 레이어가 없는데 finaltick 이 호출되었다.
 	assert(-1 != m_iLayerIdx); 
 
-	// 레이어 등록
-	CLayer* pCurLayer = CLevelMgr::GetInst()->GetCurLevel()->GetLayer(m_iLayerIdx);
-	pCurLayer->RegisterObject(this);
+	//// 레이어 등록
+	//CLayer* pCurLayer = CLevelMgr::GetInst()->GetCurLevel()->GetLayer(m_iLayerIdx);
+	//pCurLayer->RegisterObject(this);
 }
 
 void CGameObject::finaltick_module()

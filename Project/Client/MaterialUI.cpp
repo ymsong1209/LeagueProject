@@ -44,6 +44,11 @@ int MaterialUI::render_update()
         ImGui::InputText("##ShaderUIName", szEmtpy, 10, ImGuiInputTextFlags_::ImGuiInputTextFlags_ReadOnly);
     }
 
+    if (ImGui::Button("Save"))
+    {
+        pMtrl->Save(pMtrl->GetKey());
+    }
+
     ImGui::NewLine();
     ImGui::Text("Parameter");
     

@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "CTransform.h"
 
 #include "CDevice.h"
@@ -12,10 +12,12 @@ CTransform::CTransform()
 		  Vec3(1.f, 0.f, 0.f)
 		, Vec3(0.f, 1.f, 0.f)
 		, Vec3(0.f, 0.f, 1.f)}	
-	, m_fGizmoBounding_Radius(150.f)
+	, m_fGizmoBounding_Radius(50.f)
 	, m_bGizmoObjExcept(false)
 	, m_bIsShootingRay(false)
 	, m_fRayRange(20)
+	, m_bUseMouseOutLine(false)
+	, m_fOutlinethickness(0.072f)
 {
 	SetName(L"Transform");
 }
@@ -41,7 +43,7 @@ CTransform::~CTransform()
 
 void CTransform::finaltick()
 {
-	m_matWorldScale = XMMatrixIdentity(); //´ÜÀ§Çà·Ä ¸¸µé±â
+	m_matWorldScale = XMMatrixIdentity(); // ë‹¨ìœ„í–‰ë ¬ ë§Œë“¤ê¸°
 	m_matWorldScale = XMMatrixScaling(m_vRelativeScale.x, m_vRelativeScale.y, m_vRelativeScale.z);
 
 
@@ -61,13 +63,13 @@ void CTransform::finaltick()
 		, Vec3(0.f, 0.f, 1.f)
 	};
 
-	//¹æÇâº¤ÅÍ¿¡ È¸ÀüÇà·ÄÀ» °öÇÏ¸é ÇöÀç º¸°í ÀÖ´Â ¹æÇâÀÌ ³ª¿Â´Ù.
+	// ë°©í–¥ë²¡í„°ì— íšŒì „í–‰ë ¬ì„ ê³±í•˜ë©´ í˜„ì¬ ë³´ê³  ìˆëŠ” ë°©í–¥ì´ ë‚˜ì˜¨ë‹¤.
 	for (int i = 0; i < 3; ++i)
 	{
 		m_vRelativeDir[i] = XMVector3TransformNormal(vDefaultDir[i], m_matWorldRot);
 	}
 
-	// ºÎ¸ğ ¿ÀºêÁ§Æ® È®ÀÎ
+	// ë¶€ëª¨ ì˜¤ë¸Œì íŠ¸ í™•ì¸ 
 	CGameObject* pParent = GetOwner()->GetParent();
 	if (pParent)
 	{
@@ -75,9 +77,9 @@ void CTransform::finaltick()
 		{
 			Matrix matParentWorld = pParent->Transform()->m_matWorld;
 			Matrix matParentScale = pParent->Transform()->m_matWorldScale;
-			Matrix matParentScaleInv = XMMatrixInverse(nullptr, matParentScale); //Å©±â ¿ªÇÔ¼ö,nullptr:ÆÇº°½Ä
+			Matrix matParentScaleInv = XMMatrixInverse(nullptr, matParentScale); // í¬ê¸° ì—­í•¨ìˆ˜, nullptr: íŒë³„ì‹
 
-			// ¿ùµå = ·ÎÄÃ¿ùµå * ºÎ¸ğÅ©±â ¿ª * ºÎ¸ğ ¿ùµå(Å©±â/È¸Àü/ÀÌµ¿)
+			// ì›”ë“œ = ë¡œì»¬ì›”ë“œ * ë¶€ëª¨í¬ê¸° ì—­ * ë¶€ëª¨ ì›”ë“œ(í¬ê¸°/íšŒì „/ì´ë™)
 			m_matWorld = m_matWorld * matParentScaleInv * matParentWorld;
 		}
 		else
@@ -91,8 +93,8 @@ void CTransform::finaltick()
 
 	for (int i = 0; i < 3; ++i)
 	{
-		m_vWorldDir[i] = XMVector3TransformNormal(vDefaultDir[i], m_matWorld); //transformNormal·Î m_matWorldÀÇ ÀÌµ¿·® »èÁ¦
-		m_vWorldDir[i].Normalize(); //ScaleÀÌ °öÇØÁ®ÀÖÀ¸¹Ç·Î Á¤±ÔÈ­ ÁøÇà
+		m_vWorldDir[i] = XMVector3TransformNormal(vDefaultDir[i], m_matWorld); // transformNormalë¡œ m_matWorldì˜ ì´ë™ëŸ‰ ì‚­ì œ
+		m_vWorldDir[i].Normalize(); // Scaleì´ ê³±í•´ì ¸ìˆìœ¼ë¯€ë¡œ ì •ê·œí™” ì§„í–‰ 
 	}
 
 	m_matWorldInv = XMMatrixInverse(nullptr, m_matWorld);
@@ -100,7 +102,7 @@ void CTransform::finaltick()
 
 void CTransform::UpdateData()
 {
-	// À§Ä¡°ªÀ» »ó¼ö¹öÆÛ¿¡ Àü´Ş ¹× ¹ÙÀÎµù		
+	// ìœ„ì¹˜ê°’ì„ ìƒìˆ˜ë²„í¼ì— ì „ë‹¬ ë° ë°”ì¸ë”©
 	CConstBuffer* pTransformBuffer = CDevice::GetInst()->GetConstBuffer(CB_TYPE::TRANSFORM);
 
 	g_transform.matWorld = m_matWorld;
@@ -124,8 +126,13 @@ void CTransform::SaveToLevelFile(FILE* _File)
 	fwrite(&m_bGizmoObjExcept, sizeof(bool), 1, _File);
 	fwrite(&m_fGizmoBounding_Radius, sizeof(float), 1, _File);
 
+
 	fwrite(&m_bIsShootingRay, sizeof(bool), 1, _File);
 	fwrite(&m_fRayRange, sizeof(float), 1, _File);
+
+	fwrite(&m_bUseMouseOutLine, sizeof(bool), 1, _File);
+	fwrite(&m_fOutlinethickness, sizeof(float), 1, _File);
+
 }
 
 void CTransform::LoadFromLevelFile(FILE* _FILE)
@@ -138,8 +145,12 @@ void CTransform::LoadFromLevelFile(FILE* _FILE)
 	fread(&m_bGizmoObjExcept, sizeof(bool), 1, _FILE);
 	fread(&m_fGizmoBounding_Radius, sizeof(float), 1, _FILE);
 
+
 	fread(&m_bIsShootingRay, sizeof(bool), 1, _FILE);
 	fread(&m_fRayRange, sizeof(float), 1, _FILE);
+
+	fread(&m_bUseMouseOutLine, sizeof(bool), 1, _FILE);
+	fread(&m_fOutlinethickness, sizeof(float), 1, _FILE);
 }
 
 void CTransform::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
@@ -154,6 +165,8 @@ void CTransform::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& 
 
 	_objValue.AddMember("IsShootingRay", m_bIsShootingRay, allocator);
 	_objValue.AddMember("RayRange", m_fRayRange, allocator);
+	_objValue.AddMember("UseMouseOutLine", m_bUseMouseOutLine, allocator);
+	_objValue.AddMember("Outlinethickness", m_fOutlinethickness, allocator);
 }
 
 void CTransform::LoadFromLevelJsonFile(const Value& _componentValue)
@@ -168,4 +181,6 @@ void CTransform::LoadFromLevelJsonFile(const Value& _componentValue)
 
 	m_bIsShootingRay = _componentValue["IsShootingRay"].GetBool();
 	m_fRayRange = _componentValue["RayRange"].GetFloat();
+	m_bUseMouseOutLine = _componentValue["UseMouseOutLine"].GetBool();
+	m_fOutlinethickness = _componentValue["Outlinethickness"].GetFloat();
 }

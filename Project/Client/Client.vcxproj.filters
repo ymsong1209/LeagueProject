@@ -137,6 +137,9 @@
     <Filter Include="UI\InspectorUI\ComponentUI\15. Animator3DUI">
       <UniqueIdentifier>{6fb30771-efc8-40fd-9ab7-6f4c4018cb80}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI\InspectorUI\ComponentUI\15. PathFinderUI">
+      <UniqueIdentifier>{2d2bdced-bad6-4d28-9777-5663ca8f0384}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -292,6 +295,9 @@
     </ClInclude>
     <ClInclude Include="Animator3DUI.h">
       <Filter>UI\InspectorUI\ComponentUI\15. Animator3DUI</Filter>
+    </ClInclude>
+    <ClInclude Include="PathFinderUI.h">
+      <Filter>UI\InspectorUI\ComponentUI\15. PathFinderUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -456,6 +462,9 @@
     </ClCompile>
     <ClCompile Include="Animator3DUI.cpp">
       <Filter>UI\InspectorUI\ComponentUI\15. Animator3DUI</Filter>
+    </ClCompile>
+    <ClCompile Include="PathFinderUI.cpp">
+      <Filter>UI\InspectorUI\ComponentUI\15. PathFinderUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

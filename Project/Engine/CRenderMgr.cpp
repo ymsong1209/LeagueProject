@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "CRenderMgr.h"
 
 #include "CDevice.h"
@@ -31,6 +31,7 @@ CRenderMgr::CRenderMgr()
     , m_bIsQClicked(false)
     , m_iMaxRWSize(0)
     , m_FogFilterTime(0.f)
+    , b_IsImGuiHovered(false)
 {
     Vec2 vResolution = CDevice::GetInst()->GetRenderResolution();
     m_RTCopyTex = CResMgr::GetInst()->CreateTexture(L"RTCopyTex"
@@ -83,20 +84,19 @@ void CRenderMgr::render_clear()
 
 void CRenderMgr::render()
 {
-    // ·»´õ¸µ ½ÃÀÛ
+    // ë Œë”ë§ ì‹œì‘
     render_clear();
 
-    // ±¤¿ø ¹× Àü¿ª µ¥ÀÌÅÍ ¾÷µ¥ÀÌÆ® ¹× ¹ÙÀÎµù
+    // ê´‘ì› ë° ì „ì—­ ë°ì´í„° ì—…ë°ì´íŠ¸ ë° ë°”ì¸ë”©
     UpdateData();
 
-
-    // ±âÁî¸ğ ¼±ÅÃµÈ »óÅÂ Á¤¸®
+    // ê¸°ì¦ˆëª¨ ì„ íƒëœ ìƒíƒœ ì •ë¦¬
     m_bGizmoObjectChanged = false;
 
-    // ·»´õ ÇÔ¼ö È£Ãâ
+    // ë Œë” í•¨ìˆ˜ í˜¸ì¶œ
     (this->*RENDER_FUNC)();
     
-    // ±¤¿ø ÇØÁ¦
+    // ê´‘ì› í•´ì œ
     Clear();
 }
 
@@ -105,12 +105,12 @@ void CRenderMgr::render()
 
 void CRenderMgr::render_play()
 {    
-    // Directional ±¤¿ø ½ÃÁ¡¿¡¼­ Shadow¸ÊÇÎÀ» À§ÇÑ DepthMap »ı¼º
+    // Directional ê´‘ì› ì‹œì ì—ì„œ Shadowë§µí•‘ì„ ìœ„í•œ DepthMap ìƒì„±
     render_dynamic_shadowdepth();
-    // ComputeShader¿¡ Wall, Ray Á¤º¸ Àü´Ş, ¿¬»ê
+    // ComputeShaderì—  Wall, Ray ì •ë³´ ì „ë‹¬, ì—°ì‚°
     CalcRayForFog();
 
-    // Ä«¸Ş¶ó ±âÁØ ·»´õ¸µ
+    // ì¹´ë©”ë¼ ê¸°ì¤€ ë Œë”ë§
     for (size_t i = 0; i < m_vecCam.size(); ++i)
     {
         if (nullptr == m_vecCam[i])
@@ -123,15 +123,15 @@ void CRenderMgr::render_play()
 
 void CRenderMgr::render_editor()
 {   
-    // Directional ±¤¿ø ½ÃÁ¡¿¡¼­ Shadow¸ÊÇÎÀ» À§ÇÑ DepthMap »ı¼º
+    // Directional ê´‘ì› ì‹œì ì—ì„œ Shadowë§µí•‘ì„ ìœ„í•œ DepthMap ìƒì„±
     render_dynamic_shadowdepth();
-    // ComputeShader¿¡ Wall, Ray Á¤º¸ Àü´Ş, ¿¬»ê
+    // ComputeShaderì— Wall, Ray ì •ë³´ ì „ë‹¬, ì—°ì‚°
     CalcRayForFog();
    
     m_pEditorCam->SortObject();
     m_pEditorCam->render();    
 
-    //Cameraº°·Î frustumÀ» º¸¿©ÁÜ.
+    // Cameraë³„ë¡œ frustumì„ ë³´ì—¬ì¤Œ.
     for (size_t i = 0; i < m_vecCam.size(); ++i)
     {
         if (m_vecCam[i]->GetShowDebug()) {
@@ -213,7 +213,7 @@ void CRenderMgr::CalcRayForFog()
     }
     else {
 
-        // ÀüÀåÀÇ ¾È°³ ray/wall Ãæµ¹ ¿¬»ê
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½È°ï¿½ ray/wall ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½
         m_FogOfWarShader->SetSourceLightCount((int)RayBuffSize);
         m_FogOfWarShader->SetSourceLightPerRay(m_iRayCount);
         m_FogOfWarShader->SetColliderVecCount((int)WallSize);
@@ -225,15 +225,15 @@ void CRenderMgr::CalcRayForFog()
         m_FogOfWarShader->Execute();
 
 
-        // ÀüÀåÀÇ ¾È°³ ÇÊÅÍ Á¦ÀÛ ÄÄÇ»Æ® ½¦ÀÌ´õ -> ÃßÈÄ 0.1ÃÊ¿¡ ÇÑ¹øÇÏµµ·Ï º¯°æ
+        // ì „ì¥ì˜ ì•ˆê°œ í•„í„° ì œì‘ ì»´í“¨íŠ¸ ì‰ì´ë” -> ì¶”í›„ 0.1ì´ˆì— í•œë²ˆí•˜ë„ë¡ ë³€ê²½
         int m_iWidth = 1024;
-        int m_itHeight = 1024; // ±¸Á¶È­¹öÆÛ »ı¼º »çÀÌÁîµµ init¿¡¼­ 1024·Î ÇØµÒ
+        int m_itHeight = 1024; // êµ¬ì¡°í™”ë²„í¼ ìƒì„± ì‚¬ì´ì¦ˆë„ initì—ì„œ 1024ë¡œ í•´ì¤Œ
 
         m_FogFilterShader->SetCalcedFogInfo(m_RWBuffer);
         // m_FogFilterShader->SetFogFilterMap(m_FogFilterMapBuffer, m_iWidth, m_itHeight);
         m_FogFilterShader->SetFogFilterMap(m_FogFilterMap);
-        m_FogFilterShader->SetCountObject((int)m_vecRayObject.size()); // ½Ã¾ß ¿ÀºêÁ§Æ®ÀÇ °³¼ö
-        m_FogFilterShader->SetCountRayPerObj(m_iRayCount); // ¿ÀºêÁ§Æ®°¡ °¡Áö´Â ·¹ÀÌ °³¼ö
+        m_FogFilterShader->SetCountObject((int)m_vecRayObject.size()); // ì‹œì•¼ ì˜¤ë¸Œì íŠ¸ì˜ ê°œìˆ˜
+        m_FogFilterShader->SetCountRayPerObj(m_iRayCount); // ì˜¤ë¸Œì íŠ¸ê°€ ê°€ì§€ëŠ” ë ˆì´ ê°œìˆ˜
         m_FogFilterShader->UpdateData();
         m_FogFilterShader->Execute();
         m_FogFilterTime = 0.f;
@@ -275,7 +275,7 @@ void CRenderMgr::CalcRayForFog()
       
 
 
-    //ÀüÀåÀÇ ¾È°³ µğ¹ö±ë¿ë ÄÚµå. ³ªÁß¿¡ Áö¿öµµ µÊ
+    // ì „ì¥ì˜ ì•ˆê°œ ë””ë²„ê¹…ìš© ì½”ë“œ. ë‚˜ì¤‘ì— ì§€ì›Œë„ ë¨.
 
     /*auto a = m_RWBuffer[0];
 
@@ -321,7 +321,7 @@ void CRenderMgr::CalcRayForFog()
 
 int CRenderMgr::RegisterCamera(CCamera* _Cam, int _idx)
 {
-    //»õ·Î »ı¼º, È¤Àº CloneÀ» ÇÑ Camera´Â ÀÎµ¦½º°¡ -1ÀÓ
+    // ìƒˆë¡œ ìƒì„±, í˜¹ì€ Cloneì„ í•œ CameraëŠ” ì¸ë±ìŠ¤ê°€ -1ì„
     if (_idx < 0) return _idx;
 
     if (m_vecCam.size() <= _idx)
@@ -381,17 +381,17 @@ void CRenderMgr::MRT_Clear()
 
 void CRenderMgr::UpdateData()
 {
-    // GlobalData ¿¡ ±¤¿ø °³¼öÁ¤º¸ ¼¼ÆÃ
+    // GlobalDataì— ê´‘ì› ê°œìˆ˜ì •ë³´ ì„¸íŒ…
     GlobalData.Light2DCount = (UINT)m_vecLight2D.size();
     GlobalData.Light3DCount = (UINT)m_vecLight3D.size();
 
-    // ±¸Á¶È­¹öÆÛÀÇ Å©±â°¡ ¸ğÀÚ¶ó¸é ´õ Å©°Ô »õ·Î ¸¸µç´Ù.
+    // êµ¬ì¡°í™”ë²„í¼ì˜ í¬ê¸°ê°€ ëª¨ìë¼ë©´ ë” í¬ê²Œ ìƒˆë¡œ ë§Œë“ ë‹¤.
     if (m_Light2DBuffer->GetElementCount() < m_vecLight2D.size())
     {
         m_Light2DBuffer->Create(sizeof(tLightInfo), (UINT)m_vecLight2D.size(), SB_TYPE::READ_ONLY, true);
     }
 
-    // ±¸Á¶È­¹öÆÛ·Î ±¤¿ø µ¥ÀÌÅÍ¸¦ ¿Å±ä´Ù.
+    // êµ¬ì¡°í™”ë²„í¼ë¡œ ê´‘ì› ë°ì´í„°ë¥¼ ì˜®ê¸´ë‹¤.
     static vector<tLightInfo> vecLight2DInfo;
     vecLight2DInfo.clear();
 
@@ -404,13 +404,13 @@ void CRenderMgr::UpdateData()
     m_Light2DBuffer->UpdateData(12, PIPELINE_STAGE::PS_PIXEL);
 
 
-    // ±¸Á¶È­¹öÆÛÀÇ Å©±â°¡ ¸ğÀÚ¶ó¸é ´õ Å©°Ô »õ·Î ¸¸µç´Ù.
+    // êµ¬ì¡°í™”ë²„í¼ì˜ í¬ê¸°ê°€ ëª¨ìë¼ë©´ ë” í¬ê²Œ ìƒˆë¡œ ë§Œë“ ë‹¤.
     if (m_Light3DBuffer->GetElementCount() < m_vecLight3D.size())
     {
         m_Light3DBuffer->Create(sizeof(tLightInfo), (UINT)m_vecLight3D.size(), SB_TYPE::READ_ONLY, true);
     }
 
-    // ±¸Á¶È­¹öÆÛ·Î ±¤¿ø µ¥ÀÌÅÍ¸¦ ¿Å±ä´Ù.
+    // êµ¬ì¡°í™”ë²„í¼ë¡œ ê´‘ì› ë°ì´í„°ë¥¼ ì˜®ê¸´ë‹¤.
     static vector<tLightInfo> vecLight3DInfo;
     vecLight3DInfo.clear();
 
@@ -423,8 +423,7 @@ void CRenderMgr::UpdateData()
     m_Light3DBuffer->UpdateData(13, PIPELINE_STAGE::PS_PIXEL);
 
 
-
-    // Àü¿ª »ó¼ö µ¥ÀÌÅÍ ¹ÙÀÎµù
+    // ì „ì—­ ìƒìˆ˜ ë°ì´í„° ë°”ì¸ë”©
     CConstBuffer* pGlobalBuffer = CDevice::GetInst()->GetConstBuffer(CB_TYPE::GLOBAL);
     pGlobalBuffer->SetData(&GlobalData, sizeof(tGlobal));
     pGlobalBuffer->UpdateData();

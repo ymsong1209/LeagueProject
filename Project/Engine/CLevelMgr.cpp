@@ -24,11 +24,12 @@ void CLevelMgr::init()
 void CLevelMgr::tick()
 {
 	m_pCurLevel->clear();
+	m_pCurLevel->RegisterObject();
 
-	if (LEVEL_STATE::PLAY == m_pCurLevel->GetState())
-	{
+	//if (LEVEL_STATE::PLAY == m_pCurLevel->GetState())
+	//{
 		m_pCurLevel->tick();		
-	}
+	//}
 
 	m_pCurLevel->finaltick();
 }

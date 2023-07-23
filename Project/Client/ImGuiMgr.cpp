@@ -7,6 +7,7 @@
 #include <Engine\CPathMgr.h>
 
 #include <Engine\CGameObject.h>
+#include <Engine\CRenderMgr.h>
 
 #include "UI.h"
 #include "ParamUI.h"
@@ -116,6 +117,8 @@ void ImGuiMgr::finaltick()
     // Demo UI
     ImGui::ShowDemoWindow();
 
+    //LayoutDesign();
+
     // InspectorUI
     for (const auto& pair : m_mapUI)
     {
@@ -127,6 +130,11 @@ void ImGuiMgr::finaltick()
 
     if (KEY_TAP(KEY::ENTER))
         ImGui::SetWindowFocus(nullptr);
+
+    if (ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow))
+        CRenderMgr::GetInst()->SetIsImGuiHovered(true);
+    else
+        CRenderMgr::GetInst()->SetIsImGuiHovered(false);
 }
 
 void ImGuiMgr::render()
@@ -215,6 +223,49 @@ void ImGuiMgr::ObserveContent()
 
         FindNextChangeNotification(m_hObserver);        
     }
+}
+
+void ImGuiMgr::LayoutDesign()
+{
+   ImGuiStyle& style = ImGui::GetStyle();
+style.FrameRounding = 10.f;
+style.GrabRounding = style.FrameRounding;
+style.ScrollbarSize = 20;
+style.GrabMinSize = 20;
+style.WindowPadding = ImVec2(6, 5);
+
+style.Colors[ImGuiCol_TitleBg] = ImVec4(0.647, 0.741, 0.659, 0.39);  // Soft Olive
+style.Colors[ImGuiCol_WindowBg] = ImVec4(0.4, 0.45, 0.39, 1);  // Olive
+style.Colors[ImGuiCol_Border] = ImVec4(0.35, 0.35, 0.35, 0.5);  // Gray
+style.Colors[ImGuiCol_TitleBgActive] = ImVec4(0.827, 0.925, 0.831, 1);  // Light Olive
+style.Colors[ImGuiCol_MenuBarBg] = ImVec4(0.827, 0.925, 0.831, 1);  // Light Olive
+
+style.Colors[ImGuiCol_CheckMark] = ImVec4(0.933, 0.976, 0.941, 1);  // Pale Ivory
+style.Colors[ImGuiCol_ScrollbarGrab] = ImVec4(0.533, 0.631, 0.541, 1);  // Olive Green
+style.Colors[ImGuiCol_FrameBg] = ImVec4(0.3, 0.3, 0.3, 0.36);  // Dark Gray
+style.Colors[ImGuiCol_FrameBgHovered] = ImVec4(0.3, 0.3, 0.3, 0.78);  // Dark Gray
+style.Colors[ImGuiCol_FrameBgActive] = ImVec4(0.3, 0.3, 0.3, 1);  // Dark Gray
+
+style.Colors[ImGuiCol_ScrollbarGrabHovered] = ImVec4(0.6, 0.6, 0.6, 1);  // Light Gray
+style.Colors[ImGuiCol_ScrollbarGrabActive] = ImVec4(0.6, 0.6, 0.6, 1);  // Light Gray
+style.Colors[ImGuiCol_ScrollbarBg] = ImVec4(1, 1, 1, 0.09);
+style.Colors[ImGuiCol_SliderGrab] = ImVec4(0.933, 0.976, 0.941, 1);  // Pale Ivory
+style.Colors[ImGuiCol_SliderGrabActive] = ImVec4(0.733, 0.831, 0.741, 1);  // Soft Green
+
+style.Colors[ImGuiCol_Button] = ImVec4(0.8, 0.8, 0.8, 0.71);  // Light Gray
+style.Colors[ImGuiCol_ButtonHovered] = ImVec4(0.8, 0.8, 0.8, 0.78);  // Light Gray
+style.Colors[ImGuiCol_ButtonActive] = ImVec4(0.8, 0.8, 0.8, 1);  // Light Gray
+style.Colors[ImGuiCol_Header] = ImVec4(0.647, 0.741, 0.659, 1);  // Pale Olive
+style.Colors[ImGuiCol_HeaderHovered] = ImVec4(0.647, 0.741, 0.659, 1);  // Pale Olive
+
+style.Colors[ImGuiCol_HeaderActive] = ImVec4(0.678, 0.776, 0.686, 1);  // Pale Olive
+style.Colors[ImGuiCol_TabUnfocused] = ImVec4(0.678, 0.776, 0.686, 1);  // Pale Olive
+style.Colors[ImGuiCol_Tab] = ImVec4(0.678, 0.776, 0.686, 0.71);  // Pale Olive
+style.Colors[ImGuiCol_TabHovered] = ImVec4(0.678, 0.776, 0.686, 1);  // Pale Olive
+style.Colors[ImGuiCol_TabActive] = ImVec4(0.678, 0.776, 0.686, 1);  // Pale Olive
+style.Colors[ImGuiCol_TabUnfocusedActive] = ImVec4(0.647, 0.741, 0.659, 1);  // Light Olive
+
+
 }
 
 

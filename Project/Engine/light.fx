@@ -297,8 +297,36 @@ float PS_DepthMap(VS_DEPTH_OUT _in) : SV_Target
 
 
 
+// ========================
+// Contour Shader
+// mesh : RectMesh
+// g_tex_0 : DataTarget
+// g_tex_0 : ContourTarget
+// ========================
+VS_OUT VS_ContourMerge(VS_IN _in)
+{
+    VS_OUT output = (VS_OUT) 0.f;
+    output.vPosition = float4(_in.vPos.xyz * 2.f, 1.f);
+    output.vUV = _in.vUV;
+    return output;
+}
 
+float4 PS_ContourMerge(VS_OUT _in) : SV_Target0
+{
+    float4 vOutColor = (float4) 0.f;
+    
+    // Data Target 
+    float3 DefaultScale = g_tex_0.Sample(g_sam_0, _in.vUV).xyz;
+    // contour Target 
+    float3 Contour = g_tex_1.Sample(g_sam_0, _in.vUV).xyz;
+    
+    if (DefaultScale.y != 1.f && Contour.z == 1.f)
+        vOutColor = float4(1.f, 0.f, 0.f, 0.7f);
+    else
+        discard;
 
+    return vOutColor;
+}
 
 
 #endif
