@@ -201,7 +201,8 @@ void CreateTestLevel()
 		pObj->Collider3D()->SetDrawCollision(false);
 		pObj->Animator3D()->SetRepeat(true);
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		//pObj->Transform()->SetUseMouseOutline(true);
+
+		pObj->Transform()->SetUseMouseOutline(true);
 
 		SpawnGameObject(pObj, Vec3(0, 0, 0), 0);
 
@@ -258,7 +259,7 @@ void CreateTestLevel()
 	pRectFast->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
 
 	//pRectFast->MeshRender()->SetUsingMovingVec(true);
-	//pRectFast->Transform()->SetUseMouseOutline(true);
+	pRectFast->Transform()->SetUseMouseOutline(true);
 	pRectFast->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
 	pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
 	pRectFast->MeshRender()->GetDynamicMaterial(0);
@@ -284,7 +285,7 @@ void CreateTestLevel()
 	RayTestObj1->AddComponent(new CCollider2D);
 
 	RayTestObj1->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
-	//RayTestObj1->Transform()->SetUseMouseOutline(true);
+	RayTestObj1->Transform()->SetUseMouseOutline(true);
 	RayTestObj1->MeshRender()->SetUsingMovingVec(true);
 
 	RayTestObj1->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
@@ -313,7 +314,7 @@ void CreateTestLevel()
 	RayTestObj2->AddComponent(new CCollider2D);
 
 	RayTestObj2->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
-	//RayTestObj2->Transform()->SetUseMouseOutline(true);
+	RayTestObj2->Transform()->SetUseMouseOutline(true);
 
 	RayTestObj2->MeshRender()->SetUsingMovingVec(true);
 
@@ -342,7 +343,7 @@ void CreateTestLevel()
 	RayCubeTestObj1->AddComponent(new CMeshRender);
 	RayCubeTestObj1->AddComponent(new CTransform);
 	RayCubeTestObj1->AddComponent(new CCollider3D);
-	//RayCubeTestObj1->Transform()->SetUseMouseOutline(true);
+	RayCubeTestObj1->Transform()->SetUseMouseOutline(true);
 
 	RayCubeTestObj1->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
 	RayCubeTestObj1->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
@@ -365,7 +366,7 @@ void CreateTestLevel()
 	RayCubeTestObj2->AddComponent(new CMeshRender);
 	RayCubeTestObj2->AddComponent(new CTransform);
 	RayCubeTestObj2->AddComponent(new CCollider3D);
-	//RayCubeTestObj2->Transform()->SetUseMouseOutline(false);
+	RayCubeTestObj2->Transform()->SetUseMouseOutline(true);
 
 	RayCubeTestObj2->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
 	RayCubeTestObj2->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
@@ -388,7 +389,7 @@ void CreateTestLevel()
 	RayCubeTestObj3->AddComponent(new CMeshRender);
 	RayCubeTestObj3->AddComponent(new CTransform);
 	RayCubeTestObj3->AddComponent(new CCollider3D);
-	//RayCubeTestObj3->Transform()->SetUseMouseOutline(true);
+	RayCubeTestObj3->Transform()->SetUseMouseOutline(true);
 
 	RayCubeTestObj3->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
 	RayCubeTestObj3->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
