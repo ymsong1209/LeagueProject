@@ -19,6 +19,7 @@
 
 #include "TestLevel.h"
 
+#include <Engine/CEventMgr.h>
 #include <Engine/CKeyMgr.h>
 #include <iostream>
 
@@ -77,29 +78,30 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 
 
-    this_thread::sleep_for(1s);
-    
-    ClientServiceRef service = MakeShared<ClientService>(
-        NetAddress(L"221.148.206.199", 40000),
-        MakeShared<IocpCore>(),
-        MakeShared<ServerSession>, // TODO : SessionManager 등
-        1);
-    
-    ASSERT_CRASH(service->Start());
-    
-    GThreadManager->SetFlags(1);
-    for (int32 i = 0; i < 2; i++)
-    {
-        GThreadManager->Launch([=]()
-        {
-            while (true)
-            {
-                service->GetIocpCore()->Dispatch(10);
-                if (GThreadManager->GetFlags() == 0)
-                    break;
-            }
-        });
-    }    
+   this_thread::sleep_for(1s);
+   
+   ClientServiceRef service = MakeShared<ClientService>(
+       //NetAddress(L"221.148.206.199", 40000),
+       NetAddress(L"127.0.0.1", 40000),
+       MakeShared<IocpCore>(),
+       MakeShared<ServerSession>, // TODO : SessionManager 등
+       1);
+   
+   ASSERT_CRASH(service->Start());
+   
+   GThreadManager->SetFlags(1);
+   for (int32 i = 0; i < 2; i++)
+   {
+       GThreadManager->Launch([=]()
+       {
+           while (true)
+           {
+               service->GetIocpCore()->Dispatch(10);
+               if (GThreadManager->GetFlags() == 0)
+                   break;
+           }
+       });
+   }    
 
     while (true) 
     {
@@ -116,34 +118,38 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
         else
         {
-            if (KEY_TAP(KEY::SPACE) && service->GetCurrentSessionCount() > 0)
-            {
-                Send_CLogin(service, L"KIYO");
-            }
-            else if (KEY_TAP(KEY::NUM_1))
-            {
-                Send_CPickFaction(service);
-            }
-            else if (KEY_TAP(KEY::NUM_2))
-            {
-                Send_CPickChampionAndStart(service,ChampionType::JINX);
-            }
-            else if (KEY_TAP(KEY::NUM_3))
-            {
-                PlayerMove move = {};
-                move.moveDir.x = 1.f;
-                move.moveDir.y = 2.f;
-                move.moveDir.z = 3.f;
-                move.pos.x = 10.f;
-                move.pos.y = 20.f;
-                move.pos.z = 30.f;
-                move.state = PlayerMove::PlayerState::IDLE;
-
-                Send_CMove(service, move);
-            }
+           if (KEY_TAP(KEY::SPACE) && service->GetCurrentSessionCount() > 0)
+           {
+               Send_CLogin(service, L"KIYO");
+           }
+           else if (KEY_TAP(KEY::NUM_1))
+           {
+               Send_CPickFaction(service);
+           }
+           else if (KEY_TAP(KEY::NUM_2))
+           {
+               Send_CPickChampionAndStart(service,ChampionType::JINX);
+           }
+           else if (KEY_TAP(KEY::NUM_3))
+           {
+               PlayerMove move = {};
+               move.moveDir.x = 1.f;
+               move.moveDir.y = 2.f;
+               move.moveDir.z = 3.f;
+               move.pos.x = 10.f;
+               move.pos.y = 20.f;
+               move.pos.z = 30.f;
+               move.state = PlayerMove::PlayerState::IDLE;
+                          Send_CMove(service, move);
+           }
 
 
             CEngine::GetInst()->progress();
+            
+            // 패킷을 서버에 보낸다. 
+            
+            // Event 처리
+            CEventMgr::GetInst()->tick();
 
             CEditorObjMgr::GetInst()->progress();
 

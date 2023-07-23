@@ -70,8 +70,6 @@ void CEngine::progress()
 
 	render();
 
-	// Event Ã³¸®
-	CEventMgr::GetInst()->tick();
 }
 
 void CEngine::tick()

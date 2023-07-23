@@ -61,9 +61,10 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
 		pObj->Transform()->SetRelativeScale(Vec3(0.3, 0.3, 0.3));
-		//_info.posInfo.x
-		//Vec3 spawnPos = 
-		SpawnGameObject(pObj, Vec3(0, 0, 0), 0);
+
+		
+		Vec3 spawnPos = Vec3(_info.posInfo.pos.x, _info.posInfo.pos.y, _info.posInfo.pos.z);
+		SpawnGameObject(pObj, spawnPos, 0);
 
 		_players.insert(std::make_pair(MyPlayer.id,pObj));
 	}
@@ -84,14 +85,16 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 		player->SetNickName(_info.nickname);
 		player->SetFaction(_info.faction);
 
-		pObj->SetName(_info.nickname);
+		//pObj->SetName(_info.nickname);
+		pObj->SetName(L"OtherPlayer");
 		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
 		pObj->Animator3D()->SetRepeat(true);
 
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
 		pObj->Transform()->SetRelativeScale(Vec3(0.3, 0.3, 0.3));
 
-		SpawnGameObject(pObj, Vec3(100, 0, 200), 0);
+		Vec3 spawnPos = Vec3(_info.posInfo.pos.x, _info.posInfo.pos.y, _info.posInfo.pos.z);
+		SpawnGameObject(pObj, spawnPos, 0);
 
 		_players.insert(std::make_pair(_info.id, pObj));
 	}

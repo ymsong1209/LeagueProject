@@ -251,6 +251,6 @@ void ServerPacketHandler::Handle_S_MOVE(PacketSessionRef& session, BYTE* buffer,
 	uint64 _PlayerId = pkt->playerId;
 	PlayerMove playerMove = pkt->playerMove;
 
-	//GameObjMgr::GetInst()->MovePlayer(_PlayerId, playerMove);
+	GameObjMgr::GetInst()->MovePlayer(_PlayerId, playerMove);
 	std::cout << "===============================" << endl;
 }
