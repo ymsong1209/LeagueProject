@@ -138,7 +138,7 @@ void CreateTestLevel()
 	
 		Ptr<CMeshData> pMeshData = nullptr;
 		CGameObject* pObj = nullptr;
-		for (int i = 0; i < 25; ++i) {
+		for (int i = 0; i <=25; ++i) {
 			wstring num = std::to_wstring(i);
 			wstring FBXFilePath = L"fbx\\land";
 			FBXFilePath += num;
