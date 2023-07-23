@@ -51,6 +51,8 @@ private:
 
     int        m_isGizmoEditMode; // 0: 디폴트 모드 (기즈모x) 1: 에디트 모드 (기즈모o)  : 모드가 추가될수도 있으므로, bool대신 int로함
 
+    float       m_fFov; //fov값
+
 public:
     void SetProjType(PROJ_TYPE _Type) { m_ProjType = _Type; }
     PROJ_TYPE GetProjType() { return m_ProjType; }
@@ -93,6 +95,8 @@ public:
 
     bool OutlineCheck(CGameObject* _Obj);
 
+    float GetCameraFov() { return m_fFov; }
+    void SetCameraFov(float _Fov) { m_fFov = _Fov; }
 
 public:
     void SortObject();

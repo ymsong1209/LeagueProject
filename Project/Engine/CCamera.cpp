@@ -38,6 +38,7 @@ CCamera::CCamera()
 	, m_bShowFrustumDebug(false)
 	, m_bViewGizmoBounding(false)
 	, m_isGizmoEditMode(1)
+	, m_fFov(30.f)
 {
 	SetName(L"Camera");
 
@@ -58,6 +59,7 @@ CCamera::CCamera(const CCamera& _Other)
 	, m_iCamIdx(-1)
 	, m_bShowFrustumDebug(_Other.m_bShowFrustumDebug)
 	, m_bViewGizmoBounding(_Other.m_bViewGizmoBounding)
+	, m_fFov(_Other.m_fFov)
 {
 	SetName(L"Camera");
 }
@@ -327,7 +329,7 @@ void CCamera::CalcProjMat()
 	else
 	{
 		// 원근 투영
-		m_matProj = XMMatrixPerspectiveFovLH(XM_PI / 2.f, m_fAspectRatio, 1.f, m_fFar);
+		m_matProj = XMMatrixPerspectiveFovLH(XMConvertToRadians(m_fFov), m_fAspectRatio, 1.f, m_fFar);
 	}
 
 	// 투영행렬 역행렬
@@ -811,6 +813,7 @@ void CCamera::SaveToLevelFile(FILE* _File)
 	fwrite(&m_fFar, sizeof(float), 1, _File);
 	fwrite(&m_bShowFrustumDebug, sizeof(bool), 1, _File);
 	fwrite(&m_bViewGizmoBounding, sizeof(bool), 1, _File);
+	fwrite(&m_fFov, sizeof(float), 1, _File);
 }
 
 void CCamera::LoadFromLevelFile(FILE* _File)
@@ -824,6 +827,8 @@ void CCamera::LoadFromLevelFile(FILE* _File)
 	fread(&m_fFar, sizeof(float), 1, _File);
 	fread(&m_bShowFrustumDebug, sizeof(bool), 1, _File);
 	fread(&m_bViewGizmoBounding, sizeof(bool), 1, _File);
+	fread(&m_fFov, sizeof(float), 1, _File);
+
 	SetCameraIndex(m_iCamIdx);
 }
 
@@ -838,7 +843,7 @@ void CCamera::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& all
 	_objValue.AddMember("fFar", m_fFar, allocator);
 	_objValue.AddMember("bShowFrustumDebug", m_bShowFrustumDebug, allocator);
 	_objValue.AddMember("bViewGizmoBounding", m_bViewGizmoBounding, allocator);
-
+	_objValue.AddMember("fFov", m_fFov, allocator);
 }
 
 void CCamera::LoadFromLevelJsonFile(const Value& _componentValue)
@@ -851,6 +856,8 @@ void CCamera::LoadFromLevelJsonFile(const Value& _componentValue)
 	m_fFar = _componentValue["fFar"].GetFloat();
 	m_bShowFrustumDebug = _componentValue["bShowFrustumDebug"].GetBool();
 	m_bViewGizmoBounding = _componentValue["bViewGizmoBounding"].GetBool();
+	m_fFov = _componentValue["fFov"].GetFloat();
+
 	SetCameraIndex(m_iCamIdx);
 }
 

@@ -47,13 +47,13 @@ void CreateTestLevel()
 	pMainCam->AddComponent(new CCamera);
 	pMainCam->AddComponent(new CCameraMoveScript);
 
-	pMainCam->Camera()->SetProjType(PROJ_TYPE::ORTHOGRAPHIC);
+	pMainCam->Camera()->SetProjType(PROJ_TYPE::PERSPECTIVE);
 
 	pMainCam->Camera()->SetCameraIndex(0);		// MainCamera 로 설정
 	pMainCam->Camera()->SetLayerMaskAll(true);	// 모든 레이어 체크
 	pMainCam->Camera()->SetLayerMask(31, false);// UI Layer 는 렌더링하지 않는다.
-	pMainCam->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(56.f),0.f, 0.f));
-	SpawnGameObject(pMainCam, Vec3(0.f, 480.f, 0.f), 0);
+	pMainCam->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(60.f),0.f, 0.f));
+	SpawnGameObject(pMainCam, Vec3(1386.f, 498.f, -9.f), 0);
 
 
 	// 광원 추가
@@ -201,7 +201,7 @@ void CreateTestLevel()
 		pObj->Collider3D()->SetDrawCollision(false);
 		pObj->Animator3D()->SetRepeat(true);
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		pObj->Transform()->SetUseMouseOutline(true);
+		//pObj->Transform()->SetUseMouseOutline(true);
 
 		SpawnGameObject(pObj, Vec3(0, 0, 0), 0);
 
@@ -257,8 +257,8 @@ void CreateTestLevel()
 
 	pRectFast->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
 
-	pRectFast->MeshRender()->SetUsingMovingVec(true);
-	pRectFast->Transform()->SetUseMouseOutline(true);
+	//pRectFast->MeshRender()->SetUsingMovingVec(true);
+	//pRectFast->Transform()->SetUseMouseOutline(true);
 	pRectFast->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
 	pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
 	pRectFast->MeshRender()->GetDynamicMaterial(0);
@@ -284,7 +284,7 @@ void CreateTestLevel()
 	RayTestObj1->AddComponent(new CCollider2D);
 
 	RayTestObj1->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
-	RayTestObj1->Transform()->SetUseMouseOutline(true);
+	//RayTestObj1->Transform()->SetUseMouseOutline(true);
 	RayTestObj1->MeshRender()->SetUsingMovingVec(true);
 
 	RayTestObj1->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
@@ -313,7 +313,7 @@ void CreateTestLevel()
 	RayTestObj2->AddComponent(new CCollider2D);
 
 	RayTestObj2->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
-	RayTestObj2->Transform()->SetUseMouseOutline(true);
+	//RayTestObj2->Transform()->SetUseMouseOutline(true);
 
 	RayTestObj2->MeshRender()->SetUsingMovingVec(true);
 
@@ -342,7 +342,7 @@ void CreateTestLevel()
 	RayCubeTestObj1->AddComponent(new CMeshRender);
 	RayCubeTestObj1->AddComponent(new CTransform);
 	RayCubeTestObj1->AddComponent(new CCollider3D);
-	RayCubeTestObj1->Transform()->SetUseMouseOutline(true);
+	//RayCubeTestObj1->Transform()->SetUseMouseOutline(true);
 
 	RayCubeTestObj1->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
 	RayCubeTestObj1->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
@@ -360,12 +360,12 @@ void CreateTestLevel()
 
 	// Ray Cube Test Object 2
 	CGameObject* RayCubeTestObj2 = new CGameObject;
-	RayCubeTestObj2->SetName(L"RayCubeTestObj1");
+	RayCubeTestObj2->SetName(L"RayCubeTestObj2");
 
 	RayCubeTestObj2->AddComponent(new CMeshRender);
 	RayCubeTestObj2->AddComponent(new CTransform);
 	RayCubeTestObj2->AddComponent(new CCollider3D);
-	RayCubeTestObj2->Transform()->SetUseMouseOutline(true);
+	//RayCubeTestObj2->Transform()->SetUseMouseOutline(false);
 
 	RayCubeTestObj2->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
 	RayCubeTestObj2->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
@@ -383,12 +383,12 @@ void CreateTestLevel()
 
 	// Ray Cube Test Object 3
 	CGameObject* RayCubeTestObj3 = new CGameObject;
-	RayCubeTestObj3->SetName(L"RayCubeTestObj1");
+	RayCubeTestObj3->SetName(L"RayCubeTestOb31");
 
 	RayCubeTestObj3->AddComponent(new CMeshRender);
 	RayCubeTestObj3->AddComponent(new CTransform);
 	RayCubeTestObj3->AddComponent(new CCollider3D);
-	RayCubeTestObj3->Transform()->SetUseMouseOutline(true);
+	//RayCubeTestObj3->Transform()->SetUseMouseOutline(true);
 
 	RayCubeTestObj3->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
 	RayCubeTestObj3->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));

@@ -76,33 +76,57 @@ void CCameraMoveScript::Camera3DMove()
 
 	float fSpeed = m_fCamSpeed;
 
-
-
-
-	if (KEY_PRESSED(KEY::LSHIFT))
-		fSpeed *= 5.f;
-
-	if (KEY_PRESSED(KEY::W))
+	if (CLevelMgr::GetInst()->GetCurLevel()->GetState() == LEVEL_STATE::PLAY)
 	{
-		vPos += EditorDT * vFront * fSpeed;
+		if (KEY_PRESSED(KEY::LSHIFT))
+			fSpeed *= 5.f;
+
+		if (KEY_PRESSED(KEY::W))
+		{
+			vPos.z += EditorDT * fSpeed;
+		}
+
+		if (KEY_PRESSED(KEY::S))
+		{
+			vPos.z -= EditorDT  * fSpeed;
+		}
+
+		if (KEY_PRESSED(KEY::A))
+		{
+			vPos.x -= EditorDT * fSpeed;
+		}
+
+		if (KEY_PRESSED(KEY::D))
+		{
+			vPos.x += EditorDT * fSpeed;
+		}
 	}
 
-	if (KEY_PRESSED(KEY::S))
+	else
 	{
-		vPos -= EditorDT * vFront * fSpeed;
+		if (KEY_PRESSED(KEY::LSHIFT))
+			fSpeed *= 5.f;
+
+		if (KEY_PRESSED(KEY::W))
+		{
+			vPos += EditorDT * vFront * fSpeed;
+		}
+
+		if (KEY_PRESSED(KEY::S))
+		{
+			vPos -= EditorDT * vFront * fSpeed;
+		}
+
+		if (KEY_PRESSED(KEY::A))
+		{
+			vPos -= EditorDT * vRight * fSpeed;
+		}
+
+		if (KEY_PRESSED(KEY::D))
+		{
+			vPos += EditorDT * vRight * fSpeed;
+		}
 	}
-
-	if (KEY_PRESSED(KEY::A))
-	{
-		vPos -= EditorDT * vRight * fSpeed;
-	}
-
-	if (KEY_PRESSED(KEY::D))
-	{
-		vPos += EditorDT * vRight * fSpeed;
-	}
-
-
 
 	if (KEY_PRESSED(KEY::MBTN))
 	{
@@ -110,6 +134,7 @@ void CCameraMoveScript::Camera3DMove()
 		vRot.y += EditorDT * vMouseDir.x * 5.f;
 		vRot.x -= EditorDT * vMouseDir.y * 5.f;
 	}
+
 
 	Transform()->SetRelativePos(vPos);
 	Transform()->SetRelativeRot(vRot);
