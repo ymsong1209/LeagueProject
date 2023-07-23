@@ -18,6 +18,8 @@ private:
     int             m_iCollisionCount;  // 충돌 횟수
 
     bool            m_bIsCollidedFromRay;
+
+    bool            m_bDrawCollision; //콜리전을 보이게할지 여부
 public:
     virtual void finaltick() override;
 
@@ -42,8 +44,8 @@ public:
     bool  IsCollidedFromRay() { return m_bIsCollidedFromRay; }
     void  SetCollidedFromRay(bool _state) { m_bIsCollidedFromRay = _state; }
 
-
-
+    bool GetDrawCollision() { return m_bDrawCollision; }
+    void SetDrawCollision(bool _IsDraw) { m_bDrawCollision = _IsDraw; }
 
 public:
     void BeginOverlap(CCollider3D* _Other);

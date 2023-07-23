@@ -47,6 +47,21 @@ int CameraUI::render_update()
 
 		GetTarget()->Camera()->SetShowDebug(ShowDebug);
 	}
+
+	//SetFar--------//
+	ImGui::Text("Fov");
+	ImGui::SameLine();
+	float CamFov = GetTarget()->Camera()->GetCameraFov();
+	if (ImGui::DragFloat("##Fov", &CamFov)) {
+		if (CamFov >= 360.f) {
+			CamFov = 360.f;
+		}
+		if (CamFov <= 2.f)
+			CamFov = 2.f;
+		GetTarget()->Camera()->SetCameraFov(CamFov);
+	}
+
+
 	//SetFar--------//
 	ImGui::Text("Far");
 	ImGui::SameLine();

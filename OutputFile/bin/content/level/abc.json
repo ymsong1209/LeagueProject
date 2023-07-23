@@ -10,35 +10,38 @@
                         {
                             "TRANSFORM": 0,
                             "vRelativePos": {
-                                "x": 195.14718627929688,
-                                "y": 480.0,
-                                "z": -307.2429504394531
+                                "x": 1386.0,
+                                "y": 498.0,
+                                "z": -9.0
                             },
                             "vRelativeScale": {
                                 "x": 1.0,
                                 "y": 1.0,
-                                "z": 1.0
+                                "z": 0.9999998807907104
                             },
                             "vRelativeRot": {
-                                "x": 0.9773843884468079,
-                                "y": 0.0,
+                                "x": 0.9599296450614929,
+                                "y": -0.008187036961317062,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 150.0
+                            "GizmoBounding_Radius": 50.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
                         },
                         {
                             "CAMERA": 7,
                             "fAspectRatio": 1.600000023841858,
                             "fWidth": 1600.0,
                             "fScale": 4.099999904632568,
-                            "ProjType": 0,
+                            "ProjType": 1,
                             "iLayerMask": 2147483647,
                             "iCamIdx": 0,
                             "fFar": 50000.0,
                             "bShowFrustumDebug": false,
-                            "bViewGizmoBounding": false
+                            "bViewGizmoBounding": false,
+                            "fFov": 30.0
                         },
                         16
                     ],
@@ -71,7 +74,9 @@
                             },
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 150.0
+                            "GizmoBounding_Radius": 50.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
                         },
                         {
                             "LIGHT3D": 6,
@@ -153,7 +158,9 @@
                             },
                             "bAbsolute": false,
                             "IsNoGizmoObj": true,
-                            "GizmoBounding_Radius": 150.0
+                            "GizmoBounding_Radius": 50.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
                         },
                         {
                             "SKYBOX": 13,
@@ -212,7 +219,9 @@
                             },
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 150.0
+                            "GizmoBounding_Radius": 50.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
                         },
                         {
                             "ANIMATOR3D": 4,
@@ -262,23 +271,41 @@
                         {
                             "TRANSFORM": 0,
                             "vRelativePos": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
+                                "x": 107.11641693115234,
+                                "y": 15.971713066101074,
+                                "z": 187.0006103515625
                             },
                             "vRelativeScale": {
-                                "x": 0.18000000715255737,
-                                "y": 0.18000000715255737,
-                                "z": 0.18000000715255737
+                                "x": 0.20000000298023224,
+                                "y": 0.20000000298023224,
+                                "z": 0.20000000298023224
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": 0.0,
+                                "y": 1.2769641876220703,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 150.0
+                            "GizmoBounding_Radius": 50.0,
+                            "UseMouseOutLine": true,
+                            "Outlinethickness": 0.0989999994635582
+                        },
+                        {
+                            "COLLIDER3D": 2,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 30.0,
+                                "y": 30.0,
+                                "z": 30.0
+                            },
+                            "bAbsolute": true,
+                            "Shape": 0,
+                            "DrawCollision": false
                         },
                         {
                             "ANIMATOR3D": 4,
@@ -544,7 +571,9 @@
                             },
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 150.0
+                            "GizmoBounding_Radius": 50.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
                         },
                         {
                             "COLLIDER2D": 1,
@@ -619,7 +648,7 @@
                                                 "arrInt[0]": 0
                                             },
                                             {
-                                                "arrInt[1]": 5
+                                                "arrInt[1]": 0
                                             },
                                             {
                                                 "arrInt[2]": 0
@@ -723,8 +752,8 @@
                                             },
                                             {
                                                 "arrV2[5]": {
-                                                    "x": 18.786151885986328,
-                                                    "y": 0.498995304107666
+                                                    "x": 0.0,
+                                                    "y": 0.0
                                                 }
                                             },
                                             {
@@ -1039,69 +1068,7 @@
                                     }
                                 }
                             ],
-                            "bIsUsingMovingVec": true,
-                            "vMovingVec": [
-                                {
-                                    "m_vMovingVec[0]": null,
-                                    "TargetTex": 0,
-                                    "MovingStyle": 0,
-                                    "FuncValue": {
-                                        "x": 1.0,
-                                        "y": 0.5,
-                                        "z": 1.0,
-                                        "w": 0.0
-                                    },
-                                    "PreviousPos": {
-                                        "x": 0.0,
-                                        "y": 0.0
-                                    }
-                                },
-                                {
-                                    "m_vMovingVec[1]": null,
-                                    "TargetTex": 1,
-                                    "MovingStyle": 6,
-                                    "FuncValue": {
-                                        "x": 1.0,
-                                        "y": 0.5,
-                                        "z": 1.0,
-                                        "w": 0.0
-                                    },
-                                    "PreviousPos": {
-                                        "x": 1.2351455688476563,
-                                        "y": 0.16469183564186096
-                                    }
-                                },
-                                {
-                                    "m_vMovingVec[2]": null,
-                                    "TargetTex": 0,
-                                    "MovingStyle": 0,
-                                    "FuncValue": {
-                                        "x": 1.0,
-                                        "y": 0.5,
-                                        "z": 1.0,
-                                        "w": 0.0
-                                    },
-                                    "PreviousPos": {
-                                        "x": 0.0,
-                                        "y": 0.0
-                                    }
-                                },
-                                {
-                                    "m_vMovingVec[3]": null,
-                                    "TargetTex": 1,
-                                    "MovingStyle": 6,
-                                    "FuncValue": {
-                                        "x": 1.0,
-                                        "y": 0.5,
-                                        "z": 1.0,
-                                        "w": 0.0
-                                    },
-                                    "PreviousPos": {
-                                        "x": 18.786151885986328,
-                                        "y": 0.498995304107666
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],
@@ -1130,7 +1097,9 @@
                             },
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 150.0
+                            "GizmoBounding_Radius": 50.0,
+                            "UseMouseOutLine": true,
+                            "Outlinethickness": 0.07199999690055847
                         },
                         {
                             "COLLIDER2D": 1,
@@ -1205,7 +1174,7 @@
                                                 "arrInt[0]": 0
                                             },
                                             {
-                                                "arrInt[1]": 5
+                                                "arrInt[1]": 341
                                             },
                                             {
                                                 "arrInt[2]": 0
@@ -1309,8 +1278,8 @@
                                             },
                                             {
                                                 "arrV2[5]": {
-                                                    "x": 18.786151885986328,
-                                                    "y": 0.498995304107666
+                                                    "x": 202.24594116210938,
+                                                    "y": 0.18860644102096558
                                                 }
                                             },
                                             {
@@ -1655,8 +1624,8 @@
                                         "w": 0.0
                                     },
                                     "PreviousPos": {
-                                        "x": 1.2351455688476563,
-                                        "y": 0.16469183564186096
+                                        "x": 0.853011429309845,
+                                        "y": 0.3288588523864746
                                     }
                                 },
                                 {
@@ -1685,8 +1654,98 @@
                                         "w": 0.0
                                     },
                                     "PreviousPos": {
-                                        "x": 18.786151885986328,
-                                        "y": 0.498995304107666
+                                        "x": 6.023585796356201,
+                                        "y": 0.48324641585350037
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[4]": null,
+                                    "TargetTex": 0,
+                                    "MovingStyle": 0,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 0.0,
+                                        "y": 0.0
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[5]": null,
+                                    "TargetTex": 1,
+                                    "MovingStyle": 6,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 24.697744369506836,
+                                        "y": 0.4534356892108917
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[6]": null,
+                                    "TargetTex": 0,
+                                    "MovingStyle": 0,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 0.0,
+                                        "y": 0.0
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[7]": null,
+                                    "TargetTex": 1,
+                                    "MovingStyle": 6,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 26.844934463500977,
+                                        "y": -0.07046310603618622
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[8]": null,
+                                    "TargetTex": 0,
+                                    "MovingStyle": 0,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 0.0,
+                                        "y": 0.0
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[9]": null,
+                                    "TargetTex": 1,
+                                    "MovingStyle": 6,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 202.24594116210938,
+                                        "y": 0.18860644102096558
                                     }
                                 }
                             ]
@@ -1718,7 +1777,9 @@
                             },
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 150.0
+                            "GizmoBounding_Radius": 50.0,
+                            "UseMouseOutLine": true,
+                            "Outlinethickness": 0.07199999690055847
                         },
                         {
                             "COLLIDER2D": 1,
@@ -1793,7 +1854,7 @@
                                                 "arrInt[0]": 0
                                             },
                                             {
-                                                "arrInt[1]": 5
+                                                "arrInt[1]": 341
                                             },
                                             {
                                                 "arrInt[2]": 0
@@ -1897,8 +1958,8 @@
                                             },
                                             {
                                                 "arrV2[5]": {
-                                                    "x": 18.786151885986328,
-                                                    "y": 0.498995304107666
+                                                    "x": 202.24594116210938,
+                                                    "y": 0.18860644102096558
                                                 }
                                             },
                                             {
@@ -2243,8 +2304,8 @@
                                         "w": 0.0
                                     },
                                     "PreviousPos": {
-                                        "x": 1.2351455688476563,
-                                        "y": 0.16469183564186096
+                                        "x": 0.853011429309845,
+                                        "y": 0.3288588523864746
                                     }
                                 },
                                 {
@@ -2273,8 +2334,98 @@
                                         "w": 0.0
                                     },
                                     "PreviousPos": {
-                                        "x": 18.786151885986328,
-                                        "y": 0.498995304107666
+                                        "x": 6.023585796356201,
+                                        "y": 0.48324641585350037
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[4]": null,
+                                    "TargetTex": 0,
+                                    "MovingStyle": 0,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 0.0,
+                                        "y": 0.0
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[5]": null,
+                                    "TargetTex": 1,
+                                    "MovingStyle": 6,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 24.697744369506836,
+                                        "y": 0.4534356892108917
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[6]": null,
+                                    "TargetTex": 0,
+                                    "MovingStyle": 0,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 0.0,
+                                        "y": 0.0
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[7]": null,
+                                    "TargetTex": 1,
+                                    "MovingStyle": 6,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 26.844934463500977,
+                                        "y": -0.07046310603618622
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[8]": null,
+                                    "TargetTex": 0,
+                                    "MovingStyle": 0,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 0.0,
+                                        "y": 0.0
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[9]": null,
+                                    "TargetTex": 1,
+                                    "MovingStyle": 6,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 202.24594116210938,
+                                        "y": 0.18860644102096558
                                     }
                                 }
                             ]
@@ -2306,7 +2457,9 @@
                             },
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 150.0
+                            "GizmoBounding_Radius": 50.0,
+                            "UseMouseOutLine": true,
+                            "Outlinethickness": 0.07199999690055847
                         },
                         {
                             "COLLIDER3D": 2,
@@ -2321,7 +2474,8 @@
                                 "z": 1.0
                             },
                             "bAbsolute": false,
-                            "Shape": 1
+                            "Shape": 1,
+                            "DrawCollision": true
                         },
                         {
                             "MESHRENDER": 10,
@@ -2337,7 +2491,7 @@
                             "iMtrlCount": 1,
                             "vecMtrls[0]SharedMtrl": {
                                 "IsNull": false,
-                                "Key": "Std3DMtrl",
+                                "Key": "Std3D_DeferredMtrl",
                                 "RelativePath": ""
                             },
                             "DynamicMtrls": [
@@ -2411,7 +2565,7 @@
                                         ],
                                         "arrFloat[12]s": [
                                             {
-                                                "arrFloat[0]": 0.0
+                                                "arrFloat[0]": 1.0
                                             },
                                             {
                                                 "arrFloat[1]": 0.0
@@ -2800,7 +2954,7 @@
                     "children": []
                 },
                 {
-                    "ObjName": "RayCubeTestObj1",
+                    "ObjName": "RayCubeTestObj2",
                     "components": [
                         {
                             "TRANSFORM": 0,
@@ -2821,7 +2975,9 @@
                             },
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 150.0
+                            "GizmoBounding_Radius": 50.0,
+                            "UseMouseOutLine": true,
+                            "Outlinethickness": 0.07199999690055847
                         },
                         {
                             "COLLIDER3D": 2,
@@ -2836,7 +2992,8 @@
                                 "z": 1.0
                             },
                             "bAbsolute": false,
-                            "Shape": 1
+                            "Shape": 1,
+                            "DrawCollision": true
                         },
                         {
                             "MESHRENDER": 10,
@@ -2852,7 +3009,7 @@
                             "iMtrlCount": 1,
                             "vecMtrls[0]SharedMtrl": {
                                 "IsNull": false,
-                                "Key": "Std3DMtrl",
+                                "Key": "Std3D_DeferredMtrl",
                                 "RelativePath": ""
                             },
                             "DynamicMtrls": [
@@ -2926,7 +3083,7 @@
                                         ],
                                         "arrFloat[12]s": [
                                             {
-                                                "arrFloat[0]": 0.0
+                                                "arrFloat[0]": 1.0
                                             },
                                             {
                                                 "arrFloat[1]": 0.0
@@ -3315,7 +3472,7 @@
                     "children": []
                 },
                 {
-                    "ObjName": "RayCubeTestObj1",
+                    "ObjName": "RayCubeTestOb31",
                     "components": [
                         {
                             "TRANSFORM": 0,
@@ -3336,7 +3493,9 @@
                             },
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 150.0
+                            "GizmoBounding_Radius": 50.0,
+                            "UseMouseOutLine": true,
+                            "Outlinethickness": 0.07199999690055847
                         },
                         {
                             "COLLIDER3D": 2,
@@ -3351,7 +3510,8 @@
                                 "z": 1.0
                             },
                             "bAbsolute": false,
-                            "Shape": 1
+                            "Shape": 1,
+                            "DrawCollision": true
                         },
                         {
                             "MESHRENDER": 10,
@@ -3367,7 +3527,7 @@
                             "iMtrlCount": 1,
                             "vecMtrls[0]SharedMtrl": {
                                 "IsNull": false,
-                                "Key": "Std3DMtrl",
+                                "Key": "Std3D_DeferredMtrl",
                                 "RelativePath": ""
                             },
                             "DynamicMtrls": [
@@ -3441,7 +3601,7 @@
                                         ],
                                         "arrFloat[12]s": [
                                             {
-                                                "arrFloat[0]": 0.0
+                                                "arrFloat[0]": 1.0
                                             },
                                             {
                                                 "arrFloat[1]": 0.0
@@ -3820,60 +3980,6 @@
                                     "TEX_PARAM[11]": {
                                         "IsNull": true
                                     }
-                                }
-                            ],
-                            "bIsUsingMovingVec": false
-                        },
-                        16
-                    ],
-                    "scripts": [],
-                    "children": []
-                },
-                {
-                    "ObjName": "MoveSphere",
-                    "components": [
-                        {
-                            "TRANSFORM": 0,
-                            "vRelativePos": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "vRelativeScale": {
-                                "x": 45.0,
-                                "y": 45.0,
-                                "z": 45.0
-                            },
-                            "vRelativeRot": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "bAbsolute": false,
-                            "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 150.0
-                        },
-                        {
-                            "MESHRENDER": 10,
-                            "Mesh": {
-                                "IsNull": false,
-                                "Key": "SphereMesh",
-                                "RelativePath": ""
-                            },
-                            "fBounding": 150.0,
-                            "bFrustumCheck": true,
-                            "bDynamicShadow": false,
-                            "bShowDebugBoundShape": false,
-                            "iMtrlCount": 1,
-                            "vecMtrls[0]SharedMtrl": {
-                                "IsNull": false,
-                                "Key": "Std3D_DeferredMtrl",
-                                "RelativePath": ""
-                            },
-                            "DynamicMtrls": [
-                                {
-                                    "vecMtrls[0]DynamicMtrl": null,
-                                    "IsDynamicMtrlExist": false
                                 }
                             ],
                             "bIsUsingMovingVec": false
@@ -3925,12 +4031,14 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": -0.0,
+                                "y": 0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
-                            "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 150.0
+                            "IsNoGizmoObj": true,
+                            "GizmoBounding_Radius": 50.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
                         },
                         {
                             "COLLIDER2D": 1,

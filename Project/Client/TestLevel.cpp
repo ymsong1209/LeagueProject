@@ -47,13 +47,13 @@ void CreateTestLevel()
 	pMainCam->AddComponent(new CCamera);
 	pMainCam->AddComponent(new CCameraMoveScript);
 
-	pMainCam->Camera()->SetProjType(PROJ_TYPE::ORTHOGRAPHIC);
+	pMainCam->Camera()->SetProjType(PROJ_TYPE::PERSPECTIVE);
 
 	pMainCam->Camera()->SetCameraIndex(0);		// MainCamera 로 설정
 	pMainCam->Camera()->SetLayerMaskAll(true);	// 모든 레이어 체크
 	pMainCam->Camera()->SetLayerMask(31, false);// UI Layer 는 렌더링하지 않는다.
-	pMainCam->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(56.f),0.f, 0.f));
-	SpawnGameObject(pMainCam, Vec3(0.f, 480.f, 0.f), 0);
+	pMainCam->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(60.f),0.f, 0.f));
+	SpawnGameObject(pMainCam, Vec3(1386.f, 498.f, -9.f), 0);
 
 
 	// 광원 추가
@@ -157,7 +157,7 @@ void CreateTestLevel()
 		pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
 		pObj->Collider2D()->SetOffsetScale(Vec2(2700.f, 2700.f));
 		pObj->Collider2D()->SetOffsetPos(Vec3(1125.f, 16.f, 1200.f));
-
+		pObj->Transform()->SetGizmoObjExcept(true);
 		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 6);
 
 		// 마우스 피킹 이동을 위한 맵 콜리전 - 따로 오브젝트로 빼준 이유는 렉트메쉬콜리전을 회전시켜야하는데 맵도 같이 회전되면 안돼서 따로 오브젝트로 뺐음
@@ -193,9 +193,17 @@ void CreateTestLevel()
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
 		pObj->AddComponent(new CPlayerScript);
 		pObj->AddComponent(new CPathFinder);
-		//pObj->Animator3D()->Play(L"jungle_blue-jungle_blue_AllAnim", true, 0.5f);
+		pObj->AddComponent(new CCollider3D);
+
+		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+		pObj->Collider3D()->SetAbsolute(true);
+		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
+		pObj->Collider3D()->SetDrawCollision(false);
 		pObj->Animator3D()->SetRepeat(true);
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+
+		pObj->Transform()->SetUseMouseOutline(true);
+
 		SpawnGameObject(pObj, Vec3(0, 0, 0), 0);
 
 
@@ -250,8 +258,8 @@ void CreateTestLevel()
 
 	pRectFast->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
 
-	pRectFast->MeshRender()->SetUsingMovingVec(true);
-
+	//pRectFast->MeshRender()->SetUsingMovingVec(true);
+	pRectFast->Transform()->SetUseMouseOutline(true);
 	pRectFast->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
 	pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
 	pRectFast->MeshRender()->GetDynamicMaterial(0);
@@ -263,7 +271,6 @@ void CreateTestLevel()
 	pRectFast->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
 	pRectFast->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f,0.f));
 	pRectFast->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
-
 
 	SpawnGameObject(pRectFast, Vec3(-600.f, 0.f, 500.f), 0);
 
@@ -278,7 +285,7 @@ void CreateTestLevel()
 	RayTestObj1->AddComponent(new CCollider2D);
 
 	RayTestObj1->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
-
+	RayTestObj1->Transform()->SetUseMouseOutline(true);
 	RayTestObj1->MeshRender()->SetUsingMovingVec(true);
 
 	RayTestObj1->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
@@ -298,7 +305,6 @@ void CreateTestLevel()
 	SpawnGameObject(RayTestObj1, Vec3(-600.f, 0.f, 600.f), 0);
 
 
-
 	// Ray Test Object2
 	CGameObject* RayTestObj2 = new CGameObject;
 	RayTestObj2->SetName(L"RayTestObj2");
@@ -308,6 +314,7 @@ void CreateTestLevel()
 	RayTestObj2->AddComponent(new CCollider2D);
 
 	RayTestObj2->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
+	RayTestObj2->Transform()->SetUseMouseOutline(true);
 
 	RayTestObj2->MeshRender()->SetUsingMovingVec(true);
 
@@ -336,10 +343,11 @@ void CreateTestLevel()
 	RayCubeTestObj1->AddComponent(new CMeshRender);
 	RayCubeTestObj1->AddComponent(new CTransform);
 	RayCubeTestObj1->AddComponent(new CCollider3D);
+	RayCubeTestObj1->Transform()->SetUseMouseOutline(true);
 
 	RayCubeTestObj1->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
 	RayCubeTestObj1->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
-	RayCubeTestObj1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3DMtrl"), 0);
+	RayCubeTestObj1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
 	RayCubeTestObj1->MeshRender()->GetDynamicMaterial(0);
 
 	RayCubeTestObj1->Collider3D()->SetAbsolute(false);
@@ -353,15 +361,16 @@ void CreateTestLevel()
 
 	// Ray Cube Test Object 2
 	CGameObject* RayCubeTestObj2 = new CGameObject;
-	RayCubeTestObj2->SetName(L"RayCubeTestObj1");
+	RayCubeTestObj2->SetName(L"RayCubeTestObj2");
 
 	RayCubeTestObj2->AddComponent(new CMeshRender);
 	RayCubeTestObj2->AddComponent(new CTransform);
 	RayCubeTestObj2->AddComponent(new CCollider3D);
+	RayCubeTestObj2->Transform()->SetUseMouseOutline(true);
 
 	RayCubeTestObj2->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
 	RayCubeTestObj2->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
-	RayCubeTestObj2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3DMtrl"), 0);
+	RayCubeTestObj2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
 	RayCubeTestObj2->MeshRender()->GetDynamicMaterial(0);
 
 	RayCubeTestObj2->Collider3D()->SetAbsolute(false);
@@ -375,15 +384,16 @@ void CreateTestLevel()
 
 	// Ray Cube Test Object 3
 	CGameObject* RayCubeTestObj3 = new CGameObject;
-	RayCubeTestObj3->SetName(L"RayCubeTestObj1");
+	RayCubeTestObj3->SetName(L"RayCubeTestOb31");
 
 	RayCubeTestObj3->AddComponent(new CMeshRender);
 	RayCubeTestObj3->AddComponent(new CTransform);
 	RayCubeTestObj3->AddComponent(new CCollider3D);
+	RayCubeTestObj3->Transform()->SetUseMouseOutline(true);
 
 	RayCubeTestObj3->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
 	RayCubeTestObj3->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
-	RayCubeTestObj3->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3DMtrl"), 0);
+	RayCubeTestObj3->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
 	RayCubeTestObj3->MeshRender()->GetDynamicMaterial(0);
 
 	RayCubeTestObj3->Collider3D()->SetAbsolute(false);
@@ -394,18 +404,22 @@ void CreateTestLevel()
 	SpawnGameObject(RayCubeTestObj3, Vec3(-600.f, -450.f, 1220.f), 0);
 
 
-
 	// TestFastForward
-	CGameObject* pRectFast2 = new CGameObject;
-	pRectFast2->SetName(L"MoveSphere");
-	pRectFast2->AddComponent(new CMeshRender);
-	pRectFast2->AddComponent(new CTransform);
+	//CGameObject* pRectFast2 = new CGameObject;
+	//pRectFast2->SetName(L"MoveSphere");
+	//pRectFast2->AddComponent(new CMeshRender);
+	//pRectFast2->AddComponent(new CTransform);
+	//pRectFast2->AddComponent(new CCollider3D);
+	//pRectFast2->Transform()->SetUseMouseOutline(true);
 
-	pRectFast2->Transform()->SetRelativeScale(Vec3(45.f, 45.f, 45.f));
-	pRectFast2->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
-	pRectFast2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
-
-	SpawnGameObject(pRectFast2, Vec3(0.f, 0.f, 0.f), 0);
+	//pRectFast2->Transform()->SetRelativeScale(Vec3(45.f, 45.f, 45.f));
+	//pRectFast2->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+	//pRectFast2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
+	//pRectFast2->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+	//pRectFast2->Collider3D()->SetAbsolute(false);
+	//pRectFast2->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
+	//pRectFast2->Collider3D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+	//SpawnGameObject(pRectFast2, Vec3(0.f, 0.f, 0.f), 0);
 
 
 
