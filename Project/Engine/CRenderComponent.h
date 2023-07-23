@@ -19,13 +19,16 @@ class CRenderComponent :
 {
 private:
     Ptr<CMesh>              m_pMesh;
-    vector<tMtrlSet>        m_vecMtrls;     // 재질    
+    vector<tMtrlSet>        m_vecMtrls;             // 재질    
 
 
-    float                   m_fBounding;        // FrustumCheck 용도 경계범위
-    bool                    m_bFrustumCheck;    // 절두체 컬링 체크 유무
-    bool                    m_bDynamicShadow;   // 동적 그림자 사용 유무
+    float                   m_fBounding;            // FrustumCheck 용도 경계범위
+    bool                    m_bFrustumCheck;        // 절두체 컬링 체크 유무
+    bool                    m_bDynamicShadow;       // 동적 그림자 사용 유무
     bool                    m_bShowDebugBoundShape; /// bounding 범위 선 보기 유무
+
+    bool                    m_bUseBoundingOffset;   // BoundingBox Offset 사용
+    Vec3                    m_vBoundingBoxOffset;   // BoundingBox Offset
 
 
 public:
@@ -51,6 +54,12 @@ public:
     bool IsShowDebugBound() { return m_bShowDebugBoundShape; }
     void SetShowDebugBound(bool _bShow) { m_bShowDebugBoundShape = _bShow; }
 
+    //true로 설정되면 Offset 위치에 BoundingBox가 생김
+    void SetBoundingBoxOffsetUse(bool _Use) { m_bUseBoundingOffset = _Use; }
+    bool GetBoundingBoxOffsetUse() { return m_bUseBoundingOffset; }
+
+    void SetBoundingBoxOffset(Vec3 _offset) { m_vBoundingBoxOffset = _offset; }
+    Vec3 GetBoundingBoxOffset() { return m_vBoundingBoxOffset; }
 
     bool IsDynamicMtrlEmpty(UINT _idx);
     void ClearDynamicMtrl(UINT _idx);

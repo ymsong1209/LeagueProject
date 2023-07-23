@@ -3,7 +3,7 @@
 
 #include "CEngine.h"
 #include "CFontMgr.h"
-
+#include "CKeyMgr.h"
 
 CTimeMgr::CTimeMgr()
 	: m_llPrevCount{}
@@ -12,6 +12,7 @@ CTimeMgr::CTimeMgr()
 	, m_iCallCount(0)
 	, m_fDeltaTime(0.f)
 	, m_fTime(0.f)
+	
 {
 
 }
@@ -60,6 +61,7 @@ void CTimeMgr::tick()
 	GlobalData.tDT = m_fDeltaTime;
 	GlobalData.tEditDT = m_fEditorDeltaTime;
 	GlobalData.tAccTime += m_fDeltaTime;
+
 }
 
 void CTimeMgr::render()
@@ -77,4 +79,7 @@ void CTimeMgr::render()
 	}
 
 	CFontMgr::GetInst()->DrawFont(szBuff, 10, 20, 16, FONT_RGBA(255, 0, 0, 255));
+	static wchar_t szBuff2[256] = {};
+	swprintf_s(szBuff2, L"Press F11 to progress IMGUI");
+	CFontMgr::GetInst()->DrawFont(szBuff2, 10, 36, 16, FONT_RGBA(255, 0, 0, 255));
 }

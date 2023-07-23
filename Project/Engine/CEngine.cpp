@@ -15,6 +15,7 @@
 
 CEngine::CEngine()
 	: m_hWnd(nullptr)
+	, m_bShowImgui(true)
 {
 }
 
@@ -76,6 +77,10 @@ void CEngine::progress()
 
 void CEngine::tick()
 {
+	if (KEY_TAP(KEY::F11)) {
+		m_bShowImgui = !m_bShowImgui;
+	}
+
 	// 마우스가 화면 바깥으로 나가지 않도록 함
 	//RECT windowRect;
 
