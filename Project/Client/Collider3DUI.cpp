@@ -37,6 +37,8 @@ int Collider3DUI::render_update()
 		GetTarget()->Collider3D()->SetAbsolute(bAbsolute);
 	}
 
+	SetWall();
+
 	ImGui::Text("OffsetPos");
 	ImGui::SameLine();
 	if (ImGui::InputFloat3("##Collider3DOffsetPos", vOffsetPos)) {
@@ -63,6 +65,15 @@ int Collider3DUI::render_update()
 	ImGui::Text("CollisionCount : %d", iCollisionCount);
 
 	return TRUE;
+}
+
+void Collider3DUI::SetWall()
+{
+	bool iswall = GetTarget()->Collider3D()->IsWall();
+	ImGui::Text("IsWall : "); ImGui::SameLine();
+	if (ImGui::Checkbox("##IsWallCollider3D", &iswall)) {
+		GetTarget()->Collider3D()->SetIsWall(iswall);
+	}
 }
 
 void Collider3DUI::ChooseColliderType()

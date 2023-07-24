@@ -4,12 +4,16 @@
 #include "CResMgr.h"
 #include "CTransform.h"
 
+#include "CGameObject.h"
+
 CSkyBox::CSkyBox()
 	: CRenderComponent(COMPONENT_TYPE::SKYBOX)
 	, m_Type(SKYBOX_TYPE::SPHERE)
 {	
 	SetType(m_Type);
 	SetFrustumCheck(false);
+ 
+
 }
 
 CSkyBox::CSkyBox(const CSkyBox& _other)
@@ -19,6 +23,7 @@ CSkyBox::CSkyBox(const CSkyBox& _other)
 {
 	SetType(m_Type);
 	SetFrustumCheck(false);
+
 }
 
 

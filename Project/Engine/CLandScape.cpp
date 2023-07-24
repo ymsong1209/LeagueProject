@@ -12,6 +12,8 @@
 #include "CStructuredBuffer.h"
 #include "CDevice.h"
 
+#include "CGameObject.h"
+
 
 CLandScape::CLandScape()
 	: CRenderComponent(COMPONENT_TYPE::LANDSCAPE)
@@ -26,7 +28,7 @@ CLandScape::CLandScape()
 	, m_eMod(LANDSCAPE_MOD::NONE)
 	, m_bIsClicking(false)
 	, m_rstype(RS_TYPE::CULL_BACK)
-{	
+{
 	init();
 }
 

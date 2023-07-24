@@ -36,6 +36,20 @@ int RenderComponentUI::render_update()
 	// =======================
 	CRenderComponent* pRenderCom = m_pTarget->GetRenderComponent();
 
+	ImGui::Text("RaySight Culling");
+	ImGui::SameLine();
+	bool useRaySightCulling = pRenderCom->IsUsingRaySightCulling();
+	if (ImGui::Checkbox("##RaySightCullingCheck", &useRaySightCulling))
+	{
+		if (useRaySightCulling) { // 眉农等 版快
+			pRenderCom->SetRaySightCulling(true);
+
+		}
+		else { // 眉农 秦力 等 版快
+			pRenderCom->SetRaySightCulling(false);
+		}
+	}
+
 	ImGui::Text("Frustum Culling");
 	ImGui::SameLine();
 	bool useFrustum = pRenderCom->IsUseFrustumCheck();

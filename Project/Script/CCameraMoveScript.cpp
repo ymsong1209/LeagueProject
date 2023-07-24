@@ -33,7 +33,6 @@ void CCameraMoveScript::tick()
 		return;
 	}
 
-
 	if (PROJ_TYPE::ORTHOGRAPHIC == Camera()->GetProjType())
 		Camera2DMove();
 	else

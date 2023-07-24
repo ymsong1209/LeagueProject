@@ -164,6 +164,24 @@ void TransformUI::RenderGizmo()
 			ImGui::Begin("Editor");
 
 		ImGui::Text("X: %f Y: %f", io.MousePos.x, io.MousePos.y);
+
+		//Ray를 쏘는 Object인지 체크
+		bool IsShootingRay = GetTarget()->Transform()->GetIsShootingRay();
+		ImGui::Text("Ray Object"); ImGui::SameLine();
+		if (ImGui::Checkbox("##RayObjectTransformUI", &IsShootingRay)) {
+			GetTarget()->Transform()->SetIsShootingRay(IsShootingRay);
+		}
+
+		if (IsShootingRay) {
+			ImGui::Text("Ray Range"); ImGui::SameLine();
+			float RayRange = GetTarget()->Transform()->GetRayRange();
+			ImGui::SetNextItemWidth(100.f);
+			if (ImGui::InputFloat("##RayRangeTransformUI", &RayRange)) {
+				GetTarget()->Transform()->SetRayRange(RayRange);
+			}
+		}
+
+		//
 		if (ImGuizmo::IsUsing())
 		{
 			ImGui::Text("Using gizmo");

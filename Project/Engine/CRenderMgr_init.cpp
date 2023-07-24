@@ -148,4 +148,41 @@ void CRenderMgr::init()
 		m_MRT[(UINT)MRT_TYPE::SHADOW]->Create(arrRTTex, arrClear, DSTex);
 	}
 
+   // =============
+   // FogOfWar  MRT
+   // =============
+    {
+
+        Ptr<CTexture> arrRTTex[8] = {
+           CResMgr::GetInst()->CreateTexture(L"FogOfWarTex"
+             , 4096, 4096
+             , DXGI_FORMAT_R32_FLOAT, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE
+             , D3D11_USAGE_DEFAULT),
+        };
+
+        Vec4 arrClear[8] = { Vec4(0.f, 0.f, 0.f, 0.f) , };
+
+        // Depth Stencil Texture 만들기
+        Ptr<CTexture> DSTex = CResMgr::GetInst()->CreateTexture(L"FogOfWarDSTex", 4096, 4096
+            , DXGI_FORMAT_D32_FLOAT, D3D11_BIND_DEPTH_STENCIL, D3D11_USAGE_DEFAULT);
+
+        m_MRT[(UINT)MRT_TYPE::FOGOFWAR] = new CMRT;
+        m_MRT[(UINT)MRT_TYPE::FOGOFWAR]->Create(arrRTTex, arrClear, DSTex);
+    }
+
+
+   /* CResMgr::GetInst()->CreateTexture(L"DataTargetTex"
+        , (UINT)vRenderResolotion.x, (UINT)vRenderResolotion.y
+        , DXGI_FORMAT_R32G32B32A32_FLOAT, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE
+        , D3D11_USAGE_DEFAULT),*/
+
+    // 전장의 안개 필터 맵 텍스처 생성
+    m_FogFilterMap = CResMgr::GetInst()->FindRes<CTexture>(L"FogFilterMap");
+    if (!m_FogFilterMap.Get()) {
+        m_FogFilterMap = CResMgr::GetInst()->CreateTexture(L"FogFilterMap"
+            , 2048, 2048
+            , DXGI_FORMAT_R8_UNORM
+            , D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS
+            , D3D11_USAGE_DEFAULT);
+    }
 }

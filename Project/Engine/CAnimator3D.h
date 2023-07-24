@@ -121,6 +121,7 @@ public:
     void DeleteCurrentAnim();
     void DeleteEveryAnim();
     void LoadEveryAnimFromFolder(const wstring& _strRelativePath);
+    // 애니메이션이 존재할 경우, 덮어씌워지지 않고 바로 return됨
     void CreateAnimFromText(const wstring& _strRelativePath);
     vector<wstring> split(const std::wstring& s, wchar_t delimiter);
 

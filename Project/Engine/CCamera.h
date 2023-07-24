@@ -4,7 +4,7 @@
 
 class CGameObject;
 class CLevel;
-
+struct ColliderStruct;
 
 class CCamera :
     public CComponent
@@ -41,17 +41,21 @@ private:
     vector<CGameObject*>    m_vecPost;
 
     vector<CGameObject*>    m_vecDynamicShadow;     // 동적 그림자 물체
+   
 
     vector<CGameObject*>    m_vecContour;
 
-    float                   m_LayMinDistance;  // 오브젝트가 여러개 겹쳐있을때 마우스 클릭하는 것을 대비해서 오브젝트들중에 깊이가(길이) 가장 작은
-    //오브젝트의 길이값을 기억해두고 그 오브젝트를 최종 선택오브젝트로 세팅
+    float                   m_LayMinDistance;   // 오브젝트가 여러개 겹쳐있을때 마우스 클릭하는 것을 대비해서 오브젝트들중에 깊이가(길이) 가장 작은
+                                                //오브젝트의 길이값을 기억해두고 그 오브젝트를 최종 선택오브젝트로 세팅 
 
     bool                    m_bViewGizmoBounding; //기즈모 클릭범위(바운딩콜리전) 를 보여줘야하는경우 true, 안보여줘도 되는경우 false
 
     int        m_isGizmoEditMode; // 0: 디폴트 모드 (기즈모x) 1: 에디트 모드 (기즈모o)  : 모드가 추가될수도 있으므로, bool대신 int로함
 
     float       m_fFov; //fov값
+
+   
+
 
 public:
     void SetProjType(PROJ_TYPE _Type) { m_ProjType = _Type; }
@@ -109,10 +113,12 @@ public:
     virtual void finaltick() override;
 
 protected:
-    void CalRay();  // 마우스 방향으로 광선 연산
-
-    void CollideRay(); // Rect 충돌과 Cube충돌 진행
-
+    // 마우스 방향으로 광선 연산
+    void CalRay();  
+    // Rect 충돌과 Cube충돌 진행
+    void CollideRay(); 
+    //전장의 안개용; Ray를 쏘는 Object랑 현재 Object 사이에 box있는지 판별
+    bool CheckRayCollideBox(CGameObject* _CurObject); 
 
 
 public:
@@ -120,6 +126,10 @@ public:
     IntersectResult IsCollidingBtwRayCube(tRay& _ray, CGameObject* _Object);
     IntersectResult IntersectsLay(Vec3* _vertices, tRay _ray);
 
+    IntersectResult IntersecrRayFog(Vec3 _Vertices0, Vec3 _Vertices1, Vec3 _Vertices2, tRay _Ray);
+
+
+    bool IsCollidingBtwRayWall(Vec2& RayObjPos, Vec2& _CollideObjPos, float& _Raidus, float& _RayObjRadius, ColliderStruct& _ColliderData);
 
 private:
     void clear();

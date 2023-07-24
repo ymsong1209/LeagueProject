@@ -44,7 +44,7 @@ void CS_ParticleUpdate(int3 _ID : SV_DispatchThreadID)
             {
                 int orgvalue = SpawnCount;
                 int outvalue = 0;
-                InterlockedCompareExchange(SpawnCount, orgvalue, SpawnCount - 1, outvalue);
+                InterlockedCompareExchange(SpawnCount, orgvalue, SpawnCount - 1, outvalue); 
             
                 if (orgvalue == outvalue)
                 {   

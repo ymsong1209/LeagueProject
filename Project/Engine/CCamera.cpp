@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CCamera.h"
 
 
@@ -19,9 +19,14 @@
 
 #include "CResMgr.h"
 #include "CKeyMgr.h"
+#include "CRenderMgr.h"
+
 #include "CCollider2D.h"
 #include "CCollider3D.h"
 #include "CEngine.h"
+
+#include "CStructuredBuffer.h"
+
 
 
 
@@ -45,6 +50,7 @@ CCamera::CCamera()
 	Vec2 vRenderResol = CDevice::GetInst()->GetRenderResolution();
 	m_fWidth = vRenderResol.x;
 	m_fAspectRatio = vRenderResol.x / vRenderResol.y;
+
 }
 
 CCamera::CCamera(const CCamera& _Other)
@@ -65,7 +71,7 @@ CCamera::CCamera(const CCamera& _Other)
 }
 
 CCamera::~CCamera()
-{
+{	
 }
 
 void CCamera::begin()
@@ -287,6 +293,65 @@ void CCamera::CollideRay()
 	TempEndOverlapCube.clear();
 }
 
+bool CCamera::CheckRayCollideBox(CGameObject* _object)
+{
+	vector<CGameObject*> RayVec = CRenderMgr::GetInst()->GetRayObjectVec();
+	vector<ColliderStruct> WallVec  =  CRenderMgr::GetInst()->GetWallObjectVec();
+
+	bool result = false;
+	bool CollidedByWall = false;
+
+	for (int i = 0; i < RayVec.size(); ++i) {
+		CGameObject* RayShootingObject = RayVec[i];
+
+		
+		float RayRadius = RayShootingObject->Transform()->GetRayRange();
+
+
+		Vec2 RayObjPos = Vec2{ RayVec[i]->Transform()->GetRelativePos().x, RayVec[i]->Transform()->GetRelativePos().z };
+		Vec2 CollideObjPos = Vec2{ _object->Transform()->GetRelativePos().x, _object->Transform()->GetRelativePos().z };
+
+		//Vec3 RayObjPos = RayVec[i]->Transform()->GetRelativePos();
+		//Vec3 CollideObjPos = _object->Transform()->GetRelativePos();
+
+		float DistBtwRayObj = Vec2::Distance(RayObjPos, CollideObjPos);
+
+		// 사거리 내에 object가 안들어오면 continue;
+		if (DistBtwRayObj > RayRadius)
+		{
+			continue;
+			
+		}
+
+		
+		// 사거리 내에 들어오면 rayobject->CurObject로 ray-box 충돌 검사를 함.
+		for (int j = 0; j < WallVec.size(); ++j)
+		{
+			if (IsCollidingBtwRayWall(RayObjPos, CollideObjPos, RayRadius, DistBtwRayObj, WallVec[j]))
+			{
+				CollidedByWall = true;
+				break;
+			}
+
+		}
+
+		if (CollidedByWall == true)
+		{
+			CollidedByWall = false;
+			continue;
+		}
+
+
+		// 사이에 아무것도 없을 경우
+		result = true;
+		break;
+
+	}
+
+	return result;
+
+}
+
 void CCamera::CalcViewMat()
 {
 	// ==============
@@ -434,7 +499,20 @@ void CCamera::SortObject()
 						m_vecContour.push_back(vecObject[j]);
 				}
 
+				
 				CollideRay();
+
+				//Ray를 쏘는 오브젝트랑 CurObject사이에 벽이 있음 or RayObject의 시야 범위 내에 CurObject가 안들어옴
+
+				if (vecObject[j]->GetRenderComponent() != nullptr && vecObject[j]->GetRenderComponent()->IsUsingRaySightCulling() && vecObject[j]->Transform()->GetIsShootingRay() != true)
+				{
+					if (false == CheckRayCollideBox(vecObject[j])) {
+						continue;
+					}
+				}
+			 
+				 
+
 				// 쉐이더 도메인에 따른 분류
 				SHADER_DOMAIN eDomain = pRenderCom->GetMaterial(0)->GetShader()->GetDomain();
 				switch (eDomain)
@@ -660,6 +738,89 @@ IntersectResult CCamera::IsCollidingBtwRayCube(tRay& _ray, CGameObject* _Object)
 	return Final;
 }
 
+
+bool CCamera::IsCollidingBtwRayWall(Vec2& RayObjPos, Vec2& _CollideObjPos, float& _Raidus, float& _RayObjRadius, ColliderStruct& _ColliderData)
+{
+	// Sphere인지 Box인지 관계없이 벽과 Source Ray 사이의 거리가 반지름보다 길 경우 바로 false 반환
+	float WallPositionX =  _ColliderData.m_ColliderFinalMat._41;
+	float WallPositionZ = _ColliderData.m_ColliderFinalMat._43;
+
+
+	if (Vec2::Distance(RayObjPos, Vec2(WallPositionX, WallPositionZ)) > _Raidus)
+	{
+		return false;
+	}
+
+	// 거리 안에 있는 경우로 Sphere인지 Box인지에 따라 갈림 0 : Sphere, 1 : Box
+	if (_ColliderData.m_ColliderType == 0)
+	{
+		// 일단 이경우는 로직 작성안해놔ㅏㅆ음 추후 Sphere충돌이 추가되면
+		// 작성해야함
+		return false;
+	}
+
+	else if (_ColliderData.m_ColliderType == 1)
+	{
+		Vec3 arrLocal[6][3] =
+		{
+			{Vec3(-0.5f, 0.5f, -0.5f),  Vec3(0.5f, 0.5f, -0.5f),  Vec3(-0.5f, 0.5f, 0.5f)},	 // ����
+			{Vec3(-0.5f, -0.5f, -0.5f), Vec3(0.5f, -0.5f, -0.5f), Vec3(-0.5f, -0.5f, 0.5f)}, // �ظ�
+			{Vec3(-0.5f, -0.5f, -0.5f), Vec3(0.5f, -0.5f, -0.5f), Vec3(-0.5f, 0.5f, -0.5f)}, // �ո�
+			{Vec3(-0.5f, -0.5f, 0.5f),  Vec3(0.5f, -0.5f, 0.5f),  Vec3(-0.5f, 0.5f, 0.5f)},  // �޸�
+			{Vec3(-0.5f, 0.5f, -0.5f),  Vec3(-0.5f, -0.5f, -0.5f),Vec3(-0.5f, 0.5f, 0.5f)},  // ���ʸ�
+			{Vec3(0.5f, 0.5f, -0.5f),   Vec3(0.5f, -0.5f, -0.5f), Vec3(0.5f, 0.5f, 0.5f)},   // �����ʸ�
+		};
+
+		for (int i = 0; i < 6; ++i)
+			for (int j = 0; j < 3; ++j)
+				arrLocal[i][j] = Vec4::Transform(Vec4(arrLocal[i][j], 1.f), _ColliderData.m_ColliderFinalMat);
+
+		IntersectResult Final = IntersectResult{ Vec3(0.f, 0.f, 0.f), 0.f, false };
+		IntersectResult Temp;
+
+		tRay ray;
+		ray.vStart = Vec3(RayObjPos.x, 10.f, RayObjPos.y);
+		ray.vDir = Vec3(_CollideObjPos.x - RayObjPos.x, 0.f, _CollideObjPos.y - RayObjPos.y).Normalize();
+
+
+		for (int i = 0; i < 6; ++i)
+		{
+			Temp = IntersecrRayFog(arrLocal[i][0], arrLocal[i][1], arrLocal[i][2], ray);
+
+			if (Temp.bResult == true)
+			{
+				if (Final.bResult == false)
+				{
+					Final = Temp;
+				}
+				else
+				{
+					if (Temp.fResult < Final.fResult)
+						Final = Temp;
+				}
+			}
+		}
+
+		// bResult가 True인 경우 Wall과 Ray가 충돌한 경우임
+		if (Final.bResult == true)
+		{
+			if (Final.fResult < _RayObjRadius)
+				return true;
+		}
+
+		else
+		{
+			// Wall과 충돌하지 않은 경우
+			return false;
+		}
+	}
+
+
+	return false;
+	 
+}
+
+
 IntersectResult CCamera::IntersectsLay(Vec3* _vertices, tRay _ray)
 {
 	IntersectResult result;
@@ -717,6 +878,65 @@ IntersectResult CCamera::IntersectsLay(Vec3* _vertices, tRay _ray)
 	result.bResult = true;
 	return result;
 }
+
+IntersectResult CCamera::IntersecrRayFog(Vec3 _Vertices0, Vec3 _Vertices1, Vec3 _Vertices2, tRay _Ray)
+{
+	IntersectResult result;
+	result.vCrossPoint = Vec3(0.f, 0.f, 0.f);
+	result.fResult = 0.f;
+	result.bResult = false;
+
+	Vec3 edge[2] = { _Vertices1 - _Vertices0, _Vertices2 - _Vertices0 };
+	Vec3 normal = (edge[0].Cross(edge[1])).Normalize();
+
+
+
+	
+	Vec3 pvec = _Ray.vDir.Cross(edge[1]);
+	float det  = edge[0].Dot(pvec);
+
+	// 이 값이 작으면 ray와 triangle이 평행
+	if (std::abs(det) < 0.000001f)
+	{
+		return result;
+	}
+
+	float invDet = 1.0f / det;
+	Vec3 tvec = _Ray.vStart - _Vertices0;
+	 
+	float u = tvec.Dot(pvec) * invDet;
+
+	if (u < 0.0f || u > 1.0f)
+	{
+		return result;
+	}
+	 
+ 
+
+	Vec3 qvec = tvec.Cross(edge[0]);
+	float v = _Ray.vDir.Dot(qvec) * invDet;
+
+	if (v < 0.0f || v > 1.0f)
+	{
+		return result;
+	}
+
+	 
+
+	float t = edge[1].Dot(qvec) * invDet;
+
+	// 성공적인 교차점을 찾았다면 결과를 저장.
+	result.vCrossPoint = _Ray.vStart + _Ray.vDir * t;
+	result.fResult = t;
+	result.bResult = true;
+
+	if (t < 0)
+		result.bResult = false;
+
+	return result;
+}
+
+
 
 void CCamera::clear()
 {

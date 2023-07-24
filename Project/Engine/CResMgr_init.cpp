@@ -1345,6 +1345,8 @@ void CResMgr::CreateDefaultGraphicsShader()
 #include "CHeightMapShader.h"
 #include "CRaycastShader.h"
 #include "CAnimation3DShader.h"
+#include "CFogOfWarShader.h"
+#include "CFogFilterShader.h"
 
 void CResMgr::CreateDefaultComputeShader()
 {
@@ -1368,14 +1370,28 @@ void CResMgr::CreateDefaultComputeShader()
 	pCS->CreateComputeShader(L"shader\\animation3d.fx", "CS_Animation3D");
 	AddRes(pCS->GetKey(), pCS);
 
+	// ³ôÀÌ¸Ê ½¦ÀÌ´õ
 	pCS = new CHeightMapShader(32, 32, 1);
 	pCS->SetKey(L"HeightMapShader");
 	pCS->CreateComputeShader(L"shader\\heightmap.fx", "CS_HeightMap");
 	AddRes(pCS->GetKey(), pCS);
 	
+	// Á÷¼± ½¦ÀÌ´õ
 	pCS = new CRaycastShader(32, 32, 1);
 	pCS->SetKey(L"RaycastShader");
 	pCS->CreateComputeShader(L"shader\\raycast.fx", "CS_Raycast");
+	AddRes(pCS->GetKey(), pCS);
+
+	// ÀüÀåÀÇ ¾È°³ ÆÇº° ½¦ÀÌ´õ 
+	pCS = new CFogOfWarShader(16, 64, 1);
+	pCS->SetKey(L"FogOfWarShader");
+	pCS->CreateComputeShader(L"shader\\fogofwarshader.fx", "CS_FogOfWarShader");
+	AddRes(pCS->GetKey(), pCS);
+
+	// ÀüÀåÀÇ ¾È°³¸Ê ÇÊÅÍ ½¦ÀÌ´õ
+	pCS = new CFogFilterShader(32, 32, 1);
+	pCS->SetKey(L"FogFilterShader");
+	pCS->CreateComputeShader(L"shader\\fogfiltershader.fx", "CS_FogFilterShader");
 	AddRes(pCS->GetKey(), pCS);
 }
 

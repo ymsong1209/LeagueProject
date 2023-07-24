@@ -8,9 +8,9 @@
 
 struct tMtrlSet
 {
-    Ptr<CMaterial>  pSharedMtrl;    // °øÀ¯ ¸ÞÅ×¸®¾ó
-    Ptr<CMaterial>  pDynamicMtrl;   // °øÀ¯ ¸ÞÅ×¸®¾óÀÇ º¹»çº»    
-    Ptr<CMaterial>  pCurMtrl;       // ÇöÀç »ç¿ë ÇÒ ¸ÞÅ×¸®¾ó
+    Ptr<CMaterial>  pSharedMtrl;    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½×¸ï¿½ï¿½ï¿½
+    Ptr<CMaterial>  pDynamicMtrl;   // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½×¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½çº»    
+    Ptr<CMaterial>  pCurMtrl;       // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½×¸ï¿½ï¿½ï¿½
 };
 
 
@@ -19,15 +19,18 @@ class CRenderComponent :
 {
 private:
     Ptr<CMesh>              m_pMesh;
-    vector<tMtrlSet>        m_vecMtrls;             // ÀçÁú    
+    vector<tMtrlSet>        m_vecMtrls;             // ï¿½ï¿½ï¿½ï¿½    
 
 
-    float                   m_fBounding;            // FrustumCheck ¿ëµµ °æ°è¹üÀ§
-    bool                    m_bFrustumCheck;        // ÀýµÎÃ¼ ÄÃ¸µ Ã¼Å© À¯¹«
-    bool                    m_bDynamicShadow;       // µ¿Àû ±×¸²ÀÚ »ç¿ë À¯¹«
-    bool                    m_bShowDebugBoundShape; /// bounding ¹üÀ§ ¼± º¸±â À¯¹«
+    float                   m_fBounding;            // FrustumCheck ï¿½ëµµ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    bool                    m_bFrustumCheck;        // ï¿½ï¿½ï¿½ï¿½Ã¼ ï¿½Ã¸ï¿½ Ã¼Å© ï¿½ï¿½ï¿½ï¿½
+    bool                    m_bDynamicShadow;       // ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    bool                    m_bShowDebugBoundShape; /// bounding ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    bool                    m_bUseBoundingOffset;   // BoundingBox Offset »ç¿ë
+
+    bool                    m_bRaySightCulling;     // Ray ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Culling Ã¼Å©
+
+    bool                    m_bUseBoundingOffset;   // BoundingBox Offset ï¿½ï¿½ï¿½
     Vec3                    m_vBoundingBoxOffset;   // BoundingBox Offset
 
 
@@ -54,7 +57,10 @@ public:
     bool IsShowDebugBound() { return m_bShowDebugBoundShape; }
     void SetShowDebugBound(bool _bShow) { m_bShowDebugBoundShape = _bShow; }
 
-    //true·Î ¼³Á¤µÇ¸é Offset À§Ä¡¿¡ BoundingBox°¡ »ý±è
+    void SetRaySightCulling(bool _bUse) { m_bRaySightCulling = _bUse; }
+    bool IsUsingRaySightCulling() { return m_bRaySightCulling; }
+
+    //trueï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¸ï¿½ Offset ï¿½ï¿½Ä¡ï¿½ï¿½ BoundingBoxï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     void SetBoundingBoxOffsetUse(bool _Use) { m_bUseBoundingOffset = _Use; }
     bool GetBoundingBoxOffsetUse() { return m_bUseBoundingOffset; }
 
