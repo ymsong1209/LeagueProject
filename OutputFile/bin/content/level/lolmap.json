@@ -27,6 +27,8 @@
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -75,6 +77,8 @@
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -159,6 +163,8 @@
                             "bAbsolute": false,
                             "IsNoGizmoObj": true,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -173,6 +179,7 @@
                             "bFrustumCheck": false,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
                             "bUseBoundingOffset": false,
                             "vBoundingBoxOffset": {
                                 "x": 0.0,
@@ -251,6 +258,8 @@
                             "bAbsolute": false,
                             "IsNoGizmoObj": true,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -285,9 +294,9 @@
                         {
                             "TRANSFORM": 0,
                             "vRelativePos": {
-                                "x": 382.4062805175781,
-                                "y": 14.308228492736816,
-                                "z": 227.19970703125
+                                "x": -54.613525390625,
+                                "y": 29.62699317932129,
+                                "z": -44.533966064453125
                             },
                             "vRelativeScale": {
                                 "x": 0.18000000715255737,
@@ -296,13 +305,15 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": -0.45155611634254456,
+                                "y": -5.210959434509277,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
-                            "UseMouseOutLine": true,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
                         {
@@ -319,7 +330,8 @@
                             },
                             "bAbsolute": true,
                             "Shape": 0,
-                            "DrawCollision": false
+                            "bWall": false,
+                            "DrawCollision": true
                         },
                         {
                             "ANIMATOR3D": 4,
@@ -539,6 +551,7 @@
                             "bFrustumCheck": false,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
                             "bUseBoundingOffset": false,
                             "vBoundingBoxOffset": {
                                 "x": 0.0,
@@ -592,6 +605,8 @@
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -606,7 +621,8 @@
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
-                            "bUseBoundingOffset": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": true,
                             "vBoundingBoxOffset": {
                                 "x": 0.0,
                                 "y": 0.0,
@@ -762,6 +778,8 @@
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -776,6 +794,7 @@
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
                             "bUseBoundingOffset": true,
                             "vBoundingBoxOffset": {
                                 "x": 220.0,
@@ -869,6 +888,8 @@
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -879,10 +900,11 @@
                                 "Key": "mesh\\land2.mesh",
                                 "RelativePath": "mesh\\land2.mesh"
                             },
-                            "fBounding": 460.0,
+                            "fBounding": 420.0,
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
                             "bUseBoundingOffset": true,
                             "vBoundingBoxOffset": {
                                 "x": 730.0,
@@ -994,6 +1016,8 @@
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -1008,6 +1032,7 @@
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
                             "bUseBoundingOffset": true,
                             "vBoundingBoxOffset": {
                                 "x": 180.0,
@@ -1092,6 +1117,8 @@
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -1106,6 +1133,7 @@
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
                             "bUseBoundingOffset": true,
                             "vBoundingBoxOffset": {
                                 "x": 740.0,
@@ -1190,6 +1218,8 @@
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -1204,6 +1234,7 @@
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
                             "bUseBoundingOffset": true,
                             "vBoundingBoxOffset": {
                                 "x": 1170.0,
@@ -1405,6 +1436,8 @@
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -1419,6 +1452,7 @@
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
                             "bUseBoundingOffset": true,
                             "vBoundingBoxOffset": {
                                 "x": 100.0,
@@ -1539,6 +1573,8 @@
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -1553,6 +1589,7 @@
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
                             "bUseBoundingOffset": true,
                             "vBoundingBoxOffset": {
                                 "x": 640.0,
@@ -1691,6 +1728,8 @@
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -1705,6 +1744,7 @@
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
                             "bUseBoundingOffset": true,
                             "vBoundingBoxOffset": {
                                 "x": 1150.0,
@@ -1843,6 +1883,8 @@
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -1857,6 +1899,7 @@
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
                             "bUseBoundingOffset": true,
                             "vBoundingBoxOffset": {
                                 "x": 1840.0,
@@ -2004,6 +2047,8 @@
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -2018,6 +2063,7 @@
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
                             "bUseBoundingOffset": true,
                             "vBoundingBoxOffset": {
                                 "x": 200.0,
@@ -2111,6 +2157,8 @@
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -2124,12 +2172,13 @@
                             "fBounding": 255.0,
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
-                            "bShowDebugBoundShape": true,
+                            "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
                             "bUseBoundingOffset": true,
                             "vBoundingBoxOffset": {
                                 "x": 650.0,
                                 "y": 0.0,
-                                "z": 1510.0
+                                "z": 1550.0
                             },
                             "iMtrlCount": 4,
                             "vecMtrls[0]SharedMtrl": {
@@ -2194,12 +2243,14 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": 0.0,
+                                "y": -0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -2210,15 +2261,16 @@
                                 "Key": "mesh\\land12.mesh",
                                 "RelativePath": "mesh\\land12.mesh"
                             },
-                            "fBounding": 150.0,
+                            "fBounding": 335.0,
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
-                            "bUseBoundingOffset": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": true,
                             "vBoundingBoxOffset": {
-                                "x": 0.0,
+                                "x": 1150.0,
                                 "y": 0.0,
-                                "z": 0.0
+                                "z": 1080.0
                             },
                             "iMtrlCount": 4,
                             "vecMtrls[0]SharedMtrl": {
@@ -2283,12 +2335,14 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": 0.0,
+                                "y": -0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -2299,15 +2353,16 @@
                                 "Key": "mesh\\land13.mesh",
                                 "RelativePath": "mesh\\land13.mesh"
                             },
-                            "fBounding": 150.0,
+                            "fBounding": 305.0,
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
-                            "bUseBoundingOffset": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": true,
                             "vBoundingBoxOffset": {
-                                "x": 0.0,
+                                "x": 1520.0,
                                 "y": 0.0,
-                                "z": 0.0
+                                "z": 660.0
                             },
                             "iMtrlCount": 2,
                             "vecMtrls[0]SharedMtrl": {
@@ -2354,12 +2409,14 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": 0.0,
+                                "y": -0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -2370,15 +2427,16 @@
                                 "Key": "mesh\\land14.mesh",
                                 "RelativePath": "mesh\\land14.mesh"
                             },
-                            "fBounding": 150.0,
+                            "fBounding": 550.0,
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
-                            "bUseBoundingOffset": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": true,
                             "vBoundingBoxOffset": {
-                                "x": 0.0,
+                                "x": 2050.0,
                                 "y": 0.0,
-                                "z": 0.0
+                                "z": 320.0
                             },
                             "iMtrlCount": 6,
                             "vecMtrls[0]SharedMtrl": {
@@ -2461,12 +2519,14 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": 0.0,
+                                "y": -0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -2477,15 +2537,16 @@
                                 "Key": "mesh\\land15.mesh",
                                 "RelativePath": "mesh\\land15.mesh"
                             },
-                            "fBounding": 150.0,
+                            "fBounding": 1220.0,
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
-                            "bUseBoundingOffset": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": true,
                             "vBoundingBoxOffset": {
-                                "x": 0.0,
+                                "x": 20.0,
                                 "y": 0.0,
-                                "z": 0.0
+                                "z": 2390.0
                             },
                             "iMtrlCount": 5,
                             "vecMtrls[0]SharedMtrl": {
@@ -2559,12 +2620,14 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": 0.0,
+                                "y": -0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -2575,36 +2638,37 @@
                                 "Key": "mesh\\land16.mesh",
                                 "RelativePath": "mesh\\land16.mesh"
                             },
-                            "fBounding": 150.0,
+                            "fBounding": 295.0,
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
-                            "bUseBoundingOffset": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": true,
                             "vBoundingBoxOffset": {
-                                "x": 0.0,
+                                "x": 1110.0,
                                 "y": 0.0,
-                                "z": 0.0
+                                "z": 1510.0
                             },
                             "iMtrlCount": 4,
                             "vecMtrls[0]SharedMtrl": {
                                 "IsNull": false,
-                                "Key": "material\\land6Mtrl1.mtrl",
-                                "RelativePath": "material\\land6Mtrl1.mtrl"
+                                "Key": "material\\land16Mtrl1.mtrl",
+                                "RelativePath": "material\\land16Mtrl1.mtrl"
                             },
                             "vecMtrls[1]SharedMtrl": {
                                 "IsNull": false,
-                                "Key": "material\\land6Mtrl2.mtrl",
-                                "RelativePath": "material\\land6Mtrl2.mtrl"
+                                "Key": "material\\land16Mtrl2.mtrl",
+                                "RelativePath": "material\\land16Mtrl2.mtrl"
                             },
                             "vecMtrls[2]SharedMtrl": {
                                 "IsNull": false,
-                                "Key": "material\\land6Mtrl3.mtrl",
-                                "RelativePath": "material\\land6Mtrl3.mtrl"
+                                "Key": "material\\land16Mtrl3.mtrl",
+                                "RelativePath": "material\\land16Mtrl3.mtrl"
                             },
                             "vecMtrls[3]SharedMtrl": {
                                 "IsNull": false,
-                                "Key": "material\\land6Mtrl4.mtrl",
-                                "RelativePath": "material\\land6Mtrl4.mtrl"
+                                "Key": "material\\land16Mtrl4.mtrl",
+                                "RelativePath": "material\\land16Mtrl4.mtrl"
                             },
                             "DynamicMtrls": [
                                 {
@@ -2648,12 +2712,14 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": 0.0,
+                                "y": -0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -2664,15 +2730,16 @@
                                 "Key": "mesh\\land17.mesh",
                                 "RelativePath": "mesh\\land17.mesh"
                             },
-                            "fBounding": 150.0,
+                            "fBounding": 300.0,
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
-                            "bUseBoundingOffset": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": true,
                             "vBoundingBoxOffset": {
-                                "x": 0.0,
+                                "x": 1520.0,
                                 "y": 0.0,
-                                "z": 0.0
+                                "z": 1080.0
                             },
                             "iMtrlCount": 4,
                             "vecMtrls[0]SharedMtrl": {
@@ -2737,12 +2804,14 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": 0.0,
+                                "y": -0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -2753,15 +2822,16 @@
                                 "Key": "mesh\\land18.mesh",
                                 "RelativePath": "mesh\\land18.mesh"
                             },
-                            "fBounding": 150.0,
+                            "fBounding": 425.0,
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
-                            "bUseBoundingOffset": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": true,
                             "vBoundingBoxOffset": {
-                                "x": 0.0,
+                                "x": 2050.0,
                                 "y": 0.0,
-                                "z": 0.0
+                                "z": 730.0
                             },
                             "iMtrlCount": 6,
                             "vecMtrls[0]SharedMtrl": {
@@ -2844,12 +2914,14 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": 0.0,
+                                "y": -0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -2860,15 +2932,16 @@
                                 "Key": "mesh\\land19.mesh",
                                 "RelativePath": "mesh\\land19.mesh"
                             },
-                            "fBounding": 150.0,
+                            "fBounding": 455.0,
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
-                            "bUseBoundingOffset": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": true,
                             "vBoundingBoxOffset": {
-                                "x": 0.0,
+                                "x": 1130.0,
                                 "y": 0.0,
-                                "z": 0.0
+                                "z": 2090.0
                             },
                             "iMtrlCount": 5,
                             "vecMtrls[0]SharedMtrl": {
@@ -2942,12 +3015,14 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": 0.0,
+                                "y": -0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -2958,15 +3033,16 @@
                                 "Key": "mesh\\land20.mesh",
                                 "RelativePath": "mesh\\land20.mesh"
                             },
-                            "fBounding": 150.0,
+                            "fBounding": 510.0,
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
-                            "bUseBoundingOffset": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": true,
                             "vBoundingBoxOffset": {
-                                "x": 0.0,
+                                "x": 1690.0,
                                 "y": 0.0,
-                                "z": 0.0
+                                "z": 1650.0
                             },
                             "iMtrlCount": 6,
                             "vecMtrls[0]SharedMtrl": {
@@ -3049,12 +3125,14 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": 0.0,
+                                "y": -0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -3065,15 +3143,16 @@
                                 "Key": "mesh\\land21.mesh",
                                 "RelativePath": "mesh\\land21.mesh"
                             },
-                            "fBounding": 150.0,
+                            "fBounding": 405.0,
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
-                            "bUseBoundingOffset": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": true,
                             "vBoundingBoxOffset": {
-                                "x": 0.0,
+                                "x": 2040.0,
                                 "y": 0.0,
-                                "z": 0.0
+                                "z": 1120.0
                             },
                             "iMtrlCount": 5,
                             "vecMtrls[0]SharedMtrl": {
@@ -3147,12 +3226,14 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": 0.0,
+                                "y": -0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -3163,15 +3244,16 @@
                                 "Key": "mesh\\land22.mesh",
                                 "RelativePath": "mesh\\land22.mesh"
                             },
-                            "fBounding": 150.0,
+                            "fBounding": 455.0,
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
-                            "bUseBoundingOffset": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": true,
                             "vBoundingBoxOffset": {
-                                "x": 0.0,
+                                "x": 1620.0,
                                 "y": 0.0,
-                                "z": 0.0
+                                "z": 2050.0
                             },
                             "iMtrlCount": 6,
                             "vecMtrls[0]SharedMtrl": {
@@ -3254,12 +3336,14 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": 0.0,
+                                "y": -0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -3270,15 +3354,16 @@
                                 "Key": "mesh\\land23.mesh",
                                 "RelativePath": "mesh\\land23.mesh"
                             },
-                            "fBounding": 150.0,
+                            "fBounding": 725.0,
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
-                            "bUseBoundingOffset": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": true,
                             "vBoundingBoxOffset": {
-                                "x": 0.0,
+                                "x": 2270.0,
                                 "y": 0.0,
-                                "z": 0.0
+                                "z": 1770.0
                             },
                             "iMtrlCount": 7,
                             "vecMtrls[0]SharedMtrl": {
@@ -3370,12 +3455,14 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": 0.0,
+                                "y": -0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
                             "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
                         },
@@ -3386,15 +3473,16 @@
                                 "Key": "mesh\\land24.mesh",
                                 "RelativePath": "mesh\\land24.mesh"
                             },
-                            "fBounding": 150.0,
+                            "fBounding": 390.0,
                             "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
-                            "bUseBoundingOffset": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": true,
                             "vBoundingBoxOffset": {
-                                "x": 0.0,
+                                "x": 1970.0,
                                 "y": 0.0,
-                                "z": 0.0
+                                "z": 2000.0
                             },
                             "iMtrlCount": 8,
                             "vecMtrls[0]SharedMtrl": {
@@ -3468,6 +3556,98 @@
                                 },
                                 {
                                     "vecMtrls[7]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                }
+                            ],
+                            "bIsUsingMovingVec": false
+                        },
+                        16
+                    ],
+                    "scripts": [],
+                    "children": []
+                },
+                {
+                    "ObjName": "land25",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vRelativeScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": -0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
+                        },
+                        {
+                            "MESHRENDER": 10,
+                            "Mesh": {
+                                "IsNull": false,
+                                "Key": "mesh\\land25.mesh",
+                                "RelativePath": "mesh\\land25.mesh"
+                            },
+                            "fBounding": 2950.0,
+                            "bFrustumCheck": true,
+                            "bDynamicShadow": false,
+                            "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": true,
+                            "vBoundingBoxOffset": {
+                                "x": 1500.0,
+                                "y": 0.0,
+                                "z": 1550.0
+                            },
+                            "iMtrlCount": 4,
+                            "vecMtrls[0]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "material\\land25Mtrl1.mtrl",
+                                "RelativePath": "material\\land25Mtrl1.mtrl"
+                            },
+                            "vecMtrls[1]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "material\\land25Mtrl2.mtrl",
+                                "RelativePath": "material\\land25Mtrl2.mtrl"
+                            },
+                            "vecMtrls[2]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "material\\land25Mtrl3.mtrl",
+                                "RelativePath": "material\\land25Mtrl3.mtrl"
+                            },
+                            "vecMtrls[3]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "material\\land25Mtrl4.mtrl",
+                                "RelativePath": "material\\land25Mtrl4.mtrl"
+                            },
+                            "DynamicMtrls": [
+                                {
+                                    "vecMtrls[0]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                },
+                                {
+                                    "vecMtrls[1]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                },
+                                {
+                                    "vecMtrls[2]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                },
+                                {
+                                    "vecMtrls[3]DynamicMtrl": null,
                                     "IsDynamicMtrlExist": false
                                 }
                             ],

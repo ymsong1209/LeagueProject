@@ -132,11 +132,12 @@ void CreateTestLevel()
 		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
 		pObj->Collider3D()->SetDrawCollision(false);
 		pObj->Animator3D()->SetRepeat(true);
+		pObj->Animator3D()->Play(L"Jinx\\Idle1_Base", true, 0.1f);
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
 
 		pObj->Transform()->SetUseMouseOutline(true);
 
-		SpawnGameObject(pObj, Vec3(0, 0, 0), 6);
+		SpawnGameObject(pObj, Vec3(0, 0, 0), 0);
 	}
 
 
