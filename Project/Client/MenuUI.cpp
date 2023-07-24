@@ -56,6 +56,12 @@ int MenuUI::render_update()
                 LoadLevel();
             }
 
+            if (ImGui::MenuItem("Create New Material"))
+            {
+                // Level 불러오기
+                ImGuiMgr::GetInst()->FindUI("##MaterialEditor")->SetActive(true);
+            }
+
             ImGui::EndMenu();
         }
         if (ImGui::BeginMenu("GameObject"))

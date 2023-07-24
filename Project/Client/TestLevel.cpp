@@ -38,40 +38,47 @@ void CreateTestLevel()
 	//롤맵 레이어에는 롤맵만 넣을것!
 	pCurLevel->GetLayer(31)->SetName(L"ViewPort UI");
 
-
 	// Main Camera Object 생성
 	CGameObject* pMainCam = new CGameObject;
 	pMainCam->SetName(L"MainCamera");
-
 	pMainCam->AddComponent(new CTransform);
 	pMainCam->AddComponent(new CCamera);
 	pMainCam->AddComponent(new CCameraMoveScript);
-
 	pMainCam->Camera()->SetProjType(PROJ_TYPE::PERSPECTIVE);
-
 	pMainCam->Camera()->SetCameraIndex(0);		// MainCamera 로 설정
 	pMainCam->Camera()->SetLayerMaskAll(true);	// 모든 레이어 체크
 	pMainCam->Camera()->SetLayerMask(31, false);// UI Layer 는 렌더링하지 않는다.
 	pMainCam->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(60.f),0.f, 0.f));
 	SpawnGameObject(pMainCam, Vec3(1386.f, 498.f, -9.f), 0);
 
+	// UI cameara
+	CGameObject* pUICam = new CGameObject;
+	pUICam->SetName(L"UICamera");
+	pUICam->AddComponent(new CTransform);
+	pUICam->AddComponent(new CCamera);
+	pUICam->Camera()->SetProjType(PROJ_TYPE::PERSPECTIVE);
+	pUICam->Camera()->SetCameraIndex(1);
+	pUICam->Camera()->SetLayerMask(31, true);	// 모든 레이어 체크
+	SpawnGameObject(pUICam, Vec3(0.f, 0.f, 0.f), 0);
+
+	CGameObject* UIObj = new CGameObject; //각종 스크립트에서 처리할 것들
+	UIObj->SetName(L"UIObj");
+	UIObj->AddComponent(new CTransform);
+	SpawnGameObject(UIObj, Vec3(0.f, 0.f, 0.f), 31);
+
+
+
 
 	// 광원 추가
 	CGameObject* pLightObj = new CGameObject;
 	pLightObj->SetName(L"Directional Light");
-
 	pLightObj->AddComponent(new CTransform);
 	pLightObj->AddComponent(new CLight3D);
-
 	pLightObj->Light3D()->SetLightType(LIGHT_TYPE::DIRECTIONAL);
 	pLightObj->Light3D()->SetLightDirection(Vec3(1.f, -1.f, 1.f));
-
-
-
 	//pLightObj->Light3D()->SetLightDiffuse(Vec4(1.f, 1.f, 1.f,1.f));
 	//pLightObj->Light3D()->SetLightSpecular(Vec4(0.f, 0.f, 0.f,1.f));
 	//pLightObj->Light3D()->SetLightAmbient(Vec4(1.f, 1.f, 1.f,1.f));
-
 	pLightObj->Light3D()->SetLightDiffuse(Vec3(0.5f, 0.5f, 0.5f));
 	pLightObj->Light3D()->SetLightSpecular(Vec3(0.f, 0.f, 0.f));
 	pLightObj->Light3D()->SetLightAmbient(Vec3(0.9f, 0.9f, 0.9f));
@@ -160,6 +167,7 @@ void CreateTestLevel()
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
 		pObj->AddComponent(new CCollider2D);
 		pObj->Collider2D()->SetAbsolute(true);
+		pObj->Collider2D()->SetDrawCollision(false);
 		pObj->GetRenderComponent()->SetRaySightCulling(false);
 
 //<<<<<<< HEAD
@@ -439,8 +447,6 @@ void CreateTestLevel()
 	//pRectFast2->Collider3D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
 	//SpawnGameObject(pRectFast2, Vec3(0.f, 0.f, 0.f), 0);
 
-
-
 	// Anim Test Object
 	//CGameObject* pAnimTestObj = new CGameObject;
 	//pAnimTestObj->SetName(L"AnimTestObj");
@@ -460,6 +466,7 @@ void CreateTestLevel()
 
 
 	//SpawnGameObject(pAnimTestObj, Vec3(0.f, 0.f, 0.f), 0.f);
+
 
 
 

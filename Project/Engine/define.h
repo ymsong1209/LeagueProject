@@ -344,3 +344,13 @@ enum class PLAYER_STATE // 징크스 이동 테스트용 Run, Idle 상태 추가 (나중에 fsm 
 	RUN,
 	IDLE,
 };
+
+
+enum class CHARACTER
+{
+	JINX,
+	MALPHIGHT,
+	AMUMU,
+	VEIN,
+	AHRI,
+};

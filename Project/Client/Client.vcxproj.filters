@@ -299,6 +299,7 @@
     <ClInclude Include="PathFinderUI.h">
       <Filter>UI\InspectorUI\ComponentUI\15. PathFinderUI</Filter>
     </ClInclude>
+    <ClInclude Include="CreateMaterialUI.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Client.rc">
@@ -466,5 +467,6 @@
     <ClCompile Include="PathFinderUI.cpp">
       <Filter>UI\InspectorUI\ComponentUI\15. PathFinderUI</Filter>
     </ClCompile>
+    <ClCompile Include="CreateMaterialUI.cpp" />
   </ItemGroup>
 </Project>

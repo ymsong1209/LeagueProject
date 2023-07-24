@@ -163,6 +163,7 @@
     <ClInclude Include="ComponentUI.h" />
     <ClInclude Include="ComputeShaderUI.h" />
     <ClInclude Include="ContentUI.h" />
+    <ClInclude Include="CreateMaterialUI.h" />
     <ClInclude Include="DecalUI.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="FsmUI.h" />
@@ -217,6 +218,7 @@
     <ClCompile Include="ComponentUI.cpp" />
     <ClCompile Include="ComputeShaderUI.cpp" />
     <ClCompile Include="ContentUI.cpp" />
+    <ClCompile Include="CreateMaterialUI.cpp" />
     <ClCompile Include="DecalUI.cpp" />
     <ClCompile Include="FsmUI.cpp" />
     <ClCompile Include="GraphicsShaderUI.cpp" />
