@@ -13,67 +13,168 @@
  
 #include "CAnimator3D.h"
 #include "CMaterial.h"
+
+#include "CDevice.h"
+#include "CConstBuffer.h"
  
+#include "CResMgr.h"
+#include "CTexture.h"
+
 
 CMeshRender::CMeshRender()
 	: CRenderComponent(COMPONENT_TYPE::MESHRENDER)	
-	, m_bIsUsingMovingVec(false)
 {
+	memset(&m_tMeshMoveData, 0, sizeof(struct tMeshMoveData));
 
+	// Test Code
+	//SetPunctureTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Morde_Test\\Dots.jpg"));
+	//SetTexMovingStyle(MovTexType::PUNCTURE, MovTexMoveType::VERTICAL);
+	//SetFuncValue(MovTexType::PUNCTURE, Vec4(0.5f, 0.f, 0.f, 0.f));
+ 
 }
 
 CMeshRender::CMeshRender(const CMeshRender& _other)
 	: CRenderComponent(_other)
-	, m_vMovingVec(_other.m_vMovingVec)
-	, m_bIsUsingMovingVec(_other.m_bIsUsingMovingVec)
+	, m_tMeshMoveData(_other.m_tMeshMoveData)
 {
-
+	for (int i = 0; i < (UINT)MESH_TEX_PARAM::MESH_TEX_END; ++i)
+	{
+		m_arrMeshTex[i] = _other.m_arrMeshTex[i];
+	}
 }
 
 CMeshRender::~CMeshRender()
 {
 }
 
-
-void CMeshRender::SetUsingMovingVec(bool _use)
+void CMeshRender::SetOutputTexture(Ptr<CTexture> _Tex)
 {
-	m_bIsUsingMovingVec = _use;
-
-
-	// 처음 MovingVec을 만들어야 하는 경우
-	if (_use == true && m_vMovingVec.size() == 0)
+	if (GetMaterial(0) != nullptr)
 	{
-		// 움직일 여지가 있는 Texture들 전부 Vector안에 집어넣어줌.
-		MovingStruct Temp;
-
-		Temp.TargetTex = eTargetTexture::OUTPUT;
-		Temp.MovingStyle = eTexMovingStyle::NONE;
-		Temp.FuncValue = Vec4(1.f, 0.5f, 1.f, 0.f);
-		Temp.PreviousPos = Vec2(0.f, 0.f);
-
-		m_vMovingVec.push_back(Temp);
-
-
-		MovingStruct Temp2;
-
-		Temp2.TargetTex = eTargetTexture::PUNCTURE;
-		Temp2.MovingStyle = eTexMovingStyle::COS;
-		Temp2.FuncValue = Vec4(1.f, 0.5f, 1.f, 0.f);
-		Temp2.PreviousPos = Vec2(0.f, 0.f);
-
-		m_vMovingVec.push_back(Temp2);
-	}
-
-	else if (_use == false)
-	{
-		if (m_vMovingVec.size() != 0)
-		{
-			m_vMovingVec.clear();
-		}
+		GetMaterial(0)->SetTexParam(TEX_0, _Tex);
 	}
 }
 
+Ptr<CTexture> CMeshRender::GetOutputTexture(Ptr<CTexture> _Tex)
+{
+	if (GetMaterial(0) != nullptr)
+	{
+		return GetMaterial(0)->GetTexParam(TEX_PARAM::TEX_0);
+	}
 
+	else
+	{
+		return nullptr;
+	}
+}
+
+void CMeshRender::SetFuncValue(MovTexType _TexType, Vec4 _Value)
+{
+	switch (_TexType)
+	{
+	case MovTexType::OUTPUT:
+	{
+		m_tMeshMoveData.OutputTexFuncValue = _Value;
+	}
+		break;
+	case MovTexType::PUNCTURE:
+	{
+		m_tMeshMoveData.PunctureTexFuncValue = _Value;
+	}
+		break;
+	case MovTexType::ADDITIVE:
+		break;
+	case MovTexType::END:
+		break;
+	default:
+		break;
+	}
+}
+
+void CMeshRender::SetTexMovingStyle(MovTexType _TexType, MovTexMoveType _Type)
+{
+	if (_TexType == MovTexType::PUNCTURE)
+		m_tMeshMoveData.PunctureTexMovingStyle = (int)_Type;
+	else if (_TexType == MovTexType::OUTPUT)
+		m_tMeshMoveData.OutputTexMovingStyle = (int)_Type;
+}
+
+Vec4 CMeshRender::GetFuncValue(MovTexType _TexType)
+{
+	if (_TexType == MovTexType::OUTPUT)
+		return m_tMeshMoveData.OutputTexFuncValue;
+	else if (_TexType == MovTexType::PUNCTURE)
+		return m_tMeshMoveData.PunctureTexFuncValue;
+	else
+		return Vec4(0.f, 0.f, 0.f, 0.f); // 의미없는 값. 이 분기로 빠지면 함수 잘못 사용중인 것임.
+}
+
+MovTexMoveType CMeshRender::GetTexMovingStyle(MovTexType _TexType)
+{
+	if (_TexType == MovTexType::OUTPUT)
+		return (MovTexMoveType)m_tMeshMoveData.OutputTexMovingStyle;
+
+	else if (_TexType == MovTexType::PUNCTURE)
+		return (MovTexMoveType)m_tMeshMoveData.PunctureTexMovingStyle;
+
+	else
+		return (MovTexMoveType::END); // 이 분기로 빠지면 코드 잘못쓰고 있는 것임.
+}
+
+void CMeshRender::CalculateNextOffset(int _MoveStyle, Vec2& _PreviousPos, Vec4 _FunctionValue, float _DT)
+{
+	// 1. None, 2. Vertical, 3. Linear, 4. Parabola, 5. Sin, 6. Cos
+	if (_MoveStyle == 0) // None
+	{
+
+	}
+	else if (_MoveStyle == 1)  // Horizontal
+	{
+		// FunctionValue.x : dx / dt
+		_PreviousPos.x += _DT * _FunctionValue.x;
+	}
+	else if (_MoveStyle == 2) // Vertical
+	{
+		// FunctionValue.x : dy / dt
+		_PreviousPos.y += _DT * _FunctionValue.x;
+	}
+	else if (_MoveStyle == 3) // Linear
+	{
+		// FunctionValue.x : dx / dt;
+		// FunctionValue.y : x 계수
+		// FunctionValue.z : y 절편
+		_PreviousPos.x += _DT * _FunctionValue.x;
+		_PreviousPos.y = _FunctionValue.y * _PreviousPos.x + _FunctionValue.z;
+	}
+	else if (_MoveStyle == 4) // Parabola
+	{
+		// FuncValue.x : dx / dt
+		// FuncValue.y : x^2 계수
+		// FuncValye.z : x 계수
+		// FuncValue.w : y 절편
+		_PreviousPos.x += _DT * _FunctionValue.x;
+		_PreviousPos.y = _FunctionValue.y * _PreviousPos.x * _PreviousPos.x + _FunctionValue.z * _PreviousPos.x + _FunctionValue.w;
+
+	}
+	else if (_MoveStyle == 5) // Sin
+	{
+		// FuncValue.x : dx / dt
+		// FuncValue.y : sin 계수
+		// FuncValue.z : 주파수
+		// FuncValue.w : y절편
+		_PreviousPos.x += _DT * _FunctionValue.x;
+		_PreviousPos.y = _FunctionValue.y + sin(_FunctionValue.z * _PreviousPos.x) + _FunctionValue.w;
+	}
+	else if (_MoveStyle == 6) // Cos
+	{
+		// FuncValue.x : dx / dt
+		// FuncValue.y : cos 계수
+		// FuncValue.z : 주파수
+		// FuncValue.w : y절편
+		_PreviousPos.x += _DT * _FunctionValue.x;
+		_PreviousPos.y = _FunctionValue.y * cos(_FunctionValue.z * _PreviousPos.x) + _FunctionValue.w;
+	}
+}
 
 void CMeshRender::finaltick()
 {
@@ -84,118 +185,17 @@ void CMeshRender::finaltick()
 	float SmallTime = 0.f;
 
 	if (CurLevelState == LEVEL_STATE::STOP)
-	{
 		SmallTime = GlobalData.tEditDT;
-	}
 	else
-	{
 		SmallTime = GlobalData.tDT;
-	}
+	
+	// Output Texture
+	CalculateNextOffset(m_tMeshMoveData.OutputTexMovingStyle, m_tMeshMoveData.OutputTexPreviousPos,
+		m_tMeshMoveData.OutputTexFuncValue, SmallTime);
 
-
-	// vector에 있는 Texture들에 대해서
-	// 어떤 움직임을 취하고 있는지 찾아서
-	// 참조해야할 UV Offset 값을 계산해준다.
-	 
-	int MovingUse = 0;
-
-	for (int i = 0; i < m_vMovingVec.size(); ++i)
-	{
-		Vec2 PreviousPos = m_vMovingVec[i].PreviousPos;
-		Vec4 FuncValue = m_vMovingVec[i].FuncValue;
-
-		switch (m_vMovingVec[i].MovingStyle)
-		{
-		case eTexMovingStyle::NONE:
-		{
-			MovingUse |= (1 << i );
-		}
-			break;
-		case eTexMovingStyle::HORIZONTAL:
-		{
-			// FuncValue.x : dx / dt
-			PreviousPos.x += SmallTime * FuncValue.x;
-		}
-			break;
-		case eTexMovingStyle::VERTICAL:
-		{
-			// FuncValue.x : dy / dt
-			PreviousPos.y += SmallTime * FuncValue.x;
-		}
-			break;
-		case eTexMovingStyle::LINEAR:
-		{
-			// FuncValue.x : dx / dt
-			// FuncValue.y : x 계수
-			// FuncValue.z : y 절편
-			PreviousPos.x += SmallTime * FuncValue.x;
-			PreviousPos.y = FuncValue.y * PreviousPos.x + FuncValue.z;
-		}
-			break;
-		case eTexMovingStyle::PARABOLA:
-		{
-			// FuncValue.x : dx / dt
-			// FuncValue.y : x^2 계수
-			// FuncValye.z : x 계수
-			// FuncValue.w : y 절편
-			PreviousPos.x += SmallTime * FuncValue.x;
-			PreviousPos.y = FuncValue.y * PreviousPos.x * PreviousPos.x + FuncValue.z * PreviousPos.x + FuncValue.w;
-		}
-			break;
-		case eTexMovingStyle::SIN:
-		{
-			// FuncValue.x : dx / dt
-			// FuncValue.y : sin 계수
-			// FuncValue.z : 주파수
-			// FuncValue.w : y절편
-			PreviousPos.x += SmallTime * FuncValue.x;
-			PreviousPos.y = FuncValue.y * sin(FuncValue.z * PreviousPos.x) + FuncValue.w;
-		}
-			break;
-		case eTexMovingStyle::COS:
-		{
-			// FuncValue.x : dx / dt
-			// FuncValue.y : cos 계수
-			// FuncValue.z : 주파수
-			// FuncValue.w : y절편
-			PreviousPos.x += SmallTime * FuncValue.x;
-			PreviousPos.y = FuncValue.y * cos(FuncValue.z * PreviousPos.x) + FuncValue.w;
-		}
-			break;
-		case eTexMovingStyle::END:
-			break;
-		default:
-			break;
-		}
-
-		switch (m_vMovingVec[i].TargetTex)
-		{
-		case eTargetTexture::OUTPUT:
-		{
-			GetMaterial(0)->SetScalarParam(VEC2_4, &PreviousPos);
-		}
-			break;
-		case eTargetTexture::PUNCTURE:
-		{
-			GetMaterial(0)->SetScalarParam(VEC2_5, &PreviousPos);
-		}
-			break;
-		case eTargetTexture::END:
-			break;
-		default:
-			break;
-		}
-
-		// Previous Postion Update
-		m_vMovingVec[i].PreviousPos = PreviousPos;
-
-	}
-	// Texture가 Moving을 Option을 쓰는지 전달  
-
-	if (GetMaterial(0) != nullptr)
-	{
-		GetMaterial(0)->SetScalarParam(SCALAR_PARAM::INT_1, &MovingUse);
-	}
+	//// Puncture Texture
+	CalculateNextOffset(m_tMeshMoveData.PunctureTexMovingStyle, m_tMeshMoveData.PunctureTexPreviousPos,
+		m_tMeshMoveData.PunctureTexFuncValue, SmallTime);
 }
 
 void CMeshRender::render()
@@ -205,6 +205,39 @@ void CMeshRender::render()
 
 	// Transform 에 UpdateData 요청
 	Transform()->UpdateData();
+
+
+	// MeshMoveData Update
+	CConstBuffer* pMeshMoveBuffer = CDevice::GetInst()->GetConstBuffer(CB_TYPE::MESHRENDER);
+
+	// Mesh Texture Update (PunctureTex, AdditiveTex만 바인딩한다. OutputTex는 Material에서 세팅됨)
+	if (m_arrMeshTex[MESH_TEX_PARAM::PUNCTURE] == nullptr)
+	{
+		m_tMeshMoveData.isPunctureTextureUsed = 0;
+		CTexture::Clear(14); 
+	}
+
+	else
+	{
+		m_tMeshMoveData.isPunctureTextureUsed = 1;
+		m_arrMeshTex[MESH_TEX_PARAM::PUNCTURE]->UpdateData(14, PS_ALL_STAGES);
+	}
+
+	if (m_arrMeshTex[MESH_TEX_PARAM::ADDITIVE] == nullptr)
+	{
+		m_tMeshMoveData.isAdditiveTextureUsed = 0;
+		CTexture::Clear(15);
+	}
+
+	else
+	{
+		m_tMeshMoveData.isAdditiveTextureUsed = 1;
+		m_arrMeshTex[MESH_TEX_PARAM::ADDITIVE]->UpdateData(15, PS_ALL_STAGES);
+	}
+
+	pMeshMoveBuffer->SetData(&m_tMeshMoveData);
+	pMeshMoveBuffer->UpdateData();
+
 
 	// Animator2D 컴포넌트가 있다면
 	if (Animator2D())
@@ -227,6 +260,7 @@ void CMeshRender::render()
 		}
 	}
 
+	
 	// 렌더
 	UINT iSubsetCount = GetMesh()->GetSubsetCount();
 
@@ -250,112 +284,89 @@ void CMeshRender::render()
 		Animator3D()->ClearData();
 }
 
- 
-void CMeshRender::SetOutputTexture(Ptr<CTexture> _Tex)
-{
-	if (GetMesh() != nullptr) 
-		GetMaterial(0)->SetTexParam(TEX_0, _Tex);
-}
-
-void CMeshRender::SetPunctureTexture(Ptr<CTexture> _Tex)
-{
-	if (GetMesh() != nullptr) 
-		GetMaterial(0)->SetTexParam(TEX_3, _Tex);
-}
-
-void CMeshRender::SetAdditiveTexture(Ptr<CTexture> _Tex)
-{
-	if (GetMesh() != nullptr)  
-		GetMaterial(0)->SetTexParam(TEX_2, _Tex);
-}
-
 void CMeshRender::SaveToLevelFile(FILE* _File)
 {	
-	CRenderComponent::SaveToLevelFile(_File);
+	//CRenderComponent::SaveToLevelFile(_File);
 
-	
-	fwrite(&m_bIsUsingMovingVec, sizeof(bool), 1, _File);
+	//
+	//fwrite(&m_bIsUsingMovingVec, sizeof(bool), 1, _File);
 
-	// 만약에 MovingVec을 사용하고 있었다면 이에 대한 정보도 저장해줘야 하낟.
-	if (m_bIsUsingMovingVec)
-	{
-		//movingvec size 저장
-		int vecsize = m_vMovingVec.size();
-		fwrite(&vecsize, sizeof(int), 1, _File);
+	//// 만약에 MovingVec을 사용하고 있었다면 이에 대한 정보도 저장해줘야 하낟.
+	//if (m_bIsUsingMovingVec)
+	//{
+	//	//movingvec size 저장
+	//	int vecsize = m_vMovingVec.size();
+	//	fwrite(&vecsize, sizeof(int), 1, _File);
 
-		for (int i = 0; i < m_vMovingVec.size(); ++i)
-		{
-			fwrite(&m_vMovingVec[i], sizeof(MovingStruct), 1, _File);
-		}
-	}
-
-	 
+	//	for (int i = 0; i < m_vMovingVec.size(); ++i)
+	//	{
+	//		fwrite(&m_vMovingVec[i], sizeof(MovingStruct), 1, _File);
+	//	}
+	//}	 
 }
 
 void CMeshRender::LoadFromLevelFile(FILE* _File)
 {
-	CRenderComponent::LoadFromLevelFile(_File);
+	//CRenderComponent::LoadFromLevelFile(_File);
 
-	fread(&m_bIsUsingMovingVec, sizeof(bool), 1, _File);
+	//fread(&m_bIsUsingMovingVec, sizeof(bool), 1, _File);
 
-	if (m_bIsUsingMovingVec)
-	{
-		SetUsingMovingVec(true);
+	//if (m_bIsUsingMovingVec)
+	//{
+	//	SetUsingMovingVec(true);
 
-		//movingvec size 읽기
-		int vecsize;
-		fread(&vecsize, sizeof(int), 1, _File);
+	//	//movingvec size 읽기
+	//	int vecsize;
+	//	fread(&vecsize, sizeof(int), 1, _File);
 
-		for (int i = 0; i < vecsize; ++i)
-		{
-			MovingStruct movestruct;
-			fread(&movestruct, sizeof(MovingStruct), 1, _File);
-			m_vMovingVec.push_back(movestruct);
-		}		
-	}
-	else
-	{
-		SetUsingMovingVec(false);
-	}
-	 
+	//	for (int i = 0; i < vecsize; ++i)
+	//	{
+	//		MovingStruct movestruct;
+	//		fread(&movestruct, sizeof(MovingStruct), 1, _File);
+	//		m_vMovingVec.push_back(movestruct);
+	//	}		
+	//}
+	//else
+	//{
+	//	SetUsingMovingVec(false);
+	//}
 }
 
 void CMeshRender::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
 {
-	CRenderComponent::SaveToLevelJsonFile(_objValue, allocator);
+	//CRenderComponent::SaveToLevelJsonFile(_objValue, allocator);
 
-	_objValue.AddMember("bIsUsingMovingVec", m_bIsUsingMovingVec, allocator);
+	//_objValue.AddMember("bIsUsingMovingVec", m_bIsUsingMovingVec, allocator);
 
-	// 만약에 MovingVec을 사용하고 있었다면 이에 대한 정보도 저장해줘야 한다.
-	if (m_bIsUsingMovingVec)
-	{
-		Value vMovingVecArray(kArrayType);
-		for (int i = 0; i < m_vMovingVec.size(); ++i)
-		{
-			// Struct MovingStruct
-			Value MovingStructValue(kObjectType);
+	//// 만약에 MovingVec을 사용하고 있었다면 이에 대한 정보도 저장해줘야 한다.
+	//if (m_bIsUsingMovingVec)
+	//{
+	//	Value vMovingVecArray(kArrayType);
+	//	for (int i = 0; i < m_vMovingVec.size(); ++i)
+	//	{
+	//		// Struct MovingStruct
+	//		Value MovingStructValue(kObjectType);
 
-			// 가독성용
-			string key = "m_vMovingVec[" + std::to_string(i) + "]";
-			Value keyName(kStringType);
-			keyName.SetString(key.c_str(), key.length(), allocator);
-			MovingStructValue.AddMember(keyName, Value(kNullType), allocator);
+	//		// 가독성용
+	//		string key = "m_vMovingVec[" + std::to_string(i) + "]";
+	//		Value keyName(kStringType);
+	//		keyName.SetString(key.c_str(), key.length(), allocator);
+	//		MovingStructValue.AddMember(keyName, Value(kNullType), allocator);
 
-			MovingStructValue.AddMember("TargetTex", (UINT)m_vMovingVec[i].TargetTex, allocator);
-			MovingStructValue.AddMember("MovingStyle", (UINT)m_vMovingVec[i].MovingStyle, allocator);
-			MovingStructValue.AddMember("FuncValue", SaveVec4Json(m_vMovingVec[i].FuncValue,allocator), allocator);
-			MovingStructValue.AddMember("PreviousPos", SaveVec2Json(m_vMovingVec[i].PreviousPos, allocator), allocator);
+	//		MovingStructValue.AddMember("TargetTex", (UINT)m_vMovingVec[i].TargetTex, allocator);
+	//		MovingStructValue.AddMember("MovingStyle", (UINT)m_vMovingVec[i].MovingStyle, allocator);
+	//		MovingStructValue.AddMember("FuncValue", SaveVec4Json(m_vMovingVec[i].FuncValue,allocator), allocator);
+	//		MovingStructValue.AddMember("PreviousPos", SaveVec2Json(m_vMovingVec[i].PreviousPos, allocator), allocator);
 
-			vMovingVecArray.PushBack(MovingStructValue, allocator);
-		}
-		_objValue.AddMember("vMovingVec", vMovingVecArray, allocator);
-	}
-
+	//		vMovingVecArray.PushBack(MovingStructValue, allocator);
+	//	}
+	//	_objValue.AddMember("vMovingVec", vMovingVecArray, allocator);
+	//}
 }
 
 void CMeshRender::LoadFromLevelJsonFile(const Value& _componentValue)
 {
-	CRenderComponent::LoadFromLevelJsonFile(_componentValue);
+	/*CRenderComponent::LoadFromLevelJsonFile(_componentValue);
 
 	m_bIsUsingMovingVec = _componentValue["bIsUsingMovingVec"].GetBool();
 	
@@ -379,5 +390,5 @@ void CMeshRender::LoadFromLevelJsonFile(const Value& _componentValue)
 	else
 	{
 		SetUsingMovingVec(false);
-	}
+	}*/
 }

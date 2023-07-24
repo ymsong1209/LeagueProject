@@ -1,8 +1,9 @@
 #pragma once
 #include "CRenderComponent.h"
 
-// Texture가 움직여야한다면 어떤 형태로 움직이는가
-enum class eTexMovingStyle
+class CStructuredBuffer;
+
+enum class MovTexMoveType
 {
     NONE,
     HORIZONTAL,
@@ -14,20 +15,12 @@ enum class eTexMovingStyle
     END,
 };
 
-// 대상이 되는 Texture는 어떤 용도로 사용되는 것인가
-enum class eTargetTexture
+enum class MovTexType
 {
-    OUTPUT,                 // 수업때 했던 Fighter.bmp처럼 출력이 목적
-    PUNCTURE,               // 출력된 사진에 대해서 구멍을 뚫는 용도
+    OUTPUT,
+    PUNCTURE,
+    ADDITIVE,
     END,
-};
-
-struct MovingStruct
-{
-    eTargetTexture   TargetTex;
-    eTexMovingStyle  MovingStyle;
-    Vec4            FuncValue;                  // Texture가 움직일때 각각의 함수에 맞는 계수값
-    Vec2            PreviousPos;
 };
 
 
@@ -35,9 +28,29 @@ class CMeshRender :
     public CRenderComponent
 {
 private:
-    vector<MovingStruct>    m_vMovingVec;
-    bool                    m_bIsUsingMovingVec;
- 
+    tMeshMoveData           m_tMeshMoveData;
+    Ptr<CTexture>           m_arrMeshTex[MESH_TEX_PARAM::MESH_TEX_END];
+
+public:
+    void SetOutputTexture(Ptr<CTexture> _Tex);
+    void SetPunctureTexture(Ptr<CTexture> _Tex) { m_arrMeshTex[MESH_TEX_PARAM::PUNCTURE] = _Tex; }
+    void SetAdditiveTexture(Ptr<CTexture> _Tex) { m_arrMeshTex[MESH_TEX_PARAM::ADDITIVE] = _Tex; }
+   
+    Ptr<CTexture> GetOutputTexture(Ptr<CTexture> _Tex);
+    Ptr<CTexture> GetPunctureTex() { return m_arrMeshTex[MESH_TEX_PARAM::PUNCTURE]; }
+    Ptr<CTexture> GetAdditiveTex() { return m_arrMeshTex[MESH_TEX_PARAM::ADDITIVE]; }
+
+    void SetFuncValue(MovTexType _TexType, Vec4 _Value);
+    void SetTexMovingStyle(MovTexType _TexType, MovTexMoveType _Type);
+    void SetAdditiveTexColor(Vec4 _Color) { m_tMeshMoveData.AdditiveColor = _Color; }
+
+    Vec4 GetFuncValue(MovTexType _TexType);
+    MovTexMoveType GetTexMovingStyle(MovTexType _TexType);
+    Vec4 GetAdditiveTexColor() { return m_tMeshMoveData.AdditiveColor;}
+
+public:
+    void CalculateNextOffset(int  _MoveStyle, Vec2& _PreviousPos, Vec4 _FunctionValue, float _DT);
+
 
 public:
     virtual void finaltick() override;
@@ -45,16 +58,6 @@ public:
 
 
 public:
-    void SetOutputTexture(Ptr<CTexture> _Tex);  
-    void SetPunctureTexture(Ptr<CTexture> _Tex);  
-    void SetAdditiveTexture(Ptr<CTexture> _Tex);  
-
-    const vector<MovingStruct>& GetMovingStruct() { return m_vMovingVec; }
-    void SetMovingStruct(int _index, MovingStruct _info) { m_vMovingVec[_index] = _info; }
-
-    bool IsUsingMovingVec() { return m_bIsUsingMovingVec; }
-    void SetUsingMovingVec(bool _use); 
-
     virtual void SaveToLevelFile(FILE* _File) override;
     virtual void LoadFromLevelFile(FILE* _File) override;
 
@@ -62,7 +65,6 @@ public:
     virtual void LoadFromLevelJsonFile(const Value& _componentValue)override;
 
     
-
     CLONE(CMeshRender);
 public:
     CMeshRender();
