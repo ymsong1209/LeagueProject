@@ -21,8 +21,9 @@
 
 #include <Engine/CEventMgr.h>
 #include <Engine/CKeyMgr.h>
+#include <Engine/CTimeMgr.h>
 #include <iostream>
-
+#include <chrono> // for fps
 // 전역 변수:
 HINSTANCE   hInst;    // 현재 인스턴스입니다.
 HWND        g_hWnd;
@@ -81,8 +82,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
    this_thread::sleep_for(1s);
    
    ClientServiceRef service = MakeShared<ClientService>(
-       //NetAddress(L"221.148.206.199", 40000),
-       NetAddress(L"127.0.0.1", 40000),
+       NetAddress(L"221.148.206.199", 40000),
+       //NetAddress(L"127.0.0.1", 40000),
        MakeShared<IocpCore>(),
        MakeShared<ServerSession>, // TODO : SessionManager 등
        1);
@@ -98,10 +99,20 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
            {
                service->GetIocpCore()->Dispatch(10);
                if (GThreadManager->GetFlags() == 0)
-                   break;
+               {
+                   this_thread::sleep_for(500ms);
+                   return;
+                   //break;
+               }
+               
            }
        });
    }    
+
+   // for fps 
+   auto last_send_time = std::chrono::steady_clock::now();
+
+   bool ingameCheck = false;
 
     while (true) 
     {
@@ -129,34 +140,47 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
            else if (KEY_TAP(KEY::NUM_2))
            {
                Send_CPickChampionAndStart(service,ChampionType::JINX);
+               ingameCheck = true;
            }
-           else if (KEY_TAP(KEY::NUM_3))
-           {
-               PlayerMove move = {};
-               move.moveDir.x = 1.f;
-               move.moveDir.y = 2.f;
-               move.moveDir.z = 3.f;
-               move.pos.x = 10.f;
-               move.pos.y = 20.f;
-               move.pos.z = 30.f;
-               move.state = PlayerMove::PlayerState::IDLE;
-                          Send_CMove(service, move);
-           }
-
-
+          // else if (KEY_TAP(KEY::NUM_3))
+          // {
+          //     PlayerMove move = {};
+          //     move.moveDir.x = 1.f;
+          //     move.moveDir.y = 2.f;
+          //     move.moveDir.z = 3.f;
+          //     move.pos.x = 100.f;
+          //     move.pos.y = 20.f;
+          //     move.pos.z = 100.f;
+          //     move.state = PlayerMove::PlayerState::IDLE;
+          //                Send_CMove(service, move);
+          // }
+           
             CEngine::GetInst()->progress();
-            
-            // 패킷을 서버에 보낸다. 
-            
+
+            auto now = std::chrono::steady_clock::now();
+            std::chrono::duration<double, std::milli> elapsed = now - last_send_time;
+
+            // 프레임 수에 관계 없이, 패킷 전송이 1/30초마다 일어나도록 함
+            if (elapsed.count() > (1000.0 / 60.0) && ingameCheck)
+            {
+                // move 패킷을 서버에 보낸다.
+                GameObjMgr::GetInst()->tick(service);
+                last_send_time = now;
+            }
+            //// move 패킷을 서버에 보낸다. 
+            //GameObjMgr::GetInst()->tick(service);
+
             // Event 처리
             CEventMgr::GetInst()->tick();
 
+
             CEditorObjMgr::GetInst()->progress();
 
-            ImGuiMgr::GetInst()->progress();
+            //mGuiMgr::GetInst()->progress();
 
             // 렌더 종료
             CDevice::GetInst()->Present();
+
         }       
 
 
@@ -166,7 +190,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     GThreadManager->Join();
 
     // 콘솔 창 닫기
-    fclose(stdout);
+    //fclose(stdout);
     FreeConsole();
 
 
@@ -268,6 +292,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     case WM_DESTROY:
         GThreadManager->SetFlags(0);
+        this_thread::sleep_for(1s);
         PostQuitMessage(0);
         break;
 

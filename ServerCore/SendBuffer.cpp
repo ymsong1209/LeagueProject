@@ -62,6 +62,16 @@ void SendBufferChunk::Close(uint32 writeSize)
 	SendBufferManager
 ----------------------*/
 
+SendBufferManager::SendBufferManager()
+	: flag(0)
+{
+}
+
+SendBufferManager::~SendBufferManager()
+{
+	_sendBufferChunks.clear();
+}
+
 SendBufferRef SendBufferManager::Open(uint32 size)
 {
 	if (LSendBufferChunk == nullptr)

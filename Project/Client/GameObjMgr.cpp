@@ -9,6 +9,7 @@
 
 #include <Engine\CResMgr.h>
 #include <Engine\CCollisionMgr.h>
+#include <Engine\CEventMgr.h>
 
 #include <Script\CPlayerScript.h>
 #include <Script\COtherPlayerScript.h>
@@ -37,6 +38,9 @@ CGameObject* GameObjMgr::Find(uint16 _targetId)
 
 void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 {
+	//std::mutex m;
+	//m.lock();
+
 	if (myPlayer)
 	{
 		// playerScript에 _info 변수들 추가하기.
@@ -75,7 +79,6 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 
 		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
 		pObj = pMeshData->Instantiate();
-		pObj->SetName(L"OtherJinx");
 
 		pObj->AddComponent(new COtherPlayerScript);
 		pObj->AddComponent(new CPathFinder);
@@ -89,7 +92,7 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 		pObj->SetName(L"OtherPlayer");
 		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
 		pObj->Animator3D()->SetRepeat(true);
-
+		pObj->Animator3D()->Play(L"Jinx\\Run_Base", true, 0.15f);
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
 		pObj->Transform()->SetRelativeScale(Vec3(0.3, 0.3, 0.3));
 
@@ -98,14 +101,88 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 
 		_players.insert(std::make_pair(_info.id, pObj));
 	}
+
+	//m.unlock();
 }
 
 void GameObjMgr::MovePlayer(uint16 _playerId, PlayerMove _playerMove)
 {
+	std::mutex m;
+	std::lock_guard<std::mutex> lock(m);
+	//m.lock();
+
+	if (_playerId == MyPlayer.id) // 내 플레이어가 움직인건 반영하지 않아도 된다. 
+		return;
+	
 	CGameObject* obj = Find(_playerId);
 
-	CTransform* trans = (CTransform*)obj->GetComponent(COMPONENT_TYPE::TRANSFORM);
-	trans->SetRelativePos(Vec3(_playerMove.pos.x, _playerMove.pos.y, _playerMove.pos.z));
+	tEvent evn = {};
+
+	evn.Type = EVENT_TYPE::MOVE_PACKET;
+	evn.wParam = (DWORD_PTR)obj;
+	
+	// PlayerMove 구조체의 포인터를 DWORD_PTR로 캐스팅하여 lParam에 저장
+	PlayerMove* temp = new PlayerMove(_playerMove);
+	//shared_ptr<PlayerMove> temp = make_shared<PlayerMove>(_playerMove);
+	evn.lParam = (DWORD_PTR)temp;
+
+	CEventMgr::GetInst()->AddEvent(evn);
+
+	//delete temp;
+	//m.unlock();
+}
+
+void GameObjMgr::tick(ClientServiceRef _service)
+{
+	// 모든 플레이어의 움직임을 서버에 보낸다. 
+	std::mutex m;
+	//m.lock();
+	{
+		std::lock_guard<std::mutex> lock(m);
+
+		CGameObject* obj = Find(MyPlayer.id);
+
+		if (obj == nullptr)
+			return;
+
+		if (obj->GetLayerIndex() == -1)
+			return;
+
+		PlayerMove move = {};
+		Vec3 tempPos = obj->Transform()->GetRelativePos();
+		move.moveDir.x = 1.f;
+		move.moveDir.y = 2.f;
+		move.moveDir.z = 3.f;
+		move.pos.x = tempPos.x;
+		move.pos.y = tempPos.y;
+		move.pos.z = tempPos.z;
+		move.state = PlayerMove::PlayerState::IDLE;
+		Send_CMove(_service, move);
+
+		//for (int i = 0; i < _players.size(); ++i)
+		//{
+		//	CGameObject* obj = _players[i];
+		//
+		//	if (obj == nullptr)
+		//		continue;
+		//	
+		//	if (obj->GetLayerIndex() == -1)
+		//		continue;
+		//
+		//	PlayerMove move = {};
+		//	Vec3 tempPos = _players[i]->Transform()->GetRelativePos();
+		//	move.moveDir.x = 1.f;
+		//	move.moveDir.y = 2.f;
+		//	move.moveDir.z = 3.f;
+		//	move.pos.x = tempPos.x;
+		//	move.pos.y = tempPos.y;
+		//	move.pos.z = tempPos.z;
+		//	move.state = PlayerMove::PlayerState::IDLE;
+		//	Send_CMove(_service, move);
+		//}
+
+		//m.unlock();
+	}
 }
 
 GameObjMgr::GameObjMgr()

@@ -148,15 +148,12 @@ void ServerPacketHandler::Handle_S_PICK_FACTION(PacketSessionRef& session, BYTE*
 
 void ServerPacketHandler::Handle_S_PICK_CHAMPION_AND_START(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
+	std::mutex m;
+	m.lock();
+
 	// 맵 불러옴
-	{
-		std::mutex m;
-		m.lock();
-
-		CreateTestLevel();
-
-		m.unlock();
-	}
+	CreateTestLevel();
+	
 	cout << "_PICK_CHAMPION_AND_START Packet" << endl;
 
 	BufferReader br(buffer, len);
@@ -221,36 +218,42 @@ void ServerPacketHandler::Handle_S_PICK_CHAMPION_AND_START(PacketSessionRef& ses
 			<< ", " << (float)playerInfoBuff.posInfo.pos.y
 			<< ", " << (float)playerInfoBuff.posInfo.pos.z
 			<< endl;
-		{
-			//std::mutex m;
-			//m.lock();
-			GameObjMgr::GetInst()->AddPlayer(otherPlayer, false);
-			//m.unlock();
-		}
+		
+		GameObjMgr::GetInst()->AddPlayer(otherPlayer, false);
+
+		
 	}
 	std::cout << "===============================" << endl;
+
+	m.unlock();
 }
 
 void ServerPacketHandler::Handle_S_MOVE(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
+	std::mutex m;
+	m.lock();
+
 	cout << "S_MOVE Packet" << endl;
 	BufferReader br(buffer, len);
 
 	PKT_S_MOVE* pkt = reinterpret_cast<PKT_S_MOVE*>(buffer);
 
 	if (pkt->Validate() == false)
+	{
+		m.unlock();
 		return;
-	float x = pkt->playerMove.pos.x;
-	float y = pkt->playerMove.pos.y;
-	float z = pkt->playerMove.pos.z;
-	float dirx = pkt->playerMove.moveDir.x;
-	float diry = pkt->playerMove.moveDir.y;
-	float dirz = pkt->playerMove.moveDir.z;
+	}
 
 	// 해당 Id 플레이어가 움직임.
 	uint64 _PlayerId = pkt->playerId;
-	PlayerMove playerMove = pkt->playerMove;
+	if (_PlayerId != MyPlayer.id)
+	{
+		PlayerMove playerMove = pkt->playerMove;
 
-	GameObjMgr::GetInst()->MovePlayer(_PlayerId, playerMove);
+		GameObjMgr::GetInst()->MovePlayer(_PlayerId, playerMove);
+	}
+
 	std::cout << "===============================" << endl;
+
+	m.unlock();
 }

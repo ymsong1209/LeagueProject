@@ -27,7 +27,6 @@ enum class FactionType
 	RED = 1,
 };
 
-
 enum class MRT_TYPE
 {
 	SWAPCHAIN,
@@ -38,6 +37,32 @@ enum class MRT_TYPE
 	END,
 };
 
+struct PlayerMove
+{
+	enum PlayerState
+	{
+		IDLE = 0,
+		MOVE = 1,
+	};
+
+	struct MoveDir
+	{
+		float x;
+		float y;
+		float z;
+	};
+
+	struct Pos
+	{
+		float x;
+		float y;
+		float z;
+	};
+
+	PlayerState state;
+	MoveDir moveDir;
+	Pos pos;
+};
 
 
 enum class COMPONENT_TYPE
@@ -272,7 +297,10 @@ enum class EVENT_TYPE
 
 	DELETE_RESOURCE,	// wParam : RES_TYPE, lParam : Resource Adress
 
-	LEVEL_CHANGE,	
+	LEVEL_CHANGE,
+
+	// Server Packet //
+	MOVE_PACKET,    // wParam : GameObject,  lParam : Update Move Packet
 };
 
 

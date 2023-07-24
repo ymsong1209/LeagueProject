@@ -17,6 +17,7 @@ public:
 
 
 public:
+	void tick(ClientServiceRef _service);
 
 static GameObjMgr* GetInst()
 {

@@ -30,6 +30,8 @@ void CPlayerScript::tick()
 {
 
 	CLevelMgr::GetInst()->GetCurLevel()->FindObjectByName(L"Test");
+
+
 	if (KEY_TAP(KEY::LBTN))
 	{
 		GetOwner()->PathFinder()->FindPathMousePicking();
@@ -40,7 +42,11 @@ void CPlayerScript::tick()
 		PathFindMove(90.f,true); //���������� �̵��ϵ��� Ʈ�������� ���Ž����ִ� ���� ������!!Script�ʿ� ����.
 	
 	Vec3 Pos = GetOwner()->Transform()->GetRelativePos();
-
+	//if (KEY_TAP(KEY::Q))
+	//{
+	//	Pos.z += DT * 80;
+	//	GetOwner()->Transform()->SetRelativePos(Pos);
+	//}
 	// send info packet to Server
 	
 	if(Pos == m_vPrevPos)

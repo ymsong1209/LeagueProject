@@ -60,6 +60,10 @@ private:
 class SendBufferManager
 {
 public:
+	SendBufferManager();
+	~SendBufferManager();
+
+public:
 	SendBufferRef		Open(uint32 size);
 
 private:
@@ -71,4 +75,6 @@ private:
 private:
 	USE_LOCK;
 	Vector<SendBufferChunkRef> _sendBufferChunks;
+
+	atomic<int>	flag;
 };

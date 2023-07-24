@@ -1,5 +1,5 @@
 #pragma once
-
+#include <Engine\define.h>
 
 
 //enum class FactionType
@@ -21,32 +21,32 @@ enum ChampionType
     MALPHITE,
 };
 
-struct PlayerMove
-{
-    enum PlayerState
-    {
-        IDLE = 0,
-        MOVE = 1,
-    };
-
-    struct MoveDir
-    {
-        float x;
-        float y;
-        float z;
-    };
-
-    struct Pos
-    {
-        float x;
-        float y;
-        float z;
-    };
-
-    PlayerState state;
-    MoveDir moveDir;
-    Pos pos;
-};
+//struct PlayerMove
+//{
+//    enum PlayerState
+//    {
+//        IDLE = 0,
+//        MOVE = 1,
+//    };
+//
+//    struct MoveDir
+//    {
+//        float x;
+//        float y;
+//        float z;
+//    };
+//
+//    struct Pos
+//    {
+//        float x;
+//        float y;
+//        float z;
+//    };
+//
+//    PlayerState state;
+//    MoveDir moveDir;
+//    Pos pos;
+//};
 
 struct PlayerInfo
 {
