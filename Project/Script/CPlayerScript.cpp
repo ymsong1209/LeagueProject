@@ -29,6 +29,7 @@ void CPlayerScript::begin()
 
 void CPlayerScript::tick()
 {
+	/*
 	if (KEY_TAP(KEY::RBTN) && !CRenderMgr::GetInst()->GetIsImGuiHovered())
 	{
 		GetOwner()->PathFinder()->FindPathMousePicking();
@@ -57,6 +58,7 @@ void CPlayerScript::tick()
 
 	m_vPrevPos = Pos;
 	PrevState = CurState;
+	*/
 }
 
 void CPlayerScript::Shoot()

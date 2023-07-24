@@ -11,7 +11,6 @@
 #include <Engine\CCollisionMgr.h>
 
 #include <Script\CPlayerScript.h>
-#include <Script\CMonsterScript.h>
 #include <Script\CCameraMoveScript.h>
 #include <Engine\CPathFindMgr.h>
 

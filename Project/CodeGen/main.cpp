@@ -54,12 +54,15 @@ int main()
 			}
 		}
 
-		// 'State.h' 또는 'state.h'가 포함된 파일들을 제외한다.
+		// 'Script.h' 또는 'script.h'가 포함된 파일들만 스크립트화시킨다..
 		wstring currentFileName(tData.cFileName);
 		std::transform(currentFileName.begin(), currentFileName.end(), currentFileName.begin(), ::towlower);
-		if (currentFileName.find(L"state.h") != wstring::npos) {
-			bExeption = true;
+		if (currentFileName.find(L"script.h") != wstring::npos)
+		{
+			bExeption = false;
 		}
+		else
+			bExeption = true;
 
 		if (!bExeption)
 		{
