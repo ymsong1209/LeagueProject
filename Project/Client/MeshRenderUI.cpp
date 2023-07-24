@@ -119,7 +119,7 @@ int MeshRenderUI::render_update()
 		pListUI->AddDynamic_Select(this, (UI_DELEGATE_1)&MeshRenderUI::SelectMaterial);
 	}
 
-	if (ImGui::TreeNode("Output Texture"))
+	if (ImGui::TreeNode("Output   Texture"))
 	{
 		ImGui::Text("HI!");
 		ImGui::TreePop();
@@ -401,4 +401,90 @@ void MeshRenderUI::SelectMaterial(DWORD_PTR _Key)
 
 	GetTarget()->MeshRender()->SetMaterial(pMtrl, 0);
 	GetTarget()->MeshRender()->ClearDynamicMtrl(0);
+}
+
+void MeshRenderUI::SetTexMovingTypeAndValue(int& _Target, Vec4& _Funcint _RandNum)
+{
+	// 해당 Texture의 움직이는 함수를 알려줌
+	//		ImGui::Text("Moving Style"); ImGui::SameLine();
+
+	//		string MoveOffsetClearBtn = "Clear Move##" + std::to_string(i);
+	//		if (ImGui::Button(MoveOffsetClearBtn.c_str(), ImVec2(100.f, 20.f)))
+	//		{
+	//			UpdateOffsetValue = Vec2(0.f, 0.f);
+	//		}
+
+
+	//		const char* items[] = { "None", "Horizonetal", "Vertical", "Linear", "Parabola", "Sin", "Cos" };
+	//		int item_current_idx = (int)MovingVec[i].MovingStyle;; // Here we store our selection data as an index.
+	//		string MovingFuncName = "##MovingFuncName" + std::to_string(i);
+	//		const char* combo_preview_value = items[item_current_idx];  // Pass in the preview value visible before opening the combo (it could be anything)
+	//		if (ImGui::BeginCombo(MovingFuncName.c_str(), combo_preview_value))
+	//		{
+	//			for (int n = 0; n < IM_ARRAYSIZE(items); n++)
+	//			{
+	//				bool is_selected = (item_current_idx == n);
+	//				if (ImGui::Selectable(items[n], is_selected))
+	//					item_current_idx = n;
+	//			}
+	//			ImGui::EndCombo();
+	//		}
+
+	//		switch (MovingVec[i].MovingStyle)
+	//		{
+	//		case eTexMovingStyle::NONE:
+	//			break;
+	//		case eTexMovingStyle::HORIZONTAL:
+	//		{
+	//			ImGui::Text("FuncValue.x : dx / dt");
+	//		}
+	//		break;
+	//		case eTexMovingStyle::VERTICAL:
+	//		{
+	//			ImGui::Text("FuncValue.x : dy / dt");
+	//		}
+	//		break;
+	//		case eTexMovingStyle::LINEAR:
+	//		{
+	//			ImGui::Text("FuncValue.x : dx / dt"); ImGui::SameLine(); ImGui::Text("FuncValue.y : x  coef");
+	//			ImGui::Text("FuncValue.z : y-inter");
+	//		}
+	//		break;
+	//		case eTexMovingStyle::PARABOLA:
+	//		{
+	//			ImGui::Text("FuncValue.x : dx / dt"); ImGui::SameLine(); ImGui::Text("FuncValue.y : x^2coef");
+	//			ImGui::Text("FuncValue.z : x  coef"); ImGui::SameLine(); ImGui::Text("FuncValue.w : y-inter");
+
+	//		}
+	//		break;
+	//		case eTexMovingStyle::SIN:
+	//		{
+	//			ImGui::Text("FuncValue.x : dx / dt"); ImGui::SameLine(); ImGui::Text("FuncValue.y : Coef   ");
+	//			ImGui::Text("FuncValue.z : Freq   "); ImGui::SameLine(); ImGui::Text("FuncValue.w : y-inter");
+	//		}
+	//		break;
+	//		case eTexMovingStyle::COS:
+	//		{
+	//			ImGui::Text("FuncValue.x : dx / dt"); ImGui::SameLine(); ImGui::Text("FuncValue.x : Coef   ");
+	//			ImGui::Text("FuncValue.x : Freq   "); ImGui::SameLine(); ImGui::Text("FuncValue.x : y-inter");
+	//		}
+	//		break;
+	//		}
+	//		 
+	//		ImGui::Text("Func Value"); ImGui::SameLine();
+
+	//		string FuncValueName = "##FuncValue" + std::to_string(i);
+	//		ImGui::InputFloat4(FuncValueName.c_str(), FunctionValue);
+
+	//		UpdateMovingStruct.FuncValue = FunctionValue;
+	//		UpdateMovingStruct.MovingStyle = (eTexMovingStyle)item_current_idx;
+	//		UpdateMovingStruct.PreviousPos = UpdateOffsetValue;
+
+	//		UpdateMovingStruct.TargetTex = MovingVec[i].TargetTex;
+
+	//		GetTarget()->MeshRender()->SetMovingStruct(i, UpdateMovingStruct);
+
+
+	//		ImGui::Separator();
+
 }
