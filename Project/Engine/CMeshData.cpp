@@ -54,7 +54,7 @@ CGameObject* CMeshData::Instantiate()
 		// 각 tMTAnimClip에 대한 작업 수행
 		// animClip을 읽기 전용으로 사용
 		CAnim3D* anim = pAnimator->CreateAnimation(animClip);
-		anim->Save();
+		//anim->Save();
 	}
 
 	return pNewObj;
