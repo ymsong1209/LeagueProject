@@ -12,8 +12,8 @@ enum
 	S_LOGIN = 2,
 	C_PICK_FACTION = 3,
 	S_PICK_FACTION = 4,
-	C_PICK_CHAMPION = 5,
-	S_PICK_CHAMPION = 6,
+	C_PICK_CHAMPION_AND_START = 5,
+	S_PICK_CHAMPION_AND_START = 6,
 
 	S_GAME_START = 7,
 
@@ -32,7 +32,7 @@ public:
 	static void Handle_S_TEST(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_LOGIN(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_PICK_FACTION(PacketSessionRef& session, BYTE* buffer, int32 len);
-	static void Handle_S_PICK_CHAMPION(PacketSessionRef& session, BYTE* buffer, int32 len);
+	static void Handle_S_PICK_CHAMPION_AND_START(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_GAME_START(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_MOVE(PacketSessionRef& session, BYTE* buffer, int32 len);
 
@@ -328,7 +328,7 @@ struct PKT_S_PICK_FACTION
 
 
 #pragma pack(1)
-struct PKT_C_PICK_CHAMPION
+struct PKT_C_PICK_CHAMPION_AND_START
 {
 	uint16 packetSize;
 	uint16 packetId;
@@ -337,7 +337,7 @@ struct PKT_C_PICK_CHAMPION
 	bool Validate()
 	{
 		uint32 size = 0;
-		size += sizeof(PKT_C_PICK_CHAMPION);
+		size += sizeof(PKT_C_PICK_CHAMPION_AND_START);
 		if (packetSize < size)
 			return false;
 
@@ -350,7 +350,7 @@ struct PKT_C_PICK_CHAMPION
 #pragma pack()
 
 #pragma pack(1)
-struct PKT_S_PICK_CHAMPION
+struct PKT_S_PICK_CHAMPION_AND_START
 {
 	uint16 packetSize;
 	uint16 packetId;
@@ -361,7 +361,7 @@ struct PKT_S_PICK_CHAMPION
 	bool Validate()
 	{
 		uint32 size = 0;
-		size += sizeof(PKT_C_PICK_CHAMPION);
+		size += sizeof(PKT_C_PICK_CHAMPION_AND_START);
 		if (packetSize < size)
 			return false;
 
@@ -546,16 +546,16 @@ private:
 #pragma pack()
 
 #pragma pack(1)
-class PKT_C_PICK_CHAMPION_WRITE
+class PKT_C_PICK_CHAMPION_AND_START_WRITE
 {
 public:
-	PKT_C_PICK_CHAMPION_WRITE(ChampionType _champion) {
+	PKT_C_PICK_CHAMPION_AND_START_WRITE(ChampionType _champion) {
 		_sendBuffer = GSendBufferManager->Open(4096);
 		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
 
-		_pkt = _bw.Reserve<PKT_C_PICK_CHAMPION>();
+		_pkt = _bw.Reserve<PKT_C_PICK_CHAMPION_AND_START>();
 		_pkt->packetSize = 0;
-		_pkt->packetId = C_PICK_CHAMPION;
+		_pkt->packetId = C_PICK_CHAMPION_AND_START;
 		_pkt->champion = _champion;
 	}
 
@@ -569,7 +569,7 @@ public:
 	}
 
 private:
-	PKT_C_PICK_CHAMPION* _pkt = nullptr;
+	PKT_C_PICK_CHAMPION_AND_START* _pkt = nullptr;
 	SendBufferRef _sendBuffer;
 	BufferWriter _bw;
 };
