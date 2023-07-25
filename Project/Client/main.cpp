@@ -81,8 +81,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
    this_thread::sleep_for(1s);
    
    ClientServiceRef service = MakeShared<ClientService>(
-       //NetAddress(L"221.148.206.199", 40000),
-       NetAddress(L"127.0.0.1", 40000),
+       //NetAddress(L"221.148.206.199", 40000),  // 다혜집 데탑 IP
+       NetAddress(L"127.0.0.1", 40000), // 로컬 호스트
        MakeShared<IocpCore>(),
        MakeShared<ServerSession>, // TODO : SessionManager 등
        1);

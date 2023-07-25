@@ -141,7 +141,7 @@ void ServerPacketHandler::Handle_S_PICK_FACTION(PacketSessionRef& session, BYTE*
 
 	bool _Success = pkt->success;
 	WaitingStatus waiting = pkt->waiting;
-
+	
 	if(_Success)
 		cout << "S_PICK_FACTION Success" << endl;
 
@@ -163,6 +163,12 @@ void ServerPacketHandler::Handle_S_PICK_CHAMPION(PacketSessionRef& session, BYTE
 
 	if (_Success)
 		cout << "S_PICK_CHAMPION Success" << endl;
+
+	// 내가 챔피언을 변경했을 시 업데이트
+	if (MyPlayer.id == pkt->PlayerID)
+	{
+		MyPlayer.champion = pkt->champion;
+	}
 
 	std::cout << "===============================" << endl;
 
