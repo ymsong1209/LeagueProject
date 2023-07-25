@@ -43,9 +43,9 @@ void Send_CPickFaction(ClientServiceRef _service)
 
 void Send_CPickChampionAndStart(ClientServiceRef _service, ChampionType _championType)
 {
-    std::cout << "C_PICK_CHAMPION Pakcet" << endl;
+    std::cout << "C_PICK_CHAMPION_AND_START Pakcet" << endl;
 
-    PKT_C_PICK_CHAMPION_WRITE pktWriter(_championType);
+    PKT_C_PICK_CHAMPION_AND_START_WRITE pktWriter(_championType);
     
     SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
     

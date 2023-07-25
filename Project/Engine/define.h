@@ -91,6 +91,7 @@ enum class CB_TYPE
 	TRANSFORM,	// b0
 	MATERIAL,	// b1
 	GLOBAL,		// b2
+	MESHRENDER, // b3
 	END,
 };
 
@@ -173,6 +174,13 @@ enum TEX_PARAM
 	TEX_ARR_1,
 
 	TEX_END,
+};
+
+enum MESH_TEX_PARAM
+{
+	PUNCTURE,
+	ADDITIVE,
+	MESH_TEX_END,
 };
 
 enum PIPELINE_STAGE
