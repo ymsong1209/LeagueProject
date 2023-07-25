@@ -294,9 +294,9 @@
                         {
                             "TRANSFORM": 0,
                             "vRelativePos": {
-                                "x": 134.66281127929688,
-                                "y": 19.339336395263672,
-                                "z": 168.4547882080078
+                                "x": -54.613525390625,
+                                "y": 29.62699317932129,
+                                "z": -44.533966064453125
                             },
                             "vRelativeScale": {
                                 "x": 0.18000000715255737,
@@ -305,7 +305,7 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": -8.907315254211426,
+                                "y": -5.210959434509277,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
@@ -535,7 +535,7 @@
                                     "Anim3DRelativePath": "animation\\Jinx\\minigun_spell1_weapon_gunonly.anim3d"
                                 }
                             ],
-                            "strCurAnimName": "Jinx\\Run_Base"
+                            "strCurAnimName": "Jinx\\Idle1_Base"
                         },
                         {
                             "PATHFINDER": 9
@@ -570,50 +570,7 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],
@@ -791,50 +748,7 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],
@@ -944,50 +858,7 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],
@@ -1115,50 +986,7 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],
@@ -1259,50 +1087,7 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],
@@ -1403,50 +1188,7 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],
@@ -1664,50 +1406,7 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],
@@ -1844,50 +1543,7 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],
@@ -2042,50 +1698,7 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],
@@ -2240,50 +1853,7 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],
@@ -2447,50 +2017,7 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],
@@ -2600,50 +2127,7 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],
@@ -2735,50 +2219,7 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],
@@ -2870,50 +2311,7 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],
@@ -2987,50 +2385,7 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],
@@ -3140,50 +2495,7 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],
@@ -3284,50 +2596,7 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],
@@ -3419,50 +2688,7 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],
@@ -3554,50 +2780,7 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],
@@ -3707,50 +2890,7 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],
@@ -3851,50 +2991,7 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],
@@ -4004,50 +3101,7 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],
@@ -4148,50 +3202,7 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],
@@ -4301,50 +3312,7 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],
@@ -4463,50 +3431,7 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],
@@ -4634,50 +3559,7 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],
@@ -4769,50 +3651,7 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
+                            "bIsUsingMovingVec": false
                         },
                         16
                     ],

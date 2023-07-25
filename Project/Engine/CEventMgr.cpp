@@ -139,6 +139,7 @@ void CEventMgr::tick()
 
 			CTransform* trans = (CTransform*)NewObject->GetComponent(COMPONENT_TYPE::TRANSFORM);
 			trans->SetRelativePos(Vec3(playerMove->pos.x, playerMove->pos.y, playerMove->pos.z));
+			trans->SetRelativeRot(Vec3(playerMove->moveDir.x, playerMove->moveDir.y, playerMove->moveDir.z));
 
 			// 사용이 끝난 후에는 메모리를 해제하는 것을 잊지 마세요.
 			//delete playerMove;

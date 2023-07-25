@@ -326,27 +326,6 @@ struct tGlobal
 	int	  globalpadding;
 };
 
-
-struct tMeshMoveData
-{
-	// Output Texture에 대한 정보
-	Vec4  OutputTexFuncValue;
-	Vec2  OutputTexPreviousPos;
-	int   OutputTexMovingStyle;      // 0.None, 1. Horizontal, 2. Vertical, 3. Linear, 4. Parabola, 5. Sin, 6. Cos
-
-
-	// Additive Texture에 대한 정보
-	int   isAdditiveTextureUsed;
-	Vec4 AdditiveColor;
-
-
-	// Puncture Texture에 대한 정보
-	Vec4  PunctureTexFuncValue;
-	Vec2  PunctureTexPreviousPos;
-	int   isPunctureTextureUsed;
-	int   PunctureTexMovingStyle;     // 0.None,  1. Horizontal, 2. Vertical, 3. Linear, 4. Parabola, 5. Sin, 6. Cos
-};
-
 extern tGlobal GlobalData;
 
 
