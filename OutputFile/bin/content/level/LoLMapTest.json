@@ -1,5 +1,5 @@
 {
-    "levelName": "level\\lolmap.json",
+    "levelName": "level\\LoLMapTest.json",
     "layers": [
         {
             "layerName": "Default",
@@ -601,7 +601,15 @@
                                 },
                                 "isPunctureTextureUsed": 0,
                                 "PunctureTexMovingStyle": 0
-                            }
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture": null
+                                },
+                                {
+                                    "Texture": null
+                                }
+                            ]
                         },
                         16
                     ],
@@ -810,7 +818,15 @@
                                 },
                                 "isPunctureTextureUsed": 0,
                                 "PunctureTexMovingStyle": 0
-                            }
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture": null
+                                },
+                                {
+                                    "Texture": null
+                                }
+                            ]
                         },
                         16
                     ],
@@ -951,7 +967,15 @@
                                 },
                                 "isPunctureTextureUsed": 0,
                                 "PunctureTexMovingStyle": 0
-                            }
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture": null
+                                },
+                                {
+                                    "Texture": null
+                                }
+                            ]
                         },
                         16
                     ],
@@ -1110,7 +1134,15 @@
                                 },
                                 "isPunctureTextureUsed": 0,
                                 "PunctureTexMovingStyle": 0
-                            }
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture": null
+                                },
+                                {
+                                    "Texture": null
+                                }
+                            ]
                         },
                         16
                     ],
@@ -1242,7 +1274,15 @@
                                 },
                                 "isPunctureTextureUsed": 0,
                                 "PunctureTexMovingStyle": 0
-                            }
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture": null
+                                },
+                                {
+                                    "Texture": null
+                                }
+                            ]
                         },
                         16
                     ],
@@ -1374,7 +1414,15 @@
                                 },
                                 "isPunctureTextureUsed": 0,
                                 "PunctureTexMovingStyle": 0
-                            }
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture": null
+                                },
+                                {
+                                    "Texture": null
+                                }
+                            ]
                         },
                         16
                     ],
@@ -1623,7 +1671,15 @@
                                 },
                                 "isPunctureTextureUsed": 0,
                                 "PunctureTexMovingStyle": 0
-                            }
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture": null
+                                },
+                                {
+                                    "Texture": null
+                                }
+                            ]
                         },
                         16
                     ],
@@ -1791,7 +1847,15 @@
                                 },
                                 "isPunctureTextureUsed": 0,
                                 "PunctureTexMovingStyle": 0
-                            }
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture": null
+                                },
+                                {
+                                    "Texture": null
+                                }
+                            ]
                         },
                         16
                     ],
@@ -1977,7 +2041,15 @@
                                 },
                                 "isPunctureTextureUsed": 0,
                                 "PunctureTexMovingStyle": 0
-                            }
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture": null
+                                },
+                                {
+                                    "Texture": null
+                                }
+                            ]
                         },
                         16
                     ],
@@ -2163,7 +2235,15 @@
                                 },
                                 "isPunctureTextureUsed": 0,
                                 "PunctureTexMovingStyle": 0
-                            }
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture": null
+                                },
+                                {
+                                    "Texture": null
+                                }
+                            ]
                         },
                         16
                     ],
@@ -2358,7 +2438,15 @@
                                 },
                                 "isPunctureTextureUsed": 0,
                                 "PunctureTexMovingStyle": 0
-                            }
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture": null
+                                },
+                                {
+                                    "Texture": null
+                                }
+                            ]
                         },
                         16
                     ],
@@ -2499,7 +2587,15 @@
                                 },
                                 "isPunctureTextureUsed": 0,
                                 "PunctureTexMovingStyle": 0
-                            }
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture": null
+                                },
+                                {
+                                    "Texture": null
+                                }
+                            ]
                         },
                         16
                     ],
@@ -2622,7 +2718,15 @@
                                 },
                                 "isPunctureTextureUsed": 0,
                                 "PunctureTexMovingStyle": 0
-                            }
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture": null
+                                },
+                                {
+                                    "Texture": null
+                                }
+                            ]
                         },
                         16
                     ],
@@ -2745,7 +2849,15 @@
                                 },
                                 "isPunctureTextureUsed": 0,
                                 "PunctureTexMovingStyle": 0
-                            }
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture": null
+                                },
+                                {
+                                    "Texture": null
+                                }
+                            ]
                         },
                         16
                     ],
@@ -2850,7 +2962,15 @@
                                 },
                                 "isPunctureTextureUsed": 0,
                                 "PunctureTexMovingStyle": 0
-                            }
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture": null
+                                },
+                                {
+                                    "Texture": null
+                                }
+                            ]
                         },
                         16
                     ],
@@ -2991,7 +3111,15 @@
                                 },
                                 "isPunctureTextureUsed": 0,
                                 "PunctureTexMovingStyle": 0
-                            }
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture": null
+                                },
+                                {
+                                    "Texture": null
+                                }
+                            ]
                         },
                         16
                     ],
@@ -3123,7 +3251,15 @@
                                 },
                                 "isPunctureTextureUsed": 0,
                                 "PunctureTexMovingStyle": 0
-                            }
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture": null
+                                },
+                                {
+                                    "Texture": null
+                                }
+                            ]
                         },
                         16
                     ],
@@ -3246,7 +3382,15 @@
                                 },
                                 "isPunctureTextureUsed": 0,
                                 "PunctureTexMovingStyle": 0
-                            }
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture": null
+                                },
+                                {
+                                    "Texture": null
+                                }
+                            ]
                         },
                         16
                     ],
@@ -3369,7 +3513,15 @@
                                 },
                                 "isPunctureTextureUsed": 0,
                                 "PunctureTexMovingStyle": 0
-                            }
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture": null
+                                },
+                                {
+                                    "Texture": null
+                                }
+                            ]
                         },
                         16
                     ],
@@ -3510,7 +3662,15 @@
                                 },
                                 "isPunctureTextureUsed": 0,
                                 "PunctureTexMovingStyle": 0
-                            }
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture": null
+                                },
+                                {
+                                    "Texture": null
+                                }
+                            ]
                         },
                         16
                     ],
@@ -3642,7 +3802,15 @@
                                 },
                                 "isPunctureTextureUsed": 0,
                                 "PunctureTexMovingStyle": 0
-                            }
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture": null
+                                },
+                                {
+                                    "Texture": null
+                                }
+                            ]
                         },
                         16
                     ],
@@ -3783,7 +3951,15 @@
                                 },
                                 "isPunctureTextureUsed": 0,
                                 "PunctureTexMovingStyle": 0
-                            }
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture": null
+                                },
+                                {
+                                    "Texture": null
+                                }
+                            ]
                         },
                         16
                     ],
@@ -3915,7 +4091,15 @@
                                 },
                                 "isPunctureTextureUsed": 0,
                                 "PunctureTexMovingStyle": 0
-                            }
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture": null
+                                },
+                                {
+                                    "Texture": null
+                                }
+                            ]
                         },
                         16
                     ],
@@ -4056,7 +4240,15 @@
                                 },
                                 "isPunctureTextureUsed": 0,
                                 "PunctureTexMovingStyle": 0
-                            }
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture": null
+                                },
+                                {
+                                    "Texture": null
+                                }
+                            ]
                         },
                         16
                     ],
@@ -4206,7 +4398,15 @@
                                 },
                                 "isPunctureTextureUsed": 0,
                                 "PunctureTexMovingStyle": 0
-                            }
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture": null
+                                },
+                                {
+                                    "Texture": null
+                                }
+                            ]
                         },
                         16
                     ],
@@ -4365,7 +4565,15 @@
                                 },
                                 "isPunctureTextureUsed": 0,
                                 "PunctureTexMovingStyle": 0
-                            }
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture": null
+                                },
+                                {
+                                    "Texture": null
+                                }
+                            ]
                         },
                         16
                     ],
@@ -4488,7 +4696,15 @@
                                 },
                                 "isPunctureTextureUsed": 0,
                                 "PunctureTexMovingStyle": 0
-                            }
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture": null
+                                },
+                                {
+                                    "Texture": null
+                                }
+                            ]
                         },
                         16
                     ],

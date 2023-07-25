@@ -364,7 +364,39 @@ void CMeshRender::LoadFromLevelFile(FILE* _File)
 
 void CMeshRender::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
 {
-	//CRenderComponent::SaveToLevelJsonFile(_objValue, allocator);
+	CRenderComponent::SaveToLevelJsonFile(_objValue, allocator);
+
+	//Struct tMeshMoveData
+	Value MeshMoveDataValue(kObjectType);
+
+	// Output Texture에 대한 정보 저장
+	MeshMoveDataValue.AddMember("OutputTexFuncValue", SaveVec4Json(m_tMeshMoveData.OutputTexFuncValue, allocator), allocator);
+	MeshMoveDataValue.AddMember("OutputTePreviousPos", SaveVec2Json(m_tMeshMoveData.OutputTexPreviousPos, allocator), allocator);
+	MeshMoveDataValue.AddMember("OutputTexMovingStyle", m_tMeshMoveData.OutputTexMovingStyle, allocator);
+
+	// Additive Texture에 대한 정보 저장
+	MeshMoveDataValue.AddMember("isAdditiveTextureUsed", m_tMeshMoveData.isAdditiveTextureUsed, allocator);
+	MeshMoveDataValue.AddMember("AdditiveColor", SaveVec4Json(m_tMeshMoveData.AdditiveColor, allocator), allocator);
+	
+	// Puncture Texture에 대한 정보 저장
+	MeshMoveDataValue.AddMember("PunctureTextureValue", SaveVec4Json(m_tMeshMoveData.PunctureTexFuncValue, allocator), allocator);
+	MeshMoveDataValue.AddMember("PunctureTexPreviousPos", SaveVec2Json(m_tMeshMoveData.PunctureTexPreviousPos, allocator), allocator);
+	MeshMoveDataValue.AddMember("isPunctureTextureUsed", m_tMeshMoveData.isPunctureTextureUsed, allocator);
+	MeshMoveDataValue.AddMember("PunctureTexMovingStyle", m_tMeshMoveData.PunctureTexMovingStyle, allocator);
+
+	_objValue.AddMember("MeshMoveDataInfo", MeshMoveDataValue, allocator);
+	
+
+	Value MeshTexArray(kArrayType);
+	for (int i = 0; i < (int)MESH_TEX_PARAM::MESH_TEX_END; ++i)
+	{
+		Value TargetTexObject(kObjectType);
+
+		TargetTexObject.AddMember("Texture", SaveResRefJson(m_arrMeshTex[i].Get(), allocator), allocator);
+		MeshTexArray.PushBack(TargetTexObject, allocator);
+	}
+
+	_objValue.AddMember("MeshTexArray", MeshTexArray, allocator);
 
 	//_objValue.AddMember("bIsUsingMovingVec", m_bIsUsingMovingVec, allocator);
 
@@ -397,6 +429,42 @@ void CMeshRender::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType&
 void CMeshRender::LoadFromLevelJsonFile(const Value& _componentValue)
 {
 	CRenderComponent::LoadFromLevelJsonFile(_componentValue);
+
+	// Output Texture에 대한 정보 불러오기
+	m_tMeshMoveData.OutputTexFuncValue = LoadVec4Json(_componentValue["MeshMoveDataInfo"]["OutputTexFuncValue"]);
+	m_tMeshMoveData.OutputTexPreviousPos = LoadVec2Json(_componentValue["MeshMoveDataInfo"]["OutputTePreviousPos"]);
+	m_tMeshMoveData.OutputTexMovingStyle = _componentValue["MeshMoveDataInfo"]["OutputTexMovingStyle"].GetInt();
+
+	// Additive Texture에 대한 정보 불러올기
+	m_tMeshMoveData.isAdditiveTextureUsed = _componentValue["MeshMoveDataInfo"]["isAdditiveTextureUsed"].GetInt();
+	m_tMeshMoveData.AdditiveColor = LoadVec4Json(_componentValue["MeshMoveDataInfo"]["AdditiveColor"]);
+
+	// Puncture Texture에 대한 정보 불러오기
+	m_tMeshMoveData.PunctureTexFuncValue = LoadVec4Json(_componentValue["MeshMoveDataInfo"]["PunctureTextureValue"]);
+	m_tMeshMoveData.PunctureTexPreviousPos = LoadVec2Json(_componentValue["MeshMoveDataInfo"]["PunctureTexPreviousPos"]);
+	m_tMeshMoveData.isPunctureTextureUsed = _componentValue["MeshMoveDataInfo"]["isPunctureTextureUsed"].GetInt();
+	m_tMeshMoveData.PunctureTexMovingStyle = _componentValue["MeshMoveDataInfo"]["PunctureTexMovingStyle"].GetInt();
+
+
+	const Value& TextureArray = _componentValue["MeshTexArray"];
+
+	for (int i = 0; i < TextureArray.Size(); ++i)
+	{
+		Ptr<CTexture> pTexture;
+
+		string key = "Texture";
+		Value keyName(kStringType);
+		keyName.SetString(key.c_str(), key.length());
+
+		LoadResRefJson(pTexture, TextureArray[i][keyName]);
+
+		if (i == 0) 
+			SetPunctureTexture(pTexture);
+		else if (i == 1)
+			SetAdditiveTexture(pTexture);
+	}
+
+	//=================
 
 	/*
 	m_bIsUsingMovingVec = _componentValue["bIsUsingMovingVec"].GetBool();
