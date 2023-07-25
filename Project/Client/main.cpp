@@ -72,11 +72,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
         else
         {
+            
             CEngine::GetInst()->progress();
 
             CEditorObjMgr::GetInst()->progress();
 
-            ImGuiMgr::GetInst()->progress();
+            if (CEngine::GetInst()->GetImguiActive()) {
+                ImGuiMgr::GetInst()->progress();
+            }
 
             // 렌더 종료
             CDevice::GetInst()->Present();

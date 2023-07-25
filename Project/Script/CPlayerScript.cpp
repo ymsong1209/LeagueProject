@@ -29,8 +29,6 @@ void CPlayerScript::begin()
 
 void CPlayerScript::tick()
 {
-	//ImGui::IsWindowHovered()
-	CLevelMgr::GetInst()->GetCurLevel()->FindObjectByName(L"Test");
 	if (KEY_TAP(KEY::RBTN) && !CRenderMgr::GetInst()->GetIsImGuiHovered())
 	{
 		GetOwner()->PathFinder()->FindPathMousePicking();

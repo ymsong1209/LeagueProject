@@ -17,7 +17,7 @@
 
 
 #include "CLevelSaveLoad.h"
-
+#include <Script/CScriptMgr.h>
 
 
 void CreateTestLevel()
@@ -135,21 +135,33 @@ void CreateTestLevel()
 
 
 	// LandScape Object
-	CGameObject* pLandScape = new CGameObject;
-	pLandScape->SetName(L"LandScape");
+	//CGameObject* pLandScape = new CGameObject;
+	//pLandScape->SetName(L"LandScape");
 
 
-	pLandScape->AddComponent(new CTransform);
-	pLandScape->AddComponent(new CLandScape);
+	//pLandScape->AddComponent(new CTransform);
+	//pLandScape->AddComponent(new CLandScape);
 
-	pLandScape->Transform()->SetRelativeScale(Vec3(200.f, 1000.f, 200.f));
+	//pLandScape->Transform()->SetRelativeScale(Vec3(200.f, 1000.f, 200.f));
 
-	pLandScape->LandScape()->SetFace(32, 32);
-	pLandScape->LandScape()->SetFrustumCheck(false);
+	//pLandScape->LandScape()->SetFace(32, 32);
+	//pLandScape->LandScape()->SetFrustumCheck(false);
 
-	SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 0.f), 0);
+	//SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 0.f), 0);
 
 	
+
+	CGameObject* LoLMapCollider = new CGameObject;
+	LoLMapCollider->SetName(L"LoLMapCollider");
+	LoLMapCollider->AddComponent(new CTransform);
+	LoLMapCollider->AddComponent(new CCollider2D);
+	LoLMapCollider->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+	LoLMapCollider->Collider2D()->SetOffsetScale(Vec2(2700.f, 2700.f));
+	LoLMapCollider->Collider2D()->SetOffsetPos(Vec3(1125.f, 16.f, 1200.f));
+	LoLMapCollider->Transform()->SetGizmoObjExcept(true);
+	SpawnGameObject(LoLMapCollider, Vec3(0.f, 0.f, 0.f), 6);
+
+
 
 	// ============
 	// FBX Loading
@@ -157,52 +169,6 @@ void CreateTestLevel()
 	{
 		Ptr<CMeshData> pMeshData = nullptr;
 		CGameObject* pObj = nullptr;
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\LoLMapRot19Size30.fbx");
-		pObj = pMeshData->Instantiate();
-		pObj->SetName(L"LoLMapRot19Size30");
-		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->AddComponent(new CCollider2D);
-		pObj->Collider2D()->SetAbsolute(true);
-		pObj->GetRenderComponent()->SetRaySightCulling(false);
-
-//<<<<<<< HEAD
-		/*Ptr<CMeshData> pMeshData = nullptr;
-		CGameObject* pObj = nullptr;
-		
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\land16_fin.fbx");
-		
-		pObj = pMeshData->Instantiate();
-		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);*/
-//=======
-		pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-		pObj->Collider2D()->SetOffsetScale(Vec2(2700.f, 2700.f));
-		pObj->Collider2D()->SetOffsetPos(Vec3(1125.f, 16.f, 1200.f));
-		pObj->Transform()->SetGizmoObjExcept(true);
-		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 6);
-//>>>>>>> dev
-
-		// 마우스 피킹 이동을 위한 맵 콜리전 - 따로 오브젝트로 빼준 이유는 렉트메쉬콜리전을 회전시켜야하는데 맵도 같이 회전되면 안돼서 따로 오브젝트로 뺐음
-		// 맵은 이동된다는 가정을 하지않음, 크기,회전,이동을 해버리면 네브메쉬랑 좌표값이 안맞게 되어버린다.
-		// 맵이 있으면 맵 콜리전도 있어야함!
-		//CGameObject* MapCollision = new CGameObject;
-		//MapCollision->SetName(L"MapCollision");
-		//MapCollision->AddComponent(new CCollider2D);
-		//MapCollision->AddComponent(new CTransform);
-		//MapCollision->Collider2D()->SetAbsolute(true);
-		//MapCollision->Collider2D()->SetOffsetScale(Vec2(2700.f, 2700.f));
-		//MapCollision->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-		//SpawnGameObject(MapCollision, Vec3(1125.f, 16.f, 1200.f), 0);
-		//CPathFindMgr::GetInst()->SetMapCollision(MapCollision); //마우스 피킹 진행할 맵 콜리전으로 지정
-
-		pMeshData = nullptr;
-		pObj = nullptr;
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\jungle_blue.fbx");
-		pObj = pMeshData->Instantiate();
-		pObj->SetName(L"jungle_blue");
-		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->Animator3D()->Play(L"jungle_blue-jungle_blue_AllAnim", true, 0.5f);
-		pObj->Transform()->SetRelativeScale(Vec3(0.3, 0.3, 0.3));
-		SpawnGameObject(pObj, Vec3(190.f, 0.f, 607.f), 0);
 
 		pMeshData = nullptr;
 		pObj = nullptr;
@@ -210,7 +176,6 @@ void CreateTestLevel()
 		pObj = pMeshData->Instantiate();
 		pObj->SetName(L"Jinx");
 		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
-		//pObj->Animator3D()->Play(L"Jinx\\Run_Base",true,0.5f);
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
 		pObj->AddComponent(new CPlayerScript);
 		pObj->AddComponent(new CPathFinder);
@@ -221,53 +186,40 @@ void CreateTestLevel()
 		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
 		pObj->Collider3D()->SetDrawCollision(false);
 		pObj->Animator3D()->SetRepeat(true);
+		pObj->Animator3D()->Play(L"Jinx\\Idle1_Base", true, 0.1f);
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
 
 		pObj->Transform()->SetUseMouseOutline(true);
 
 		SpawnGameObject(pObj, Vec3(0, 0, 0), 0);
-
-
-		//단일재생
-		//pObj->Animator3D()->Play(L"Take 001");
-		//단일재생, 이전 애니메이션 0.5초 블렌딩 후 단일재생
-		//pObj->Animator3D()->Play(L"Take001", true, 0.5f);
-		//반복재생, 마지막프레임후 첫프레임으로 blend안함
-		//pObj->Animator3D()->Play(L"Take001", true, false);
-		//반복재생, AnimA->Take001로 0.5초동안 애니메이션 blend하고 take001재생,take001마지막프레임->첫프레임 돌아오면서 blend안하기 
-		//pObj->Animator3D()->Play(L"Take001", true, false, true, 0.5f);
-		//반복재생, AnimA->Take001로 0.5초동안 애니메이션 blend하고 take001재생,take001마지막프레임->첫프레임 돌아오면서 blend 0.5초동안 하기
-		//pObj->Animator3D()->Play(L"Take001", true, true, true, 0.5f);
-		//사용 예시
-
-		//IdleAnimation 반복재생 blend안함
-		//pObj->animator3d()->play(L"IdleAnimation",true,false);
-		//공격버튼 누르면 공격 애니메이션 단일재생, blending 0.2초
-		//if(key_pressed(key::lbtn){
-		//changestate(attack);
-		//pobj->animator3d()->play(L"AttackAnimation", true,0.2f);
-		//}
-		//공격 애님 끝나면 다시 idle로 전환
-		//if(animator3d()->getcuranim()->isfinish()){
-		//changestate(idle)
-		////Attack->Idle 0.2초 blend주고, idle animation 재생, idle anim은 마지막프레임->첫프레임 이동시 blend없음 
-		//pobj->animator3d()->play(L"IdleAnimation",true,false,true,0.2f); 
-		//}
-
-
-
-
-		//SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
 	}
 
-	//CGameObject* pObj = new CGameObject;
-	//pObj->AddComponent(new CTransform);
-	//pObj->AddComponent(new CMeshRender);
-	////pObj->AddComponent(new CAnimator3D);
-	////pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\jinx55");
-	//
-	//pObj->SetName(L"jinx");
-	//SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
+
+	// LoLMap 로딩
+	{
+	
+		Ptr<CMeshData> pMeshData = nullptr;
+		CGameObject* pObj = nullptr;
+		for (int i = 0; i <= 25; ++i) 
+		{
+			wstring num = std::to_wstring(i);
+			wstring FBXFilePath = L"fbx\\land";
+			FBXFilePath += num;
+			FBXFilePath += L".fbx";
+
+			wstring FBXFileName = L"land";
+			FBXFileName += num;
+
+
+			pMeshData = CResMgr::GetInst()->LoadFBX(FBXFilePath);
+			pObj = pMeshData->Instantiate();
+			pObj->SetName(FBXFileName);
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetShowDebugBound(false);
+			pObj->Transform()->SetGizmoObjExcept(false);
+			SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 6);
+		}
+	}
 
 
 	// TestFastForward
@@ -403,6 +355,10 @@ void CreateTestLevel()
 
 
 	//SpawnGameObject(pAnimTestObj, Vec3(0.f, 0.f, 0.f), 0.f);
+
+
+		
+	
 
 
 

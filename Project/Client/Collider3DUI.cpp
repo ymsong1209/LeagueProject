@@ -28,8 +28,16 @@ int Collider3DUI::render_update()
 	Vec3					vOffsetPos = GetTarget()->Collider3D()->GetOffsetPos();
 	Vec3					vOffsetScale = GetTarget()->Collider3D()->GetOffsetScale();
 	bool					bAbsolute = GetTarget()->Collider3D()->GetColliderAbsolute();
+	bool					bShowDebug = GetTarget()->Collider3D()->GetDrawCollision();
 
 	int						iCollisionCount = GetTarget()->Collider3D()->GetCollisionCount();  // Ãæµ¹ È½¼ö
+
+
+	ImGui::Text("ShowDebug");
+	ImGui::SameLine();
+	if (ImGui::Checkbox("##ShowDebugCollider3D", &bShowDebug)) {
+		GetTarget()->Collider3D()->SetDrawCollision(bShowDebug);
+	}
 
 	ImGui::Text("IsAbsolute");
 	ImGui::SameLine();

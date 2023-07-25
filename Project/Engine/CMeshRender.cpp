@@ -396,8 +396,9 @@ void CMeshRender::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType&
 
 void CMeshRender::LoadFromLevelJsonFile(const Value& _componentValue)
 {
-	/*CRenderComponent::LoadFromLevelJsonFile(_componentValue);
+	CRenderComponent::LoadFromLevelJsonFile(_componentValue);
 
+	/*
 	m_bIsUsingMovingVec = _componentValue["bIsUsingMovingVec"].GetBool();
 	
 	if (m_bIsUsingMovingVec)

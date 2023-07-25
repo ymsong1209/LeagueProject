@@ -70,13 +70,12 @@ void CPathFinder::FindNextPath()
 
 void CPathFinder::FindPathMousePicking()  //현재 카메라에서 레이를 가져오고, 맵콜리전과의 교차점을 endPos로 지정해서 FindPath 호출.(마우스 피킹 이동)
 {
-	vector<CGameObject*> LayerObj = CLevelMgr::GetInst()->GetCurLevel()->GetLayer(6)->GetParentObject();
-	CGameObject* LoLMap = nullptr;
-	if (!LayerObj.empty())
+	CGameObject* LoLMap = CLevelMgr::GetInst()->GetCurLevel()->FindObjectByName(L"LoLMapCollider");
+	/*if (!LayerObj.empty())
 	{
 		if (LayerObj[0] && !LayerObj[0]->IsDead())
 			LoLMap = LayerObj[0];
-	}
+	}*/
 
 	if (LoLMap != nullptr && !LoLMap->IsDead())  //맵 콜리전이 정상적으로 존재할경우만 호출
 	{
