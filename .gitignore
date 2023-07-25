@@ -11,7 +11,6 @@ Project/StaticLib/
 unity_*.cpp
 External/Include/Engine/*
 !External/Include/Engine/SimpleMath.inl
-External/Include/Script/*
 !External/Include/Script/.gitkeep
 **/imgui.ini
 OutputFile/bin_d/Client.exe
