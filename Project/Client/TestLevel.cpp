@@ -193,40 +193,139 @@ void CreateTestLevel()
 
 		SpawnGameObject(pObj, Vec3(0, 0, 0), 0);
 
-		//Ptr<CMeshData> pMeshData = nullptr;
-		//CGameObject* pObj = nullptr;
+
+		//-------------------------------넥서스-----------------------------------------
+		//넥서스는 0번머터리얼을 쓰면 1번 머터리얼에는 알파텍스쳐를 장착하고, 1번머터리얼을 쓰면 0번머터리얼에 알파 텍스쳐를 장착해줘야한다.
+		//-----터지는 넥서스쪽 보기 ------ 
+		//pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\nexus_destroyed_red_clear.png"));
+		//pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
+
+		//-----빙빙 도는 넥서스쪽 보기------ 
+		/*pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
+		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\nexus_red_clear.png"));*/
+		pMeshData = nullptr;
+		pObj = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\nexus.fbx");
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"blue_nexus");
+		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\nexus");
+		pObj->GetRenderComponent()->SetFrustumCheck(false);
+		pObj->Animator3D()->SetRepeat(true);
+		pObj->Animator3D()->Play(L"nexus\\sruap_order_idle.anm_skinned_mesh.001", true, 0.1f);
+		pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
+		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\sruap_ordernexus_tx_cm_clear.png"));
+		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+		SpawnGameObject(pObj, Vec3(229.7f, 15.9f, 241.5f), 0);
+
+		//------------------------------------------------------------------------------
+
+	
+		//억제기 평상시 애니메이션은 idle1 애니메이션임!! 
+		//억제기의 평상시에는 1번에 alphaTex 이미지를 넣어주고, 0번 머터리얼에 억제기 기본 머터리얼을 넣어주면됨(기본적으로 되어있어서 따로 세팅해줄 필요는 없음)
+		//억제기가 폭발할때는 0번머터리얼에 alphaTex 이미지를 넣어주고, 1번머터리얼에 억제기 전용 detroy텍스쳐를 입혀주면됨 (따로 세팅해줘야함)
+		pMeshData = nullptr;
+		pObj = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Inhibitor.fbx");
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"blue_Inhibitor");
+		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
+		pObj->GetRenderComponent()->SetFrustumCheck(false);
+		pObj->Animator3D()->SetRepeat(true);
+		pObj->Animator3D()->Play(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true, 0.1f);
+		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
+		pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(-45.48f), 0.f));
+		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+		SpawnGameObject(pObj, Vec3(537.71f, 14.2f, 546.9f), 0);
+
+		pMeshData = nullptr;
+		pObj = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Inhibitor.fbx");
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"blue_Inhibitor2");
+		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
+		pObj->GetRenderComponent()->SetFrustumCheck(false);
+		pObj->Animator3D()->SetRepeat(true);
+		pObj->Animator3D()->Play(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true, 0.1f);
+		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
+		pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(-89.48f), 0.f));
+		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+		SpawnGameObject(pObj, Vec3(169.86f, 14.2f, 527.02f), 0);
+
+		pMeshData = nullptr;
+		pObj = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Inhibitor.fbx");
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"blue_Inhibitor2");
+		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
+		pObj->GetRenderComponent()->SetFrustumCheck(false);
+		pObj->Animator3D()->SetRepeat(true);
+		pObj->Animator3D()->Play(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true, 0.1f);
+		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
+		pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(2.f), 0.f));
+		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+		SpawnGameObject(pObj, Vec3(634.97f, 14.2f, 183.08f), 0);
+
+		//----------RED-------------------------------
 
 		pMeshData = nullptr;
 		pObj = nullptr;
 		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\nexus.fbx");
 		pObj = pMeshData->Instantiate();
-		pObj->SetName(L"nexus");
-		//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
-		//pObj->GetRenderComponent()->SetFrustumCheck(false);
-		//pObj->AddComponent(new CPlayerScript);
-		//pObj->AddComponent(new CPathFinder);
-		//pObj->AddComponent(new CCollider3D);
-		//pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
-		//pObj->Collider3D()->SetAbsolute(true);
-		//pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
-		//pObj->Collider3D()->SetDrawCollision(false);
-		//pObj->Animator3D()->SetRepeat(true);
-		//pObj->Animator3D()->Play(L"Jinx\\Idle1_Base", true, 0.1f);
+		pObj->SetName(L"red_nexus");
+		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\nexus");
+		pObj->GetRenderComponent()->SetFrustumCheck(false);
+		pObj->Animator3D()->SetRepeat(true);
+		pObj->Animator3D()->Play(L"nexus\\sruap_order_idle.anm_skinned_mesh.001", true, 0.1f);
+		pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\nexus_Mat_Red.mtrl"), 1);
+		pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		pObj->Transform()->SetUseMouseOutline(true);
+		SpawnGameObject(pObj, Vec3(1952.174f, 15.26f, 1956.22f), 0);
 
-		//터지는 넥서스쪽 보기 - 
-		////넥서스는 0번머터리얼을 쓰면 1번 머터리얼에는 알파텍스쳐를 장착하고, 1번머터리얼을 쓰면 0번머터리얼에 알파 텍스쳐를 장착해줘야한다.
-		// 
-		//pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\nexus_destroyed_red_clear.png"));
-		//pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
+		pMeshData = nullptr;
+		pObj = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Inhibitor.fbx");
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"red_Inhibitor1");
+		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
+		pObj->GetRenderComponent()->SetFrustumCheck(false);
+		pObj->Animator3D()->SetRepeat(true);
+		pObj->Animator3D()->Play(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true, 0.1f);
+		pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\inhibitor_red_Mtrl.mtrl"), 0);
+		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
+		pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(0.f), XMConvertToRadians(-180.f)));
+		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+		SpawnGameObject(pObj, Vec3(1661.7f, 14.8f, 2013.9f), 0);
 
+		pMeshData = nullptr;
+		pObj = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Inhibitor.fbx");
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"red_Inhibitor2");
+		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
+		pObj->GetRenderComponent()->SetFrustumCheck(false);
+		pObj->Animator3D()->SetRepeat(true);
+		pObj->Animator3D()->Play(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true, 0.1f);
+		pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\inhibitor_red_Mtrl.mtrl"), 0);
+		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
+		pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(45.f), XMConvertToRadians(-180.f)));
+		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+		SpawnGameObject(pObj, Vec3(1711.f, 14.8f, 1721.f), 0);
 
-		//빙빙 도는 넥서스쪽 보기- 
-		//pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
-		//pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\nexus_red_clear.png"));
+		pMeshData = nullptr;
+		pObj = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Inhibitor.fbx");
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"red_Inhibitor3");
+		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
+		pObj->GetRenderComponent()->SetFrustumCheck(false);
+		pObj->Animator3D()->SetRepeat(true);
+		pObj->Animator3D()->Play(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true, 0.1f);
+		pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\inhibitor_red_Mtrl.mtrl"), 0);
+		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
+		pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(90.f), XMConvertToRadians(-180.f)));
+		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+		SpawnGameObject(pObj, Vec3(2006.9f, 14.8f, 1670.1f), 0);
 
-		SpawnGameObject(pObj, Vec3(0, 0, 0), 0);
 	}
 
 
@@ -245,11 +344,13 @@ void CreateTestLevel()
 			wstring FBXFileName = L"land";
 			FBXFileName += num;
 
-
 			pMeshData = CResMgr::GetInst()->LoadFBX(FBXFilePath);
 			pObj = pMeshData->Instantiate();
 			pObj->SetName(FBXFileName);
-			pObj->GetRenderComponent()->SetFrustumCheck(true);
+
+			//맵이 다 (0,0,0) 기준 컬링인거같아 불편해서 잠시 끕니다.
+			pObj->GetRenderComponent()->SetFrustumCheck(false);
+
 			pObj->GetRenderComponent()->SetShowDebugBound(false);
 			pObj->Transform()->SetGizmoObjExcept(false);
 			SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 6);
