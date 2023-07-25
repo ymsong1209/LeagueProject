@@ -88,6 +88,11 @@ public:
     void Play(const wstring& _strName, bool _blend = false, float _blendtime = 0.f);
 
 
+    void PlayOnce(const wstring& _strName, bool _blend = false, float _blendtime = 0.f);
+
+    void PlayLoop(const wstring& _strName, bool _blend = false, bool _Repeatblend = false, float _blendtime = 0.f);
+
+
     void Pause();
     void Reset();
     void Stop();

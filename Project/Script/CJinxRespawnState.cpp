@@ -14,11 +14,13 @@ CJinxRespawnState::~CJinxRespawnState()
 
 void CJinxRespawnState::tick()
 {
+	CChampionRespawnState::tick();
 }
 
 void CJinxRespawnState::Enter()
 {
-	GetOwner()->Animator3D()->Play(L"Jinx\\Respawn", true, 0.1f);
+	//GetOwner()->Animator3D()->Play(L"Jinx\\Respawn", true, 0.1f);
+	GetOwner()->Animator3D()->PlayOnce(L"Jinx\\Respawn");
 	CChampionRespawnState::Enter();
 }
 

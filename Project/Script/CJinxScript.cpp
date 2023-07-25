@@ -17,7 +17,6 @@ CJinxScript::CJinxScript()
 
 CJinxScript::~CJinxScript()
 {
-
 }
 
 void CJinxScript::begin()

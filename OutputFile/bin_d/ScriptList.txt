@@ -1,9 +1,6 @@
 CCameraMoveScript
 CChampionScript
-CGravityScript
 CInGameCameraScript
 CJinxScript
-CMissileScript
-CMonsterScript
 CPlayerScript
 CUnitScript

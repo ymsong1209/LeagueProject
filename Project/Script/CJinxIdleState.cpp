@@ -19,7 +19,8 @@ void CJinxIdleState::tick()
 
 void CJinxIdleState::Enter()
 {
-	GetOwner()->Animator3D()->Play(L"Jinx\\Idle1_Base", true, 0.1f);
+	//GetOwner()->Animator3D()->Play(L"Jinx\\Idle1_Base", true, 0.1f);
+	GetOwner()->Animator3D()->PlayLoop(L"Jinx\\Idle1_Base", true, true, 0.1f);
 	CChampionIdleState::Enter();
 }
 

@@ -18,7 +18,7 @@ CChampionScript::CChampionScript(UINT ScriptType)
 	, m_fRespawnTime(5)
 	, m_eCurCC(NONE)
 	, m_eRestraint(DEFAULT)
-	, m_Skill(new CSkill* [4]{ nullptr, nullptr, nullptr, nullptr })
+	, m_Skill{}
 {
 	m_fMaxHP = 5;
 }
@@ -30,12 +30,7 @@ CChampionScript::CChampionScript()
 
 CChampionScript::~CChampionScript()
 {
-	for (int i = 0; i < 4; i++)
-	{
-		if (m_Skill[i] != nullptr)
-			delete m_Skill[i];
-	}
-
+	Safe_Del_Array(m_Skill);
 }
 
 void CChampionScript::begin()

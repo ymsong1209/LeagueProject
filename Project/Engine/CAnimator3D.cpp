@@ -19,7 +19,7 @@ CAnimator3D::CAnimator3D()
 	: m_mapAnim()
 	, m_pVecBones(nullptr)
 	, m_pCurAnim(nullptr)
-	, m_bRepeat(false)
+	, m_bRepeat(true)
 	, m_pBoneFinalMatBuffer(nullptr)
 	, m_bBlend(false)
 	, m_bRepeatBlend(false)
@@ -196,7 +196,6 @@ void CAnimator3D::Play(const wstring& _strName, bool _bRepeat, bool _RepeatBlend
 	if (_blend) {
 		//현재 애니메이션에서 다른 애니메이션으로 blend하면서 들어가기
 		if (GetCurAnim()) {
-			m_pCurAnim->Reset();
 			m_bBlend = true;
 			m_fCurBlendTime = 0.f;
 			m_fMaxBlendTime = _blendtime;
@@ -205,7 +204,6 @@ void CAnimator3D::Play(const wstring& _strName, bool _bRepeat, bool _RepeatBlend
 		//현재 애니메이션이 없을 경우에는 blend 옵션 없이 그대로 재생
 		else {
 			m_pCurAnim = pAnim;
-			m_pCurAnim->Reset();
 			m_bRepeat = _bRepeat;
 			m_pCurAnim->Play();
 		}
@@ -227,7 +225,8 @@ void CAnimator3D::Play(const wstring& _strName, bool _blend, float _blendtime)
 	//현재 애니메이션에서 다른 애니메이션으로 blend하면서 들어가기
 	if (_blend) {
 		//현재 애니메이션이 있음
-		if (GetCurAnim()) {
+		if (GetCurAnim()) 
+		{
 			m_pCurAnim->Reset();
 			m_bBlend = true;
 			m_fCurBlendTime = 0.f;
@@ -256,6 +255,95 @@ void CAnimator3D::Play(const wstring& _strName, bool _blend, float _blendtime)
 		m_pCurAnim->Play();
 	}
 	m_bRepeatBlend = false;
+}
+
+void CAnimator3D::PlayOnce(const wstring& _strName, bool _blend, float _blendtime)
+{
+	// 해당 이름을 가진 Anim 없을 시 Assert
+	CAnim3D* pAnim = FindAnim(_strName);
+	assert(pAnim);
+
+	// 단일 재생 전용 함수
+	m_bRepeat = false;
+	m_bRepeatBlend = false;
+
+	//현재 애니메이션에서 다른 애니메이션으로 blend하면서 들어가기
+	if (_blend) 
+	{
+		//현재 애니메이션이 있음
+		if (GetCurAnim()) 
+		{
+			//m_pCurAnim->Reset();
+			m_bBlend = true;
+			m_fCurBlendTime = 0.f;
+			m_fMaxBlendTime = _blendtime;
+			m_iBlendStartFrm = GetCurAnim()->GetCurFrameIdx();
+			m_pCurAnim = pAnim;
+			//m_pCurAnim->Reset();
+			m_pCurAnim->Play();
+		}
+		//현재 애니메이션이 없을 경우에는 blend 옵션 없이 그대로 재생
+		else 
+		{
+			m_pCurAnim = pAnim;
+			m_pCurAnim->Reset();
+			m_pCurAnim->Play();
+		}
+	}
+	//blend없이 바로 재생
+	else 
+	{
+		m_bBlend = false;
+
+		//현재 애니메이션 존재할 경우 리셋
+		if (m_pCurAnim) 
+		{
+			m_pCurAnim->Reset();
+		}
+
+		m_pCurAnim = pAnim;
+		m_pCurAnim->Reset();
+		m_pCurAnim->Play();
+	}
+}
+
+void CAnimator3D::PlayLoop(const wstring& _strName, bool _blend, bool _Repeatblend, float _blendtime)
+{
+	// 해당 이름을 가진 Anim 없을 시 Assert
+	CAnim3D* pAnim = FindAnim(_strName);
+	assert(pAnim);
+
+	// 반복재생 전용 함수
+	m_bRepeat = true;
+
+	m_bRepeatBlend = _Repeatblend;
+
+	if (_blend) 
+	{
+		//현재 애니메이션에서 다른 애니메이션으로 blend하면서 들어가기
+		if (GetCurAnim()) 
+		{
+			m_bBlend = true;
+			m_fCurBlendTime = 0.f;
+			m_fMaxBlendTime = _blendtime;
+			m_iBlendStartFrm = GetCurAnim()->GetCurFrameIdx();
+			m_pCurAnim = pAnim;
+			m_pCurAnim->Play();
+		}
+		//현재 애니메이션이 없을 경우에는 blend 옵션 없이 그대로 재생
+		else 
+		{
+			m_pCurAnim = pAnim;
+			m_pCurAnim->Play();
+		}
+	}
+	else 
+	{
+		m_bBlend = false;
+		m_pCurAnim = pAnim;
+		m_pCurAnim->Reset();
+		m_pCurAnim->Play();
+	}
 }
 
 

@@ -60,7 +60,7 @@ protected:
     CC                      m_eCurCC;
     RESTRAINT               m_eRestraint;
 
-    CSkill**                m_Skill;
+    CSkill*                 m_Skill[4];
     SUMMONERS_SPELL*        m_EquippedSpell;    // 장착 소환사 주문(2칸 배열)
 
 

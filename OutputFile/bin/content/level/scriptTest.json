@@ -10,9 +10,9 @@
                         {
                             "TRANSFORM": 0,
                             "vRelativePos": {
-                                "x": 1386.0,
+                                "x": 180.0,
                                 "y": 498.0,
-                                "z": -9.0
+                                "z": -150.0
                             },
                             "vRelativeScale": {
                                 "x": 1.0,
@@ -21,7 +21,7 @@
                             },
                             "vRelativeRot": {
                                 "x": 1.0471975803375244,
-                                "y": 0.0,
+                                "y": -0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
@@ -242,7 +242,7 @@
                             "ANIMATOR3D": 4,
                             "IsEmpty": false,
                             "MeshDataRelativePath": "meshdata\\Jinx.mdat",
-                            "bRepeat": false,
+                            "bRepeat": true,
                             "mapAnim": [
                                 {
                                     "Anim3DRelativePath": "animation\\Jinx\\Death_model.002.anim3d"
