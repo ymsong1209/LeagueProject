@@ -8,9 +8,9 @@
 
 struct tMtrlSet
 {
-    Ptr<CMaterial>  pSharedMtrl;    // °øÀ¯ ¸ŞÅ×¸®¾ó
-    Ptr<CMaterial>  pDynamicMtrl;   // °øÀ¯ ¸ŞÅ×¸®¾óÀÇ º¹»çº»    
-    Ptr<CMaterial>  pCurMtrl;       // ÇöÀç »ç¿ë ÇÒ ¸ŞÅ×¸®¾ó
+    Ptr<CMaterial>  pSharedMtrl;    // ê³µìœ  ë©”í…Œë¦¬ì–¼
+    Ptr<CMaterial>  pDynamicMtrl;   // ê³µìœ  ë©”í…Œë¦¬ì–¼ì˜ ë³µì‚¬ë³¸    
+    Ptr<CMaterial>  pCurMtrl;       // í˜„ì¬ ì‚¬ìš© í•  ë©”í…Œë¦¬ì–¼
 };
 
 
@@ -19,13 +19,17 @@ class CRenderComponent :
 {
 private:
     Ptr<CMesh>              m_pMesh;
-    vector<tMtrlSet>        m_vecMtrls;     // ÀçÁú    
+    vector<tMtrlSet>        m_vecMtrls;             // ì¬ì§ˆ    
 
+    float                   m_fBounding;            // FrustumCheck ìš©ë„ ê²½ê³„ë²”ìœ„
+    bool                    m_bFrustumCheck;        // ì ˆë‘ì²´ ì»¬ë§ ì²´í¬ ìœ ë¬´
+    bool                    m_bDynamicShadow;       // ë™ì  ê·¸ë¦¼ì ì‚¬ìš© ìœ ë¬´
+    bool                    m_bShowDebugBoundShape; /// bounding ë²”ìœ„ ì„  ë³´ê¸° ìœ ë¬´
 
-    float                   m_fBounding;        // FrustumCheck ¿ëµµ °æ°è¹üÀ§
-    bool                    m_bFrustumCheck;    // ÀıµÎÃ¼ ÄÃ¸µ Ã¼Å© À¯¹«
-    bool                    m_bDynamicShadow;   // µ¿Àû ±×¸²ÀÚ »ç¿ë À¯¹«
-    bool                    m_bShowDebugBoundShape; /// bounding ¹üÀ§ ¼± º¸±â À¯¹«
+    bool                    m_bRaySightCulling;     // Ray ê´‘ì›ì— ì˜í•œ Culling ì²´í¬
+
+    bool                    m_bUseBoundingOffset;   // BoundingBox Offset ì‚¬ìš©
+    Vec3                    m_vBoundingBoxOffset;   // BoundingBox Offset
 
 
 public:
@@ -51,6 +55,15 @@ public:
     bool IsShowDebugBound() { return m_bShowDebugBoundShape; }
     void SetShowDebugBound(bool _bShow) { m_bShowDebugBoundShape = _bShow; }
 
+    void SetRaySightCulling(bool _bUse) { m_bRaySightCulling = _bUse; }
+    bool IsUsingRaySightCulling() { return m_bRaySightCulling; }
+
+    //trueë¡œ ì„¤ì •ë˜ë©´ Offset ìœ„ì¹˜ì— BoundingBoxê°€ ìƒê¹€
+    void SetBoundingBoxOffsetUse(bool _Use) { m_bUseBoundingOffset = _Use; }
+    bool GetBoundingBoxOffsetUse() { return m_bUseBoundingOffset; }
+
+    void SetBoundingBoxOffset(Vec3 _offset) { m_vBoundingBoxOffset = _offset; }
+    Vec3 GetBoundingBoxOffset() { return m_vBoundingBoxOffset; }
 
     bool IsDynamicMtrlEmpty(UINT _idx);
     void ClearDynamicMtrl(UINT _idx);

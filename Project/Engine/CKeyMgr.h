@@ -16,6 +16,7 @@ enum class KEY
 	TAB,
 
 	LBTN,
+	MBTN,
 	RBTN,
 
 	F1,

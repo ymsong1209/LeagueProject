@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "CCollider3D.h"
 #include "CScript.h"
 #include "components.h"
@@ -9,6 +9,8 @@ CCollider3D::CCollider3D()
 	, m_bAbsolute(false)
 	, m_iCollisionCount(0)
 	, m_bIsCollidedFromRay(false)
+	, m_bIsWall(false)
+	, m_bDrawCollision(true)
 {
 }
 
@@ -19,6 +21,8 @@ CCollider3D::CCollider3D(const CCollider3D& _other)
 	, m_bAbsolute(_other.m_bAbsolute)
 	, m_Shape(_other.m_Shape)
 	, m_bIsCollidedFromRay(false)
+	, m_bIsWall(_other.m_bIsWall)
+	, m_bDrawCollision(_other.m_bDrawCollision)
 {
 
 }
@@ -30,7 +34,7 @@ CCollider3D::~CCollider3D()
 
 void CCollider3D::finaltick()
 {
-	// Ãæµ¹ È¸¼ö°¡ À½¼öÀÎ °æ¿ì
+	// ì¶©ëŒ íšŸìˆ˜ê°€ ìŒìˆ˜ì¸ ê²½ìš°
 	assert(0 <= m_iCollisionCount);
 	m_matColliderScale = XMMatrixIdentity();
 	m_matColliderScale = XMMatrixScaling(m_vOffsetScale.x, m_vOffsetScale.y, m_vOffsetScale.z);
@@ -40,45 +44,48 @@ void CCollider3D::finaltick()
 
 	m_matCollider3D = XMMatrixScaling(m_vOffsetScale.x, m_vOffsetScale.y, m_vOffsetScale.z);
 	m_matCollider3D *= XMMatrixTranslation(m_vOffsetPos.x, m_vOffsetPos.y, m_vOffsetPos.z);
-	//Å©±â X È¸Àü X ÀÌµ¿ (È¸ÀüÀº ¾ÈÇÔ)
-	const Matrix& matWorld = Transform()->GetWorldMat(); //ÃÖÁ¾ ¿ùµå Çà·Ä
+	// í¬ê¸° X íšŒì „ X ì´ë™ ( íšŒì „ì€ ì•ˆí•¨)
+	const Matrix& matWorld = Transform()->GetWorldMat(); // ìµœì¢… ì›”ë“œ í–‰ë ¬
 
 	if (m_bAbsolute)
 	{
-		//ºÎ¸ğÀÇ Scale¾ø¾Ö±â
+		// ë¶€ëª¨ì˜ Scale ì—†ì• ê¸°
 		Matrix matParentScaleInv = XMMatrixInverse(nullptr, Transform()->GetWorldScaleMat());
-		//ColliderÀÇ Offset * ºÎ¸ğ Å©±âÀÇ ¿ªÇà·Ä * ºÎ¸ğ
+		// Colliderì˜ Offset * ë¶€ëª¨ í¬ê¸°ì˜ ì—­í–‰ë ¬ * ë¶€ëª¨
 		m_matCollider3D = m_matCollider3D * matParentScaleInv * matWorld;
 
 	}
 	else
 	{
-		// Ãæµ¹Ã¼ ¿ùµå * ¿ÀºêÁ§Æ® ¿ùµå
+		// ì¶©ëŒì²´ ì›”ë“œ * ì˜¤ë¸Œì íŠ¸ ì›”ë“œ
 		m_matCollider3D *= matWorld;
 
-		// Ãæµ¹Ã¼ scale update
+		// ì¶©ëŒì²´ scale update
 		m_matColliderScale *= Transform()->GetWorldScaleMat();
 		m_matColliderPos *= Transform()->GetWorldPosMat();
 	}
 
 
-	// DebugShape ¿äÃ»
+	// DeabugShape ìš”ì²­
 	Vec4 vColor = Vec4(0.f, 1.f, 0.f, 1.f);
 	if (0 < m_iCollisionCount)
 		vColor = Vec4(1.f, 0.f, 0.f, 1.f);
 
-	// ¸¶Áö¸·¿¡ 0.f·Î ¼³Á¤ÇØ GameObject°¡ »ç¶óÁö¸é Colliderµµ »ç¶óÁø´Ù.
-	if (COLLIDER3D_TYPE::SPHERE == m_Shape)
-		DrawDebugSphere(m_matCollider3D, vColor, 0.f);
-	else
-		DrawDebugCube(m_matCollider3D, vColor, 0.f);
+	// ë§ˆì§€ë§‰ì— 0.fë¡œ ì„¤ì •í•´ GameObjectê°€ ì‚¬ë¼ì§€ë©´ Colliderë„ ì‚¬ë¼ì§„ë‹¤.
+	if (m_bDrawCollision)
+	{
+		if (COLLIDER3D_TYPE::SPHERE == m_Shape)
+			DrawDebugSphere(m_matCollider3D, vColor, 0.f);
+		else
+			DrawDebugCube(m_matCollider3D, vColor, 0.f);
+	}
 }
 
 void CCollider3D::BeginOverlap(CCollider3D* _Other)
 {
 	m_iCollisionCount += 1;
 
-	// Script È£Ãâ
+	// Script í˜¸ì¶œ
 	const vector<CScript*>& vecScript = GetOwner()->GetScripts();
 	for (size_t i = 0; i < vecScript.size(); ++i)
 	{
@@ -88,7 +95,7 @@ void CCollider3D::BeginOverlap(CCollider3D* _Other)
 
 void CCollider3D::OnOverlap(CCollider3D* _Other)
 {
-	// Script È£Ãâ
+	// Script í˜¸ì¶œ
 	const vector<CScript*>& vecScript = GetOwner()->GetScripts();
 	for (size_t i = 0; i < vecScript.size(); ++i)
 	{
@@ -100,7 +107,7 @@ void CCollider3D::EndOverlap(CCollider3D* _Other)
 {
 	m_iCollisionCount -= 1;
 
-	// Script È£Ãâ
+	// Script í˜¸ì¶œ
 	const vector<CScript*>& vecScript = GetOwner()->GetScripts();
 	for (size_t i = 0; i < vecScript.size(); ++i)
 	{
@@ -132,6 +139,8 @@ void CCollider3D::SaveToLevelFile(FILE* _File)
 	fwrite(&m_vOffsetScale, sizeof(Vec3), 1, _File);
 	fwrite(&m_bAbsolute, sizeof(bool), 1, _File);
 	fwrite(&m_Shape, sizeof(UINT), 1, _File);
+	fwrite(&m_bIsWall, sizeof(bool), 1, _File);
+	fwrite(&m_bDrawCollision, sizeof(bool), 1, _File);
 }
 
 void CCollider3D::LoadFromLevelFile(FILE* _File)
@@ -140,6 +149,8 @@ void CCollider3D::LoadFromLevelFile(FILE* _File)
 	fread(&m_vOffsetScale, sizeof(Vec3), 1, _File);
 	fread(&m_bAbsolute, sizeof(bool), 1, _File);
 	fread(&m_Shape, sizeof(UINT), 1, _File);
+	fread(&m_bIsWall, sizeof(bool), 1, _File);
+	fread(&m_bDrawCollision, sizeof(bool), 1, _File);
 }
 
 void CCollider3D::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
@@ -148,6 +159,8 @@ void CCollider3D::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType&
 	_objValue.AddMember("vOffsetScale", SaveVec3Json(m_vOffsetScale, allocator), allocator);
 	_objValue.AddMember("bAbsolute", m_bAbsolute, allocator);
 	_objValue.AddMember("Shape", (UINT)m_Shape, allocator);
+	_objValue.AddMember("bWall", m_bIsWall, allocator);
+	_objValue.AddMember("DrawCollision", m_bDrawCollision, allocator);
 }
 
 void CCollider3D::LoadFromLevelJsonFile(const Value& _componentValue)
@@ -156,4 +169,6 @@ void CCollider3D::LoadFromLevelJsonFile(const Value& _componentValue)
 	m_vOffsetScale = LoadVec3Json(_componentValue["vOffsetScale"]);
 	m_bAbsolute = _componentValue["bAbsolute"].GetBool();
 	m_Shape = (COLLIDER3D_TYPE)_componentValue["Shape"].GetUint();
+	m_bIsWall = _componentValue["bWall"].GetBool();
+	m_bDrawCollision = _componentValue["DrawCollision"].GetBool();
 }

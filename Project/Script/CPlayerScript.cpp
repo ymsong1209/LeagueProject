@@ -4,6 +4,7 @@
 #include <Engine\CMeshRender.h>
 #include <Engine\CMaterial.h>
 #include <Engine\CPathFinder.h>
+#include <Engine\CRenderMgr.h>
 
 #include <fstream>
 
@@ -32,22 +33,16 @@ void CPlayerScript::tick()
 	CLevelMgr::GetInst()->GetCurLevel()->FindObjectByName(L"Test");
 
 
-	if (KEY_TAP(KEY::LBTN))
+	if (KEY_TAP(KEY::RBTN) && !CRenderMgr::GetInst()->GetIsImGuiHovered())
 	{
 		GetOwner()->PathFinder()->FindPathMousePicking();
-		//���콺 ��ŷ������ ��ã�� ��� ������ �˷���! �̵��� ���� �ڵ忡�� ����!
 	}
 
 	if (GetOwner()->PathFinder() != nullptr)
-		PathFindMove(90.f,true); //���������� �̵��ϵ��� Ʈ�������� ���Ž����ִ� ���� ������!!Script�ʿ� ����.
+		PathFindMove(90.f,true); 
 	
 	Vec3 Pos = GetOwner()->Transform()->GetRelativePos();
-	//if (KEY_TAP(KEY::Q))
-	//{
-	//	Pos.z += DT * 80;
-	//	GetOwner()->Transform()->SetRelativePos(Pos);
-	//}
-	// send info packet to Server
+
 	
 	if(Pos == m_vPrevPos)
 		CurState = PLAYER_STATE::IDLE;

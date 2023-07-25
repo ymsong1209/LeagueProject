@@ -28,14 +28,24 @@ int Collider3DUI::render_update()
 	Vec3					vOffsetPos = GetTarget()->Collider3D()->GetOffsetPos();
 	Vec3					vOffsetScale = GetTarget()->Collider3D()->GetOffsetScale();
 	bool					bAbsolute = GetTarget()->Collider3D()->GetColliderAbsolute();
+	bool					bShowDebug = GetTarget()->Collider3D()->GetDrawCollision();
 
 	int						iCollisionCount = GetTarget()->Collider3D()->GetCollisionCount();  // Ãæµ¹ È½¼ö
+
+
+	ImGui::Text("ShowDebug");
+	ImGui::SameLine();
+	if (ImGui::Checkbox("##ShowDebugCollider3D", &bShowDebug)) {
+		GetTarget()->Collider3D()->SetDrawCollision(bShowDebug);
+	}
 
 	ImGui::Text("IsAbsolute");
 	ImGui::SameLine();
 	if (ImGui::Checkbox("##Collider3DAbsolute", &bAbsolute)) {
 		GetTarget()->Collider3D()->SetAbsolute(bAbsolute);
 	}
+
+	SetWall();
 
 	ImGui::Text("OffsetPos");
 	ImGui::SameLine();
@@ -63,6 +73,15 @@ int Collider3DUI::render_update()
 	ImGui::Text("CollisionCount : %d", iCollisionCount);
 
 	return TRUE;
+}
+
+void Collider3DUI::SetWall()
+{
+	bool iswall = GetTarget()->Collider3D()->IsWall();
+	ImGui::Text("IsWall : "); ImGui::SameLine();
+	if (ImGui::Checkbox("##IsWallCollider3D", &iswall)) {
+		GetTarget()->Collider3D()->SetIsWall(iswall);
+	}
 }
 
 void Collider3DUI::ChooseColliderType()

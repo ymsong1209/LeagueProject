@@ -51,8 +51,12 @@ int PrefabUI::render_update()
 	Matrix CamWorld = m_pEditorCam->Transform()->GetWorldMat();
 
 	//EditorCamera의 Position에 스폰됩니다.
-	Vec3 FinalPos = XMVector3TransformCoord(RayPos, CamWorld);
-	m_vConvertedMousePos = Vec4(FinalPos.x, FinalPos.y, FinalPos.z, 1.f);
+	CGameObject* LoLMap = CLevelMgr::GetInst()->GetCurLevel()->FindObjectByName(L"LoLMapCollider");
+	tRay ray = m_pEditorCam->GetRay();
+	IntersectResult result = m_pEditorCam->IsCollidingBtwRayRect(ray, LoLMap);
+	Vec3 EndPos = result.vCrossPoint;
+	
+	m_vConvertedMousePos = Vec4(EndPos.x, EndPos.y, EndPos.z, 1.f);
 
 	CPrefab* pPrefab = (CPrefab*)GetTargetRes().Get();
 	CGameObject* PrefabObject = pPrefab->GetProtoObject();
@@ -135,7 +139,10 @@ void PrefabUI::SpawnPrefab()
 		}
 
 		CGameObject* PrefabObject = pPrefab->Instantiate();
-		Vec3 pos = Vec3(m_vConvertedMousePos.x, m_vConvertedMousePos.y, m_vConvertedMousePos.z);
+		Vec3 Scale = PrefabObject->Transform()->GetRelativeScale();
+		Vec3 pos = Vec3(m_vConvertedMousePos.x, m_vConvertedMousePos.y + Scale.y/2.f, m_vConvertedMousePos.z);
+		
+
 		if (m_bIsTransformAbsolute) {
 			PrefabObject->Transform()->SetAbsolute(true);
 		}

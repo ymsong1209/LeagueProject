@@ -4,7 +4,7 @@
 
 class CGameObject;
 class CLevel;
-
+struct ColliderStruct;
 
 class CCamera :
     public CComponent
@@ -36,18 +36,26 @@ private:
     vector<CGameObject*>    m_vecDecal;
     vector<CGameObject*>    m_vecOpaque;
     vector<CGameObject*>    m_vecMask;
-    vector<CGameObject*>    m_vecTransparent;    
+    vector<CGameObject*>    m_vecTransparent;
     vector<CGameObject*>    m_vecUI;
     vector<CGameObject*>    m_vecPost;
 
     vector<CGameObject*>    m_vecDynamicShadow;     // 동적 그림자 물체
+   
 
-    float                   m_LayMinDistance;  // 오브젝트가 여러개 겹쳐있을때 마우스 클릭하는 것을 대비해서 오브젝트들중에 깊이가(길이) 가장 작은
-    //오브젝트의 길이값을 기억해두고 그 오브젝트를 최종 선택오브젝트로 세팅
+    vector<CGameObject*>    m_vecContour;
+
+    float                   m_LayMinDistance;   // 오브젝트가 여러개 겹쳐있을때 마우스 클릭하는 것을 대비해서 오브젝트들중에 깊이가(길이) 가장 작은
+                                                //오브젝트의 길이값을 기억해두고 그 오브젝트를 최종 선택오브젝트로 세팅 
 
     bool                    m_bViewGizmoBounding; //기즈모 클릭범위(바운딩콜리전) 를 보여줘야하는경우 true, 안보여줘도 되는경우 false
-    
-    int        m_iCameraMoveMode; // 0: 디폴트 모드 (기즈모 오브젝트 클릭가능 + 카메라 움직임가능) 1: 카메라 전용 모드 (카메라만 움직일수있음) 2: 오브젝트 전용모드 (오브젝트만 움직일수있음)
+
+    int        m_isGizmoEditMode; // 0: 디폴트 모드 (기즈모x) 1: 에디트 모드 (기즈모o)  : 모드가 추가될수도 있으므로, bool대신 int로함
+
+    float       m_fFov; //fov값
+
+   
+
 
 public:
     void SetProjType(PROJ_TYPE _Type) { m_ProjType = _Type; }
@@ -84,11 +92,15 @@ public:
     bool GetViewGizmoBounding() { return m_bViewGizmoBounding; }
     void GizmoClickCheck(CGameObject* _CheckTargetObj, CLevel* _CurLevel);
 
-
     bool RayIntersectsSphere(Vec3 _SphereTrans, float _SphereRadius);
 
-    void SetCameraMoveMode(int _CameraMove) { m_iCameraMoveMode = _CameraMove; }
-    int GetCameraMoveMode() { return m_iCameraMoveMode; }
+    void SetIsGizmoEditMode(int _Mode) { m_isGizmoEditMode = _Mode; }
+    int GetIsGizmoEditMode() { return m_isGizmoEditMode; }
+
+    bool OutlineCheck(CGameObject* _Obj);
+
+    float GetCameraFov() { return m_fFov; }
+    void SetCameraFov(float _Fov) { m_fFov = _Fov; }
 
 public:
     void SortObject();
@@ -101,10 +113,12 @@ public:
     virtual void finaltick() override;
 
 protected:
-    void CalRay();  // 마우스 방향으로 광선 연산
-
-    void CollideRay(); // Rect 충돌과 Cube충돌 진행
-
+    // 마우스 방향으로 광선 연산
+    void CalRay();  
+    // Rect 충돌과 Cube충돌 진행
+    void CollideRay(); 
+    //전장의 안개용; Ray를 쏘는 Object랑 현재 Object 사이에 box있는지 판별
+    bool CheckRayCollideBox(CGameObject* _CurObject); 
 
 
 public:
@@ -112,10 +126,20 @@ public:
     IntersectResult IsCollidingBtwRayCube(tRay& _ray, CGameObject* _Object);
     IntersectResult IntersectsLay(Vec3* _vertices, tRay _ray);
 
+    IntersectResult IntersecrRayFog(Vec3 _Vertices0, Vec3 _Vertices1, Vec3 _Vertices2, tRay _Ray);
+
+
+    bool IsCollidingBtwRayWall(Vec2& RayObjPos, Vec2& _CollideObjPos, float& _Raidus, float& _RayObjRadius, ColliderStruct& _ColliderData);
 
 private:
     void clear();
     void render_deferred();
+
+    void render_Outline();
+    void render_DefaultContourPaint();
+    void render_ContourPaint();
+    void render_contour();
+
     void render_decal();
 
     void render_merge();
@@ -137,7 +161,7 @@ private:
     virtual void LoadFromLevelJsonFile(const Value& _componentValue)override;
 
     CLONE(CCamera);
-public:    
+public:
     CCamera();
     CCamera(const CCamera& _Other);
     ~CCamera();

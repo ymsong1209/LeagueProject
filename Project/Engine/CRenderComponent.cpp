@@ -11,6 +11,9 @@ CRenderComponent::CRenderComponent(COMPONENT_TYPE _type)
 	, m_bFrustumCheck(true)
 	, m_bDynamicShadow(false)
 	, m_bShowDebugBoundShape(false)
+	, m_bRaySightCulling(false)
+	, m_bUseBoundingOffset(false)
+	, m_vBoundingBoxOffset(Vec3(0.f, 0.f, 0.f))
 {
 }
 
@@ -22,6 +25,9 @@ CRenderComponent::CRenderComponent(const CRenderComponent& _other)
 	, m_bFrustumCheck(_other.m_bFrustumCheck)
 	, m_bDynamicShadow(_other.m_bDynamicShadow)
 	, m_bShowDebugBoundShape(_other.m_bShowDebugBoundShape)
+	, m_bRaySightCulling(_other.m_bRaySightCulling)
+	, m_bUseBoundingOffset(_other.m_bUseBoundingOffset)
+	, m_vBoundingBoxOffset(_other.m_vBoundingBoxOffset)
 {
 
 }
@@ -196,6 +202,10 @@ void CRenderComponent::SaveToLevelFile(FILE* _File)
 	fwrite(&m_fBounding, sizeof(float), 1, _File);
 	fwrite(&m_bFrustumCheck, sizeof(bool), 1, _File);
 	fwrite(&m_bDynamicShadow, sizeof(bool), 1, _File);
+	fwrite(&m_bShowDebugBoundShape, sizeof(bool), 1, _File);
+	fwrite(&m_bRaySightCulling, sizeof(bool), 1, _File);
+	fwrite(&m_bUseBoundingOffset, sizeof(bool), 1, _File);
+	fwrite(&m_vBoundingBoxOffset, sizeof(Vec3), 1, _File);
 
 
 	bool IsDynamicMtrlExist = false;
@@ -257,7 +267,10 @@ void CRenderComponent::LoadFromLevelFile(FILE* _File)
 	fread(&m_fBounding, sizeof(float), 1, _File);
 	fread(&m_bFrustumCheck, sizeof(bool), 1, _File);
 	fread(&m_bDynamicShadow, sizeof(bool), 1, _File);
-
+	fread(&m_bShowDebugBoundShape, sizeof(bool), 1, _File);
+	fread(&m_bRaySightCulling, sizeof(bool), 1, _File);
+	fread(&m_bUseBoundingOffset, sizeof(bool), 1, _File);
+	fread(&m_vBoundingBoxOffset, sizeof(Vec3), 1, _File);
 	
 	// 동적 재질에 대한 정보를 가져와야 되는지 확인
 	for (UINT i = 0; i < iMtrlCount; ++i)
@@ -303,6 +316,9 @@ void CRenderComponent::SaveToLevelJsonFile(Value& _objValue, Document::Allocator
 	_objValue.AddMember("bFrustumCheck", m_bFrustumCheck, allocator);
 	_objValue.AddMember("bDynamicShadow", m_bDynamicShadow, allocator);
 	_objValue.AddMember("bShowDebugBoundShape" , m_bShowDebugBoundShape, allocator);
+	_objValue.AddMember("bRaySightCulling", m_bRaySightCulling, allocator);
+	_objValue.AddMember("bUseBoundingOffset", m_bUseBoundingOffset, allocator);
+	_objValue.AddMember("vBoundingBoxOffset", SaveVec3Json(m_vBoundingBoxOffset, allocator), allocator);
 
 	UINT iMtrlCount = GetMtrlCount();
 	_objValue.AddMember("iMtrlCount", iMtrlCount, allocator);
@@ -374,6 +390,9 @@ void CRenderComponent::LoadFromLevelJsonFile(const Value& _componentValue)
 	m_bFrustumCheck = _componentValue["bFrustumCheck"].GetBool();
 	m_bDynamicShadow = _componentValue["bDynamicShadow"].GetBool();
 	m_bShowDebugBoundShape = _componentValue["bShowDebugBoundShape"].GetBool();
+	m_bRaySightCulling = _componentValue["bRaySightCulling"].GetBool();
+	m_bUseBoundingOffset = _componentValue["bUseBoundingOffset"].GetBool();
+	m_vBoundingBoxOffset = LoadVec3Json(_componentValue["vBoundingBoxOffset"]);
 
 	UINT iMtrlCount = _componentValue["iMtrlCount"].GetUint();
 	m_vecMtrls.resize(iMtrlCount);

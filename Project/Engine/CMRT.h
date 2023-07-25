@@ -24,6 +24,16 @@ public:
     void OMSet();
     void Clear();
 
+    UINT GetRTCount() { return m_RTCount; }
+
+    Ptr<CTexture> GetRTAtIndex(int index) const 
+    {
+        if (index < 0 || index >= 8) 
+            return nullptr;
+
+        return m_RT[index];
+    }
+
     CLONE_DISABLE(CMRT);
 public:
     CMRT();

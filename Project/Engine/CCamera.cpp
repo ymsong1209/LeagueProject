@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CCamera.h"
 
 
@@ -16,12 +16,17 @@
 
 #include "CMRT.h"
 #include "CLight3D.h"
- 
+
 #include "CResMgr.h"
 #include "CKeyMgr.h"
+#include "CRenderMgr.h"
+
 #include "CCollider2D.h"
 #include "CCollider3D.h"
 #include "CEngine.h"
+
+#include "CStructuredBuffer.h"
+
 
 
 
@@ -30,20 +35,22 @@ CCamera::CCamera()
 	, m_Frustum(this)
 	, m_fWidth(0.f)
 	, m_fAspectRatio(1.f)
-	, m_fScale(3.4f)
+	, m_fScale(4.1f)
 	, m_fFar(50000.f)
 	, m_ProjType(PROJ_TYPE::ORTHOGRAPHIC)
 	, m_iLayerMask(0)
 	, m_iCamIdx(-1)
 	, m_bShowFrustumDebug(false)
 	, m_bViewGizmoBounding(false)
-	, m_iCameraMoveMode(0)
+	, m_isGizmoEditMode(1)
+	, m_fFov(30.f)
 {
 	SetName(L"Camera");
 
 	Vec2 vRenderResol = CDevice::GetInst()->GetRenderResolution();
 	m_fWidth = vRenderResol.x;
 	m_fAspectRatio = vRenderResol.x / vRenderResol.y;
+
 }
 
 CCamera::CCamera(const CCamera& _Other)
@@ -58,6 +65,7 @@ CCamera::CCamera(const CCamera& _Other)
 	, m_iCamIdx(-1)
 	, m_bShowFrustumDebug(_Other.m_bShowFrustumDebug)
 	, m_bViewGizmoBounding(_Other.m_bViewGizmoBounding)
+	, m_fFov(_Other.m_fFov)
 {
 	SetName(L"Camera");
 }
@@ -105,7 +113,6 @@ void CCamera::CalRay()
 	//  현재 마우스 좌표
 	Vec2 vMousePos = CKeyMgr::GetInst()->GetMousePos();
 
-
 	if (m_ProjType == PROJ_TYPE::PERSPECTIVE)
 	{
 		// 직선은 카메라의 좌표를 반드시 지난다.
@@ -129,8 +136,8 @@ void CCamera::CalRay()
 
 		Vec2 MousePos = CKeyMgr::GetInst()->GetMousePos() - CamPos;
 
-		Vec3 Addx = MousePos.x * Transform()->GetWorldDir(DIR_TYPE::RIGHT) * (1.f / m_fScale) ;
-		Vec3 Addy = MousePos.y * Transform()->GetWorldDir(DIR_TYPE::UP) * ( 1.f / m_fScale);
+		Vec3 Addx = MousePos.x * Transform()->GetWorldDir(DIR_TYPE::RIGHT) * (1.f / m_fScale);
+		Vec3 Addy = MousePos.y * Transform()->GetWorldDir(DIR_TYPE::UP) * (1.f / m_fScale);
 
 		// Add앞에 -를 붙여야 하는 이유는 DirectX의 y축과 화면에서의 y축의 증가 방향이
 		// 반대이기 때문이다.
@@ -157,7 +164,6 @@ void CCamera::CollideRay()
 	{
 		vector<CGameObject*> Objects = CurLevel->GetLayer(i)->GetObjects();
 
-
 		for (int j = 0; j < Objects.size(); ++j)
 		{
 			IntersectResult result = IsCollidingBtwRayRect(m_ray, Objects[j]);
@@ -179,7 +185,6 @@ void CCamera::CollideRay()
 					// 후보군에 넣어준다.
 					else
 					{
-
 						TempEndOverlapRect.push_back(Objects[j]);
 					}
 				}
@@ -211,7 +216,6 @@ void CCamera::CollideRay()
 					// 후보군에 넣어준다.
 					else
 					{
-
 						TempEndOverlapCube.push_back(Objects[j]);
 					}
 				}
@@ -289,6 +293,65 @@ void CCamera::CollideRay()
 	TempEndOverlapCube.clear();
 }
 
+bool CCamera::CheckRayCollideBox(CGameObject* _object)
+{
+	vector<CGameObject*> RayVec = CRenderMgr::GetInst()->GetRayObjectVec();
+	vector<ColliderStruct> WallVec  =  CRenderMgr::GetInst()->GetWallObjectVec();
+
+	bool result = false;
+	bool CollidedByWall = false;
+
+	for (int i = 0; i < RayVec.size(); ++i) {
+		CGameObject* RayShootingObject = RayVec[i];
+
+		
+		float RayRadius = RayShootingObject->Transform()->GetRayRange();
+
+
+		Vec2 RayObjPos = Vec2{ RayVec[i]->Transform()->GetRelativePos().x, RayVec[i]->Transform()->GetRelativePos().z };
+		Vec2 CollideObjPos = Vec2{ _object->Transform()->GetRelativePos().x, _object->Transform()->GetRelativePos().z };
+
+		//Vec3 RayObjPos = RayVec[i]->Transform()->GetRelativePos();
+		//Vec3 CollideObjPos = _object->Transform()->GetRelativePos();
+
+		float DistBtwRayObj = Vec2::Distance(RayObjPos, CollideObjPos);
+
+		// 사거리 내에 object가 안들어오면 continue;
+		if (DistBtwRayObj > RayRadius)
+		{
+			continue;
+			
+		}
+
+		
+		// 사거리 내에 들어오면 rayobject->CurObject로 ray-box 충돌 검사를 함.
+		for (int j = 0; j < WallVec.size(); ++j)
+		{
+			if (IsCollidingBtwRayWall(RayObjPos, CollideObjPos, RayRadius, DistBtwRayObj, WallVec[j]))
+			{
+				CollidedByWall = true;
+				break;
+			}
+
+		}
+
+		if (CollidedByWall == true)
+		{
+			CollidedByWall = false;
+			continue;
+		}
+
+
+		// 사이에 아무것도 없을 경우
+		result = true;
+		break;
+
+	}
+
+	return result;
+
+}
+
 void CCamera::CalcViewMat()
 {
 	// ==============
@@ -321,7 +384,7 @@ void CCamera::CalcProjMat()
 	// 투영 행렬 계산
 	// =============
 	m_matProj = XMMatrixIdentity();
-	
+
 	if (PROJ_TYPE::ORTHOGRAPHIC == m_ProjType)
 	{
 		// 직교 투영
@@ -329,9 +392,9 @@ void CCamera::CalcProjMat()
 		m_matProj = XMMatrixOrthographicLH(m_fWidth * (1.f / m_fScale), fHeight * (1.f / m_fScale), 1.f, m_fFar);
 	}
 	else
-	{	
+	{
 		// 원근 투영
-		m_matProj = XMMatrixPerspectiveFovLH(XM_PI / 2.f, m_fAspectRatio, 1.f, m_fFar);
+		m_matProj = XMMatrixPerspectiveFovLH(XMConvertToRadians(m_fFov), m_fAspectRatio, 1.f, m_fFar);
 	}
 
 	// 투영행렬 역행렬
@@ -368,6 +431,8 @@ void CCamera::SetCameraIndex(int _idx)
 	CRenderMgr::GetInst()->RegisterCamera(this, m_iCamIdx);
 }
 
+
+
 void CCamera::SortObject()
 {
 	// 이전 프레임 분류정보 제거
@@ -387,7 +452,6 @@ void CCamera::SortObject()
 			m_LayMinDistance = GetFar();//기즈모 테스트 :레이캐스트 할때 겹쳐있는 오브젝트 체크하는데 겹쳐있는 오브젝트중 카메라의 거리가 가장 작은 값을 기록하는 변수.
 			//이는 오브젝트 검사할때마다 한번씩 초기화를 해주어야함.
 
-
 			for (size_t j = 0; j < vecObject.size(); ++j)
 			{
 				CRenderComponent* pRenderCom = vecObject[j]->GetRenderComponent();
@@ -403,8 +467,14 @@ void CCamera::SortObject()
 				// FrustumCheck
 				if (pRenderCom->IsUseFrustumCheck())
 				{
-					Vec3 vWorldPos = vecObject[j]->Transform()->GetWorldPos();
-
+					Vec3 vWorldPos;
+					if (pRenderCom->GetBoundingBoxOffsetUse()) {
+						vWorldPos = pRenderCom->GetBoundingBoxOffset();
+					}
+					else {
+						vWorldPos = vecObject[j]->Transform()->GetWorldPos();
+					}
+				
 					if (pRenderCom->IsShowDebugBound())
 					{
 						// Bounding Debug Shape 그리기
@@ -419,10 +489,29 @@ void CCamera::SortObject()
 						continue;
 				}
 
-				if(m_iCameraMoveMode == 0 || m_iCameraMoveMode == 2) //디폴트 모드거나, 오브젝트 무빙 전용 모드일때만 기즈모 클릭체크(모르겠다면 m_iCameraMoveMode 변수에 써놨음)
+				if (m_isGizmoEditMode == 1) //에디트 모드일때만 클릭체크
 					GizmoClickCheck(vecObject[j], pCurLevel); //기즈모 클릭 체크
 
+				//아웃라인 출력 오브젝트 테스트
+				if (vecObject[j]->Transform()->GetUseMouseOutline() == true)
+				{
+					if (OutlineCheck(vecObject[j]))
+						m_vecContour.push_back(vecObject[j]);
+				}
+
+				
 				CollideRay();
+
+				//Ray를 쏘는 오브젝트랑 CurObject사이에 벽이 있음 or RayObject의 시야 범위 내에 CurObject가 안들어옴
+
+				if (vecObject[j]->GetRenderComponent() != nullptr && vecObject[j]->GetRenderComponent()->IsUsingRaySightCulling() && vecObject[j]->Transform()->GetIsShootingRay() != true)
+				{
+					if (false == CheckRayCollideBox(vecObject[j])) {
+						continue;
+					}
+				}
+			 
+				 
 
 				// 쉐이더 도메인에 따른 분류
 				SHADER_DOMAIN eDomain = pRenderCom->GetMaterial(0)->GetShader()->GetDomain();
@@ -448,7 +537,7 @@ void CCamera::SortObject()
 					break;
 				case SHADER_DOMAIN::DOMAIN_UI:
 					m_vecUI.push_back(vecObject[j]);
-					break;				
+					break;
 				}
 			}
 		}
@@ -478,6 +567,42 @@ void CCamera::SortShadowObject()
 	}
 }
 
+bool CCamera::OutlineCheck(CGameObject* _Obj)
+{
+	if (_Obj->Collider3D() != nullptr) //콜리전이 있을경우에만 아웃라인 출력가능(마우스와 교차점 체크를 해야하기 때문)
+	{
+		//윤곽선 출력은 콜리전이 스피어,큐브,렉트일때만 함.(레이랑 충돌체크 가능한 것들만)
+		COLLIDER3D_TYPE Type = _Obj->Collider3D()->GetCollider3DType();
+		if (Type == COLLIDER3D_TYPE::CUBE)
+		{
+			IntersectResult Result = IsCollidingBtwRayCube(m_ray, _Obj);
+			return Result.bResult;
+		}
+		else if (Type == COLLIDER3D_TYPE::SPHERE)
+		{ 
+			//일단 원의 x축 길이를 반지름으로 생각하고 계산함. 하지만 타원과 레이 충돌은 조금더 복잡함..
+			//RayIntersectsSphere는 일반 타원x 일반 구체 기준 충돌체크임
+			Vec3 Pos = _Obj->Transform()->GetWorldPos();
+			Matrix scaleMatrix = _Obj->Collider3D()->GetColliderScaleMat();
+			Vec3 scale = {};
+			scale.x = scaleMatrix._11;
+			bool IsCollide = RayIntersectsSphere(Pos, scale.x);
+			return IsCollide;
+		}
+	}
+
+	else if (_Obj->Collider2D() != nullptr)
+	{
+		COLLIDER2D_TYPE Type = _Obj->Collider2D()->GetCollider2DType();
+		if (Type == COLLIDER2D_TYPE::RECT)
+		{
+			IntersectResult Result = IsCollidingBtwRayRect(m_ray, _Obj);
+			return Result.bResult;
+		}
+	}
+
+}
+
 void CCamera::render()
 {
 	// 행렬 업데이트
@@ -498,7 +623,7 @@ void CCamera::render()
 
 	// Lighting
 	CRenderMgr::GetInst()->GetMRT(MRT_TYPE::LIGHT)->OMSet();
-	
+
 	const vector<CLight3D*> vecLight3D = CRenderMgr::GetInst()->GetLight3D();
 	for (size_t i = 0; i < vecLight3D.size(); ++i)
 	{
@@ -509,18 +634,20 @@ void CCamera::render()
 	CRenderMgr::GetInst()->GetMRT(MRT_TYPE::SWAPCHAIN)->OMSet();
 	render_merge();
 
-
 	// Forward Object	
 	render_opaque();
 	render_mask();
 	render_transparent();
 
+	// Outline :포스트 프로세스 단계에 넣어도 상관은없지만 정리를 위해 따로. 테두리는 깊이 모두 기록된후에 마지막에 진행
+	if(m_vecContour.size() > 0) //아웃라인을 출력해야하는 오브젝트가 있을경우에만 시행
+		render_Outline();
+
 	// PostProcess
 	render_postprocess();
-
 	// UI
 	render_ui();
-	
+
 }
 
 void CCamera::render_depthmap()
@@ -558,7 +685,7 @@ IntersectResult CCamera::IsCollidingBtwRayRect(tRay& _ray, CGameObject* _Object)
 
 	for (int i = 0; i < 3; ++i)
 		arrLocal[i] = Vector4::Transform(Vec4(arrLocal[i], 1.f), ColliderWorldMat);
- 
+
 
 	return IntersectsLay(arrLocal, m_ray);
 }
@@ -611,6 +738,89 @@ IntersectResult CCamera::IsCollidingBtwRayCube(tRay& _ray, CGameObject* _Object)
 	return Final;
 }
 
+
+bool CCamera::IsCollidingBtwRayWall(Vec2& RayObjPos, Vec2& _CollideObjPos, float& _Raidus, float& _RayObjRadius, ColliderStruct& _ColliderData)
+{
+	// Sphere인지 Box인지 관계없이 벽과 Source Ray 사이의 거리가 반지름보다 길 경우 바로 false 반환
+	float WallPositionX =  _ColliderData.m_ColliderFinalMat._41;
+	float WallPositionZ = _ColliderData.m_ColliderFinalMat._43;
+
+
+	if (Vec2::Distance(RayObjPos, Vec2(WallPositionX, WallPositionZ)) > _Raidus)
+	{
+		return false;
+	}
+
+	// 거리 안에 있는 경우로 Sphere인지 Box인지에 따라 갈림 0 : Sphere, 1 : Box
+	if (_ColliderData.m_ColliderType == 0)
+	{
+		// 일단 이경우는 로직 작성안해놔ㅏㅆ음 추후 Sphere충돌이 추가되면
+		// 작성해야함
+		return false;
+	}
+
+	else if (_ColliderData.m_ColliderType == 1)
+	{
+		Vec3 arrLocal[6][3] =
+		{
+			{Vec3(-0.5f, 0.5f, -0.5f),  Vec3(0.5f, 0.5f, -0.5f),  Vec3(-0.5f, 0.5f, 0.5f)},	 // ����
+			{Vec3(-0.5f, -0.5f, -0.5f), Vec3(0.5f, -0.5f, -0.5f), Vec3(-0.5f, -0.5f, 0.5f)}, // �ظ�
+			{Vec3(-0.5f, -0.5f, -0.5f), Vec3(0.5f, -0.5f, -0.5f), Vec3(-0.5f, 0.5f, -0.5f)}, // �ո�
+			{Vec3(-0.5f, -0.5f, 0.5f),  Vec3(0.5f, -0.5f, 0.5f),  Vec3(-0.5f, 0.5f, 0.5f)},  // �޸�
+			{Vec3(-0.5f, 0.5f, -0.5f),  Vec3(-0.5f, -0.5f, -0.5f),Vec3(-0.5f, 0.5f, 0.5f)},  // ���ʸ�
+			{Vec3(0.5f, 0.5f, -0.5f),   Vec3(0.5f, -0.5f, -0.5f), Vec3(0.5f, 0.5f, 0.5f)},   // �����ʸ�
+		};
+
+		for (int i = 0; i < 6; ++i)
+			for (int j = 0; j < 3; ++j)
+				arrLocal[i][j] = Vec4::Transform(Vec4(arrLocal[i][j], 1.f), _ColliderData.m_ColliderFinalMat);
+
+		IntersectResult Final = IntersectResult{ Vec3(0.f, 0.f, 0.f), 0.f, false };
+		IntersectResult Temp;
+
+		tRay ray;
+		ray.vStart = Vec3(RayObjPos.x, 10.f, RayObjPos.y);
+		ray.vDir = Vec3(_CollideObjPos.x - RayObjPos.x, 0.f, _CollideObjPos.y - RayObjPos.y).Normalize();
+
+
+		for (int i = 0; i < 6; ++i)
+		{
+			Temp = IntersecrRayFog(arrLocal[i][0], arrLocal[i][1], arrLocal[i][2], ray);
+
+			if (Temp.bResult == true)
+			{
+				if (Final.bResult == false)
+				{
+					Final = Temp;
+				}
+				else
+				{
+					if (Temp.fResult < Final.fResult)
+						Final = Temp;
+				}
+			}
+		}
+
+		// bResult가 True인 경우 Wall과 Ray가 충돌한 경우임
+		if (Final.bResult == true)
+		{
+			if (Final.fResult < _RayObjRadius)
+				return true;
+		}
+
+		else
+		{
+			// Wall과 충돌하지 않은 경우
+			return false;
+		}
+	}
+
+
+	return false;
+	 
+}
+
+
 IntersectResult CCamera::IntersectsLay(Vec3* _vertices, tRay _ray)
 {
 	IntersectResult result;
@@ -623,7 +833,7 @@ IntersectResult CCamera::IntersectsLay(Vec3* _vertices, tRay _ray)
 
 	Vec3 normal = (edge[0].Cross(edge[1])).Normalize();
 	float b = normal.Dot(_ray.vDir);
-	 
+
 
 	Vec3 w0 = _ray.vStart - _vertices[0];
 	float a = -(normal.Dot(w0));
@@ -643,7 +853,7 @@ IntersectResult CCamera::IntersectsLay(Vec3* _vertices, tRay _ray)
 	Vec3 w = p - _vertices[0];
 	wu = w.Dot(edge[0]);
 	wv = w.Dot(edge[1]);
-	
+
 	inverseD = uv * uv - uu * vv;
 	inverseD = 1.0f / inverseD;
 
@@ -669,6 +879,65 @@ IntersectResult CCamera::IntersectsLay(Vec3* _vertices, tRay _ray)
 	return result;
 }
 
+IntersectResult CCamera::IntersecrRayFog(Vec3 _Vertices0, Vec3 _Vertices1, Vec3 _Vertices2, tRay _Ray)
+{
+	IntersectResult result;
+	result.vCrossPoint = Vec3(0.f, 0.f, 0.f);
+	result.fResult = 0.f;
+	result.bResult = false;
+
+	Vec3 edge[2] = { _Vertices1 - _Vertices0, _Vertices2 - _Vertices0 };
+	Vec3 normal = (edge[0].Cross(edge[1])).Normalize();
+
+
+
+	
+	Vec3 pvec = _Ray.vDir.Cross(edge[1]);
+	float det  = edge[0].Dot(pvec);
+
+	// 이 값이 작으면 ray와 triangle이 평행
+	if (std::abs(det) < 0.000001f)
+	{
+		return result;
+	}
+
+	float invDet = 1.0f / det;
+	Vec3 tvec = _Ray.vStart - _Vertices0;
+	 
+	float u = tvec.Dot(pvec) * invDet;
+
+	if (u < 0.0f || u > 1.0f)
+	{
+		return result;
+	}
+	 
+ 
+
+	Vec3 qvec = tvec.Cross(edge[0]);
+	float v = _Ray.vDir.Dot(qvec) * invDet;
+
+	if (v < 0.0f || v > 1.0f)
+	{
+		return result;
+	}
+
+	 
+
+	float t = edge[1].Dot(qvec) * invDet;
+
+	// 성공적인 교차점을 찾았다면 결과를 저장.
+	result.vCrossPoint = _Ray.vStart + _Ray.vDir * t;
+	result.fResult = t;
+	result.bResult = true;
+
+	if (t < 0)
+		result.bResult = false;
+
+	return result;
+}
+
+
+
 void CCamera::clear()
 {
 	m_vecDeferred.clear();
@@ -676,6 +945,7 @@ void CCamera::clear()
 	m_vecOpaque.clear();
 	m_vecMask.clear();
 	m_vecTransparent.clear();
+	m_vecContour.clear();
 	m_vecPost.clear();
 	m_vecUI.clear();
 }
@@ -689,7 +959,10 @@ void CCamera::render_deferred()
 			//layer는 0~31이지만 비트연산을 위해 한칸씩 옮김
 			//layernum = 1~32
 			float layernum = m_vecDeferred[i]->GetLayerIndex() + 1;
-			m_vecDeferred[i]->GetRenderComponent()->GetMaterial(0)->SetScalarParam(FLOAT_0, &layernum);
+			UINT matsize = m_vecDeferred[i]->GetRenderComponent()->GetMtrlCount();
+			for (UINT j = 0; j < matsize; ++j) {
+				m_vecDeferred[i]->GetRenderComponent()->GetMaterial(j)->SetScalarParam(FLOAT_0, &layernum);
+			}
 		}
 		m_vecDeferred[i]->render();
 	}
@@ -769,6 +1042,7 @@ void CCamera::SaveToLevelFile(FILE* _File)
 	fwrite(&m_fFar, sizeof(float), 1, _File);
 	fwrite(&m_bShowFrustumDebug, sizeof(bool), 1, _File);
 	fwrite(&m_bViewGizmoBounding, sizeof(bool), 1, _File);
+	fwrite(&m_fFov, sizeof(float), 1, _File);
 }
 
 void CCamera::LoadFromLevelFile(FILE* _File)
@@ -782,6 +1056,8 @@ void CCamera::LoadFromLevelFile(FILE* _File)
 	fread(&m_fFar, sizeof(float), 1, _File);
 	fread(&m_bShowFrustumDebug, sizeof(bool), 1, _File);
 	fread(&m_bViewGizmoBounding, sizeof(bool), 1, _File);
+	fread(&m_fFov, sizeof(float), 1, _File);
+
 	SetCameraIndex(m_iCamIdx);
 }
 
@@ -796,7 +1072,7 @@ void CCamera::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& all
 	_objValue.AddMember("fFar", m_fFar, allocator);
 	_objValue.AddMember("bShowFrustumDebug", m_bShowFrustumDebug, allocator);
 	_objValue.AddMember("bViewGizmoBounding", m_bViewGizmoBounding, allocator);
-
+	_objValue.AddMember("fFov", m_fFov, allocator);
 }
 
 void CCamera::LoadFromLevelJsonFile(const Value& _componentValue)
@@ -809,6 +1085,8 @@ void CCamera::LoadFromLevelJsonFile(const Value& _componentValue)
 	m_fFar = _componentValue["fFar"].GetFloat();
 	m_bShowFrustumDebug = _componentValue["bShowFrustumDebug"].GetBool();
 	m_bViewGizmoBounding = _componentValue["bViewGizmoBounding"].GetBool();
+	m_fFov = _componentValue["fFov"].GetFloat();
+
 	SetCameraIndex(m_iCamIdx);
 }
 
@@ -821,9 +1099,9 @@ void CCamera::GizmoClickCheck(CGameObject* _CheckTargetObj, CLevel* _CurLevel)
 
 	if (_CurLevel->GetState() != LEVEL_STATE::PLAY) // 플레이 모드에서는 기즈모 작동하지 않음
 	{
-		if (KEY_TAP(KEY::RBTN)) // 클릭되었을경우만
+		if (KEY_TAP(KEY::LBTN) &&!_CheckTargetObj->Transform()->GetGizmoObjExcept() && !CRenderMgr::GetInst()->GetIsImGuiHovered())
 		{
-			if (RayIntersectsSphere(vWorldPos, _CheckTargetObj->Transform()->GetGizmoBounding()) && !_CheckTargetObj->Transform()->GetGizmoObjExcept())  //오브젝트 구체 콜리전 - 레이 클릭 체크
+			if (RayIntersectsSphere(vWorldPos, _CheckTargetObj->Transform()->GetGizmoBounding()))  //오브젝트 구체 콜리전 - 레이 클릭 체크
 			{
 				// 가장 깊이가 작은경우의 오브젝트를 선택하게됨 SetGizMoTargetObj 함수자체는 여러번 호출되지만. 오브젝트 개수만큼 반복문을 통해 결국 마지막엔 가장 작은 깊이를 가진 오브젝트가 기즈모 타겟  오브젝트로 세팅되어있을 것임
 				if (!_CheckTargetObj->IsDead())
@@ -831,7 +1109,6 @@ void CCamera::GizmoClickCheck(CGameObject* _CheckTargetObj, CLevel* _CurLevel)
 					CRenderMgr::GetInst()->SetGizmoObjectChanged(true);
 					CRenderMgr::GetInst()->SetGizMoTargetObj(_CheckTargetObj); //위의 if문에서 레이인터섹트 스피어 (현재 구체위에 마우스가 있음) 상태고 마우스를 눌렀다면, 그것을 기즈모 오브젝트로 지정해둠
 				}
-
 			}
 		}
 
@@ -891,3 +1168,100 @@ bool CCamera::RayIntersectsSphere(Vec3 _SphereTrans, float _SphereRadius)
 
 }
 
+
+void CCamera::render_DefaultContourPaint()
+{
+	//외곽선 필요한 오브젝트 렌더타겟에 기록
+	for (size_t i = 0; i < m_vecContour.size(); ++i)
+	{
+		CGameObject* Obj = m_vecContour[i];
+		UINT MtrlNum = Obj->GetRenderComponent()->GetMtrlCount();
+		vector<Ptr<CGraphicsShader>> VecShader;
+
+		for (UINT j = 0; j < MtrlNum; ++j) //렌더타겟 출력위한 셰이더 변경
+		{
+			Ptr<CGraphicsShader> DefaultShader = Obj->GetRenderComponent()->GetMaterial(j)->GetShader();
+			VecShader.push_back(DefaultShader);
+			Obj->GetRenderComponent()->GetMaterial(j)->SetShader(CResMgr::GetInst()->FindRes<CGraphicsShader>(L"DefaultObjWriteShader"));
+		}
+		Obj->render();
+
+		for (UINT z = 0; z < MtrlNum; ++z) //기존셰이더 장착
+			Obj->GetRenderComponent()->GetMaterial(z)->SetShader(VecShader[z]);
+	}
+}
+
+
+void CCamera::render_ContourPaint()
+{
+	//업스케일 오브젝트 기록
+	for (size_t i = 0; i < m_vecContour.size(); ++i)
+	{
+		UINT MtrlNum = m_vecContour[i]->GetRenderComponent()->GetMtrlCount();
+		vector<Ptr<CGraphicsShader>> VecShader;
+		CGameObject* Obj = m_vecContour[i];
+
+		for (UINT j = 0; j < MtrlNum; ++j) 
+		{
+			//렌더타겟 기록을 위한 셰이더 변경 (모든 머터리얼에 적용)
+			Ptr<CGraphicsShader> DefaultShader = Obj->GetRenderComponent()->GetMaterial(j)->GetShader();
+			VecShader.push_back(DefaultShader);
+			Obj->GetRenderComponent()->GetMaterial(j)->SetShader(CResMgr::GetInst()->FindRes<CGraphicsShader>(L"ContourPaintShader"));
+		}
+
+		CTransform* Transform = Obj->Transform();
+		float fThickness = Transform->GetOutlineThickness();
+		Vec3 DefaultScale = Transform->GetRelativeScale();
+
+		//두께계산-----
+		Vec3 vThickness = Vec3(DefaultScale.x * fThickness, DefaultScale.y * fThickness, DefaultScale.z * fThickness);
+		vThickness.y /= 4.f; //y는 조금더 작은값으로 해줘야 자연스러움
+		Transform->SetRelativeScale(Vec3(DefaultScale.x + vThickness.x, DefaultScale.y + vThickness.y, DefaultScale.z + vThickness.z));
+		Transform->finaltick(); //렌더 전 월드행렬 계산
+		//---------------
+
+		Obj->render();
+
+		Transform->SetRelativeScale(DefaultScale);
+		Transform->finaltick(); //해줘야함! 바로 다음함수가 기본 오브젝트 기록이기때문에 바로 변경된 스케일 적용
+
+		//기존 셰이더 다시 장착 (모든 머터리얼에 적용함)
+		for (UINT z = 0; z < MtrlNum; ++z)
+			Obj->GetRenderComponent()->GetMaterial(z)->SetShader(VecShader[z]);
+	}
+}
+
+
+void CCamera::render_contour()
+{
+	Ptr<CMesh> pMesh = CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh");
+	Ptr<CMaterial> pMtrl = CResMgr::GetInst()->FindRes<CMaterial>(L"ContourMtrl");
+	pMtrl->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"DefaultContourTargetTex"));
+	pMtrl->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"ContourTargetTex"));
+
+	pMtrl->UpdateData();
+	pMesh->render(0);
+}
+
+void CCamera::render_Outline()
+{
+	CMRT* DefferedMrt = CRenderMgr::GetInst()->GetMRT(MRT_TYPE::DEFERRED);
+	//디퍼드에 담겨있는 ContourTargetTex,DefaultContourTargetTex를 렌더타겟으로 쓰기전에, 스왑체인에 그려내면서 셰이더 리소스 역할로 되어있던것들을 해제
+	UINT RTCount = DefferedMrt->GetRTCount();
+	for (UINT i = 0; i < RTCount; ++i)
+		DefferedMrt->GetRTAtIndex(i)->Clear();
+
+	//해제한후 렌더타겟으로 지정
+	DefferedMrt->OMSet();
+	//하나의 텍스쳐에 원래 오브젝트, 업스케일 오브젝트의 값을 같이 기록할수 없음. 이유는 두개의 물체가 겹쳐있는 부분은 나중에 그려지는 쪽의 rgba값으로 초기화됨.
+	//결국 하나의 텍스쳐에 업스케일 오브젝트의 값만 있거나, 디폴트 오브젝트의 값만 있어서 나중에 테두리 부분만 추출할수없음.
+
+	//서로 다른 도화지가 있을때 하나의 도화지엔 업스케일 오브젝트, 두번째 도화지엔 디폴트 오브젝트를 그려놓고 render_contour단계에서 값을 비교해 테두리 부분을 추출.
+	//처음에 생각했던 방식인 같은렌더타겟을 사용하여 기존에 그려진 픽셀에 +1 하는방법은 그려지는곳을 텍스쳐로써 사용하는것이므로 안됨
+	render_ContourPaint();
+	render_DefaultContourPaint();
+
+	//mrt를 다시 스왑체인으로 변경하고 테두리 검출,출력 진행
+	CRenderMgr::GetInst()->GetMRT(MRT_TYPE::SWAPCHAIN)->OMSet();
+	render_contour();
+}

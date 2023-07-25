@@ -144,7 +144,12 @@ void CAnim3D::Save(bool _nameincludesMeshPath)
 
 	m_RelativePath = RelativePath;
 
-
+	
+	// 해당경로에 애니메이션이 저장되어있으면 return
+	// fbx로딩할때 모든 애니메이션 합쳐진 기다란 animation은 아직 상대경로 지정안되있어서
+	// 여기서 체크해줘야함.
+	if (filesystem::exists(strFilePath)) return;
+	
 	// 자동으로 폴더 생성
 	filesystem::path directory = filesystem::path(strFilePath).parent_path();
 	if (!filesystem::exists(directory))

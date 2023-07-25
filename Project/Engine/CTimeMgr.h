@@ -16,8 +16,9 @@ private:
 	float			m_fTime;
 	float			m_fAccTime;
 
-
 	float			m_fTimeScale;
+
+	
 
 public:
 	void init();
@@ -29,5 +30,7 @@ public:
 	float GetDeltaTime() { return m_fDeltaTime; }
 	float GetEditorDeltaTime() { return m_fEditorDeltaTime; }
 	float GetAccTime() { return m_fAccTime; }
+
+
 };
 

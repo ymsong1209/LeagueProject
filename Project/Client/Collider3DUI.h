@@ -7,6 +7,7 @@ public:
     virtual int render_update() override;
 
 public:
+    void SetWall();
     void ChooseColliderType();
 public:
     Collider3DUI();

@@ -34,6 +34,7 @@ enum class MRT_TYPE
 	DECAL,
 	LIGHT,
 	SHADOW,
+	FOGOFWAR,
 	END,
 };
 
@@ -284,6 +285,7 @@ enum class SHADER_DOMAIN
 	DOMAIN_TRANSPARENT,	// 반투명
 	DOMAIN_POSTPROCESS, // 후 처리
 	DOMAIN_UI,
+	DOMAIN_CONTOURPAINT, // 아웃라인 페인팅
 	DOMAIN_UNDEFINED,	// 미정
 };
 

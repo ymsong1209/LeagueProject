@@ -5,10 +5,12 @@
 #include <Engine\CTransform.h>
 #include <Engine\CLevelMgr.h>
 #include <Engine\CKeyMgr.h>
+#include <Engine/CEventMgr.h>
 
 #include "TransformUI.h"
 #include "MeshRenderUI.h"
 #include "Collider2DUI.h"
+#include "Collider3DUI.h"
 #include "CameraUI.h"
 #include "Animator2DUI.h"
 #include "Animator3DUI.h"
@@ -71,6 +73,11 @@ InspectorUI::InspectorUI()
 	m_arrComUI[(UINT)COMPONENT_TYPE::COLLIDER2D] = new Collider2DUI;
 	m_arrComUI[(UINT)COMPONENT_TYPE::COLLIDER2D]->SetSize(0.f, 150.f);
 	AddChildUI(m_arrComUI[(UINT)COMPONENT_TYPE::COLLIDER2D]);
+
+	m_arrComUI[(UINT)COMPONENT_TYPE::COLLIDER3D] = new Collider3DUI;
+	m_arrComUI[(UINT)COMPONENT_TYPE::COLLIDER3D]->SetSize(0.f, 150.f);
+	AddChildUI(m_arrComUI[(UINT)COMPONENT_TYPE::COLLIDER3D]);
+
 
 	m_arrComUI[(UINT)COMPONENT_TYPE::ANIMATOR2D] = new Animator2DUI;
 	m_arrComUI[(UINT)COMPONENT_TYPE::ANIMATOR2D]->SetSize(0.f, 150.f);
@@ -157,7 +164,17 @@ void InspectorUI::init()
 
 void InspectorUI::tick()
 {
-	
+	if (CEventMgr::GetInst()->IsLevelChanged()) {
+		if (m_pTargetObj) {
+			vector<CGameObject*> GC = CEventMgr::GetInst()->GetGC();
+			vector<CGameObject*>::iterator iter = find(GC.begin(), GC.end(), m_pTargetObj);
+			if (iter != GC.end()) {
+				SetTargetObject(nullptr);
+			}
+		}
+	}
+
+
 }
 
 int InspectorUI::render_update()

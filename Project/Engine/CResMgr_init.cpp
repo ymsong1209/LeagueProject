@@ -1279,6 +1279,64 @@ void CResMgr::CreateDefaultGraphicsShader()
 
 	AddRes(pShader->GetKey(), pShader);
 
+	// ============================
+	// ContourPaintShader
+	// RasterizerState      : CULL_BACK
+	// BlendState           : Mask
+	// DepthStencilState    : Less
+	//
+	// Parameter
+	// g_tex_0              : Output Texture
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"ContourPaintShader");
+	pShader->CreateVertexShader(L"shader\\std3d_deferred.fx", "VS_ContourPaint_Deferred");
+	pShader->CreatePixelShader(L"shader\\std3d_deferred.fx", "PS_ContourPaint_Deferred");
+	pShader->SetRSType(RS_TYPE::CULL_BACK);
+	pShader->SetDSType(DS_TYPE::LESS); // 업스케일 오브젝트는 가려지는것까지 고려해야함
+	pShader->SetBSType(BS_TYPE::MASK);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_CONTOURPAINT);
+
+	AddRes(pShader->GetKey(), pShader);
+
+	// ============================
+	// DefaultObjWrite
+	// RasterizerState      : CULL_BACK
+	// BlendState           : Mask
+	// DepthStencilState    : Less
+	//
+	// Parameter
+	// g_tex_0              : Output Texture
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"DefaultObjWriteShader");
+	pShader->CreateVertexShader(L"shader\\std3d_deferred.fx", "VS_DefaultTexWrite");
+	pShader->CreatePixelShader(L"shader\\std3d_deferred.fx", "PS_DefaultObjWrite");
+	pShader->SetRSType(RS_TYPE::CULL_BACK);
+	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE); //원본 오브젝트값을 텍스쳐에 기록할땐 원본 그대로를 기록해야하므로 다른물체에 가려지지 않도록함(가려질경우 0이 들어가게되고 테두리 연산이 잘못됨)
+	pShader->SetBSType(BS_TYPE::ALPHA_BLEND);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_CONTOURPAINT);
+
+	AddRes(pShader->GetKey(), pShader);
+
+	// ============================
+	// Contour Shader
+	// RS_TYPE : CULL_NONE
+	// DS_TYPE : NO_TEST_NO_WRITE
+	// BS_TYPE : DEFAULT	 
+	// Domain : DOMAIN_LIGHT
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"ContourShader");
+	pShader->CreateVertexShader(L"shader\\light.fx", "VS_ContourMerge");
+	pShader->CreatePixelShader(L"shader\\light.fx", "PS_ContourMerge");
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::DEFAULT);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_CONTOURPAINT);
+	AddRes(pShader->GetKey(), pShader);
+
+
 }
 
 
@@ -1287,6 +1345,8 @@ void CResMgr::CreateDefaultGraphicsShader()
 #include "CHeightMapShader.h"
 #include "CRaycastShader.h"
 #include "CAnimation3DShader.h"
+#include "CFogOfWarShader.h"
+#include "CFogFilterShader.h"
 
 void CResMgr::CreateDefaultComputeShader()
 {
@@ -1310,14 +1370,28 @@ void CResMgr::CreateDefaultComputeShader()
 	pCS->CreateComputeShader(L"shader\\animation3d.fx", "CS_Animation3D");
 	AddRes(pCS->GetKey(), pCS);
 
+	// 높이맵 쉐이더
 	pCS = new CHeightMapShader(32, 32, 1);
 	pCS->SetKey(L"HeightMapShader");
 	pCS->CreateComputeShader(L"shader\\heightmap.fx", "CS_HeightMap");
 	AddRes(pCS->GetKey(), pCS);
 	
+	// 직선 쉐이더
 	pCS = new CRaycastShader(32, 32, 1);
 	pCS->SetKey(L"RaycastShader");
 	pCS->CreateComputeShader(L"shader\\raycast.fx", "CS_Raycast");
+	AddRes(pCS->GetKey(), pCS);
+
+	// 전장의 안개 판별 쉐이더 
+	pCS = new CFogOfWarShader(16, 64, 1);
+	pCS->SetKey(L"FogOfWarShader");
+	pCS->CreateComputeShader(L"shader\\fogofwarshader.fx", "CS_FogOfWarShader");
+	AddRes(pCS->GetKey(), pCS);
+
+	// 전장의 안개맵 필터 쉐이더
+	pCS = new CFogFilterShader(32, 32, 1);
+	pCS->SetKey(L"FogFilterShader");
+	pCS->CreateComputeShader(L"shader\\fogfiltershader.fx", "CS_FogFilterShader");
 	AddRes(pCS->GetKey(), pCS);
 }
 
@@ -1440,4 +1514,9 @@ void CResMgr::CreateDefaultMaterial()
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"DepthMapShader"));
 	AddRes<CMaterial>(L"DepthMapMtrl", pMtrl);
+
+	// ContourMtrl
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"ContourShader"));
+	AddRes(L"ContourMtrl", pMtrl);
 }

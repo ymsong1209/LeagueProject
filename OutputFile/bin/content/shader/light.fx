@@ -14,8 +14,10 @@
 
 // g_tex_0 : Position Target
 // g_tex_1 : Normal Target
+// g_tex_2 : FogMap // 전장의 안개 
 // g_tex_3 : Shadow DepthMap
 // ========================
+
 
 struct VS_IN
 {
@@ -60,6 +62,7 @@ PS_OUT PS_DirLightShader(VS_OUT _in)
     float3 vViewNormal = g_tex_1.Sample(g_sam_0, _in.vUV).xyz;
     
     tLightColor lightcolor = (tLightColor) 0.f;
+    
     CalcLight3D(vViewPos, vViewNormal, g_int_0, lightcolor);
         
     
@@ -87,6 +90,15 @@ PS_OUT PS_DirLightShader(VS_OUT _in)
         fShadowPow = 0.9f;
     }
 
+    //FogofWar
+    float2 FogUV = float2(vWorldPos.x / 3000.f, 1.f - vWorldPos.z / 3000.f);
+    float fog = g_tex_2.Sample(g_sam_0, FogUV).r;
+    if (fog)
+    {
+        lightcolor.vAmbient = float4(1.f, 1.f, 1.f, 1.f);
+    }
+    
+    
     output.vDiffuse = lightcolor.vDiffuse * saturate(1.f - fShadowPow) + lightcolor.vAmbient;
     output.vSpecular = lightcolor.vSpecular * saturate(1.f - fShadowPow);
         
@@ -222,8 +234,9 @@ float4 PS_LightMerge(VS_OUT _in) : SV_Target0
     float3 Diffuse = g_tex_1.Sample(g_sam_0, _in.vUV).xyz;
     float3 Specular = g_tex_2.Sample(g_sam_0, _in.vUV).xyz;
     float3 Emissive = g_tex_3.Sample(g_sam_0, _in.vUV).xyz;
-    
     vOutColor.xyz = (Color * Diffuse) + Emissive + Specular;
+    
+    
     vOutColor.a = 1.f;
     
     return vOutColor;
@@ -284,8 +297,36 @@ float PS_DepthMap(VS_DEPTH_OUT _in) : SV_Target
 
 
 
+// ========================
+// Contour Shader
+// mesh : RectMesh
+// g_tex_0 : DataTarget
+// g_tex_0 : ContourTarget
+// ========================
+VS_OUT VS_ContourMerge(VS_IN _in)
+{
+    VS_OUT output = (VS_OUT) 0.f;
+    output.vPosition = float4(_in.vPos.xyz * 2.f, 1.f);
+    output.vUV = _in.vUV;
+    return output;
+}
 
+float4 PS_ContourMerge(VS_OUT _in) : SV_Target0
+{
+    float4 vOutColor = (float4) 0.f;
+    
+    // Data Target 
+    float3 DefaultScale = g_tex_0.Sample(g_sam_0, _in.vUV).xyz;
+    // contour Target 
+    float3 Contour = g_tex_1.Sample(g_sam_0, _in.vUV).xyz;
+    
+    if (DefaultScale.y != 1.f && Contour.z == 1.f)
+        vOutColor = float4(1.f, 0.f, 0.f, 0.7f);
+    else
+        discard;
 
+    return vOutColor;
+}
 
 
 #endif

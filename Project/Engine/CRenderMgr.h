@@ -9,6 +9,35 @@ class CLight2D;
 class CLight3D;
 class CStructuredBuffer;
 class CMRT;
+class CFogOfWarShader;
+class CFogFilterShader;
+
+
+//-----------전장의 안개에 전달해줄 구조체---------------------//
+struct ColliderStruct{
+    Matrix      m_ColliderFinalMat;
+    int         m_ColliderType;     //0 : Sphere, 1 : Cube;
+    int         padding[3];
+};
+
+struct RayStruct {
+    Vec3        m_vRayPos;
+    int         m_iRayCount;
+    float       m_fRayRange;
+    int         padding[3];
+};
+
+struct RWStruct {
+    Vec3        m_vCrossPos;        //Ray랑 사각형이 부딪힌 지점.
+    float       m_vCrossRadius;     //Ray랑 교차된 지점의 좌표, 교차가 안되면 최대 반지름이 들어옴
+    Vec3        m_vCenterPos;       //Ray의 중앙 지점
+    int         m_iRayCount;        //몇번째 Ray인지
+
+    float       m_fMaxRadius;       //Ray의 원본 범위
+    float       padding[3];
+};
+//------------------------------------------------------------//
+
 
 class CRenderMgr :
     public CSingleton<CRenderMgr>
@@ -32,11 +61,32 @@ private:
     CGameObject*                m_GizMoTargetObject;  //기즈모가 생겨야할 타겟 오브젝트
     bool                        m_bGizmoObjectChanged;
 
+    bool                        b_IsImGuiHovered; //Imgui와 상호작용중인 상태라면 특정 키를 안먹히도록 하는데 사용
+   
     Ptr<CTexture>               m_RTCopyTex;
 
+ 
+    // 전장의 안개
+    Ptr<CFogOfWarShader>        m_FogOfWarShader;   //전장의 안개 ComputeShader
+    vector<ColliderStruct>      m_vecWallObject;    //Ray에 충돌될 가능성이 있는 벽 오브젝트
+    vector<CGameObject*>        m_vecRayObject;     //Ray를 쏘는 object player, 와드 등
+    vector<RayStruct>           m_vecRayStruct;     //RayObject를 통해 만들어진 RayStruct구조체 모음
+    CStructuredBuffer*          m_WallBuffer;
+    CStructuredBuffer*          m_RayBuffer;
+    CStructuredBuffer*          m_RWBuffer;         // ComputeShader 계산 후 받아올 버퍼 
+    int                         m_iRayCount;         // 물체 하나가 쏠 Ray개수
+    bool                        m_bIsQClicked;
+   
+    // 전장의 안개 필터
+    Ptr<CFogFilterShader>       m_FogFilterShader;  // 전장의 안개 필터맵 ComputeShader
+    
+    //CStructuredBuffer*          m_FogFilterMapBuffer; // ComputeShader 계산 후 받아올 버퍼 
+    Ptr<CTexture>               m_FogFilterMap; // 결과 안개 필터맵 텍스처
 
+    int                         m_iMaxRWSize;
+    float                       m_FogFilterTime;
+ 
     void (CRenderMgr::* RENDER_FUNC)(void);
-
 
 public:
     void init();
@@ -45,6 +95,10 @@ public:
 private:
     void render_clear();
     void render_dynamic_shadowdepth();
+    void CalcRayForFog();
+
+    void SetRayCount(int _ray) { m_iRayCount = _ray; }
+    int  GetRayCount() { return m_iRayCount; }
 
 public:
     CMRT* GetMRT(MRT_TYPE _type) { return m_MRT[(UINT)_type]; }
@@ -55,6 +109,7 @@ public:
 
     void RegisterLight2D(CLight2D* _Light2D) { m_vecLight2D.push_back(_Light2D); }
     UINT RegisterLight3D(CLight3D* _Light3D) { m_vecLight3D.push_back(_Light3D); return (UINT)m_vecLight3D.size() - 1; }
+
 
     void ClearCamera() { m_vecCam.clear(); }
 
@@ -71,12 +126,21 @@ public:
 
     const vector<CLight3D*> GetLight3D() { return m_vecLight3D; }
 
+ 
+    bool GetIsImGuiHovered() { return b_IsImGuiHovered; }
+    void SetIsImGuiHovered(bool _IsHovered) { b_IsImGuiHovered = _IsHovered; }
+ 
+
 public:
     CGameObject* GetGizMoTargetObj() { return m_GizMoTargetObject; }   //기즈모가 생겨야할 타겟오브젝트 게터, 세터 함수
     void SetGizMoTargetObj(CGameObject* _Object) { m_GizMoTargetObject = _Object; }
 
     void SetGizmoObjectChanged(bool _State) { m_bGizmoObjectChanged = _State; }
     bool GetGizmoObjectChanged() { return m_bGizmoObjectChanged; }
+
+    // 전장의 안개용 ray를 쏘고 있는 object모음집 return
+    vector<CGameObject*> GetRayObjectVec() { return m_vecRayObject; } 
+    vector<ColliderStruct> GetWallObjectVec() { return m_vecWallObject; }
 
     void CopyRenderTarget();
 

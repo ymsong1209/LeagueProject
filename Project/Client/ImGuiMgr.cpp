@@ -7,6 +7,7 @@
 #include <Engine\CPathMgr.h>
 
 #include <Engine\CGameObject.h>
+#include <Engine\CRenderMgr.h>
 
 #include "UI.h"
 #include "ParamUI.h"
@@ -129,6 +130,11 @@ void ImGuiMgr::finaltick()
 
     if (KEY_TAP(KEY::ENTER))
         ImGui::SetWindowFocus(nullptr);
+
+    if (ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow))
+        CRenderMgr::GetInst()->SetIsImGuiHovered(true);
+    else
+        CRenderMgr::GetInst()->SetIsImGuiHovered(false);
 }
 
 void ImGuiMgr::render()

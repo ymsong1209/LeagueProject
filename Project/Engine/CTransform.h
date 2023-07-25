@@ -23,6 +23,12 @@ private:
 
     float   m_fGizmoBounding_Radius; //기즈모한테 클릭될 바운딩 범위(구체 반지름값)
     bool    m_bGizmoObjExcept; // 기즈모한테 선택되지 않아야하는 오브젝트일 경우 true
+    bool    m_bUseMouseOutLine; //마우스 피킹 아웃라인 출력을 사용하려면 true
+
+
+    bool    m_bIsShootingRay;  // 와드,Player는 Ray를 쏜다.
+    float   m_fRayRange;
+    float   m_fOutlinethickness;
 
 public:
     void SetRelativePos(Vec3 _vPos) { m_vRelativePos = _vPos; }
@@ -62,6 +68,19 @@ public:
     void SetGizmoObjExcept(bool _IsNoGizmoObj) { m_bGizmoObjExcept = _IsNoGizmoObj; }
     bool GetGizmoObjExcept() { return m_bGizmoObjExcept; }
     // 기즈모한테 선택되지 않아야하는 오브젝트일 경우 true
+
+    
+    void SetIsShootingRay(bool _ray) { m_bIsShootingRay = _ray; }
+    bool GetIsShootingRay() { return m_bIsShootingRay; }
+
+    void SetRayRange(float _Range) { m_fRayRange = _Range; }
+    int  GetRayRange() { return m_fRayRange; }
+
+    void SetUseMouseOutline(bool _IsUse) { m_bUseMouseOutLine = _IsUse; }
+    bool GetUseMouseOutline() { return m_bUseMouseOutLine; }
+
+    void SetOutlineThickness(float _Thickenss) { m_fOutlinethickness = _Thickenss; }
+    float GetOutlineThickness() { return m_fOutlinethickness; }
 
 public:
     virtual void finaltick() override;

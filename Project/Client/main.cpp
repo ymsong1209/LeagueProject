@@ -139,44 +139,35 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
            {
                Send_CPickChampionAndStart(service,ChampionType::JINX);
            }
-          // else if (KEY_TAP(KEY::NUM_3))
-          // {
-          //     PlayerMove move = {};
-          //     move.moveDir.x = 1.f;
-          //     move.moveDir.y = 2.f;
-          //     move.moveDir.z = 3.f;
-          //     move.pos.x = 100.f;
-          //     move.pos.y = 20.f;
-          //     move.pos.z = 100.f;
-          //     move.state = PlayerMove::PlayerState::IDLE;
-          //                Send_CMove(service, move);
-          // }
-           
-            CEngine::GetInst()->progress();
-
-            auto now = std::chrono::steady_clock::now();
-            std::chrono::duration<double, std::milli> elapsed = now - last_send_time;
-
-            // 프레임 수에 관계 없이, 패킷 전송이 1/30초마다 일어나도록 함
-            if (elapsed.count() > (1000.0 / 60.0) && IsInGame)
-            {
-                // move 패킷을 서버에 보낸다.
-                GameObjMgr::GetInst()->tick(service);
-                last_send_time = now;
-            }
-            //// move 패킷을 서버에 보낸다. 
-            //GameObjMgr::GetInst()->tick(service);
-
-            // Event 처리
-            CEventMgr::GetInst()->tick();
 
 
-            CEditorObjMgr::GetInst()->progress();
+           CEngine::GetInst()->progress();
 
-            //mGuiMgr::GetInst()->progress();
+           auto now = std::chrono::steady_clock::now();
+           std::chrono::duration<double, std::milli> elapsed = now - last_send_time;
 
-            // 렌더 종료
-            CDevice::GetInst()->Present();
+           // 프레임 수에 관계 없이, 패킷 전송이 1/30초마다 일어나도록 함
+           if (elapsed.count() > (1000.0 / 60.0) && IsInGame)
+           {
+               // move 패킷을 서버에 보낸다.
+               GameObjMgr::GetInst()->tick(service);
+               last_send_time = now;
+           }
+           //// move 패킷을 서버에 보낸다. 
+           //GameObjMgr::GetInst()->tick(service);
+
+           // Event 처리
+           CEventMgr::GetInst()->tick();
+
+
+           CEditorObjMgr::GetInst()->progress();
+
+           if (CEngine::GetInst()->GetImguiActive()) {
+               ImGuiMgr::GetInst()->progress();
+           }
+
+           // 렌더 종료
+           CDevice::GetInst()->Present();
 
         }       
 

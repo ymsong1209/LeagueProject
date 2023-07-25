@@ -70,6 +70,12 @@
     <FxCompile Include="worldmap.fx">
       <Filter>Source\08. ShaderCode\02. Render\3D</Filter>
     </FxCompile>
+    <FxCompile Include="fogofwarshader.fx">
+      <Filter>Source\08. ShaderCode\03. Compute\FogOfWar\FogOfWar</Filter>
+    </FxCompile>
+    <FxCompile Include="fogfiltershader.fx">
+      <Filter>Source\08. ShaderCode\03. Compute\FogOfWar\FogFilter</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CRes.cpp">
@@ -293,6 +299,12 @@
     </ClCompile>
     <ClCompile Include="CPathFinder.cpp">
       <Filter>Source\06.Component\10. PathFinder</Filter>
+    </ClCompile>
+    <ClCompile Include="CFogOfWarShader.cpp">
+      <Filter>Source\08. ShaderCode\03. Compute\FogOfWar\FogOfWar</Filter>
+    </ClCompile>
+    <ClCompile Include="CFogFilterShader.cpp">
+      <Filter>Source\08. ShaderCode\03. Compute\FogOfWar\FogFilter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -644,6 +656,12 @@
     <ClInclude Include="CPathFinder.h">
       <Filter>Source\06.Component\10. PathFinder</Filter>
     </ClInclude>
+    <ClInclude Include="CFogOfWarShader.h">
+      <Filter>Source\08. ShaderCode\03. Compute\FogOfWar\FogOfWar</Filter>
+    </ClInclude>
+    <ClInclude Include="CFogFilterShader.h">
+      <Filter>Source\08. ShaderCode\03. Compute\FogOfWar\FogFilter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -849,6 +867,15 @@
     </Filter>
     <Filter Include="Source\06.Component\10. PathFinder">
       <UniqueIdentifier>{e5784bd0-20e1-4f60-87de-f3b849a7ac8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\08. ShaderCode\03. Compute\FogOfWar">
+      <UniqueIdentifier>{761b1dde-9034-428c-bbcd-c84d40a04cdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\08. ShaderCode\03. Compute\FogOfWar\FogOfWar">
+      <UniqueIdentifier>{7c9ad769-5bb0-4e89-8209-d79c96a962f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\08. ShaderCode\03. Compute\FogOfWar\FogFilter">
+      <UniqueIdentifier>{66f39572-13f8-45c6-b373-50772d132f4a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

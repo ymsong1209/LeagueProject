@@ -255,7 +255,7 @@ int IntersectsLay(float3 _vertices[3], float3 _vStart, float3 _vDir, out float3 
 
     float3 normal = normalize(cross(edge[0], edge[1]));
     float b = dot(normal, _vDir);
-
+        
     float3 w0 = _vStart - _vertices[0].xyz;
     float a = -dot(normal, w0);
     float t = a / b;
