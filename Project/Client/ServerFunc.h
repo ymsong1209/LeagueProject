@@ -1,5 +1,5 @@
 #pragma once
-#include <Engine\define.h>
+#include <Engine\serverpacket.h>
 
 
 //enum class FactionType

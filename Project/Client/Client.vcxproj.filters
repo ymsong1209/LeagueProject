@@ -305,17 +305,17 @@
     <ClInclude Include="PathFinderUI.h">
       <Filter>UI\InspectorUI\ComponentUI\15. PathFinderUI</Filter>
     </ClInclude>
-    <ClInclude Include="ServerSession.h">
+    <ClInclude Include="GameObjMgr.h">
+      <Filter>GameObjMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerFunc.h">
       <Filter>ClientMain</Filter>
     </ClInclude>
     <ClInclude Include="ServerPacketHandler.h">
       <Filter>ClientMain</Filter>
     </ClInclude>
-    <ClInclude Include="ServerFunc.h">
+    <ClInclude Include="ServerSession.h">
       <Filter>ClientMain</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjMgr.h">
-      <Filter>GameObjMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -484,17 +484,17 @@
     <ClCompile Include="PathFinderUI.cpp">
       <Filter>UI\InspectorUI\ComponentUI\15. PathFinderUI</Filter>
     </ClCompile>
-    <ClCompile Include="ServerPacketHandler.cpp">
-      <Filter>ClientMain</Filter>
+    <ClCompile Include="GameObjMgr.cpp">
+      <Filter>GameObjMgr</Filter>
     </ClCompile>
-    <ClCompile Include="ServerSession.cpp">
+    <ClCompile Include="ServerPacketHandler.cpp">
       <Filter>ClientMain</Filter>
     </ClCompile>
     <ClCompile Include="ServerFunc.cpp">
       <Filter>ClientMain</Filter>
     </ClCompile>
-    <ClCompile Include="GameObjMgr.cpp">
-      <Filter>GameObjMgr</Filter>
+    <ClCompile Include="ServerSession.cpp">
+      <Filter>ClientMain</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

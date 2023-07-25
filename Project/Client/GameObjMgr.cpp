@@ -38,71 +38,114 @@ CGameObject* GameObjMgr::Find(uint16 _targetId)
 
 void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 {
-	//std::mutex m;
-	//m.lock();
 
-	if (myPlayer)
+	std::mutex m;
 	{
-		// playerScript에 _info 변수들 추가하기.
+		std::lock_guard<std::mutex> lock(m);
 
 		Ptr<CMeshData> pMeshData = nullptr;
-		CGameObject* pObj = new CGameObject;
+		CGameObject* pObj = nullptr;
 
+		pMeshData = nullptr;
+		pObj = nullptr;
 		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
 		pObj = pMeshData->Instantiate();
-
+		pObj->SetName(L"Jinx");
+		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
+		pObj->GetRenderComponent()->SetFrustumCheck(false);
 		pObj->AddComponent(new CPlayerScript);
 		pObj->AddComponent(new CPathFinder);
+		pObj->AddComponent(new CCollider3D);
 
-		MyPlayerScript = pObj->GetScript<CPlayerScript>();
-		MyPlayerScript->SetPlayerID(MyPlayer.id);
-		MyPlayerScript->SetNickName(MyPlayer.nickname);
-		MyPlayerScript->SetFaction(MyPlayer.faction);
-
-		pObj->SetName(MyPlayer.nickname);
-		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
+		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+		pObj->Collider3D()->SetAbsolute(true);
+		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
+		pObj->Collider3D()->SetDrawCollision(false);
 		pObj->Animator3D()->SetRepeat(true);
+		pObj->Animator3D()->Play(L"Jinx\\Idle1_Base", true, 0.1f);
+		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
 
-		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->Transform()->SetRelativeScale(Vec3(0.3, 0.3, 0.3));
+		pObj->Transform()->SetUseMouseOutline(true);
 
-		
-		Vec3 spawnPos = Vec3(_info.posInfo.pos.x, _info.posInfo.pos.y, _info.posInfo.pos.z);
-		SpawnGameObject(pObj, spawnPos, 0);
+		SpawnGameObject(pObj, Vec3(0, 0, 0), 0);
 
-		_players.insert(std::make_pair(MyPlayer.id,pObj));
+		if (myPlayer)
+		{
+			// playerScript에 _info 변수들 추가하기.
+
+			Ptr<CMeshData> pMeshData = nullptr;
+			CGameObject* pObj = new CGameObject;
+
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
+			pObj = pMeshData->Instantiate();
+
+			pObj->AddComponent(new CPlayerScript);
+			pObj->AddComponent(new CPathFinder);
+			pObj->AddComponent(new CCollider3D);
+
+			MyPlayerScript = pObj->GetScript<CPlayerScript>();
+			MyPlayerScript->SetPlayerID(MyPlayer.id);
+			MyPlayerScript->SetNickName(MyPlayer.nickname);
+			MyPlayerScript->SetFaction(MyPlayer.faction);
+
+			pObj->SetName(MyPlayer.nickname);
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
+			pObj->Animator3D()->Play(L"Jinx\\Idle1_Base", true, 0.1f);
+			pObj->Animator3D()->SetRepeat(true);
+
+			pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
+			pObj->Collider3D()->SetDrawCollision(false);
+
+			pObj->GetRenderComponent()->SetFrustumCheck(false);
+
+			pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+
+
+			Vec3 spawnPos = Vec3(_info.posInfo.pos.x, _info.posInfo.pos.y, _info.posInfo.pos.z);
+			SpawnGameObject(pObj, spawnPos, 0);
+
+			_players.insert(std::make_pair(MyPlayer.id, pObj));
+		}
+		else
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			CGameObject* pObj = new CGameObject;
+
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
+			pObj = pMeshData->Instantiate();
+
+			pObj->AddComponent(new COtherPlayerScript);
+			pObj->AddComponent(new CPathFinder);
+			pObj->AddComponent(new CCollider3D);
+
+			COtherPlayerScript* player = pObj->GetScript<COtherPlayerScript>();
+			player->SetPlayerID(_info.id);
+			player->SetNickName(_info.nickname);
+			player->SetFaction(_info.faction);
+
+			//pObj->SetName(_info.nickname);
+			pObj->SetName(L"OtherPlayer");
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
+			pObj->Animator3D()->SetRepeat(true);
+			pObj->Animator3D()->Play(L"Jinx\\Idle1_Base", true, 0.15f);
+
+			pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
+			pObj->Collider3D()->SetDrawCollision(false);
+
+			pObj->GetRenderComponent()->SetFrustumCheck(false);
+			pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+
+
+			Vec3 spawnPos = Vec3(_info.posInfo.pos.x, _info.posInfo.pos.y, _info.posInfo.pos.z);
+			SpawnGameObject(pObj, spawnPos, 0);
+
+			_players.insert(std::make_pair(_info.id, pObj));
+		}
 	}
-	else
-	{
-		Ptr<CMeshData> pMeshData = nullptr;
-		CGameObject* pObj = new CGameObject;
-
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
-		pObj = pMeshData->Instantiate();
-
-		pObj->AddComponent(new COtherPlayerScript);
-		pObj->AddComponent(new CPathFinder);
-
-		COtherPlayerScript* player = pObj->GetScript<COtherPlayerScript>();
-		player->SetPlayerID(_info.id);
-		player->SetNickName(_info.nickname);
-		player->SetFaction(_info.faction);
-
-		//pObj->SetName(_info.nickname);
-		pObj->SetName(L"OtherPlayer");
-		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
-		pObj->Animator3D()->SetRepeat(true);
-		pObj->Animator3D()->Play(L"Jinx\\Run_Base", true, 0.15f);
-		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->Transform()->SetRelativeScale(Vec3(0.3, 0.3, 0.3));
-
-		Vec3 spawnPos = Vec3(_info.posInfo.pos.x, _info.posInfo.pos.y, _info.posInfo.pos.z);
-		SpawnGameObject(pObj, spawnPos, 0);
-
-		_players.insert(std::make_pair(_info.id, pObj));
-	}
-
-	//m.unlock();
 }
 
 void GameObjMgr::MovePlayer(uint16 _playerId, PlayerMove _playerMove)

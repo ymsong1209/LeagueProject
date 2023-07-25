@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <Windows.h>
 
-
+#include "serverpacket.h"
 #include "global.h"
 
 
