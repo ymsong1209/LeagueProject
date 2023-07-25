@@ -25,8 +25,8 @@ void ServerPacketHandler::HandlePacket(PacketSessionRef& session, BYTE* buffer, 
 	case S_PICK_FACTION:
 		Handle_S_PICK_FACTION(session, buffer, len);
 		break;
-	case S_PICK_CHAMPION_AND_START:
-		Handle_S_PICK_CHAMPION_AND_START(session, buffer, len);
+	case S_PICK_CHAMPION:
+		Handle_S_PICK_CHAMPION(session, buffer, len);
 		break;
 	case S_GAME_START:
 		Handle_S_GAME_START(session, buffer, len);
@@ -148,13 +148,13 @@ void ServerPacketHandler::Handle_S_PICK_FACTION(PacketSessionRef& session, BYTE*
 	std::cout << "===============================" << endl;
 }
 
-void ServerPacketHandler::Handle_S_PICK_CHAMPION_AND_START(PacketSessionRef& session, BYTE* buffer, int32 len)
+void ServerPacketHandler::Handle_S_PICK_CHAMPION(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
-	cout << "S_PICK_CHAMPION_AND_START Packet" << endl;
+	cout << "S_PICK_CHAMPION Packet" << endl;
 
 	BufferReader br(buffer, len);
 
-	PKT_S_PICK_CHAMPION_AND_START* pkt = reinterpret_cast<PKT_S_PICK_CHAMPION_AND_START*>(buffer);
+	PKT_S_PICK_CHAMPION* pkt = reinterpret_cast<PKT_S_PICK_CHAMPION*>(buffer);
 
 	if (pkt->Validate() == false)
 		return;
@@ -162,7 +162,7 @@ void ServerPacketHandler::Handle_S_PICK_CHAMPION_AND_START(PacketSessionRef& ses
 	bool _Success = pkt->success;
 
 	if (_Success)
-		cout << "S_PICK_CHAMPION_AND_START Success" << endl;
+		cout << "S_PICK_CHAMPION Success" << endl;
 
 	std::cout << "===============================" << endl;
 
