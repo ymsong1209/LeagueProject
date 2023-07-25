@@ -28,6 +28,8 @@ void ServerPacketHandler::HandlePacket(PacketSessionRef& session, BYTE* buffer, 
 	case S_PICK_CHAMPION_AND_START:
 		Handle_S_PICK_CHAMPION_AND_START(session, buffer, len);
 		break;
+	case S_GAME_START:
+		Handle_S_GAME_START(session, buffer, len);
 	case S_MOVE:
 		Handle_S_MOVE(session, buffer, len);
 	//case S_PLAYER_UPDATE:
@@ -148,13 +150,7 @@ void ServerPacketHandler::Handle_S_PICK_FACTION(PacketSessionRef& session, BYTE*
 
 void ServerPacketHandler::Handle_S_PICK_CHAMPION_AND_START(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
-	std::mutex m;
-	m.lock();
-
-	// 맵 불러옴
-	CreateTestLevel();
-	
-	cout << "_PICK_CHAMPION_AND_START Packet" << endl;
+	cout << "S_PICK_CHAMPION_AND_START Packet" << endl;
 
 	BufferReader br(buffer, len);
 
@@ -168,61 +164,88 @@ void ServerPacketHandler::Handle_S_PICK_CHAMPION_AND_START(PacketSessionRef& ses
 	if (_Success)
 		cout << "S_PICK_CHAMPION_AND_START Success" << endl;
 
-	PKT_S_PICK_CHAMPION_AND_START::PlayerInfoList playerInfoBuffs = pkt->GetPlayerInfoList();
-	for (auto& playerInfoBuff : playerInfoBuffs)
+	std::cout << "===============================" << endl;
+
+}
+
+void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* buffer, int32 len)
+{
+	std::mutex m;
+	m.lock();
+	cout << "S_GAME_START Packet" << endl;
+	BufferReader br(buffer, len);
+
+	PKT_S_GAME_START* pkt = reinterpret_cast<PKT_S_GAME_START*>(buffer);
+
+	if (pkt->Validate() == false)
+		return;
+
+	bool _Success = pkt->success;
+
+	if (_Success)
 	{
+		cout << "S_GAME_START Success" << endl;
+		// 인게임 진입
 
-		PKT_S_PICK_CHAMPION_AND_START::NickNameList playerNickNamebuffs = pkt->GetNickNameList(&playerInfoBuff);
+		// 맵 불러옴
+		CreateTestLevel();
 
-		// 전체 플레이어 이름
-		wstring playerNickName = L"";
-		for (auto& playerNameBuff : playerNickNamebuffs)
+		PKT_S_GAME_START::PlayerInfoList playerInfoBuffs = pkt->GetPlayerInfoList();
+		for (auto& playerInfoBuff : playerInfoBuffs)
 		{
-			playerNickName.push_back(playerNameBuff.nickname);
-		}
 
+			PKT_S_GAME_START::NickNameList playerNickNamebuffs = pkt->GetNickNameList(&playerInfoBuff);
 
-		// 내 id일시
-		if (MyPlayer.id == playerInfoBuff.id)
-		{
-			MyPlayer.champion = playerInfoBuff.champion; 
-			MyPlayer.posInfo = playerInfoBuff.posInfo;
-			
-			// 플레이어 생성
+			// 전체 플레이어 이름
+			wstring playerNickName = L"";
+			for (auto& playerNameBuff : playerNickNamebuffs)
 			{
-				//std::mutex m;
-				//m.lock();
-				GameObjMgr::GetInst()->AddPlayer(MyPlayer, true);
-				//m.unlock();
+				playerNickName.push_back(playerNameBuff.nickname);
 			}
 
-			cout << "My Champion : " << (int)MyPlayer.champion
-				<< " My PosInfo : " << (float)MyPlayer.posInfo.pos.x
-				<< ", " << (float)MyPlayer.posInfo.pos.y
-				<< ", " << (float)MyPlayer.posInfo.pos.z
+
+			// 내 id일시
+			if (MyPlayer.id == playerInfoBuff.id)
+			{
+				MyPlayer.champion = playerInfoBuff.champion;
+				MyPlayer.posInfo = playerInfoBuff.posInfo;
+
+				// 플레이어 생성
+				GameObjMgr::GetInst()->AddPlayer(MyPlayer, true);
+				
+				cout << "My Champion : " << (int)MyPlayer.champion
+					<< " My PosInfo : " << (float)MyPlayer.posInfo.pos.x
+					<< ", " << (float)MyPlayer.posInfo.pos.y
+					<< ", " << (float)MyPlayer.posInfo.pos.z
+					<< endl;
+
+				continue;
+			}
+
+			// 다른 플레이어 생성
+			PlayerInfo otherPlayer = {};
+			otherPlayer.champion = playerInfoBuff.champion;
+			otherPlayer.faction = playerInfoBuff.faction;
+			otherPlayer.id = playerInfoBuff.id;
+			otherPlayer.nickname = playerNickName;
+			otherPlayer.posInfo = playerInfoBuff.posInfo;
+
+			cout << "OtherPlayer Champion : " << (int)playerInfoBuff.champion
+				<< ", OtherPlayer PosInfo : " << (float)playerInfoBuff.posInfo.pos.x
+				<< ", " << (float)playerInfoBuff.posInfo.pos.y
+				<< ", " << (float)playerInfoBuff.posInfo.pos.z
 				<< endl;
 
-			continue;
+			GameObjMgr::GetInst()->AddPlayer(otherPlayer, false);
 		}
-
-		// 다른 플레이어 생성
-		PlayerInfo otherPlayer = {};
-		otherPlayer.champion = playerInfoBuff.champion;
-		otherPlayer.faction = playerInfoBuff.faction;
-		otherPlayer.id = playerInfoBuff.id;
-		otherPlayer.nickname = playerNickName;
-		otherPlayer.posInfo = playerInfoBuff.posInfo;
-		
-		cout << "OtherPlayer Champion : " << (int)playerInfoBuff.champion
-			<< ", OtherPlayer PosInfo : " << (float)playerInfoBuff.posInfo.pos.x
-			<< ", " << (float)playerInfoBuff.posInfo.pos.y
-			<< ", " << (float)playerInfoBuff.posInfo.pos.z
-			<< endl;
-		
-		GameObjMgr::GetInst()->AddPlayer(otherPlayer, false);
-
-		
+		IsInGame = true;
 	}
+	else
+	{
+		IsInGame = false;
+		// 다시 진영 선택 레벨로 간다.
+	}
+
 	std::cout << "===============================" << endl;
 
 	m.unlock();

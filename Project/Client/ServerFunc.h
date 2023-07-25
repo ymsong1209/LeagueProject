@@ -83,7 +83,7 @@ struct PlayerInfoPacket
 
 
 
-
+extern bool IsInGame;
 extern PlayerInfo MyPlayer;
 
 void Send_CLogin(ClientServiceRef _service, wstring _userName);

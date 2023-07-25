@@ -46,8 +46,9 @@ void Send_CPickChampionAndStart(ClientServiceRef _service, ChampionType _champio
     std::cout << "C_PICK_CHAMPION_AND_START Pakcet" << endl;
 
     PKT_C_PICK_CHAMPION_AND_START_WRITE pktWriter(_championType);
-
+    
     SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+    
     _service->Broadcast(sendBuffer);
 
     std::cout << "===============================" << endl;
@@ -65,5 +66,6 @@ void Send_CMove(ClientServiceRef _service, PlayerMove _move)
     std::cout << "===============================" << endl;
 }
 
+bool IsInGame = false;
 PlayerInfo MyPlayer = {};
 wstring MyPlayerNickName = L"";

@@ -15,11 +15,13 @@ enum
 	C_PICK_CHAMPION_AND_START = 5,
 	S_PICK_CHAMPION_AND_START = 6,
 
-	C_PLAYER_UPDATE = 7,
-	S_PLAYER_UPDATE = 8,
+	S_GAME_START = 7,
 
-	C_MOVE = 9,
-	S_MOVE = 10,
+	C_PLAYER_UPDATE = 8,
+	S_PLAYER_UPDATE = 9,
+
+	C_MOVE = 10,
+	S_MOVE = 11,
 };
 
 class ServerPacketHandler
@@ -31,6 +33,7 @@ public:
 	static void Handle_S_LOGIN(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_PICK_FACTION(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_PICK_CHAMPION_AND_START(PacketSessionRef& session, BYTE* buffer, int32 len);
+	static void Handle_S_GAME_START(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_MOVE(PacketSessionRef& session, BYTE* buffer, int32 len);
 
 private:
@@ -352,13 +355,36 @@ struct PKT_S_PICK_CHAMPION_AND_START
 	uint16 packetSize;
 	uint16 packetId;
 	bool   success;
+	uint16 PlayerID;
+	ChampionType champion;
+
+	bool Validate()
+	{
+		uint32 size = 0;
+		size += sizeof(PKT_C_PICK_CHAMPION_AND_START);
+		if (packetSize < size)
+			return false;
+
+		if (size != packetSize)
+			return false;
+
+		return true;
+	}
+};
+#pragma pack()
+
+#pragma pack(1)
+struct PKT_S_GAME_START {
+	uint16 packetSize;
+	uint16 packetId;
+	bool   success;
 	uint16 playerInfoOffset;
 	uint16 playerInfoCount;
 
 	bool Validate()
 	{
 		uint32 size = 0;
-		size += sizeof(PKT_S_PICK_CHAMPION_AND_START);
+		size += sizeof(PKT_S_GAME_START);
 		if (packetSize < size)
 			return false;
 
@@ -373,7 +399,6 @@ struct PKT_S_PICK_CHAMPION_AND_START
 			if (playerInfoList[i].Validate((BYTE*)this, packetSize, OUT size) == false)
 				return false;
 		}
-
 
 		if (size != packetSize)
 			return false;
@@ -399,7 +424,6 @@ struct PKT_S_PICK_CHAMPION_AND_START
 	}
 };
 #pragma pack()
-
 
 
 #pragma pack(1)

@@ -82,8 +82,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
    this_thread::sleep_for(1s);
    
    ClientServiceRef service = MakeShared<ClientService>(
-       NetAddress(L"221.148.206.199", 40000),
-       //NetAddress(L"127.0.0.1", 40000),
+       //NetAddress(L"221.148.206.199", 40000),
+       NetAddress(L"127.0.0.1", 40000),
        MakeShared<IocpCore>(),
        MakeShared<ServerSession>, // TODO : SessionManager 등
        1);
@@ -112,8 +112,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
    // for fps 
    auto last_send_time = std::chrono::steady_clock::now();
 
-   bool ingameCheck = false;
-
     while (true) 
     {
         if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
@@ -140,7 +138,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
            else if (KEY_TAP(KEY::NUM_2))
            {
                Send_CPickChampionAndStart(service,ChampionType::JINX);
-               ingameCheck = true;
            }
           // else if (KEY_TAP(KEY::NUM_3))
           // {
@@ -161,7 +158,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             std::chrono::duration<double, std::milli> elapsed = now - last_send_time;
 
             // 프레임 수에 관계 없이, 패킷 전송이 1/30초마다 일어나도록 함
-            if (elapsed.count() > (1000.0 / 60.0) && ingameCheck)
+            if (elapsed.count() > (1000.0 / 60.0) && IsInGame)
             {
                 // move 패킷을 서버에 보낸다.
                 GameObjMgr::GetInst()->tick(service);
