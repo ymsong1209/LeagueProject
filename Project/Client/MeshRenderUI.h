@@ -14,7 +14,7 @@ public:
     void SelectMaterial(DWORD_PTR _Key);
 
 public:
-    void SetTexMovingTypeAndValue(int& _Target, Vec4& _FuncValue,  int _RandNum);
+    void SetTexMovingTypeAndValue(int& _Target, Vec4& _FuncValue, Vec2& _Offset,  int _RandNum);
 
 
 public:

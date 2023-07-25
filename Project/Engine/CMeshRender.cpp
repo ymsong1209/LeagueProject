@@ -99,6 +99,14 @@ void CMeshRender::SetTexMovingStyle(MovTexType _TexType, MovTexMoveType _Type)
 		m_tMeshMoveData.OutputTexMovingStyle = (int)_Type;
 }
 
+void CMeshRender::SetOffsetValue(MovTexType _TexType, Vec2 _OffsetValue)
+{
+	if (_TexType == MovTexType::OUTPUT)
+		m_tMeshMoveData.OutputTexPreviousPos = _OffsetValue;
+	else if (_TexType == MovTexType::PUNCTURE)
+		m_tMeshMoveData.PunctureTexPreviousPos = _OffsetValue;
+}
+
 Vec4 CMeshRender::GetFuncValue(MovTexType _TexType)
 {
 	if (_TexType == MovTexType::OUTPUT)
@@ -119,6 +127,28 @@ MovTexMoveType CMeshRender::GetTexMovingStyle(MovTexType _TexType)
 
 	else
 		return (MovTexMoveType::END); // 이 분기로 빠지면 코드 잘못쓰고 있는 것임.
+}
+
+Vec2 CMeshRender::GetOffsetValue(MovTexType _TexType)
+{
+	switch (_TexType)
+	{
+	case MovTexType::OUTPUT:
+	{
+		return m_tMeshMoveData.OutputTexPreviousPos;
+	}
+		break;
+	case MovTexType::PUNCTURE:
+	{
+		return m_tMeshMoveData.PunctureTexPreviousPos;
+	}
+		break;
+	case MovTexType::ADDITIVE:
+	case MovTexType::END:
+	{
+		return Vec2(0.f, 0.f); // 여기로 빠지면 의도대로 함수를 쓰고 있지 않은 것임.
+	}
+	}
 }
 
 void CMeshRender::CalculateNextOffset(int _MoveStyle, Vec2& _PreviousPos, Vec4 _FunctionValue, float _DT)

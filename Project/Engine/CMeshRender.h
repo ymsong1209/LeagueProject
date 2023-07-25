@@ -43,10 +43,12 @@ public:
     void SetFuncValue(MovTexType _TexType, Vec4 _Value);
     void SetTexMovingStyle(MovTexType _TexType, MovTexMoveType _Type);
     void SetAdditiveTexColor(Vec4 _Color) { m_tMeshMoveData.AdditiveColor = _Color; }
+    void SetOffsetValue(MovTexType _TexType, Vec2 _OffsetValue);
 
     Vec4 GetFuncValue(MovTexType _TexType);
     MovTexMoveType GetTexMovingStyle(MovTexType _TexType);
     Vec4 GetAdditiveTexColor() { return m_tMeshMoveData.AdditiveColor;}
+    Vec2 GetOffsetValue(MovTexType _TexType);
 
 public:
     void CalculateNextOffset(int  _MoveStyle, Vec2& _PreviousPos, Vec4 _FunctionValue, float _DT);
