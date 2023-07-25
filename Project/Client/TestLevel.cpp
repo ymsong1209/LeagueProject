@@ -113,31 +113,31 @@ void CreateTestLevel()
 	// FBX Loading
 	// ============	
 	{
-		Ptr<CMeshData> pMeshData = nullptr;
-		CGameObject* pObj = nullptr;
-
-		pMeshData = nullptr;
-		pObj = nullptr;
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
-		pObj = pMeshData->Instantiate();
-		pObj->SetName(L"Jinx");
-		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
-		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->AddComponent(new CPlayerScript);
-		pObj->AddComponent(new CPathFinder);
-		pObj->AddComponent(new CCollider3D);
-
-		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
-		pObj->Collider3D()->SetAbsolute(true);
-		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
-		pObj->Collider3D()->SetDrawCollision(false);
-		pObj->Animator3D()->SetRepeat(true);
-		pObj->Animator3D()->Play(L"Jinx\\Idle1_Base", true, 0.1f);
-		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-
-		pObj->Transform()->SetUseMouseOutline(true);
-
-		SpawnGameObject(pObj, Vec3(0, 0, 0), 0);
+		//Ptr<CMeshData> pMeshData = nullptr;
+		//CGameObject* pObj = nullptr;
+		//
+		//pMeshData = nullptr;
+		//pObj = nullptr;
+		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
+		//pObj = pMeshData->Instantiate();
+		//pObj->SetName(L"Jinx");
+		//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
+		//pObj->GetRenderComponent()->SetFrustumCheck(false);
+		//pObj->AddComponent(new CPlayerScript);
+		//pObj->AddComponent(new CPathFinder);
+		//pObj->AddComponent(new CCollider3D);
+		//
+		//pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+		//pObj->Collider3D()->SetAbsolute(true);
+		//pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
+		//pObj->Collider3D()->SetDrawCollision(false);
+		//pObj->Animator3D()->SetRepeat(true);
+		//pObj->Animator3D()->Play(L"Jinx\\Idle1_Base", true, 0.1f);
+		//pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+		//
+		//pObj->Transform()->SetUseMouseOutline(true);
+		//
+		//SpawnGameObject(pObj, Vec3(0, 0, 0), 0);
 	}
 
 

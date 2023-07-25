@@ -4,12 +4,12 @@
 #include "pch.h"
 #include "Client.h"
 
-//#include "ThreadManager.h"
-//#include "Service.h"
-//#include "Session.h"
-//#include "BufferReader.h"
-//#include "ServerPacketHandler.h"
-//#include "ServerSession.h"
+#include "ThreadManager.h"
+#include "Service.h"
+#include "Session.h"
+#include "BufferReader.h"
+#include "ServerPacketHandler.h"
+#include "ServerSession.h"
 
 #include "CEditorObjMgr.h"
 #include <Engine\CDevice.h>
@@ -61,7 +61,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     ImGuiMgr::GetInst()->init(g_hWnd);
 
     // 테스트 용 레벨 생성
-    CreateTestLevel();
+    //CreateTestLevel();
     //CreateLoginLevel();
 
 
@@ -69,47 +69,47 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CLIENT));
     MSG msg;
 
-    //// 해상도 수정
-    //SetProcessDPIAware();
-    //
-    //AllocConsole();
-    //// 표준 출력을 콘솔 창으로 리디렉션
-    //freopen("CONOUT$", "w", stdout);
+    // 해상도 수정
+    SetProcessDPIAware();
+    
+    AllocConsole();
+    // 표준 출력을 콘솔 창으로 리디렉션
+    freopen("CONOUT$", "w", stdout);
 
 
 
-   //this_thread::sleep_for(1s);
-   //
-   //ClientServiceRef service = MakeShared<ClientService>(
-   //    //NetAddress(L"221.148.206.199", 40000),
-   //    NetAddress(L"127.0.0.1", 40000),
-   //    MakeShared<IocpCore>(),
-   //    MakeShared<ServerSession>, // TODO : SessionManager 등
-   //    1);
-   //
-   //ASSERT_CRASH(service->Start());
-   //
-   //GThreadManager->SetFlags(1);
-   //for (int32 i = 0; i < 2; i++)
-   //{
-   //    GThreadManager->Launch([=]()
-   //    {
-   //        while (true)
-   //        {
-   //            service->GetIocpCore()->Dispatch(10);
-   //            if (GThreadManager->GetFlags() == 0)
-   //            {
-   //                this_thread::sleep_for(500ms);
-   //                return;
-   //                //break;
-   //            }
-   //            
-   //        }
-   //    });
-   //}    
+   this_thread::sleep_for(1s);
+   
+   ClientServiceRef service = MakeShared<ClientService>(
+       //NetAddress(L"221.148.206.199", 40000),  // 다혜집 데탑 IP
+       NetAddress(L"127.0.0.1", 40000), // 로컬 호스트
+       MakeShared<IocpCore>(),
+       MakeShared<ServerSession>, // TODO : SessionManager 등
+       1);
+   
+   ASSERT_CRASH(service->Start());
+   
+   GThreadManager->SetFlags(1);
+   for (int32 i = 0; i < 2; i++)
+   {
+       GThreadManager->Launch([=]()
+       {
+           while (true)
+           {
+               service->GetIocpCore()->Dispatch(10);
+               if (GThreadManager->GetFlags() == 0)
+               {
+                   this_thread::sleep_for(500ms);
+                   return;
+                   //break;
+               }
+               
+           }
+       });
+   }    
 
-   //// for fps 
-   //auto last_send_time = std::chrono::steady_clock::now();
+   // for fps 
+   auto last_send_time = std::chrono::steady_clock::now();
 
     while (true) 
     {
@@ -126,34 +126,32 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
         else
         {
-          // if (KEY_TAP(KEY::SPACE) && service->GetCurrentSessionCount() > 0)
-          // {
-          //     Send_CLogin(service, L"KIYO");
-          // }
-          // else if (KEY_TAP(KEY::NUM_1))
-          // {
-          //     Send_CPickFaction(service);
-          // }
-          // else if (KEY_TAP(KEY::NUM_2))
-          // {
-          //     Send_CPickChampionAndStart(service,ChampionType::JINX);
-          // }
+            if (KEY_TAP(KEY::SPACE) && service->GetCurrentSessionCount() > 0)
+            {
+                Send_CLogin(service, L"KIYO");
+            }
+            else if (KEY_TAP(KEY::NUM_1))
+            {
+                Send_CPickFaction(service);
+            }
+            else if (KEY_TAP(KEY::NUM_2))
+            {
+                Send_CPickChampionAndStart(service,ChampionType::JINX);
+            }
 
 
            CEngine::GetInst()->progress();
 
-           //auto now = std::chrono::steady_clock::now();
-           //std::chrono::duration<double, std::milli> elapsed = now - last_send_time;
-           //
-           //// 프레임 수에 관계 없이, 패킷 전송이 1/30초마다 일어나도록 함
-           //if (elapsed.count() > (1000.0 / 60.0) && IsInGame)
-           //{
-           //    // move 패킷을 서버에 보낸다.
-           //    GameObjMgr::GetInst()->tick(service);
-           //    last_send_time = now;
-           //}
-           ////// move 패킷을 서버에 보낸다. 
-           ////GameObjMgr::GetInst()->tick(service);
+           auto now = std::chrono::steady_clock::now();
+           std::chrono::duration<double, std::milli> elapsed = now - last_send_time;
+           
+           // 프레임 수에 관계 없이, 패킷 전송이 1/30초마다 일어나도록 함
+           if (elapsed.count() > (1000.0 / 30.0) && IsInGame)
+           {
+               // move 패킷을 서버에 보낸다.
+               GameObjMgr::GetInst()->tick(service);
+               last_send_time = now;
+           }
 
            // Event 처리
            CEventMgr::GetInst()->tick();
@@ -174,11 +172,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     }
 
-    //GThreadManager->Join();
-    //
-    //// 콘솔 창 닫기
-    ////fclose(stdout);
-    //FreeConsole();
+    GThreadManager->Join();
+    
+    // 콘솔 창 닫기
+    //fclose(stdout);
+    FreeConsole();
 
 
     return (int) msg.wParam;
@@ -278,8 +276,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
     case WM_DESTROY:
-        //GThreadManager->SetFlags(0);
-        //this_thread::sleep_for(1s);
+        GThreadManager->SetFlags(0);
+        this_thread::sleep_for(1s);
         PostQuitMessage(0);
         break;
 
