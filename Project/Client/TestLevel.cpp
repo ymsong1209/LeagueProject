@@ -215,6 +215,17 @@ void CreateTestLevel()
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
 		pObj->Transform()->SetUseMouseOutline(true);
 
+		//터지는 넥서스쪽 보기 - 
+		////넥서스는 0번머터리얼을 쓰면 1번 머터리얼에는 알파텍스쳐를 장착하고, 1번머터리얼을 쓰면 0번머터리얼에 알파 텍스쳐를 장착해줘야한다.
+		// 
+		//pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\nexus_destroyed_red_clear.png"));
+		//pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
+
+
+		//빙빙 도는 넥서스쪽 보기- 
+		//pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
+		//pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\nexus_red_clear.png"));
+
 		SpawnGameObject(pObj, Vec3(0, 0, 0), 0);
 	}
 
