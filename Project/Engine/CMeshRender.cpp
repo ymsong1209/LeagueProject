@@ -392,7 +392,11 @@ void CMeshRender::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType&
 	{
 		Value TargetTexObject(kObjectType);
 
-		TargetTexObject.AddMember("Texture", SaveResRefJson(m_arrMeshTex[i].Get(), allocator), allocator);
+		string key = "Texture[" + std::to_string(i) + "]";
+		Value keyName(kStringType);
+		keyName.SetString(key.c_str(), key.length(), allocator);
+		TargetTexObject.AddMember(keyName, SaveResRefJson(m_arrMeshTex[i].Get(), allocator), allocator);
+
 		MeshTexArray.PushBack(TargetTexObject, allocator);
 	}
 
@@ -452,7 +456,7 @@ void CMeshRender::LoadFromLevelJsonFile(const Value& _componentValue)
 	{
 		Ptr<CTexture> pTexture;
 
-		string key = "Texture";
+		string key = "Texture[" + std::to_string(i) + "]";
 		Value keyName(kStringType);
 		keyName.SetString(key.c_str(), key.length());
 
