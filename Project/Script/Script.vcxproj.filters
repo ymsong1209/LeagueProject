@@ -48,6 +48,9 @@
     <ClInclude Include="CCameraMoveScript.h">
       <Filter>Script\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="COtherPlayerScript.h">
+      <Filter>Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CMissileScript.cpp">
@@ -79,6 +82,9 @@
     </ClCompile>
     <ClCompile Include="CCameraMoveScript.cpp">
       <Filter>Script\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="COtherPlayerScript.cpp">
+      <Filter>Script</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

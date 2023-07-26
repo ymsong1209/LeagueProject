@@ -1,0 +1,5 @@
+sruap_ordernexus_balloon_death.anm_skinned_mesh.002,0,192
+sruap_ordernexus_death.anm_skinned_mesh.001,193,385
+sruap_ordernexus_idle.anm_skinned_mesh.001,386,625
+sruap_ordernexus_spawn.anm_skinned_mesh.001,626,750
+sruap_ordernexus_spawn_hold.anm_skinned_mesh.001,751,755
