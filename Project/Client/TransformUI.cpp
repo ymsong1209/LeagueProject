@@ -17,6 +17,7 @@ static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::TRANSLATE);
 TransformUI::TransformUI()
 	: ComponentUI("##Transform", COMPONENT_TYPE::TRANSFORM)
 	, b_IsWindowMode(false)
+	, m_fDragSpeed(1.f)
 {
 	SetName("Transform");
 }
@@ -49,17 +50,23 @@ int TransformUI::render_update()
 		Vec3 vRotation = GetTarget()->Transform()->GetRelativeRot();
 		vRotation = (vRotation / XM_PI) * 180.f;
 
+
+		ImGui::Text("Move Speed : ");
+		ImGui::SameLine();
+		ImGui::DragFloat("##MoveSpeed", &m_fDragSpeed, 0.04f); 
+
+
 		ImGui::Text("Position");
 		ImGui::SameLine();
-		ImGui::DragFloat3("##Relative Position", vPos);
+		ImGui::DragFloat3("##Relative Position", vPos, m_fDragSpeed);
 
 		ImGui::Text("Scale   ");
 		ImGui::SameLine();
-		ImGui::DragFloat3("##Relative Scale", vScale);
+		ImGui::DragFloat3("##Relative Scale", vScale, m_fDragSpeed);
 
 		ImGui::Text("Rotation");
 		ImGui::SameLine();
-		ImGui::DragFloat3("##Relative Rotation", vRotation);
+		ImGui::DragFloat3("##Relative Rotation", vRotation, m_fDragSpeed);
 
 		GetTarget()->Transform()->SetRelativePos(vPos);
 		GetTarget()->Transform()->SetRelativeScale(vScale);

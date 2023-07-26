@@ -1,5 +1,4 @@
 CCameraMoveScript
-CCharacterUI
 CCharacterUIScript
 CGravityScript
 CInGameCameraScript

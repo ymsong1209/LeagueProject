@@ -35,7 +35,7 @@ public:
     void SetOutputTexture(Ptr<CTexture> _Tex);
     void SetPunctureTexture(Ptr<CTexture> _Tex) { m_arrMeshTex[MESH_TEX_PARAM::PUNCTURE] = _Tex; }
     void SetAdditiveTexture(Ptr<CTexture> _Tex) { m_arrMeshTex[MESH_TEX_PARAM::ADDITIVE] = _Tex; }
-   
+
     Ptr<CTexture> GetOutputTexture(Ptr<CTexture> _Tex);
     Ptr<CTexture> GetPunctureTex() { return m_arrMeshTex[MESH_TEX_PARAM::PUNCTURE]; }
     Ptr<CTexture> GetAdditiveTex() { return m_arrMeshTex[MESH_TEX_PARAM::ADDITIVE]; }
@@ -47,7 +47,7 @@ public:
 
     Vec4 GetFuncValue(MovTexType _TexType);
     MovTexMoveType GetTexMovingStyle(MovTexType _TexType);
-    Vec4 GetAdditiveTexColor() { return m_tMeshMoveData.AdditiveColor;}
+    Vec4 GetAdditiveTexColor() { return m_tMeshMoveData.AdditiveColor; }
     Vec2 GetOffsetValue(MovTexType _TexType);
 
 public:
@@ -66,11 +66,10 @@ public:
     virtual void SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)override;
     virtual void LoadFromLevelJsonFile(const Value& _componentValue)override;
 
-    
+
     CLONE(CMeshRender);
 public:
     CMeshRender();
     CMeshRender(const CMeshRender& _other);
     ~CMeshRender();
 };
-

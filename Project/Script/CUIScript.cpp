@@ -3,6 +3,10 @@
 
 void CUIScript::begin()
 {
+	CharacterType = CHARACTER_TYPE::JINX;
+	SpellType_D = SUMMONERS_SPELL::IGNITE;
+	SpellType_F = SUMMONERS_SPELL::CLEANSE;
+
 	m_UIBackPanel = new CGameObject;
 	m_UIBackPanel->SetName(L"UIBackPanel");
 	m_UIBackPanel->AddComponent(new CTransform);
@@ -12,7 +16,7 @@ void CUIScript::begin()
 	m_UIBackPanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\UIBackMaterial.mtrl"),0);
 	m_UIBackPanel->MeshRender()->GetDynamicMaterial(0);
 	m_UIBackPanel->MeshRender()->SetRaySightCulling(false);
-	SpawnGameObject(m_UIBackPanel, Vec3(0.f, -88.f, 373.f), 31);
+	SpawnGameObject(m_UIBackPanel, Vec3(0.f, -109.5f, 373.f), 31);
 
 	m_UIFrontPanel = new CGameObject;
 	m_UIFrontPanel->SetName(L"UIFrontPanel");
@@ -23,9 +27,7 @@ void CUIScript::begin()
 	m_UIFrontPanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\UIFrontMaterial.mtrl"), 0);
 	m_UIFrontPanel->MeshRender()->GetDynamicMaterial(0);
 	m_UIFrontPanel->MeshRender()->SetRaySightCulling(false);
-	SpawnGameObject(m_UIFrontPanel, Vec3(0.f, -88.f, 373.f), 31);
-
-
+	SpawnGameObject(m_UIFrontPanel, Vec3(-1.f, -110.f, 369.f), 31);
 	//UI들끼리 앞뒤를 지정해주기 위해서는 깊이체크가 필요함.
 }
 

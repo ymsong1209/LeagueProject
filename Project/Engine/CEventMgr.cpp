@@ -146,6 +146,15 @@ void CEventMgr::tick()
 		}
 
 		break;
+
+		//스크립트 시점에서 오브젝트의 특정 정보를 변경해줄경우 인스펙터에 반영이 안됨 (스크립트에서 오브젝트 이름변경 등..) - 이미 이벤트 매니저 호출 끝나고 스크립트 변경사항이 추가되니까 소용이 없는거같음
+		//그래서 이벤트매니저에 ui 리로드 이벤트 추가
+		case EVENT_TYPE::INSPECTOR_RELOAD:
+		{
+			m_LevelChanged = true;
+		}
+
+		break;
 		}
 	}
 

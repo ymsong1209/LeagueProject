@@ -55,6 +55,52 @@
                     "children": []
                 },
                 {
+                    "ObjName": "UICamera",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vRelativeScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
+                        },
+                        {
+                            "CAMERA": 7,
+                            "fAspectRatio": 1.600000023841858,
+                            "fWidth": 1600.0,
+                            "fScale": 4.099999904632568,
+                            "ProjType": 0,
+                            "iLayerMask": 2147483648,
+                            "iCamIdx": 1,
+                            "fFar": 50000.0,
+                            "bShowFrustumDebug": false,
+                            "bViewGizmoBounding": false,
+                            "fFov": 30.0
+                        },
+                        16
+                    ],
+                    "scripts": [],
+                    "children": []
+                },
+                {
                     "ObjName": "Directional Light",
                     "components": [
                         {
@@ -1799,7 +1845,8 @@
                                 "z": 0.0
                             },
                             "bAbsolute": false,
-                            "Shape": 0
+                            "Shape": 0,
+                            "DrawCollision": true
                         },
                         {
                             "MESHRENDER": 10,
@@ -2375,7 +2422,8 @@
                                 "z": 0.0
                             },
                             "bAbsolute": false,
-                            "Shape": 0
+                            "Shape": 0,
+                            "DrawCollision": true
                         },
                         {
                             "MESHRENDER": 10,
@@ -4118,7 +4166,8 @@
                                 "z": 0.0
                             },
                             "bAbsolute": false,
-                            "Shape": 0
+                            "Shape": 0,
+                            "DrawCollision": true
                         },
                         16
                     ],
@@ -8419,7 +8468,45 @@
         },
         {
             "layerName": "ViewPort UI",
-            "gameObjects": []
+            "gameObjects": [
+                {
+                    "ObjName": "UIObj",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vRelativeScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
+                        },
+                        16
+                    ],
+                    "scripts": [
+                        {
+                            "scriptName": "CCharacterUIScript"
+                        }
+                    ],
+                    "children": []
+                }
+            ]
         }
     ],
     "CollisionMatrix": [

@@ -277,6 +277,10 @@ enum class EVENT_TYPE
 
 	// Server Packet //
 	MOVE_PACKET,    // wParam : GameObject,  lParam : Update Move Packet
+
+	//스크립트 시점에서 오브젝트의 특정 정보를 변경해줄경우 인스펙터에 반영이 안됨 (스크립트에서 오브젝트 이름변경 등..)
+	//그래서 이벤트매니저에 ui 리로드 이벤트 추가
+	INSPECTOR_RELOAD,
 };
 
 
@@ -354,11 +358,42 @@ enum class PLAYER_STATE // 징크스 이동 테스트용 Run, Idle 상태 추가 (나중에 fsm 
 };
 
 
-enum class CHARACTER
+enum class CHARACTER_TYPE
 {
 	JINX,
 	MALPHIGHT,
 	AMUMU,
 	VEIN,
 	AHRI,
+	END,
+}; //이 이름을 조합하여 자동으로 머터리얼 찾아오므로 함부로 변경 x!!
+
+extern const char* CHARACTER_TYPE_STR[(UINT)CHARACTER_TYPE::END];
+extern const wchar_t* CHARACTER_TYPE_WSTR[(UINT)CHARACTER_TYPE::END];
+
+//UI이미지용
+enum class SkillNum
+{
+	Q,
+	W,
+	E,
+	R,
+	PASSIVE,
+	END,
+}; //이 이름을 조합하여 자동으로 머터리얼 찾아오므로 함부로 변경 x!!
+
+extern const wchar_t* SKILL_TYPE_WSTR[(UINT)SkillNum::END];
+
+enum class SUMMONERS_SPELL //스펠 이미지 이름을 가져올때 이 이름으로 가져오므로 함부로 변경 x!! (자동화를 위해)
+{
+	FLASH, //점멸
+	HEAL, //회복
+	GHOST, //유체화
+	IGNITE, //점화
+	SMITE, //강타
+	EXHAUST, //탈진
+	CLEANSE, //정화
+	END,
 };
+
+extern const wchar_t* SUMMONERS_SPELL_WSTR[(UINT)SUMMONERS_SPELL::END];

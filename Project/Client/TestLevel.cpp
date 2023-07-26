@@ -56,10 +56,11 @@ void CreateTestLevel()
 	pUICam->SetName(L"UICamera");
 	pUICam->AddComponent(new CTransform);
 	pUICam->AddComponent(new CCamera);
-	pUICam->Camera()->SetProjType(PROJ_TYPE::PERSPECTIVE);
+	pUICam->Camera()->SetProjType(PROJ_TYPE::ORTHOGRAPHIC);
 	pUICam->Camera()->SetCameraIndex(1);
 	pUICam->Camera()->SetLayerMask(31, true);	// 모든 레이어 체크
 	SpawnGameObject(pUICam, Vec3(0.f, 0.f, 0.f), 0);
+
 
 	CGameObject* UIObj = new CGameObject; //각종 스크립트에서 처리할 것들
 	UIObj->SetName(L"UIObj");
@@ -177,53 +178,24 @@ void CreateTestLevel()
 	{
 		Ptr<CMeshData> pMeshData = nullptr;
 		CGameObject* pObj = nullptr;
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\LoLMapRot19Size30.fbx");
-		pObj = pMeshData->Instantiate();
-		pObj->SetName(L"LoLMapRot19Size30");
-		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->AddComponent(new CCollider2D);
-		pObj->Collider2D()->SetAbsolute(true);
-		pObj->Collider2D()->SetDrawCollision(false);
-		pObj->GetRenderComponent()->SetRaySightCulling(false);
+		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\LoLMapRot19Size30.fbx");
+		//pObj = pMeshData->Instantiate();
+		//pObj->SetName(L"LoLMapRot19Size30");
+		//pObj->GetRenderComponent()->SetFrustumCheck(false);
+		//pObj->AddComponent(new CCollider2D);
+		//pObj->Collider2D()->SetAbsolute(true);
+		//pObj->Collider2D()->SetDrawCollision(false);
+		//pObj->GetRenderComponent()->SetRaySightCulling(false);
 
-//<<<<<<< HEAD
-		/*Ptr<CMeshData> pMeshData = nullptr;
-		CGameObject* pObj = nullptr;
-		
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\land16_fin.fbx");
-		
-		pObj = pMeshData->Instantiate();
-		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);*/
-//=======
-		pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-		pObj->Collider2D()->SetOffsetScale(Vec2(2700.f, 2700.f));
-		pObj->Collider2D()->SetOffsetPos(Vec3(1125.f, 16.f, 1200.f));
-		pObj->Transform()->SetGizmoObjExcept(true);
-		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 6);
-//>>>>>>> dev
-
-		// 마우스 피킹 이동을 위한 맵 콜리전 - 따로 오브젝트로 빼준 이유는 렉트메쉬콜리전을 회전시켜야하는데 맵도 같이 회전되면 안돼서 따로 오브젝트로 뺐음
-		// 맵은 이동된다는 가정을 하지않음, 크기,회전,이동을 해버리면 네브메쉬랑 좌표값이 안맞게 되어버린다.
-		// 맵이 있으면 맵 콜리전도 있어야함!
-		//CGameObject* MapCollision = new CGameObject;
-		//MapCollision->SetName(L"MapCollision");
-		//MapCollision->AddComponent(new CCollider2D);
-		//MapCollision->AddComponent(new CTransform);
-		//MapCollision->Collider2D()->SetAbsolute(true);
-		//MapCollision->Collider2D()->SetOffsetScale(Vec2(2700.f, 2700.f));
-		//MapCollision->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-		//SpawnGameObject(MapCollision, Vec3(1125.f, 16.f, 1200.f), 0);
-		//CPathFindMgr::GetInst()->SetMapCollision(MapCollision); //마우스 피킹 진행할 맵 콜리전으로 지정
-
-		pMeshData = nullptr;
-		pObj = nullptr;
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\jungle_blue.fbx");
-		pObj = pMeshData->Instantiate();
-		pObj->SetName(L"jungle_blue");
-		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->Animator3D()->Play(L"jungle_blue-jungle_blue_AllAnim", true, 0.5f);
-		pObj->Transform()->SetRelativeScale(Vec3(0.3, 0.3, 0.3));
-		SpawnGameObject(pObj, Vec3(190.f, 0.f, 607.f), 0);
+		//pMeshData = nullptr;
+		//pObj = nullptr;
+		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\jungle_blue.fbx");
+		//pObj = pMeshData->Instantiate();
+		//pObj->SetName(L"jungle_blue");
+		//pObj->GetRenderComponent()->SetFrustumCheck(false);
+		//pObj->Animator3D()->Play(L"jungle_blue-jungle_blue_AllAnim", true, 0.5f);
+		//pObj->Transform()->SetRelativeScale(Vec3(0.3, 0.3, 0.3));
+		//SpawnGameObject(pObj, Vec3(190.f, 0.f, 607.f), 0);
 
 		pMeshData = nullptr;
 		pObj = nullptr;
