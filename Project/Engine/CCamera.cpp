@@ -467,8 +467,14 @@ void CCamera::SortObject()
 				// FrustumCheck
 				if (pRenderCom->IsUseFrustumCheck())
 				{
-					Vec3 vWorldPos = vecObject[j]->Transform()->GetWorldPos();
-
+					Vec3 vWorldPos;
+					if (pRenderCom->GetBoundingBoxOffsetUse()) {
+						vWorldPos = pRenderCom->GetBoundingBoxOffset();
+					}
+					else {
+						vWorldPos = vecObject[j]->Transform()->GetWorldPos();
+					}
+				
 					if (pRenderCom->IsShowDebugBound())
 					{
 						// Bounding Debug Shape 그리기

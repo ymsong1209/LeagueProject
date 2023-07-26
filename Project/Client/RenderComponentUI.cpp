@@ -88,6 +88,27 @@ int RenderComponentUI::render_update()
 		ImGui::DragFloat("##BoundingScale", &bounding, 5.f);
 
 		pRenderCom->SetBounding(bounding);
+
+		// Bounding Pos를 기본 transform으로 쓸건지, 아니면 OffsetPos로 줄 것인지
+		ImGui::Text("Set Bound Offset");
+		ImGui::SameLine();
+		bool bShowBoundOffset = pRenderCom->GetBoundingBoxOffsetUse();
+		if (ImGui::Checkbox("##SetBoundOffsetRenderComUI", &bShowBoundOffset))
+		{
+			pRenderCom->SetBoundingBoxOffsetUse(bShowBoundOffset);
+		}
+
+		//Bounding Pos를 OffsetPos로 설정하겠다.
+		if (bShowBoundOffset) {
+			// Bounding Scale
+			ImGui::Text("Bound Offset");
+			ImGui::SameLine();
+			Vec3 boundoffset = pRenderCom->GetBoundingBoxOffset();
+			if (ImGui::DragFloat3("##BoundingOffsetRenderComUI", boundoffset, 10.f)) {
+				pRenderCom->SetBoundingBoxOffset(boundoffset);
+			};
+		}
+
 	}
 
 	//Dynamic Shadow check

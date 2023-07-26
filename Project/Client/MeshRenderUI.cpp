@@ -37,10 +37,10 @@ int MeshRenderUI::render_update()
 	GetResKey(pMesh.Get(), szBuff, 50);
 	ImGui::InputText("##MeshName", szBuff, 50, ImGuiInputTextFlags_ReadOnly);
 
-	// Mesh µå¶ø Ã¼Å©
+	// Mesh ï¿½ï¿½ï¿½ Ã¼Å©
 	if (ImGui::BeginDragDropTarget())
 	{
-		// ÇØ´ç ³ëµå¿¡¼­ ¸¶¿ì½º ¶¾ °æ¿ì, ÁöÁ¤ÇÑ PayLoad Å°°ªÀÌ ÀÏÄ¡ÇÑ °æ¿ì
+		// ï¿½Ø´ï¿½ ï¿½ï¿½å¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ PayLoad Å°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½
 		const ImGuiPayload* pPayLoad = ImGui::AcceptDragDropPayload("Resource");
 		if (pPayLoad)
 		{
@@ -54,8 +54,8 @@ int MeshRenderUI::render_update()
 		ImGui::EndDragDropTarget();
 	}
 
-	// Mesh°¡ ¼±ÅÃ ¾ÈµÇ¾î ÀÖÀ» °æ¿ì Mesh¸¸ ¼±ÅÃÇÒ ¼ö ÀÖµµ·Ï ÇØÁÖ°í Skip
-	// Mesh°¡ ¼±ÅÃ µÇ¾î ÀÖÀ¸¸é ÃÖ¼ÒÇÑ Material(0)¹øÀº Ã¼¿öÁö°Ô µÈ´Ù.
+	// Meshï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ÈµÇ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Meshï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ö°ï¿½ Skip
+	// Meshï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½ Material(0)ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½È´ï¿½.
 	if (pMesh == nullptr)
 		return true;
 
@@ -74,7 +74,7 @@ int MeshRenderUI::render_update()
 			pListUI->AddItem(string(pair.first.begin(), pair.first.end()));
 		}
 
-		// Ç×¸ñ ¼±ÅÃ½Ã È£Ãâ¹ÞÀ» µ¨¸®°ÔÀÌÆ® µî·Ï
+		// ï¿½×¸ï¿½ ï¿½ï¿½ï¿½Ã½ï¿½ È£ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½
 		pListUI->AddDynamic_Select(this, (UI_DELEGATE_1)&MeshRenderUI::SelectMesh);
 	}
 		
@@ -85,7 +85,7 @@ int MeshRenderUI::render_update()
 
 	if (ImGui::BeginDragDropTarget())
 	{
-		// ÇØ´ç ³ëµå¿¡¼­ ¸¶¿ì½º ¶¾ °æ¿ì, ÁöÁ¤ÇÑ PayLoad Å°°ªÀÌ ÀÏÄ¡ÇÑ °æ¿ì
+		// ï¿½Ø´ï¿½ ï¿½ï¿½å¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ PayLoad Å°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½
 		const ImGuiPayload* pPayLoad = ImGui::AcceptDragDropPayload("Resource");
 		if (pPayLoad)
 		{
@@ -95,7 +95,7 @@ int MeshRenderUI::render_update()
 			{
 				GetTarget()->MeshRender()->SetMaterial(((CMaterial*)pRes), 0);
 
-				// MtrlÀ» »õ·Î ¼±ÅÃÇÑ°æ¿ì Dynamic MtrlÀ» Áö¿öÁØ´Ù.
+				// Mtrlï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ°ï¿½ï¿½ Dynamic Mtrlï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
 				GetTarget()->MeshRender()->ClearDynamicMtrl(0);
 			}
 		}
@@ -115,23 +115,15 @@ int MeshRenderUI::render_update()
 			pListUI->AddItem(string(pair.first.begin(), pair.first.end()));
 		}
 
-		// Ç×¸ñ ¼±ÅÃ½Ã È£Ãâ¹ÞÀ» µ¨¸®°ÔÀÌÆ® µî·Ï
+		// ï¿½×¸ï¿½ ï¿½ï¿½ï¿½Ã½ï¿½ È£ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½
 		pListUI->AddDynamic_Select(this, (UI_DELEGATE_1)&MeshRenderUI::SelectMaterial);
 	}
 
-	int isDynamicMtrlUse = (int)(GetTarget()->MeshRender()->IsDynamicMtrlEmpty(0));
-	ImGui::Text("Dynamic Mtrl Use :"); ImGui::SameLine();
-	if (ImGui::RadioButton("Use", &isDynamicMtrlUse, 0))
+	if (ImGui::TreeNode("Output   Texture"))
 	{
-		GetTarget()->MeshRender()->GetDynamicMaterial(0);
-	}
-	ImGui::SameLine();
-	if (ImGui::RadioButton("Not Use", &isDynamicMtrlUse, 1))
-	{
-		GetTarget()->MeshRender()->ClearDynamicMtrl(0);
-		GetTarget()->MeshRender()->SetUsingMovingVec(false);
-	}
-	
+		GetResKey(pMtrl->GetTexParam(TEX_PARAM(0)).Get(), szBuff, 50);
+		string TexName = "##OutputTex";
+		ImGui::InputText(TexName.c_str(), szBuff, 50, ImGuiInputTextFlags_ReadOnly);
 
 	ImGui::Separator();
 
@@ -201,217 +193,125 @@ int MeshRenderUI::render_update()
 	}
 
 
-	// Std2DMtrl_Dynamic MtrlÀ» ¾²°í ÀÖ´Â °æ¿ì
+	// Std2DMtrl_Dynamic Mtrlï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½
 	if (GetTarget()->MeshRender()->IsUsingMovingVec())
 	{
 		const vector<MovingStruct>   MovingVec = GetTarget()->MeshRender()->GetMovingStruct();
 
 		for (int i = 0; i < MovingVec.size(); ++i)
-		{
-			MovingStruct UpdateMovingStruct;
-			Vec4 FunctionValue = MovingVec[i].FuncValue;
-			Vec2 UpdateOffsetValue = MovingVec[i].PreviousPos;
-
-			// ¹«½¼ ¿ªÇÒÀÇ TextureÀÎÁö ÀÌ¸§À» ¾Ë·ÁÁÜ
-			switch (MovingVec[i].TargetTex)
-			{
-			case eTargetTexture::OUTPUT:
-			{
-				ImGui::Text("Output Texture");
-			}
-			break;
-			case eTargetTexture::PUNCTURE:
-			{
-				ImGui::Text("Puncture Texture");
-			}
-			break;
-			}
-
-			// Texture¼±ÅÃÇÒ ¼ö ÀÖµµ·Ï ÇØÁÜ
-			ImGui::SameLine();
- 
-			if (MovingVec[i].TargetTex == eTargetTexture::OUTPUT)
-				GetResKey(pMtrl->GetTexParam((TEX_PARAM(0))).Get(), szBuff, 50);
-			else if (MovingVec[i].TargetTex == eTargetTexture::PUNCTURE)
-				GetResKey(pMtrl->GetTexParam((TEX_PARAM(3))).Get(), szBuff, 50);
-		 
-			string TexName = "##TexName" + std::to_string(i);
-			ImGui::InputText(TexName.c_str(), szBuff, 50, ImGuiInputTextFlags_ReadOnly);
-
-			if (ImGui::BeginDragDropTarget())
-			{
-				// ÇØ´ç ³ëµå¿¡¼­ ¸¶¿ì½º ¶¾ °æ¿ì, ÁöÁ¤ÇÑ PayLoad Å°°ªÀÌ ÀÏÄ¡ÇÑ °æ¿ì
-				const ImGuiPayload* pPayLoad = ImGui::AcceptDragDropPayload("Resource");
-				if (pPayLoad)
-				{
-					TreeNode* pNode = (TreeNode*)pPayLoad->Data;
-					CRes* pRes = (CRes*)pNode->GetData();
-					if (RES_TYPE::TEXTURE == pRes->GetType())
-					{
-						if (MovingVec[i].TargetTex == eTargetTexture::OUTPUT)
-							GetTarget()->MeshRender()->SetOutputTexture((CTexture*)pRes);
-						else if (MovingVec[i].TargetTex == eTargetTexture::PUNCTURE)
-							GetTarget()->MeshRender()->SetPunctureTexture((CTexture*)pRes);
-					}
-				}
-				ImGui::EndDragDropTarget();
-			}
-
-
-			// Texture¸¦ ºñ¿ï ¼ö ÀÖµµ·Ï ÇØÁÜ
-			ImGui::SameLine();
-			string TexClearButton = "Clear##" +  std::to_string(i);
-			if (ImGui::Button(TexClearButton.c_str(), ImVec2(50.f, 20.f)))
-			{
-				if (MovingVec[i].TargetTex == eTargetTexture::OUTPUT)
-					GetTarget()->MeshRender()->SetOutputTexture((CTexture*)nullptr);
-				else if (MovingVec[i].TargetTex == eTargetTexture::PUNCTURE)
-					GetTarget()->MeshRender()->SetPunctureTexture((CTexture*)nullptr);
-			}
-
-
-			// ÇØ´ç TextureÀÇ ¿òÁ÷ÀÌ´Â ÇÔ¼ö¸¦ ¾Ë·ÁÁÜ
-			ImGui::Text("Moving Style"); ImGui::SameLine();
-
-			string MoveOffsetClearBtn = "Clear Move##" + std::to_string(i);
-			if (ImGui::Button(MoveOffsetClearBtn.c_str(), ImVec2(100.f, 20.f)))
-			{
-				UpdateOffsetValue = Vec2(0.f, 0.f);
-			}
-
-
-			const char* items[] = { "None", "Horizonetal", "Vertical", "Linear", "Parabola", "Sin", "Cos" };
-			int item_current_idx = (int)MovingVec[i].MovingStyle;; // Here we store our selection data as an index.
-			string MovingFuncName = "##MovingFuncName" + std::to_string(i);
-			const char* combo_preview_value = items[item_current_idx];  // Pass in the preview value visible before opening the combo (it could be anything)
-			if (ImGui::BeginCombo(MovingFuncName.c_str(), combo_preview_value))
-			{
-				for (int n = 0; n < IM_ARRAYSIZE(items); n++)
-				{
-					bool is_selected = (item_current_idx == n);
-					if (ImGui::Selectable(items[n], is_selected))
-						item_current_idx = n;
-				}
-				ImGui::EndCombo();
-			}
-
-			switch (MovingVec[i].MovingStyle)
-			{
-			case eTexMovingStyle::NONE:
-				break;
-			case eTexMovingStyle::HORIZONTAL:
-			{
-				ImGui::Text("FuncValue.x : dx / dt");
-			}
-			break;
-			case eTexMovingStyle::VERTICAL:
-			{
-				ImGui::Text("FuncValue.x : dy / dt");
-			}
-			break;
-			case eTexMovingStyle::LINEAR:
-			{
-				ImGui::Text("FuncValue.x : dx / dt"); ImGui::SameLine(); ImGui::Text("FuncValue.y : x  coef");
-				ImGui::Text("FuncValue.z : y-inter");
-			}
-			break;
-			case eTexMovingStyle::PARABOLA:
-			{
-				ImGui::Text("FuncValue.x : dx / dt"); ImGui::SameLine(); ImGui::Text("FuncValue.y : x^2coef");
-				ImGui::Text("FuncValue.z : x  coef"); ImGui::SameLine(); ImGui::Text("FuncValue.w : y-inter");
-
-			}
-			break;
-			case eTexMovingStyle::SIN:
-			{
-				ImGui::Text("FuncValue.x : dx / dt"); ImGui::SameLine(); ImGui::Text("FuncValue.y : Coef   ");
-				ImGui::Text("FuncValue.z : Freq   "); ImGui::SameLine(); ImGui::Text("FuncValue.w : y-inter");
-			}
-			break;
-			case eTexMovingStyle::COS:
-			{
-				ImGui::Text("FuncValue.x : dx / dt"); ImGui::SameLine(); ImGui::Text("FuncValue.x : Coef   ");
-				ImGui::Text("FuncValue.x : Freq   "); ImGui::SameLine(); ImGui::Text("FuncValue.x : y-inter");
-			}
-			break;
-			}
-			 
-			ImGui::Text("Func Value"); ImGui::SameLine();
-
-			string FuncValueName = "##FuncValue" + std::to_string(i);
-			ImGui::InputFloat4(FuncValueName.c_str(), FunctionValue);
-
-			UpdateMovingStruct.FuncValue = FunctionValue;
-			UpdateMovingStruct.MovingStyle = (eTexMovingStyle)item_current_idx;
-			UpdateMovingStruct.PreviousPos = UpdateOffsetValue;
-
-			UpdateMovingStruct.TargetTex = MovingVec[i].TargetTex;
-
-			GetTarget()->MeshRender()->SetMovingStruct(i, UpdateMovingStruct);
-
-
-			ImGui::Separator();
-
-		}
-
-		// Additive Texture È®ÀÎºÎºÐ
-		//ImGui::SameLine();
-		GetResKey(pMtrl->GetTexParam((TEX_PARAM(2))).Get(), szBuff, 50);
-		 
-		ImGui::Text("Additive Texture"); ImGui::SameLine();
-		ImGui::InputText("##AdditiveTex", szBuff, 50, ImGuiInputTextFlags_ReadOnly);
-
 		if (ImGui::BeginDragDropTarget())
 		{
-			// ÇØ´ç ³ëµå¿¡¼­ ¸¶¿ì½º ¶¾ °æ¿ì, ÁöÁ¤ÇÑ PayLoad Å°°ªÀÌ ÀÏÄ¡ÇÑ °æ¿ì
+			//ï¿½Ø´ï¿½ ï¿½ï¿½å¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ PayLoad Å°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½
 			const ImGuiPayload* pPayLoad = ImGui::AcceptDragDropPayload("Resource");
 			if (pPayLoad)
 			{
 				TreeNode* pNode = (TreeNode*)pPayLoad->Data;
 				CRes* pRes = (CRes*)pNode->GetData();
 				if (RES_TYPE::TEXTURE == pRes->GetType())
-				{
-					GetTarget()->MeshRender()->GetMaterial(0)->SetTexParam(TEX_PARAM(2), (CTexture*)pRes);
-				}
+						GetTarget()->MeshRender()->SetOutputTexture((CTexture*)pRes);
 			}
+			ImGui::EndDragDropTarget();
+		}
 
+		// Textureï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		ImGui::SameLine();
+		string TexClearButton = "Clear##OutputTex";
+		if (ImGui::Button(TexClearButton.c_str(), ImVec2(50.f, 20.f)))
+			GetTarget()->MeshRender()->SetOutputTexture((CTexture*)nullptr);
+
+		int Target = (int)GetTarget()->MeshRender()->GetTexMovingStyle(MovTexType::OUTPUT);
+		Vec4 FuncValue = GetTarget()->MeshRender()->GetFuncValue(MovTexType::OUTPUT);
+		Vec2 Offset =  GetTarget()->MeshRender()->GetOffsetValue(MovTexType::OUTPUT);
+
+		SetTexMovingTypeAndValue(Target, FuncValue, Offset, 10);
+
+		GetTarget()->MeshRender()->SetTexMovingStyle(MovTexType::OUTPUT, (MovTexMoveType)(Target));
+		GetTarget()->MeshRender()->SetFuncValue(MovTexType::OUTPUT, FuncValue);
+		GetTarget()->MeshRender()->SetOffsetValue(MovTexType::OUTPUT, Offset);
+		ImGui::TreePop();
+	}
+
+
+	if (ImGui::TreeNode("Puncture Texture"))
+	{
+		GetResKey(GetTarget()->MeshRender()->GetPunctureTex().Get(), szBuff, 50);
+		string TexName = "##PunctureTex";
+		ImGui::InputText(TexName.c_str(), szBuff, 50, ImGuiInputTextFlags_ReadOnly);
+
+		if (ImGui::BeginDragDropTarget())
+		{
+			//ï¿½Ø´ï¿½ ï¿½ï¿½å¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ PayLoad Å°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½
+			const ImGuiPayload* pPayLoad = ImGui::AcceptDragDropPayload("Resource");
+			if (pPayLoad)
+			{
+				TreeNode* pNode = (TreeNode*)pPayLoad->Data;
+				CRes* pRes = (CRes*)pNode->GetData();
+				if (RES_TYPE::TEXTURE == pRes->GetType())
+					GetTarget()->MeshRender()->SetPunctureTexture((CTexture*)pRes);
+			}
+			ImGui::EndDragDropTarget();
+		}
+
+		// Textureï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		ImGui::SameLine();
+		string TexClearButton = "Clear##OutputTex";
+		if (ImGui::Button(TexClearButton.c_str(), ImVec2(50.f, 20.f)))
+			GetTarget()->MeshRender()->SetPunctureTexture((CTexture*)nullptr);
+
+
+		int Target = (int)GetTarget()->MeshRender()->GetTexMovingStyle(MovTexType::PUNCTURE);
+		Vec4 FuncValue = GetTarget()->MeshRender()->GetFuncValue(MovTexType::PUNCTURE);
+		Vec2 Offset = GetTarget()->MeshRender()->GetOffsetValue(MovTexType::PUNCTURE);
+
+		SetTexMovingTypeAndValue(Target, FuncValue, Offset, 20);
+
+		GetTarget()->MeshRender()->SetTexMovingStyle(MovTexType::PUNCTURE, (MovTexMoveType)(Target));
+		GetTarget()->MeshRender()->SetFuncValue(MovTexType::PUNCTURE, FuncValue);
+		GetTarget()->MeshRender()->SetOffsetValue(MovTexType::PUNCTURE, Offset);
+		ImGui::TreePop();
+	}
+
+	if (ImGui::TreeNode("Additive Texture"))
+	{
+		GetResKey(GetTarget()->MeshRender()->GetAdditiveTex().Get(), szBuff, 50);			 
+		ImGui::Text("Additive Texture"); ImGui::SameLine();
+		ImGui::InputText("##AdditiveTex", szBuff, 50, ImGuiInputTextFlags_ReadOnly);
+
+		if (ImGui::BeginDragDropTarget())
+		{
+			// ï¿½Ø´ï¿½ ï¿½ï¿½å¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ì½º ï¿½ï¿½ ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ PayLoad Å°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½ï¿½
+			const ImGuiPayload* pPayLoad = ImGui::AcceptDragDropPayload("Resource");
+			if (pPayLoad)
+			{
+				TreeNode* pNode = (TreeNode*)pPayLoad->Data;
+				CRes* pRes = (CRes*)pNode->GetData();
+				if (RES_TYPE::TEXTURE == pRes->GetType())
+					GetTarget()->MeshRender()->SetAdditiveTexture((CTexture*)pRes);
+			}
 			ImGui::EndDragDropTarget();
 		}
 
 
-		// Texture¸¦ ºñ¿ï ¼ö ÀÖµµ·Ï ÇØÁÜ (Additive Texture)
+		// Textureï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (Additive Texture)
 		ImGui::SameLine();
 		string TexClearButton = "Clear##" + std::to_string(3);
 		if (ImGui::Button(TexClearButton.c_str(), ImVec2(50.f, 20.f)))
-		{
-			GetTarget()->MeshRender()->GetMaterial(0)->SetTexParam(TEX_PARAM(2), (CTexture*)nullptr);
-		}
+			GetTarget()->MeshRender()->SetAdditiveTexture(nullptr);
 
 
+		Vec4 AdditiveColor = GetTarget()->MeshRender()->GetAdditiveTexColor();
+		float AdditiveVec[4] = { AdditiveColor.x * 255, AdditiveColor.y * 255 , AdditiveColor.z *255, 0.f };
 
-		Ptr<CMaterial> Material = GetTarget()->MeshRender()->GetMaterial(0);
+		ImGui::Text("Additive Color"); ImGui::SameLine();
+		ImGui::InputFloat4("##AdditiveColor", AdditiveVec);
 
-		// Additive Texture°¡ ÀÖ´Â Áö È®ÀÎ 
-		if (Material->GetTexParam(TEX_PARAM::TEX_2).Get() != nullptr)
-		{
-			Vec4 AdditiveColor;
+		AdditiveColor = Vec4{ AdditiveVec[0] / 255, AdditiveVec[1] / 255, AdditiveVec[2] / 255, 0.f };
 
-			Material->GetScalarParam(SCALAR_PARAM::VEC4_0, &AdditiveColor);
+		GetTarget()->MeshRender()->SetAdditiveTexColor(AdditiveColor);
 
-			float AdditiveVec[4] = { AdditiveColor.x * 255, AdditiveColor.y * 255 , AdditiveColor.z *255, 0.f };
-
-			ImGui::Text("Additive Color"); ImGui::SameLine();
-			ImGui::InputFloat4("##AdditiveColor", AdditiveVec);
-
-			AdditiveColor = Vec4{ AdditiveVec[0] / 255, AdditiveVec[1] / 255, AdditiveVec[2] / 255, 0.f };
-
-			 
-			Material->SetScalarParam(SCALAR_PARAM::VEC4_0, &AdditiveColor);
-
-			ImGui::Separator();
-		}
+		ImGui::TreePop();
 	}
-	 
+
 	return TRUE;
 }
 
@@ -429,4 +329,69 @@ void MeshRenderUI::SelectMaterial(DWORD_PTR _Key)
 
 	GetTarget()->MeshRender()->SetMaterial(pMtrl, 0);
 	GetTarget()->MeshRender()->ClearDynamicMtrl(0);
+}
+
+void MeshRenderUI::SetTexMovingTypeAndValue(int& _Target, Vec4& _FuncValue, Vec2& _Offest,  int _RandNum)
+{
+	// ï¿½Ø´ï¿½ Textureï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½Ë·ï¿½ï¿½ï¿½
+	ImGui::Text("Moving Style"); ImGui::SameLine();
+
+	string MoveOffsetClearBtn = "Clear Move##" + std::to_string(_RandNum);
+	if (ImGui::Button(MoveOffsetClearBtn.c_str(), ImVec2(100.f, 20.f)))
+		_Offest = Vec2(0.f, 0.f);
+	
+
+	const char* items[] = { "None", "Horizonetal", "Vertical", "Linear", "Parabola", "Sin", "Cos" };
+	//int item_current_idx = (int)MovingVec[i].MovingStyle;; // Here we store our selection data as an index.
+	string MovingFuncName = "##MovingFuncName" + std::to_string(_RandNum);
+	const char* combo_preview_value = items[_Target];  // Pass in the preview value visible before opening the combo (it could be anything)
+	if (ImGui::BeginCombo(MovingFuncName.c_str(), combo_preview_value))
+	{
+		for (int n = 0; n < IM_ARRAYSIZE(items); n++)
+		{
+			bool is_selected = (_Target == n);
+			if (ImGui::Selectable(items[n], is_selected))
+				_Target = n;
+		}
+		ImGui::EndCombo();
+	}
+
+	switch (MovTexMoveType(_Target))
+	{
+	case MovTexMoveType::NONE:
+		break;
+	case MovTexMoveType::HORIZONTAL: {
+		ImGui::Text("FuncValue.x : dx / dt"); }
+		break;
+	case MovTexMoveType::VERTICAL: {
+		ImGui::Text("FuncValue.x : dy / dt"); }
+		break;
+	case MovTexMoveType::LINEAR:{
+		ImGui::Text("FuncValue.x : dx / dt"); ImGui::SameLine(); ImGui::Text("FuncValue.y : x  coef");
+		ImGui::Text("FuncValue.z : y-inter");}
+		break;
+	case MovTexMoveType::PARABOLA: {
+		ImGui::Text("FuncValue.x : dx / dt"); ImGui::SameLine(); ImGui::Text("FuncValue.y : x^2coef");
+		ImGui::Text("FuncValue.z : x  coef"); ImGui::SameLine(); ImGui::Text("FuncValue.w : y-inter"); }
+		break;
+	case MovTexMoveType::SIN:{
+		ImGui::Text("FuncValue.x : dx / dt"); ImGui::SameLine(); ImGui::Text("FuncValue.y : Coef   ");
+		ImGui::Text("FuncValue.z : Freq   "); ImGui::SameLine(); ImGui::Text("FuncValue.w : y-inter");}
+		break;
+	case MovTexMoveType::COS:{
+		ImGui::Text("FuncValue.x : dx / dt"); ImGui::SameLine(); ImGui::Text("FuncValue.x : Coef   ");
+		ImGui::Text("FuncValue.x : Freq   "); ImGui::SameLine(); ImGui::Text("FuncValue.x : y-inter");}
+		break;
+	case MovTexMoveType::END:
+		break;
+	default:
+		break;
+	}
+	  
+	ImGui::Text("Func Value"); ImGui::SameLine();
+	string FuncValueName = "##FuncValue" + std::to_string(_RandNum);
+	ImGui::InputFloat4(FuncValueName.c_str(), _FuncValue);
+ 
+	//ImGui::Separator();
+
 }

@@ -140,6 +140,11 @@ PS_OUT PS_Std3D_Deferred(VS_OUT _in) : SV_Target
     
     PS_OUT output = (PS_OUT) 0.f;
     
+    if (vObjectColor.a <= 0.9f)
+    {
+        discard;
+    }
+    
     output.vColor = float4(vObjectColor.xyz, 1.f);
     output.vNormal = float4(vViewNormal.xyz, 1.f);
     output.vPosition = float4(_in.vViewPos.xyz, 1.f);
