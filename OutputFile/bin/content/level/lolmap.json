@@ -209,6 +209,307 @@
                     ],
                     "scripts": [],
                     "children": []
+                },
+                {
+                    "ObjName": "Turret_IdleBreak",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 321.26849365234375,
+                                "y": 15.0,
+                                "z": 262.1343994140625
+                            },
+                            "vRelativeScale": {
+                                "x": 0.1799982786178589,
+                                "y": 0.179997980594635,
+                                "z": 0.1799982786178589
+                            },
+                            "vRelativeRot": {
+                                "x": -3.1415908336639404,
+                                "y": 1.5707954168319702,
+                                "z": -3.1415908336639404
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
+                        },
+                        {
+                            "ANIMATOR3D": 4,
+                            "IsEmpty": false,
+                            "MeshDataRelativePath": "meshdata\\turret_idlebreak.mdat",
+                            "bRepeat": true,
+                            "mapAnim": [
+                                {
+                                    "Anim3DRelativePath": "animation\\turret_idlebreak\\sruap_chaosturret1_idle2.anm_skinned_mesh.001.anim3d"
+                                },
+                                {
+                                    "Anim3DRelativePath": "animation\\turret_idlebreak\\sruap_turret_chaos_cloth_stage1.anm_skinned_mesh.001.anim3d"
+                                },
+                                {
+                                    "Anim3DRelativePath": "animation\\turret_idlebreak\\sruap_turret_chaos_cloth_stage2.anm_skinned_mesh.001.anim3d"
+                                }
+                            ],
+                            "strCurAnimName": "turret_idlebreak\\sruap_chaosturret1_idle2.anm_skinned_mesh.001"
+                        },
+                        {
+                            "MESHRENDER": 10,
+                            "Mesh": {
+                                "IsNull": false,
+                                "Key": "mesh\\turret_idlebreak.mesh",
+                                "RelativePath": "mesh\\turret_idlebreak.mesh"
+                            },
+                            "fBounding": 150.0,
+                            "bFrustumCheck": true,
+                            "bDynamicShadow": false,
+                            "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": false,
+                            "vBoundingBoxOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "iMtrlCount": 6,
+                            "vecMtrls[0]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "material\\turret_idlebreak_Cloth1_blue.mtrl",
+                                "RelativePath": "material\\turret_idlebreak_Cloth1_blue.mtrl"
+                            },
+                            "vecMtrls[1]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "material\\turret_idlebreak_Cloth2_blue.mtrl",
+                                "RelativePath": "material\\turret_idlebreak_Cloth2_blue.mtrl"
+                            },
+                            "vecMtrls[2]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "material\\turret_idlebreak_SRUAP_ChaosTurret1_Mat_blue.mtrl",
+                                "RelativePath": "material\\turret_idlebreak_SRUAP_ChaosTurret1_Mat_blue.mtrl"
+                            },
+                            "vecMtrls[3]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "material\\turret_idlebreak_Stage1_blue.mtrl",
+                                "RelativePath": "material\\turret_idlebreak_Stage1_blue.mtrl"
+                            },
+                            "vecMtrls[4]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "material\\turret_idlebreak_Stage2_blue.mtrl",
+                                "RelativePath": "material\\turret_idlebreak_Stage2_blue.mtrl"
+                            },
+                            "vecMtrls[5]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "material\\turret_idlebreak_Rubble_blue.mtrl",
+                                "RelativePath": "material\\turret_idlebreak_Rubble_blue.mtrl"
+                            },
+                            "DynamicMtrls": [
+                                {
+                                    "vecMtrls[0]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                },
+                                {
+                                    "vecMtrls[1]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                },
+                                {
+                                    "vecMtrls[2]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                },
+                                {
+                                    "vecMtrls[3]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                },
+                                {
+                                    "vecMtrls[4]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                },
+                                {
+                                    "vecMtrls[5]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                }
+                            ],
+                            "bIsUsingMovingVec": false
+                        },
+                        16
+                    ],
+                    "scripts": [],
+                    "children": [
+                        {
+                            "ObjName": "Turret_break1",
+                            "components": [
+                                {
+                                    "TRANSFORM": 0,
+                                    "vRelativePos": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "vRelativeScale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    },
+                                    "vRelativeRot": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "bAbsolute": false,
+                                    "IsNoGizmoObj": false,
+                                    "GizmoBounding_Radius": 50.0,
+                                    "IsShootingRay": false,
+                                    "RayRange": 20.0,
+                                    "UseMouseOutLine": false,
+                                    "Outlinethickness": 0.07199999690055847
+                                },
+                                {
+                                    "ANIMATOR3D": 4,
+                                    "IsEmpty": false,
+                                    "MeshDataRelativePath": "meshdata\\turret_break1.mdat",
+                                    "bRepeat": true,
+                                    "mapAnim": [
+                                        {
+                                            "Anim3DRelativePath": "animation\\turret_break1\\turret_break1.anim3d"
+                                        }
+                                    ],
+                                    "strCurAnimName": "turret_break1\\turret_break1"
+                                },
+                                {
+                                    "MESHRENDER": 10,
+                                    "Mesh": {
+                                        "IsNull": false,
+                                        "Key": "mesh\\turret_break1.mesh",
+                                        "RelativePath": "mesh\\turret_break1.mesh"
+                                    },
+                                    "fBounding": 150.0,
+                                    "bFrustumCheck": true,
+                                    "bDynamicShadow": false,
+                                    "bShowDebugBoundShape": false,
+                                    "bRaySightCulling": false,
+                                    "bUseBoundingOffset": false,
+                                    "vBoundingBoxOffset": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "iMtrlCount": 2,
+                                    "vecMtrls[0]SharedMtrl": {
+                                        "IsNull": false,
+                                        "Key": "material\\turret_break1_Cloth1_blue.mtrl",
+                                        "RelativePath": "material\\turret_break1_Cloth1_blue.mtrl"
+                                    },
+                                    "vecMtrls[1]SharedMtrl": {
+                                        "IsNull": false,
+                                        "Key": "material\\turret_break1_Mage_blue.mtrl",
+                                        "RelativePath": "material\\turret_break1_Mage_blue.mtrl"
+                                    },
+                                    "DynamicMtrls": [
+                                        {
+                                            "vecMtrls[0]DynamicMtrl": null,
+                                            "IsDynamicMtrlExist": false
+                                        },
+                                        {
+                                            "vecMtrls[1]DynamicMtrl": null,
+                                            "IsDynamicMtrlExist": false
+                                        }
+                                    ],
+                                    "bIsUsingMovingVec": false
+                                },
+                                16
+                            ],
+                            "scripts": [],
+                            "children": []
+                        },
+                        {
+                            "ObjName": "Turret_break2",
+                            "components": [
+                                {
+                                    "TRANSFORM": 0,
+                                    "vRelativePos": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "vRelativeScale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    },
+                                    "vRelativeRot": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "bAbsolute": false,
+                                    "IsNoGizmoObj": false,
+                                    "GizmoBounding_Radius": 50.0,
+                                    "IsShootingRay": false,
+                                    "RayRange": 20.0,
+                                    "UseMouseOutLine": false,
+                                    "Outlinethickness": 0.0
+                                },
+                                {
+                                    "ANIMATOR3D": 4,
+                                    "IsEmpty": false,
+                                    "MeshDataRelativePath": "meshdata\\turret_break2.mdat",
+                                    "bRepeat": true,
+                                    "mapAnim": [
+                                        {
+                                            "Anim3DRelativePath": "animation\\turret_break2\\turret_break2.anim3d"
+                                        }
+                                    ],
+                                    "strCurAnimName": "turret_break2\\turret_break2"
+                                },
+                                {
+                                    "MESHRENDER": 10,
+                                    "Mesh": {
+                                        "IsNull": false,
+                                        "Key": "mesh\\turret_break2.mesh",
+                                        "RelativePath": "mesh\\turret_break2.mesh"
+                                    },
+                                    "fBounding": 150.0,
+                                    "bFrustumCheck": true,
+                                    "bDynamicShadow": false,
+                                    "bShowDebugBoundShape": false,
+                                    "bRaySightCulling": false,
+                                    "bUseBoundingOffset": false,
+                                    "vBoundingBoxOffset": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "iMtrlCount": 2,
+                                    "vecMtrls[0]SharedMtrl": {
+                                        "IsNull": false,
+                                        "Key": "material\\turret_break2_Mage1_blue.mtrl",
+                                        "RelativePath": "material\\turret_break2_Mage1_blue.mtrl"
+                                    },
+                                    "vecMtrls[1]SharedMtrl": {
+                                        "IsNull": false,
+                                        "Key": "material\\turret_break2_Mage2_blue.mtrl",
+                                        "RelativePath": "material\\turret_break2_Mage2_blue.mtrl"
+                                    },
+                                    "DynamicMtrls": [
+                                        {
+                                            "vecMtrls[0]DynamicMtrl": null,
+                                            "IsDynamicMtrlExist": false
+                                        },
+                                        {
+                                            "vecMtrls[1]DynamicMtrl": null,
+                                            "IsDynamicMtrlExist": false
+                                        }
+                                    ],
+                                    "bIsUsingMovingVec": false
+                                },
+                                16
+                            ],
+                            "scripts": [],
+                            "children": []
+                        }
+                    ]
                 }
             ]
         },
@@ -294,9 +595,9 @@
                         {
                             "TRANSFORM": 0,
                             "vRelativePos": {
-                                "x": -54.613525390625,
-                                "y": 29.62699317932129,
-                                "z": -44.533966064453125
+                                "x": 11.374298095703125,
+                                "y": 24.642107009887695,
+                                "z": 153.04739379882813
                             },
                             "vRelativeScale": {
                                 "x": 0.18000000715255737,
@@ -305,7 +606,7 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": -5.210959434509277,
+                                "y": -3.3660528659820557,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
