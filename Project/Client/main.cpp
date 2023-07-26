@@ -62,8 +62,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // 테스트 용 레벨 생성
     //CreateTestLevel();
-    //CreateLoginLevel();
-
+    CreateLoginLevel();
 
     // 메세지 루프
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CLIENT));
@@ -82,7 +81,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
    
    ClientServiceRef service = MakeShared<ClientService>(
        //NetAddress(L"221.148.206.199", 40000),  // 다혜집 데탑 IP
-       NetAddress(L"192.168.0.19", 40000), // 로컬 호스트
+       //NetAddress(L"192.168.0.19", 40000), // 로컬 호스트
+       NetAddress(L"127.0.0.1", 40000), // 로컬 호스트
        MakeShared<IocpCore>(),
        MakeShared<ServerSession>, // TODO : SessionManager 등
        1);

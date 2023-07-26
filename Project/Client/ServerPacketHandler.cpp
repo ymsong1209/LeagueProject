@@ -86,8 +86,13 @@ void ServerPacketHandler::Handle_S_LOGIN(PacketSessionRef& session, BYTE* buffer
 	if (_Success)
 		cout << "S_LOGIN Success" << endl;
 
+
 	if(MyPlayer.id == 0)
 		MyPlayer.id = _PlayerId;
+
+	// 진영 선택 레벨 
+	CreateFactionLevel();
+
 
 	PKT_S_LOGIN::PlayerList playerIdBuffs = pkt->GetPlayerList();
 	for (auto& playerIdBuff : playerIdBuffs)
@@ -145,6 +150,9 @@ void ServerPacketHandler::Handle_S_PICK_FACTION(PacketSessionRef& session, BYTE*
 	if(_Success)
 		cout << "S_PICK_FACTION Success" << endl;
 
+	// 챔피언 픽 레벨로 이동
+	CreateChampionPickLevel();
+
 	std::cout << "===============================" << endl;
 }
 
@@ -194,7 +202,7 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 		// 인게임 진입
 
 		// 맵 불러옴
-		CreateTestLevel();
+		CreateIngameLevel();
 
 		PKT_S_GAME_START::PlayerInfoList playerInfoBuffs = pkt->GetPlayerInfoList();
 		for (auto& playerInfoBuff : playerInfoBuffs)
@@ -250,6 +258,8 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 	{
 		IsInGame = false;
 		// 다시 진영 선택 레벨로 간다.
+		CreateFactionLevel();
+
 	}
 
 	std::cout << "===============================" << endl;
