@@ -1,6 +1,13 @@
 #include "pch.h"
 #include "GameObjMgr.h"
 
+#include "ThreadManager.h"
+#include "Service.h"
+#include "Session.h"
+#include "BufferReader.h"
+#include "ServerPacketHandler.h"
+#include "ServerSession.h"
+
 #include <Engine\CLevelMgr.h>
 #include <Engine\CLevel.h>
 #include <Engine\CLayer.h>
@@ -17,6 +24,7 @@
 #include <Script\CCameraMoveScript.h>
 #include <Engine\CPathFindMgr.h>
 
+#include "ServerEventMgr.h"
 CGameObject* GameObjMgr::Find(uint16 _targetId)
 {
 	// find 함수를 사용하여 원하는 키 값을 가진 원소를 찾습니다.
@@ -31,7 +39,7 @@ CGameObject* GameObjMgr::Find(uint16 _targetId)
 	}
 	else {
 		// 원하는 원소가 없을 때의 처리
-		cout << "Id is not objectId in Server";
+		cout << "Id is not objectId in Server" << endl;
 		return nullptr;
 	}
 }
@@ -45,30 +53,7 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 
 		Ptr<CMeshData> pMeshData = nullptr;
 		CGameObject* pObj = nullptr;
-
-		pMeshData = nullptr;
-		pObj = nullptr;
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
-		pObj = pMeshData->Instantiate();
-		pObj->SetName(L"Jinx");
-		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
-		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->AddComponent(new CPlayerScript);
-		pObj->AddComponent(new CPathFinder);
-		pObj->AddComponent(new CCollider3D);
-
-		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
-		pObj->Collider3D()->SetAbsolute(true);
-		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
-		pObj->Collider3D()->SetDrawCollision(false);
-		pObj->Animator3D()->SetRepeat(true);
-		pObj->Animator3D()->Play(L"Jinx\\Idle1_Base", true, 0.1f);
-		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-
-		pObj->Transform()->SetUseMouseOutline(true);
-
-		SpawnGameObject(pObj, Vec3(0, 0, 0), 0);
-
+		
 		if (myPlayer)
 		{
 			// playerScript에 _info 변수들 추가하기.
@@ -148,7 +133,7 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 	}
 }
 
-void GameObjMgr::MovePlayer(uint16 _playerId, PlayerMove _playerMove)
+void GameObjMgr::E_MovePlayer(uint16 _playerId, PlayerMove _playerMove)
 {
 	std::mutex m;
 	{
@@ -168,13 +153,13 @@ void GameObjMgr::MovePlayer(uint16 _playerId, PlayerMove _playerMove)
 		PlayerMove* temp = new PlayerMove(_playerMove);
 		evn.lParam = (DWORD_PTR)temp;
 
-		CEventMgr::GetInst()->AddEvent(evn);
+		ServerEventMgr::GetInst()->AddEvent(evn);
 	}
 }
 
-void GameObjMgr::tick(ClientServiceRef _service)
+void GameObjMgr::SendMyPlayerMove(ClientServiceRef _service)
 {
-	// 모든 플레이어의 움직임을 서버에 보낸다. 
+	// 본인 플레이어의 움직임을 서버에 보낸다. 
 	std::mutex m;
 	{
 		std::lock_guard<std::mutex> lock(m);
@@ -187,17 +172,32 @@ void GameObjMgr::tick(ClientServiceRef _service)
 		if (obj->GetLayerIndex() == -1)
 			return;
 
-		PlayerMove move = {};
 		Vec3 tempPos = obj->Transform()->GetRelativePos();
 		Vec3 temoRot = obj->Transform()->GetRelativeRot();
-		move.moveDir.x = temoRot.x;
-		move.moveDir.y = temoRot.y;
-		move.moveDir.z = temoRot.z;
+
+		if (PrevPos == tempPos) // 이전 좌표와 변화가 없다면 return
+		{
+			// obj->Animator3D()->Play(L"Jinx\\Idle1_Base", true, 0.1f);
+			return;
+		}
+
+		PrevPos = tempPos;
+
+		PlayerMove move = {};
 		move.pos.x = tempPos.x;
 		move.pos.y = tempPos.y;
 		move.pos.z = tempPos.z;
-		move.state = PlayerMove::PlayerState::IDLE;
-		Send_CMove(_service, move);
+		move.moveDir.x = temoRot.x;
+		move.moveDir.y = temoRot.y;
+		move.moveDir.z = temoRot.z;
+		move.state = PlayerMove::PlayerState::MOVE;
+
+		// 서버에게 패킷 전송
+		std::cout << "C_MOVE Pakcet" << endl;
+		PKT_C_MOVE_WRITE pktWriter(move);
+		SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+		_service->Broadcast(sendBuffer);
+		std::cout << "===============================" << endl;
 	}
 }
 

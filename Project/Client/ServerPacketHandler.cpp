@@ -91,8 +91,7 @@ void ServerPacketHandler::Handle_S_LOGIN(PacketSessionRef& session, BYTE* buffer
 		MyPlayer.id = _PlayerId;
 
 	// 진영 선택 레벨 
-	CreateFactionLevel();
-
+	//CreateFactionLevel();
 
 	PKT_S_LOGIN::PlayerList playerIdBuffs = pkt->GetPlayerList();
 	for (auto& playerIdBuff : playerIdBuffs)
@@ -118,6 +117,7 @@ void ServerPacketHandler::Handle_S_LOGIN(PacketSessionRef& session, BYTE* buffer
 		{
 			MyPlayer.faction = playerIdBuff.playerFaction;
 			MyPlayer.nickname = playerNickName;
+			MyPlayer.host = playerIdBuff.host;
 
 			cout << "My Id : " << MyPlayer.id
 				<< ", My Faction : " << (int)MyPlayer.faction
@@ -151,7 +151,7 @@ void ServerPacketHandler::Handle_S_PICK_FACTION(PacketSessionRef& session, BYTE*
 		cout << "S_PICK_FACTION Success" << endl;
 
 	// 챔피언 픽 레벨로 이동
-	CreateChampionPickLevel();
+	//CreateChampionPickLevel();
 
 	std::cout << "===============================" << endl;
 }
@@ -176,6 +176,8 @@ void ServerPacketHandler::Handle_S_PICK_CHAMPION(PacketSessionRef& session, BYTE
 	if (MyPlayer.id == pkt->PlayerID)
 	{
 		MyPlayer.champion = pkt->champion;
+
+		cout << "My Pick Champion is " << (int)MyPlayer.champion << endl;
 	}
 
 	std::cout << "===============================" << endl;
@@ -192,7 +194,10 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 	PKT_S_GAME_START* pkt = reinterpret_cast<PKT_S_GAME_START*>(buffer);
 
 	if (pkt->Validate() == false)
+	{
+		m.unlock();
 		return;
+	}
 
 	bool _Success = pkt->success;
 
@@ -228,7 +233,7 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 				GameObjMgr::GetInst()->AddPlayer(MyPlayer, true);
 				
 				cout << "My Champion : " << (int)MyPlayer.champion
-					<< " My PosInfo : " << (float)MyPlayer.posInfo.pos.x
+					<< ", My PosInfo : " << (float)MyPlayer.posInfo.pos.x
 					<< ", " << (float)MyPlayer.posInfo.pos.y
 					<< ", " << (float)MyPlayer.posInfo.pos.z
 					<< endl;
@@ -258,7 +263,7 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 	{
 		IsInGame = false;
 		// 다시 진영 선택 레벨로 간다.
-		CreateFactionLevel();
+		//CreateFactionLevel();
 
 	}
 
@@ -289,7 +294,7 @@ void ServerPacketHandler::Handle_S_MOVE(PacketSessionRef& session, BYTE* buffer,
 	{
 		PlayerMove playerMove = pkt->playerMove;
 
-		GameObjMgr::GetInst()->MovePlayer(_PlayerId, playerMove);
+		GameObjMgr::GetInst()->E_MovePlayer(_PlayerId, playerMove);
 	}
 
 	std::cout << "===============================" << endl;

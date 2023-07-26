@@ -12,7 +12,7 @@
 void Send_CLogin(ClientServiceRef _service, wstring _userName)
 {
     std::cout << "C_LOGIN Pakcet" << endl;
-    std::cout << _userName << std::endl;
+    std::cout << "Login_Name : " << _userName << std::endl;
 
     PKT_C_LOGIN_WRITE pktWriter;
 
@@ -41,7 +41,7 @@ void Send_CPickFaction(ClientServiceRef _service)
     std::cout << "===============================" << endl;
 }
 
-void Send_CPickChampionAndStart(ClientServiceRef _service, ChampionType _championType)
+void Send_CPickChampion(ClientServiceRef _service, ChampionType _championType)
 {
     std::cout << "C_PICK_CHAMPION Pakcet" << endl;
 
@@ -54,17 +54,6 @@ void Send_CPickChampionAndStart(ClientServiceRef _service, ChampionType _champio
     std::cout << "===============================" << endl;
 }
 
-void Send_CMove(ClientServiceRef _service, PlayerMove _move)
-{
-    std::cout << "C_MOVE Pakcet" << endl;
-
-    PKT_C_MOVE_WRITE pktWriter(_move);
-
-    SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
-    _service->Broadcast(sendBuffer);
-
-    std::cout << "===============================" << endl;
-}
 
 bool IsInGame = false;
 PlayerInfo MyPlayer = {};

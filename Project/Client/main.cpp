@@ -23,6 +23,9 @@
 #include <Engine/CTimeMgr.h>
 #include <iostream>
 #include <chrono> // for fps
+#include "ServerEventMgr.h"
+
+
 // 전역 변수:
 HINSTANCE   hInst;    // 현재 인스턴스입니다.
 HWND        g_hWnd;
@@ -62,7 +65,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // 테스트 용 레벨 생성
     //CreateTestLevel();
-    CreateLoginLevel();
+    //CreateLoginLevel();
 
     // 메세지 루프
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CLIENT));
@@ -76,19 +79,19 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     freopen("CONOUT$", "w", stdout);
 
 
-
+    bool InGame = false;
    this_thread::sleep_for(1s);
    
    ClientServiceRef service = MakeShared<ClientService>(
-       //NetAddress(L"221.148.206.199", 40000),  // 다혜집 데탑 IP
+       NetAddress(L"221.148.206.199", 40000),  // 다혜집 데탑 IP
        //NetAddress(L"192.168.0.19", 40000), // 로컬 호스트
-       NetAddress(L"127.0.0.1", 40000), // 로컬 호스트
+       //NetAddress(L"127.0.0.1", 40000), // 로컬 호스트
        MakeShared<IocpCore>(),
        MakeShared<ServerSession>, // TODO : SessionManager 등
        1);
    
    ASSERT_CRASH(service->Start());
-   
+
    GThreadManager->SetFlags(1);
    for (int32 i = 0; i < 2; i++)
    {
@@ -107,9 +110,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
            }
        });
    }    
-
-   // for fps 
-   auto last_send_time = std::chrono::steady_clock::now();
 
     while (true) 
     {
@@ -136,25 +136,28 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             }
             else if (KEY_TAP(KEY::NUM_2))
             {
-                Send_CPickChampionAndStart(service,ChampionType::JINX);
+                Send_CPickChampion(service,ChampionType::JINX);
+                InGame = true;
             }
 
 
            CEngine::GetInst()->progress();
-
-           auto now = std::chrono::steady_clock::now();
-           std::chrono::duration<double, std::milli> elapsed = now - last_send_time;
            
-           // 프레임 수에 관계 없이, 패킷 전송이 1/30초마다 일어나도록 함
-           if (elapsed.count() > (1000.0 / 30.0) && IsInGame)
+           if (InGame)
            {
-               // move 패킷을 서버에 보낸다.
-               GameObjMgr::GetInst()->tick(service);
-               last_send_time = now;
+               // 보낼 패킷을 확인해서 보냄. 
+               ServerEventMgr::GetInst()->sendtick(service);
            }
+
+           // 랜덤으로 온 서버패킷을 핸들러에서 서버 이벤트 매니저에 등록해둠.
+           
 
            // Event 처리
            CEventMgr::GetInst()->tick();
+
+
+           // Server에서 온 패킷 정보를 클라이언트에 반영.
+           ServerEventMgr::GetInst()->clienttick();
 
 
            CEditorObjMgr::GetInst()->progress();

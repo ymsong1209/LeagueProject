@@ -197,6 +197,7 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResUI.h" />
     <ClInclude Include="ScriptUI.h" />
+    <ClInclude Include="ServerEventMgr.h" />
     <ClInclude Include="ServerFunc.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
@@ -267,6 +268,7 @@
     <ClCompile Include="RenderComponentUI.cpp" />
     <ClCompile Include="ResUI.cpp" />
     <ClCompile Include="ScriptUI.cpp" />
+    <ClCompile Include="ServerEventMgr.cpp" />
     <ClCompile Include="ServerFunc.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>

@@ -234,7 +234,7 @@ void CreateLoginLevel()
 	pSkyBox->Transform()->SetRelativeRot(Vec3(0.f, XM_PI / 2.f, 0.f));
 	pSkyBox->Transform()->SetGizmoObjExcept(true);
 	pSkyBox->SkyBox()->SetType(SKYBOX_TYPE::CUBE);
-	pSkyBox->SkyBox()->SetSkyTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\skybox\\Sky02.jpg"));
+	pSkyBox->SkyBox()->SetSkyTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\skybox\\SkyDawn.dds"));
 	pSkyBox->SkyBox()->SetRaySightCulling(false);
 
 	SpawnGameObject(pSkyBox, Vec3(0.f, 0.f, 0.f), 0);
@@ -321,7 +321,7 @@ void CreateFactionLevel()
 	pSkyBox->Transform()->SetRelativeRot(Vec3(0.f, XM_PI / 2.f, 0.f));
 	pSkyBox->Transform()->SetGizmoObjExcept(true);
 	pSkyBox->SkyBox()->SetType(SKYBOX_TYPE::CUBE);
-	pSkyBox->SkyBox()->SetSkyTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\skybox\\SkyDawn.dds"));
+	pSkyBox->SkyBox()->SetSkyTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\skybox\\SkyWater.dds"));
 	pSkyBox->SkyBox()->SetRaySightCulling(false);
 
 	SpawnGameObject(pSkyBox, Vec3(0.f, 0.f, 0.f), 0);
@@ -394,7 +394,7 @@ void CreateChampionPickLevel()
 	pSkyBox->Transform()->SetRelativeRot(Vec3(0.f, XM_PI / 2.f, 0.f));
 	pSkyBox->Transform()->SetGizmoObjExcept(true);
 	pSkyBox->SkyBox()->SetType(SKYBOX_TYPE::CUBE);
-	pSkyBox->SkyBox()->SetSkyTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\skybox\\Sky01.png"));
+	pSkyBox->SkyBox()->SetSkyTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\skybox\\SkyDawn.dds"));
 	pSkyBox->SkyBox()->SetRaySightCulling(false);
 
 	SpawnGameObject(pSkyBox, Vec3(0.f, 0.f, 0.f), 0);

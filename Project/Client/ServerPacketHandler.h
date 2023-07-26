@@ -212,6 +212,7 @@ struct PKT_S_LOGIN
 	{
 		uint64 playerId;
 		FactionType playerFaction;
+		bool            host;
 
 		uint16 nickNameOffset;
 		uint16 nickNameCount;

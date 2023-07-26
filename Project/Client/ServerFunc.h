@@ -54,14 +54,17 @@ struct PlayerInfo
     wstring nickname;
     FactionType faction;
     ChampionType champion;
+    bool host;
 
     PlayerMove posInfo;
 };
+
 struct PlayerInfoPacket
 {
     uint64  id;
     FactionType faction;
     ChampionType champion;
+    bool host;
 
     PlayerMove posInfo;
 
@@ -82,11 +85,9 @@ struct PlayerInfoPacket
 };
 
 
-
 extern bool IsInGame;
 extern PlayerInfo MyPlayer;
 
 void Send_CLogin(ClientServiceRef _service, wstring _userName);
 void Send_CPickFaction(ClientServiceRef _service);
-void Send_CPickChampionAndStart(ClientServiceRef _service, ChampionType _championType);
-void Send_CMove(ClientServiceRef _service, PlayerMove _move);
+void Send_CPickChampion(ClientServiceRef _service, ChampionType _championType);
