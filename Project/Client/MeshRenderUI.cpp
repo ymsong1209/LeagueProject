@@ -135,13 +135,59 @@ int MeshRenderUI::render_update()
 
 	ImGui::Separator();
 
+	int DSType = (int)GetTarget()->MeshRender()->GetMaterial(0)->GetShader()->GetDSType();
+	int BSType = (int)GetTarget()->MeshRender()->GetMaterial(0)->GetShader()->GetBSType();
+	int DomainType = (int)GetTarget()->MeshRender()->GetMaterial(0)->GetShader()->GetDomain();
+
+	ImGui::Text("Set BSType : ");
+	if (ImGui::RadioButton("DEFAULT", &BSType, 0))
+		GetTarget()->MeshRender()->GetMaterial(0)->GetShader()->SetBSType(BS_TYPE::DEFAULT);
+	ImGui::SameLine();
+	if (ImGui::RadioButton("MASK", &BSType, 1))
+		GetTarget()->MeshRender()->GetMaterial(0)->GetShader()->SetBSType(BS_TYPE::MASK);
+	ImGui::SameLine();
+	if (ImGui::RadioButton("ALPHA_BLEND", &BSType, 2))
+		GetTarget()->MeshRender()->GetMaterial(0)->GetShader()->SetBSType(BS_TYPE::ALPHA_BLEND);
+	ImGui::SameLine();
+	if (ImGui::RadioButton("ONE_ONE", &BSType, 3))
+		GetTarget()->MeshRender()->GetMaterial(0)->GetShader()->SetBSType(BS_TYPE::ONE_ONE);
+
+	ImGui::Separator();
+
+	ImGui::Text("Set DSType : ");
+	if (ImGui::RadioButton("LESS", &DSType, 0))
+		GetTarget()->MeshRender()->GetMaterial(0)->GetShader()->SetDSType(DS_TYPE::LESS);
+	ImGui::SameLine();
+	if (ImGui::RadioButton("LESS_EQUAL", &DSType, 1))
+		GetTarget()->MeshRender()->GetMaterial(0)->GetShader()->SetDSType(DS_TYPE::LESS_EQUAL);
+	ImGui::SameLine();
+	if (ImGui::RadioButton("NO_WRITE", &DSType, 4))
+		GetTarget()->MeshRender()->GetMaterial(0)->GetShader()->SetDSType(DS_TYPE::NO_WRITE);
+	ImGui::SameLine();
+	if (ImGui::RadioButton("NO_TEST_NO_WRITE", &DSType, 5))
+		GetTarget()->MeshRender()->GetMaterial(0)->GetShader()->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+
+	ImGui::Separator();
+
+	ImGui::Text("Set DomainType : ");
+	if (ImGui::RadioButton("DOMAIN_OPAQUE", &DomainType, 3))
+		GetTarget()->MeshRender()->GetMaterial(0)->GetShader()->SetDomain(SHADER_DOMAIN::DOMAIN_OPAQUE);
+	ImGui::SameLine();
+	if (ImGui::RadioButton("DOMAIN_MASK", &DomainType, 4))
+		GetTarget()->MeshRender()->GetMaterial(0)->GetShader()->SetDomain(SHADER_DOMAIN::DOMAIN_MASK);
+	ImGui::SameLine();
+	if (ImGui::RadioButton("DOMAIN_TRANSPARENT", &DomainType, 5))
+		GetTarget()->MeshRender()->GetMaterial(0)->GetShader()->SetDomain(SHADER_DOMAIN::DOMAIN_TRANSPARENT);
+	ImGui::SameLine();
+	if (ImGui::RadioButton("DOMAIN_UI", &DomainType, 7))
+		GetTarget()->MeshRender()->GetMaterial(0)->GetShader()->SetDomain(SHADER_DOMAIN::DOMAIN_UI);
 
 
 	int isUseMovingVec = (int)(GetTarget()->MeshRender()->IsUsingMovingVec());
 	if (isUseMovingVec)
 		SetSize(0.f, 400.f);
-	else
-		SetSize(0.f, 150.f);
+	//else
+	//	SetSize(0.f, 150.f);
 
 	ImGui::Text("Moving Vec Use :"); ImGui::SameLine();
 	if (ImGui::RadioButton("Use##MovingVec", &isUseMovingVec, 1))

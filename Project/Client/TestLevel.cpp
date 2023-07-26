@@ -14,7 +14,7 @@
 #include <Script\CMonsterScript.h>
 #include <Script\CCameraMoveScript.h>
 #include <Engine\CPathFindMgr.h>
-
+#include <Script\CCharacterUIScript.h>
 
 #include "CLevelSaveLoad.h"
 
@@ -64,6 +64,7 @@ void CreateTestLevel()
 	CGameObject* UIObj = new CGameObject; //각종 스크립트에서 처리할 것들
 	UIObj->SetName(L"UIObj");
 	UIObj->AddComponent(new CTransform);
+	UIObj->AddComponent(new CCharacterUIScript);
 	SpawnGameObject(UIObj, Vec3(0.f, 0.f, 0.f), 31);
 
 

@@ -827,9 +827,32 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_Std2D");
 
 	pShader->SetRSType(RS_TYPE::CULL_NONE);
-	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::MASK);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_OPAQUE);
+	// Param
+	pShader->AddTexParam(TEX_0, "Output Texture");
+
+	AddRes(pShader->GetKey(), pShader);
+
+	// ============================
+	// Std2DUITransShader
+	// RasterizerState      : CULL_NONE
+	// BlendState           : ALPHA_BLEND
+	// DepthStencilState    : Less
+	//
+	// Parameter
+	// g_tex_0              : Output Texture
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"Std2DUITransShader");
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_Std2D");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_Std2D");
+
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::LESS);
 	pShader->SetBSType(BS_TYPE::ALPHA_BLEND);
-	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_TRANSPARENT);
 	// Param
 	pShader->AddTexParam(TEX_0, "Output Texture");
 
@@ -1436,6 +1459,11 @@ void CResMgr::CreateDefaultMaterial()
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std2DUIShader"));
 	AddRes(L"Std2DUIMtrl", pMtrl);
+
+	// Std2DUITransShader Material
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std2DUITransShader"));
+	AddRes(L"Std2DUITransMtrl", pMtrl);
 
 	// Std2DAnim Material
 	pMtrl = new CMaterial(true);

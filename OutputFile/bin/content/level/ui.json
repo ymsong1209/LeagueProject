@@ -283,7 +283,7 @@
                             "bound": 150.0,
                             "frustumUse": false,
                             "ShadowUse": false,
-                            "HeightMapName": "texture\\LandScape\\HeightMap714.dds",
+                            "HeightMapName": "texture\\LandScape\\.dds",
                             "WeightWidth": 1024,
                             "WeightHeight": 1024,
                             "WeightIdx": 1,
@@ -1296,7 +1296,7 @@
                                                 "arrInt[0]": 0
                                             },
                                             {
-                                                "arrInt[1]": 1
+                                                "arrInt[1]": 1398101
                                             },
                                             {
                                                 "arrInt[2]": 0
@@ -1400,8 +1400,8 @@
                                             },
                                             {
                                                 "arrV2[5]": {
-                                                    "x": 9.9774169921875,
-                                                    "y": -0.425571084022522
+                                                    "x": 24.532917022705078,
+                                                    "y": 0.41271743178367615
                                                 }
                                             },
                                             {
@@ -1746,8 +1746,308 @@
                                         "w": 0.0
                                     },
                                     "PreviousPos": {
-                                        "x": 9.9774169921875,
-                                        "y": -0.425571084022522
+                                        "x": 1.220375657081604,
+                                        "y": 0.17164647579193115
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[2]": null,
+                                    "TargetTex": 0,
+                                    "MovingStyle": 0,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 0.0,
+                                        "y": 0.0
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[3]": null,
+                                    "TargetTex": 1,
+                                    "MovingStyle": 6,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 2.1026546955108643,
+                                        "y": -0.2535679340362549
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[4]": null,
+                                    "TargetTex": 0,
+                                    "MovingStyle": 0,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 0.0,
+                                        "y": 0.0
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[5]": null,
+                                    "TargetTex": 1,
+                                    "MovingStyle": 6,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 2.8343868255615234,
+                                        "y": -0.4765911102294922
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[6]": null,
+                                    "TargetTex": 0,
+                                    "MovingStyle": 0,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 0.0,
+                                        "y": 0.0
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[7]": null,
+                                    "TargetTex": 1,
+                                    "MovingStyle": 6,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 3.8150758743286133,
+                                        "y": -0.390826940536499
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[8]": null,
+                                    "TargetTex": 0,
+                                    "MovingStyle": 0,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 0.0,
+                                        "y": 0.0
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[9]": null,
+                                    "TargetTex": 1,
+                                    "MovingStyle": 6,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 5.004651069641113,
+                                        "y": 0.14405956864356995
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[10]": null,
+                                    "TargetTex": 0,
+                                    "MovingStyle": 0,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 0.0,
+                                        "y": 0.0
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[11]": null,
+                                    "TargetTex": 1,
+                                    "MovingStyle": 6,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 5.9210662841796875,
+                                        "y": 0.4675741195678711
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[12]": null,
+                                    "TargetTex": 0,
+                                    "MovingStyle": 0,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 0.0,
+                                        "y": 0.0
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[13]": null,
+                                    "TargetTex": 1,
+                                    "MovingStyle": 6,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 6.958160400390625,
+                                        "y": 0.3903612494468689
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[14]": null,
+                                    "TargetTex": 0,
+                                    "MovingStyle": 0,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 0.0,
+                                        "y": 0.0
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[15]": null,
+                                    "TargetTex": 1,
+                                    "MovingStyle": 6,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 7.769234657287598,
+                                        "y": 0.042322784662246704
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[16]": null,
+                                    "TargetTex": 0,
+                                    "MovingStyle": 0,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 0.0,
+                                        "y": 0.0
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[17]": null,
+                                    "TargetTex": 1,
+                                    "MovingStyle": 6,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 9.752239227294922,
+                                        "y": -0.4734309911727905
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[18]": null,
+                                    "TargetTex": 0,
+                                    "MovingStyle": 0,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 0.0,
+                                        "y": 0.0
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[19]": null,
+                                    "TargetTex": 1,
+                                    "MovingStyle": 6,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 10.70512866973877,
+                                        "y": -0.14318960905075073
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[20]": null,
+                                    "TargetTex": 0,
+                                    "MovingStyle": 0,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 0.0,
+                                        "y": 0.0
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[21]": null,
+                                    "TargetTex": 1,
+                                    "MovingStyle": 6,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 24.532917022705078,
+                                        "y": 0.41271743178367615
                                     }
                                 }
                             ]
@@ -1860,7 +2160,7 @@
                                                 "arrInt[0]": 0
                                             },
                                             {
-                                                "arrInt[1]": 1
+                                                "arrInt[1]": 1398101
                                             },
                                             {
                                                 "arrInt[2]": 0
@@ -1964,8 +2264,8 @@
                                             },
                                             {
                                                 "arrV2[5]": {
-                                                    "x": 9.9774169921875,
-                                                    "y": -0.425571084022522
+                                                    "x": 24.532917022705078,
+                                                    "y": 0.41271743178367615
                                                 }
                                             },
                                             {
@@ -2310,8 +2610,308 @@
                                         "w": 0.0
                                     },
                                     "PreviousPos": {
-                                        "x": 9.9774169921875,
-                                        "y": -0.425571084022522
+                                        "x": 1.220375657081604,
+                                        "y": 0.17164647579193115
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[2]": null,
+                                    "TargetTex": 0,
+                                    "MovingStyle": 0,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 0.0,
+                                        "y": 0.0
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[3]": null,
+                                    "TargetTex": 1,
+                                    "MovingStyle": 6,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 2.1026546955108643,
+                                        "y": -0.2535679340362549
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[4]": null,
+                                    "TargetTex": 0,
+                                    "MovingStyle": 0,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 0.0,
+                                        "y": 0.0
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[5]": null,
+                                    "TargetTex": 1,
+                                    "MovingStyle": 6,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 2.8343868255615234,
+                                        "y": -0.4765911102294922
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[6]": null,
+                                    "TargetTex": 0,
+                                    "MovingStyle": 0,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 0.0,
+                                        "y": 0.0
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[7]": null,
+                                    "TargetTex": 1,
+                                    "MovingStyle": 6,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 3.8150758743286133,
+                                        "y": -0.390826940536499
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[8]": null,
+                                    "TargetTex": 0,
+                                    "MovingStyle": 0,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 0.0,
+                                        "y": 0.0
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[9]": null,
+                                    "TargetTex": 1,
+                                    "MovingStyle": 6,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 5.004651069641113,
+                                        "y": 0.14405956864356995
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[10]": null,
+                                    "TargetTex": 0,
+                                    "MovingStyle": 0,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 0.0,
+                                        "y": 0.0
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[11]": null,
+                                    "TargetTex": 1,
+                                    "MovingStyle": 6,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 5.9210662841796875,
+                                        "y": 0.4675741195678711
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[12]": null,
+                                    "TargetTex": 0,
+                                    "MovingStyle": 0,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 0.0,
+                                        "y": 0.0
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[13]": null,
+                                    "TargetTex": 1,
+                                    "MovingStyle": 6,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 6.958160400390625,
+                                        "y": 0.3903612494468689
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[14]": null,
+                                    "TargetTex": 0,
+                                    "MovingStyle": 0,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 0.0,
+                                        "y": 0.0
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[15]": null,
+                                    "TargetTex": 1,
+                                    "MovingStyle": 6,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 7.769234657287598,
+                                        "y": 0.042322784662246704
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[16]": null,
+                                    "TargetTex": 0,
+                                    "MovingStyle": 0,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 0.0,
+                                        "y": 0.0
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[17]": null,
+                                    "TargetTex": 1,
+                                    "MovingStyle": 6,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 9.752239227294922,
+                                        "y": -0.4734309911727905
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[18]": null,
+                                    "TargetTex": 0,
+                                    "MovingStyle": 0,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 0.0,
+                                        "y": 0.0
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[19]": null,
+                                    "TargetTex": 1,
+                                    "MovingStyle": 6,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 10.70512866973877,
+                                        "y": -0.14318960905075073
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[20]": null,
+                                    "TargetTex": 0,
+                                    "MovingStyle": 0,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 0.0,
+                                        "y": 0.0
+                                    }
+                                },
+                                {
+                                    "m_vMovingVec[21]": null,
+                                    "TargetTex": 1,
+                                    "MovingStyle": 6,
+                                    "FuncValue": {
+                                        "x": 1.0,
+                                        "y": 0.5,
+                                        "z": 1.0,
+                                        "w": 0.0
+                                    },
+                                    "PreviousPos": {
+                                        "x": 24.532917022705078,
+                                        "y": 0.41271743178367615
                                     }
                                 }
                             ]
@@ -6598,7 +7198,11 @@
                         },
                         16
                     ],
-                    "scripts": [],
+                    "scripts": [
+                        {
+                            "scriptName": "CCharacterUIScript"
+                        }
+                    ],
                     "children": []
                 }
             ]
