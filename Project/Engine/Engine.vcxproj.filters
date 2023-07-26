@@ -76,6 +76,9 @@
     <FxCompile Include="fogfiltershader.fx">
       <Filter>Source\08. ShaderCode\03. Compute\FogOfWar\FogFilter</Filter>
     </FxCompile>
+    <FxCompile Include="minimap.fx">
+      <Filter>Source\08. ShaderCode\02. Render\2D</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CRes.cpp">
