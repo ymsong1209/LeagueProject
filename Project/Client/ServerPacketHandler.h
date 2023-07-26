@@ -22,8 +22,9 @@ enum
 
 	C_MOVE = 10,
 	S_MOVE = 11,
-};
 
+	S_SPAWN_OBJECT = 12,
+};
 class ServerPacketHandler
 {
 public:
@@ -35,6 +36,7 @@ public:
 	static void Handle_S_PICK_CHAMPION(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_GAME_START(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_MOVE(PacketSessionRef& session, BYTE* buffer, int32 len);
+	static void Handle_S_SPAWN_OBJECT(PacketSessionRef& session, BYTE* buffer, int32 len);
 
 private:
 	USE_LOCK;
@@ -471,6 +473,30 @@ struct PKT_S_MOVE
 	}
 };
 #pragma pack()
+
+#pragma pack(1)
+struct PKT_S_SPAWN_OBJECT {
+	uint16 packetSize;
+	uint16 packetId;
+	uint64 objectId;
+	ObjectType objectType;
+	FactionType factionType;
+
+	bool Validate()
+	{
+		uint32 size = 0;
+		size += sizeof(PKT_S_SPAWN_OBJECT);
+		if (packetSize < size)
+			return false;
+
+		if (size != packetSize)
+			return false;
+
+		return true;
+	}
+};
+#pragma pack()
+
 
 
 //=====================================

@@ -25,10 +25,11 @@
 #include <Engine\CPathFindMgr.h>
 
 #include "ServerEventMgr.h"
-CGameObject* GameObjMgr::Find(uint16 _targetId)
+
+CGameObject* GameObjMgr::FindPlayer(uint64 _targetId)
 {
 	// find 함수를 사용하여 원하는 키 값을 가진 원소를 찾습니다.
-	std::map<uint16, CGameObject*>::iterator iter = _players.find(_targetId);
+	std::map<uint64, CGameObject*>::iterator iter = _players.find(_targetId);
 
 	// 원하는 원소가 존재하는지 확인합니다.
 	if (iter != _players.end()) {
@@ -133,7 +134,83 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 	}
 }
 
-void GameObjMgr::E_MovePlayer(uint16 _playerId, PlayerMove _playerMove)
+void GameObjMgr::AddObject(uint64 _objectId, ObjectType _objectType, FactionType _factionType)
+{
+
+	std::mutex m;
+	{
+		std::lock_guard<std::mutex> lock(m);
+
+
+		if (MyPlayer.host)
+		{
+			// 미니언 스크립트
+			// 디버깅용으로 구체 띄워야지
+			CGameObject* pObj = new CGameObject;
+
+			//pObj->AddComponent(new CMeshRender);
+			pObj->AddComponent(new CTransform);
+			pObj->AddComponent(new COtherPlayerScript);
+			pObj->AddComponent(new CCollider3D);
+
+			COtherPlayerScript* Script = pObj->GetScript<COtherPlayerScript>();
+			Script->SetPlayerID(_objectId);
+			Script->SetFaction(_factionType);
+
+			pObj->SetName(L"Minion");
+
+			pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
+			pObj->Collider3D()->SetDrawCollision(true);
+
+			pObj->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 100.f));
+
+
+			Vec3 spawnPos = Vec3(100.f + (50 * _objects.size()), 30.f, 100.f);
+			SpawnGameObject(pObj, spawnPos, 0);
+
+			_objects.insert(std::make_pair(_objectId, pObj));
+
+		}
+		else
+		{
+			// 기본 OtherObjectScript
+			// 미니언 스크립트
+			// 디버깅용으로 구체 띄워야지
+			CGameObject* pObj = new CGameObject;
+
+			//pObj->AddComponent(new CMeshRender);
+			pObj->AddComponent(new CTransform);
+			pObj->AddComponent(new COtherPlayerScript);
+			pObj->AddComponent(new CCollider3D);
+
+			COtherPlayerScript* Script = pObj->GetScript<COtherPlayerScript>();
+			Script->SetPlayerID(_objectId);
+			Script->SetFaction(_factionType);
+
+			pObj->SetName(L"Minion");
+
+			pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
+			pObj->Collider3D()->SetDrawCollision(true);
+
+			pObj->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 100.f));
+
+
+			Vec3 spawnPos = Vec3(100.f + (50 * _objects.size()), 30.f, 100.f);
+			SpawnGameObject(pObj, spawnPos, 0);
+
+			_objects.insert(std::make_pair(_objectId, pObj));
+		}
+
+
+		
+	}
+}
+
+void GameObjMgr::E_MovePlayer(uint64 _playerId, PlayerMove _playerMove)
 {
 	std::mutex m;
 	{
@@ -142,7 +219,7 @@ void GameObjMgr::E_MovePlayer(uint16 _playerId, PlayerMove _playerMove)
 		if (_playerId == MyPlayer.id) // 내 플레이어가 움직인건 반영하지 않아도 된다. 
 			return;
 
-		CGameObject* obj = Find(_playerId);
+		CGameObject* obj = FindPlayer(_playerId);
 
 		tEvent evn = {};
 
@@ -164,7 +241,7 @@ void GameObjMgr::SendMyPlayerMove(ClientServiceRef _service)
 	{
 		std::lock_guard<std::mutex> lock(m);
 
-		CGameObject* obj = Find(MyPlayer.id);
+		CGameObject* obj = FindPlayer(MyPlayer.id);
 
 		if (obj == nullptr)
 			return;
@@ -172,25 +249,31 @@ void GameObjMgr::SendMyPlayerMove(ClientServiceRef _service)
 		if (obj->GetLayerIndex() == -1)
 			return;
 
-		Vec3 tempPos = obj->Transform()->GetRelativePos();
-		Vec3 temoRot = obj->Transform()->GetRelativeRot();
+		Vec3 CurPos = obj->Transform()->GetRelativePos();
+		Vec3 CurRot = obj->Transform()->GetRelativeRot();
 
-		if (PrevPos == tempPos) // 이전 좌표와 변화가 없다면 return
+		PlayerMove::PlayerState CurState;
+
+		if (PrevPos == CurPos) // 이전 좌표와 변화가 없다면 move packet을 보내지 않는다. return
 		{
-			// obj->Animator3D()->Play(L"Jinx\\Idle1_Base", true, 0.1f);
+			CurState = PlayerMove::PlayerState::IDLE;
 			return;
 		}
+		else
+			CurState = PlayerMove::PlayerState::MOVE;
 
-		PrevPos = tempPos;
+
+		PrevPos = CurPos;
+		PrevState = CurState;
 
 		PlayerMove move = {};
-		move.pos.x = tempPos.x;
-		move.pos.y = tempPos.y;
-		move.pos.z = tempPos.z;
-		move.moveDir.x = temoRot.x;
-		move.moveDir.y = temoRot.y;
-		move.moveDir.z = temoRot.z;
-		move.state = PlayerMove::PlayerState::MOVE;
+		move.pos.x = CurPos.x;
+		move.pos.y = CurPos.y;
+		move.pos.z = CurPos.z;
+		move.moveDir.x = CurRot.x;
+		move.moveDir.y = CurRot.y;
+		move.moveDir.z = CurRot.z;
+		move.state = CurState;
 
 		// 서버에게 패킷 전송
 		std::cout << "C_MOVE Pakcet" << endl;
@@ -208,5 +291,7 @@ GameObjMgr::GameObjMgr()
 GameObjMgr::~GameObjMgr()
 {
 	_players.clear();
+	_objects.clear();
+	_towers.clear();
 }
 

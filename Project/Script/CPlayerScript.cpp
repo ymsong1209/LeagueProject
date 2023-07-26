@@ -51,7 +51,6 @@ void CPlayerScript::tick()
 		CurState = PLAYER_STATE::RUN;
 
 
-
 	if (PrevState != CurState)
 	{
 		if (CurState == PLAYER_STATE::RUN)

@@ -19,19 +19,30 @@ void ServerPacketHandler::HandlePacket(PacketSessionRef& session, BYTE* buffer, 
 	case S_TEST:
 		Handle_S_TEST(session, buffer, len);
 		break;
+
 	case S_LOGIN:
 		Handle_S_LOGIN(session, buffer, len);
 		break;
+
 	case S_PICK_FACTION:
 		Handle_S_PICK_FACTION(session, buffer, len);
 		break;
+
 	case S_PICK_CHAMPION:
 		Handle_S_PICK_CHAMPION(session, buffer, len);
 		break;
+
 	case S_GAME_START:
 		Handle_S_GAME_START(session, buffer, len);
+		break;
+
 	case S_MOVE:
 		Handle_S_MOVE(session, buffer, len);
+		break;
+
+	case S_SPAWN_OBJECT:
+		Handle_S_SPAWN_OBJECT(session, buffer, len);
+		break;
 	//case S_PLAYER_UPDATE:
 	//	Handle_S_PLAYER_UPDATE(session, buffer, len);
 	//	break;
@@ -300,4 +311,34 @@ void ServerPacketHandler::Handle_S_MOVE(PacketSessionRef& session, BYTE* buffer,
 	std::cout << "===============================" << endl;
 
 	m.unlock();
+}
+
+void ServerPacketHandler::Handle_S_SPAWN_OBJECT(PacketSessionRef& session, BYTE* buffer, int32 len)
+{
+	std::mutex m;
+	m.lock();
+
+	cout << "S_SPAWN_OBJECT Packet" << endl;
+	BufferReader br(buffer, len);
+
+	PKT_S_SPAWN_OBJECT* pkt = reinterpret_cast<PKT_S_SPAWN_OBJECT*>(buffer);
+
+	if (pkt->Validate() == false)
+	{
+		cout << "S_SPAWN_OBJECT Validate Fail" << endl;
+		m.unlock();
+		return;
+	}
+
+	// 해당 Id 플레이어가 움직임.
+	uint64 _objectId = pkt->objectId;
+	ObjectType _objectType = pkt->objectType;
+	FactionType _factionType = pkt->factionType;
+
+	GameObjMgr::GetInst()->AddObject(_objectId, _objectType, _factionType);
+
+	std::cout << "===============================" << endl;
+
+	m.unlock();
+
 }
