@@ -3,6 +3,17 @@
 
 // LoL 게임 내에서 플레이어가 상호작용할 수 있는 모든 오브젝트
 
+enum class UnitType
+{
+    CHAMPION,
+    STRUCTURE,
+    MINION,
+    JUNGLEMOB,
+    DRAGON,
+    BARON,
+};
+
+
 class CUnitScript :
     public CScript
 {
@@ -11,11 +22,12 @@ protected:
 
 public:
     CUnitScript();
-    ~CUnitScript();
+    virtual ~CUnitScript();
 
     CLONE(CUnitScript);
 
 protected:
+    UnitType    m_eUnitType;        // 유닛 종류
     float       m_fHP;              // 체력
     float       m_fMaxHP;           // 전체 체력
     float       m_fAttackPower;     // 공격력
@@ -31,6 +43,9 @@ protected:
 
 public:
     virtual void begin() override;
+    virtual void tick() override {};
+
+    virtual UnitType GetType() { return m_eUnitType; }
 
 public:
     bool IsUnitDead() { return m_bUnitDead; }

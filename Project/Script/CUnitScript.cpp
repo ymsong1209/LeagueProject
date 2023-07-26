@@ -3,6 +3,16 @@
 
 CUnitScript::CUnitScript(UINT ScriptType)
 	: CScript(ScriptType)
+	, m_fHP(0)
+	, m_fMaxHP(0)
+	, m_fAttackPower(0)
+	, m_fDefencePower(0)
+	, m_fAttackSpeed(0)
+	, m_fAttackRange(0)
+	, m_fMoveSpeed(0)
+	, m_vNextPos{}
+	, m_fFaceRot(0)
+	, m_bUnitDead(false)
 {
 }
 
@@ -17,6 +27,14 @@ CUnitScript::~CUnitScript()
 
 void CUnitScript::begin()
 {
+	// FSM
+	if (GetOwner()->Fsm() == nullptr)
+		return;
+	GetOwner()->Fsm()->ChangeState(L"Idle");
+
+	// Ã¼·Â
+	m_fHP = m_fMaxHP;
+
 }
 
 bool CUnitScript::PathFindMove(float _fSpeed, bool _IsRotation)

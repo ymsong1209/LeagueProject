@@ -200,6 +200,7 @@ void CAnimator3D::Play(const wstring& _strName, bool _bRepeat, bool _RepeatBlend
 			m_fCurBlendTime = 0.f;
 			m_fMaxBlendTime = _blendtime;
 			m_iBlendStartFrm = GetCurAnim()->GetCurFrameIdx();
+			m_bRepeat = _bRepeat;
 		}
 		//현재 애니메이션이 없을 경우에는 blend 옵션 없이 그대로 재생
 		else {
@@ -215,7 +216,8 @@ void CAnimator3D::Play(const wstring& _strName, bool _bRepeat, bool _RepeatBlend
 		m_pCurAnim->Play();
 	}
 
-	m_bRepeatBlend = _RepeatBlend;
+	m_bRepeatBlend = _RepeatBlend; 
+	//m_fBlendRatio = 0.f;
 }
 void CAnimator3D::Play(const wstring& _strName, bool _blend, float _blendtime)
 {
@@ -255,6 +257,7 @@ void CAnimator3D::Play(const wstring& _strName, bool _blend, float _blendtime)
 		m_pCurAnim->Play();
 	}
 	m_bRepeatBlend = false;
+	//m_fBlendRatio = 0.f;
 }
 
 void CAnimator3D::PlayOnce(const wstring& _strName, bool _blend, float _blendtime)

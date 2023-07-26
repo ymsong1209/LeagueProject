@@ -68,6 +68,9 @@ void CAnim3D::finaltick()
 	if (m_fClipUpdateTime >= m_pClip.dTimeLength)
 	{
 		m_bFinish = true;
+		m_fRatio = 0.f;
+		m_pOwner->SetFrameRatio(0.f);
+		return;
 	}
 
 	m_dCurTime = m_pClip.dStartTime + (double)m_fClipUpdateTime;

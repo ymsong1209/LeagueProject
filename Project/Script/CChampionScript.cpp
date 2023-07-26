@@ -20,6 +20,9 @@ CChampionScript::CChampionScript(UINT ScriptType)
 	, m_eRestraint(DEFAULT)
 	, m_Skill{}
 {
+	m_eUnitType = UnitType::CHAMPION;
+
+	// test	
 	m_fMaxHP = 5;
 }
 
@@ -37,12 +40,6 @@ void CChampionScript::begin()
 {
 	CUnitScript::begin();
 
-	// FSM
-	if (GetOwner()->Fsm() == nullptr)
-		return;
-
-	GetOwner()->Fsm()->ChangeState(L"Idle");
-
 	// 소환사 주문 배열에 넣어주기
 }
 
@@ -59,6 +56,7 @@ void CChampionScript::tick()
 	GetInput();
 	CheckStatus();
 	Move();
+	CheckSkills();
 
 }
 
@@ -207,6 +205,14 @@ void CChampionScript::GetInput()
 
 	// 소환사 주문
 
+}
+
+void CChampionScript::CheckSkills()
+{
+	//for (int i = 0; i < 4; i++)
+	//{
+	//	m_Skill[i]->tick();
+	//}
 }
 
 void CChampionScript::Move()

@@ -108,6 +108,21 @@ void CLevel::clear()
 }
 
 
+CGameObject* CLevel::FindObjectByID(UINT _id)
+{
+	for (UINT i = 0; i < MAX_LAYER; ++i)
+	{
+		const vector<CGameObject*>& vecObjects = m_arrLayer[i]->GetObjects();
+		for (size_t j = 0; j < vecObjects.size(); ++j)
+		{
+			if (_id == vecObjects[j]->GetID())
+				return vecObjects[j];
+		}
+	}
+
+	return nullptr;
+}
+
 CGameObject* CLevel::FindObjectByName(const wstring& _Name)
 {
 	for (UINT i = 0; i < MAX_LAYER; ++i)

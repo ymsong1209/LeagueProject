@@ -26,13 +26,13 @@ enum RESTRAINT
 // 소환사 주문(임시)
 enum class SUMMONERS_SPELL
 {
-    FLASH,
-    HEAL,
-    GHOST,
-    IGNITE,
-    SMITE,
-    EXHAUST,
-    CLEANSE,
+    FLASH,      // 점멸
+    HEAL,       // 회복
+    GHOST,      // 유체화
+    IGNITE,     // 점화
+    SMITE,      // 강타
+    EXHAUST,    // 탈진
+    CLEANSE,    // 정화
 };
 
 class CSkill;
@@ -76,7 +76,7 @@ public:
     bool    CheckDeath();
     void    CheckStatus();  // 현재 상태 확인
     void    GetInput();     // 입력 받기
-
+    void    CheckSkills();  // 스킬 체크
     void    Move();
 
     // =========== Skill     ==============

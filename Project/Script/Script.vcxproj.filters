@@ -55,6 +55,21 @@
     <Filter Include="State\ChampionState\Base">
       <UniqueIdentifier>{5214ea23-07bb-4000-8a13-bc04a9370710}</UniqueIdentifier>
     </Filter>
+    <Filter Include="State\StructureState">
+      <UniqueIdentifier>{57bc7b40-80b4-4dd0-aa46-61bd5847e6b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Script\UnitScript\Mob\Minion">
+      <UniqueIdentifier>{14f987aa-fe65-4d15-b999-d9738905b06a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Script\UnitScript\Structure\02. Inhibitor">
+      <UniqueIdentifier>{9c377cd9-947c-4e0e-a65c-6eb8fe5f6063}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Script\UnitScript\Structure\03. Nexus">
+      <UniqueIdentifier>{ab29b89f-19a3-4225-bca3-fb7ffa607805}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Script\UnitScript\Structure\01. Turret">
+      <UniqueIdentifier>{554a82a4-9373-4d93-824e-2877c3edc67d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CPlayerScript.h">
@@ -145,6 +160,27 @@
     <ClInclude Include="CJinxQState.h">
       <Filter>State\ChampionState\Jinx\SkillState</Filter>
     </ClInclude>
+    <ClInclude Include="CInhibitorBrokenState.h">
+      <Filter>State\StructureState</Filter>
+    </ClInclude>
+    <ClInclude Include="CInhibitorIdleState.h">
+      <Filter>State\StructureState</Filter>
+    </ClInclude>
+    <ClInclude Include="CInhibitorSpawnState.h">
+      <Filter>State\StructureState</Filter>
+    </ClInclude>
+    <ClInclude Include="CStructureScript.h">
+      <Filter>Script\UnitScript\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="CInhibitorScript.h">
+      <Filter>Script\UnitScript\Structure\02. Inhibitor</Filter>
+    </ClInclude>
+    <ClInclude Include="CTurretScript.h">
+      <Filter>Script\UnitScript\Structure\01. Turret</Filter>
+    </ClInclude>
+    <ClInclude Include="CNexusScript.h">
+      <Filter>Script\UnitScript\Structure\03. Nexus</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">
@@ -228,6 +264,27 @@
     </ClCompile>
     <ClCompile Include="CJinxQState.cpp">
       <Filter>State\ChampionState\Jinx\SkillState</Filter>
+    </ClCompile>
+    <ClCompile Include="CInhibitorBrokenState.cpp">
+      <Filter>State\StructureState</Filter>
+    </ClCompile>
+    <ClCompile Include="CInhibitorIdleState.cpp">
+      <Filter>State\StructureState</Filter>
+    </ClCompile>
+    <ClCompile Include="CInhibitorSpawnState.cpp">
+      <Filter>State\StructureState</Filter>
+    </ClCompile>
+    <ClCompile Include="CStructureScript.cpp">
+      <Filter>Script\UnitScript\Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="CInhibitorScript.cpp">
+      <Filter>Script\UnitScript\Structure\02. Inhibitor</Filter>
+    </ClCompile>
+    <ClCompile Include="CTurretScript.cpp">
+      <Filter>Script\UnitScript\Structure\01. Turret</Filter>
+    </ClCompile>
+    <ClCompile Include="CNexusScript.cpp">
+      <Filter>Script\UnitScript\Structure\03. Nexus</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

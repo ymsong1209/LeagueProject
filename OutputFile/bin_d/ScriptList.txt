@@ -1,6 +1,10 @@
 CCameraMoveScript
 CChampionScript
 CInGameCameraScript
+CInhibitorScript
 CJinxScript
+CNexusScript
 CPlayerScript
+CStructureScript
+CTurretScript
 CUnitScript

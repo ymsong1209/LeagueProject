@@ -20,8 +20,8 @@ void CJinxDeathState::tick()
 void CJinxDeathState::Enter()
 {
 	GetOwner()->Animator3D()->SetRepeat(false);
-	//GetOwner()->Animator3D()->Play(L"Jinx\\Death_model.002", false, 0.1f);
-	GetOwner()->Animator3D()->PlayOnce(L"Jinx\\Death_model.002");
+	GetOwner()->Animator3D()->Play(L"Jinx\\Death_model.002", false, 0.1f);
+	//GetOwner()->Animator3D()->PlayOnce(L"Jinx\\Death_model.002");
 	
 	CChampionDeathState::Enter();
 }  
