@@ -40,13 +40,33 @@ void ServerPacketHandler::HandlePacket(PacketSessionRef& session, BYTE* buffer, 
 		Handle_S_PLAYER_MOVE(session, buffer, len);
 		break;
 
+	case S_OBJECT_ANIM:
+		Handle_S_OBJECT_ANIM(session, buffer, len);
+		break;
+
 	case S_SPAWN_OBJECT:
 		Handle_S_SPAWN_OBJECT(session, buffer, len);
 		break;
 
-	//case S_PLAYER_UPDATE:
-	//	Handle_S_PLAYER_UPDATE(session, buffer, len);
-	//	break;
+	case S_OBJECT_MOVE:
+		Handle_S_OBJECT_MOVE(session, buffer, len);
+		break;
+
+	case S_SKILL_PROJECTILE:
+		Handle_S_SKILL_PROJECTILE(session, buffer, len);
+		break;
+
+	case S_SKILL_HIT:
+		Handle_S_SKILL_HIT(session, buffer, len);
+		break;
+
+	case S_SKILL_DAMAGE:
+		Handle_S_SKILL_DAMAGE(session, buffer, len);
+		break;
+
+	case S_SKILL_CC:
+		Handle_S_SKILL_CC(session, buffer, len);
+		break;
 	}
 }
 
@@ -314,6 +334,39 @@ void ServerPacketHandler::Handle_S_PLAYER_MOVE(PacketSessionRef& session, BYTE* 
 	m.unlock();
 }
 
+void ServerPacketHandler::Handle_S_OBJECT_ANIM(PacketSessionRef& session, BYTE* buffer, int32 len)
+{
+	std::mutex m;
+	m.lock();
+
+	cout << "S_OBJECT_ANIM Packet" << endl;
+	BufferReader br(buffer, len);
+
+	PKT_S_OBJECT_ANIM* pkt = reinterpret_cast<PKT_S_OBJECT_ANIM*>(buffer);
+
+	if (pkt->Validate() == false)
+	{
+		m.unlock();
+		return;
+	}
+
+	// 해당 오브젝트id의 애니메이션
+	uint64 _ObjectId = pkt->targetId;
+
+	if (_ObjectId != MyPlayer.id)
+	{
+		AnimInfo  _AnimInfo = pkt->animInfo;
+		
+
+		//여기 E_AnimPlay부터 짜면 된다. 
+		GameObjMgr::GetInst()->E_AnimPlay(_ObjectId, _AnimInfo);
+	}
+
+	std::cout << "===============================" << endl;
+
+	m.unlock();
+}
+
 void ServerPacketHandler::Handle_S_SPAWN_OBJECT(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
 	std::mutex m;
@@ -331,7 +384,6 @@ void ServerPacketHandler::Handle_S_SPAWN_OBJECT(PacketSessionRef& session, BYTE*
 		return;
 	}
 
-	// 해당 Id 플레이어가 움직임.
 	uint64 _objectId = pkt->objectId;
 	ObjectType _objectType = pkt->objectType;
 	FactionType _factionType = pkt->factionType;
@@ -342,4 +394,24 @@ void ServerPacketHandler::Handle_S_SPAWN_OBJECT(PacketSessionRef& session, BYTE*
 
 	m.unlock();
 
+}
+
+void ServerPacketHandler::Handle_S_OBJECT_MOVE(PacketSessionRef& session, BYTE* buffer, int32 len)
+{
+}
+
+void ServerPacketHandler::Handle_S_SKILL_PROJECTILE(PacketSessionRef& session, BYTE* buffer, int32 len)
+{
+}
+
+void ServerPacketHandler::Handle_S_SKILL_HIT(PacketSessionRef& session, BYTE* buffer, int32 len)
+{
+}
+
+void ServerPacketHandler::Handle_S_SKILL_DAMAGE(PacketSessionRef& session, BYTE* buffer, int32 len)
+{
+}
+
+void ServerPacketHandler::Handle_S_SKILL_CC(PacketSessionRef& session, BYTE* buffer, int32 len)
+{
 }

@@ -24,6 +24,7 @@ public:
 	// void AddTower();
 
 	void E_MovePlayer(uint64 _playerId, ObjectMove _playerMove);
+	void E_AnimPlay(uint64 _objectId, AnimInfo _animInfo);
 
 
 public: // 서버에 보낸다.

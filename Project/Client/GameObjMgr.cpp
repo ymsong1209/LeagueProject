@@ -40,7 +40,7 @@ CGameObject* GameObjMgr::FindPlayer(uint64 _targetId)
 	}
 	else {
 		// 원하는 원소가 없을 때의 처리
-		cout << "Id is not objectId in Server" << endl;
+		cout << "Id is not playerId in Server" << endl;
 		return nullptr;
 	}
 }
@@ -234,6 +234,10 @@ void GameObjMgr::E_MovePlayer(uint64 _playerId, ObjectMove _playerMove)
 	}
 }
 
+void GameObjMgr::E_AnimPlay(uint64 _objectId, AnimInfo _animInfo)
+{
+}
+
 void GameObjMgr::SendMyPlayerMove(ClientServiceRef _service)
 {
 	// 본인 플레이어의 움직임을 서버에 보낸다. 
@@ -273,16 +277,5 @@ void GameObjMgr::SendMyPlayerMove(ClientServiceRef _service)
 		_service->Broadcast(sendBuffer);
 		std::cout << "===============================" << endl;
 	}
-}
-
-GameObjMgr::GameObjMgr()
-{
-}
-
-GameObjMgr::~GameObjMgr()
-{
-	_players.clear();
-	_objects.clear();
-	_towers.clear();
 }
 
