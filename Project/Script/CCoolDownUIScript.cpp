@@ -19,7 +19,6 @@ void CCoolDownUIScript::begin()
 
 void CCoolDownUIScript::tick()
 {
-	if(m_dCoolDow
 }
 
 void CCoolDownUIScript::BeginOverlap(CCollider2D* _Other)

@@ -5,7 +5,7 @@ class CCoolDownUIScript :
     public CScript
 {
 private:
-    double m_dCoolDown;
+    float m_dCoolDown;
 
 
 public:
