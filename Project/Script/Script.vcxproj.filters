@@ -53,6 +53,7 @@
     <ClInclude Include="COtherPlayerScript.h">
       <Filter>Script</Filter>
     </ClInclude>
+    <ClInclude Include="CCoolDownUIScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CMissileScript.cpp">
@@ -90,5 +91,6 @@
     <ClCompile Include="COtherPlayerScript.cpp">
       <Filter>Script</Filter>
     </ClCompile>
+    <ClCompile Include="CCoolDownUIScript.cpp" />
   </ItemGroup>
 </Project>

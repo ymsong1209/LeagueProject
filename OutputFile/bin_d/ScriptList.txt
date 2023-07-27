@@ -1,5 +1,6 @@
 CCameraMoveScript
 CCharacterUIScript
+CCoolDownUIScript
 CGravityScript
 CInGameCameraScript
 CMissileScript

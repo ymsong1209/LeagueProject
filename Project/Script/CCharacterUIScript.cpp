@@ -2,6 +2,16 @@
 #include "CCharacterUIScript.h"
 #include "CUIScript.h"
 #include <Engine\CEventMgr.h>
+#include "CCoolDownUIScript.h"
+
+CCharacterUIScript::CCharacterUIScript()
+	:CUIScript(CHARACTERUISCRIPT)
+{
+}
+
+CCharacterUIScript::~CCharacterUIScript()
+{
+}
 
 void CCharacterUIScript::begin()
 {
@@ -16,6 +26,7 @@ void CCharacterUIScript::begin()
 
 void CCharacterUIScript::tick()
 {
+	//============================디버깅용 (필요x)============================
 	if (KEY_TAP(KEY::F5))
 	{
 		if(GetCharacterType() == CHARACTER_TYPE::MALPHIGHT)
@@ -23,7 +34,6 @@ void CCharacterUIScript::tick()
 		else if(GetCharacterType() == CHARACTER_TYPE::JINX)
 			SetCharacterType(CHARACTER_TYPE::MALPHIGHT);
 	}
-
 
 	//----혹시라도 디버깅을 위해 챔피언을 변경한다면 스킬 머터리얼들도 변경-----
 	CHARACTER_TYPE Champ = GetCharacterType();
@@ -95,13 +105,12 @@ void CCharacterUIScript::SkillUILoad()
 	//머터리얼 이름은 CHARACTER_TYPE + "_" + SkillNum 형태로 되어있어야함 (ex: MALPHGITE_Q)
 	//그래야 알아서 캐릭터별로 머터리얼을 찾아옴
 	CUIScript::begin();
-	SetChampInFo(CHARACTER_TYPE::MALPHIGHT, SUMMONERS_SPELL::HEAL, SUMMONERS_SPELL::FLASH);
+	SetChampInFo(CHARACTER_TYPE::VEIN, SUMMONERS_SPELL::HEAL, SUMMONERS_SPELL::FLASH);
 
 	PrevCharacter = GetCharacterType();
 	wstring UIpath = L"material\\";
 	wstring mtrl = L".mtrl";
 	wstring under = L"_";
-
 	wstring CharacterType = CHARACTER_TYPE_WSTR[(UINT)GetCharacterType()];
 	wstring ChampMtrlPath = UIpath + CharacterType + under + L"CIRCLE" + mtrl;
 
@@ -125,13 +134,14 @@ void CCharacterUIScript::SkillUILoad()
 		Obj->SetName(SkillName);
 		Obj->AddComponent(new CTransform);
 		Obj->AddComponent(new CMeshRender);
+		Obj->AddComponent(new CCoolDownUIScript);
 		Obj->Transform()->SetRelativeScale(Vec3(10.f, 10.f, 10.f));
 		Obj->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
 		Obj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(fullpath), 0);
 		Obj->Transform()->SetAbsolute(true);
 		GetUIBackPanel()->AddChild(Obj);
 
-		switch (i) //스킬별 위치 지정
+		switch (i) //스킬 오브젝트 저장. 
 		{
 		case 0:
 			Skill_Q_Image = Obj;
@@ -165,6 +175,7 @@ void CCharacterUIScript::SpellUILoad()
 		CGameObject* Spell = new CGameObject; //캐릭터 패널 배치
 		Spell->AddComponent(new CTransform);
 		Spell->AddComponent(new CMeshRender);
+		Spell->AddComponent(new CCoolDownUIScript);
 		Spell->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
 		Spell->Transform()->SetAbsolute(true);
 
@@ -250,6 +261,7 @@ void CCharacterUIScript::LoadFromLevelJsonFile(const Value& _componentValue)
 {
 }
 
+
 void CCharacterUIScript::UISetting()
 {
 	//---스킬 고정 위치---
@@ -263,26 +275,12 @@ void CCharacterUIScript::UISetting()
 	Spell_D->Transform()->SetRelativePos(Vec3(16.f, 5.2f, 2.f));
 	Spell_F->Transform()->SetRelativeScale(Vec3(7.f, 7.f, 7.f));
 	Spell_F->Transform()->SetRelativePos(Vec3(24.52f, 5.2f, 2.f));
-
 	HPBar->Transform()->SetRelativeScale(Vec3(68.4f, 3.f, 1.f));
 	HPBar->Transform()->SetRelativePos(Vec3(-7.f, -5.76f, -1.f));
 	MPBar->Transform()->SetRelativeScale(Vec3(68.4f, 3.f, 1.f));
 	MPBar->Transform()->SetRelativePos(Vec3(-7.f, -9.12f, -1.f));
-
 	EXPBar->Transform()->SetRelativeScale(Vec3(7.f, 18.7f, 1.f));
 	EXPBar->Transform()->SetRelativePos(Vec3(-48.f, 1.f, -1.f));
-
 	WadingTotem->Transform()->SetRelativeScale(Vec3(6.f, 6.f, 1.f));
 	WadingTotem->Transform()->SetRelativePos(Vec3(60.32f, 5.68f, 7.f));
-}
-
-CCharacterUIScript::CCharacterUIScript()
-	:CUIScript(CHARACTERUISCRIPT)
-{
-
-}
-
-
-CCharacterUIScript::~CCharacterUIScript()
-{
 }

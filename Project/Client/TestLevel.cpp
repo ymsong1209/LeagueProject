@@ -83,7 +83,7 @@ void CreateTestLevel()
 	//pLightObj->Light3D()->SetLightAmbient(Vec4(1.f, 1.f, 1.f,1.f));
 	pLightObj->Light3D()->SetLightDiffuse(Vec3(0.5f, 0.5f, 0.5f));
 	pLightObj->Light3D()->SetLightSpecular(Vec3(0.f, 0.f, 0.f));
-	pLightObj->Light3D()->SetLightAmbient(Vec3(0.9f, 0.9f, 0.9f));
+	pLightObj->Light3D()->SetLightAmbient(Vec3(0.3f, 0.3f, 0.3f));
 
 
 	pLightObj->Light3D()->SetRadius(400.f);
@@ -167,6 +167,7 @@ void CreateTestLevel()
 	LoLMapCollider->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
 	LoLMapCollider->Collider2D()->SetOffsetScale(Vec2(2700.f, 2700.f));
 	LoLMapCollider->Collider2D()->SetOffsetPos(Vec3(1125.f, 16.f, 1200.f));
+	LoLMapCollider->Collider2D()->SetDrawCollision(false);
 	LoLMapCollider->Transform()->SetGizmoObjExcept(true);
 	SpawnGameObject(LoLMapCollider, Vec3(0.f, 0.f, 0.f), 6);
 

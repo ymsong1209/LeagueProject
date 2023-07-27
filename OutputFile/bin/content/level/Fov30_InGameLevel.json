@@ -139,9 +139,9 @@
                                         "w": 0.0
                                     },
                                     "vAmbient": {
-                                        "x": 0.8999999761581421,
-                                        "y": 0.8999999761581421,
-                                        "z": 0.8999999761581421,
+                                        "x": 0.30000001192092896,
+                                        "y": 0.30000001192092896,
+                                        "z": 0.30000001192092896,
                                         "w": 0.0
                                     },
                                     "vSpecular": {
@@ -2235,7 +2235,7 @@
                                         ],
                                         "arrTex[(UINT)TEX_PARAM::TEX_END]s": [
                                             {
-                                                "arrTex[0]": 1
+                                                "arrTex[0]": 0
                                             },
                                             {
                                                 "arrTex[1]": 0
@@ -2812,7 +2812,7 @@
                                         ],
                                         "arrTex[(UINT)TEX_PARAM::TEX_END]s": [
                                             {
-                                                "arrTex[0]": 1
+                                                "arrTex[0]": 0
                                             },
                                             {
                                                 "arrTex[1]": 0
@@ -3093,7 +3093,7 @@
                                         ],
                                         "arrFloat[12]s": [
                                             {
-                                                "arrFloat[0]": 1.0
+                                                "arrFloat[0]": 0.0
                                             },
                                             {
                                                 "arrFloat[1]": 0.0
@@ -3664,7 +3664,7 @@
                                         ],
                                         "arrFloat[12]s": [
                                             {
-                                                "arrFloat[0]": 1.0
+                                                "arrFloat[0]": 0.0
                                             },
                                             {
                                                 "arrFloat[1]": 0.0
@@ -4094,6 +4094,39 @@
                     ],
                     "scripts": [],
                     "children": []
+                },
+                {
+                    "ObjName": "New Object",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vRelativeScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
+                        },
+                        16
+                    ],
+                    "scripts": [],
+                    "children": []
                 }
             ]
         },
@@ -4167,7 +4200,7 @@
                             },
                             "bAbsolute": false,
                             "Shape": 0,
-                            "DrawCollision": true
+                            "DrawCollision": false
                         },
                         16
                     ],
