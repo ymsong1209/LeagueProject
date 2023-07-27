@@ -1,0 +1,12 @@
+Attack1,0,80
+Attack2,81,161
+Attack3,162,242
+Idle1,243,315
+Idle2,316,388
+Idle3,389,461
+jinxmine_attack2,462,542
+jinxmine_attack3,543,623
+jinxmine_attack,624,704
+jinxmine_idle2,705,777
+jinxmine_idle4,778,850
+jinxmine_idle,851,923
