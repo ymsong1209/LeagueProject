@@ -34,32 +34,6 @@ enum class ObjectType {
     END,
 };
 
-//struct PlayerMove
-//{
-//    enum PlayerState
-//    {
-//        IDLE = 0,
-//        MOVE = 1,
-//    };
-//
-//    struct MoveDir
-//    {
-//        float x;
-//        float y;
-//        float z;
-//    };
-//
-//    struct Pos
-//    {
-//        float x;
-//        float y;
-//        float z;
-//    };
-//
-//    PlayerState state;
-//    MoveDir moveDir;
-//    Pos pos;
-//};
 
 struct PlayerInfo
 {
@@ -69,7 +43,7 @@ struct PlayerInfo
     ChampionType champion;
     bool host;
 
-    PlayerMove posInfo;
+    ObjectMove posInfo;
 };
 
 struct PlayerInfoPacket
@@ -79,7 +53,7 @@ struct PlayerInfoPacket
     ChampionType champion;
     bool host;
 
-    PlayerMove posInfo;
+    ObjectMove posInfo;
 
     uint16 nickNameOffset;
     uint16 nickNameCount;

@@ -4,12 +4,12 @@
 class ServerEventMgr
 {
 private:
-    vector<tEvent>          m_vecEvent;
+    vector<tServerEvent>          m_vecEvent;
 
 
     std::chrono::steady_clock::time_point last_tick_time;
 public:
-   void AddEvent(const tEvent& _evn) { m_vecEvent.push_back(_evn); }
+   void AddEvent(const tServerEvent& _evn) { m_vecEvent.push_back(_evn); }
 
 public:
     void sendtick(ClientServiceRef _service);

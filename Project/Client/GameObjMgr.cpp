@@ -210,7 +210,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectType _objectType, FactionType
 	}
 }
 
-void GameObjMgr::E_MovePlayer(uint64 _playerId, PlayerMove _playerMove)
+void GameObjMgr::E_MovePlayer(uint64 _playerId, ObjectMove _playerMove)
 {
 	std::mutex m;
 	{
@@ -221,13 +221,13 @@ void GameObjMgr::E_MovePlayer(uint64 _playerId, PlayerMove _playerMove)
 
 		CGameObject* obj = FindPlayer(_playerId);
 
-		tEvent evn = {};
+		tServerEvent evn = {};
 
-		evn.Type = EVENT_TYPE::MOVE_PACKET;
+		evn.Type = SERVER_EVENT_TYPE::MOVE_PACKET;
 		evn.wParam = (DWORD_PTR)obj;
 
-		// PlayerMove 구조체의 포인터를 DWORD_PTR로 캐스팅하여 lParam에 저장
-		PlayerMove* temp = new PlayerMove(_playerMove);
+		// ObjectMove 구조체의 포인터를 DWORD_PTR로 캐스팅하여 lParam에 저장
+		ObjectMove* temp = new ObjectMove(_playerMove);
 		evn.lParam = (DWORD_PTR)temp;
 
 		ServerEventMgr::GetInst()->AddEvent(evn);
@@ -248,36 +248,27 @@ void GameObjMgr::SendMyPlayerMove(ClientServiceRef _service)
 
 		if (obj->GetLayerIndex() == -1)
 			return;
-
+		
 		Vec3 CurPos = obj->Transform()->GetRelativePos();
 		Vec3 CurRot = obj->Transform()->GetRelativeRot();
 
-		PlayerMove::PlayerState CurState;
 
 		if (PrevPos == CurPos) // 이전 좌표와 변화가 없다면 move packet을 보내지 않는다. return
-		{
-			CurState = PlayerMove::PlayerState::IDLE;
 			return;
-		}
-		else
-			CurState = PlayerMove::PlayerState::MOVE;
-
 
 		PrevPos = CurPos;
-		PrevState = CurState;
 
-		PlayerMove move = {};
+		ObjectMove move = {};
 		move.pos.x = CurPos.x;
 		move.pos.y = CurPos.y;
 		move.pos.z = CurPos.z;
 		move.moveDir.x = CurRot.x;
 		move.moveDir.y = CurRot.y;
 		move.moveDir.z = CurRot.z;
-		move.state = CurState;
 
 		// 서버에게 패킷 전송
 		std::cout << "C_MOVE Pakcet" << endl;
-		PKT_C_MOVE_WRITE pktWriter(move);
+		PKT_C_PLAYER_MOVE_WRITE pktWriter(move);
 		SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
 		_service->Broadcast(sendBuffer);
 		std::cout << "===============================" << endl;

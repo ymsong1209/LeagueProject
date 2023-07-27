@@ -1,5 +1,19 @@
 #pragma once
 
+enum class SERVER_EVENT_TYPE
+{
+	// Server Packet //
+	MOVE_PACKET,    // wParam : GameObject,  lParam : Update Move Packet
+};
+
+// Event
+struct tServerEvent
+{
+	SERVER_EVENT_TYPE Type;
+	DWORD_PTR	wParam;
+	DWORD_PTR	lParam;
+};
+
 
 enum class FactionType
 {
@@ -9,14 +23,8 @@ enum class FactionType
 	END = 3,
 };
 
-struct PlayerMove
+struct ObjectMove
 {
-	enum PlayerState
-	{
-		IDLE = 0,
-		MOVE = 1,
-	};
-
 	struct MoveDir
 	{
 		float x;
@@ -31,7 +39,11 @@ struct PlayerMove
 		float z;
 	};
 
-	PlayerState state;
 	MoveDir moveDir;
 	Pos pos;
+};
+
+struct ObjectInfo
+{
+
 };

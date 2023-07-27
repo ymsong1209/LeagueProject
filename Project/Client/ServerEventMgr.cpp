@@ -19,14 +19,18 @@ void ServerEventMgr::sendtick(ClientServiceRef _service)
     auto now = std::chrono::steady_clock::now();
     auto time_diff = std::chrono::duration_cast<std::chrono::milliseconds>(now - last_tick_time);
 
-    // 100ms = 1/10 sec
+	// 규칙 패킷 : 100ms = 1/10 sec
     if (time_diff.count() >= 100) 
     {      
-        // 본인 플레이어 move 패킷을 서버에 보낸다.
+        // 1. 본인 플레이어 move 패킷을 서버에 보낸다.
         GameObjMgr::GetInst()->SendMyPlayerMove(_service);
 
-		// 방장일시, 모든 오브젝트 move패킷을 서버에 보낸다. 
+		// 2. 본인 플레이어 anim 패킷을 서버에 보낸다.
+		//GameObjMgr::GetInst()->SendMyPlayerAnim(_service);
+		
 		if (MyPlayer.host)
+			// 방장일시, 모든 오브젝트 move패킷을 서버에 보낸다. 
+			// _objects에 있는 모든것.
 			//GameObjMgr::GetInst()->SendAllObjectMove(); // 안에서 오브젝트만큼 반복문을 돌듯.
 
 		// S_SPAWN_OBJECT
@@ -59,24 +63,15 @@ void ServerEventMgr::clienttick()
 		switch (m_vecEvent[i].Type)
 		{
 
-		case EVENT_TYPE::MOVE_PACKET:
+		case SERVER_EVENT_TYPE::MOVE_PACKET:
 		{
 
 			CGameObject* NewObject = (CGameObject*)m_vecEvent[i].wParam;
-			PlayerMove* playerMove = (PlayerMove*)(m_vecEvent[i].lParam);
+			ObjectMove* playerMove = (ObjectMove*)(m_vecEvent[i].lParam);
 
 
 			NewObject->Transform()->SetRelativePos(Vec3(playerMove->pos.x, playerMove->pos.y, playerMove->pos.z));
 			NewObject->Transform()->SetRelativeRot(Vec3(playerMove->moveDir.x, playerMove->moveDir.y, playerMove->moveDir.z));
-
-			// 이전 프레임 상태도 체크해야함.
-			if(playerMove->state == PlayerMove::MOVE 
-				&& GameObjMgr::GetInst()->GetPrevState() == PlayerMove::IDLE)
-				NewObject->Animator3D()->Play(L"Jinx\\Run_Base", true, 0.15f);
-
-			else if(playerMove->state == PlayerMove::IDLE
-				&& GameObjMgr::GetInst()->GetPrevState() == PlayerMove::MOVE)
-				NewObject->Animator3D()->Play(L"Jinx\\Idle1_Base", true, 0.1f);
 
 
 			// 사용이 끝난 후에는 메모리를 해제

@@ -36,13 +36,14 @@ void ServerPacketHandler::HandlePacket(PacketSessionRef& session, BYTE* buffer, 
 		Handle_S_GAME_START(session, buffer, len);
 		break;
 
-	case S_MOVE:
-		Handle_S_MOVE(session, buffer, len);
+	case S_PLAYER_MOVE:
+		Handle_S_PLAYER_MOVE(session, buffer, len);
 		break;
 
 	case S_SPAWN_OBJECT:
 		Handle_S_SPAWN_OBJECT(session, buffer, len);
 		break;
+
 	//case S_PLAYER_UPDATE:
 	//	Handle_S_PLAYER_UPDATE(session, buffer, len);
 	//	break;
@@ -283,15 +284,15 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 	m.unlock();
 }
 
-void ServerPacketHandler::Handle_S_MOVE(PacketSessionRef& session, BYTE* buffer, int32 len)
+void ServerPacketHandler::Handle_S_PLAYER_MOVE(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
 	std::mutex m;
 	m.lock();
 
-	cout << "S_MOVE Packet" << endl;
+	cout << "S_PLAYER_MOVE Packet" << endl;
 	BufferReader br(buffer, len);
 
-	PKT_S_MOVE* pkt = reinterpret_cast<PKT_S_MOVE*>(buffer);
+	PKT_S_PLAYER_MOVE* pkt = reinterpret_cast<PKT_S_PLAYER_MOVE*>(buffer);
 
 	if (pkt->Validate() == false)
 	{
@@ -303,7 +304,7 @@ void ServerPacketHandler::Handle_S_MOVE(PacketSessionRef& session, BYTE* buffer,
 	uint64 _PlayerId = pkt->playerId;
 	if (_PlayerId != MyPlayer.id)
 	{
-		PlayerMove playerMove = pkt->playerMove;
+		ObjectMove playerMove = pkt->playerMove;
 
 		GameObjMgr::GetInst()->E_MovePlayer(_PlayerId, playerMove);
 	}

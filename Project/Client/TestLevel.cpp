@@ -406,7 +406,7 @@ void CreateChampionPickLevel()
 void CreateIngameLevel()
 {
 	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
-	pCurLevel->ChangeState(LEVEL_STATE::PLAY);
+	pCurLevel->ChangeState(LEVEL_STATE::STOP);
 
 	// Layer 이름설정
 	pCurLevel->GetLayer(0)->SetName(L"Default");

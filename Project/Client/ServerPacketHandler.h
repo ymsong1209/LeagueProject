@@ -4,6 +4,7 @@
 #include "CoreMacro.h"
 
 #include "ServerFunc.h"
+
 enum
 {
 	S_TEST = 0,
@@ -20,11 +21,12 @@ enum
 	C_PLAYER_UPDATE = 8,
 	S_PLAYER_UPDATE = 9,
 
-	C_MOVE = 10,
-	S_MOVE = 11,
+	C_PLAYER_MOVE = 10,
+	S_PLAYER_MOVE = 11,
 
 	S_SPAWN_OBJECT = 12,
 };
+
 class ServerPacketHandler
 {
 public:
@@ -35,7 +37,7 @@ public:
 	static void Handle_S_PICK_FACTION(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_PICK_CHAMPION(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_GAME_START(PacketSessionRef& session, BYTE* buffer, int32 len);
-	static void Handle_S_MOVE(PacketSessionRef& session, BYTE* buffer, int32 len);
+	static void Handle_S_PLAYER_MOVE(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_SPAWN_OBJECT(PacketSessionRef& session, BYTE* buffer, int32 len);
 
 private:
@@ -430,16 +432,16 @@ struct PKT_S_GAME_START {
 
 
 #pragma pack(1)
-struct PKT_C_MOVE
+struct PKT_C_PLAYER_MOVE
 {
 	uint16 packetSize;
 	uint16 packetId;
-	PlayerMove playerMove;
+	ObjectMove playerMove;
 
 	bool Validate()
 	{
 		uint32 size = 0;
-		size += sizeof(PKT_C_MOVE);
+		size += sizeof(PKT_C_PLAYER_MOVE);
 		if (packetSize < size)
 			return false;
 
@@ -451,18 +453,19 @@ struct PKT_C_MOVE
 };
 #pragma pack()
 
+
 #pragma pack(1)
-struct PKT_S_MOVE
+struct PKT_S_PLAYER_MOVE
 {
 	uint16 packetSize;
 	uint16 packetId;
 	uint64 playerId;
-	PlayerMove playerMove;
+	ObjectMove playerMove;
 
 	bool Validate()
 	{
 		uint32 size = 0;
-		size += sizeof(PKT_S_MOVE);
+		size += sizeof(PKT_S_PLAYER_MOVE);
 		if (packetSize < size)
 			return false;
 
@@ -603,17 +606,17 @@ private:
 #pragma pack()
 
 #pragma pack(1)
-class PKT_C_MOVE_WRITE
+class PKT_C_PLAYER_MOVE_WRITE
 {
 public:
-	PKT_C_MOVE_WRITE(PlayerMove _playerMove) {
+	PKT_C_PLAYER_MOVE_WRITE(ObjectMove _playerMove) {
 		_sendBuffer = GSendBufferManager->Open(4096);
 		// ÃÊ±âÈ­
 		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
 
-		_pkt = _bw.Reserve<PKT_C_MOVE>();
+		_pkt = _bw.Reserve<PKT_C_PLAYER_MOVE>();
 		_pkt->packetSize = 0; // To Fill
-		_pkt->packetId = C_MOVE;
+		_pkt->packetId = C_PLAYER_MOVE;
 		_pkt->playerMove = _playerMove;
 	}
 
@@ -627,7 +630,7 @@ public:
 	}
 
 private:
-	PKT_C_MOVE* _pkt = nullptr;
+	PKT_C_PLAYER_MOVE* _pkt = nullptr;
 	SendBufferRef _sendBuffer;
 	BufferWriter _bw;
 };
