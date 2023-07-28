@@ -54,6 +54,7 @@ private:
     float                       m_fFrameRatio;      
     float                       m_fBlendRatio;       //애니메이션 전환시에 적용되는 blend값
     bool                        m_bDebugAnimator;    //True일 경우, level이 stop이여도 애니메이션 재생됨.dt가 아니라 editdt사용, Anim3dEditorUI에서 만든 object만 사용됨
+    float                       m_fAnimSpeed;        
 
     const vector<tMTBone>* m_pVecBones;
 
@@ -82,10 +83,10 @@ public:
     //반복재생 사용하고 싶을 시
     //repeatblend : 현재 애니메이션 반복재생할때 마지막에 blend 옵션 줄 것인지
     //blend : 이전 애니메이션이 남아있을때 애니메이션 전환할때 blend옵션을 줄 것인지
-    void Play(const wstring& _strName, bool _bRepeat, bool _RepeatBlend, bool _blend = true, float _blendtime = 0.f);
+    void PlayRepeat(const wstring& _strName, bool _RepeatBlend, bool _blend = true, float _blendtime = 0.f);
     //단일재생 사용하고 싶을 시
     //blend : 이전 애니메이션이 남아있을때 애니메이션 전환할때 blend옵션을 줄 것인지
-    void Play(const wstring& _strName, bool _blend = false, float _blendtime = 0.f);
+    void PlayOnce(const wstring& _strName, bool _blend = false, float _blendtime = 0.f);
 
 
     void Pause();
@@ -94,6 +95,9 @@ public:
     //반복재생 사용중인지 확인
     bool IsRepeat() { return m_bRepeat; }
     void SetRepeat(bool _bRepeat) { m_bRepeat = _bRepeat; }
+
+    void  SetSpeed(float _speed) { m_fAnimSpeed = _speed; }
+    float GetSpeed() { return m_fAnimSpeed; }
 
 
     //애니메이션 사이 blend 옵션 제어

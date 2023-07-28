@@ -31,6 +31,7 @@ CAnimator3D::CAnimator3D()
 	, m_iNextFrm(0)
 	, m_fBlendRatio(0)
 	, m_bDebugAnimator(false)
+	, m_fAnimSpeed(1.f)
 	, m_vecFinalBoneMat()
 	, m_MeshDataRelativePath()
 	, CComponent(COMPONENT_TYPE::ANIMATOR3D)
@@ -53,6 +54,7 @@ CAnimator3D::CAnimator3D(const CAnimator3D& _origin)
 	, m_iNextFrm(_origin.m_iNextFrm)
 	, m_fBlendRatio(_origin.m_fBlendRatio)
 	, m_bDebugAnimator(_origin.m_bDebugAnimator)
+	, m_fAnimSpeed(_origin.m_fAnimSpeed)
 	, m_vecFinalBoneMat(_origin.m_vecFinalBoneMat)
 	, m_MeshDataRelativePath(_origin.m_MeshDataRelativePath)
 	, CComponent(COMPONENT_TYPE::ANIMATOR3D)
@@ -186,7 +188,7 @@ void CAnimator3D::ClearData()
 	}
 }
 
-void CAnimator3D::Play(const wstring& _strName, bool _bRepeat, bool _RepeatBlend, bool _blend, float _blendtime)
+void CAnimator3D::PlayRepeat(const wstring& _strName, bool _RepeatBlend, bool _blend, float _blendtime)
 {
 
 	CAnim3D* pAnim = FindAnim(_strName);
@@ -206,20 +208,20 @@ void CAnimator3D::Play(const wstring& _strName, bool _bRepeat, bool _RepeatBlend
 		else {
 			m_pCurAnim = pAnim;
 			m_pCurAnim->Reset();
-			m_bRepeat = _bRepeat;
+			m_bRepeat = true;
 			m_pCurAnim->Play();
 		}
 	}
 	else {
 		m_pCurAnim = pAnim;
 		m_pCurAnim->Reset();
-		m_bRepeat = _bRepeat;
+		m_bRepeat = true;
 		m_pCurAnim->Play();
 	}
 
 	m_bRepeatBlend = _RepeatBlend;
 }
-void CAnimator3D::Play(const wstring& _strName, bool _blend, float _blendtime)
+void CAnimator3D::PlayOnce(const wstring& _strName, bool _blend, float _blendtime)
 {
 	CAnim3D* pAnim = FindAnim(_strName);
 	assert(pAnim);
@@ -255,6 +257,7 @@ void CAnimator3D::Play(const wstring& _strName, bool _blend, float _blendtime)
 		m_pCurAnim->Reset();
 		m_pCurAnim->Play();
 	}
+	m_bRepeat = false;
 	m_bRepeatBlend = false;
 }
 

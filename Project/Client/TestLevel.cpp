@@ -185,8 +185,7 @@ void CreateTestLevel()
 		pObj->Collider3D()->SetAbsolute(true);
 		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
 		pObj->Collider3D()->SetDrawCollision(false);
-		pObj->Animator3D()->SetRepeat(true);
-		pObj->Animator3D()->Play(L"Jinx\\Idle1_Base", true, 0.1f);
+		pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true,true,0.1f);
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
 
 		pObj->Transform()->SetUseMouseOutline(true);
@@ -210,8 +209,7 @@ void CreateTestLevel()
 		pObj->SetName(L"blue_nexus");
 		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\nexus");
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->Animator3D()->SetRepeat(true);
-		pObj->Animator3D()->Play(L"nexus\\sruap_order_idle.anm_skinned_mesh.001", true, 0.1f);
+		pObj->Animator3D()->PlayRepeat(L"nexus\\sruap_order_idle.anm_skinned_mesh.001", true,true,0.1f);
 		pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\sruap_ordernexus_tx_cm_clear.png"));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
@@ -230,8 +228,7 @@ void CreateTestLevel()
 		pObj->SetName(L"blue_Inhibitor");
 		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->Animator3D()->SetRepeat(true);
-		pObj->Animator3D()->Play(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true, 0.1f);
+		pObj->Animator3D()->PlayRepeat(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true,true, 0.1f);
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(-45.48f), 0.f));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
@@ -244,8 +241,7 @@ void CreateTestLevel()
 		pObj->SetName(L"blue_Inhibitor2");
 		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->Animator3D()->SetRepeat(true);
-		pObj->Animator3D()->Play(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true, 0.1f);
+		pObj->Animator3D()->PlayRepeat(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001",true, true, 0.1f);
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(-89.48f), 0.f));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
@@ -258,8 +254,7 @@ void CreateTestLevel()
 		pObj->SetName(L"blue_Inhibitor2");
 		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->Animator3D()->SetRepeat(true);
-		pObj->Animator3D()->Play(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true, 0.1f);
+		pObj->Animator3D()->PlayRepeat(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true,true, 0.1f);
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(2.f), 0.f));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
@@ -274,8 +269,7 @@ void CreateTestLevel()
 		pObj->SetName(L"red_nexus");
 		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\nexus");
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->Animator3D()->SetRepeat(true);
-		pObj->Animator3D()->Play(L"nexus\\sruap_order_idle.anm_skinned_mesh.001", true, 0.1f);
+		pObj->Animator3D()->PlayRepeat(L"nexus\\sruap_order_idle.anm_skinned_mesh.001", true,true, 0.1f);
 		pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\nexus_Mat_Red.mtrl"), 1);
 		pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
@@ -288,8 +282,7 @@ void CreateTestLevel()
 		pObj->SetName(L"red_Inhibitor1");
 		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->Animator3D()->SetRepeat(true);
-		pObj->Animator3D()->Play(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true, 0.1f);
+		pObj->Animator3D()->PlayRepeat(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true,true, 0.1f);
 		pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\inhibitor_red_Mtrl.mtrl"), 0);
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(0.f), XMConvertToRadians(-180.f)));
@@ -303,8 +296,7 @@ void CreateTestLevel()
 		pObj->SetName(L"red_Inhibitor2");
 		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->Animator3D()->SetRepeat(true);
-		pObj->Animator3D()->Play(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true, 0.1f);
+		pObj->Animator3D()->PlayRepeat(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true,true, 0.1f);
 		pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\inhibitor_red_Mtrl.mtrl"), 0);
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(45.f), XMConvertToRadians(-180.f)));
@@ -318,8 +310,7 @@ void CreateTestLevel()
 		pObj->SetName(L"red_Inhibitor3");
 		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->Animator3D()->SetRepeat(true);
-		pObj->Animator3D()->Play(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true, 0.1f);
+		pObj->Animator3D()->PlayRepeat(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true, true, 0.1f);
 		pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\inhibitor_red_Mtrl.mtrl"), 0);
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(90.f), XMConvertToRadians(-180.f)));
