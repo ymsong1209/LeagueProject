@@ -17,7 +17,8 @@ void Send_CLogin(ClientServiceRef _service, wstring _userName)
     PKT_C_LOGIN_WRITE pktWriter;
 
     //문자 개수만큼 함수에 파라미터로 넣어주세요.
-    PKT_C_LOGIN_WRITE::NickName nickNamePacket = pktWriter.ReserveNickName(_userName.size());
+    PKT_C_LOGIN_WRITE::NickName nickNamePacket 
+        = pktWriter.ReserveNickName(_userName.size());
     for (int i = 0; i < _userName.size(); i++) {
         nickNamePacket[i] = { _userName[i] };
     }

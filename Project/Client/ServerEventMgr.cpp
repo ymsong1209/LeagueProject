@@ -21,36 +21,34 @@ void ServerEventMgr::sendtick(ClientServiceRef _service)
 
 	// 규칙 패킷 : 100ms = 1/10 sec
     if (time_diff.count() >= 100) 
-    {      
-        // 1. 본인 플레이어 move 패킷을 서버에 보낸다.
+    {     
+        // 1. 본인 플레이어 move 패킷을 서버에 보낸다. (움직임,방향,lv, HP MP AD Defence)
         GameObjMgr::GetInst()->SendMyPlayerMove(_service);
 
-		// 2. 본인 플레이어 anim 패킷을 서버에 보낸다.
-		//GameObjMgr::GetInst()->SendMyPlayerAnim(_service);
-		
+		// 2. 방장일시, 모든 오브젝트 move패킷을 서버에 보낸다. (포탑,억제기,넥서스 제외)
 		if (MyPlayer.host)
-			// 방장일시, 모든 오브젝트 move패킷을 서버에 보낸다. 
-			// _objects에 있는 모든것.
-			//GameObjMgr::GetInst()->SendAllObjectMove(); // 안에서 오브젝트만큼 반복문을 돌듯.
-
-		// S_SPAWN_OBJECT
-		// 핸들러에서 서버에서 모두에게 spawnObject 패킷이 온다. (오브젝트 타입 : 미니언)
-		// 내가 방장이면 찐 미니언 스크립트를 단 미니언을 생성하고
-		// 다른 클라이언트들은 other미니언 스크립트를 단 미니언을 생성한다. 
-		// C_UPDATE_OBJECT
-		// 이후 플레이어를 제외한 모든 오브젝트(미니언, 투사체)는 방장이 관련 패킷을 보낸다. -> 이 정보를 서버가 모두에게 뿌린다. (S_UPDATE_OBJECT)
-
-
+		{
+			map<uint64, CGameObject*> _objects = GameObjMgr::GetInst()->GetObjects();
+			for (auto& pair : _objects) {
+				uint64 id = pair.first; 
+				CGameObject* obj = pair.second; 
+				GameObjMgr::GetInst()->SendObjectMove(id, obj, _service);
+			}
+		}
+		
         // 시간 업데이트
         last_tick_time = now;
     }
 
-	// MyPlayer 가 스킬을 쓰는지 플래그 체크 -> 서버에 스킬을 사용한다는 허락 패킷을 보낸다.
-
-    // 서버는 해당 id플레이어가 해당 스킬을 사용한다고 브로드캐스팅. 그걸 받고 상태를 바꿔줌. 
-	// 투사체 스킬일시, 생성은 방장이 한다. 
-	// if 방장일시 모든걸 처리
-
+	// 불규칙 패킷
+	// 스크립트 이벤트 매니저의 이벤트 vector를 확인하고 보낸다. 
+	// vector<tEvent> _vecEvent = ScriptMgr::GetInst()->GetVecEvent();
+	// for(_vecEvent)
+	// { switch case : 
+	//  애니메이션 변경, 스킬사용, 스킬Hit, 데미지맞음, 상태이상중,}
+	// GameObjMgr::GetInst()->SendMyPlayerAnim(_service);
+	// 
+	
 }
 
 void ServerEventMgr::clienttick()
@@ -65,21 +63,39 @@ void ServerEventMgr::clienttick()
 
 		case SERVER_EVENT_TYPE::MOVE_PACKET:
 		{
-
 			CGameObject* NewObject = (CGameObject*)m_vecEvent[i].wParam;
-			ObjectMove* playerMove = (ObjectMove*)(m_vecEvent[i].lParam);
+			ObjectMove* objectMove = (ObjectMove*)(m_vecEvent[i].lParam);
 
-
-			NewObject->Transform()->SetRelativePos(Vec3(playerMove->pos.x, playerMove->pos.y, playerMove->pos.z));
-			NewObject->Transform()->SetRelativeRot(Vec3(playerMove->moveDir.x, playerMove->moveDir.y, playerMove->moveDir.z));
-
+			//NewObject->?()->SetLV(objectMove->LV);
+			//NewObject->?()->SetHP(objectMove->HP);
+			//NewObject->?()->SetMP(objectMove->MP);
+			//NewObject->?()->SetAD(objectMove->AD);
+			//NewObject->?()->SetDefence(objectMove->Defence);
+			NewObject->Transform()->SetRelativePos(Vec3(objectMove->pos.x, objectMove->pos.y, objectMove->pos.z));
+			NewObject->Transform()->SetRelativeRot(Vec3(objectMove->moveDir.x, objectMove->moveDir.y, objectMove->moveDir.z));
 
 			// 사용이 끝난 후에는 메모리를 해제
-			delete playerMove;
-			playerMove = nullptr;
+			delete objectMove;
+			objectMove = nullptr;
 		}
-
 		break;
+
+		case SERVER_EVENT_TYPE::ANIM_PACKET:
+		{
+			CGameObject* NewObject = (CGameObject*)m_vecEvent[i].wParam;
+			AnimInfo* animInfo = (AnimInfo*)(m_vecEvent[i].lParam);
+
+			NewObject->Animator3D()->Play(animInfo->animName, animInfo->blend, animInfo->blendTime);
+
+			// 사용이 끝난 후에는 메모리를 해제
+			delete animInfo;
+			animInfo = nullptr;
+		}
+		break;
+
+
+
+
 		}
 
 	}

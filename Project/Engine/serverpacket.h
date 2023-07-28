@@ -1,9 +1,11 @@
 #pragma once
+#include<Windows.h>
 
 enum class SERVER_EVENT_TYPE
 {
 	// Server Packet //
-	MOVE_PACKET,    // wParam : GameObject,  lParam : Update Move Packet
+	MOVE_PACKET,    // wParam : GameObject,  lParam : ObjectMove Update Move Packet
+	ANIM_PACKET,    // wParam : GameObject,  lParam : AnimInfo
 };
 
 // Event
@@ -23,27 +25,3 @@ enum class FactionType
 	END = 3,
 };
 
-struct ObjectMove
-{
-	struct MoveDir
-	{
-		float x;
-		float y;
-		float z;
-	};
-
-	struct Pos
-	{
-		float x;
-		float y;
-		float z;
-	};
-
-	MoveDir moveDir;
-	Pos pos;
-};
-
-struct ObjectInfo
-{
-
-};

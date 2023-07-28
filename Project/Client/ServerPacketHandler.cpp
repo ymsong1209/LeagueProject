@@ -151,6 +151,7 @@ void ServerPacketHandler::Handle_S_LOGIN(PacketSessionRef& session, BYTE* buffer
 			MyPlayer.nickname = playerNickName;
 			MyPlayer.host = playerIdBuff.host;
 
+			cout << "!!!! You are a HOST !!!! " << endl;
 			cout << "My Id : " << MyPlayer.id
 				<< ", My Faction : " << (int)MyPlayer.faction
 				<< ", My NickName : " << MyPlayer.nickname << endl;
@@ -355,11 +356,22 @@ void ServerPacketHandler::Handle_S_OBJECT_ANIM(PacketSessionRef& session, BYTE* 
 
 	if (_ObjectId != MyPlayer.id)
 	{
-		AnimInfo  _AnimInfo = pkt->animInfo;
-		
+		AnimInfoPacket _AnimInfoPacket = pkt->animInfo;
 
-		//여기 E_AnimPlay부터 짜면 된다. 
-		GameObjMgr::GetInst()->E_AnimPlay(_ObjectId, _AnimInfo);
+		AnimInfo _AnimInfo = {};
+
+		PKT_S_OBJECT_ANIM::AnimNameList AnimNameBuffs = pkt->GetAnimNameList();
+		// 애니메이션 이름
+		wstring _animName = L"";
+		for (auto& AnimNameBuff : AnimNameBuffs)
+		{
+			_animName.push_back(AnimNameBuff.animName);
+		}
+		_AnimInfo.animName = _animName;
+		_AnimInfo.blend = _AnimInfoPacket.blend;
+		_AnimInfo.blendTime = _AnimInfoPacket.blendTime;
+
+		GameObjMgr::GetInst()->E_ObjectAnim(_ObjectId, _AnimInfo);
 	}
 
 	std::cout << "===============================" << endl;
@@ -384,20 +396,48 @@ void ServerPacketHandler::Handle_S_SPAWN_OBJECT(PacketSessionRef& session, BYTE*
 		return;
 	}
 
-	uint64 _objectId = pkt->objectId;
-	ObjectType _objectType = pkt->objectType;
-	FactionType _factionType = pkt->factionType;
+	ObjectInfo _objectInfo = pkt->objectInfo;
+	uint64 _objectId = pkt->objectInfo.objectId;
 
-	GameObjMgr::GetInst()->AddObject(_objectId, _objectType, _factionType);
+	cout << "Id : " << _objectId << endl;
+
+	GameObjMgr::GetInst()->AddObject(_objectId, _objectInfo);
 
 	std::cout << "===============================" << endl;
 
 	m.unlock();
-
 }
 
 void ServerPacketHandler::Handle_S_OBJECT_MOVE(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
+	std::mutex m;
+	m.lock();
+
+	cout << "S_OBJECT_MOVE Packet" << endl;
+	BufferReader br(buffer, len);
+
+	PKT_S_OBJECT_MOVE* pkt = reinterpret_cast<PKT_S_OBJECT_MOVE*>(buffer);
+
+	if (pkt->Validate() == false)
+	{
+		m.unlock();
+		return;
+	}
+
+	// 해당 Id 오브젝트가 움직임.
+	uint64 _objectId = pkt->objectId;
+
+	// 방장을 제외한 클라이언트만 해당 움직임을 받는다.
+	if (!MyPlayer.host)
+	{
+		ObjectMove playerMove = pkt->objectMove;
+
+		GameObjMgr::GetInst()->E_MoveObject(_objectId, playerMove);
+	}
+
+	std::cout << "===============================" << endl;
+
+	m.unlock();
 }
 
 void ServerPacketHandler::Handle_S_SKILL_PROJECTILE(PacketSessionRef& session, BYTE* buffer, int32 len)

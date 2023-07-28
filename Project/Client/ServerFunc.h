@@ -15,7 +15,7 @@ struct SkillInfo {
     SkillType skillType;
 };
 
-struct AnimInfo {
+struct AnimInfoPacket {
     uint16 animIdx;
     bool blend;
     float blendTime;
@@ -36,6 +36,12 @@ struct AnimInfo {
     }
 };
 
+struct AnimInfo {
+    wstring animName;
+    uint16  animIdx;
+    bool    blend;
+    float   blendTime;
+};
 //enum class FactionType
 //{
 //    BLUE = 0,
@@ -50,16 +56,10 @@ enum WaitingStatus
     RUN = 1,
 };
 
-enum ChampionType
-{
-    NONE,
-    BLITZCRANK,
-    JINX,
-    AMUMU,
-    MALPHITE,
-};
 
 enum class ObjectType {
+    PLAYER,
+
     MELEE_MINION,
     CASTER_MINION,
     SIEGE_MINION,
@@ -75,6 +75,8 @@ enum class ObjectType {
     INHIBITOR,
     NEXUS,
 
+    PROJECTILE,
+
     END,
 };
 
@@ -86,6 +88,79 @@ enum class CC_TYPE
     SNARE, // 속박
     BLEED, // 출혈
     AIRBORNE, // 에어본
+};
+
+enum ChampionType
+{
+    NONE,
+    BLITZCRANK,
+    JINX,
+    AMUMU,
+    MALPHITE,
+};
+struct ObjectMove
+{
+public:
+    struct MoveDir
+    {
+        float x;
+        float y;
+        float z;
+    };
+
+    struct Pos
+    {
+        float x;
+        float y;
+        float z;
+    };
+public:
+    ObjectMove(){}
+    ObjectMove(int _LV, float _HP, float _MP, float _AD, float _Defence, ObjectMove::MoveDir _moveDir, ObjectMove::Pos _pos)
+        : LV(_LV)
+        , HP(_HP)
+        , MP(_MP)
+        , AD(_AD)
+        , Defence(_Defence)
+        , moveDir(_moveDir)
+        , pos(_pos)
+    {}
+    ~ObjectMove() {}
+
+    int   LV;
+    float HP;
+    float MP;
+    float AD;
+    float Defence;
+
+    MoveDir moveDir;
+    Pos pos;
+};
+
+enum class LaneType {
+    NONE,
+    TOP,
+    MID,
+    BOTTOM,
+    END,
+};
+
+struct ObjectInfo {
+    ObjectInfo() {}
+    ObjectInfo(uint64 _objectId, ObjectType _objectType, FactionType _factionType, LaneType _laneType, ObjectMove _objectMove)
+        : objectId(_objectId)
+        , objectType(_objectType)
+        , factionType(_factionType)
+        , laneType(_laneType)
+        , objectMove(_objectMove)
+    {}
+    ~ObjectInfo() {}
+
+    uint64 objectId;
+    ObjectType objectType;
+    FactionType factionType;
+    LaneType    laneType;
+    ObjectMove objectMove;
 };
 
 struct PlayerInfo
@@ -105,7 +180,6 @@ struct PlayerInfoPacket
     FactionType faction;
     ChampionType champion;
     bool host;
-
     ObjectMove posInfo;
 
     uint16 nickNameOffset;
