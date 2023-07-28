@@ -3,6 +3,8 @@
 #include "CUIScript.h"
 #include <Engine\CEventMgr.h>
 #include "CCoolDownUIScript.h"
+#include "CExpRatioUIScript.h"
+#include "CHpMpRatioUIScript.h"
 
 CCharacterUIScript::CCharacterUIScript()
 	:CUIScript(CHARACTERUISCRIPT)
@@ -134,17 +136,20 @@ void CCharacterUIScript::SkillUILoad()
 		Obj->SetName(SkillName);
 		Obj->AddComponent(new CTransform);
 		Obj->AddComponent(new CMeshRender);
-		Obj->AddComponent(new CCoolDownUIScript);
 		Obj->Transform()->SetRelativeScale(Vec3(10.f, 10.f, 10.f));
 		Obj->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
 		Obj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(fullpath), 0);
 		Obj->Transform()->SetAbsolute(true);
+		
 		GetUIBackPanel()->AddChild(Obj);
 
 		switch (i) //스킬 오브젝트 저장. 
 		{
 		case 0:
+		{
+			Obj->AddComponent(new CCoolDownUIScript);
 			Skill_Q_Image = Obj;
+		}
 			break;
 		case 1:
 			Skill_W_Image = Obj;
@@ -175,7 +180,7 @@ void CCharacterUIScript::SpellUILoad()
 		CGameObject* Spell = new CGameObject; //캐릭터 패널 배치
 		Spell->AddComponent(new CTransform);
 		Spell->AddComponent(new CMeshRender);
-		Spell->AddComponent(new CCoolDownUIScript);
+		//Spell->AddComponent(new CCoolDownUIScript);
 		Spell->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
 		Spell->Transform()->SetAbsolute(true);
 
@@ -217,6 +222,7 @@ void CCharacterUIScript::BarUILoad()
 			HPBar = BarUI;
 			HPBar->SetName(L"HPBar");
 			HPBar->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\HPBar.mtrl"), 0);
+			HPBar->AddComponent(new CHpMpRatioUIScript(BARTYPE::HP));
 		}
 		break;
 		case 1:
@@ -224,6 +230,7 @@ void CCharacterUIScript::BarUILoad()
 			MPBar = BarUI;
 			MPBar->SetName(L"MPBar");
 			MPBar->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\MPBar.mtrl"), 0);
+			MPBar->AddComponent(new CHpMpRatioUIScript(BARTYPE::MP));
 		}
 		break;
 		case 2:
@@ -231,6 +238,7 @@ void CCharacterUIScript::BarUILoad()
 			EXPBar = BarUI;
 			EXPBar->SetName(L"EXPBar");
 			EXPBar->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\EXPBar.mtrl"), 0);
+			EXPBar->AddComponent(new CExpRatioUIScript);
 		}
 		break;
 		case 3:

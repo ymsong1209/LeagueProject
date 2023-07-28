@@ -880,6 +880,71 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->AddTexParam(TEX_0, "Output Texture");
 	AddRes(pShader->GetKey(), pShader);
 
+	// ============================
+	// CoolDownShader
+	// RasterizerState      : CULL_NONE
+	// BlendState           : ALPHA_BLEND
+	// DepthStencilState    : Less
+	//
+	// Parameter
+	// g_tex_0              : Output Texture
+	// ============================
+		pShader = new CGraphicsShader;
+	pShader->SetKey(L"CoolDownShader");
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_CoolDown");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_CoolDown");
+
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::MASK);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_MASK);
+	// Param
+	pShader->AddTexParam(TEX_0, "Output Texture");
+	AddRes(pShader->GetKey(), pShader);
+
+	// ============================
+	// EXPRatioShader
+	// RasterizerState      : CULL_NONE
+	// BlendState           : ALPHA_BLEND
+	// DepthStencilState    : Less
+	//
+	// Parameter
+	// g_tex_0              : Output Texture
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"EXPRatioShader");
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_EXPRatio");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_EXPRatio");
+
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::MASK);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_MASK);
+	// Param
+	pShader->AddTexParam(TEX_0, "Output Texture");
+	AddRes(pShader->GetKey(), pShader);
+
+	// ============================
+	// HPMPRatioShader
+	// RasterizerState      : CULL_NONE
+	// BlendState           : ALPHA_BLEND
+	// DepthStencilState    : Less
+	//
+	// Parameter
+	// g_tex_0              : Output Texture
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"HPMPRatioShader");
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_HPMPRatio");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_HPMPRatio");
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::MASK);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_MASK);
+	// Param
+	pShader->AddTexParam(TEX_0, "Output Texture");
+	AddRes(pShader->GetKey(), pShader);
+
 
 
 	// ======================================

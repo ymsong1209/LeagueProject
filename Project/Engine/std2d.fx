@@ -342,4 +342,150 @@ float4 PS_Anim2D(VS_Anim_OUT _in) : SV_Target
 }
 
 
+
+// ============================
+// CoolDownShader
+// RasterizerState      : None
+// BlendState           : Mask
+// DepthStencilState    : Less
+//
+// Parameter
+// g_int_0              : AnimUse
+// g_vec2_0             : AnimAtlas LeftTop
+// g_vec2_1             : AnimAtlas Slice
+//
+// g_tex_0              : Output Texture
+// ============================
+
+struct VS_CoolDownIN
+{
+    float3 vLocalPos : POSITION;
+    float2 vUV : TEXCOORD;
+};
+
+struct VS_CoolDownOUT
+{
+    float4 vPosition : SV_Position;
+    float2 vUV : TEXCOORD;
+};
+
+VS_CoolDownOUT VS_CoolDown(VS_CoolDownIN _in)
+{
+    VS_CoolDownOUT output = (VS_CoolDownOUT) 0.f;
+    
+    output.vPosition = mul(float4(_in.vLocalPos, 1.f), g_matWVP);
+    output.vUV = _in.vUV;
+        
+    return output;
+}
+
+float4 PS_CoolDown(VS_CoolDownOUT _in) : SV_Target
+{
+    float4 vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
+
+    float2 vYPos = float2(0.5f, 0.f);
+    float2 vCenterUV = float2(0.5, 0.5);
+    float2 vCurUV = _in.vUV;
+    float2 vDir = normalize(vCurUV - vCenterUV);
+    float2 vYDir = normalize(vYPos - vCenterUV);
+
+    float angleY = degrees(acos(dot(vDir, vYDir)));
+
+    // 쿨타임의 각도를 반대로 계산합니다. (360.f - (360.f * g_float_0))는 쿨타임이 가득 찼을 때 0도부터 시작해서 시계방향으로 감소하는 형태를 만듭니다.
+    float angle = 360.f - (360.f * g_float_0);
+
+    if (_in.vUV.x < 0.5)
+    {
+        angleY = 360.f - angleY;
+    }
+
+    if (g_float_0 != 0.f) // g_float_0이 0이면 쿨타임이 없는 상태, 즉 일반 텍스쳐 출력
+    {
+        if (angleY > angle)
+        {
+            // Modify the output color to blue for the cooling down part.
+            vOutColor = float4(0.06f, 0.23f, 0.34f, 0.6f);
+        }
+        else
+        {
+            // Modify the output color to darker for the rest of the texture.
+            vOutColor = float4(vOutColor.r * 0.2, vOutColor.g * 0.2, vOutColor.b * 0.2, vOutColor.a);
+        }
+    }
+    else
+    {
+        // g_float_0이 0이면 쿨타임이 없으므로 원래 텍스쳐 그대로 출력
+        vOutColor = vOutColor;
+    }
+
+    return vOutColor;
+}
+
+// ============================
+// EXPRatioShader
+// RasterizerState      : None
+// BlendState           : Mask
+// DepthStencilState    : Less
+
+// g_tex_0              : Output Texture
+// g_float_0            : XP Ratio (경험치 비율)
+// ============================
+
+VS_OUT VS_EXPRatio(VS_IN _in)
+{
+    VS_OUT output = (VS_OUT) 0.f;
+
+    output.vPosition = mul(float4(_in.vLocalPos, 1.f), g_matWVP);
+    output.vUV = _in.vUV; // UV 조정은 삭제
+
+    return output;
+}
+
+float4 PS_EXPRatio(VS_OUT _in) : SV_Target
+{
+    // 경험치 비율보다 낮은 부분은 렌더링하지 않습니다.
+    if (_in.vUV.y < (1.0f - g_float_0))
+    {
+        discard;
+    }
+    // 그 외 부분은 텍스쳐 샘플링을 통해 색상을 결정합니다.
+    float4 vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
+    return vOutColor;
+}
+
+
+// ============================
+// HPMPRatioShader
+// RasterizerState      : None
+// BlendState           : Mask
+// DepthStencilState    : Less
+
+// g_tex_0              : Output Texture
+// g_float_0            :  Ratio (마나or체력 비율)
+// ============================
+
+VS_OUT VS_HPMPRatio(VS_IN _in)
+{
+    VS_OUT output = (VS_OUT) 0.f;
+
+    output.vPosition = mul(float4(_in.vLocalPos, 1.f), g_matWVP);
+    output.vUV = _in.vUV; // UV 조정은 삭제
+
+    return output;
+}
+
+float4 PS_HPMPRatio(VS_OUT _in) : SV_Target
+{
+    // 경험치 비율보다 낮은 부분은 렌더링하지 않습니다.
+    if (_in.vUV.x > g_float_0)
+    {
+        discard;
+    }
+    // 그 외 부분은 텍스쳐 샘플링을 통해 색상을 결정합니다.
+    float4 vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
+    return vOutColor;
+}
+
+
+
 #endif

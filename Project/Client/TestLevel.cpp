@@ -18,6 +18,7 @@
 
 #include "CLevelSaveLoad.h"
 #include <Script/CScriptMgr.h>
+#include <Script/CWorldHPSpawnScript.h>
 
 
 void CreateTestLevel()
@@ -208,6 +209,7 @@ void CreateTestLevel()
 		pObj->AddComponent(new CPlayerScript);
 		pObj->AddComponent(new CPathFinder);
 		pObj->AddComponent(new CCollider3D);
+		pObj->AddComponent(new CWorldHPSpawnScript);
 
 		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
 		pObj->Collider3D()->SetAbsolute(true);

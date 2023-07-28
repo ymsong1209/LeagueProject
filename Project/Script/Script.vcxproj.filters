@@ -54,6 +54,10 @@
       <Filter>Script</Filter>
     </ClInclude>
     <ClInclude Include="CCoolDownUIScript.h" />
+    <ClInclude Include="CExpRatioUIScript.h" />
+    <ClInclude Include="CHpMpRatioUIScript.h" />
+    <ClInclude Include="CWorldHPUIScript.h" />
+    <ClInclude Include="CWorldHPSpawnScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CMissileScript.cpp">
@@ -92,5 +96,9 @@
       <Filter>Script</Filter>
     </ClCompile>
     <ClCompile Include="CCoolDownUIScript.cpp" />
+    <ClCompile Include="CExpRatioUIScript.cpp" />
+    <ClCompile Include="CHpMpRatioUIScript.cpp" />
+    <ClCompile Include="CWorldHPUIScript.cpp" />
+    <ClCompile Include="CWorldHPSpawnScript.cpp" />
   </ItemGroup>
 </Project>

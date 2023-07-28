@@ -175,7 +175,9 @@ call CodeGen.exe</Command>
     <ClInclude Include="CCameraMoveScript.h" />
     <ClInclude Include="CCharacterUIScript.h" />
     <ClInclude Include="CCoolDownUIScript.h" />
+    <ClInclude Include="CExpRatioUIScript.h" />
     <ClInclude Include="CGravityScript.h" />
+    <ClInclude Include="CHpMpRatioUIScript.h" />
     <ClInclude Include="CMissileScript.h" />
     <ClInclude Include="CMonsterScript.h" />
     <ClInclude Include="COtherPlayerScript.h" />
@@ -183,6 +185,8 @@ call CodeGen.exe</Command>
     <ClInclude Include="CScriptMgr.h" />
     <ClInclude Include="CTestIdleState.h" />
     <ClInclude Include="CUIScript.h" />
+    <ClInclude Include="CWorldHPSpawnScript.h" />
+    <ClInclude Include="CWorldHPUIScript.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="CInGameCameraScript.h" />
     <ClInclude Include="pch.h" />
@@ -191,7 +195,9 @@ call CodeGen.exe</Command>
     <ClCompile Include="CCameraMoveScript.cpp" />
     <ClCompile Include="CCharacterUIScript.cpp" />
     <ClCompile Include="CCoolDownUIScript.cpp" />
+    <ClCompile Include="CExpRatioUIScript.cpp" />
     <ClCompile Include="CGravityScript.cpp" />
+    <ClCompile Include="CHpMpRatioUIScript.cpp" />
     <ClCompile Include="CMissileScript.cpp" />
     <ClCompile Include="CMonsterScript.cpp" />
     <ClCompile Include="COtherPlayerScript.cpp" />
@@ -200,6 +206,8 @@ call CodeGen.exe</Command>
     <ClCompile Include="CTestIdleState.cpp" />
     <ClCompile Include="CInGameCameraScript.cpp" />
     <ClCompile Include="CUIScript.cpp" />
+    <ClCompile Include="CWorldHPSpawnScript.cpp" />
+    <ClCompile Include="CWorldHPUIScript.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

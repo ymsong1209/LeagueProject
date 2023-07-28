@@ -1,10 +1,14 @@
 CCameraMoveScript
 CCharacterUIScript
 CCoolDownUIScript
+CExpRatioUIScript
 CGravityScript
+CHpMpRatioUIScript
 CInGameCameraScript
 CMissileScript
 CMonsterScript
 COtherPlayerScript
 CPlayerScript
 CUIScript
+CWorldHPSpawnScript
+CWorldHPUIScript

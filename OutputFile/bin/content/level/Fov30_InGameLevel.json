@@ -589,6 +589,9 @@
                         {
                             "scriptName": "CPlayerScript",
                             "fSpeed": 200.0
+                        },
+                        {
+                            "scriptName": "CWorldHPSpawnScript"
                         }
                     ],
                     "children": []
@@ -4089,39 +4092,6 @@
                                     }
                                 }
                             ]
-                        },
-                        16
-                    ],
-                    "scripts": [],
-                    "children": []
-                },
-                {
-                    "ObjName": "New Object",
-                    "components": [
-                        {
-                            "TRANSFORM": 0,
-                            "vRelativePos": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "vRelativeScale": {
-                                "x": 1.0,
-                                "y": 1.0,
-                                "z": 1.0
-                            },
-                            "vRelativeRot": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "bAbsolute": false,
-                            "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 50.0,
-                            "IsShootingRay": false,
-                            "RayRange": 20.0,
-                            "UseMouseOutLine": false,
-                            "Outlinethickness": 0.07199999690055847
                         },
                         16
                     ],

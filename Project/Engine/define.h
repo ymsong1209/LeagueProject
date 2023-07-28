@@ -397,3 +397,10 @@ enum class SUMMONERS_SPELL //스펠 이미지 이름을 가져올때 이 이름으로 가져오므로 
 };
 
 extern const wchar_t* SUMMONERS_SPELL_WSTR[(UINT)SUMMONERS_SPELL::END];
+
+enum class BARTYPE
+{
+	HP,
+	MP,
+	END,
+};
