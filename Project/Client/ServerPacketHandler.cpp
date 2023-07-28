@@ -151,7 +151,9 @@ void ServerPacketHandler::Handle_S_LOGIN(PacketSessionRef& session, BYTE* buffer
 			MyPlayer.nickname = playerNickName;
 			MyPlayer.host = playerIdBuff.host;
 
-			cout << "!!!! You are a HOST !!!! " << endl;
+			if(MyPlayer.host)
+				cout << "!!!! You are a HOST !!!! " << endl;
+
 			cout << "My Id : " << MyPlayer.id
 				<< ", My Faction : " << (int)MyPlayer.faction
 				<< ", My NickName : " << MyPlayer.nickname << endl;
@@ -446,8 +448,39 @@ void ServerPacketHandler::Handle_S_SKILL_PROJECTILE(PacketSessionRef& session, B
 
 void ServerPacketHandler::Handle_S_SKILL_HIT(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
+	std::mutex m;
+	m.lock();
+
+	cout << "S_SKILL_HIT Packet" << endl;
+	BufferReader br(buffer, len);
+
+	PKT_S_SKILL_HIT* pkt = reinterpret_cast<PKT_S_SKILL_HIT*>(buffer);
+
+	if (pkt->Validate() == false)
+	{
+		m.unlock();
+		return;
+	}
+
+	uint64 AttackedId = pkt->objecId;       // 스킬을 맞은 오브젝트 id
+	SkillInfo skillInfo = pkt->skillInfo;  // 맞은 스킬 정보
+
+
+	// 1. 스킬맞은 id가 플레이어 id면 걔 클라이언트에서 알아서 처리
+	// 2. 스킬맞은 id가 오브젝트 id면(미니언,포탑) 방장 클라이언트에서 알아서 처리
+
+	// 여기서 스킬 타입에 따라서 
+	// CSkill curSkill = SkillMgr::GetInst()->AttackedSkill(skillInfo.skillType) 
+
+
+
+
+	std::cout << "===============================" << endl;
+	m.unlock();
 }
 
+
+// 안씀
 void ServerPacketHandler::Handle_S_SKILL_DAMAGE(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
 }

@@ -27,7 +27,7 @@ public:
 	void SendMyPlayerMove(ClientServiceRef _service);
 	void SendObjectAnim(uint64 _id, ClientServiceRef _service);
 	void SendObjectMove(uint64 _id, CGameObject* _obj, ClientServiceRef _service);
-
+	void SendTowerUpdate(uint64 _id, CGameObject* _obj, ClientServiceRef _service);
 
 	// 서버에게 받은 패킷 처리
 	void E_MovePlayer(uint64 _playerId, ObjectMove _playerMove);

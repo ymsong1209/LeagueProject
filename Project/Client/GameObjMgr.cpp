@@ -334,47 +334,52 @@ void GameObjMgr::SendObjectMove(uint64 _id, CGameObject* _obj, ClientServiceRef 
 		Vec3 CurRot = obj->Transform()->GetRelativeRot();
 
 		auto it = _objectsPrevPos.find(_id);
-		if (it != _objectsPrevPos.end())
+		if (it != _objectsPrevPos.end()) // PrevPos가 있다. 	
 		{
-			// id가 map에 있다.
-			if (_objectsPrevPos.at(_id) == CurPos) // 이전 좌표와 변화가 없다면 move packet을 보내지 않는다. return
+			// 이전 좌표와 똑같다면 move packet을 보내지 않는다. return
+			if (_objectsPrevPos.at(_id) == CurPos) 
 				return;
 
-			_objectsPrevPos.at(_id) = CurPos;
+			_objectsPrevPos.at(_id) = CurPos; // 현재 좌표를 이전좌표로 저장
+
+			// float CurLV = obj->?()->GetLV();
+			// float CurHP = obj->?()->GetHP();
+			// float CurMP = obj->?()->GetMP();
+			// float CurAD = obj->?()->GetAD();
+			// float CurDefence = obj->?()->GetDefence();
+
+			ObjectMove move = {};
+			//move.LV = CurLV;
+			//move.HP = CurHP;
+			//move.MP = CurMP;
+			//move.AD = CurAD;
+			//move.Defence = CurDefence;
+			move.pos.x = CurPos.x;
+			move.pos.y = CurPos.y;
+			move.pos.z = CurPos.z;
+			move.moveDir.x = CurRot.x;
+			move.moveDir.y = CurRot.y;
+			move.moveDir.z = CurRot.z;
+
+			// 서버에게 패킷 전송
+			std::cout << "C_OBJECT_MOVE Pakcet. id : " << _id << endl;
+
+			PKT_C_OBJECT_MOVE_WRITE pktWriter(_id, move);
+			SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+			_service->Broadcast(sendBuffer);
+			std::cout << "===============================" << endl;
 		}
 		else
-		{   
-			// id가 map에 없다.
-			return;
+		{
+			_objectsPrevPos.insert(pair(_id, CurPos));
 		}
 
-		// float CurLV = obj->?()->GetLV();
-		// float CurHP = obj->?()->GetHP();
-		// float CurMP = obj->?()->GetMP();
-		// float CurAD = obj->?()->GetAD();
-		// float CurDefence = obj->?()->GetDefence();
-
-		ObjectMove move = {};
-		//move.LV = CurLV;
-		//move.HP = CurHP;
-		//move.MP = CurMP;
-		//move.AD = CurAD;
-		//move.Defence = CurDefence;
-		move.pos.x = CurPos.x;
-		move.pos.y = CurPos.y;
-		move.pos.z = CurPos.z;
-		move.moveDir.x = CurRot.x;
-		move.moveDir.y = CurRot.y;
-		move.moveDir.z = CurRot.z;
-
-		// 서버에게 패킷 전송
-		std::cout << "C_OBJECT_MOVE Pakcet. id : "<< _id << endl;
-
-		PKT_C_OBJECT_MOVE_WRITE pktWriter(_id, move);
-		SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
-		_service->Broadcast(sendBuffer);
-		std::cout << "===============================" << endl;
+		
 	}
+}
+
+void GameObjMgr::SendTowerUpdate(uint64 _id, CGameObject* _obj, ClientServiceRef _service)
+{
 }
 
 void GameObjMgr::SendObjectAnim(uint64 _id, ClientServiceRef _service)

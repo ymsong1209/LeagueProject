@@ -82,6 +82,7 @@ enum class ObjectType {
 
 enum class CC_TYPE
 {
+    NONE,
     STUN, // ±âÀý
     SLOW, // µÐÈ­
     SILENCE, // Ä§¹¬
@@ -115,8 +116,8 @@ public:
         float z;
     };
 public:
-    ObjectMove(){}
-    ObjectMove(int _LV, float _HP, float _MP, float _AD, float _Defence, ObjectMove::MoveDir _moveDir, ObjectMove::Pos _pos)
+    ObjectMove() {}
+    ObjectMove(int _LV, float _HP, float _MP, float _AD, float _Defence, ObjectMove::MoveDir _moveDir, ObjectMove::Pos _pos, CC_TYPE _CCType)
         : LV(_LV)
         , HP(_HP)
         , MP(_MP)
@@ -124,6 +125,7 @@ public:
         , Defence(_Defence)
         , moveDir(_moveDir)
         , pos(_pos)
+        , CCType(_CCType)
     {}
     ~ObjectMove() {}
 
@@ -135,6 +137,7 @@ public:
 
     MoveDir moveDir;
     Pos pos;
+    CC_TYPE CCType;
 };
 
 enum class LaneType {

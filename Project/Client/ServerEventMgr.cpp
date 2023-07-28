@@ -19,20 +19,30 @@ void ServerEventMgr::sendtick(ClientServiceRef _service)
     auto now = std::chrono::steady_clock::now();
     auto time_diff = std::chrono::duration_cast<std::chrono::milliseconds>(now - last_tick_time);
 
-	// 규칙 패킷 : 100ms = 1/10 sec
+	// 규칙 패킷(MovePacket) : 100ms = 1/10 sec
     if (time_diff.count() >= 100) 
     {     
         // 1. 본인 플레이어 move 패킷을 서버에 보낸다. (움직임,방향,lv, HP MP AD Defence)
+		// 문제점 : 안움직일땐 move 패킷을 안보내서 LV,HP,MP 등 업데이트가 안됌...그냥 움직여라는 뜻.(나중에는 안움직일때도 패킷보내게 변경예정)
         GameObjMgr::GetInst()->SendMyPlayerMove(_service);
 
 		// 2. 방장일시, 모든 오브젝트 move패킷을 서버에 보낸다. (포탑,억제기,넥서스 제외)
 		if (MyPlayer.host)
 		{
+			// 일단은 pos다르면 업데이트 안하지만 추후 pos가 같아도 계속 보내도록 변경하기
 			map<uint64, CGameObject*> _objects = GameObjMgr::GetInst()->GetObjects();
 			for (auto& pair : _objects) {
 				uint64 id = pair.first; 
 				CGameObject* obj = pair.second; 
 				GameObjMgr::GetInst()->SendObjectMove(id, obj, _service);
+			}
+
+			// 배치형 오브젝트는 움직임이 없으니 HP에 변동이 생길때만 보낸다.(SendTowersUpdate)
+			map<uint64, CGameObject*> _towers = GameObjMgr::GetInst()->GetObjects();
+			for (auto& pair : _towers) {
+				uint64 id = pair.first;
+				CGameObject* obj = pair.second;
+				GameObjMgr::GetInst()->SendTowerUpdate(id, obj, _service);
 			}
 		}
 		
@@ -92,9 +102,6 @@ void ServerEventMgr::clienttick()
 			animInfo = nullptr;
 		}
 		break;
-
-
-
 
 		}
 
