@@ -19,7 +19,7 @@ void CJinxWalkState::tick()
 
 void CJinxWalkState::Enter()
 {
-	GetOwner()->Animator3D()->Play(L"Jinx\\Run_Base", true, 0.15f);
+	GetOwner()->Animator3D()->PlayRepeat(L"Jinx\\Run_Base", true, 0.15f);
 	CChampionWalkState::Enter();
 }
 

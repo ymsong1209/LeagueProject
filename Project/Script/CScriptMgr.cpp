@@ -5,18 +5,13 @@
 #include "CCameraMoveScript.h"
 #include "CChampionScript.h"
 #include "CInGameCameraScript.h"
-
 #include "CInhibitorScript.h"
 #include "CJinxScript.h"
 #include "CJungleMonsterScript.h"
 #include "CMinionScript.h"
 #include "CMobScript.h"
 #include "CNexusScript.h"
-
-#include "CMissileScript.h"
-#include "CMonsterScript.h"
 #include "COtherPlayerScript.h"
-
 #include "CPlayerScript.h"
 #include "CStructureScript.h"
 #include "CTurretScript.h"
@@ -28,18 +23,13 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CCameraMoveScript");
 	_vec.push_back(L"CChampionScript");
 	_vec.push_back(L"CInGameCameraScript");
-
 	_vec.push_back(L"CInhibitorScript");
 	_vec.push_back(L"CJinxScript");
 	_vec.push_back(L"CJungleMonsterScript");
 	_vec.push_back(L"CMinionScript");
 	_vec.push_back(L"CMobScript");
 	_vec.push_back(L"CNexusScript");
-
-	_vec.push_back(L"CMissileScript");
-	_vec.push_back(L"CMonsterScript");
 	_vec.push_back(L"COtherPlayerScript");
-
 	_vec.push_back(L"CPlayerScript");
 	_vec.push_back(L"CStructureScript");
 	_vec.push_back(L"CTurretScript");
@@ -56,7 +46,6 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CChampionScript;
 	if (L"CInGameCameraScript" == _strScriptName)
 		return new CInGameCameraScript;
-
 	if (L"CInhibitorScript" == _strScriptName)
 		return new CInhibitorScript;
 	if (L"CJinxScript" == _strScriptName)
@@ -69,14 +58,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CMobScript;
 	if (L"CNexusScript" == _strScriptName)
 		return new CNexusScript;
-
-	if (L"CMissileScript" == _strScriptName)
-		return new CMissileScript;
-	if (L"CMonsterScript" == _strScriptName)
-		return new CMonsterScript;
 	if (L"COtherPlayerScript" == _strScriptName)
 		return new COtherPlayerScript;
-
 	if (L"CPlayerScript" == _strScriptName)
 		return new CPlayerScript;
 	if (L"CStructureScript" == _strScriptName)

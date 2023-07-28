@@ -14,8 +14,6 @@ private:
     float       m_fSpeed;
     Vec3        m_vTargetPosTest;
     Vec3        m_vPrevPos;
-    PLAYER_STATE    CurState;
-    PLAYER_STATE    PrevState;
 
 public:
     virtual void begin() override;

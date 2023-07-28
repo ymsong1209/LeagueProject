@@ -29,7 +29,7 @@ void CPlayerScript::begin()
 
 void CPlayerScript::tick()
 {
-
+	/*
 	CLevelMgr::GetInst()->GetCurLevel()->FindObjectByName(L"Test");
 
 
