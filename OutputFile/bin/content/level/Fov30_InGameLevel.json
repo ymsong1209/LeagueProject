@@ -589,9 +589,6 @@
                         {
                             "scriptName": "CPlayerScript",
                             "fSpeed": 200.0
-                        },
-                        {
-                            "scriptName": "CWorldHPSpawnScript"
                         }
                     ],
                     "children": []

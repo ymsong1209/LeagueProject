@@ -24,7 +24,6 @@ void CWorldHPUIScript::tick()
 	//--------------------------------
 
 	//CurrentExpRatio = CurrentExp / LevelTotalExp;
-
 	//if (CurrentExp >= LevelTotalExp)
 	//	CurrentExp = LevelTotalExp;
 	//if (CurrentExp <= 0.f)
@@ -48,8 +47,12 @@ void CWorldHPUIScript::tick()
 		CurrentMP = 0.f;
 	//-------------------------
 
-	MeshRender()->GetMaterial(1)->SetScalarParam(FLOAT_0, &CurrentHPRatio); //1번 머터리얼: 체력바
-	MeshRender()->GetMaterial(2)->SetScalarParam(FLOAT_0, &CurrentMPRatio); //1번 머터리얼: 체력바
+	//디버깅용
+	CurrentHPRatio = 0.6f;
+	CurrentMPRatio = 0.3f;
+	//MeshRender()->GetMaterial(0)->SetScalarParam(FLOAT_0, &CurrentHPRatio);
+	//MeshRender()->GetMaterial(0)->SetScalarParam(FLOAT_1, &CurrentMPRatio);
+
 	
 	// 하나의 렉트메쉬, 하나의 머터리얼로 hp,mp같이 처리할수가 없음 hp,mp이미지 모두 하나의 렉트메쉬에 맵핑되기때문
 	// 그래서 머터리얼을 여러개 들고있을수 있어야 하나의 오브젝트로 각각의 셰이더로 여러개를 처리하는데,
@@ -61,8 +64,6 @@ void CWorldHPUIScript::tick()
 	//또한.. 닳게 하려면 hp,mp개별로 닳아야 하는데 그것도 힘듬. (hp바만큼 닳게 하면 mp바 부분도 같이 닳게될것임)
 
 	// --> 해결? : 결국렉트메쉬의 인덱스버퍼가 하나라서.. 여러개의 머터리얼을 장착할수없음 그래서 결국 개별 오브젝트로 처리해줘야함.
-
-
 }
 
 void CWorldHPUIScript::BeginOverlap(CCollider2D* _Other)

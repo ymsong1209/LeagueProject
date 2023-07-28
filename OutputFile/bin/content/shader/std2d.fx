@@ -486,6 +486,99 @@ float4 PS_HPMPRatio(VS_OUT _in) : SV_Target
     return vOutColor;
 }
 
+// ============================
+// WorldBarShader
+// RasterizerState      : None
+// BlendState           : Mask
+// DepthStencilState    : Less
+
+// g_tex_0              : Output Texture
+// g_float_0            :  HPRatio (마나or체력 비율)
+// g_float_1            :  MPRatio (마나or체력 비율)
+// ============================
+
+VS_OUT VS_WorldBar(VS_IN _in)
+{
+    VS_OUT output = (VS_OUT) 0.f;
+
+    output.vPosition = mul(float4(_in.vLocalPos, 1.f), g_matWVP);
+    output.vUV = _in.vUV; // UV 조정은 삭제
+
+    return output;
+}
+
+float4 PS_WorldBar(VS_OUT _in) : SV_Target
+{
+    // Define UV boundaries
+    
+    float BarLeftX = 26.f;
+    float BarRightX = 132.f;
+    float HPUpY = 5.f;
+    float HPDownY = 18.f;
+    float MPUpY = 19.f;
+    float MPDownY = 24.f;
+    float BarTotalX = 136.f;
+    float BarTotalY = 29.f;
+    
+    float2 HPuv_1 = float2(BarLeftX / BarTotalX, HPUpY / BarTotalY);
+    float2 HPuv_2 = float2(BarRightX / BarTotalX, HPUpY / BarTotalY);
+    float2 HPuv_3 = float2(BarLeftX / BarTotalX, HPDownY / BarTotalY);
+    float2 HPuv_4 = float2(BarRightX / BarTotalX, HPDownY / BarTotalY);
+
+    float2 MPuv_1 = float2(BarLeftX / BarTotalX, MPUpY / BarTotalY);
+    float2 MPuv_2 = float2(BarRightX / BarTotalX, MPUpY / BarTotalY);
+    float2 MPuv_3 = float2(BarLeftX / BarTotalX, MPDownY / BarTotalY);
+    float2 MPuv_4 = float2(BarRightX / BarTotalX, MPDownY / BarTotalY);
+
+    // Define HP and MP ratios
+    float HP_ratio = g_float_0;
+    float MP_ratio = g_float_1;
+
+    // Normalize the UV.x with respect to the HP and MP bar widths
+    float normalized_HP_UV_x = (_in.vUV.x - HPuv_1.x) / (HPuv_2.x - HPuv_1.x);
+    float normalized_MP_UV_x = (_in.vUV.x - MPuv_1.x) / (MPuv_2.x - MPuv_1.x);
+
+    // Check if the UV is within HP or MP bar and beyond the remaining HP or MP
+    if ((_in.vUV.y >= HPuv_1.y && _in.vUV.y <= HPuv_3.y) && _in.vUV.x <= HPuv_2.x && normalized_HP_UV_x > HP_ratio)
+    {
+        discard;
+    }
+    else if ((_in.vUV.y >= MPuv_1.y && _in.vUV.y <= MPuv_3.y) && _in.vUV.x <= MPuv_2.x && normalized_MP_UV_x > MP_ratio)
+    {
+        discard;
+    }
+    
+    // Sample the color from the texture
+    float4 vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
+    return vOutColor;
+}
+//VS_OUT VS_WorldBar(VS_IN _in)
+//{
+//    VS_OUT output = (VS_OUT) 0.f;
+    
+//    output.vPosition = mul(float4(_in.vLocalPos, 1.f), g_matWVP);
+//    output.vUV = _in.vUV;
+        
+//    return output;
+//}
+
+
+//float4 PS_WorldBar(VS_OUT _in) : SV_Target
+//{
+//    float4 vOutColor = (float4) 0.f;
+        
+//    if (g_btex_0)
+//    {
+//        vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
+//    }
+//    else
+//    {
+//        vOutColor = float4(1.f, 0.f, 1.f, 1.f);
+//    }
+        
+//    return vOutColor;
+//}
+
 
 
 #endif
