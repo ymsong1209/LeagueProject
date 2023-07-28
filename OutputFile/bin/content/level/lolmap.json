@@ -209,6 +209,780 @@
                     ],
                     "scripts": [],
                     "children": []
+                },
+                {
+                    "ObjName": "Turret_Rubble",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 324.03009033203125,
+                                "y": 20.0,
+                                "z": 259.585205078125
+                            },
+                            "vRelativeScale": {
+                                "x": 0.1799994707107544,
+                                "y": 0.17999976873397827,
+                                "z": 0.1799994707107544
+                            },
+                            "vRelativeRot": {
+                                "x": -3.1415908336639404,
+                                "y": -0.9075708985328674,
+                                "z": -3.1415908336639404
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
+                        },
+                        {
+                            "ANIMATOR3D": 4,
+                            "IsEmpty": false,
+                            "MeshDataRelativePath": "meshdata\\turret_rubble.mdat",
+                            "bRepeat": false,
+                            "mapAnim": [
+                                {
+                                    "Anim3DRelativePath": "animation\\turret_rubble\\turret_rubble.anim3d"
+                                }
+                            ],
+                            "strCurAnimName": "turret_rubble\\turret_rubble"
+                        },
+                        {
+                            "MESHRENDER": 10,
+                            "Mesh": {
+                                "IsNull": false,
+                                "Key": "mesh\\turret_rubble.mesh",
+                                "RelativePath": "mesh\\turret_rubble.mesh"
+                            },
+                            "fBounding": 150.0,
+                            "bFrustumCheck": true,
+                            "bDynamicShadow": false,
+                            "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": false,
+                            "vBoundingBoxOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "iMtrlCount": 2,
+                            "vecMtrls[0]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "material\\turret_rubble_Rubble_blue.mtrl",
+                                "RelativePath": "material\\turret_rubble_Rubble_blue.mtrl"
+                            },
+                            "vecMtrls[1]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "material\\turret_rubble_Break1_blue.mtrl",
+                                "RelativePath": "material\\turret_rubble_Break1_blue.mtrl"
+                            },
+                            "DynamicMtrls": [
+                                {
+                                    "vecMtrls[0]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                },
+                                {
+                                    "vecMtrls[1]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                }
+                            ],
+                            "bIsUsingMovingVec": false
+                        },
+                        16
+                    ],
+                    "scripts": [],
+                    "children": [
+                        {
+                            "ObjName": "Turret_IdleBreak",
+                            "components": [
+                                {
+                                    "TRANSFORM": 0,
+                                    "vRelativePos": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "vRelativeScale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    },
+                                    "vRelativeRot": {
+                                        "x": -3.1415908336639404,
+                                        "y": -0.7853981852531433,
+                                        "z": -3.1415908336639404
+                                    },
+                                    "bAbsolute": false,
+                                    "IsNoGizmoObj": false,
+                                    "GizmoBounding_Radius": 50.0,
+                                    "IsShootingRay": false,
+                                    "RayRange": 20.0,
+                                    "UseMouseOutLine": false,
+                                    "Outlinethickness": 0.0
+                                },
+                                {
+                                    "ANIMATOR3D": 4,
+                                    "IsEmpty": false,
+                                    "MeshDataRelativePath": "meshdata\\turret_idlebreak.mdat",
+                                    "bRepeat": true,
+                                    "mapAnim": [
+                                        {
+                                            "Anim3DRelativePath": "animation\\turret_idlebreak\\sruap_chaosturret1_idle2.anm_skinned_mesh.001.anim3d"
+                                        },
+                                        {
+                                            "Anim3DRelativePath": "animation\\turret_idlebreak\\sruap_turret_chaos_cloth_stage1.anm_skinned_mesh.001.anim3d"
+                                        },
+                                        {
+                                            "Anim3DRelativePath": "animation\\turret_idlebreak\\sruap_turret_chaos_cloth_stage2.anm_skinned_mesh.001.anim3d"
+                                        }
+                                    ],
+                                    "strCurAnimName": "turret_idlebreak\\sruap_chaosturret1_idle2.anm_skinned_mesh.001"
+                                },
+                                {
+                                    "MESHRENDER": 10,
+                                    "Mesh": {
+                                        "IsNull": false,
+                                        "Key": "mesh\\turret_idlebreak.mesh",
+                                        "RelativePath": "mesh\\turret_idlebreak.mesh"
+                                    },
+                                    "fBounding": 150.0,
+                                    "bFrustumCheck": true,
+                                    "bDynamicShadow": false,
+                                    "bShowDebugBoundShape": false,
+                                    "bRaySightCulling": false,
+                                    "bUseBoundingOffset": false,
+                                    "vBoundingBoxOffset": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "iMtrlCount": 6,
+                                    "vecMtrls[0]SharedMtrl": {
+                                        "IsNull": false,
+                                        "Key": "material\\turret_idlebreak_Cloth1_blue.mtrl",
+                                        "RelativePath": "material\\turret_idlebreak_Cloth1_blue.mtrl"
+                                    },
+                                    "vecMtrls[1]SharedMtrl": {
+                                        "IsNull": false,
+                                        "Key": "material\\turret_idlebreak_Cloth2_blue.mtrl",
+                                        "RelativePath": "material\\turret_idlebreak_Cloth2_blue.mtrl"
+                                    },
+                                    "vecMtrls[2]SharedMtrl": {
+                                        "IsNull": false,
+                                        "Key": "material\\turret_idlebreak_SRUAP_ChaosTurret1_Mat_blue.mtrl",
+                                        "RelativePath": "material\\turret_idlebreak_SRUAP_ChaosTurret1_Mat_blue.mtrl"
+                                    },
+                                    "vecMtrls[3]SharedMtrl": {
+                                        "IsNull": false,
+                                        "Key": "material\\turret_idlebreak_Stage1_blue.mtrl",
+                                        "RelativePath": "material\\turret_idlebreak_Stage1_blue.mtrl"
+                                    },
+                                    "vecMtrls[4]SharedMtrl": {
+                                        "IsNull": false,
+                                        "Key": "material\\turret_idlebreak_Stage2_blue.mtrl",
+                                        "RelativePath": "material\\turret_idlebreak_Stage2_blue.mtrl"
+                                    },
+                                    "vecMtrls[5]SharedMtrl": {
+                                        "IsNull": false,
+                                        "Key": "material\\turret_idlebreak_Rubble_blue.mtrl",
+                                        "RelativePath": "material\\turret_idlebreak_Rubble_blue.mtrl"
+                                    },
+                                    "DynamicMtrls": [
+                                        {
+                                            "vecMtrls[0]DynamicMtrl": null,
+                                            "IsDynamicMtrlExist": false
+                                        },
+                                        {
+                                            "vecMtrls[1]DynamicMtrl": null,
+                                            "IsDynamicMtrlExist": false
+                                        },
+                                        {
+                                            "vecMtrls[2]DynamicMtrl": null,
+                                            "IsDynamicMtrlExist": false
+                                        },
+                                        {
+                                            "vecMtrls[3]DynamicMtrl": null,
+                                            "IsDynamicMtrlExist": false
+                                        },
+                                        {
+                                            "vecMtrls[4]DynamicMtrl": null,
+                                            "IsDynamicMtrlExist": false
+                                        },
+                                        {
+                                            "vecMtrls[5]DynamicMtrl": null,
+                                            "IsDynamicMtrlExist": false
+                                        }
+                                    ],
+                                    "bIsUsingMovingVec": false
+                                },
+                                16
+                            ],
+                            "scripts": [],
+                            "children": []
+                        },
+                        {
+                            "ObjName": "Turret_break1",
+                            "components": [
+                                {
+                                    "TRANSFORM": 0,
+                                    "vRelativePos": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "vRelativeScale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    },
+                                    "vRelativeRot": {
+                                        "x": 0.0,
+                                        "y": 3.1415927410125732,
+                                        "z": 0.0
+                                    },
+                                    "bAbsolute": false,
+                                    "IsNoGizmoObj": false,
+                                    "GizmoBounding_Radius": 50.0,
+                                    "IsShootingRay": false,
+                                    "RayRange": 20.0,
+                                    "UseMouseOutLine": false,
+                                    "Outlinethickness": 0.0
+                                },
+                                {
+                                    "ANIMATOR3D": 4,
+                                    "IsEmpty": false,
+                                    "MeshDataRelativePath": "meshdata\\turret_break1.mdat",
+                                    "bRepeat": true,
+                                    "mapAnim": [
+                                        {
+                                            "Anim3DRelativePath": "animation\\turret_break1\\turret_break1.anim3d"
+                                        }
+                                    ],
+                                    "strCurAnimName": "turret_break1\\turret_break1"
+                                },
+                                {
+                                    "MESHRENDER": 10,
+                                    "Mesh": {
+                                        "IsNull": false,
+                                        "Key": "mesh\\turret_break1.mesh",
+                                        "RelativePath": "mesh\\turret_break1.mesh"
+                                    },
+                                    "fBounding": 150.0,
+                                    "bFrustumCheck": true,
+                                    "bDynamicShadow": false,
+                                    "bShowDebugBoundShape": false,
+                                    "bRaySightCulling": false,
+                                    "bUseBoundingOffset": false,
+                                    "vBoundingBoxOffset": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "iMtrlCount": 2,
+                                    "vecMtrls[0]SharedMtrl": {
+                                        "IsNull": false,
+                                        "Key": "material\\turret_break1_Cloth1_blue.mtrl",
+                                        "RelativePath": "material\\turret_break1_Cloth1_blue.mtrl"
+                                    },
+                                    "vecMtrls[1]SharedMtrl": {
+                                        "IsNull": false,
+                                        "Key": "material\\turret_break1_Mage_blue.mtrl",
+                                        "RelativePath": "material\\turret_break1_Mage_blue.mtrl"
+                                    },
+                                    "DynamicMtrls": [
+                                        {
+                                            "vecMtrls[0]DynamicMtrl": null,
+                                            "IsDynamicMtrlExist": false
+                                        },
+                                        {
+                                            "vecMtrls[1]DynamicMtrl": null,
+                                            "IsDynamicMtrlExist": false
+                                        }
+                                    ],
+                                    "bIsUsingMovingVec": false
+                                },
+                                16
+                            ],
+                            "scripts": [],
+                            "children": []
+                        },
+                        {
+                            "ObjName": "Turret_break2",
+                            "components": [
+                                {
+                                    "TRANSFORM": 0,
+                                    "vRelativePos": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "vRelativeScale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    },
+                                    "vRelativeRot": {
+                                        "x": 0.0,
+                                        "y": 3.9269909858703613,
+                                        "z": 0.0
+                                    },
+                                    "bAbsolute": false,
+                                    "IsNoGizmoObj": false,
+                                    "GizmoBounding_Radius": 50.0,
+                                    "IsShootingRay": false,
+                                    "RayRange": 20.0,
+                                    "UseMouseOutLine": false,
+                                    "Outlinethickness": 0.0
+                                },
+                                {
+                                    "ANIMATOR3D": 4,
+                                    "IsEmpty": false,
+                                    "MeshDataRelativePath": "meshdata\\turret_break2.mdat",
+                                    "bRepeat": true,
+                                    "mapAnim": [
+                                        {
+                                            "Anim3DRelativePath": "animation\\turret_break2\\turret_break2.anim3d"
+                                        }
+                                    ],
+                                    "strCurAnimName": "turret_break2\\turret_break2"
+                                },
+                                {
+                                    "MESHRENDER": 10,
+                                    "Mesh": {
+                                        "IsNull": false,
+                                        "Key": "mesh\\turret_break2.mesh",
+                                        "RelativePath": "mesh\\turret_break2.mesh"
+                                    },
+                                    "fBounding": 150.0,
+                                    "bFrustumCheck": true,
+                                    "bDynamicShadow": false,
+                                    "bShowDebugBoundShape": false,
+                                    "bRaySightCulling": false,
+                                    "bUseBoundingOffset": false,
+                                    "vBoundingBoxOffset": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "iMtrlCount": 2,
+                                    "vecMtrls[0]SharedMtrl": {
+                                        "IsNull": false,
+                                        "Key": "material\\turret_break2_Mage1_blue.mtrl",
+                                        "RelativePath": "material\\turret_break2_Mage1_blue.mtrl"
+                                    },
+                                    "vecMtrls[1]SharedMtrl": {
+                                        "IsNull": false,
+                                        "Key": "material\\turret_break2_Mage2_blue.mtrl",
+                                        "RelativePath": "material\\turret_break2_Mage2_blue.mtrl"
+                                    },
+                                    "DynamicMtrls": [
+                                        {
+                                            "vecMtrls[0]DynamicMtrl": null,
+                                            "IsDynamicMtrlExist": false
+                                        },
+                                        {
+                                            "vecMtrls[1]DynamicMtrl": null,
+                                            "IsDynamicMtrlExist": false
+                                        }
+                                    ],
+                                    "bIsUsingMovingVec": false
+                                },
+                                16
+                            ],
+                            "scripts": [],
+                            "children": []
+                        }
+                    ]
+                },
+                {
+                    "ObjName": "Turret_Rubble1575",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 257.376708984375,
+                                "y": 20.0,
+                                "z": 328.6214294433594
+                            },
+                            "vRelativeScale": {
+                                "x": 0.17999239265918732,
+                                "y": 0.1799997240304947,
+                                "z": 0.17999239265918732
+                            },
+                            "vRelativeRot": {
+                                "x": -3.1415908336639404,
+                                "y": -0.7504566311836243,
+                                "z": -3.1415908336639404
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.0
+                        },
+                        {
+                            "ANIMATOR3D": 4,
+                            "IsEmpty": false,
+                            "MeshDataRelativePath": "meshdata\\turret_rubble.mdat",
+                            "bRepeat": false,
+                            "mapAnim": [
+                                {
+                                    "Anim3DRelativePath": "animation\\turret_rubble\\turret_rubble.anim3d"
+                                }
+                            ],
+                            "strCurAnimName": "turret_rubble\\turret_rubble"
+                        },
+                        {
+                            "MESHRENDER": 10,
+                            "Mesh": {
+                                "IsNull": false,
+                                "Key": "mesh\\turret_rubble.mesh",
+                                "RelativePath": "mesh\\turret_rubble.mesh"
+                            },
+                            "fBounding": 150.0,
+                            "bFrustumCheck": true,
+                            "bDynamicShadow": false,
+                            "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": false,
+                            "vBoundingBoxOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "iMtrlCount": 2,
+                            "vecMtrls[0]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "material\\turret_rubble_Rubble_blue.mtrl",
+                                "RelativePath": "material\\turret_rubble_Rubble_blue.mtrl"
+                            },
+                            "vecMtrls[1]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "material\\turret_rubble_Break1_blue.mtrl",
+                                "RelativePath": "material\\turret_rubble_Break1_blue.mtrl"
+                            },
+                            "DynamicMtrls": [
+                                {
+                                    "vecMtrls[0]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                },
+                                {
+                                    "vecMtrls[1]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                }
+                            ],
+                            "bIsUsingMovingVec": false
+                        },
+                        16
+                    ],
+                    "scripts": [],
+                    "children": [
+                        {
+                            "ObjName": "Turret_IdleBreak",
+                            "components": [
+                                {
+                                    "TRANSFORM": 0,
+                                    "vRelativePos": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "vRelativeScale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    },
+                                    "vRelativeRot": {
+                                        "x": -3.1415908336639404,
+                                        "y": -0.7853981852531433,
+                                        "z": -3.1415908336639404
+                                    },
+                                    "bAbsolute": false,
+                                    "IsNoGizmoObj": false,
+                                    "GizmoBounding_Radius": 50.0,
+                                    "IsShootingRay": false,
+                                    "RayRange": 20.0,
+                                    "UseMouseOutLine": false,
+                                    "Outlinethickness": 0.0
+                                },
+                                {
+                                    "ANIMATOR3D": 4,
+                                    "IsEmpty": false,
+                                    "MeshDataRelativePath": "meshdata\\turret_idlebreak.mdat",
+                                    "bRepeat": true,
+                                    "mapAnim": [
+                                        {
+                                            "Anim3DRelativePath": "animation\\turret_idlebreak\\sruap_chaosturret1_idle2.anm_skinned_mesh.001.anim3d"
+                                        },
+                                        {
+                                            "Anim3DRelativePath": "animation\\turret_idlebreak\\sruap_turret_chaos_cloth_stage1.anm_skinned_mesh.001.anim3d"
+                                        },
+                                        {
+                                            "Anim3DRelativePath": "animation\\turret_idlebreak\\sruap_turret_chaos_cloth_stage2.anm_skinned_mesh.001.anim3d"
+                                        }
+                                    ],
+                                    "strCurAnimName": "turret_idlebreak\\sruap_chaosturret1_idle2.anm_skinned_mesh.001"
+                                },
+                                {
+                                    "MESHRENDER": 10,
+                                    "Mesh": {
+                                        "IsNull": false,
+                                        "Key": "mesh\\turret_idlebreak.mesh",
+                                        "RelativePath": "mesh\\turret_idlebreak.mesh"
+                                    },
+                                    "fBounding": 150.0,
+                                    "bFrustumCheck": true,
+                                    "bDynamicShadow": false,
+                                    "bShowDebugBoundShape": false,
+                                    "bRaySightCulling": false,
+                                    "bUseBoundingOffset": false,
+                                    "vBoundingBoxOffset": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "iMtrlCount": 6,
+                                    "vecMtrls[0]SharedMtrl": {
+                                        "IsNull": false,
+                                        "Key": "material\\turret_idlebreak_Cloth1_blue.mtrl",
+                                        "RelativePath": "material\\turret_idlebreak_Cloth1_blue.mtrl"
+                                    },
+                                    "vecMtrls[1]SharedMtrl": {
+                                        "IsNull": false,
+                                        "Key": "material\\turret_idlebreak_Cloth2_blue.mtrl",
+                                        "RelativePath": "material\\turret_idlebreak_Cloth2_blue.mtrl"
+                                    },
+                                    "vecMtrls[2]SharedMtrl": {
+                                        "IsNull": false,
+                                        "Key": "material\\turret_idlebreak_SRUAP_ChaosTurret1_Mat_blue.mtrl",
+                                        "RelativePath": "material\\turret_idlebreak_SRUAP_ChaosTurret1_Mat_blue.mtrl"
+                                    },
+                                    "vecMtrls[3]SharedMtrl": {
+                                        "IsNull": false,
+                                        "Key": "material\\turret_idlebreak_Stage1_blue.mtrl",
+                                        "RelativePath": "material\\turret_idlebreak_Stage1_blue.mtrl"
+                                    },
+                                    "vecMtrls[4]SharedMtrl": {
+                                        "IsNull": false,
+                                        "Key": "material\\turret_idlebreak_Stage2_blue.mtrl",
+                                        "RelativePath": "material\\turret_idlebreak_Stage2_blue.mtrl"
+                                    },
+                                    "vecMtrls[5]SharedMtrl": {
+                                        "IsNull": false,
+                                        "Key": "material\\turret_idlebreak_Rubble_blue.mtrl",
+                                        "RelativePath": "material\\turret_idlebreak_Rubble_blue.mtrl"
+                                    },
+                                    "DynamicMtrls": [
+                                        {
+                                            "vecMtrls[0]DynamicMtrl": null,
+                                            "IsDynamicMtrlExist": false
+                                        },
+                                        {
+                                            "vecMtrls[1]DynamicMtrl": null,
+                                            "IsDynamicMtrlExist": false
+                                        },
+                                        {
+                                            "vecMtrls[2]DynamicMtrl": null,
+                                            "IsDynamicMtrlExist": false
+                                        },
+                                        {
+                                            "vecMtrls[3]DynamicMtrl": null,
+                                            "IsDynamicMtrlExist": false
+                                        },
+                                        {
+                                            "vecMtrls[4]DynamicMtrl": null,
+                                            "IsDynamicMtrlExist": false
+                                        },
+                                        {
+                                            "vecMtrls[5]DynamicMtrl": null,
+                                            "IsDynamicMtrlExist": false
+                                        }
+                                    ],
+                                    "bIsUsingMovingVec": false
+                                },
+                                16
+                            ],
+                            "scripts": [],
+                            "children": []
+                        },
+                        {
+                            "ObjName": "Turret_break1",
+                            "components": [
+                                {
+                                    "TRANSFORM": 0,
+                                    "vRelativePos": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "vRelativeScale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    },
+                                    "vRelativeRot": {
+                                        "x": 0.0,
+                                        "y": 3.1415927410125732,
+                                        "z": 0.0
+                                    },
+                                    "bAbsolute": false,
+                                    "IsNoGizmoObj": false,
+                                    "GizmoBounding_Radius": 50.0,
+                                    "IsShootingRay": false,
+                                    "RayRange": 20.0,
+                                    "UseMouseOutLine": false,
+                                    "Outlinethickness": 0.0
+                                },
+                                {
+                                    "ANIMATOR3D": 4,
+                                    "IsEmpty": false,
+                                    "MeshDataRelativePath": "meshdata\\turret_break1.mdat",
+                                    "bRepeat": true,
+                                    "mapAnim": [
+                                        {
+                                            "Anim3DRelativePath": "animation\\turret_break1\\turret_break1.anim3d"
+                                        }
+                                    ],
+                                    "strCurAnimName": "turret_break1\\turret_break1"
+                                },
+                                {
+                                    "MESHRENDER": 10,
+                                    "Mesh": {
+                                        "IsNull": false,
+                                        "Key": "mesh\\turret_break1.mesh",
+                                        "RelativePath": "mesh\\turret_break1.mesh"
+                                    },
+                                    "fBounding": 150.0,
+                                    "bFrustumCheck": true,
+                                    "bDynamicShadow": false,
+                                    "bShowDebugBoundShape": false,
+                                    "bRaySightCulling": false,
+                                    "bUseBoundingOffset": false,
+                                    "vBoundingBoxOffset": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "iMtrlCount": 2,
+                                    "vecMtrls[0]SharedMtrl": {
+                                        "IsNull": false,
+                                        "Key": "material\\turret_break1_Cloth1_blue.mtrl",
+                                        "RelativePath": "material\\turret_break1_Cloth1_blue.mtrl"
+                                    },
+                                    "vecMtrls[1]SharedMtrl": {
+                                        "IsNull": false,
+                                        "Key": "material\\turret_break1_Mage_blue.mtrl",
+                                        "RelativePath": "material\\turret_break1_Mage_blue.mtrl"
+                                    },
+                                    "DynamicMtrls": [
+                                        {
+                                            "vecMtrls[0]DynamicMtrl": null,
+                                            "IsDynamicMtrlExist": false
+                                        },
+                                        {
+                                            "vecMtrls[1]DynamicMtrl": null,
+                                            "IsDynamicMtrlExist": false
+                                        }
+                                    ],
+                                    "bIsUsingMovingVec": false
+                                },
+                                16
+                            ],
+                            "scripts": [],
+                            "children": []
+                        },
+                        {
+                            "ObjName": "Turret_break2",
+                            "components": [
+                                {
+                                    "TRANSFORM": 0,
+                                    "vRelativePos": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "vRelativeScale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    },
+                                    "vRelativeRot": {
+                                        "x": 0.0,
+                                        "y": 3.9269909858703613,
+                                        "z": 0.0
+                                    },
+                                    "bAbsolute": false,
+                                    "IsNoGizmoObj": false,
+                                    "GizmoBounding_Radius": 50.0,
+                                    "IsShootingRay": false,
+                                    "RayRange": 20.0,
+                                    "UseMouseOutLine": false,
+                                    "Outlinethickness": 0.0
+                                },
+                                {
+                                    "ANIMATOR3D": 4,
+                                    "IsEmpty": false,
+                                    "MeshDataRelativePath": "meshdata\\turret_break2.mdat",
+                                    "bRepeat": true,
+                                    "mapAnim": [
+                                        {
+                                            "Anim3DRelativePath": "animation\\turret_break2\\turret_break2.anim3d"
+                                        }
+                                    ],
+                                    "strCurAnimName": "turret_break2\\turret_break2"
+                                },
+                                {
+                                    "MESHRENDER": 10,
+                                    "Mesh": {
+                                        "IsNull": false,
+                                        "Key": "mesh\\turret_break2.mesh",
+                                        "RelativePath": "mesh\\turret_break2.mesh"
+                                    },
+                                    "fBounding": 150.0,
+                                    "bFrustumCheck": true,
+                                    "bDynamicShadow": false,
+                                    "bShowDebugBoundShape": false,
+                                    "bRaySightCulling": false,
+                                    "bUseBoundingOffset": false,
+                                    "vBoundingBoxOffset": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "iMtrlCount": 2,
+                                    "vecMtrls[0]SharedMtrl": {
+                                        "IsNull": false,
+                                        "Key": "material\\turret_break2_Mage1_blue.mtrl",
+                                        "RelativePath": "material\\turret_break2_Mage1_blue.mtrl"
+                                    },
+                                    "vecMtrls[1]SharedMtrl": {
+                                        "IsNull": false,
+                                        "Key": "material\\turret_break2_Mage2_blue.mtrl",
+                                        "RelativePath": "material\\turret_break2_Mage2_blue.mtrl"
+                                    },
+                                    "DynamicMtrls": [
+                                        {
+                                            "vecMtrls[0]DynamicMtrl": null,
+                                            "IsDynamicMtrlExist": false
+                                        },
+                                        {
+                                            "vecMtrls[1]DynamicMtrl": null,
+                                            "IsDynamicMtrlExist": false
+                                        }
+                                    ],
+                                    "bIsUsingMovingVec": false
+                                },
+                                16
+                            ],
+                            "scripts": [],
+                            "children": []
+                        }
+                    ]
                 }
             ]
         },
@@ -294,9 +1068,15 @@
                         {
                             "TRANSFORM": 0,
                             "vRelativePos": {
-                                "x": -54.613525390625,
-                                "y": 29.62699317932129,
-                                "z": -44.533966064453125
+<<<<<<< HEAD
+                                "x": 11.374298095703125,
+                                "y": 24.642107009887695,
+                                "z": 153.04739379882813
+=======
+                                "x": 134.66281127929688,
+                                "y": 19.339336395263672,
+                                "z": 168.4547882080078
+>>>>>>> 89ccc2f8912f9320926d17aae6412364afba075d
                             },
                             "vRelativeScale": {
                                 "x": 0.18000000715255737,
@@ -305,7 +1085,11 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": -5.210959434509277,
+<<<<<<< HEAD
+                                "y": -3.3660528659820557,
+=======
+                                "y": -8.907315254211426,
+>>>>>>> 89ccc2f8912f9320926d17aae6412364afba075d
                                 "z": 0.0
                             },
                             "bAbsolute": false,
@@ -535,7 +1319,7 @@
                                     "Anim3DRelativePath": "animation\\Jinx\\minigun_spell1_weapon_gunonly.anim3d"
                                 }
                             ],
-                            "strCurAnimName": "Jinx\\Idle1_Base"
+                            "strCurAnimName": "Jinx\\Run_Base"
                         },
                         {
                             "PATHFINDER": 9
@@ -570,7 +1354,50 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "bIsUsingMovingVec": false
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
                         },
                         16
                     ],
@@ -748,7 +1575,50 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "bIsUsingMovingVec": false
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
                         },
                         16
                     ],
@@ -858,7 +1728,50 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "bIsUsingMovingVec": false
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
                         },
                         16
                     ],
@@ -986,7 +1899,50 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "bIsUsingMovingVec": false
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
                         },
                         16
                     ],
@@ -1087,7 +2043,50 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "bIsUsingMovingVec": false
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
                         },
                         16
                     ],
@@ -1188,7 +2187,50 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "bIsUsingMovingVec": false
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
                         },
                         16
                     ],
@@ -1406,7 +2448,50 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "bIsUsingMovingVec": false
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
                         },
                         16
                     ],
@@ -1543,7 +2628,50 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "bIsUsingMovingVec": false
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
                         },
                         16
                     ],
@@ -1698,7 +2826,50 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "bIsUsingMovingVec": false
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
                         },
                         16
                     ],
@@ -1853,7 +3024,50 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "bIsUsingMovingVec": false
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
                         },
                         16
                     ],
@@ -2017,7 +3231,50 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "bIsUsingMovingVec": false
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
                         },
                         16
                     ],
@@ -2127,7 +3384,50 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "bIsUsingMovingVec": false
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
                         },
                         16
                     ],
@@ -2219,7 +3519,50 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "bIsUsingMovingVec": false
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
                         },
                         16
                     ],
@@ -2311,7 +3654,50 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "bIsUsingMovingVec": false
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
                         },
                         16
                     ],
@@ -2385,7 +3771,50 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "bIsUsingMovingVec": false
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
                         },
                         16
                     ],
@@ -2495,7 +3924,50 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "bIsUsingMovingVec": false
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
                         },
                         16
                     ],
@@ -2596,7 +4068,50 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "bIsUsingMovingVec": false
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
                         },
                         16
                     ],
@@ -2688,7 +4203,50 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "bIsUsingMovingVec": false
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
                         },
                         16
                     ],
@@ -2780,7 +4338,50 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "bIsUsingMovingVec": false
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
                         },
                         16
                     ],
@@ -2890,7 +4491,50 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "bIsUsingMovingVec": false
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
                         },
                         16
                     ],
@@ -2991,7 +4635,50 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "bIsUsingMovingVec": false
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
                         },
                         16
                     ],
@@ -3101,7 +4788,50 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "bIsUsingMovingVec": false
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
                         },
                         16
                     ],
@@ -3202,7 +4932,50 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "bIsUsingMovingVec": false
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
                         },
                         16
                     ],
@@ -3312,7 +5085,50 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "bIsUsingMovingVec": false
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
                         },
                         16
                     ],
@@ -3431,7 +5247,50 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "bIsUsingMovingVec": false
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
                         },
                         16
                     ],
@@ -3559,7 +5418,50 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "bIsUsingMovingVec": false
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
                         },
                         16
                     ],
@@ -3651,7 +5553,50 @@
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
-                            "bIsUsingMovingVec": false
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
                         },
                         16
                     ],

@@ -22,8 +22,6 @@
 
 #define SINGLE(type) private: type(); ~type(); friend class CSingleton<type>;
 
-
-
 enum class MRT_TYPE
 {
 	SWAPCHAIN,
@@ -34,7 +32,6 @@ enum class MRT_TYPE
 	FOGOFWAR,
 	END,
 };
-
 
 
 enum class COMPONENT_TYPE
@@ -96,6 +93,7 @@ enum class CB_TYPE
 	TRANSFORM,	// b0
 	MATERIAL,	// b1
 	GLOBAL,		// b2
+	MESHRENDER, // b3
 	END,
 };
 
@@ -178,6 +176,13 @@ enum TEX_PARAM
 	TEX_ARR_1,
 
 	TEX_END,
+};
+
+enum MESH_TEX_PARAM
+{
+	PUNCTURE,
+	ADDITIVE,
+	MESH_TEX_END,
 };
 
 enum PIPELINE_STAGE
@@ -270,7 +275,10 @@ enum class EVENT_TYPE
 
 	DELETE_RESOURCE,	// wParam : RES_TYPE, lParam : Resource Adress
 
-	LEVEL_CHANGE,	
+	LEVEL_CHANGE,
+
+	// Server Packet //
+	MOVE_PACKET,    // wParam : GameObject,  lParam : Update Move Packet
 };
 
 

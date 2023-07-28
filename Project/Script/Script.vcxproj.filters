@@ -372,6 +372,8 @@
     </ClCompile>
     <ClCompile Include="CBaseAttack.cpp">
       <Filter>Skill</Filter>
+    <ClCompile Include="COtherPlayerScript.cpp">
+      <Filter>Script</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

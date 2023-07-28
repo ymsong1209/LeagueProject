@@ -29,7 +29,10 @@ void CPlayerScript::begin()
 
 void CPlayerScript::tick()
 {
-	/*
+
+	CLevelMgr::GetInst()->GetCurLevel()->FindObjectByName(L"Test");
+
+
 	if (KEY_TAP(KEY::RBTN) && !CRenderMgr::GetInst()->GetIsImGuiHovered())
 	{
 		GetOwner()->PathFinder()->FindPathMousePicking();
@@ -39,6 +42,8 @@ void CPlayerScript::tick()
 		PathFindMove(90.f,true); 
 	
 	Vec3 Pos = GetOwner()->Transform()->GetRelativePos();
+
+	
 	if(Pos == m_vPrevPos)
 		CurState = PLAYER_STATE::IDLE;
 	else
@@ -49,10 +54,10 @@ void CPlayerScript::tick()
 	if (PrevState != CurState)
 	{
 		if (CurState == PLAYER_STATE::RUN)
-			Animator3D()->Play(L"Jinx\\Run_Base", true, 0.15f);
+			Animator3D()->PlayRepeat(L"Jinx\\Run_Base", true, true, 0.15f);
 
 		else if (CurState == PLAYER_STATE::IDLE)
-			Animator3D()->Play(L"Jinx\\Idle1_Base", true, 0.1f);
+			Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base",true,true, 0.1f);
 	}
 
 

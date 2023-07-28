@@ -31,6 +31,7 @@ CAnimator3D::CAnimator3D()
 	, m_iNextFrm(0)
 	, m_fBlendRatio(0)
 	, m_bDebugAnimator(false)
+	, m_fAnimSpeed(1.f)
 	, m_vecFinalBoneMat()
 	, m_MeshDataRelativePath()
 	, CComponent(COMPONENT_TYPE::ANIMATOR3D)
@@ -53,6 +54,7 @@ CAnimator3D::CAnimator3D(const CAnimator3D& _origin)
 	, m_iNextFrm(_origin.m_iNextFrm)
 	, m_fBlendRatio(_origin.m_fBlendRatio)
 	, m_bDebugAnimator(_origin.m_bDebugAnimator)
+	, m_fAnimSpeed(_origin.m_fAnimSpeed)
 	, m_vecFinalBoneMat(_origin.m_vecFinalBoneMat)
 	, m_MeshDataRelativePath(_origin.m_MeshDataRelativePath)
 	, CComponent(COMPONENT_TYPE::ANIMATOR3D)
@@ -85,8 +87,8 @@ void CAnimator3D::finaltick()
 {
 	if (nullptr != m_pCurAnim)
 	{
-		//blend ¿É¼Ç ÄÑÁ³À¸¸é ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ blendµÇ¸é¼­ Àç»ı
-		//¾Ö´Ï¸ŞÀÌ¼Ç1 -> ¾Ö´Ï¸ŞÀÌ¼Ç2·Î Àç»ıÁß
+		//blend ì˜µì…˜ ì¼œì¡Œìœ¼ë©´ ì• ë‹ˆë©”ì´ì…˜ì´ blendë˜ë©´ì„œ ì¬ìƒ
+		//ì• ë‹ˆë©”ì´ì…˜1 -> ì• ë‹ˆë©”ì´ì…˜2ë¡œ ì¬ìƒì¤‘
 		if (m_bBlend) {
 			if (m_bDebugAnimator) {
 				m_fCurBlendTime += EditorDT;
@@ -103,7 +105,7 @@ void CAnimator3D::finaltick()
 			}
 		}
 		else {
-			//¹İº¹Àç»ı
+			//ë°˜ë³µì¬ìƒ
 			if (m_bRepeat)
 			{
 				if (m_pCurAnim->IsFinish()) {
@@ -112,7 +114,7 @@ void CAnimator3D::finaltick()
 						m_bRepeatBlending = true;
 					}
 				}
-				//Ã³À½ ÇÁ·¹ÀÓÀ¸·Î blendÇØ¼­ µ¹¾Æ¿À±â
+				//ì²˜ìŒ í”„ë ˆì„ìœ¼ë¡œ blendí•´ì„œ ëŒì•„ì˜¤ê¸°
 				if (m_bRepeatBlending) {
 
 					if (m_bDebugAnimator) {
@@ -161,11 +163,11 @@ void CAnimator3D::UpdateData()
 	pUpdateShader->SetFrameRatio(m_fFrameRatio);
 	pUpdateShader->SetBlendRatio(m_fBlendRatio);
 
-	// ¾÷µ¥ÀÌÆ® ½¦ÀÌ´õ ½ÇÇà
+	// ì—…ë°ì´íŠ¸ ì‰ì´ë” ì‹¤í–‰
 	pUpdateShader->Execute();
 
 
-	// t30 ·¹Áö½ºÅÍ¿¡ ÃÖÁ¾Çà·Ä µ¥ÀÌÅÍ(±¸Á¶¹öÆÛ) ¹ÙÀÎµù		
+	// t30 ë ˆì§€ìŠ¤í„°ì— ìµœì¢…í–‰ë ¬ ë°ì´í„°(êµ¬ì¡°ë²„í¼) ë°”ì¸ë”©		
 	m_pBoneFinalMatBuffer->UpdateData(30, PIPELINE_STAGE::PS_VERTEX);
 }
 
@@ -181,12 +183,12 @@ void CAnimator3D::ClearData()
 		if (nullptr == pMtrl)
 			continue;
 
-		pMtrl->SetAnim3D(false); // Animation Mesh ¾Ë¸®±â
+		pMtrl->SetAnim3D(false); // Animation Mesh ì•Œë¦¬ê¸°
 		pMtrl->SetBoneCount(0);
 	}
 }
 
-void CAnimator3D::Play(const wstring& _strName, bool _bRepeat, bool _RepeatBlend, bool _blend, float _blendtime)
+void CAnimator3D::PlayRepeat(const wstring& _strName, bool _RepeatBlend, bool _blend, float _blendtime)
 {
 
 	CAnim3D* pAnim = FindAnim(_strName);
@@ -194,7 +196,7 @@ void CAnimator3D::Play(const wstring& _strName, bool _bRepeat, bool _RepeatBlend
 
 
 	if (_blend) {
-		//ÇöÀç ¾Ö´Ï¸ŞÀÌ¼Ç¿¡¼­ ´Ù¸¥ ¾Ö´Ï¸ŞÀÌ¼ÇÀ¸·Î blendÇÏ¸é¼­ µé¾î°¡±â
+		//í˜„ì¬ ì• ë‹ˆë©”ì´ì…˜ì—ì„œ ë‹¤ë¥¸ ì• ë‹ˆë©”ì´ì…˜ìœ¼ë¡œ blendí•˜ë©´ì„œ ë“¤ì–´ê°€ê¸°
 		if (GetCurAnim()) {
 			m_bBlend = true;
 			m_fCurBlendTime = 0.f;
@@ -202,31 +204,32 @@ void CAnimator3D::Play(const wstring& _strName, bool _bRepeat, bool _RepeatBlend
 			m_iBlendStartFrm = GetCurAnim()->GetCurFrameIdx();
 			m_bRepeat = _bRepeat;
 		}
-		//ÇöÀç ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ ¾øÀ» °æ¿ì¿¡´Â blend ¿É¼Ç ¾øÀÌ ±×´ë·Î Àç»ı
+		//í˜„ì¬ ì• ë‹ˆë©”ì´ì…˜ì´ ì—†ì„ ê²½ìš°ì—ëŠ” blend ì˜µì…˜ ì—†ì´ ê·¸ëŒ€ë¡œ ì¬ìƒ
 		else {
 			m_pCurAnim = pAnim;
-			m_bRepeat = _bRepeat;
+			m_pCurAnim->Reset();
+			m_bRepeat = true;
 			m_pCurAnim->Play();
 		}
 	}
 	else {
 		m_pCurAnim = pAnim;
 		m_pCurAnim->Reset();
-		m_bRepeat = _bRepeat;
+		m_bRepeat = true;
 		m_pCurAnim->Play();
 	}
 
 	m_bRepeatBlend = _RepeatBlend; 
 	//m_fBlendRatio = 0.f;
 }
-void CAnimator3D::Play(const wstring& _strName, bool _blend, float _blendtime)
+void CAnimator3D::PlayOnce(const wstring& _strName, bool _blend, float _blendtime)
 {
 	CAnim3D* pAnim = FindAnim(_strName);
 	assert(pAnim);
 
-	//ÇöÀç ¾Ö´Ï¸ŞÀÌ¼Ç¿¡¼­ ´Ù¸¥ ¾Ö´Ï¸ŞÀÌ¼ÇÀ¸·Î blendÇÏ¸é¼­ µé¾î°¡±â
+	//í˜„ì¬ ì• ë‹ˆë©”ì´ì…˜ì—ì„œ ë‹¤ë¥¸ ì• ë‹ˆë©”ì´ì…˜ìœ¼ë¡œ blendí•˜ë©´ì„œ ë“¤ì–´ê°€ê¸°
 	if (_blend) {
-		//ÇöÀç ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ ÀÖÀ½
+		//í˜„ì¬ ì• ë‹ˆë©”ì´ì…˜ì´ ìˆìŒ
 		if (GetCurAnim()) 
 		{
 			m_pCurAnim->Reset();
@@ -238,16 +241,16 @@ void CAnimator3D::Play(const wstring& _strName, bool _blend, float _blendtime)
 			m_pCurAnim->Reset();
 			m_pCurAnim->Play();
 		}
-		//ÇöÀç ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ ¾øÀ» °æ¿ì¿¡´Â blend ¿É¼Ç ¾øÀÌ ±×´ë·Î Àç»ı
+		//í˜„ì¬ ì• ë‹ˆë©”ì´ì…˜ì´ ì—†ì„ ê²½ìš°ì—ëŠ” blend ì˜µì…˜ ì—†ì´ ê·¸ëŒ€ë¡œ ì¬ìƒ
 		else {
 			m_pCurAnim = pAnim;
 			m_pCurAnim->Reset();
 			m_pCurAnim->Play();
 		}
 	}
-	//blend¾øÀÌ ¹Ù·Î Àç»ı
+	//blendì—†ì´ ë°”ë¡œ ì¬ìƒ
 	else {
-		//ÇöÀç ¾Ö´Ï¸ŞÀÌ¼Ç Á¸ÀçÇÒ °æ¿ì ¸®¼Â
+		//í˜„ì¬ ì• ë‹ˆë©”ì´ì…˜ ì¡´ì¬í•  ê²½ìš° ë¦¬ì…‹
 		if (m_pCurAnim) {
 			m_pCurAnim->Reset();
 		}
@@ -256,24 +259,25 @@ void CAnimator3D::Play(const wstring& _strName, bool _blend, float _blendtime)
 		m_pCurAnim->Reset();
 		m_pCurAnim->Play();
 	}
+	m_bRepeat = false;
 	m_bRepeatBlend = false;
 	//m_fBlendRatio = 0.f;
 }
 
 void CAnimator3D::PlayOnce(const wstring& _strName, bool _blend, float _blendtime)
 {
-	// ÇØ´ç ÀÌ¸§À» °¡Áø Anim ¾øÀ» ½Ã Assert
+	// í•´ë‹¹ ì´ë¦„ì„ ê°€ì§„ Anim ì—†ì„ ì‹œ Assert
 	CAnim3D* pAnim = FindAnim(_strName);
 	assert(pAnim);
 
-	// ´ÜÀÏ Àç»ı Àü¿ë ÇÔ¼ö
+	// ë‹¨ì¼ ì¬ìƒ ì „ìš© í•¨ìˆ˜
 	m_bRepeat = false;
 	m_bRepeatBlend = false;
 
-	//ÇöÀç ¾Ö´Ï¸ŞÀÌ¼Ç¿¡¼­ ´Ù¸¥ ¾Ö´Ï¸ŞÀÌ¼ÇÀ¸·Î blendÇÏ¸é¼­ µé¾î°¡±â
+	//í˜„ì¬ ì• ë‹ˆë©”ì´ì…˜ì—ì„œ ë‹¤ë¥¸ ì• ë‹ˆë©”ì´ì…˜ìœ¼ë¡œ blendí•˜ë©´ì„œ ë“¤ì–´ê°€ê¸°
 	if (_blend) 
 	{
-		//ÇöÀç ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ ÀÖÀ½
+		//í˜„ì¬ ì• ë‹ˆë©”ì´ì…˜ì´ ìˆìŒ
 		if (GetCurAnim()) 
 		{
 			//m_pCurAnim->Reset();
@@ -285,7 +289,7 @@ void CAnimator3D::PlayOnce(const wstring& _strName, bool _blend, float _blendtim
 			//m_pCurAnim->Reset();
 			m_pCurAnim->Play();
 		}
-		//ÇöÀç ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ ¾øÀ» °æ¿ì¿¡´Â blend ¿É¼Ç ¾øÀÌ ±×´ë·Î Àç»ı
+		//í˜„ì¬ ì• ë‹ˆë©”ì´ì…˜ì´ ì—†ì„ ê²½ìš°ì—ëŠ” blend ì˜µì…˜ ì—†ì´ ê·¸ëŒ€ë¡œ ì¬ìƒ
 		else 
 		{
 			m_pCurAnim = pAnim;
@@ -293,12 +297,12 @@ void CAnimator3D::PlayOnce(const wstring& _strName, bool _blend, float _blendtim
 			m_pCurAnim->Play();
 		}
 	}
-	//blend¾øÀÌ ¹Ù·Î Àç»ı
+	//blendì—†ì´ ë°”ë¡œ ì¬ìƒ
 	else 
 	{
 		m_bBlend = false;
 
-		//ÇöÀç ¾Ö´Ï¸ŞÀÌ¼Ç Á¸ÀçÇÒ °æ¿ì ¸®¼Â
+		//í˜„ì¬ ì• ë‹ˆë©”ì´ì…˜ ì¡´ì¬í•  ê²½ìš° ë¦¬ì…‹
 		if (m_pCurAnim) 
 		{
 			m_pCurAnim->Reset();
@@ -312,18 +316,18 @@ void CAnimator3D::PlayOnce(const wstring& _strName, bool _blend, float _blendtim
 
 void CAnimator3D::PlayLoop(const wstring& _strName, bool _blend, bool _Repeatblend, float _blendtime)
 {
-	// ÇØ´ç ÀÌ¸§À» °¡Áø Anim ¾øÀ» ½Ã Assert
+	// í•´ë‹¹ ì´ë¦„ì„ ê°€ì§„ Anim ì—†ì„ ì‹œ Assert
 	CAnim3D* pAnim = FindAnim(_strName);
 	assert(pAnim);
 
-	// ¹İº¹Àç»ı Àü¿ë ÇÔ¼ö
+	// ë°˜ë³µì¬ìƒ ì „ìš© í•¨ìˆ˜
 	m_bRepeat = true;
 
 	m_bRepeatBlend = _Repeatblend;
 
 	if (_blend) 
 	{
-		//ÇöÀç ¾Ö´Ï¸ŞÀÌ¼Ç¿¡¼­ ´Ù¸¥ ¾Ö´Ï¸ŞÀÌ¼ÇÀ¸·Î blendÇÏ¸é¼­ µé¾î°¡±â
+		//í˜„ì¬ ì• ë‹ˆë©”ì´ì…˜ì—ì„œ ë‹¤ë¥¸ ì• ë‹ˆë©”ì´ì…˜ìœ¼ë¡œ blendí•˜ë©´ì„œ ë“¤ì–´ê°€ê¸°
 		if (GetCurAnim()) 
 		{
 			m_bBlend = true;
@@ -333,7 +337,7 @@ void CAnimator3D::PlayLoop(const wstring& _strName, bool _blend, bool _Repeatble
 			m_pCurAnim = pAnim;
 			m_pCurAnim->Play();
 		}
-		//ÇöÀç ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ ¾øÀ» °æ¿ì¿¡´Â blend ¿É¼Ç ¾øÀÌ ±×´ë·Î Àç»ı
+		//í˜„ì¬ ì• ë‹ˆë©”ì´ì…˜ì´ ì—†ì„ ê²½ìš°ì—ëŠ” blend ì˜µì…˜ ì—†ì´ ê·¸ëŒ€ë¡œ ì¬ìƒ
 		else 
 		{
 			m_pCurAnim = pAnim;
@@ -396,7 +400,7 @@ CAnim3D* CAnimator3D::LoadAnim(const wstring& _strRelativePath)
 	wstring filename = (pos == std::wstring::npos) ? _strRelativePath : _strRelativePath.substr(pos + 1);
 	size_t dot_pos = filename.find_last_of(L".");
 	wstring filename_without_extension = (dot_pos == wstring::npos) ? filename : filename.substr(0, dot_pos);
-	//ÇöÀç Map¿¡ ¾Ö´Ï¸ŞÀÌ¼Ç ÀÖÀ¸¸é return
+	//í˜„ì¬ Mapì— ì• ë‹ˆë©”ì´ì…˜ ìˆìœ¼ë©´ return
 	CAnim3D* pAnim = FindAnim(filename_without_extension);
 	if (pAnim == nullptr) {
 		pAnim = new CAnim3D;
@@ -418,8 +422,8 @@ CAnim3D* CAnimator3D::CreateAnimation(const tMTAnimClip& _OriginalVecClip, const
 	CAnim3D* pAnim = new CAnim3D;
 
 	pAnim->Create(_OriginalVecClip, _AnimName);
-	FbxTime::EMode timeMode = _OriginalVecClip.eMode;	// ½Ã°£ ¸ğµå
-	int frameRate = FbxTime::GetFrameRate(timeMode);	// ÇÁ·¹ÀÓ ·¹ÀÌÆ®
+	FbxTime::EMode timeMode = _OriginalVecClip.eMode;	// ì‹œê°„ ëª¨ë“œ
+	int frameRate = FbxTime::GetFrameRate(timeMode);	// í”„ë ˆì„ ë ˆì´íŠ¸
 	pAnim->SetFrameRate(frameRate);
 	pAnim->m_pOwner = this;
 
@@ -463,7 +467,7 @@ void CAnimator3D::LoadEveryAnimFromFolder(const std::wstring& _strRelativePath) 
 	std::wstring search_path = folderPath + L"/*.anim3d";
 	hFind = FindFirstFile(search_path.c_str(), &findFileData);
 	if (hFind == INVALID_HANDLE_VALUE) {
-		// Æú´õ ³» .anim3d ÆÄÀÏ ¾øÀ½
+		// í´ë” ë‚´ .anim3d íŒŒì¼ ì—†ìŒ
 		return;
 	}
 	do {
@@ -474,7 +478,7 @@ void CAnimator3D::LoadEveryAnimFromFolder(const std::wstring& _strRelativePath) 
 			pNewAnim->Load(animRelativePath);
 			auto it = m_mapAnim.find(pNewAnim->GetName());
 			if (it != m_mapAnim.end()) {
-				//µ¿ÀÏ key°ª Á¸Àç
+				//ë™ì¼ keyê°’ ì¡´ì¬
 				delete pNewAnim;
 			}
 			else {
@@ -490,7 +494,7 @@ void CAnimator3D::CreateAnimFromText(const wstring& _strRelativePath)
 	wstring FilePath = CPathMgr::GetInst()->GetContentPath();
 	FilePath += _strRelativePath;
 
-	// _strRelativePath¿¡¼­ ÆÄÀÏ¸í¸¸ °¡Á®¿È
+	// _strRelativePathì—ì„œ íŒŒì¼ëª…ë§Œ ê°€ì ¸ì˜´
 	filesystem::path path(_strRelativePath);
 	wstring FileName = path.stem();
 	
@@ -501,34 +505,34 @@ void CAnimator3D::CreateAnimFromText(const wstring& _strRelativePath)
 
 	m_MeshDataRelativePath = pMeshData->GetRelativePath();
 
-	// ÆÄÀÏ °æ·Î ¸¸µé±â
+	// íŒŒì¼ ê²½ë¡œ ë§Œë“¤ê¸°
 	wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
 	wstring RelativePath;
 	RelativePath += L"animation\\";
-	//ÀÚµ¿ ¼¼ÀÌºê´Â meshdataÀÌ¸§À» µı Æú´õ ¾È¿¡ ÀúÀåµÊ
+	//ìë™ ì„¸ì´ë¸ŒëŠ” meshdataì´ë¦„ì„ ë”´ í´ë” ì•ˆì— ì €ì¥ë¨
 	filesystem::path meshpath = m_MeshDataRelativePath;
 	wstring meshdataname = meshpath.stem();
 	RelativePath += meshdataname;
 	
-	// ÀÚµ¿À¸·Î Æú´õ »ı¼º
+	// ìë™ìœ¼ë¡œ í´ë” ìƒì„±
 	filesystem::path directory = filesystem::path(strFilePath + RelativePath);
 	if (!filesystem::exists(directory))
 		filesystem::create_directories(directory);
 	
-	std::wifstream file(FilePath); // ÆÄÀÏÀ» ÀĞ±â ¸ğµå·Î ¿¬´Ù
+	std::wifstream file(FilePath); // íŒŒì¼ì„ ì½ê¸° ëª¨ë“œë¡œ ì—°ë‹¤
 	if (!file) {
 		wchar_t szStr[256] = {};
-		wsprintf(szStr, L"animator3d / ÅØ½ºÆ® ·Îµå ½ÇÆĞ.");
-		MessageBox(nullptr, szStr, L"ÅØ½ºÆ® ·Îµå ½ÇÆĞ.", MB_OK);
+		wsprintf(szStr, L"animator3d / í…ìŠ¤íŠ¸ ë¡œë“œ ì‹¤íŒ¨.");
+		MessageBox(nullptr, szStr, L"í…ìŠ¤íŠ¸ ë¡œë“œ ì‹¤íŒ¨.", MB_OK);
 		return;
 	}
 	std::wstring line;
 
-	while (std::getline(file, line)) { // °¢ ÁÙÀ» ÀĞ´Â´Ù
+	while (std::getline(file, line)) { // ê° ì¤„ì„ ì½ëŠ”ë‹¤
 		std::wistringstream iss(line);
 
 		vector<wstring> tokens = split(line, ',');
-		if (tokens.size() != 3) { // ¿Ã¹Ù¸¥ Æ÷¸ËÀÌ ¾Æ´Ï¸é °Ç³Ê¶Ú´Ù
+		if (tokens.size() != 3) { // ì˜¬ë°”ë¥¸ í¬ë§·ì´ ì•„ë‹ˆë©´ ê±´ë„ˆë›´ë‹¤
 			continue;
 		}
 
@@ -539,11 +543,11 @@ void CAnimator3D::CreateAnimFromText(const wstring& _strRelativePath)
 		wstring AnimFinalName;
 		AnimFinalName += FileName;
 		AnimFinalName += L"\\";
-		if (strAnimName.find(FileName) != wstring::npos) // strAnimName¿¡ FileNameÀÌ ÀÖ´Ù¸é,
+		if (strAnimName.find(FileName) != wstring::npos) // strAnimNameì— FileNameì´ ìˆë‹¤ë©´,
 		{
-			strAnimName.erase(strAnimName.find(FileName), FileName.length()); // Áö¿î´Ù
+			strAnimName.erase(strAnimName.find(FileName), FileName.length()); // ì§€ìš´ë‹¤
 		}
-		AnimFinalName += strAnimName; // ±×¸®°í AnimFinalName¿¡ ºÙÀÎ´Ù
+		AnimFinalName += strAnimName; // ê·¸ë¦¬ê³  AnimFinalNameì— ë¶™ì¸ë‹¤
 
 		CAnim3D* panim = new CAnim3D;
 		panim->SetName(AnimFinalName);
@@ -553,12 +557,12 @@ void CAnimator3D::CreateAnimFromText(const wstring& _strRelativePath)
 		clip.iEndFrame = endFrame;
 		
 
-		const vector<tMTAnimClip>* animClipPtr = pMeshData->GetMesh()->GetAnimClip();  // GetAnimClip()·ÎºÎÅÍ Æ÷ÀÎÅÍ¸¦ °¡Á®¿È
+		const vector<tMTAnimClip>* animClipPtr = pMeshData->GetMesh()->GetAnimClip();  // GetAnimClip()ë¡œë¶€í„° í¬ì¸í„°ë¥¼ ê°€ì ¸ì˜´
 		tMTAnimClip originclip = (*animClipPtr)[0];
 		clip.iFrameLength = originclip.iEndFrame - originclip.iStartFrame;
 		clip.eMode = originclip.eMode;
-		FbxTime::EMode timeMode = clip.eMode;	// ½Ã°£ ¸ğµå
-		int frameRate = FbxTime::GetFrameRate(timeMode);	// ÇÁ·¹ÀÓ ·¹ÀÌÆ®
+		FbxTime::EMode timeMode = clip.eMode;	// ì‹œê°„ ëª¨ë“œ
+		int frameRate = FbxTime::GetFrameRate(timeMode);	// í”„ë ˆì„ ë ˆì´íŠ¸
 		panim->SetFrameRate(frameRate);
 		double TimePerFrm = 1.f / frameRate;
 		clip.dStartTime = TimePerFrm * clip.iStartFrame;
@@ -598,8 +602,8 @@ void CAnimator3D::check_mesh(Ptr<CMesh> _pMesh)
 
 void CAnimator3D::SaveToLevelFile(FILE* _pFile)
 {
-	// ºó ¾Ö´Ï¸ŞÀÌÅÍ´Â ÀúÀå ¾ÈÇÔ
-	// ºó ¾Ö´Ï¸ŞÀÌÅÍ´Â meshdata path°¡ ÀúÀå¾ÈµÇ¾îÀÖÀ½
+	// ë¹ˆ ì• ë‹ˆë©”ì´í„°ëŠ” ì €ì¥ ì•ˆí•¨
+	// ë¹ˆ ì• ë‹ˆë©”ì´í„°ëŠ” meshdata pathê°€ ì €ì¥ì•ˆë˜ì–´ìˆìŒ
 	bool isEmpty = false;
 	if (m_MeshDataRelativePath == L"") {
 		isEmpty = true;
@@ -612,6 +616,8 @@ void CAnimator3D::SaveToLevelFile(FILE* _pFile)
 
 	SaveWString(m_MeshDataRelativePath, _pFile);
 	fwrite(&m_bRepeat, sizeof(bool), 1, _pFile);
+	fwrite(&m_fAnimSpeed, sizeof(float), 1, _pFile);
+
 	size_t AnimCount = m_mapAnim.size();
 	fwrite(&AnimCount, sizeof(size_t), 1, _pFile);
 
@@ -644,6 +650,8 @@ void CAnimator3D::LoadFromLevelFile(FILE* _pFile)
 	SetBones(MeshData->GetMesh()->GetBones());
 
 	fread(&m_bRepeat, sizeof(bool), 1, _pFile);
+	fread(&m_fAnimSpeed, sizeof(float), 1, _pFile);
+
 	size_t AnimCount = 0;
 	fread(&AnimCount, sizeof(size_t), 1, _pFile);
 
@@ -668,8 +676,8 @@ void CAnimator3D::LoadFromLevelFile(FILE* _pFile)
 
 void CAnimator3D::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
 {
-	// ºó ¾Ö´Ï¸ŞÀÌÅÍ´Â ÀúÀå ¾ÈÇÔ
-	// ºó ¾Ö´Ï¸ŞÀÌÅÍ´Â meshdata path°¡ ÀúÀå¾ÈµÇ¾îÀÖÀ½
+	// ë¹ˆ ì• ë‹ˆë©”ì´í„°ëŠ” ì €ì¥ ì•ˆí•¨
+	// ë¹ˆ ì• ë‹ˆë©”ì´í„°ëŠ” meshdata pathê°€ ì €ì¥ì•ˆë˜ì–´ìˆìŒ
 	bool isEmpty = false;
 	if (m_MeshDataRelativePath == L"") {
 		isEmpty = true;
@@ -683,6 +691,7 @@ void CAnimator3D::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType&
 
 	_objValue.AddMember("MeshDataRelativePath", SaveWStringJson(m_MeshDataRelativePath, allocator), allocator);
 	_objValue.AddMember("bRepeat", m_bRepeat, allocator);
+	_objValue.AddMember("fAnimSpeed", m_fAnimSpeed, allocator);
 
 	// Anim Save
 	Value animArray(kArrayType);
@@ -721,6 +730,7 @@ void CAnimator3D::LoadFromLevelJsonFile(const Value& _componentValue)
 	SetBones(MeshData->GetMesh()->GetBones());
 
 	m_bRepeat = _componentValue["bRepeat"].GetBool();
+	m_fAnimSpeed = _componentValue["fAnimSpeed"].GetFloat();
 
 	const Value& mapAnimArray = _componentValue["mapAnim"];
 	for (size_t i = 0; i < mapAnimArray.Size(); ++i)

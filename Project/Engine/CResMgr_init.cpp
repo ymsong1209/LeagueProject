@@ -813,6 +813,26 @@ void CResMgr::CreateDefaultGraphicsShader()
 	AddRes(pShader->GetKey(), pShader);
 
 
+	// =============================
+	// MiniMap Shader
+	// RasterRizerState   : CULL_BACK
+	// BlendState :		  : MASK
+	// DepthStencilState  : LESS_EQUAL
+	// 
+	// ==============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"MiniMapShader");
+	pShader->CreateVertexShader(L"shader\\minimap.fx", "VS_MiniMapShader");
+	pShader->CreatePixelShader(L"shader\\minimap.fx", "PS_MiniMapShader");
+
+	pShader->SetRSType(RS_TYPE::CULL_BACK);
+	pShader->SetDSType(DS_TYPE::LESS_EQUAL);
+	pShader->SetBSType(BS_TYPE::MASK);
+
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI);
+
+	AddRes(pShader->GetKey(), pShader);
+
 
 	// ======================================
 	// Std2DLightShader
@@ -1408,6 +1428,11 @@ void CResMgr::CreateDefaultMaterial()
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std2DShader"));
 	AddRes(L"Std2DMtrl", pMtrl);
+
+	// MiniMap Material
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"MiniMapShader"));
+	AddRes(L"MiniMapMtrl", pMtrl);
 
 	// Std2DAnim Material
 	pMtrl = new CMaterial(true);

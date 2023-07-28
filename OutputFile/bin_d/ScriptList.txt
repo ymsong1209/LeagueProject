@@ -8,6 +8,9 @@ CJungleMonsterScript
 CMinionScript
 CMobScript
 CNexusScript
+CMissileScript
+CMonsterScript
+COtherPlayerScript
 CPlayerScript
 CStructureScript
 CTurretScript
