@@ -3,6 +3,9 @@
 #include <Engine/CFsm.h>
 #include <Engine\CTimeMgr.h>
 
+#include "CChampionAttackState.h"
+#include "CGameEvent.h"
+
 CChampionRecallState::CChampionRecallState()
 	: m_fRecallTime(8.0f)
 {
@@ -46,9 +49,19 @@ void CChampionRecallState::HandleEvent(CGameEvent& event)
 		GetOwnerFSM()->ChangeState(L"Death");
 		break;
 
-	case GAME_EVENT_TYPE::PLAYER_ATTACK:
+	case GAME_EVENT_TYPE::PLAYER_BASE_ATTACK:
+	{
+		BaseAttackEvent* AttackEvent = dynamic_cast<BaseAttackEvent*>(&event);
+
+		CChampionAttackState* AttackState = dynamic_cast<CChampionAttackState*>(GetOwnerFSM()->FindState(L"Attack"));
+		if (AttackState != nullptr)
+		{
+			AttackState->SetUserID(AttackEvent->GetUserID());
+			AttackState->SetTargetID(AttackEvent->GetTargetID());
+		}
 		GetOwnerFSM()->ChangeState(L"Attack");
-		break;
+	}
+	break;
 
 	case GAME_EVENT_TYPE::PLAYER_MOVE:
 		GetOwnerFSM()->ChangeState(L"Walk");

@@ -8,7 +8,7 @@ enum class GAME_EVENT_TYPE
 	PLAYER_MOVE,
 	PLAYER_KILL_CHAMPION,
 	PLAYER_KILL_MOB,
-	PLAYER_ATTACK,
+	PLAYER_BASE_ATTACK,
 	PLAYER_RECALL,
 	PLAYER_ABILITY_MODIFY,
 	PLAYER_SKILL_Q,
@@ -96,6 +96,37 @@ public:
 	void Clear() override { m_iPlayerID = -1; m_vTargetPos = {}; m_fFaceRot = 0; }
 };
 
+class BaseAttackEvent :
+	public CGameEvent
+{
+public:
+	BaseAttackEvent()
+		: m_iUserID(-1)
+		, m_iTargetID(-1)
+	{
+		m_eEventType = GAME_EVENT_TYPE::PLAYER_BASE_ATTACK;
+	}
+
+private:
+	int             m_iUserID;
+	int             m_iTargetID;
+	
+
+public:
+	void	SetUserID(int _i) { m_iUserID = _i; }
+	void	SetTargetID(int _i) { m_iTargetID = _i; }
+
+	int		GetUserID() { return m_iUserID; }
+	int		GetTargetID() { return m_iTargetID; }
+
+
+	void Clear() override { m_iUserID = -1; m_iTargetID = -1; }
+};
+
+
+
+
+/*
 enum Ability
 {
 	MaxHP = 1 < 0,
@@ -134,5 +165,7 @@ public:
 
 	void Clear() override { m_iPlayerID = -1; m_Ability = (Ability)0; m_fTime = 0.f; }
 };
+*/
+
 
 

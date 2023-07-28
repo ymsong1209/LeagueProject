@@ -19,7 +19,7 @@ void CChampionSkillState::tick()
 	else
 		m_fCurCastingTime = 0.f;
 
-	
+	// 애니메이션 끝났고, 캐스팅타임 끝났으면 Idle로 전환
 }
 
 void CChampionSkillState::Enter()
@@ -43,54 +43,5 @@ void CChampionSkillState::HandleEvent(CGameEvent& event)
 	case GAME_EVENT_TYPE::PLAYER_DEATH:
 		GetOwnerFSM()->ChangeState(L"Death");
 		break;
-
-	case GAME_EVENT_TYPE::PLAYER_ATTACK:
-	{
-		if(!m_fCurCastingTime > 0.0f)
-			GetOwnerFSM()->ChangeState(L"Attack");
-		break;
-	}
-	case GAME_EVENT_TYPE::PLAYER_MOVE:
-	{
-		if (!m_fCurCastingTime > 0.0f)
-			GetOwnerFSM()->ChangeState(L"Walk");
-		break;
-	}
-	case GAME_EVENT_TYPE::PLAYER_SKILL_Q:
-	{
-		if (!m_fCurCastingTime > 0.0f)
-		{
-			if (GetOwnerFSM()->FindState(L"Q") != nullptr)
-					GetOwnerFSM()->ChangeState(L"Q");
-		}
-		break;
-	}
-	case GAME_EVENT_TYPE::PLAYER_SKILL_W:
-	{
-		if (!m_fCurCastingTime > 0.0f)
-		{
-			if (GetOwnerFSM()->FindState(L"W") != nullptr)
-				GetOwnerFSM()->ChangeState(L"W");
-		}
-		break;
-	}
-	case GAME_EVENT_TYPE::PLAYER_SKILL_E:
-	{
-		if (!m_fCurCastingTime > 0.0f)
-		{
-			if (GetOwnerFSM()->FindState(L"E") != nullptr)
-				GetOwnerFSM()->ChangeState(L"E");
-			break;
-		}
-	}
-	case GAME_EVENT_TYPE::PLAYER_SKILL_R:
-	{
-		if (!m_fCurCastingTime > 0.0f)
-		{
-			if (GetOwnerFSM()->FindState(L"R") != nullptr)
-				GetOwnerFSM()->ChangeState(L"R");
-			break;
-		}
-	}
 	}
 }

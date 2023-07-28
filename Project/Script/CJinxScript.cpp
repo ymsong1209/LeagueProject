@@ -28,10 +28,10 @@ void CJinxScript::begin()
 	GetOwner()->Fsm()->AddState(L"Respawn", new CJinxRespawnState);
 
 	// Skill에 Jinx Skill 추가
-	m_Skill[0] = new CJinxQ;
-	m_Skill[0]->SetOwnerScript(this);
-	m_Skill[1] = new CJinxW;
+	m_Skill[1] = new CJinxQ;
 	m_Skill[1]->SetOwnerScript(this);
+	m_Skill[2] = new CJinxW;
+	m_Skill[2]->SetOwnerScript(this);
 
 	// Spell에 소환사 주문 추가
 

@@ -60,7 +60,7 @@ protected:
     CC                      m_eCurCC;
     RESTRAINT               m_eRestraint;
 
-    CSkill*                 m_Skill[4];
+    CSkill*                 m_Skill[5];
     SUMMONERS_SPELL*        m_EquippedSpell;    // 장착 소환사 주문(2칸 배열)
 
 
@@ -79,6 +79,10 @@ public:
     void    CheckSkills();  // 스킬 체크
     void    Move();
 
+
+    // 비동기
+    void    GetHit(CSkill* _skill);       // 피격시 
+    
     // =========== Skill     ==============
 public:
     virtual void Skill1() {};
@@ -87,6 +91,9 @@ public:
     virtual void Skill4() {};
 
 
-
+public:
+    int GetLevel() { return m_iLevel; }
+    float GetDefencePower() { return m_fDefencePower; }
+    CSkill* GetSkill(int _i) { if (_i < 0 || _i >= 5) return nullptr; m_Skill[_i]; }
 };
 

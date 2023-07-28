@@ -17,6 +17,8 @@ CGameEventMgr::CGameEventMgr()
 CGameEventMgr::~CGameEventMgr()
 {
 	Safe_Del_Vec(m_vecListener);
+
+	Safe_Del_Array(m_vecEvent);
 }
 
 void CGameEventMgr::NotifyEvent(CGameEvent& _event)

@@ -135,11 +135,22 @@ void CChampionScript::GetInput()
 		/*
 		if (오브젝트 클릭)
 		{
-		if (오브젝트 거리 - 플레이어 거리 < 공격 사거리)
-		{
-			일반공격;
-			일반공격 이벤트 등록;
-		}
+			if(오브젝트의 진영이 나와 같지 않다면 공격 가능)
+			{
+				if (오브젝트 거리 - 플레이어 거리 < 공격 사거리)
+				{
+					일반공격 이벤트 등록;
+					BaseAttackEvent* evn = dynamic_cast<BaseAttackEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_BASE_ATTACK));
+					if (evn != nullptr)
+					{
+						evn->Clear();
+						evn->SetPlayerID(GetOwner()->GetID());
+						evn->SetTargetID(클릭한 Obj ID);
+						
+						CGameEventMgr::GetInst()->NotifyEvent(*evn);
+					}
+				}
+			}
 		else
 		{
 			오브젝트 방향으로 오브젝트 중심에서 사거리만큼 떨어진 곳까지 걸어감
@@ -151,7 +162,7 @@ void CChampionScript::GetInput()
 		if ((m_eRestraint & CAN_MOVE) == 0)
 			return;
 
-		CGameObject* Map = CLevelMgr::GetInst()->GetCurLevel()->GetLayer(6)->GetParentObject()[0];
+		CGameObject* Map = CLevelMgr::GetInst()->GetCurLevel()->FindParentObjectByName(L"LoLMapCollider");
 		IntersectResult result = MainCam->IsCollidingBtwRayRect(ray, Map);
 		Vec3 TargetPos = result.vCrossPoint;	// 클릭 좌표
 		PathFinder()->FindPath(TargetPos);
@@ -245,4 +256,18 @@ void CChampionScript::Move()
 			CGameEventMgr::GetInst()->NotifyEvent(*evn);
 		}
 	}
+}
+
+void CChampionScript::GetHit(CSkill* _skill)
+{
+	// 스킬 매니저 등에서 스킬 맵을 가지고 와 스킬을 까봄
+
+	// 시전자 정보
+	CGameObject* User = CUR_LEVEL->FindObjectByID(_skill->GetUserID());
+	CUnitScript* UserScript = User->GetScript<CUnitScript>();
+
+	float	UserAttackPower = UserScript->GetAttackPower();
+
+	// 미완
+
 }
