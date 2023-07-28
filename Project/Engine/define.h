@@ -15,6 +15,8 @@
 #define DT CTimeMgr::GetInst()->GetDeltaTime()
 #define EditorDT CTimeMgr::GetInst()->GetEditorDeltaTime()
 
+#define CUR_LEVEL CLevelMgr::GetInst()->GetCurLevel()
+
 #define MAX_LAYER 32
 #define NaN std::numeric_limits<float>::quiet_NaN()
 

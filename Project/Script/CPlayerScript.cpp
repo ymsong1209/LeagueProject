@@ -63,6 +63,7 @@ void CPlayerScript::tick()
 
 	m_vPrevPos = Pos;
 	PrevState = CurState;
+	*/
 }
 
 void CPlayerScript::Shoot()
