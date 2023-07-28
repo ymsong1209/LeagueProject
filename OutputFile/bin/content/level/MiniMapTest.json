@@ -260,6 +260,7 @@
                             "IsEmpty": false,
                             "MeshDataRelativePath": "meshdata\\Jinx.mdat",
                             "bRepeat": true,
+                            "fAnimSpeed": 1.0,
                             "mapAnim": [
                                 {
                                     "Anim3DRelativePath": "animation\\Jinx\\Jinx-Jinx_AllAnim.anim3d"
@@ -580,6 +581,7 @@
                             "IsEmpty": false,
                             "MeshDataRelativePath": "meshdata\\nexus.mdat",
                             "bRepeat": true,
+                            "fAnimSpeed": 1.0,
                             "mapAnim": [
                                 {
                                     "Anim3DRelativePath": "animation\\nexus\\sruap_order_balloon_death.anm_skinned_mesh.002.anim3d"
@@ -724,6 +726,7 @@
                             "IsEmpty": false,
                             "MeshDataRelativePath": "meshdata\\Inhibitor.mdat",
                             "bRepeat": true,
+                            "fAnimSpeed": 1.0,
                             "mapAnim": [
                                 {
                                     "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_death.anm_skinned_mesh.001.anim3d"
@@ -877,6 +880,7 @@
                             "IsEmpty": false,
                             "MeshDataRelativePath": "meshdata\\Inhibitor.mdat",
                             "bRepeat": true,
+                            "fAnimSpeed": 1.0,
                             "mapAnim": [
                                 {
                                     "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_death.anm_skinned_mesh.001.anim3d"
@@ -1030,6 +1034,7 @@
                             "IsEmpty": false,
                             "MeshDataRelativePath": "meshdata\\Inhibitor.mdat",
                             "bRepeat": true,
+                            "fAnimSpeed": 1.0,
                             "mapAnim": [
                                 {
                                     "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_death.anm_skinned_mesh.001.anim3d"
@@ -1183,6 +1188,7 @@
                             "IsEmpty": false,
                             "MeshDataRelativePath": "meshdata\\nexus.mdat",
                             "bRepeat": true,
+                            "fAnimSpeed": 1.0,
                             "mapAnim": [
                                 {
                                     "Anim3DRelativePath": "animation\\nexus\\sruap_order_balloon_death.anm_skinned_mesh.002.anim3d"
@@ -1327,6 +1333,7 @@
                             "IsEmpty": false,
                             "MeshDataRelativePath": "meshdata\\Inhibitor.mdat",
                             "bRepeat": true,
+                            "fAnimSpeed": 1.0,
                             "mapAnim": [
                                 {
                                     "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_death.anm_skinned_mesh.001.anim3d"
@@ -1480,6 +1487,7 @@
                             "IsEmpty": false,
                             "MeshDataRelativePath": "meshdata\\Inhibitor.mdat",
                             "bRepeat": true,
+                            "fAnimSpeed": 1.0,
                             "mapAnim": [
                                 {
                                     "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_death.anm_skinned_mesh.001.anim3d"
@@ -1633,6 +1641,7 @@
                             "IsEmpty": false,
                             "MeshDataRelativePath": "meshdata\\Inhibitor.mdat",
                             "bRepeat": true,
+                            "fAnimSpeed": 1.0,
                             "mapAnim": [
                                 {
                                     "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_death.anm_skinned_mesh.001.anim3d"

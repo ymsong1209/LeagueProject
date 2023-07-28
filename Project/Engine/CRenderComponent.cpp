@@ -207,7 +207,6 @@ void CRenderComponent::SaveToLevelFile(FILE* _File)
 	fwrite(&m_bUseBoundingOffset, sizeof(bool), 1, _File);
 	fwrite(&m_vBoundingBoxOffset, sizeof(Vec3), 1, _File);
 
-
 	bool IsDynamicMtrlExist = false;
 
 	// 동적 재질을 사용하는 경우 이에 대한 정보 저장

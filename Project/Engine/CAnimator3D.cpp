@@ -524,6 +524,8 @@ void CAnimator3D::SaveToLevelFile(FILE* _pFile)
 
 	SaveWString(m_MeshDataRelativePath, _pFile);
 	fwrite(&m_bRepeat, sizeof(bool), 1, _pFile);
+	fwrite(&m_fAnimSpeed, sizeof(float), 1, _pFile);
+
 	size_t AnimCount = m_mapAnim.size();
 	fwrite(&AnimCount, sizeof(size_t), 1, _pFile);
 
@@ -556,6 +558,8 @@ void CAnimator3D::LoadFromLevelFile(FILE* _pFile)
 	SetBones(MeshData->GetMesh()->GetBones());
 
 	fread(&m_bRepeat, sizeof(bool), 1, _pFile);
+	fread(&m_fAnimSpeed, sizeof(float), 1, _pFile);
+
 	size_t AnimCount = 0;
 	fread(&AnimCount, sizeof(size_t), 1, _pFile);
 
@@ -595,6 +599,7 @@ void CAnimator3D::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType&
 
 	_objValue.AddMember("MeshDataRelativePath", SaveWStringJson(m_MeshDataRelativePath, allocator), allocator);
 	_objValue.AddMember("bRepeat", m_bRepeat, allocator);
+	_objValue.AddMember("fAnimSpeed", m_fAnimSpeed, allocator);
 
 	// Anim Save
 	Value animArray(kArrayType);
@@ -633,6 +638,7 @@ void CAnimator3D::LoadFromLevelJsonFile(const Value& _componentValue)
 	SetBones(MeshData->GetMesh()->GetBones());
 
 	m_bRepeat = _componentValue["bRepeat"].GetBool();
+	m_fAnimSpeed = _componentValue["fAnimSpeed"].GetFloat();
 
 	const Value& mapAnimArray = _componentValue["mapAnim"];
 	for (size_t i = 0; i < mapAnimArray.Size(); ++i)

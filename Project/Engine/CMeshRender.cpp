@@ -316,50 +316,24 @@ void CMeshRender::render()
 
 void CMeshRender::SaveToLevelFile(FILE* _File)
 {	
-	//CRenderComponent::SaveToLevelFile(_File);
+	CRenderComponent::SaveToLevelFile(_File);
+	fwrite(&m_tMeshMoveData, sizeof(tMeshMoveData), 1, _File);
 
-	//
-	//fwrite(&m_bIsUsingMovingVec, sizeof(bool), 1, _File);
-
-	//// 만약에 MovingVec을 사용하고 있었다면 이에 대한 정보도 저장해줘야 하낟.
-	//if (m_bIsUsingMovingVec)
-	//{
-	//	//movingvec size 저장
-	//	int vecsize = m_vMovingVec.size();
-	//	fwrite(&vecsize, sizeof(int), 1, _File);
-
-	//	for (int i = 0; i < m_vMovingVec.size(); ++i)
-	//	{
-	//		fwrite(&m_vMovingVec[i], sizeof(MovingStruct), 1, _File);
-	//	}
-	//}	 
+	for (int i = 0; i < (int)MESH_TEX_PARAM::MESH_TEX_END; ++i)
+	{
+		SaveResRef(m_arrMeshTex[i].Get(), _File);
+	}
 }
 
 void CMeshRender::LoadFromLevelFile(FILE* _File)
 {
-	//CRenderComponent::LoadFromLevelFile(_File);
+	CRenderComponent::LoadFromLevelFile(_File);
+	fread(&m_tMeshMoveData, sizeof(tMeshMoveData), 1, _File);
 
-	//fread(&m_bIsUsingMovingVec, sizeof(bool), 1, _File);
-
-	//if (m_bIsUsingMovingVec)
-	//{
-	//	SetUsingMovingVec(true);
-
-	//	//movingvec size 읽기
-	//	int vecsize;
-	//	fread(&vecsize, sizeof(int), 1, _File);
-
-	//	for (int i = 0; i < vecsize; ++i)
-	//	{
-	//		MovingStruct movestruct;
-	//		fread(&movestruct, sizeof(MovingStruct), 1, _File);
-	//		m_vMovingVec.push_back(movestruct);
-	//	}		
-	//}
-	//else
-	//{
-	//	SetUsingMovingVec(false);
-	//}
+	for (int i = 0; i < (int)MESH_TEX_PARAM::MESH_TEX_END; ++i)
+	{
+		LoadResRef(m_arrMeshTex[i], _File);
+	}
 }
 
 void CMeshRender::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
