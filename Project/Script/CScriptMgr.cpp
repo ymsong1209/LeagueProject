@@ -1,11 +1,15 @@
 #include "pch.h"
 #include "CScriptMgr.h"
 
+#include "CBasicAttackScript.h"
 #include "CCameraMoveScript.h"
 #include "CChampionScript.h"
 #include "CInGameCameraScript.h"
 #include "CInhibitorScript.h"
 #include "CJinxScript.h"
+#include "CJungleMonsterScript.h"
+#include "CMinionScript.h"
+#include "CMobScript.h"
 #include "CNexusScript.h"
 #include "CPlayerScript.h"
 #include "CStructureScript.h"
@@ -14,11 +18,15 @@
 
 void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 {
+	_vec.push_back(L"CBasicAttackScript");
 	_vec.push_back(L"CCameraMoveScript");
 	_vec.push_back(L"CChampionScript");
 	_vec.push_back(L"CInGameCameraScript");
 	_vec.push_back(L"CInhibitorScript");
 	_vec.push_back(L"CJinxScript");
+	_vec.push_back(L"CJungleMonsterScript");
+	_vec.push_back(L"CMinionScript");
+	_vec.push_back(L"CMobScript");
 	_vec.push_back(L"CNexusScript");
 	_vec.push_back(L"CPlayerScript");
 	_vec.push_back(L"CStructureScript");
@@ -28,6 +36,8 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 
 CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 {
+	if (L"CBasicAttackScript" == _strScriptName)
+		return new CBasicAttackScript;
 	if (L"CCameraMoveScript" == _strScriptName)
 		return new CCameraMoveScript;
 	if (L"CChampionScript" == _strScriptName)
@@ -38,6 +48,12 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CInhibitorScript;
 	if (L"CJinxScript" == _strScriptName)
 		return new CJinxScript;
+	if (L"CJungleMonsterScript" == _strScriptName)
+		return new CJungleMonsterScript;
+	if (L"CMinionScript" == _strScriptName)
+		return new CMinionScript;
+	if (L"CMobScript" == _strScriptName)
+		return new CMobScript;
 	if (L"CNexusScript" == _strScriptName)
 		return new CNexusScript;
 	if (L"CPlayerScript" == _strScriptName)
@@ -55,6 +71,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 {
 	switch (_iScriptType)
 	{
+	case (UINT)SCRIPT_TYPE::BASICATTACKSCRIPT:
+		return new CBasicAttackScript;
+		break;
 	case (UINT)SCRIPT_TYPE::CAMERAMOVESCRIPT:
 		return new CCameraMoveScript;
 		break;
@@ -69,6 +88,15 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::JINXSCRIPT:
 		return new CJinxScript;
+		break;
+	case (UINT)SCRIPT_TYPE::JUNGLEMONSTERSCRIPT:
+		return new CJungleMonsterScript;
+		break;
+	case (UINT)SCRIPT_TYPE::MINIONSCRIPT:
+		return new CMinionScript;
+		break;
+	case (UINT)SCRIPT_TYPE::MOBSCRIPT:
+		return new CMobScript;
 		break;
 	case (UINT)SCRIPT_TYPE::NEXUSSCRIPT:
 		return new CNexusScript;
@@ -93,6 +121,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 {
 	switch ((SCRIPT_TYPE)_pScript->GetScriptType())
 	{
+	case SCRIPT_TYPE::BASICATTACKSCRIPT:
+		return L"CBasicAttackScript";
+		break;
+
 	case SCRIPT_TYPE::CAMERAMOVESCRIPT:
 		return L"CCameraMoveScript";
 		break;
@@ -111,6 +143,18 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::JINXSCRIPT:
 		return L"CJinxScript";
+		break;
+
+	case SCRIPT_TYPE::JUNGLEMONSTERSCRIPT:
+		return L"CJungleMonsterScript";
+		break;
+
+	case SCRIPT_TYPE::MINIONSCRIPT:
+		return L"CMinionScript";
+		break;
+
+	case SCRIPT_TYPE::MOBSCRIPT:
+		return L"CMobScript";
 		break;
 
 	case SCRIPT_TYPE::NEXUSSCRIPT:

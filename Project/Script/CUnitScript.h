@@ -8,11 +8,26 @@ enum class UnitType
     CHAMPION,
     STRUCTURE,
     MINION,
-    JUNGLEMOB,
+    JUNGLEMONSTER,
     DRAGON,
     BARON,
 };
 
+enum class Faction
+{
+    NONE,
+    RED,
+    BLUE,
+};
+
+
+enum class Lane
+{
+    NONE,
+    TOP,
+    MID,
+    BOTTOM,
+};
 
 class CUnitScript :
     public CScript
@@ -28,6 +43,8 @@ public:
 
 protected:
     UnitType    m_eUnitType;        // 유닛 종류
+    Faction     m_eFaction;         // 진영(레드, 블루, 중립)
+
     float       m_fHP;              // 체력
     float       m_fMaxHP;           // 전체 체력
     float       m_fAttackPower;     // 공격력
@@ -46,6 +63,7 @@ public:
     virtual void tick() override {};
 
     virtual UnitType GetType() { return m_eUnitType; }
+    virtual Faction GetFaction() { return m_eFaction; }
 
 public:
     bool IsUnitDead() { return m_bUnitDead; }
@@ -59,6 +77,7 @@ public:
     void  SetCurHPVar(float _f) { m_fHP += _f; }     // 현재 체력 += 인자값
 
     // 기타 필요한 Getter/Setter 함수 추가
-
+    float  GetAttackPower() { return m_fAttackPower; }
+    float   GetDefencePower() { return m_fDefencePower; }
 };
 

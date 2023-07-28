@@ -1,14 +1,6 @@
 #pragma once
 #include "CUnitScript.h"
 
-enum class Lane
-{
-    NONE,
-    TOP,
-    MID,
-    BOTTOM,
-};
-
 class CStructureScript :
     public CUnitScript
 {

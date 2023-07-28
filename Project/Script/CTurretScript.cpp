@@ -109,7 +109,29 @@ void CTurretScript::ChangeAnim()
 
 void CTurretScript::CheckStatus()
 {
-	// 공격 가능한지 여부
+	// 공격 가능한지 여부 체크
+
+	// 포탑이 파괴되었다면 무조건 공격 불가
+	if (m_bUnitDead)
+	{
+		m_bAttackable = false;
+		return;
+	}
+
+	if (m_iTurretNumber == 1)	// 1차 포탑의 경우 조건 없음
+		m_bAttackable = true;
+	else if (m_iTurretNumber == 2) // 2차 포탑
+	{
+		// 터렛 레이어에서, 같은 Lane의 1차 포탑이 파괴된 경우에만 공격 가능
+	}
+	else if (m_iTurretNumber == 3)	// 3차(억제기 앞 포탑)
+	{
+		// 터렛 레이어에서, 같은 Lane의 2차 포탑이 파괴된 경우에만 공격 가능
+	}
+	else                            // 4차포탑(넥서스 앞 쌍둥이타워)
+	{
+		// Lane에 상관 없이, 억제기가 하나라도 파괴된 상태라면 공격 가능
+	}
 }
 
 bool CTurretScript::IsEnemyInRange(UINT _unitID)

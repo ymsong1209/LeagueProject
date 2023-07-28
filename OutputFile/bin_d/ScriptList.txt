@@ -1,8 +1,12 @@
+CBasicAttackScript
 CCameraMoveScript
 CChampionScript
 CInGameCameraScript
 CInhibitorScript
 CJinxScript
+CJungleMonsterScript
+CMinionScript
+CMobScript
 CNexusScript
 CPlayerScript
 CStructureScript

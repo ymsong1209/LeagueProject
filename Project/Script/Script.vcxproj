@@ -172,6 +172,8 @@ call CodeGen.exe</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CBaseAttack.h" />
+    <ClInclude Include="CBasicAttackScript.h" />
     <ClInclude Include="CCameraMoveScript.h" />
     <ClInclude Include="CChampionAttackState.h" />
     <ClInclude Include="CChampionDeathState.h" />
@@ -197,6 +199,16 @@ call CodeGen.exe</Command>
     <ClInclude Include="CJinxScript.h" />
     <ClInclude Include="CJinxW.h" />
     <ClInclude Include="CJinxWalkState.h" />
+    <ClInclude Include="CJungleAttackState.h" />
+    <ClInclude Include="CJungleChaseState.h" />
+    <ClInclude Include="CJungleDeathState.h" />
+    <ClInclude Include="CJungleIdleState.h" />
+    <ClInclude Include="CJungleMonsterScript.h" />
+    <ClInclude Include="CMinionAttackState.h" />
+    <ClInclude Include="CMinionDeathState.h" />
+    <ClInclude Include="CMinionScript.h" />
+    <ClInclude Include="CMinionWalkState.h" />
+    <ClInclude Include="CMobScript.h" />
     <ClInclude Include="CNexusScript.h" />
     <ClInclude Include="CPlayerScript.h" />
     <ClInclude Include="CScriptMgr.h" />
@@ -211,6 +223,8 @@ call CodeGen.exe</Command>
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CBaseAttack.cpp" />
+    <ClCompile Include="CBasicAttackScript.cpp" />
     <ClCompile Include="CCameraMoveScript.cpp" />
     <ClCompile Include="CChampionAttackState.cpp" />
     <ClCompile Include="CChampionDeathState.cpp" />
@@ -235,6 +249,16 @@ call CodeGen.exe</Command>
     <ClCompile Include="CJinxScript.cpp" />
     <ClCompile Include="CJinxW.cpp" />
     <ClCompile Include="CJinxWalkState.cpp" />
+    <ClCompile Include="CJungleAttackState.cpp" />
+    <ClCompile Include="CJungleChaseState.cpp" />
+    <ClCompile Include="CJungleDeathState.cpp" />
+    <ClCompile Include="CJungleIdleState.cpp" />
+    <ClCompile Include="CJungleMonsterScript.cpp" />
+    <ClCompile Include="CMinionAttackState.cpp" />
+    <ClCompile Include="CMinionDeathState.cpp" />
+    <ClCompile Include="CMinionScript.cpp" />
+    <ClCompile Include="CMinionWalkState.cpp" />
+    <ClCompile Include="CMobScript.cpp" />
     <ClCompile Include="CNexusScript.cpp" />
     <ClCompile Include="CPlayerScript.cpp" />
     <ClCompile Include="CScriptMgr.cpp" />

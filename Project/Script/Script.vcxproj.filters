@@ -16,15 +16,6 @@
     <Filter Include="GameEvent">
       <UniqueIdentifier>{ebe4d16d-a135-4a21-a99e-0ad1d0deebb9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Script\Skill">
-      <UniqueIdentifier>{7de20475-0433-402e-9351-4652c76c0614}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Script\Skill\Jinx">
-      <UniqueIdentifier>{43f3fd48-b9d1-4de2-a1ee-3b57b576f10c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Script\Skill\SummonersSpell">
-      <UniqueIdentifier>{87b8d2e6-9881-4c35-88e8-f0578e60eb37}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Script\UnitScript">
       <UniqueIdentifier>{faf70b0b-553d-48f5-b9e1-0b9be1edb08e}</UniqueIdentifier>
     </Filter>
@@ -70,6 +61,30 @@
     <Filter Include="Script\UnitScript\Structure\01. Turret">
       <UniqueIdentifier>{554a82a4-9373-4d93-824e-2877c3edc67d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Script\UnitScript\Mob\JungleMonster">
+      <UniqueIdentifier>{8339824a-f9d3-4bb7-aff5-89e3c7289cac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Script\UnitScript\Mob\Dragon">
+      <UniqueIdentifier>{b7a6bfcc-8e4b-421e-9aed-5e9135b16fd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\MinionState">
+      <UniqueIdentifier>{bfdeb4cb-0d70-4bb0-a55b-afd4ca531e6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\JungleMonsterState">
+      <UniqueIdentifier>{8565bdb3-3712-4497-92e3-365461b8e863}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Script\SkillProjectile">
+      <UniqueIdentifier>{501f6a1b-a4fe-4090-bb33-8a7e084e0d0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Skill">
+      <UniqueIdentifier>{7de20475-0433-402e-9351-4652c76c0614}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Skill\Jinx">
+      <UniqueIdentifier>{43f3fd48-b9d1-4de2-a1ee-3b57b576f10c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Skill\SummonersSpell">
+      <UniqueIdentifier>{87b8d2e6-9881-4c35-88e8-f0578e60eb37}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CPlayerScript.h">
@@ -100,19 +115,19 @@
       <Filter>GameEvent</Filter>
     </ClInclude>
     <ClInclude Include="CSkill.h">
-      <Filter>Script\Skill</Filter>
+      <Filter>Skill</Filter>
     </ClInclude>
     <ClInclude Include="CHeal.h">
-      <Filter>Script\Skill\SummonersSpell</Filter>
+      <Filter>Skill\SummonersSpell</Filter>
     </ClInclude>
     <ClInclude Include="CFlash.h">
-      <Filter>Script\Skill\SummonersSpell</Filter>
+      <Filter>Skill\SummonersSpell</Filter>
     </ClInclude>
     <ClInclude Include="CJinxQ.h">
-      <Filter>Script\Skill\Jinx</Filter>
+      <Filter>Skill\Jinx</Filter>
     </ClInclude>
     <ClInclude Include="CJinxW.h">
-      <Filter>Script\Skill\Jinx</Filter>
+      <Filter>Skill\Jinx</Filter>
     </ClInclude>
     <ClInclude Include="CUnitScript.h">
       <Filter>Script\UnitScript</Filter>
@@ -181,6 +196,42 @@
     <ClInclude Include="CNexusScript.h">
       <Filter>Script\UnitScript\Structure\03. Nexus</Filter>
     </ClInclude>
+    <ClInclude Include="CMobScript.h">
+      <Filter>Script\UnitScript\Mob</Filter>
+    </ClInclude>
+    <ClInclude Include="CMinionScript.h">
+      <Filter>Script\UnitScript\Mob\Minion</Filter>
+    </ClInclude>
+    <ClInclude Include="CMinionAttackState.h">
+      <Filter>State\MinionState</Filter>
+    </ClInclude>
+    <ClInclude Include="CMinionDeathState.h">
+      <Filter>State\MinionState</Filter>
+    </ClInclude>
+    <ClInclude Include="CMinionWalkState.h">
+      <Filter>State\MinionState</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleIdleState.h">
+      <Filter>State\JungleMonsterState</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleChaseState.h">
+      <Filter>State\JungleMonsterState</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleAttackState.h">
+      <Filter>State\JungleMonsterState</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleDeathState.h">
+      <Filter>State\JungleMonsterState</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleMonsterScript.h">
+      <Filter>Script\UnitScript\Mob\JungleMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="CBasicAttackScript.h">
+      <Filter>Script\SkillProjectile</Filter>
+    </ClInclude>
+    <ClInclude Include="CBaseAttack.h">
+      <Filter>Skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">
@@ -205,19 +256,19 @@
       <Filter>GameEvent</Filter>
     </ClCompile>
     <ClCompile Include="CSkill.cpp">
-      <Filter>Script\Skill</Filter>
+      <Filter>Skill</Filter>
     </ClCompile>
     <ClCompile Include="CHeal.cpp">
-      <Filter>Script\Skill\SummonersSpell</Filter>
+      <Filter>Skill\SummonersSpell</Filter>
     </ClCompile>
     <ClCompile Include="CFlash.cpp">
-      <Filter>Script\Skill\SummonersSpell</Filter>
+      <Filter>Skill\SummonersSpell</Filter>
     </ClCompile>
     <ClCompile Include="CJinxQ.cpp">
-      <Filter>Script\Skill\Jinx</Filter>
+      <Filter>Skill\Jinx</Filter>
     </ClCompile>
     <ClCompile Include="CJinxW.cpp">
-      <Filter>Script\Skill\Jinx</Filter>
+      <Filter>Skill\Jinx</Filter>
     </ClCompile>
     <ClCompile Include="CUnitScript.cpp">
       <Filter>Script\UnitScript</Filter>
@@ -285,6 +336,42 @@
     </ClCompile>
     <ClCompile Include="CNexusScript.cpp">
       <Filter>Script\UnitScript\Structure\03. Nexus</Filter>
+    </ClCompile>
+    <ClCompile Include="CMobScript.cpp">
+      <Filter>Script\UnitScript\Mob</Filter>
+    </ClCompile>
+    <ClCompile Include="CMinionScript.cpp">
+      <Filter>Script\UnitScript\Mob\Minion</Filter>
+    </ClCompile>
+    <ClCompile Include="CMinionAttackState.cpp">
+      <Filter>State\MinionState</Filter>
+    </ClCompile>
+    <ClCompile Include="CMinionDeathState.cpp">
+      <Filter>State\MinionState</Filter>
+    </ClCompile>
+    <ClCompile Include="CMinionWalkState.cpp">
+      <Filter>State\MinionState</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleIdleState.cpp">
+      <Filter>State\JungleMonsterState</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleChaseState.cpp">
+      <Filter>State\JungleMonsterState</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleAttackState.cpp">
+      <Filter>State\JungleMonsterState</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleDeathState.cpp">
+      <Filter>State\JungleMonsterState</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleMonsterScript.cpp">
+      <Filter>Script\UnitScript\Mob\JungleMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="CBasicAttackScript.cpp">
+      <Filter>Script\SkillProjectile</Filter>
+    </ClCompile>
+    <ClCompile Include="CBaseAttack.cpp">
+      <Filter>Skill</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
