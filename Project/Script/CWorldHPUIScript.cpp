@@ -50,8 +50,8 @@ void CWorldHPUIScript::tick()
 	//디버깅용
 	CurrentHPRatio = 0.6f;
 	CurrentMPRatio = 0.3f;
-	//MeshRender()->GetMaterial(0)->SetScalarParam(FLOAT_0, &CurrentHPRatio);
-	//MeshRender()->GetMaterial(0)->SetScalarParam(FLOAT_1, &CurrentMPRatio);
+	MeshRender()->GetMaterial(0)->SetScalarParam(FLOAT_0, &CurrentHPRatio);
+	MeshRender()->GetMaterial(0)->SetScalarParam(FLOAT_1, &CurrentMPRatio);
 
 	
 	// 하나의 렉트메쉬, 하나의 머터리얼로 hp,mp같이 처리할수가 없음 hp,mp이미지 모두 하나의 렉트메쉬에 맵핑되기때문
@@ -63,7 +63,6 @@ void CWorldHPUIScript::tick()
 	//그렇다고 같은 머터리얼에 텍스쳐HP,MP 두개, 현재 HP,MP ratio변수 두개 이렇게 넘겨도 결국 하나의 렉트메쉬에 맵핑되는거라 위치 조절이 힘듬.
 	//또한.. 닳게 하려면 hp,mp개별로 닳아야 하는데 그것도 힘듬. (hp바만큼 닳게 하면 mp바 부분도 같이 닳게될것임)
 
-	// --> 해결? : 결국렉트메쉬의 인덱스버퍼가 하나라서.. 여러개의 머터리얼을 장착할수없음 그래서 결국 개별 오브젝트로 처리해줘야함.
 }
 
 void CWorldHPUIScript::BeginOverlap(CCollider2D* _Other)

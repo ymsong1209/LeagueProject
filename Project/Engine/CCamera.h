@@ -41,9 +41,13 @@ private:
     vector<CGameObject*>    m_vecPost;
 
     vector<CGameObject*>    m_vecDynamicShadow;     // 동적 그림자 물체
-   
 
     vector<CGameObject*>    m_vecContour;
+
+    vector<CGameObject*>    m_vecUIOpaque;
+    vector<CGameObject*>    m_vecUIMask;
+    vector<CGameObject*>    m_vecUITransparent;
+
 
     float                   m_LayMinDistance;   // 오브젝트가 여러개 겹쳐있을때 마우스 클릭하는 것을 대비해서 오브젝트들중에 깊이가(길이) 가장 작은
                                                 //오브젝트의 길이값을 기억해두고 그 오브젝트를 최종 선택오브젝트로 세팅 
@@ -55,7 +59,7 @@ private:
     float       m_fFov; //fov값
 
    
-
+    
 
 public:
     void SetProjType(PROJ_TYPE _Type) { m_ProjType = _Type; }
@@ -131,6 +135,9 @@ public:
 
     bool IsCollidingBtwRayWall(Vec2& RayObjPos, Vec2& _CollideObjPos, float& _Raidus, float& _RayObjRadius, ColliderStruct& _ColliderData);
 
+    void CalcViewMat();
+    void CalcProjMat();
+
 private:
     void clear();
     void render_deferred();
@@ -149,9 +156,11 @@ private:
     void render_transparent();
     void render_postprocess();
     void render_ui();
+    void render_uiopaque();
+    void render_uimask();
+    void render_uitransparent();
+    void render_uicamera();
 
-    void CalcViewMat();
-    void CalcProjMat();
 
 
     virtual void SaveToLevelFile(FILE* _File) override;

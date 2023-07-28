@@ -14,6 +14,8 @@ public:
     virtual void tick() override;
     virtual void BeginOverlap(CCollider2D* _Other) override;
 
+
+    Vec2 ObjViewportPos(Vec3 _Pos);
 public:
 
     CLONE(CWorldHPSpawnScript);

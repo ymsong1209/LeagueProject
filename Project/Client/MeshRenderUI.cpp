@@ -142,14 +142,14 @@ int MeshRenderUI::render_update()
         ImGui::Separator();
 
         ImGui::Text("Set DomainType : ");
-        if (ImGui::RadioButton("DOMAIN_OPAQUE", &DomainType, 3))
-            Shader->SetDomain(SHADER_DOMAIN::DOMAIN_OPAQUE);
+        if (ImGui::RadioButton("DOMAIN_UI_OPAQUE", &DomainType, 9))
+            Shader->SetDomain(SHADER_DOMAIN::DOMAIN_UI_OPAQUE);
         ImGui::SameLine();
-        if (ImGui::RadioButton("DOMAIN_MASK", &DomainType, 4))
-            Shader->SetDomain(SHADER_DOMAIN::DOMAIN_MASK);
+        if (ImGui::RadioButton("DOMAIN_UI_MASK", &DomainType, 10))
+            Shader->SetDomain(SHADER_DOMAIN::DOMAIN_UI_MASK);
         ImGui::SameLine();
-        if (ImGui::RadioButton("DOMAIN_TRANSPARENT", &DomainType, 5))
-            Shader->SetDomain(SHADER_DOMAIN::DOMAIN_TRANSPARENT);
+        if (ImGui::RadioButton("DOMAIN_UI_TRANSPARENT", &DomainType, 11))
+            Shader->SetDomain(SHADER_DOMAIN::DOMAIN_UI_TRANSPARENT);
         ImGui::SameLine();
         if (ImGui::RadioButton("DOMAIN_UI", &DomainType, 7))
             Shader->SetDomain(SHADER_DOMAIN::DOMAIN_UI);

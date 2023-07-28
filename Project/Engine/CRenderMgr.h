@@ -130,6 +130,7 @@ public:
     bool GetIsImGuiHovered() { return b_IsImGuiHovered; }
     void SetIsImGuiHovered(bool _IsHovered) { b_IsImGuiHovered = _IsHovered; }
  
+    CCamera* GetCamerafromIdx(int _idx) { return m_vecCam[_idx]; }
 
 public:
     CGameObject* GetGizMoTargetObj() { return m_GizMoTargetObject; }   //기즈모가 생겨야할 타겟오브젝트 게터, 세터 함수
@@ -144,8 +145,11 @@ public:
 
     void CopyRenderTarget();
 
+    void MRT_Clear(MRT_TYPE _Type);
+
 private:
     void MRT_Clear();
+
     void UpdateData();
     void render_play();
     void render_editor();

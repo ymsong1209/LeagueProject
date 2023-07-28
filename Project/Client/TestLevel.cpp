@@ -98,7 +98,7 @@ void CreateTestLevel()
 	//pLightObj->Light3D()->SetLightAmbient(Vec4(1.f, 1.f, 1.f,1.f));
 	pLightObj->Light3D()->SetLightDiffuse(Vec3(0.5f, 0.5f, 0.5f));
 	pLightObj->Light3D()->SetLightSpecular(Vec3(0.f, 0.f, 0.f));
-	pLightObj->Light3D()->SetLightAmbient(Vec3(0.3f, 0.3f, 0.3f));
+	pLightObj->Light3D()->SetLightAmbient(Vec3(0.65f, 0.65f, 0.65f));
 
 
 	pLightObj->Light3D()->SetRadius(400.f);
@@ -223,6 +223,7 @@ void CreateTestLevel()
 		pObj->AddComponent(new CPlayerScript);
 		pObj->AddComponent(new CPathFinder);
 		pObj->AddComponent(new CCollider3D);
+		pObj->AddComponent(new CWorldHPSpawnScript);
 
 		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
 		pObj->Collider3D()->SetAbsolute(true);
@@ -234,7 +235,9 @@ void CreateTestLevel()
 
 		pObj->Transform()->SetUseMouseOutline(true);
 
-		SpawnGameObject(pObj, Vec3(0, 0, 0), 0);
+		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0), 0);
+
+
 
 
 		//-------------------------------넥서스-----------------------------------------
