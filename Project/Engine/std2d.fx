@@ -514,12 +514,12 @@ float4 PS_WorldBar(VS_OUT _in) : SV_Target
     float4 vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
     
     float BarLeftX = 26.f;
-    float BarRightX = 132.f;
+    float BarRightX = 129.7f;
     float HPUpY = 5.f;
     float HPDownY = 18.f;
     float MPUpY = 19.f;
     float MPDownY = 24.f;
-    float BarTotalX = 136.f;
+    float BarTotalX = 133.f;
     float BarTotalY = 29.f;
     
     float2 HPuv_1 = float2(BarLeftX / BarTotalX, HPUpY / BarTotalY);
@@ -543,11 +543,11 @@ float4 PS_WorldBar(VS_OUT _in) : SV_Target
     // Check if the UV is within HP or MP bar and beyond the remaining HP or MP
     if ((_in.vUV.y >= HPuv_1.y && _in.vUV.y <= HPuv_3.y) && _in.vUV.x <= HPuv_2.x && normalized_HP_UV_x > HP_ratio)
     {
-        vOutColor = float4(0.f, 0.f, 0.f, 1.f);
+        vOutColor = float4(0.f, 0.f, 0.f, 0.6f);
     }
     else if ((_in.vUV.y >= MPuv_1.y && _in.vUV.y <= MPuv_3.y) && _in.vUV.x <= MPuv_2.x && normalized_MP_UV_x > MP_ratio)
     {
-        vOutColor = float4(0.f, 0.f, 0.f, 1.f);
+        vOutColor = float4(0.f, 0.f, 0.f, 0.6f);
     }
     
 

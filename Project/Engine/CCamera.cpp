@@ -666,8 +666,6 @@ void CCamera::render()
 		render_uicamera();
 	}
 
-
-
 }
 
 void CCamera::render_depthmap()

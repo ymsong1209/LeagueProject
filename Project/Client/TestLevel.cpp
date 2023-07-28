@@ -51,7 +51,7 @@ void CreateTestLevel()
 	pMainCam->Camera()->SetLayerMaskAll(true);	// 모든 레이어 체크
 	pMainCam->Camera()->SetLayerMask(31, false);// UI Layer 는 렌더링하지 않는다.
 	pMainCam->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(60.f),0.f, 0.f));
-	SpawnGameObject(pMainCam, Vec3(1386.f, 498.f, -9.f), 0);
+	SpawnGameObject(pMainCam, Vec3(0.f, 498.f, -9.f), 0);
 
 	// UI cameara
 	CGameObject* pUICam = new CGameObject;
@@ -231,13 +231,11 @@ void CreateTestLevel()
 		pObj->Collider3D()->SetDrawCollision(false);
 		pObj->Animator3D()->SetRepeat(true);
 		pObj->Animator3D()->Play(L"Jinx\\Idle1_Base", true, 0.1f);
-		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+		pObj->Transform()->SetRelativeScale(Vec3(0.195f, 0.195f, 0.195f));
 
 		pObj->Transform()->SetUseMouseOutline(true);
 
 		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0), 0);
-
-
 
 
 		//-------------------------------넥서스-----------------------------------------
