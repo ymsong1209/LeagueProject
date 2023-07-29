@@ -6,6 +6,8 @@ enum class SERVER_EVENT_TYPE
 	// Server Packet //
 	MOVE_PACKET,    // wParam : GameObject,  lParam : ObjectMove Update Move Packet
 	ANIM_PACKET,    // wParam : GameObject,  lParam : AnimInfo
+	SKILL_PROJECTILE_PACKET,
+	SKILL_HIT_PACKET,
 };
 
 // Event
