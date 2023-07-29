@@ -32,7 +32,7 @@ void ServerEventMgr::sendtick(ClientServiceRef _service)
 	// ========================================
 	// 규칙 패킷(MovePacket) : 100ms = 1/10 sec
     // ========================================
-	if (time_diff.count() >= 80) 
+	if (time_diff.count() >= 100)  // 나중에 20으로 고침
     {     
         // 1. 본인 플레이어 move 패킷을 서버에 보낸다. (움직임,방향,lv, HP MP AD Defence)
 		// 문제점 : 안움직일땐 move 패킷을 안보내서 LV,HP,MP 등 업데이트가 안됌...그냥 움직여라는 뜻.(나중에는 안움직일때도 패킷보내게 변경예정)

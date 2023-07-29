@@ -53,8 +53,7 @@ void CreateTestLevel()
 	pMainCam->Camera()->SetLayerMaskAll(true);	// 모든 레이어 체크
 	pMainCam->Camera()->SetLayerMask(31, false);// UI Layer 는 렌더링하지 않는다.
 	pMainCam->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(60.f),0.f, 0.f));
-	SpawnGameObject(pMainCam, Vec3(1386.f, 498.f, -9.f), 0);
-
+	SpawnGameObject(pMainCam, Vec3(153.f, 500.f, -148.f), 0);
 
 	// 광원 추가
 	CGameObject* pLightObj = new CGameObject;
