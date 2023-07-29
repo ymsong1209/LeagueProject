@@ -27,8 +27,9 @@ void CJinxWalkState::Enter()
 
 	// server에 보낼 애니메이션 패킷 이벤트 등록
 	AnimInfo* animInfo = new AnimInfo();
-	animInfo->animIdx = GetOwnerFSM()->GetOwner()->GetScript<CUnitScript>()->GetServerID();
+	animInfo->targetId = GetOwnerFSM()->GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	animInfo->animName = L"Jinx\\Run_Base";
+	//animInfo->bRepeat  = ?
 	animInfo->blend = true;
 	animInfo->blendTime = 0.1f;
 	

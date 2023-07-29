@@ -353,30 +353,27 @@ void ServerPacketHandler::Handle_S_OBJECT_ANIM(PacketSessionRef& session, BYTE* 
 		return;
 	}
 
-	// 해당 오브젝트id의 애니메이션
-	uint64 _ObjectId = pkt->targetId;
-
-	cout << "I receive anim Packet about : " << _ObjectId << endl;
-
-	if (_ObjectId != MyPlayer.id)
+	// 보낸이가 본인일 경우 처리 x
+	uint64 _sendId = pkt->sendId;
+	if (_sendId != MyPlayer.id)
 	{
 		AnimInfoPacket _AnimInfoPacket = pkt->animInfo;
 
-		AnimInfo _AnimInfo = {};
-
-		PKT_S_OBJECT_ANIM::AnimNameList AnimNameBuffs = pkt->GetAnimNameList();
 		// 애니메이션 이름
+		PKT_S_OBJECT_ANIM::AnimNameList AnimNameBuffs = pkt->GetAnimNameList();
 		wstring _animName = L"";
 		for (auto& AnimNameBuff : AnimNameBuffs)
 		{
 			_animName.push_back(AnimNameBuff.animName);
 		}
-		_AnimInfo.animIdx = _ObjectId;
+
+		AnimInfo _AnimInfo = {};
+		_AnimInfo.targetId = _AnimInfoPacket.targetId;
 		_AnimInfo.animName = _animName;
 		_AnimInfo.blend = _AnimInfoPacket.blend;
 		_AnimInfo.blendTime = _AnimInfoPacket.blendTime;
 
-		GameObjMgr::GetInst()->E_ObjectAnim(_ObjectId, _AnimInfo);
+		GameObjMgr::GetInst()->E_ObjectAnim(_AnimInfo);
 	}
 
 	std::cout << "===============================" << endl;

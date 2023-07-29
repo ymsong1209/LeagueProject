@@ -26,14 +26,14 @@ public:
 public: 
 	// 서버에게 패킷을 보낸다.
 	void SendMyPlayerMove(ClientServiceRef _service);
-	void SendObjectAnim(uint64 _id, ClientServiceRef _service);
+	void SendObjectAnim(AnimInfo* _animInfo, ClientServiceRef _service);
 	void SendObjectMove(uint64 _id, CGameObject* _obj, ClientServiceRef _service);
 	void SendTowerUpdate(uint64 _id, CGameObject* _obj, ClientServiceRef _service);
 
 	// 서버에게 받은 패킷 처리
 	void E_MovePlayer(uint64 _playerId, ObjectMove _playerMove);
 	void E_MoveObject(uint64 _objectId, ObjectMove _objectMove);
-	void E_ObjectAnim(uint64 _objectId, AnimInfo _animInfo);
+	void E_ObjectAnim(AnimInfo _animInfo);
 
 public:
 	CGameObject* FindPlayer(uint64 _targetId);

@@ -62,53 +62,32 @@ void ServerEventMgr::sendtick(ClientServiceRef _service)
         last_tick_time = now;
     }
 
-	// ==========================================
-	// 불규칙 패킷
-	// =========================================
-	// 여기서!!! 스크립트 이벤트 매니저의 이벤트 vector를 확인하고 보낸다. 
-
-	//  애니메이션 변경, 스킬사용, 스킬Hit, 데미지맞음, 상태이상중,}
-	// GameObjMgr::GetInst()->SendMyPlayerAnim(_service);
-	// 
-	vector<tServerEvent> _vecEvent = CSendServerEventMgr::GetInst()->GetVecEvent();
-	for (int i = 0; i < _vecEvent.size(); ++i)
+	// ==================================================================
+	// 불규칙 패킷 (애니메이션 변경, 스킬사용, 스킬Hit, 데미지맞음, 상태이상)
+	// ==================================================================
+	vector<tServerEvent> _vecScriptEvent = CSendServerEventMgr::GetInst()->GetVecEvent();
+	for (int i = 0; i < _vecScriptEvent.size(); ++i)
 	{
-		if (_vecEvent.size() == 0) break;
+		if (_vecScriptEvent.size() == 0) break;
 
-		switch (_vecEvent[i].Type)
+		switch (_vecScriptEvent[i].Type)
 		{
 
 		case SERVER_EVENT_TYPE::SEND_ANIM_PACKET:
 		{
-			// wParam 일단 안쓰는중. animinfo animIdx에 오브젝트id를 받아오고 있음.
-			//CGameObject* NewObject = (CGameObject*)m_vecEvent[i].wParam;
-			AnimInfo* animInfo = (AnimInfo*)(_vecEvent[i].lParam);
+			AnimInfo* animInfo = (AnimInfo*)(_vecScriptEvent[i].lParam);
+			uint64 _objectId = animInfo->targetId; // 애니메이션 변경할 id
+
+			// 본인 플레이어 애니메이션 전송
+			if (MyPlayer.id == _objectId) 
+				GameObjMgr::GetInst()->SendObjectAnim(animInfo, _service);
 			
-			uint64 _objectId = animInfo->animIdx; // 애니메이션 변경할 id
+			// 방장인 경우, 플레이어 아닌 오브젝트 애니메이션 전송
+			else if(MyPlayer.host)		
+				GameObjMgr::GetInst()->SendObjectAnim(animInfo, _service);
 
-			//if (_objectId == MyPlayer.id) break;
-
-			// 여기서 서버에 보낸다. 
-			std::cout << "Send C_OBJECT_ANIM Pakcet : Send ID : " << _objectId << endl;
-
-			AnimInfoPacket animInfoPacket = {};
-			animInfoPacket.blend = animInfo->blend;
-			animInfoPacket.blendTime = animInfo->blendTime;
-
-			wstring _animName = animInfo->animName;
-
-			PKT_C_OBJECT_ANIM_WRITE  pktWriter(_objectId, animInfoPacket);
-			PKT_C_OBJECT_ANIM_WRITE::AnimNameList animNamePacket = pktWriter.ReserveAnimNameList(_animName.size());
-			for (int i = 0; i < _animName.size(); i++)
-				animNamePacket[i] = { _animName[i] };
-
-			SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
-			_service->Broadcast(sendBuffer);
-
-			delete animInfo;
+			delete animInfo; // 메모리 사용 해제
 			animInfo = nullptr;
-
-			std::cout << "===============================" << endl;
 			break;
 		}
 		}
@@ -152,10 +131,11 @@ void ServerEventMgr::clienttick()
 			CGameObject* NewObject = (CGameObject*)m_vecEvent[i].wParam;
 			AnimInfo* animInfo = (AnimInfo*)(m_vecEvent[i].lParam);
 			
-			cout << "Real PlayRepeat about " << animInfo->animIdx << endl;
-			// Play함수가 바꼈나?
-			NewObject->Animator3D()->PlayRepeat(animInfo->animName, animInfo->blend, animInfo->blendTime);
-
+			if(animInfo->bRepeat)
+				NewObject->Animator3D()->PlayRepeat(animInfo->animName, animInfo->blend, animInfo->blendTime);
+			else
+				NewObject->Animator3D()->PlayOnce(animInfo->animName, animInfo->blend, animInfo->blendTime);
+			
 			// 사용이 끝난 후에는 메모리를 해제
 			delete animInfo;
 			animInfo = nullptr;

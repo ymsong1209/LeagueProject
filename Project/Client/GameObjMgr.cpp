@@ -384,36 +384,33 @@ void GameObjMgr::SendTowerUpdate(uint64 _id, CGameObject* _obj, ClientServiceRef
 {
 }
 
-void GameObjMgr::SendObjectAnim(uint64 _id, ClientServiceRef _service)
+void GameObjMgr::SendObjectAnim(AnimInfo* _animInfo, ClientServiceRef _service)
 {
 	// _id 오브젝트의 애니메이션을 보낸다.
 	std::mutex m;
 	{
 		std::lock_guard<std::mutex> lock(m);
 
-		CGameObject* obj = FindAllObject(_id);
-
-		if (obj == nullptr)
-			return;
-
-		if (obj->GetLayerIndex() == -1)
-			return;
-
 		AnimInfoPacket animInfoPacket = {};
-		animInfoPacket.blend = obj->Animator3D()->IsBlend();
-		animInfoPacket.blendTime = obj->Animator3D()->GetBlendTime();
+		animInfoPacket.targetId = _animInfo->targetId;
+		animInfoPacket.bRepeat = _animInfo->bRepeat;
+		animInfoPacket.blend = _animInfo->blend;
+		animInfoPacket.blendTime = _animInfo->blendTime;
 
-		wstring _animName = obj->Animator3D()->GetCurAnim()->GetName();
 
-		// 서버에게 패킷 전송
-		std::cout << "C_OBJECT_ANIM Pakcet. id : " << _id << endl;
-		PKT_C_OBJECT_ANIM_WRITE  pktWriter(_id, animInfoPacket);
+		wstring _animName = _animInfo->animName;
+
+		// 보내는 사람의 Id	  : MyPlayer.id
+		// 변경될 오브젝트의 Id : animInfo.targetId
+		PKT_C_OBJECT_ANIM_WRITE  pktWriter(MyPlayer.id, animInfoPacket);
 		PKT_C_OBJECT_ANIM_WRITE::AnimNameList animNamePacket = pktWriter.ReserveAnimNameList(_animName.size());
 		for (int i = 0; i < _animName.size(); i++)
 		{
 			animNamePacket[i] = { _animName[i] };
 		}
 
+		// 서버에게 패킷 전송
+		std::cout << "Send C_OBJECT_ANIM Pakcet " << endl;
 		SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
 		_service->Broadcast(sendBuffer);
 
@@ -477,19 +474,15 @@ void GameObjMgr::E_MoveObject(uint64 _objectId, ObjectMove _objectMove)
 	}
 }
 
-void GameObjMgr::E_ObjectAnim(uint64 _objectId, AnimInfo _animInfo)
+void GameObjMgr::E_ObjectAnim(AnimInfo _animInfo)
 {
 	std::mutex m;
 	{
 		std::lock_guard<std::mutex> lock(m);
 
-		if (_objectId == MyPlayer.id) // 내 플레이어 애니메이션은 반영하지 않아도 된다. 
-			return;
-
-		CGameObject* obj = FindAllObject(_objectId);
+		CGameObject* obj = FindAllObject(_animInfo.targetId);
 
 		tServerEvent evn = {};
-
 		evn.Type = SERVER_EVENT_TYPE::ANIM_PACKET;
 		evn.wParam = (DWORD_PTR)obj;
 

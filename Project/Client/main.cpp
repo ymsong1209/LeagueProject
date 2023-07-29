@@ -45,7 +45,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_ int       nCmdShow)
 {
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-    //_CrtSetBreakAlloc(619);
+   // _CrtSetBreakAlloc(623603);
     MyRegisterClass(hInstance);
 
     // 애플리케이션 초기화를 수행합니다:
@@ -86,8 +86,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     this_thread::sleep_for(1s);
     
     ClientServiceRef service = MakeShared<ClientService>(
-        // NetAddress(L"221.148.206.199", 40000),  // 다혜집 데탑 IP
-        NetAddress(L"14.35.246.224", 40000),    // snow
+         NetAddress(L"221.148.206.199", 40000),  // 다혜집 데탑 IP
+        //NetAddress(L"14.35.246.224", 40000),    // snow
         //NetAddress(L"192.168.0.19", 40000), //  내부ip
         //NetAddress(L"127.0.0.1", 40000), // 로컬 호스트
         MakeShared<IocpCore>(),

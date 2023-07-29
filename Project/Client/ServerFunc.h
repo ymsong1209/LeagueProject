@@ -1,22 +1,9 @@
 #pragma once
 #include <Engine\serverpacket.h>
 
-
-enum SkillType {
-    AUTO_ATTACK,
-    JINX_W,
-    JINX_E,
-    JINX_R,
-};
-
-struct SkillInfo {
-    uint64 OwnerId;
-    uint64 TargetId;
-    SkillType skillType;
-};
-
 struct AnimInfoPacket {
-    uint16 animIdx;
+    uint16 targetId;
+    bool bRepeat;
     bool blend;
     float blendTime;
 

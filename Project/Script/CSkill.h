@@ -1,18 +1,19 @@
 #pragma once
 
-enum class SkillType
-{
-	BASIC_ATTACK,		// 모든 종류의 평타 (미니언/정글몹의 기본공격 포함)
-	JINX_Q,
-	JINX_W,
-	JINX_E,
-	JINX_R,
-	DARIUS_Q,
-	DARIUS_W,
-	DARIUS_E,
-	DARIUS_R,
-
-};
+// Engine\serverpacket.h로 이사했음.
+//enum class SkillType
+//{
+//	BASIC_ATTACK,		// 모든 종류의 평타 (미니언/정글몹의 기본공격 포함)
+//	JINX_Q,
+//	JINX_W,
+//	JINX_E,
+//	JINX_R,
+//	DARIUS_Q,
+//	DARIUS_W,
+//	DARIUS_E,
+//	DARIUS_R,
+//
+//};
 
 class CUnitScript;
 enum CC;
