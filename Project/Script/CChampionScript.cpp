@@ -112,13 +112,13 @@ void CChampionScript::CheckStatus()
 {
 	// 체력 / 마나 리젠 예시
 	m_fHP += 2.0f * DT;
-	m_fMana += 5.0f * DT;
+	m_fMP += 5.0f * DT;
 
 	if (m_fHP > m_fMaxHP)
 		m_fHP = m_fMaxHP;
 
-	if (m_fMana > m_fMaxMana)
-		m_fMana = m_fMaxMana;
+	if (m_fMP > m_fMaxMP)
+		m_fMP = m_fMaxMP;
 }
 
 void CChampionScript::GetInput()
@@ -172,7 +172,7 @@ void CChampionScript::GetInput()
 	if (KEY_TAP(KEY::Q))
 	{
 		// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-		if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[0]->GetCost() > m_fMana)
+		if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[0]->GetCost() > m_fMP)
 			return;
 
 		if (m_Skill[0]->Use())
@@ -183,7 +183,7 @@ void CChampionScript::GetInput()
 	if (KEY_TAP(KEY::W))
 	{
 		// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-		if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[1]->GetCost() > m_fMana)
+		if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[1]->GetCost() > m_fMP)
 			return;
 
 		if (m_Skill[1]->Use())
@@ -194,7 +194,7 @@ void CChampionScript::GetInput()
 	if (KEY_TAP(KEY::E))
 	{
 		// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-		if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[2]->GetCost() > m_fMana)
+		if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[2]->GetCost() > m_fMP)
 			return;
 
 		if (m_Skill[2]->Use())
@@ -205,7 +205,7 @@ void CChampionScript::GetInput()
 	if (KEY_TAP(KEY::R))
 	{
 		// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-		if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[3]->GetCost() > m_fMana)
+		if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[3]->GetCost() > m_fMP)
 			return;
 
 		if (m_Skill[3]->Use())

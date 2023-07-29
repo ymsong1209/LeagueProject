@@ -1,5 +1,6 @@
 #pragma once
 #include<Windows.h>
+#include "global.h"
 
 enum class SERVER_EVENT_TYPE
 {

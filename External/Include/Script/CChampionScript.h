@@ -2,7 +2,7 @@
 #include "CUnitScript.h"
 
 // 군중 제어기
-enum CC
+enum class CC
 {
     NONE = 0,
     SLOW = 1 << 0,
