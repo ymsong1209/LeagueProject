@@ -233,7 +233,7 @@ void CChampionScript::Move()
 		return;
 
 	// 이동
-	if (PathFindMove(200, true))
+	if (PathFindMove(80, true))
 	{
 		// 이동 이벤트
 		MoveEvent* evn = dynamic_cast<MoveEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_MOVE));
