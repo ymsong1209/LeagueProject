@@ -41,7 +41,7 @@ void CJinxIdleState::Enter()
 
 void CJinxIdleState::Exit()
 {
-	//GetOwner()->Animator3D()->FindAnim(L"Jinx\\Idle1_Base")->Reset();
+	GetOwner()->Animator3D()->FindAnim(L"Jinx\\Idle1_Base")->Reset();
 	CChampionIdleState::Exit();
 }
 

@@ -199,6 +199,7 @@ void CAnimator3D::PlayRepeat(const wstring& _strName, bool _RepeatBlend, bool _b
 		//현재 애니메이션에서 다른 애니메이션으로 blend하면서 들어가기
 		if (GetCurAnim()) {
 			m_pCurAnim->Reset();
+			m_pCurAnim = pAnim;
 			m_bBlend = true;
 			m_fCurBlendTime = 0.f;
 			m_fMaxBlendTime = _blendtime;
