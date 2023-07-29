@@ -162,7 +162,7 @@ void CChampionScript::GetInput()
 		if ((m_eRestraint & CAN_MOVE) == 0)
 			return;
 
-		CGameObject* Map = CLevelMgr::GetInst()->GetCurLevel()->FindParentObjectByName(L"LoLMapCollider");
+		CGameObject* Map = CLevelMgr::GetInst()->GetCurLevel()->FindObjectByName(L"LoLMapCollider");
 		IntersectResult result = MainCam->IsCollidingBtwRayRect(ray, Map);
 		Vec3 TargetPos = result.vCrossPoint;	// Å¬¸¯ ÁÂÇ¥
 		PathFinder()->FindPath(TargetPos);

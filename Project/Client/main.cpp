@@ -67,7 +67,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     ImGuiMgr::GetInst()->init(g_hWnd);
 
     // 테스트 용 레벨 생성
-    //CreateTestLevel();
+    CreateTestLevel();
     //CreateLoginLevel();
 
     // 메세지 루프
@@ -75,45 +75,45 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MSG msg;
 
     // 해상도 수정
-     SetProcessDPIAware();
-     
-     AllocConsole();
-     // 표준 출력을 콘솔 창으로 리디렉션
-     freopen("CONOUT$", "w", stdout);
+     //SetProcessDPIAware();
+     //
+     //AllocConsole();
+     //// 표준 출력을 콘솔 창으로 리디렉션
+     //freopen("CONOUT$", "w", stdout);
     
     
     
-    this_thread::sleep_for(1s);
+    //this_thread::sleep_for(1s);
+    //
+    //ClientServiceRef service = MakeShared<ClientService>(
+    //    // NetAddress(L"221.148.206.199", 40000),  // 다혜집 데탑 IP
+    //    NetAddress(L"14.35.246.224", 40000),    // snow
+    //    //NetAddress(L"192.168.0.19", 40000), //  내부ip
+    //    //NetAddress(L"127.0.0.1", 40000), // 로컬 호스트
+    //    MakeShared<IocpCore>(),
+    //    MakeShared<ServerSession>, // TODO : SessionManager 등
+    //    1);
     
-    ClientServiceRef service = MakeShared<ClientService>(
-        // NetAddress(L"221.148.206.199", 40000),  // 다혜집 데탑 IP
-        NetAddress(L"14.35.246.224", 40000),    // snow
-        //NetAddress(L"192.168.0.19", 40000), //  내부ip
-        //NetAddress(L"127.0.0.1", 40000), // 로컬 호스트
-        MakeShared<IocpCore>(),
-        MakeShared<ServerSession>, // TODO : SessionManager 등
-        1);
-    
-    ASSERT_CRASH(service->Start());
-    
-    GThreadManager->SetFlags(1);
-    for (int32 i = 0; i < 2; i++)
-    {
-        GThreadManager->Launch([=]()
-        {
-            while (true)
-            {
-                service->GetIocpCore()->Dispatch(10);
-                if (GThreadManager->GetFlags() == 0)
-                {
-                    this_thread::sleep_for(500ms);
-                    return;
-                    //break;
-                }
-                
-            }
-        });
-    }    
+    //ASSERT_CRASH(service->Start());
+    //
+    //GThreadManager->SetFlags(1);
+    //for (int32 i = 0; i < 2; i++)
+    //{
+    //    GThreadManager->Launch([=]()
+    //    {
+    //        while (true)
+    //        {
+    //            service->GetIocpCore()->Dispatch(10);
+    //            if (GThreadManager->GetFlags() == 0)
+    //            {
+    //                this_thread::sleep_for(500ms);
+    //                return;
+    //                //break;
+    //            }
+    //            
+    //        }
+    //    });
+    //}    
 
     while (true) 
     {
@@ -130,45 +130,45 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
         else
         {
-            if (KEY_TAP(KEY::SPACE) && service->GetCurrentSessionCount() > 0)
-            {
-                Send_CLogin(service, L"KIYO");
-            }
-            else if (KEY_TAP(KEY::NUM_1))
-            {
-                Send_CPickFaction(service);
-            }
-            else if (KEY_TAP(KEY::NUM_2))
-            {
-                Send_CPickChampion(service,ChampionType::JINX);
-            }
-            
-            else if (KEY_TAP(KEY::NUM_4))
-            {
-                std::cout << "C_OBJECT_ANIM Pakcet" << endl;
-            
-                AnimInfoPacket animInfoPacket = {};
-                animInfoPacket.blend = GameObjMgr::GetInst()->GetMyPlayerScript()->Animator3D()->IsBlend();
-                animInfoPacket.blendTime = GameObjMgr::GetInst()->GetMyPlayerScript()->Animator3D()->GetBlendTime();
-            
-                wstring _animName = GameObjMgr::GetInst()->GetMyPlayerScript()->Animator3D()->GetCurAnim()->GetName();
-            
-                PKT_C_OBJECT_ANIM_WRITE  pktWriter(MyPlayer.id, animInfoPacket);
-                PKT_C_OBJECT_ANIM_WRITE::AnimNameList animNamePacket = pktWriter.ReserveAnimNameList(_animName.size());
-                for (int i = 0; i < _animName.size(); i++)
-                    animNamePacket[i] = { _animName[i] };
-            
-                SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
-                service->Broadcast(sendBuffer);
-            
-                std::cout << "===============================" << endl;
-            }
+            //if (KEY_TAP(KEY::SPACE) && service->GetCurrentSessionCount() > 0)
+            //{
+            //    Send_CLogin(service, L"KIYO");
+            //}
+            //else if (KEY_TAP(KEY::NUM_1))
+            //{
+            //    Send_CPickFaction(service);
+            //}
+            //else if (KEY_TAP(KEY::NUM_2))
+            //{
+            //    Send_CPickChampion(service,ChampionType::JINX);
+            //}
+            //
+            //else if (KEY_TAP(KEY::NUM_4))
+            //{
+            //    std::cout << "C_OBJECT_ANIM Pakcet" << endl;
+            //
+            //    AnimInfoPacket animInfoPacket = {};
+            //    animInfoPacket.blend = GameObjMgr::GetInst()->GetMyPlayerScript()->Animator3D()->IsBlend();
+            //    animInfoPacket.blendTime = GameObjMgr::GetInst()->GetMyPlayerScript()->Animator3D()->GetBlendTime();
+            //
+            //    wstring _animName = GameObjMgr::GetInst()->GetMyPlayerScript()->Animator3D()->GetCurAnim()->GetName();
+            //
+            //    PKT_C_OBJECT_ANIM_WRITE  pktWriter(MyPlayer.id, animInfoPacket);
+            //    PKT_C_OBJECT_ANIM_WRITE::AnimNameList animNamePacket = pktWriter.ReserveAnimNameList(_animName.size());
+            //    for (int i = 0; i < _animName.size(); i++)
+            //        animNamePacket[i] = { _animName[i] };
+            //
+            //    SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+            //    service->Broadcast(sendBuffer);
+            //
+            //    std::cout << "===============================" << endl;
+            //}
 
 
            CEngine::GetInst()->progress();
            
-           if (IsInGame) // C->S 패킷 전송
-               ServerEventMgr::GetInst()->sendtick(service);
+           //if (IsInGame) // C->S 패킷 전송
+           //    ServerEventMgr::GetInst()->sendtick(service);
 
            // 랜덤으로 온 서버패킷을 핸들러에서 서버 이벤트 매니저에 등록해둠.
           
@@ -176,7 +176,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
            CEventMgr::GetInst()->tick();
 
            //// Server에서 온 패킷 정보를 클라이언트에 반영.
-           ServerEventMgr::GetInst()->clienttick();
+           //ServerEventMgr::GetInst()->clienttick();
 
 
            CEditorObjMgr::GetInst()->progress();
@@ -194,11 +194,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     }
 
-    GThreadManager->Join();
+    //GThreadManager->Join();
     
-    // 콘솔 창 닫기
-    //fclose(stdout);
-    FreeConsole();
+    //// 콘솔 창 닫기
+    ////fclose(stdout);
+    //FreeConsole();
 
 
     return (int) msg.wParam;
@@ -298,8 +298,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
     case WM_DESTROY:
-        GThreadManager->SetFlags(0);
-        this_thread::sleep_for(1s);
+        //GThreadManager->SetFlags(0);
+        //this_thread::sleep_for(1s);
         PostQuitMessage(0);
         break;
 

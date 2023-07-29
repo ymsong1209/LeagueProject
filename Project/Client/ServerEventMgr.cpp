@@ -73,6 +73,8 @@ void ServerEventMgr::sendtick(ClientServiceRef _service)
 	vector<tServerEvent> _vecEvent = CSendServerEventMgr::GetInst()->GetVecEvent();
 	for (int i = 0; i < _vecEvent.size(); ++i)
 	{
+		if (_vecEvent.size() == 0) break;
+
 		switch (_vecEvent[i].Type)
 		{
 
@@ -80,9 +82,11 @@ void ServerEventMgr::sendtick(ClientServiceRef _service)
 		{
 			// wParam 일단 안쓰는중. animinfo animIdx에 오브젝트id를 받아오고 있음.
 			//CGameObject* NewObject = (CGameObject*)m_vecEvent[i].wParam;
-			AnimInfo* animInfo = (AnimInfo*)(m_vecEvent[i].lParam);
+			AnimInfo* animInfo = (AnimInfo*)(_vecEvent[i].lParam);
 			
 			uint64 _objectId = animInfo->animIdx; // 애니메이션 변경할 id
+
+			if (_objectId == MyPlayer.id) break;
 
 			// 여기서 서버에 보낸다. 
 			std::cout << "C_OBJECT_ANIM Pakcet" << endl;

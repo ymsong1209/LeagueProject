@@ -41,7 +41,7 @@ class CAnimator3D :
 {
 private:
     map<wstring, CAnim3D*>      m_mapAnim;          // Animation 목록
-    CAnim3D*                    m_pCurAnim;         // 현재 재생중인 Animation
+    CAnim3D* m_pCurAnim;         // 현재 재생중인 Animation
     bool                        m_bRepeat;          // 반복
     bool                        m_bBlend;           // 애니메이션 사이 Blend 옵션
     bool                        m_bRepeatBlend;     // 반복재생할시 처음 프레임으로 blend할것인지 옵션
@@ -51,10 +51,10 @@ private:
     int                         m_iBlendStartFrm;
     int                         m_iStartFrm;
     int                         m_iNextFrm;
-    float                       m_fFrameRatio;      
+    float                       m_fFrameRatio;
     float                       m_fBlendRatio;       //애니메이션 전환시에 적용되는 blend값
     bool                        m_bDebugAnimator;    //True일 경우, level이 stop이여도 애니메이션 재생됨.dt가 아니라 editdt사용, Anim3dEditorUI에서 만든 object만 사용됨
-    float                       m_fAnimSpeed;        
+    float                       m_fAnimSpeed;
 
     const vector<tMTBone>* m_pVecBones;
 
@@ -78,6 +78,8 @@ public:
     void ClearData();
 
 public:
+
+
     //반복재생 사용하고 싶을 시
     //repeatblend : 현재 애니메이션 반복재생할때 마지막에 blend 옵션 줄 것인지
     //blend : 이전 애니메이션이 남아있을때 애니메이션 전환할때 blend옵션을 줄 것인지
@@ -85,6 +87,7 @@ public:
     //단일재생 사용하고 싶을 시
     //blend : 이전 애니메이션이 남아있을때 애니메이션 전환할때 blend옵션을 줄 것인지
     void PlayOnce(const wstring& _strName, bool _blend = false, float _blendtime = 0.f);
+
 
     void Pause();
     void Reset();
@@ -132,7 +135,7 @@ private:
 public:
     virtual void SaveToLevelFile(FILE* _pFile) override;
     virtual void LoadFromLevelFile(FILE* _pFile) override;
-    
+
     virtual void SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)override;
     virtual void LoadFromLevelJsonFile(const Value& _componentValue)override;
 
