@@ -96,7 +96,8 @@ void ServerEventMgr::clienttick()
 			CGameObject* NewObject = (CGameObject*)m_vecEvent[i].wParam;
 			AnimInfo* animInfo = (AnimInfo*)(m_vecEvent[i].lParam);
 
-			NewObject->Animator3D()->Play(animInfo->animName, animInfo->blend, animInfo->blendTime);
+			// Play함수가 바꼈나?
+			//NewObject->Animator3D()->Play(animInfo->animName, animInfo->blend, animInfo->blendTime);
 
 			// 사용이 끝난 후에는 메모리를 해제
 			delete animInfo;

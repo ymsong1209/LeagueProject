@@ -23,7 +23,6 @@
 
 #include <Script\CPlayerScript.h>
 #include <Script\COtherPlayerScript.h>
-#include <Script\CMonsterScript.h>
 #include <Script\CCameraMoveScript.h>
 #include "ServerEventMgr.h"
 
@@ -129,7 +128,7 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 
 			pObj->SetName(MyPlayer.nickname);
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
-			pObj->Animator3D()->Play(L"Jinx\\Idle1_Base", true, 0.1f);
+			pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true, 0.1f);
 			pObj->Animator3D()->SetRepeat(true);
 
 			pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
@@ -168,7 +167,7 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 			pObj->SetName(L"OtherPlayer");
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
 			pObj->Animator3D()->SetRepeat(true);
-			pObj->Animator3D()->Play(L"Jinx\\Idle1_Base", true, 0.15f);
+			pObj->Animator3D()->PlayRepeat (L"Jinx\\Idle1_Base", true, 0.15f);
 
 			pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
 			pObj->Collider3D()->SetAbsolute(true);

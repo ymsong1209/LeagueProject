@@ -119,199 +119,87 @@ int MeshRenderUI::render_update()
 		pListUI->AddDynamic_Select(this, (UI_DELEGATE_1)&MeshRenderUI::SelectMaterial);
 	}
 
-	int isDynamicMtrlUse = (int)(GetTarget()->MeshRender()->IsDynamicMtrlEmpty(0));
-	ImGui::Text("Dynamic Mtrl Use :"); ImGui::SameLine();
-	if (ImGui::RadioButton("Use", &isDynamicMtrlUse, 0))
+	if (ImGui::TreeNode("Output   Texture"))
 	{
-		GetTarget()->MeshRender()->GetDynamicMaterial(0);
-	}
-	ImGui::SameLine();
-	if (ImGui::RadioButton("Not Use", &isDynamicMtrlUse, 1))
-	{
-		GetTarget()->MeshRender()->ClearDynamicMtrl(0);
-		GetTarget()->MeshRender()->SetUsingMovingVec(false);
-	}
-	
+		GetResKey(pMtrl->GetTexParam(TEX_PARAM(0)).Get(), szBuff, 50);
+		string TexName = "##OutputTex";
+		ImGui::InputText(TexName.c_str(), szBuff, 50, ImGuiInputTextFlags_ReadOnly);
 
-	ImGui::Separator();
-
-
-
-	int isUseMovingVec = (int)(GetTarget()->MeshRender()->IsUsingMovingVec());
-	if (isUseMovingVec)
-		SetSize(0.f, 400.f);
-	else
-		SetSize(0.f, 150.f);
-
-	ImGui::Text("Moving Vec Use :"); ImGui::SameLine();
-	if (ImGui::RadioButton("Use##MovingVec", &isUseMovingVec, 1))
-	{
-		GetTarget()->MeshRender()->SetUsingMovingVec(true);
-	}
-	ImGui::SameLine();
-	if (ImGui::RadioButton("Not Use##MovingVec", &isUseMovingVec, 0))
-	{
-		GetTarget()->MeshRender()->SetUsingMovingVec(false);
-	}
-
-
-	// Std2DMtrl_Dynamic Mtrl을 쓰고 있는 경우
-	if (GetTarget()->MeshRender()->IsUsingMovingVec())
-	{
-		const vector<MovingStruct>   MovingVec = GetTarget()->MeshRender()->GetMovingStruct();
-
-		for (int i = 0; i < MovingVec.size(); ++i)
+		if (ImGui::BeginDragDropTarget())
 		{
-			MovingStruct UpdateMovingStruct;
-			Vec4 FunctionValue = MovingVec[i].FuncValue;
-			Vec2 UpdateOffsetValue = MovingVec[i].PreviousPos;
-
-			// 무슨 역할의 Texture인지 이름을 알려줌
-			switch (MovingVec[i].TargetTex)
+			//해당 노드에서 마우스 뗀 경우, 지정한 PayLoad 키값이 일치한 경우
+			const ImGuiPayload* pPayLoad = ImGui::AcceptDragDropPayload("Resource");
+			if (pPayLoad)
 			{
-			case eTargetTexture::OUTPUT:
-			{
-				ImGui::Text("Output Texture");
+				TreeNode* pNode = (TreeNode*)pPayLoad->Data;
+				CRes* pRes = (CRes*)pNode->GetData();
+				if (RES_TYPE::TEXTURE == pRes->GetType())
+						GetTarget()->MeshRender()->SetOutputTexture((CTexture*)pRes);
 			}
-			break;
-			case eTargetTexture::PUNCTURE:
-			{
-				ImGui::Text("Puncture Texture");
-			}
-			break;
-			}
-
-			// Texture선택할 수 있도록 해줌
-			ImGui::SameLine();
- 
-			if (MovingVec[i].TargetTex == eTargetTexture::OUTPUT)
-				GetResKey(pMtrl->GetTexParam((TEX_PARAM(0))).Get(), szBuff, 50);
-			else if (MovingVec[i].TargetTex == eTargetTexture::PUNCTURE)
-				GetResKey(pMtrl->GetTexParam((TEX_PARAM(3))).Get(), szBuff, 50);
-		 
-			string TexName = "##TexName" + std::to_string(i);
-			ImGui::InputText(TexName.c_str(), szBuff, 50, ImGuiInputTextFlags_ReadOnly);
-
-			if (ImGui::BeginDragDropTarget())
-			{
-				// 해당 노드에서 마우스 뗀 경우, 지정한 PayLoad 키값이 일치한 경우
-				const ImGuiPayload* pPayLoad = ImGui::AcceptDragDropPayload("Resource");
-				if (pPayLoad)
-				{
-					TreeNode* pNode = (TreeNode*)pPayLoad->Data;
-					CRes* pRes = (CRes*)pNode->GetData();
-					if (RES_TYPE::TEXTURE == pRes->GetType())
-					{
-						if (MovingVec[i].TargetTex == eTargetTexture::OUTPUT)
-							GetTarget()->MeshRender()->SetOutputTexture((CTexture*)pRes);
-						else if (MovingVec[i].TargetTex == eTargetTexture::PUNCTURE)
-							GetTarget()->MeshRender()->SetPunctureTexture((CTexture*)pRes);
-					}
-				}
-				ImGui::EndDragDropTarget();
-			}
-
-
-			// Texture를 비울 수 있도록 해줌
-			ImGui::SameLine();
-			string TexClearButton = "Clear##" +  std::to_string(i);
-			if (ImGui::Button(TexClearButton.c_str(), ImVec2(50.f, 20.f)))
-			{
-				if (MovingVec[i].TargetTex == eTargetTexture::OUTPUT)
-					GetTarget()->MeshRender()->SetOutputTexture((CTexture*)nullptr);
-				else if (MovingVec[i].TargetTex == eTargetTexture::PUNCTURE)
-					GetTarget()->MeshRender()->SetPunctureTexture((CTexture*)nullptr);
-			}
-
-
-			// 해당 Texture의 움직이는 함수를 알려줌
-			ImGui::Text("Moving Style"); ImGui::SameLine();
-
-			string MoveOffsetClearBtn = "Clear Move##" + std::to_string(i);
-			if (ImGui::Button(MoveOffsetClearBtn.c_str(), ImVec2(100.f, 20.f)))
-			{
-				UpdateOffsetValue = Vec2(0.f, 0.f);
-			}
-
-
-			const char* items[] = { "None", "Horizonetal", "Vertical", "Linear", "Parabola", "Sin", "Cos" };
-			int item_current_idx = (int)MovingVec[i].MovingStyle;; // Here we store our selection data as an index.
-			string MovingFuncName = "##MovingFuncName" + std::to_string(i);
-			const char* combo_preview_value = items[item_current_idx];  // Pass in the preview value visible before opening the combo (it could be anything)
-			if (ImGui::BeginCombo(MovingFuncName.c_str(), combo_preview_value))
-			{
-				for (int n = 0; n < IM_ARRAYSIZE(items); n++)
-				{
-					bool is_selected = (item_current_idx == n);
-					if (ImGui::Selectable(items[n], is_selected))
-						item_current_idx = n;
-				}
-				ImGui::EndCombo();
-			}
-
-			switch (MovingVec[i].MovingStyle)
-			{
-			case eTexMovingStyle::NONE:
-				break;
-			case eTexMovingStyle::HORIZONTAL:
-			{
-				ImGui::Text("FuncValue.x : dx / dt");
-			}
-			break;
-			case eTexMovingStyle::VERTICAL:
-			{
-				ImGui::Text("FuncValue.x : dy / dt");
-			}
-			break;
-			case eTexMovingStyle::LINEAR:
-			{
-				ImGui::Text("FuncValue.x : dx / dt"); ImGui::SameLine(); ImGui::Text("FuncValue.y : x  coef");
-				ImGui::Text("FuncValue.z : y-inter");
-			}
-			break;
-			case eTexMovingStyle::PARABOLA:
-			{
-				ImGui::Text("FuncValue.x : dx / dt"); ImGui::SameLine(); ImGui::Text("FuncValue.y : x^2coef");
-				ImGui::Text("FuncValue.z : x  coef"); ImGui::SameLine(); ImGui::Text("FuncValue.w : y-inter");
-
-			}
-			break;
-			case eTexMovingStyle::SIN:
-			{
-				ImGui::Text("FuncValue.x : dx / dt"); ImGui::SameLine(); ImGui::Text("FuncValue.y : Coef   ");
-				ImGui::Text("FuncValue.z : Freq   "); ImGui::SameLine(); ImGui::Text("FuncValue.w : y-inter");
-			}
-			break;
-			case eTexMovingStyle::COS:
-			{
-				ImGui::Text("FuncValue.x : dx / dt"); ImGui::SameLine(); ImGui::Text("FuncValue.x : Coef   ");
-				ImGui::Text("FuncValue.x : Freq   "); ImGui::SameLine(); ImGui::Text("FuncValue.x : y-inter");
-			}
-			break;
-			}
-			 
-			ImGui::Text("Func Value"); ImGui::SameLine();
-
-			string FuncValueName = "##FuncValue" + std::to_string(i);
-			ImGui::InputFloat4(FuncValueName.c_str(), FunctionValue);
-
-			UpdateMovingStruct.FuncValue = FunctionValue;
-			UpdateMovingStruct.MovingStyle = (eTexMovingStyle)item_current_idx;
-			UpdateMovingStruct.PreviousPos = UpdateOffsetValue;
-
-			UpdateMovingStruct.TargetTex = MovingVec[i].TargetTex;
-
-			GetTarget()->MeshRender()->SetMovingStruct(i, UpdateMovingStruct);
-
-
-			ImGui::Separator();
-
+			ImGui::EndDragDropTarget();
 		}
 
-		// Additive Texture 확인부분
-		//ImGui::SameLine();
-		GetResKey(pMtrl->GetTexParam((TEX_PARAM(2))).Get(), szBuff, 50);
-		 
+		// Texture를 비울 수 있도록 해줌
+		ImGui::SameLine();
+		string TexClearButton = "Clear##OutputTex";
+		if (ImGui::Button(TexClearButton.c_str(), ImVec2(50.f, 20.f)))
+			GetTarget()->MeshRender()->SetOutputTexture((CTexture*)nullptr);
+
+		int Target = (int)GetTarget()->MeshRender()->GetTexMovingStyle(MovTexType::OUTPUT);
+		Vec4 FuncValue = GetTarget()->MeshRender()->GetFuncValue(MovTexType::OUTPUT);
+		Vec2 Offset =  GetTarget()->MeshRender()->GetOffsetValue(MovTexType::OUTPUT);
+
+		SetTexMovingTypeAndValue(Target, FuncValue, Offset, 10);
+
+		GetTarget()->MeshRender()->SetTexMovingStyle(MovTexType::OUTPUT, (MovTexMoveType)(Target));
+		GetTarget()->MeshRender()->SetFuncValue(MovTexType::OUTPUT, FuncValue);
+		GetTarget()->MeshRender()->SetOffsetValue(MovTexType::OUTPUT, Offset);
+		ImGui::TreePop();
+	}
+
+
+	if (ImGui::TreeNode("Puncture Texture"))
+	{
+		GetResKey(GetTarget()->MeshRender()->GetPunctureTex().Get(), szBuff, 50);
+		string TexName = "##PunctureTex";
+		ImGui::InputText(TexName.c_str(), szBuff, 50, ImGuiInputTextFlags_ReadOnly);
+
+		if (ImGui::BeginDragDropTarget())
+		{
+			//해당 노드에서 마우스 뗀 경우, 지정한 PayLoad 키값이 일치한 경우
+			const ImGuiPayload* pPayLoad = ImGui::AcceptDragDropPayload("Resource");
+			if (pPayLoad)
+			{
+				TreeNode* pNode = (TreeNode*)pPayLoad->Data;
+				CRes* pRes = (CRes*)pNode->GetData();
+				if (RES_TYPE::TEXTURE == pRes->GetType())
+					GetTarget()->MeshRender()->SetPunctureTexture((CTexture*)pRes);
+			}
+			ImGui::EndDragDropTarget();
+		}
+
+		// Texture를 비울 수 있도록 해줌
+		ImGui::SameLine();
+		string TexClearButton = "Clear##OutputTex";
+		if (ImGui::Button(TexClearButton.c_str(), ImVec2(50.f, 20.f)))
+			GetTarget()->MeshRender()->SetPunctureTexture((CTexture*)nullptr);
+
+
+		int Target = (int)GetTarget()->MeshRender()->GetTexMovingStyle(MovTexType::PUNCTURE);
+		Vec4 FuncValue = GetTarget()->MeshRender()->GetFuncValue(MovTexType::PUNCTURE);
+		Vec2 Offset = GetTarget()->MeshRender()->GetOffsetValue(MovTexType::PUNCTURE);
+
+		SetTexMovingTypeAndValue(Target, FuncValue, Offset, 20);
+
+		GetTarget()->MeshRender()->SetTexMovingStyle(MovTexType::PUNCTURE, (MovTexMoveType)(Target));
+		GetTarget()->MeshRender()->SetFuncValue(MovTexType::PUNCTURE, FuncValue);
+		GetTarget()->MeshRender()->SetOffsetValue(MovTexType::PUNCTURE, Offset);
+		ImGui::TreePop();
+	}
+
+	if (ImGui::TreeNode("Additive Texture"))
+	{
+		GetResKey(GetTarget()->MeshRender()->GetAdditiveTex().Get(), szBuff, 50);			 
 		ImGui::Text("Additive Texture"); ImGui::SameLine();
 		ImGui::InputText("##AdditiveTex", szBuff, 50, ImGuiInputTextFlags_ReadOnly);
 
@@ -324,11 +212,8 @@ int MeshRenderUI::render_update()
 				TreeNode* pNode = (TreeNode*)pPayLoad->Data;
 				CRes* pRes = (CRes*)pNode->GetData();
 				if (RES_TYPE::TEXTURE == pRes->GetType())
-				{
-					GetTarget()->MeshRender()->GetMaterial(0)->SetTexParam(TEX_PARAM(2), (CTexture*)pRes);
-				}
+					GetTarget()->MeshRender()->SetAdditiveTexture((CTexture*)pRes);
 			}
-
 			ImGui::EndDragDropTarget();
 		}
 
@@ -337,35 +222,22 @@ int MeshRenderUI::render_update()
 		ImGui::SameLine();
 		string TexClearButton = "Clear##" + std::to_string(3);
 		if (ImGui::Button(TexClearButton.c_str(), ImVec2(50.f, 20.f)))
-		{
-			GetTarget()->MeshRender()->GetMaterial(0)->SetTexParam(TEX_PARAM(2), (CTexture*)nullptr);
-		}
+			GetTarget()->MeshRender()->SetAdditiveTexture(nullptr);
 
 
+		Vec4 AdditiveColor = GetTarget()->MeshRender()->GetAdditiveTexColor();
+		float AdditiveVec[4] = { AdditiveColor.x * 255, AdditiveColor.y * 255 , AdditiveColor.z *255, 0.f };
 
-		Ptr<CMaterial> Material = GetTarget()->MeshRender()->GetMaterial(0);
+		ImGui::Text("Additive Color"); ImGui::SameLine();
+		ImGui::InputFloat4("##AdditiveColor", AdditiveVec);
 
-		// Additive Texture가 있는 지 확인 
-		if (Material->GetTexParam(TEX_PARAM::TEX_2).Get() != nullptr)
-		{
-			Vec4 AdditiveColor;
+		AdditiveColor = Vec4{ AdditiveVec[0] / 255, AdditiveVec[1] / 255, AdditiveVec[2] / 255, 0.f };
 
-			Material->GetScalarParam(SCALAR_PARAM::VEC4_0, &AdditiveColor);
+		GetTarget()->MeshRender()->SetAdditiveTexColor(AdditiveColor);
 
-			float AdditiveVec[4] = { AdditiveColor.x * 255, AdditiveColor.y * 255 , AdditiveColor.z *255, 0.f };
-
-			ImGui::Text("Additive Color"); ImGui::SameLine();
-			ImGui::InputFloat4("##AdditiveColor", AdditiveVec);
-
-			AdditiveColor = Vec4{ AdditiveVec[0] / 255, AdditiveVec[1] / 255, AdditiveVec[2] / 255, 0.f };
-
-			 
-			Material->SetScalarParam(SCALAR_PARAM::VEC4_0, &AdditiveColor);
-
-			ImGui::Separator();
-		}
+		ImGui::TreePop();
 	}
-	 
+
 	return TRUE;
 }
 
@@ -383,4 +255,69 @@ void MeshRenderUI::SelectMaterial(DWORD_PTR _Key)
 
 	GetTarget()->MeshRender()->SetMaterial(pMtrl, 0);
 	GetTarget()->MeshRender()->ClearDynamicMtrl(0);
+}
+
+void MeshRenderUI::SetTexMovingTypeAndValue(int& _Target, Vec4& _FuncValue, Vec2& _Offest,  int _RandNum)
+{
+	// 해당 Texture의 움직이는 함수를 알려줌
+	ImGui::Text("Moving Style"); ImGui::SameLine();
+
+	string MoveOffsetClearBtn = "Clear Move##" + std::to_string(_RandNum);
+	if (ImGui::Button(MoveOffsetClearBtn.c_str(), ImVec2(100.f, 20.f)))
+		_Offest = Vec2(0.f, 0.f);
+	
+
+	const char* items[] = { "None", "Horizonetal", "Vertical", "Linear", "Parabola", "Sin", "Cos" };
+	//int item_current_idx = (int)MovingVec[i].MovingStyle;; // Here we store our selection data as an index.
+	string MovingFuncName = "##MovingFuncName" + std::to_string(_RandNum);
+	const char* combo_preview_value = items[_Target];  // Pass in the preview value visible before opening the combo (it could be anything)
+	if (ImGui::BeginCombo(MovingFuncName.c_str(), combo_preview_value))
+	{
+		for (int n = 0; n < IM_ARRAYSIZE(items); n++)
+		{
+			bool is_selected = (_Target == n);
+			if (ImGui::Selectable(items[n], is_selected))
+				_Target = n;
+		}
+		ImGui::EndCombo();
+	}
+
+	switch (MovTexMoveType(_Target))
+	{
+	case MovTexMoveType::NONE:
+		break;
+	case MovTexMoveType::HORIZONTAL: {
+		ImGui::Text("FuncValue.x : dx / dt"); }
+		break;
+	case MovTexMoveType::VERTICAL: {
+		ImGui::Text("FuncValue.x : dy / dt"); }
+		break;
+	case MovTexMoveType::LINEAR:{
+		ImGui::Text("FuncValue.x : dx / dt"); ImGui::SameLine(); ImGui::Text("FuncValue.y : x  coef");
+		ImGui::Text("FuncValue.z : y-inter");}
+		break;
+	case MovTexMoveType::PARABOLA: {
+		ImGui::Text("FuncValue.x : dx / dt"); ImGui::SameLine(); ImGui::Text("FuncValue.y : x^2coef");
+		ImGui::Text("FuncValue.z : x  coef"); ImGui::SameLine(); ImGui::Text("FuncValue.w : y-inter"); }
+		break;
+	case MovTexMoveType::SIN:{
+		ImGui::Text("FuncValue.x : dx / dt"); ImGui::SameLine(); ImGui::Text("FuncValue.y : Coef   ");
+		ImGui::Text("FuncValue.z : Freq   "); ImGui::SameLine(); ImGui::Text("FuncValue.w : y-inter");}
+		break;
+	case MovTexMoveType::COS:{
+		ImGui::Text("FuncValue.x : dx / dt"); ImGui::SameLine(); ImGui::Text("FuncValue.x : Coef   ");
+		ImGui::Text("FuncValue.x : Freq   "); ImGui::SameLine(); ImGui::Text("FuncValue.x : y-inter");}
+		break;
+	case MovTexMoveType::END:
+		break;
+	default:
+		break;
+	}
+	  
+	ImGui::Text("Func Value"); ImGui::SameLine();
+	string FuncValueName = "##FuncValue" + std::to_string(_RandNum);
+	ImGui::InputFloat4(FuncValueName.c_str(), _FuncValue);
+ 
+	//ImGui::Separator();
+
 }

@@ -242,7 +242,7 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 		// ÀÎ°ÔÀÓ ÁøÀÔ
 
 		// ¸Ê ºÒ·¯¿È
-		CreateIngameLevel();
+		CreateTestLevel();
 
 		PKT_S_GAME_START::PlayerInfoList playerInfoBuffs = pkt->GetPlayerInfoList();
 		for (auto& playerInfoBuff : playerInfoBuffs)
