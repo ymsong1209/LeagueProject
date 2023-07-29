@@ -16,8 +16,8 @@ CChampionScript::CChampionScript(UINT ScriptType)
 	, m_fExp(0)
 	, m_EquippedSpell{}
 	, m_fRespawnTime(5)
-	, m_eCurCC(NONE)
-	, m_eRestraint(DEFAULT)
+	, m_eCurCC(CC::CLEAR)
+	, m_eRestraint(RESTRAINT::DEFAULT)
 	, m_Skill{}
 {
 	m_eUnitType = UnitType::CHAMPION;
