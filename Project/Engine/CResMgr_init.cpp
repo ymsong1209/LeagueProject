@@ -785,6 +785,29 @@ void CResMgr::CreateDefaultMesh()
 
 void CResMgr::CreateDefaultGraphicsShader()
 {
+	AddInputLayout(DXGI_FORMAT_R32G32B32_FLOAT, "POSITION", 0, 0);
+	AddInputLayout(DXGI_FORMAT_R32G32B32A32_FLOAT, "COLOR", 0, 0);
+	AddInputLayout(DXGI_FORMAT_R32G32_FLOAT, "TEXCOORD", 0, 0);
+	AddInputLayout(DXGI_FORMAT_R32G32B32_FLOAT, "TANGENT", 0, 0);
+	AddInputLayout(DXGI_FORMAT_R32G32B32_FLOAT, "NORMAL", 0, 0);
+	AddInputLayout(DXGI_FORMAT_R32G32B32_FLOAT, "BINORMAL", 0, 0);
+	AddInputLayout(DXGI_FORMAT_R32G32B32A32_FLOAT, "BLENDWEIGHT", 0, 0);
+	AddInputLayout(DXGI_FORMAT_R32G32B32A32_FLOAT, "BLENDINDICES", 0, 0);
+
+	AddInputLayout(DXGI_FORMAT_R32G32B32A32_FLOAT, "WORLD", 1, 0);
+	AddInputLayout(DXGI_FORMAT_R32G32B32A32_FLOAT, "WORLD", 1, 1);
+	AddInputLayout(DXGI_FORMAT_R32G32B32A32_FLOAT, "WORLD", 1, 2);
+	AddInputLayout(DXGI_FORMAT_R32G32B32A32_FLOAT, "WORLD", 1, 3);
+	AddInputLayout(DXGI_FORMAT_R32G32B32A32_FLOAT, "WV", 1, 0);
+	AddInputLayout(DXGI_FORMAT_R32G32B32A32_FLOAT, "WV", 1, 1);
+	AddInputLayout(DXGI_FORMAT_R32G32B32A32_FLOAT, "WV", 1, 2);
+	AddInputLayout(DXGI_FORMAT_R32G32B32A32_FLOAT, "WV", 1, 3);
+	AddInputLayout(DXGI_FORMAT_R32G32B32A32_FLOAT, "WVP", 1, 0);
+	AddInputLayout(DXGI_FORMAT_R32G32B32A32_FLOAT, "WVP", 1, 1);
+	AddInputLayout(DXGI_FORMAT_R32G32B32A32_FLOAT, "WVP", 1, 2);
+	AddInputLayout(DXGI_FORMAT_R32G32B32A32_FLOAT, "WVP", 1, 3);
+	AddInputLayout(DXGI_FORMAT_R32_UINT, "ROWINDEX", 1, 0);
+
 	Ptr<CGraphicsShader> pShader = nullptr;
 
 	// ============================
@@ -1367,6 +1390,7 @@ void CResMgr::CreateDefaultGraphicsShader()
 #include "CAnimation3DShader.h"
 #include "CFogOfWarShader.h"
 #include "CFogFilterShader.h"
+#include "CCopyBoneShader.h"
 
 void CResMgr::CreateDefaultComputeShader()
 {
@@ -1412,6 +1436,12 @@ void CResMgr::CreateDefaultComputeShader()
 	pCS = new CFogFilterShader(32, 32, 1);
 	pCS->SetKey(L"FogFilterShader");
 	pCS->CreateComputeShader(L"shader\\fogfiltershader.fx", "CS_FogFilterShader");
+	AddRes(pCS->GetKey(), pCS);
+
+	// Animation Matrix Update ½¦ÀÌ´õ
+	pCS = new CCopyBoneShader(1024, 1, 1);
+	pCS->SetKey(L"CopyBoneCS");
+	pCS->CreateComputeShader(L"shader\\copybone.fx", "CS_CopyBoneMatrix");
 	AddRes(pCS->GetKey(), pCS);
 }
 

@@ -58,6 +58,12 @@ void CSkyBox::render()
 	GetMesh()->render(0);
 }
 
+void CSkyBox::render(UINT _iSubset)
+{
+	render();
+}
+
+
 void CSkyBox::SaveToLevelFile(FILE* _File)
 {
 	CRenderComponent::SaveToLevelFile(_File);
