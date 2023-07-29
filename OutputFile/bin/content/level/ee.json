@@ -260,6 +260,7 @@
                             "IsEmpty": false,
                             "MeshDataRelativePath": "meshdata\\Jinx.mdat",
                             "bRepeat": true,
+                            "fAnimSpeed": 1.0,
                             "mapAnim": [
                                 {
                                     "Anim3DRelativePath": "animation\\Jinx\\Jinx-Jinx_AllAnim.anim3d"

@@ -21,6 +21,8 @@ public:
     CLayer* FindLayerByName(const wstring& _strName);
     CLayer* GetLayer(int _iLayerIdx) { assert(!(_iLayerIdx < 0)); return m_arrLayer[_iLayerIdx]; }
 
+    CGameObject* FindObjectByID(UINT _id);
+
     CGameObject* FindObjectByName(const wstring& _Name);
     void FindObjectByName(const wstring& _Name, vector<CGameObject*>& _Out);
 

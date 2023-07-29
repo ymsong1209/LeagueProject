@@ -30,7 +30,7 @@ void CPlayerScript::begin()
 
 void CPlayerScript::tick()
 {
-
+	/*
 	CLevelMgr::GetInst()->GetCurLevel()->FindObjectByName(L"Test");
 
 
@@ -54,15 +54,16 @@ void CPlayerScript::tick()
 	if (PrevState != CurState)
 	{
 		if (CurState == PLAYER_STATE::RUN)
-			Animator3D()->Play(L"Jinx\\Run_Base", true, 0.15f);
+			Animator3D()->PlayRepeat(L"Jinx\\Run_Base", true, true, 0.15f);
 
 		else if (CurState == PLAYER_STATE::IDLE)
-			Animator3D()->Play(L"Jinx\\Idle1_Base", true, 0.1f);
+			Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base",true,true, 0.1f);
 	}
 
 
 	m_vPrevPos = Pos;
 	PrevState = CurState;
+	*/
 }
 
 void CPlayerScript::Shoot()

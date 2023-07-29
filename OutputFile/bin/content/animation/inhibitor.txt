@@ -1,0 +1,8 @@
+inhibitor_death.anm_skinned_mesh.001,0,199
+inhibitor_hold.anm_skinned_mesh.001,200,208
+inhibitor_idle1.anm_skinned_mesh.001,209,233
+inhibitor_idle2.anm_skinned_mesh.001,234,258
+inhibitor_idle3.anm_skinned_mesh.001,259,283
+inhibitor_idle_dead.anm_skinned_mesh.001,284,324
+inhibitor_respawn.anm_skinned_mesh.001,325,565
+inhibitor_spawn.anm_skinned_mesh.001,566,594

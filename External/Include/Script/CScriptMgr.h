@@ -1,0 +1,40 @@
+#pragma once
+
+#include <vector>
+#include <string>
+
+enum SCRIPT_TYPE
+{
+	BASICATTACKSCRIPT,
+	CAMERAMOVESCRIPT,
+	CHAMPIONSCRIPT,
+	GRAVITYSCRIPT,
+	INGAMECAMERASCRIPT,
+	INHIBITORSCRIPT,
+	JINXSCRIPT,
+	JUNGLEMONSTERSCRIPT,
+	MINIONSCRIPT,
+	MISSILESCRIPT,
+	MOBSCRIPT,
+	MONSTERSCRIPT,
+	NEXUSSCRIPT,
+	OTHERPLAYERSCRIPT,
+	PLAYERSCRIPT,
+	STRUCTURESCRIPT,
+	TURRETSCRIPT,
+	UNITSCRIPT,
+	END,
+};
+
+using namespace std;
+
+class CScript;
+
+class CScriptMgr
+{
+public:
+	static void GetScriptInfo(vector<wstring>& _vec);
+	static CScript * GetScript(const wstring& _strScriptName);
+	static CScript * GetScript(UINT _iScriptType);
+	static const wchar_t * GetScriptName(CScript * _pScript);
+};

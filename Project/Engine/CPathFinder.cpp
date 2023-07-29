@@ -68,23 +68,27 @@ void CPathFinder::FindNextPath()
 	}
 }
 
-void CPathFinder::FindPathMousePicking()  //현재 카메라에서 레이를 가져오고, 맵콜리전과의 교차점을 endPos로 지정해서 FindPath 호출.(마우스 피킹 이동)
+//void CPathFinder::FindPathMousePicking()  //현재 카메라에서 레이를 가져오고, 맵콜리전과의 교차점을 endPos로 지정해서 FindPath 호출.(마우스 피킹 이동)
+//{
+//	CGameObject* LoLMap = CLevelMgr::GetInst()->GetCurLevel()->FindObjectByName(L"LoLMapCollider");
+//	/*if (!LayerObj.empty())
+//	{
+//		if (LayerObj[0] && !LayerObj[0]->IsDead())
+//			LoLMap = LayerObj[0];
+//	}*/
+//
+//	if (LoLMap != nullptr && !LoLMap->IsDead())  //맵 콜리전이 정상적으로 존재할경우만 호출
+//	{
+//		CCamera* MainCam = CRenderMgr::GetInst()->GetMainCam();
+//		tRay ray = MainCam->GetRay();
+//		IntersectResult result = MainCam->IsCollidingBtwRayRect(ray, LoLMap);
+//		Vec3 EndPos = result.vCrossPoint;
+//		FindPath(EndPos);
+//	}
+//}
+
+void CPathFinder::ClearPath()
 {
-	CGameObject* LoLMap = CLevelMgr::GetInst()->GetCurLevel()->FindObjectByName(L"LoLMapCollider");
-	/*if (!LayerObj.empty())
-	{
-		if (LayerObj[0] && !LayerObj[0]->IsDead())
-			LoLMap = LayerObj[0];
-	}*/
-
-	if (LoLMap != nullptr && !LoLMap->IsDead())  //맵 콜리전이 정상적으로 존재할경우만 호출
-	{
-		CCamera* MainCam = CRenderMgr::GetInst()->GetMainCam();
-		tRay ray = MainCam->GetRay();
-		IntersectResult result = MainCam->IsCollidingBtwRayRect(ray, LoLMap);
-		Vec3 EndPos = result.vCrossPoint;
-		FindPath(EndPos);
-	}
+	m_vNextPos = Vec3(NaN, NaN, NaN);
 }
-
 
