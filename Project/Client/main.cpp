@@ -27,7 +27,7 @@
 
 #include <Script/CPlayerScript.h>
 #include <Engine/CAnim3D.h>
-
+#include <Script/CChampionScript.h>
 
 // 전역 변수:
 HINSTANCE   hInst;    // 현재 인스턴스입니다.

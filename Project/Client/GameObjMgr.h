@@ -44,7 +44,7 @@ public:
 	void AddObject(uint64 _objectId, ObjectInfo _objectInfo);
 	// void AddTower();
 
-	CPlayerScript* GetMyPlayerScript() { return MyPlayerScript; }
+	CChampionScript* GetMyPlayerScript() { return MyPlayerScript; }
 
 static GameObjMgr* GetInst()
 {

@@ -23,6 +23,7 @@ void CJinxIdleState::Enter()
 {
 	GetOwner()->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true, 0.1f);
 
+	// server에 보낼 애니메이션 패킷 이벤트 등록
 	AnimInfo* animInfo = new AnimInfo();
 	animInfo->animIdx = GetOwnerFSM()->GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	animInfo->animName = L"Jinx\\Idle1_Base";

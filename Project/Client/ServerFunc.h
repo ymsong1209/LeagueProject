@@ -36,12 +36,12 @@ struct AnimInfoPacket {
     }
 };
 
-struct AnimInfo {
-    wstring animName;
-    uint16  animIdx;
-    bool    blend;
-    float   blendTime;
-};
+//struct AnimInfo {
+//    wstring animName;
+//    uint16  animIdx;
+//    bool    blend;
+//    float   blendTime;
+//};
 //enum class FactionType
 //{
 //    BLUE = 0,

@@ -21,21 +21,12 @@ enum class Faction
     BLUE,
 };
 
-
 enum class Lane
 {
     NONE,
     TOP,
     MID,
     BOTTOM,
-};
-
-struct AnimInfo 
-{
-    wstring animName;
-    unsigned __int16  animIdx;
-    bool    blend;
-    float   blendTime;
 };
 
 

@@ -10,8 +10,8 @@
 // 여기에 미리 컴파일하려는 헤더 추가
 #include "framework.h"
 
-#include <Engine\ServerPacket.h>
 #include <Engine\global.h>
+#include <Engine\ServerPacket.h>
 
 #include "CScriptMgr.h"
 

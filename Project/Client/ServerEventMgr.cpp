@@ -1,9 +1,19 @@
 #include "pch.h"
 #include "ServerEventMgr.h"
 
+#include "ThreadManager.h"
+#include "Service.h"
+#include "Session.h"
+#include "BufferReader.h"
+#include "ServerPacketHandler.h"
+#include "ServerSession.h"
+
 #include "GameObjMgr.h"
 #include <Engine/ServerPacket.h>
 #include <Engine/components.h>
+#include <Script/CSendServerEventMgr.h>
+
+#include <Script/CChampionScript.h>
 
 ServerEventMgr::ServerEventMgr()
 {
@@ -19,8 +29,10 @@ void ServerEventMgr::sendtick(ClientServiceRef _service)
     auto now = std::chrono::steady_clock::now();
     auto time_diff = std::chrono::duration_cast<std::chrono::milliseconds>(now - last_tick_time);
 
+	// ========================================
 	// 규칙 패킷(MovePacket) : 100ms = 1/10 sec
-    if (time_diff.count() >= 100) 
+    // ========================================
+	if (time_diff.count() >= 100) 
     {     
         // 1. 본인 플레이어 move 패킷을 서버에 보낸다. (움직임,방향,lv, HP MP AD Defence)
 		// 문제점 : 안움직일땐 move 패킷을 안보내서 LV,HP,MP 등 업데이트가 안됌...그냥 움직여라는 뜻.(나중에는 안움직일때도 패킷보내게 변경예정)
@@ -50,16 +62,56 @@ void ServerEventMgr::sendtick(ClientServiceRef _service)
         last_tick_time = now;
     }
 
+	// ==========================================
 	// 불규칙 패킷
-	// 
+	// =========================================
 	// 여기서!!! 스크립트 이벤트 매니저의 이벤트 vector를 확인하고 보낸다. 
-	// vector<tEvent> _vecEvent = ScriptMgr::GetInst()->GetVecEvent();
-	// for(_vecEvent)
-	// { switch case : 
+
 	//  애니메이션 변경, 스킬사용, 스킬Hit, 데미지맞음, 상태이상중,}
 	// GameObjMgr::GetInst()->SendMyPlayerAnim(_service);
 	// 
-	
+	vector<tServerEvent> _vecEvent = CSendServerEventMgr::GetInst()->GetVecEvent();
+	for (int i = 0; i < _vecEvent.size(); ++i)
+	{
+		switch (_vecEvent[i].Type)
+		{
+
+		case SERVER_EVENT_TYPE::SEND_ANIM_PACKET:
+		{
+			// wParam 일단 안쓰는중. animinfo animIdx에 오브젝트id를 받아오고 있음.
+			//CGameObject* NewObject = (CGameObject*)m_vecEvent[i].wParam;
+			AnimInfo* animInfo = (AnimInfo*)(m_vecEvent[i].lParam);
+			
+			uint64 _objectId = animInfo->animIdx; // 애니메이션 변경할 id
+
+			// 여기서 서버에 보낸다. 
+			std::cout << "C_OBJECT_ANIM Pakcet" << endl;
+
+			AnimInfoPacket animInfoPacket = {};
+			animInfoPacket.blend = animInfo->blend;
+			animInfoPacket.blendTime = animInfo->blendTime;
+
+			wstring _animName = animInfo->animName;
+
+			PKT_C_OBJECT_ANIM_WRITE  pktWriter(_objectId, animInfoPacket);
+			PKT_C_OBJECT_ANIM_WRITE::AnimNameList animNamePacket = pktWriter.ReserveAnimNameList(_animName.size());
+			for (int i = 0; i < _animName.size(); i++)
+				animNamePacket[i] = { _animName[i] };
+
+			SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+			_service->Broadcast(sendBuffer);
+
+			delete animInfo;
+			animInfo = nullptr;
+
+			std::cout << "===============================" << endl;
+			break;
+		}
+		}
+
+
+	}
+	CSendServerEventMgr::GetInst()->ClearServerSendEvent();
 }
 
 void ServerEventMgr::clienttick()
@@ -97,7 +149,7 @@ void ServerEventMgr::clienttick()
 			AnimInfo* animInfo = (AnimInfo*)(m_vecEvent[i].lParam);
 
 			// Play함수가 바꼈나?
-			//NewObject->Animator3D()->Play(animInfo->animName, animInfo->blend, animInfo->blendTime);
+			NewObject->Animator3D()->PlayRepeat(animInfo->animName, animInfo->blend, animInfo->blendTime);
 
 			// 사용이 끝난 후에는 메모리를 해제
 			delete animInfo;

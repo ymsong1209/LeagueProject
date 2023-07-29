@@ -1,6 +1,7 @@
 #pragma once
 #include <Engine\CScript.h>
 
+
 // LoL 게임 내에서 플레이어가 상호작용할 수 있는 모든 오브젝트
 
 enum class UnitType
@@ -20,7 +21,6 @@ enum class Faction
     BLUE,
 };
 
-
 enum class Lane
 {
     NONE,
@@ -28,6 +28,7 @@ enum class Lane
     MID,
     BOTTOM,
 };
+
 
 class CUnitScript :
     public CScript
@@ -42,19 +43,23 @@ public:
     CLONE(CUnitScript);
 
 protected:
-    UnitType    m_eUnitType;        // 유닛 종류
-    Faction     m_eFaction;         // 진영(레드, 블루, 중립)
+    UnitType            m_eUnitType;        // 유닛 종류
+    Faction             m_eFaction;         // 진영(레드, 블루, 중립)
 
-    float       m_fHP;              // 체력
-    float       m_fMaxHP;           // 전체 체력
-    float       m_fAttackPower;     // 공격력
-    float       m_fDefencePower;    // 방어력
-    float       m_fAttackSpeed;     // 공격(평타)속도
-    float       m_fAttackRange;     // 공격(평타)사거리
-    float       m_fMoveSpeed;       // 이동속도
+    unsigned __int64    m_iServerID;
+    float               m_fHP;              // 체력
+    float               m_fMaxHP;           // 전체 체력
+    float               m_fMP;
+    float               m_fMaxMP;
 
-    Vec3        m_vNextPos;
-    float       m_fFaceRot;
+    float               m_fAttackPower;     // 공격력
+    float               m_fDefencePower;    // 방어력
+    float               m_fAttackSpeed;     // 공격(평타)속도
+    float               m_fAttackRange;     // 공격(평타)사거리
+    float               m_fMoveSpeed;       // 이동속도
+
+    Vec3                m_vNextPos;
+    float               m_fFaceRot;
 
     bool        m_bUnitDead;      // 유닛이 죽었는지(HP 0 이하)
 
@@ -75,6 +80,13 @@ public:
     float GetCurHP() { return m_fHP; }
     void  SetCurHP(float _f) { m_fHP = _f; }         // 현재 체력 = 인자값
     void  SetCurHPVar(float _f) { m_fHP += _f; }     // 현재 체력 += 인자값
+
+    float GetCurMP() { return m_fMP; }
+    void SetCurMP(float _f) { m_fMP = _f; }
+    void  SetCurMPVar(float _f) { m_fMP += _f; }
+
+    unsigned __int64 GetServerID() { return m_iServerID; }
+    void SetServerID(unsigned __int64 _id) { m_iServerID = _id; }
 
     // 기타 필요한 Getter/Setter 함수 추가
     float  GetAttackPower() { return m_fAttackPower; }

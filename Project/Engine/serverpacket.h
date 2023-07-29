@@ -21,6 +21,14 @@ struct tServerEvent
 };
 
 
+struct AnimInfo
+{
+	wstring animName;
+	unsigned __int16  animIdx;
+	bool    blend;
+	float   blendTime;
+};
+
 enum class FactionType
 {
 	BLUE = 0,

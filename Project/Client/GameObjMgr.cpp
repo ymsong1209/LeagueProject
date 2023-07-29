@@ -181,7 +181,6 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 			pObj->GetRenderComponent()->SetFrustumCheck(false);
 			pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
 
-
 			Vec3 spawnPos = Vec3(_info.posInfo.pos.x, _info.posInfo.pos.y, _info.posInfo.pos.z);
 			SpawnGameObject(pObj, spawnPos, 0);
 
