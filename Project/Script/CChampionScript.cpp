@@ -250,7 +250,7 @@ void CChampionScript::Move()
 	else
 	{
 		// ¿Ãµø ∫§≈Õ∞™¿Ã NaN -> ¿Ãµø ∫“∞°, ∏ÿ√„
-		StopEvent* evn = dynamic_cast<StopEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_STOP));
+		StopEvent* evn = new StopEvent;
 		if (evn != nullptr)
 		{
 			CGameEventMgr::GetInst()->NotifyEvent(*evn);

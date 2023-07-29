@@ -49,6 +49,9 @@
     <ClCompile Include="CUnitState.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Script.cpp" />
+    <ClCompile Include="CSendServerEventMgr.cpp">
+      <Filter>SendServerEventMgr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CBaseAttack.h" />
@@ -101,5 +104,13 @@
     <ClInclude Include="CInGameCameraScript.h" />
     <ClInclude Include="IGameEventListener.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="CSendServerEventMgr.h">
+      <Filter>SendServerEventMgr</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="SendServerEventMgr">
+      <UniqueIdentifier>{a1f9af3a-6472-47a7-82a8-e48fd395bb44}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

@@ -2,6 +2,7 @@
 
 class CPlayerScript;
 class CGameObject;
+class CChampionScript;
 
 class GameObjMgr
 {
@@ -12,7 +13,7 @@ private:
 	map<uint64, CGameObject*> _towers; // 포탑, 억제기, 넥서스 (맵 처음)
 
 	// My Player 관련
-	CPlayerScript* MyPlayerScript;
+	CChampionScript* MyPlayerScript;
 	Vec3 PrevPos = Vec3(0, 0, 0);  // playerScript의 prevPos는 매 틱마다 이전좌표고, 이건 1/10초전 좌표.
 
 	// Objects pos 관련

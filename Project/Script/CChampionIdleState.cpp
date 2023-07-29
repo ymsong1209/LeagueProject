@@ -19,6 +19,7 @@ void CChampionIdleState::tick()
 
 void CChampionIdleState::Enter()
 {
+
 	CUnitState::Enter();
 }
 

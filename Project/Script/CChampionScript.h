@@ -52,8 +52,6 @@ protected:
     int                     m_iLevel;           // 레벨
     float                   m_fExp;             // 경험치
 
-    float                   m_fMana;            // 마나
-    float                   m_fMaxMana;         // 전체 마나
 
     float                   m_fRespawnTime;     // 부활 대기시간
 

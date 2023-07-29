@@ -8,6 +8,8 @@ enum class SERVER_EVENT_TYPE
 	ANIM_PACKET,    // wParam : GameObject,  lParam : AnimInfo
 	SKILL_PROJECTILE_PACKET,
 	SKILL_HIT_PACKET,
+
+	SEND_ANIM_PACKET,	// wParam : id,  lParam : AnimInfo
 };
 
 // Event

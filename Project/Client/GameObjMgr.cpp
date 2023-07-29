@@ -22,6 +22,8 @@
 #include <Engine\CAnim3D.h>
 
 #include <Script\CPlayerScript.h>
+#include <Script\CJinxScript.h>
+#include <Script\CChampionScript.h>
 #include <Script\COtherPlayerScript.h>
 #include <Script\CCameraMoveScript.h>
 #include "ServerEventMgr.h"
@@ -117,26 +119,28 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
 			pObj = pMeshData->Instantiate();
 
-			pObj->AddComponent(new CPlayerScript);
+			pObj->AddComponent(new CJinxScript);
 			pObj->AddComponent(new CPathFinder);
-			pObj->AddComponent(new CCollider3D);
+			pObj->AddComponent(new CFsm);
+			//pObj->AddComponent(new CCollider3D);
 
-			MyPlayerScript = pObj->GetScript<CPlayerScript>();
-			MyPlayerScript->SetPlayerID(MyPlayer.id);
-			MyPlayerScript->SetNickName(MyPlayer.nickname);
-			MyPlayerScript->SetFaction(MyPlayer.faction);
+			MyPlayerScript = pObj->GetScript<CChampionScript>();
+			MyPlayerScript->SetServerID(MyPlayer.id);
+			//MyPlayerScript->SetNickName(MyPlayer.nickname);
+			//MyPlayerScript->SetFaction(MyPlayer.faction);
 
-			pObj->SetName(MyPlayer.nickname);
+			//pObj->SetName(MyPlayer.nickname);
+			pObj->SetName(L"My Player");
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
 			pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true, 0.1f);
-			pObj->Animator3D()->SetRepeat(true);
+			//pObj->Animator3D()->SetRepeat(true);
 
-			pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
-			pObj->Collider3D()->SetAbsolute(true);
-			pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
-			pObj->Collider3D()->SetDrawCollision(false);
+			//pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+			//pObj->Collider3D()->SetAbsolute(true);
+			//pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
+			//pObj->Collider3D()->SetDrawCollision(false);
 
-			pObj->GetRenderComponent()->SetFrustumCheck(false);
+			//pObj->GetRenderComponent()->SetFrustumCheck(false);
 
 			pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
 
