@@ -78,8 +78,6 @@ public:
     void ClearData();
 
 public:
-
-
     //반복재생 사용하고 싶을 시
     //repeatblend : 현재 애니메이션 반복재생할때 마지막에 blend 옵션 줄 것인지
     //blend : 이전 애니메이션이 남아있을때 애니메이션 전환할때 blend옵션을 줄 것인지

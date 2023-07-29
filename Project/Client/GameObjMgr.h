@@ -5,19 +5,45 @@ class CGameObject;
 
 class GameObjMgr
 {
+private:
+	map<uint64, CGameObject*> _allObjects; // 맵에 있는 모든 오브젝트
+	map<uint64, CGameObject*> _players;
+	map<uint64, CGameObject*> _objects; // 미니언, 정글몹, 스킬 투사체
+	map<uint64, CGameObject*> _towers; // 포탑, 억제기, 넥서스 (맵 처음)
+
+	// My Player 관련
 	CPlayerScript* MyPlayerScript;
+	Vec3 PrevPos = Vec3(0, 0, 0);  // playerScript의 prevPos는 매 틱마다 이전좌표고, 이건 1/10초전 좌표.
 
-	map<uint16, CGameObject*> _players;
-	// map<uint16, CGameObject> _monsters;
+	// Objects pos 관련
+	map<uint64, Vec3> _objectsPrevPos;
 
 public:
-	CGameObject* Find(uint16 _id);
+	map<uint64, CGameObject*> GetObjects() { return _objects; }
+
+
+public: 
+	// 서버에게 패킷을 보낸다.
+	void SendMyPlayerMove(ClientServiceRef _service);
+	void SendObjectAnim(uint64 _id, ClientServiceRef _service);
+	void SendObjectMove(uint64 _id, CGameObject* _obj, ClientServiceRef _service);
+	void SendTowerUpdate(uint64 _id, CGameObject* _obj, ClientServiceRef _service);
+
+	// 서버에게 받은 패킷 처리
+	void E_MovePlayer(uint64 _playerId, ObjectMove _playerMove);
+	void E_MoveObject(uint64 _objectId, ObjectMove _objectMove);
+	void E_ObjectAnim(uint64 _objectId, AnimInfo _animInfo);
+
+public:
+	CGameObject* FindPlayer(uint64 _targetId);
+	CGameObject* FindObject(uint64 _targetId);
+	CGameObject* FindAllObject(uint64 _targetId);
+
 	void AddPlayer(PlayerInfo info, bool myPlayer = false);
-	void MovePlayer(uint16 _playerId, PlayerMove _playerMove);
+	void AddObject(uint64 _objectId, ObjectInfo _objectInfo);
+	// void AddTower();
 
-
-public:
-	void tick(ClientServiceRef _service);
+	CPlayerScript* GetMyPlayerScript() { return MyPlayerScript; }
 
 static GameObjMgr* GetInst()
 {

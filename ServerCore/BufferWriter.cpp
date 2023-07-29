@@ -18,7 +18,6 @@ BufferWriter::BufferWriter(BYTE* buffer, uint32 size, uint32 pos)
 
 BufferWriter::~BufferWriter()
 {
-
 }
 
 bool BufferWriter::Write(void* src, uint32 len)
