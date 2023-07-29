@@ -89,7 +89,7 @@ void ServerEventMgr::sendtick(ClientServiceRef _service)
 			//if (_objectId == MyPlayer.id) break;
 
 			// 여기서 서버에 보낸다. 
-			std::cout << "C_OBJECT_ANIM Pakcet" << endl;
+			std::cout << "Send C_OBJECT_ANIM Pakcet : Send ID : " << _objectId << endl;
 
 			AnimInfoPacket animInfoPacket = {};
 			animInfoPacket.blend = animInfo->blend;
@@ -151,7 +151,8 @@ void ServerEventMgr::clienttick()
 		{
 			CGameObject* NewObject = (CGameObject*)m_vecEvent[i].wParam;
 			AnimInfo* animInfo = (AnimInfo*)(m_vecEvent[i].lParam);
-
+			
+			cout << "Real PlayRepeat about " << animInfo->animIdx << endl;
 			// Play함수가 바꼈나?
 			NewObject->Animator3D()->PlayRepeat(animInfo->animName, animInfo->blend, animInfo->blendTime);
 

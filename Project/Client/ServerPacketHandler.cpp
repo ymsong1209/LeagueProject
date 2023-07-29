@@ -356,6 +356,8 @@ void ServerPacketHandler::Handle_S_OBJECT_ANIM(PacketSessionRef& session, BYTE* 
 	// 해당 오브젝트id의 애니메이션
 	uint64 _ObjectId = pkt->targetId;
 
+	cout << "I receive anim Packet about : " << _ObjectId << endl;
+
 	if (_ObjectId != MyPlayer.id)
 	{
 		AnimInfoPacket _AnimInfoPacket = pkt->animInfo;
