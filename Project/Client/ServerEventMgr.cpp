@@ -51,7 +51,8 @@ void ServerEventMgr::sendtick(ClientServiceRef _service)
     }
 
 	// 불규칙 패킷
-	// 스크립트 이벤트 매니저의 이벤트 vector를 확인하고 보낸다. 
+	// 
+	// 여기서!!! 스크립트 이벤트 매니저의 이벤트 vector를 확인하고 보낸다. 
 	// vector<tEvent> _vecEvent = ScriptMgr::GetInst()->GetVecEvent();
 	// for(_vecEvent)
 	// { switch case : 
@@ -102,7 +103,16 @@ void ServerEventMgr::clienttick()
 			animInfo = nullptr;
 		}
 		break;
+		case SERVER_EVENT_TYPE::SKILL_PROJECTILE_PACKET:
+		{
 
+		}
+		break;
+		case SERVER_EVENT_TYPE::SKILL_HIT_PACKET:
+		{
+
+		}
+		break;
 		}
 
 	}
