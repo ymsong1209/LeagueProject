@@ -197,6 +197,8 @@ void CAnimator3D::PlayRepeat(const wstring& _strName, bool _RepeatBlend, bool _b
 	if (_blend) {
 		//현재 애니메이션에서 다른 애니메이션으로 blend하면서 들어가기
 		if (GetCurAnim()) {
+			m_pCurAnim = pAnim;
+			m_pCurAnim->Reset();
 			m_bBlend = true;
 			m_fCurBlendTime = 0.f;
 			m_fMaxBlendTime = _blendtime;
@@ -219,7 +221,6 @@ void CAnimator3D::PlayRepeat(const wstring& _strName, bool _RepeatBlend, bool _b
 	}
 
 	m_bRepeatBlend = _RepeatBlend; 
-	//m_fBlendRatio = 0.f;
 }
 void CAnimator3D::PlayOnce(const wstring& _strName, bool _blend, float _blendtime)
 {
@@ -260,7 +261,6 @@ void CAnimator3D::PlayOnce(const wstring& _strName, bool _blend, float _blendtim
 	}
 	m_bRepeat = false;
 	m_bRepeatBlend = false;
-	//m_fBlendRatio = 0.f;
 }
 
 
