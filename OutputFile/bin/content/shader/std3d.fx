@@ -39,7 +39,7 @@ struct VS_IN
     float3 vNormal : NORMAL; 
     float3 vBinormal : BINORMAL;
 };
-
+    
 struct VS_OUT
 {
     float4 vPosition : SV_Position;

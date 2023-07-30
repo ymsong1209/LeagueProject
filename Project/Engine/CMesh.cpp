@@ -40,6 +40,8 @@ CMesh* CMesh::CreateFromContainer(CFBXLoader& _loader)
 
 	UINT iVtxCount = (UINT)container->vecPos.size();
 
+	
+
 	D3D11_BUFFER_DESC tVtxDesc = {};
 
 	tVtxDesc.ByteWidth = sizeof(Vtx) * iVtxCount;

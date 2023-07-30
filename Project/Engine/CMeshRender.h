@@ -13,7 +13,7 @@ enum class MovTexMoveType
     SIN,
     COS,
     END,
-};
+};  
 
 enum class MovTexType
 {

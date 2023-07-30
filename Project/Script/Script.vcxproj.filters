@@ -15,27 +15,6 @@
     <ClCompile Include="CFlash.cpp" />
     <ClCompile Include="CGameEventMgr.cpp" />
     <ClCompile Include="CHeal.cpp" />
-    <ClCompile Include="CInhibitorBrokenState.cpp" />
-    <ClCompile Include="CInhibitorIdleState.cpp" />
-    <ClCompile Include="CInhibitorScript.cpp" />
-    <ClCompile Include="CInhibitorSpawnState.cpp" />
-    <ClCompile Include="CJinxDeathState.cpp" />
-    <ClCompile Include="CJinxIdleState.cpp" />
-    <ClCompile Include="CJinxQ.cpp" />
-    <ClCompile Include="CJinxQState.cpp" />
-    <ClCompile Include="CJinxRespawnState.cpp" />
-    <ClCompile Include="CJinxScript.cpp" />
-    <ClCompile Include="CJinxW.cpp" />
-    <ClCompile Include="CJinxWalkState.cpp" />
-    <ClCompile Include="CJungleAttackState.cpp" />
-    <ClCompile Include="CJungleChaseState.cpp" />
-    <ClCompile Include="CJungleDeathState.cpp" />
-    <ClCompile Include="CJungleIdleState.cpp" />
-    <ClCompile Include="CJungleMonsterScript.cpp" />
-    <ClCompile Include="CMinionAttackState.cpp" />
-    <ClCompile Include="CMinionDeathState.cpp" />
-    <ClCompile Include="CMinionScript.cpp" />
-    <ClCompile Include="CMinionWalkState.cpp" />
     <ClCompile Include="CMobScript.cpp" />
     <ClCompile Include="CNexusScript.cpp" />
     <ClCompile Include="COtherPlayerScript.cpp" />
@@ -44,11 +23,79 @@
     <ClCompile Include="CInGameCameraScript.cpp" />
     <ClCompile Include="CSkill.cpp" />
     <ClCompile Include="CStructureScript.cpp" />
-    <ClCompile Include="CTurretScript.cpp" />
     <ClCompile Include="CUnitScript.cpp" />
     <ClCompile Include="CUnitState.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Script.cpp" />
+    <ClCompile Include="CJinxWalkState.cpp">
+      <Filter>Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxW.cpp">
+      <Filter>Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxScript.cpp">
+      <Filter>Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxRespawnState.cpp">
+      <Filter>Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxQState.cpp">
+      <Filter>Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxQ.cpp">
+      <Filter>Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxIdleState.cpp">
+      <Filter>Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxDeathState.cpp">
+      <Filter>Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CVayneScript.cpp">
+      <Filter>Vayne</Filter>
+    </ClCompile>
+    <ClCompile Include="CInhibitorBrokenState.cpp">
+      <Filter>Inhibitor</Filter>
+    </ClCompile>
+    <ClCompile Include="CInhibitorIdleState.cpp">
+      <Filter>Inhibitor</Filter>
+    </ClCompile>
+    <ClCompile Include="CInhibitorScript.cpp">
+      <Filter>Inhibitor</Filter>
+    </ClCompile>
+    <ClCompile Include="CInhibitorSpawnState.cpp">
+      <Filter>Inhibitor</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleAttackState.cpp">
+      <Filter>Jungle</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleChaseState.cpp">
+      <Filter>Jungle</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleDeathState.cpp">
+      <Filter>Jungle</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleIdleState.cpp">
+      <Filter>Jungle</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleMonsterScript.cpp">
+      <Filter>Jungle</Filter>
+    </ClCompile>
+    <ClCompile Include="CMinionAttackState.cpp">
+      <Filter>Minion</Filter>
+    </ClCompile>
+    <ClCompile Include="CMinionDeathState.cpp">
+      <Filter>Minion</Filter>
+    </ClCompile>
+    <ClCompile Include="CMinionScript.cpp">
+      <Filter>Minion</Filter>
+    </ClCompile>
+    <ClCompile Include="CMinionWalkState.cpp">
+      <Filter>Minion</Filter>
+    </ClCompile>
+    <ClCompile Include="CTurretScript.cpp">
+      <Filter>Turret</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CBaseAttack.h" />
@@ -66,27 +113,6 @@
     <ClInclude Include="CGameEvent.h" />
     <ClInclude Include="CGameEventMgr.h" />
     <ClInclude Include="CHeal.h" />
-    <ClInclude Include="CInhibitorBrokenState.h" />
-    <ClInclude Include="CInhibitorIdleState.h" />
-    <ClInclude Include="CInhibitorScript.h" />
-    <ClInclude Include="CInhibitorSpawnState.h" />
-    <ClInclude Include="CJinxDeathState.h" />
-    <ClInclude Include="CJinxIdleState.h" />
-    <ClInclude Include="CJinxQ.h" />
-    <ClInclude Include="CJinxQState.h" />
-    <ClInclude Include="CJinxRespawnState.h" />
-    <ClInclude Include="CJinxScript.h" />
-    <ClInclude Include="CJinxW.h" />
-    <ClInclude Include="CJinxWalkState.h" />
-    <ClInclude Include="CJungleAttackState.h" />
-    <ClInclude Include="CJungleChaseState.h" />
-    <ClInclude Include="CJungleDeathState.h" />
-    <ClInclude Include="CJungleIdleState.h" />
-    <ClInclude Include="CJungleMonsterScript.h" />
-    <ClInclude Include="CMinionAttackState.h" />
-    <ClInclude Include="CMinionDeathState.h" />
-    <ClInclude Include="CMinionScript.h" />
-    <ClInclude Include="CMinionWalkState.h" />
     <ClInclude Include="CMobScript.h" />
     <ClInclude Include="CNexusScript.h" />
     <ClInclude Include="COtherPlayerScript.h" />
@@ -94,12 +120,100 @@
     <ClInclude Include="CScriptMgr.h" />
     <ClInclude Include="CSkill.h" />
     <ClInclude Include="CStructureScript.h" />
-    <ClInclude Include="CTurretScript.h" />
     <ClInclude Include="CUnitScript.h" />
     <ClInclude Include="CUnitState.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="CInGameCameraScript.h" />
     <ClInclude Include="IGameEventListener.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="CJinxWalkState.h">
+      <Filter>Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxW.h">
+      <Filter>Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxScript.h">
+      <Filter>Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxRespawnState.h">
+      <Filter>Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxQState.h">
+      <Filter>Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxQ.h">
+      <Filter>Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxIdleState.h">
+      <Filter>Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxDeathState.h">
+      <Filter>Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CVayneScript.h">
+      <Filter>Vayne</Filter>
+    </ClInclude>
+    <ClInclude Include="CInhibitorBrokenState.h">
+      <Filter>Inhibitor</Filter>
+    </ClInclude>
+    <ClInclude Include="CInhibitorIdleState.h">
+      <Filter>Inhibitor</Filter>
+    </ClInclude>
+    <ClInclude Include="CInhibitorScript.h">
+      <Filter>Inhibitor</Filter>
+    </ClInclude>
+    <ClInclude Include="CInhibitorSpawnState.h">
+      <Filter>Inhibitor</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleAttackState.h">
+      <Filter>Jungle</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleChaseState.h">
+      <Filter>Jungle</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleDeathState.h">
+      <Filter>Jungle</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleIdleState.h">
+      <Filter>Jungle</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleMonsterScript.h">
+      <Filter>Jungle</Filter>
+    </ClInclude>
+    <ClInclude Include="CMinionAttackState.h">
+      <Filter>Minion</Filter>
+    </ClInclude>
+    <ClInclude Include="CMinionDeathState.h">
+      <Filter>Minion</Filter>
+    </ClInclude>
+    <ClInclude Include="CMinionScript.h">
+      <Filter>Minion</Filter>
+    </ClInclude>
+    <ClInclude Include="CMinionWalkState.h">
+      <Filter>Minion</Filter>
+    </ClInclude>
+    <ClInclude Include="CTurretScript.h">
+      <Filter>Turret</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Jinx">
+      <UniqueIdentifier>{374d186b-ad42-463c-a57d-ce5569c18f43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vayne">
+      <UniqueIdentifier>{75274509-2f6c-4f29-ba84-308c230db5ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inhibitor">
+      <UniqueIdentifier>{add152db-1fb1-4396-a8f8-e0f95f812a09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jungle">
+      <UniqueIdentifier>{bd6be75a-70f5-43c0-977a-1e3898b68578}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Minion">
+      <UniqueIdentifier>{825b0c01-0c70-4290-bd50-e18e0284ef03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Turret">
+      <UniqueIdentifier>{f7d80c07-b5d7-49af-8435-5eabef337b83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

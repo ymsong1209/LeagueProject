@@ -17,6 +17,8 @@
 
 #include "CLevelSaveLoad.h"
 #include <Script/CScriptMgr.h>
+#include <Script/CJinxScript.h>
+#include <Script/CVayneScript.h>
 
 
 void CreateTestLevel()
@@ -161,6 +163,36 @@ void CreateTestLevel()
 	SpawnGameObject(LoLMapCollider, Vec3(0.f, 0.f, 0.f), 6);
 
 
+	// ===========
+	// Vayne Test
+	// ===========
+	{
+		Ptr<CMeshData> pMeshData = nullptr;
+		CGameObject* pObj = nullptr;
+
+		pMeshData = nullptr;
+		pObj = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Vayne.fbx");
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"Vayne");
+		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Vayne");
+		pObj->GetRenderComponent()->SetFrustumCheck(false);
+		//pObj->AddComponent(new CPlayerScript);
+		pObj->AddComponent(new CVayneScript);
+		pObj->AddComponent(new CPathFinder);
+
+		pObj->Animator3D()->PlayRepeat(L"Vayne\\Attack1.002", true, true, 0.1f);
+		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+
+		pObj->Transform()->SetUseMouseOutline(false);
+		
+		auto b = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png");
+		CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Vayne_Vehicle_Mtrl.mtrl")->SetTexParam(TEX_0, b);
+		int c = pObj->MeshRender()->GetMtrlCount();
+
+		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
+	}
+
 
 	// ============
 	// FBX Loading
@@ -176,7 +208,8 @@ void CreateTestLevel()
 		pObj->SetName(L"Jinx");
 		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->AddComponent(new CPlayerScript);
+		//pObj->AddComponent(new CPlayerScript);
+		//pObj->AddComponent(new CJinxScript);
 		pObj->AddComponent(new CPathFinder);
 		pObj->AddComponent(new CCollider3D);
 

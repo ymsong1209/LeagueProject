@@ -60,9 +60,13 @@ private:
 
     vector<Matrix>				m_vecFinalBoneMat; // 텍스쳐에 전달할 최종 행렬정보
 
-    CStructuredBuffer* m_pBoneFinalMatBuffer;  // 특정 프레임의 최종 행렬
+    CStructuredBuffer*          m_pBoneFinalMatBuffer;  // 특정 프레임의 최종 행렬
 
     wstring                     m_MeshDataRelativePath; //애니메이션은 mesh랑 material이 세팅되어야함. 
+
+
+
+   // vector<
 
 
 public:
@@ -71,6 +75,7 @@ public:
 
 public:
     void SetBones(const vector<tMTBone>* _vecBones) { m_pVecBones = _vecBones; m_vecFinalBoneMat.resize(m_pVecBones->size()); }
+    const vector<tMTBone>* GetVecBones() { return m_pVecBones; }
     void SetMeshDataRelativePath(wstring _path) { m_MeshDataRelativePath = _path; }
     wstring GetMeshDataRelativePath() { return m_MeshDataRelativePath; }
     CStructuredBuffer* GetFinalBoneMat() { return m_pBoneFinalMatBuffer; }
