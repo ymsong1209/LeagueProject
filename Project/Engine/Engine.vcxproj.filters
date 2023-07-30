@@ -665,9 +665,6 @@
     <ClInclude Include="CFogFilterShader.h">
       <Filter>Source\08. ShaderCode\03. Compute\FogOfWar\FogFilter</Filter>
     </ClInclude>
-    <ClInclude Include="serverpacket.h">
-      <Filter>Source\00. header</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">

@@ -9,7 +9,6 @@
 #include "ServerSession.h"
 
 #include "GameObjMgr.h"
-#include <Engine/ServerPacket.h>
 #include <Engine/components.h>
 #include <Script/CSendServerEventMgr.h>
 

@@ -15,6 +15,4 @@
 
 #include "global.h"
 
-#include "serverpacket.h"
-
 #endif //PCH_H

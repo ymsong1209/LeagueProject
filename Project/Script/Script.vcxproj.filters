@@ -107,6 +107,9 @@
     <ClInclude Include="CSendServerEventMgr.h">
       <Filter>SendServerEventMgr</Filter>
     </ClInclude>
+    <ClInclude Include="CServerTypes.h">
+      <Filter>SendServerEventMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="SendServerEventMgr">

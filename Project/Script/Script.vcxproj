@@ -187,6 +187,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CFlash.h" />
     <ClInclude Include="CGameEvent.h" />
     <ClInclude Include="CGameEventMgr.h" />
+    <ClInclude Include="CServerTypes.h" />
     <ClInclude Include="CHeal.h" />
     <ClInclude Include="CInhibitorBrokenState.h" />
     <ClInclude Include="CInhibitorIdleState.h" />

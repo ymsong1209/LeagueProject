@@ -1,5 +1,5 @@
 #pragma once
-#include <Engine\serverpacket.h>
+
 
 struct AnimInfoPacket {
     uint16 targetId;

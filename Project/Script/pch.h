@@ -11,7 +11,7 @@
 #include "framework.h"
 
 #include <Engine\global.h>
-#include <Engine\ServerPacket.h>
+#include "CServerTypes.h"
 
 #include "CScriptMgr.h"
 

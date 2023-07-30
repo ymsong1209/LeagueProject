@@ -1,7 +1,6 @@
 #pragma once
-#include<Windows.h>
-#include "global.h"
 
+#include<Windows.h>
 
 // unsigned __int16은 Uint16과 동일하다.
 
@@ -28,10 +27,10 @@ struct tServerEvent
 struct AnimInfo
 {
 	wstring animName;			// 변경할 애니메이션 이름
-	unsigned __int16  targetId; // 애니메이션이 변경될 오브젝트의 id
+	UINT16  targetId; // 애니메이션이 변경될 오브젝트의 id
 	bool    bRepeat;			// 반복 여부
 	bool    blend;				// 블렌드 사용여부
-	float   blendTime;			
+	float   blendTime;
 };
 
 enum class SkillType
@@ -49,13 +48,11 @@ enum class SkillType
 };
 
 struct SkillInfo {
-	unsigned __int64 OwnerId;
-	unsigned __int64 TargetId;
-	unsigned __int16 SkillLevel;
+	UINT64    OwnerId;
+	UINT64    TargetId;
+	UINT16    SkillLevel;
 	SkillType skillType;
 };
-
-
 
 
 // 다혜꺼, 추후 하은님껄로 교체
