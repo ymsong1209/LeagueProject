@@ -1,54 +1,13 @@
 #pragma once
 
-
-struct AnimInfoPacket {
-    uint16 targetId;
-    bool bRepeat;
-    bool blend;
-    float blendTime;
-
-    uint16 animNameOffset;
-    uint16 animNameCount;
-
-    struct animNameItem {
-        wchar_t animName;
-    };
-
-    bool Validate(BYTE* packetStart, uint16 packetSize, OUT uint32& size) {
-        if (animNameOffset + animNameCount * sizeof(animNameItem) > packetSize)
-            return false;
-
-        size += animNameCount * sizeof(animNameItem);
-        return true;
-    }
-};
-
-//struct AnimInfo {
-//    wstring animName;
-//    uint16  animIdx;
-//    bool    blend;
-//    float   blendTime;
-//};
-//enum class FactionType
-//{
-//    BLUE = 0,
-//    RED = 1,
-//    NONE = 2, // 비선공몬스터(모두를 적대함. 선빵x)
-//    END = 3,
-//};
-
-enum WaitingStatus
-{
-    WAITING = 0,
-    RUN = 1,
-};
+//#include <Script/CServerTypes.h>
 
 
 enum class ObjectType {
     PLAYER,
 
     MELEE_MINION,
-    CASTER_MINION,
+    RANGED_MINION,
     SIEGE_MINION,
     SUPER_MINION,
 
@@ -67,17 +26,6 @@ enum class ObjectType {
     END,
 };
 
-enum class CC_TYPE
-{
-    NONE,
-    STUN, // 기절
-    SLOW, // 둔화
-    SILENCE, // 침묵
-    SNARE, // 속박
-    BLEED, // 출혈
-    AIRBORNE, // 에어본
-};
-
 enum ChampionType
 {
     NONE,
@@ -86,6 +34,30 @@ enum ChampionType
     AMUMU,
     MALPHITE,
 };
+
+
+struct AnimInfoPacket {
+    uint16  targetId;
+    bool    bRepeat;
+    bool    blend;
+    float   blendTime;
+
+    uint16  animNameOffset;
+    uint16  animNameCount;
+
+    struct animNameItem {
+        wchar_t animName;
+    };
+
+    bool Validate(BYTE* packetStart, uint16 packetSize, OUT uint32& size) {
+        if (animNameOffset + animNameCount * sizeof(animNameItem) > packetSize)
+            return false;
+
+        size += animNameCount * sizeof(animNameItem);
+        return true;
+    }
+};
+
 struct ObjectMove
 {
 public:
@@ -125,14 +97,6 @@ public:
     MoveDir moveDir;
     Pos pos;
     CC_TYPE CCType;
-};
-
-enum class LaneType {
-    NONE,
-    TOP,
-    MID,
-    BOTTOM,
-    END,
 };
 
 struct ObjectInfo {
@@ -186,6 +150,12 @@ struct PlayerInfoPacket
         size += nickNameCount * sizeof(NickNameItem);
         return true;
     }
+};
+
+enum WaitingStatus
+{
+    WAITING = 0,
+    RUN = 1,
 };
 
 extern bool IsInGame;

@@ -1,17 +1,6 @@
 #pragma once
 #include "CUnitScript.h"
 
-// 군중 제어기
-enum CC
-{
-    CLEAR = 0,
-    SLOW = 1 << 0,
-    SILENCE = 1 << 1,
-    ROOT = 1 << 2,
-    STUN = 1 << 3,
-    AIRBORNE = 1 << 4,
-};
-
 // 행동 제약
 enum RESTRAINT
 {

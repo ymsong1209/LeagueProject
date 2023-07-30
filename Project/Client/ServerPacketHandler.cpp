@@ -464,20 +464,20 @@ void ServerPacketHandler::Handle_S_SKILL_PROJECTILE(PacketSessionRef& session, B
 		return;
 	}
 
-	// 투사체 objectId Id 오브젝트가 움직임.
+	// 투사체 objectId Id
 	uint64 _objectId = pkt->projectileId;
 
 	 // 여기 작성중
 	 // 
 	 // 
 	 // 
-	// 방장을 제외한 클라이언트만 해당 움직임을 받는다.
-	if (!MyPlayer.host)
-	{
-		ObjectMove playerMove = pkt->objectMove;
-
-		GameObjMgr::GetInst()->E_MoveObject(_objectId, playerMove);
-	}
+	// 방장은 진짜 투사체 생성 
+	//if (!MyPlayer.host)
+	//{
+	//	//ObjectMove playerMove = pkt->objectMove;
+	//
+	//	GameObjMgr::GetInst()->E_MoveObject(_objectId, playerMove);
+	//}
 
 	std::cout << "===============================" << endl;
 

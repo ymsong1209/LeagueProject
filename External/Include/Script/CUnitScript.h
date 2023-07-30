@@ -14,21 +14,6 @@ enum class UnitType
     BARON,
 };
 
-enum class Faction
-{
-    NONE,
-    RED,
-    BLUE,
-};
-
-enum class Lane
-{
-    NONE,
-    TOP,
-    MID,
-    BOTTOM,
-};
-
 
 class CUnitScript :
     public CScript
