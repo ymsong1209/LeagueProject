@@ -110,7 +110,7 @@ public:
 
 
 
-    void             SetServerID(unsigned __int64 _id) { m_iServerID = _id; }
+   // void             SetServerID(unsigned __int64 _id) { m_iServerID = _id; }
 
     // 기타 필요한 Getter/Setter 함수 추가
     float  GetAttackPower() { return m_fAttackPower; }

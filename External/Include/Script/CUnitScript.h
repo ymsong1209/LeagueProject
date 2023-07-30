@@ -43,10 +43,13 @@ public:
     CLONE(CUnitScript);
 
 protected:
+    unsigned __int64    m_iServerID;        // 서버에게 부여받은 ID
+    wstring             m_strNickname;      // 닉네임
+    bool                m_bHost;            // 방장인지 여부
+   
     UnitType            m_eUnitType;        // 유닛 종류
     Faction             m_eFaction;         // 진영(레드, 블루, 중립)
 
-    unsigned __int64    m_iServerID;
     float               m_fHP;              // 체력
     float               m_fMaxHP;           // 전체 체력
     float               m_fMP;
@@ -54,6 +57,8 @@ protected:
 
     float               m_fAttackPower;     // 공격력
     float               m_fDefencePower;    // 방어력
+
+
     float               m_fAttackSpeed;     // 공격(평타)속도
     float               m_fAttackRange;     // 공격(평타)사거리
     float               m_fMoveSpeed;       // 이동속도
@@ -61,7 +66,7 @@ protected:
     Vec3                m_vNextPos;
     float               m_fFaceRot;
 
-    bool        m_bUnitDead;      // 유닛이 죽었는지(HP 0 이하)
+    bool                m_bUnitDead;      // 유닛이 죽었는지(HP 0 이하)
 
 public:
     virtual void begin() override;
@@ -80,13 +85,32 @@ public:
     float GetCurHP() { return m_fHP; }
     void  SetCurHP(float _f) { m_fHP = _f; }         // 현재 체력 = 인자값
     void  SetCurHPVar(float _f) { m_fHP += _f; }     // 현재 체력 += 인자값
+    float GetMaxHP() const { return m_fMaxHP; }
 
     float GetCurMP() { return m_fMP; }
-    void SetCurMP(float _f) { m_fMP = _f; }
+    void  SetCurMP(float _f) { m_fMP = _f; }
     void  SetCurMPVar(float _f) { m_fMP += _f; }
+    float GetMaxMP() const { return m_fMaxMP; }
 
     unsigned __int64 GetServerID() { return m_iServerID; }
-    void SetServerID(unsigned __int64 _id) { m_iServerID = _id; }
+    wstring          GetNickname() const { return m_strNickname; }
+    bool             IsHost() const { return m_bHost; }
+    UnitType         GetUnitType() const { return m_eUnitType; }
+    Faction          GetFaction() const { return m_eFaction; }
+
+    void             SetServerID(unsigned __int64 serverID) { m_iServerID = serverID; }
+    void             SetNickname(wstring nickname) { m_strNickname = nickname; }
+    void             SetHost(bool isHost) { m_bHost = isHost; }
+    void             SetFaction(Faction faction) { m_eFaction = faction; }
+
+
+
+
+
+
+
+
+   // void             SetServerID(unsigned __int64 _id) { m_iServerID = _id; }
 
     // 기타 필요한 Getter/Setter 함수 추가
     float  GetAttackPower() { return m_fAttackPower; }
