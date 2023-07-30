@@ -197,13 +197,14 @@ void CAnimator3D::PlayRepeat(const wstring& _strName, bool _RepeatBlend, bool _b
 	if (_blend) {
 		//현재 애니메이션에서 다른 애니메이션으로 blend하면서 들어가기
 		if (GetCurAnim()) {
-			m_pCurAnim = pAnim;
 			m_pCurAnim->Reset();
 			m_bBlend = true;
 			m_fCurBlendTime = 0.f;
 			m_fMaxBlendTime = _blendtime;
 			m_iBlendStartFrm = GetCurAnim()->GetCurFrameIdx();
-			m_bRepeat = true;
+			m_pCurAnim = pAnim;
+			m_pCurAnim->Reset();
+			m_pCurAnim->Play();
 		}
 		//현재 애니메이션이 없을 경우에는 blend 옵션 없이 그대로 재생
 		else {
