@@ -50,22 +50,22 @@ void CVayneScript::tick()
 
 	if (KEY_TAP(KEY::F))
 	{
-		CGameObject* pObj = nullptr;
-		pObj = new CGameObject;
-		pObj->SetName(L"VayneTestFromScript");
+		//CGameObject* pObj = nullptr;
+		//pObj = new CGameObject;
+		//pObj->SetName(L"VayneTestFromScript");
 
-		pObj->AddComponent(new CTransform);
-		pObj->AddComponent(new CMeshRender);
+		//pObj->AddComponent(new CTransform);
+		//pObj->AddComponent(new CMeshRender);
 
-		pObj->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-		pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
-		pObj->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
-		pObj->Transform()->SetRelativeRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
+		//pObj->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+		//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
+		//pObj->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
+		//pObj->Transform()->SetRelativeRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
 
-		pObj->MeshRender()->GetDynamicMaterial(0);
-		pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Fighter.bmp"));
+		//pObj->MeshRender()->GetDynamicMaterial(0);
+		//pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Fighter.bmp"));
 
-		SpawnGameObject(pObj, Vec3(100.f, 100.f, 100.f), 0);
+		//SpawnGameObject(pObj, Vec3(100.f, 100.f, 100.f), 0);
 
 
 		CStructuredBuffer* FinalBoneMat =  GetOwner()->Animator3D()->GetFinalBoneMat();
@@ -73,31 +73,52 @@ void CVayneScript::tick()
 		int BoneCount = GetOwner()->MeshRender()->GetMesh()->GetBoneCount();
 		Vtx* VertexInfo = GetOwner()->MeshRender()->GetMesh()->GetVtxSysMem();		// Vertex의 정보가 모두 들어있음?
 		int* IndexInfo_0 = GetOwner()->MeshRender()->GetMesh()->GetIdxSysMem(0);
+		UINT indexCount = GetOwner()->MeshRender()->GetMesh()->GetIndexCount(0);
+		UINT VertexCount = GetOwner()->MeshRender()->GetMesh()->GetVertexCount();
 	
 
 
-		for (int i = 0; i < 3; ++i)
+		for (int i = 0; i < 7000; ++i)
 		{
-			int temp = IndexInfo_0[i];
+			//int temp = IndexInfo_0[i];
 
-			Vtx Vertex = VertexInfo[IndexInfo_0[i]];
+			//Vtx Vertex = VertexInfo[IndexInfo_0[i]];
+
+			Vtx Vertex = VertexInfo[i];
 
 			Skinning(Vertex.vPos, Vertex.vTangent, Vertex.vBinormal, Vertex.vNormal, Vertex.vWeights, Vertex.vIndices, 0, FinalBoneMat, BoneCount);
 
+			// Vayne의 Local Position 이 확정된 상태임 (정점) ===================================== 
+			
 
-
+			
 	/*		Matrix WorldMat = GetOwner()->Transform()->GetWorldMat();
 			Matrix ViewMat = CRenderMgr::GetInst()->GetMainCam()->GetViewMat();
 			Matrix ProjMat = CRenderMgr::GetInst()->GetMainCam()->GetProjMat();*/
 
 
 			// 웓드로 정점을 보내버려야함 ( World * View * Projection 적용)
-			Matrix WVP =  GetOwner()->Transform()->GetWorldMat() *
+			/*Matrix WVP = GetOwner()->Transform()->GetWorldMat() *
 			CRenderMgr::GetInst()->GetMainCam()->GetViewMat() *
 			CRenderMgr::GetInst()->GetMainCam()->GetProjMat();
 
+			*/
 
-			Vec4 FinalPos = XMVector3TransformCoord(Vertex.vPos, WVP);
+			//Matrix World = GetOwner()->Transform()->GetWorldMat();
+			//Matrix Transform = GetOwner()->Transform()->GetWorldPosMat();
+
+			//Matrix WorldMat = GetOwner()->Transform()->GetWorldMat();
+
+
+			Matrix ScaleMat = XMMatrixIdentity(); // 단위행렬 만들기
+			ScaleMat = XMMatrixScaling(30, 30, 30); // 크기행렬 만듬
+			Matrix RotMat = GetOwner()->Transform()->GetWorldRotMat(); // 회전 가져옴
+			Matrix TransMat = GetOwner()->Transform()->GetWorldPosMat(); // 이동 가져옴
+
+			Matrix FinalMat = ScaleMat * RotMat * TransMat;
+
+
+			Vec4 FinalPos = XMVector3TransformCoord(Vertex.vPos, FinalMat);
 
 
 
@@ -112,7 +133,7 @@ void CVayneScript::tick()
 		 
 
 			MeshObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3DMtrl"), 0);
-			MeshObj->Transform()->SetRelativeScale(Vec3(10.f, 10.f, 10.f));
+			MeshObj->Transform()->SetRelativeScale(Vec3(1.f, 1.f, 1.f));
 
 
 			SpawnGameObject(MeshObj, Vec3(FinalPos.x, FinalPos.y, FinalPos.z), 0);

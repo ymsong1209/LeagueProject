@@ -51,6 +51,7 @@ struct VS_OUT
     float3 vViewTangent : TANGENT;
     float3 vViewNormal : NORMAL;
     float3 vViewBinormal : BINORMAL;
+    float4 vBlendIndices : BLENDINDICES;
 };
 
 VS_OUT VS_Std3D_Deferred(VS_IN _in)
@@ -61,7 +62,13 @@ VS_OUT VS_Std3D_Deferred(VS_IN _in)
     {
         Skinning(_in.vPos, _in.vTangent, _in.vBinormal, _in.vNormal, _in.vWeights, _in.vIndices, 0);
     }
-        
+     
+    // Local에서 의 최종 정점 위치를 확정지음 (...)
+    // World ( 크기 , 회전, 이동이니까 모양에는 영향을 주지 않음)
+    // Vayne Mesh만 쓰고 있다면 여기까지는 에니메이션이 같고, 프레임이 같다면 같은 수치로 나올 것임
+    // Vayne1 , Vayne 2    ( Vertex Buffer / IndexBuffer (
+    // =================================================================
+
     output.vPosition = mul(float4(_in.vPos, 1.f), g_matWVP);
     output.vUV = _in.vUV;
     
@@ -69,6 +76,7 @@ VS_OUT VS_Std3D_Deferred(VS_IN _in)
     output.vViewTangent = normalize(mul(float4(_in.vTangent, 0.f), g_matWV));
     output.vViewNormal = normalize(mul(float4(_in.vNormal, 0.f), g_matWV));
     output.vViewBinormal = normalize(mul(float4(_in.vBinormal, 0.f), g_matWV));
+    output.vBlendIndices = _in.vIndices;
     
     return output;
 }
@@ -92,7 +100,7 @@ PS_OUT PS_Std3D_Deferred(VS_OUT _in) : SV_Target
     float3 vViewNormal = _in.vViewNormal;
 
     // Ray Test용 Code
-    if (RayTest == 30)
+    if (_in.vBlendIndices.x  >= 1 && _in.vBlendIndices.x <= 50)
     {
 
         PS_OUT TempOut = (PS_OUT)0.f;
@@ -104,17 +112,7 @@ PS_OUT PS_Std3D_Deferred(VS_OUT _in) : SV_Target
         return TempOut;
     }
 
-    else if (RayTest == 20)
-    {
-        PS_OUT TempOut = (PS_OUT)0.f;
-
-        TempOut.vColor = float4(0.f, 0.f, 1.f, 1.f);
-        TempOut.vNormal = float4(vViewNormal.xyz, 1.f);
-        TempOut.vPosition = float4(_in.vViewPos.xyz, 1.f);
-
-        return TempOut;
  
-    }
 
      
     // 텍스쳐가 있으면, 해당 색상을 사용한다.

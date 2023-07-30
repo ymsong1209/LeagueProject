@@ -181,8 +181,8 @@ void CreateTestLevel()
 		pObj->AddComponent(new CVayneScript);
 		pObj->AddComponent(new CPathFinder);
 
-		pObj->Animator3D()->PlayRepeat(L"Vayne\\Attack1.002", true, true, 0.1f);
-		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+		pObj->Animator3D()->PlayRepeat(L"Vayne\\Respawn.001", false, true, 0.1f);
+		pObj->Transform()->SetRelativeScale(Vec3(1.f, 1.f, 1.f));
 
 		pObj->Transform()->SetUseMouseOutline(false);
 		
@@ -190,7 +190,7 @@ void CreateTestLevel()
 		CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Vayne_Vehicle_Mtrl.mtrl")->SetTexParam(TEX_0, b);
 		int c = pObj->MeshRender()->GetMtrlCount();
 
-		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 0);
+		SpawnGameObject(pObj, Vec3(100.f, 200.f, 100.f), 0);
 	}
 
 

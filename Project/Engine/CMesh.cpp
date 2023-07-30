@@ -40,8 +40,6 @@ CMesh* CMesh::CreateFromContainer(CFBXLoader& _loader)
 
 	UINT iVtxCount = (UINT)container->vecPos.size();
 
-	
-
 	D3D11_BUFFER_DESC tVtxDesc = {};
 
 	tVtxDesc.ByteWidth = sizeof(Vtx) * iVtxCount;
@@ -76,6 +74,7 @@ CMesh* CMesh::CreateFromContainer(CFBXLoader& _loader)
 	pMesh->m_VB = pVB;
 	pMesh->m_tVBDesc = tVtxDesc;
 	pMesh->m_pVtxSys = pSys;
+	pMesh->m_TempVtxCount = iVtxCount;
 
 	// ÀÎµ¦½º Á¤º¸
 	UINT iIdxBufferCount = (UINT)container->vecIdx.size();

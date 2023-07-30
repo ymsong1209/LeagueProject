@@ -20,6 +20,8 @@ private:
 	D3D11_BUFFER_DESC		m_tVBDesc;
 	UINT					m_VtxCount;
 
+	UINT					m_TempVtxCount;
+
 	UINT					m_VtxCountFromContainer;
 	void* m_pVtxSys;
 
@@ -31,10 +33,12 @@ private:
 public:
 	Vtx* GetVtxSysMem() { return (Vtx*)m_pVtxSys; }
 	int* GetIdxSysMem(int _SubsetIndex) { return (int*)(m_vecIdxInfo[_SubsetIndex].pIdxSysMem); } // ¸Â³ª..?
+	UINT GetVertexCount() { return m_TempVtxCount; }
 	UINT GetSubsetCount() { return (UINT)m_vecIdxInfo.size(); }
 
 	const vector<tMTBone>* GetBones() { return &m_vecBones; }
 	UINT GetBoneCount() { return (UINT)m_vecBones.size(); }
+	UINT GetIndexCount(int _SubsetIndex) { return m_vecIdxInfo[_SubsetIndex].iIdxCount; }
 	const vector<tMTAnimClip>* GetAnimClip() { return &m_vecAnimClip; }
 	bool IsAnimMesh() { return !m_vecAnimClip.empty(); }
 
