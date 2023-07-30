@@ -117,6 +117,8 @@ void ServerPacketHandler::Handle_S_LOGIN(PacketSessionRef& session, BYTE* buffer
 	uint64 _PlayerId = pkt->playerId;
 	if (_Success)
 		cout << "S_LOGIN Success" << endl;
+	else
+		cout << "S_LOGIN Fail" << endl;
 
 
 	if(MyPlayer.id == 0)
@@ -184,7 +186,8 @@ void ServerPacketHandler::Handle_S_PICK_FACTION(PacketSessionRef& session, BYTE*
 	
 	if(_Success)
 		cout << "S_PICK_FACTION Success" << endl;
-
+	else
+		cout << "S_PICK_FACTION Fail" << endl;
 	// 챔피언 픽 레벨로 이동
 	//CreateChampionPickLevel();
 
@@ -206,6 +209,8 @@ void ServerPacketHandler::Handle_S_PICK_CHAMPION(PacketSessionRef& session, BYTE
 
 	if (_Success)
 		cout << "S_PICK_CHAMPION Success" << endl;
+	else
+		cout << "S_PICK_CHAMPION Fail" << endl;
 
 	// 내가 챔피언을 변경했을 시 업데이트
 	if (MyPlayer.id == pkt->PlayerID)
@@ -296,10 +301,11 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 	}
 	else
 	{
+		cout << "S_GAME_START Fail" << endl;
+		
 		IsInGame = false;
 		// 다시 진영 선택 레벨로 간다.
 		//CreateFactionLevel();
-
 	}
 
 	std::cout << "===============================" << endl;
@@ -444,6 +450,38 @@ void ServerPacketHandler::Handle_S_OBJECT_MOVE(PacketSessionRef& session, BYTE* 
 
 void ServerPacketHandler::Handle_S_SKILL_PROJECTILE(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
+	std::mutex m;
+	m.lock();
+
+	cout << "S_SKILL_PROJECTILE Packet" << endl;
+	BufferReader br(buffer, len);
+
+	PKT_S_SKILL_PROJECTILE* pkt = reinterpret_cast<PKT_S_SKILL_PROJECTILE*>(buffer);
+
+	if (pkt->Validate() == false)
+	{
+		m.unlock();
+		return;
+	}
+
+	// 투사체 objectId Id 오브젝트가 움직임.
+	uint64 _objectId = pkt->projectileId;
+
+	 // 여기 작성중
+	 // 
+	 // 
+	 // 
+	// 방장을 제외한 클라이언트만 해당 움직임을 받는다.
+	if (!MyPlayer.host)
+	{
+		ObjectMove playerMove = pkt->objectMove;
+
+		GameObjMgr::GetInst()->E_MoveObject(_objectId, playerMove);
+	}
+
+	std::cout << "===============================" << endl;
+
+	m.unlock();
 }
 
 void ServerPacketHandler::Handle_S_SKILL_HIT(PacketSessionRef& session, BYTE* buffer, int32 len)
@@ -471,7 +509,6 @@ void ServerPacketHandler::Handle_S_SKILL_HIT(PacketSessionRef& session, BYTE* bu
 
 	// 여기서 스킬 타입에 따라서 
 	// CSkill curSkill = SkillMgr::GetInst()->AttackedSkill(skillInfo.skillType) 
-
 
 
 
