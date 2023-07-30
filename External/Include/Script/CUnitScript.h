@@ -28,7 +28,7 @@ public:
     CLONE(CUnitScript);
 
 protected:
-    unsigned __int64    m_iServerID;        // 서버에게 부여받은 ID
+    UINT64              m_iServerID;        // 서버에게 부여받은 ID
     wstring             m_strNickname;      // 닉네임
     bool                m_bHost;            // 방장인지 여부
    
@@ -77,7 +77,7 @@ public:
     void  SetCurMPVar(float _f) { m_fMP += _f; }
     float GetMaxMP() const { return m_fMaxMP; }
 
-    unsigned __int64 GetServerID() { return m_iServerID; }
+    UINT64           GetServerID() { return m_iServerID; }
     wstring          GetNickname() const { return m_strNickname; }
     bool             IsHost() const { return m_bHost; }
     UnitType         GetUnitType() const { return m_eUnitType; }

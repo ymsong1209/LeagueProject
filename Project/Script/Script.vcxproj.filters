@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="CBaseAttack.cpp" />
     <ClCompile Include="CBasicAttackScript.cpp" />
     <ClCompile Include="CCameraMoveScript.cpp" />
     <ClCompile Include="CChampionAttackState.cpp" />
@@ -47,14 +46,20 @@
     <ClCompile Include="CTurretScript.cpp" />
     <ClCompile Include="CUnitScript.cpp" />
     <ClCompile Include="CUnitState.cpp" />
-    <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Script.cpp" />
     <ClCompile Include="CSendServerEventMgr.cpp">
       <Filter>SendServerEventMgr</Filter>
     </ClCompile>
+    <ClCompile Include="Script.cpp">
+      <Filter>Default</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Default</Filter>
+    </ClCompile>
+    <ClCompile Include="CBaseAttack.cpp">
+      <Filter>CSkill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CBaseAttack.h" />
     <ClInclude Include="CBasicAttackScript.h" />
     <ClInclude Include="CCameraMoveScript.h" />
     <ClInclude Include="CChampionAttackState.h" />
@@ -100,20 +105,45 @@
     <ClInclude Include="CTurretScript.h" />
     <ClInclude Include="CUnitScript.h" />
     <ClInclude Include="CUnitState.h" />
-    <ClInclude Include="framework.h" />
     <ClInclude Include="CInGameCameraScript.h" />
     <ClInclude Include="IGameEventListener.h" />
-    <ClInclude Include="pch.h" />
     <ClInclude Include="CSendServerEventMgr.h">
       <Filter>SendServerEventMgr</Filter>
     </ClInclude>
     <ClInclude Include="CServerTypes.h">
       <Filter>SendServerEventMgr</Filter>
     </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Default</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>Default</Filter>
+    </ClInclude>
+    <ClInclude Include="CBaseAttack.h">
+      <Filter>CSkill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="SendServerEventMgr">
       <UniqueIdentifier>{a1f9af3a-6472-47a7-82a8-e48fd395bb44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CSkill">
+      <UniqueIdentifier>{1f126d1b-8e12-4d67-90cc-de1ca062e204}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CGameEvent">
+      <UniqueIdentifier>{17fc3d2f-1241-4508-8e58-a71b39cda8b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScriptMgr">
+      <UniqueIdentifier>{19eb54d0-953a-4bd4-9d8c-14be9263ea54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts">
+      <UniqueIdentifier>{d9def97f-4966-409c-8d68-706865917eb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Default">
+      <UniqueIdentifier>{e47d8c20-ceb0-4b46-b728-7655108937b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State">
+      <UniqueIdentifier>{7a331946-ae8e-4e9f-b525-0321ca9958c5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

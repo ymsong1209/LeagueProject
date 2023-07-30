@@ -37,7 +37,7 @@ void CBaseAttack::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript)
 {
 	// 평타 투사체가 적과 충돌시 이 함수에 본인 스크립트 넣어서 호출할 것임
 
-	float Damage;
+	float Damage = 0;
 
 	// 시전자의 레벨, 기본 공격력 등에 따라 데미지 계산
 	CChampionScript* ChampScript = dynamic_cast<CChampionScript*>(_UserScript);
