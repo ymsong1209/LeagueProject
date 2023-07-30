@@ -18,6 +18,7 @@ void CWorldHPSpawnScript::begin()
 	info.tMP = 75.f;
 	info.tTotalHP = 100.f;
 	info.tTotalMP = 100.f;
+	info.team = 0;
 	m_vOtherplayerInfo.push_back(info);
 
 	for (size_t i = 0; i < m_vOtherplayerInfo.size(); ++i)
@@ -28,7 +29,20 @@ void CWorldHPSpawnScript::begin()
 		WorldBar->AddComponent(new CMeshRender);
 		WorldBar->AddComponent(new CWorldHPUIScript);
 		WorldBar->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-		WorldBar->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\WorldBar133.mtrl"), 0);
+
+		switch (m_vOtherplayerInfo[i].team)
+		{
+		case 0: //blue
+			WorldBar->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\BlueWorldBar133.mtrl"), 0);
+			break;
+		case 1: //red
+			WorldBar->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\RedWorldBar133.mtrl"), 0);
+			break;
+		case 2: //player
+			WorldBar->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\WorldBar133.mtrl"), 0);
+			break;
+		}
+
 		WorldBar->MeshRender()->SetRaySightCulling(false);
 		WorldBar->Transform()->SetRelativeScale(Vec3(31.92f, 6.96f, 100.f));
 		WorldBar->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
@@ -72,13 +86,13 @@ void CWorldHPSpawnScript::tick()
 		CCamera* UICam = CRenderMgr::GetInst()->GetCamerafromIdx(1);
 
 		// Get the inverse of the view-projection matrix
-		Matrix viewInvMatrix = UICam->GetViewMatInv();  // This should be your current view matrix
-		Matrix projInvMatrix = UICam->GetProjMatInv();  // This should be your current projection matrix
+		Matrix viewInvMatrix = UICam->GetViewMatInv(); 
+		Matrix projInvMatrix = UICam->GetProjMatInv(); 
 		Matrix invViewProjMatrix = viewInvMatrix * projInvMatrix;
 
 		// Transform to world coordinates
 		Vec3 worldVec = XMVector3TransformCoord(ndcVec, invViewProjMatrix);
-		m_vWorldBar[i]->Transform()->SetRelativePos(Vec3(worldVec.x- 3.f, -worldVec.y + 30.f, 700.f));
+		m_vWorldBar[i]->Transform()->SetRelativePos(Vec3(worldVec.x- 3.f, -worldVec.y + 37.f, 700.f)); 
 	}
 }
 

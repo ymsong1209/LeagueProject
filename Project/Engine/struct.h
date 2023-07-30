@@ -357,7 +357,7 @@ struct tWorldHPInfo //패킷이 어떻들어오는지 잘 몰라서 일단 이렇게 정보를 가져온�
 	float tTotalHP;
 	float tTotalMP;
 	Vec3  Pos;
-	bool  team; // 0: blue , 1: red
+	int  team; // 0: blue , 1: red , 2: player
 };
 
 

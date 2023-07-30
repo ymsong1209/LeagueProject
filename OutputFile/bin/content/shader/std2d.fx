@@ -543,43 +543,77 @@ float4 PS_WorldBar(VS_OUT _in) : SV_Target
     // Check if the UV is within HP or MP bar and beyond the remaining HP or MP
     if ((_in.vUV.y >= HPuv_1.y && _in.vUV.y <= HPuv_3.y) && _in.vUV.x <= HPuv_2.x && normalized_HP_UV_x > HP_ratio)
     {
-        vOutColor = float4(0.f, 0.f, 0.f, 0.6f);
+        vOutColor = float4(0.f, 0.f, 0.f, 0.75f);
     }
     else if ((_in.vUV.y >= MPuv_1.y && _in.vUV.y <= MPuv_3.y) && _in.vUV.x <= MPuv_2.x && normalized_MP_UV_x > MP_ratio)
     {
-        vOutColor = float4(0.f, 0.f, 0.f, 0.6f);
+        vOutColor = float4(0.f, 0.f, 0.f, 0.75f);
     }
     
 
     return vOutColor;
 }
-//VS_OUT VS_WorldBar(VS_IN _in)
-//{
-//    VS_OUT output = (VS_OUT) 0.f;
+
+
+// ============================
+// BarRatioShader
+// RasterizerState      : None
+// BlendState           : Mask
+// DepthStencilState    : Less
+
+// g_tex_0              : Output Texture
+// g_float_0            : 현재 bar대비 비율 (마나or체력 비율)
+// g_float_1            : 체력바의 왼쪽 x지점
+// g_float_2            : 체력바의 오른쪽 x지점
+// g_float_3            : 체력바의 위 y지점
+// g_float_4            : 체력바의 아래 y지점
+// g_float_5            : 전체 텍스쳐 가로
+// g_float_6            : 전체 텍스쳐 세로
+
+// Animation 관련
+#define Ratio                   g_float_0  
+#define LeftX                   g_float_1  
+#define RightX                  g_float_2  
+#define UpY                     g_float_3  
+#define DownY                   g_float_4
+#define TotalWidth              g_float_5
+#define TotalHeight             g_float_6
+// ============================
+
+VS_OUT VS_BarRatioShader(VS_IN _in)
+{
+    VS_OUT output = (VS_OUT) 0.f;
+
+    output.vPosition = mul(float4(_in.vLocalPos, 1.f), g_matWVP);
+    output.vUV = _in.vUV; // UV 조정은 삭제
+
+    return output;
+}
+
+float4 PS_BarRatioShader(VS_OUT _in) : SV_Target
+{
+    // Define UV boundaries
+    // Sample the color from the texture
+    float4 vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
     
-//    output.vPosition = mul(float4(_in.vLocalPos, 1.f), g_matWVP);
-//    output.vUV = _in.vUV;
-        
-//    return output;
-//}
+    float2 HPuv_1 = float2(LeftX / TotalWidth, UpY / TotalHeight);
+    float2 HPuv_2 = float2(RightX / TotalWidth, UpY / TotalHeight);
+    float2 HPuv_3 = float2(LeftX / TotalWidth, DownY / TotalHeight);
+    float2 HPuv_4 = float2(RightX / TotalWidth, DownY / TotalHeight);
 
+    // Define HP and MP ratios
+    float HP_ratio = g_float_0;
 
-//float4 PS_WorldBar(VS_OUT _in) : SV_Target
-//{
-//    float4 vOutColor = (float4) 0.f;
-        
-//    if (g_btex_0)
-//    {
-//        vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
-//    }
-//    else
-//    {
-//        vOutColor = float4(1.f, 0.f, 1.f, 1.f);
-//    }
-        
-//    return vOutColor;
-//}
+    // Normalize the UV.x with respect to the HP and MP bar widths
+    float normalized_HP_UV_x = (_in.vUV.x - HPuv_1.x) / (HPuv_2.x - HPuv_1.x);
 
+    // Check if the UV is within HP or MP bar and beyond the remaining HP or MP
+    if ((_in.vUV.y >= HPuv_1.y && _in.vUV.y <= HPuv_3.y) && _in.vUV.x <= HPuv_2.x && normalized_HP_UV_x > HP_ratio)
+    {
+        vOutColor = float4(0.f, 0.f, 0.f, 0.75f);
+    }
 
+    return vOutColor;
+}
 
 #endif

@@ -946,6 +946,35 @@ void CResMgr::CreateDefaultGraphicsShader()
 	AddRes(pShader->GetKey(), pShader);
 
 	// ============================
+	// BarShader  //한가지만 처리
+	// RasterizerState      : CULL_NONE
+	// BlendState           : ALPHA_BLEND
+	// DepthStencilState    : Less
+	//
+	// Parameter
+	// g_tex_0              : Output Texture
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"BarRatioShader");
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_BarRatioShader");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_BarRatioShader");
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::MASK);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI_MASK);
+	// Param
+	pShader->AddTexParam(TEX_0, "Output Texture");
+	pShader->AddScalarParam(FLOAT_0, "Ratio      ");
+	pShader->AddScalarParam(FLOAT_1, "LeftX      ");
+	pShader->AddScalarParam(FLOAT_2, "RightX     ");
+	pShader->AddScalarParam(FLOAT_3, "UpY        ");
+	pShader->AddScalarParam(FLOAT_4, "DownY      ");
+	pShader->AddScalarParam(FLOAT_5, "TotalWidth ");
+	pShader->AddScalarParam(FLOAT_6, "TotalHeight");
+	AddRes(pShader->GetKey(), pShader);
+
+
+	// ============================
 	// WorldBarShader
 	// RasterizerState      : CULL_NONE
 	// BlendState           : ALPHA_BLEND

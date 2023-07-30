@@ -1321,6 +1321,7 @@ void CCamera::render_Outline()
 	DefferedMrt = CRenderMgr::GetInst()->GetMRT(MRT_TYPE::DEFERRED);
 	RTCount = DefferedMrt->GetRTCount();
 	for (UINT i = 0; i < RTCount; ++i)
-		DefferedMrt->GetRTAtIndex(i)->Clear();
-
+		DefferedMrt->GetRTAtIndex(i)->Clear();  //셰이더 리소스 해제
+	 
+	DefferedMrt->Clear(); //다른 카메라가 있을 경우를 대비한 디퍼드 mrt클리어(다른 카메라에 영향을 주지 않게 함)
 }
