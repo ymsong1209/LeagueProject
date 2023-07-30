@@ -173,6 +173,7 @@ call CodeGen.exe</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CAttackRangeScript.h" />
     <ClInclude Include="CBaseAttack.h" />
     <ClInclude Include="CBasicAttackScript.h" />
     <ClInclude Include="CCameraMoveScript.h" />
@@ -187,6 +188,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CFlash.h" />
     <ClInclude Include="CGameEvent.h" />
     <ClInclude Include="CGameEventMgr.h" />
+    <ClInclude Include="CJinxAttackState.h" />
     <ClInclude Include="CServerTypes.h" />
     <ClInclude Include="CHeal.h" />
     <ClInclude Include="CInhibitorBrokenState.h" />
@@ -227,6 +229,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CAttackRangeScript.cpp" />
     <ClCompile Include="CBaseAttack.cpp" />
     <ClCompile Include="CBasicAttackScript.cpp" />
     <ClCompile Include="CCameraMoveScript.cpp" />
@@ -245,6 +248,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CInhibitorIdleState.cpp" />
     <ClCompile Include="CInhibitorScript.cpp" />
     <ClCompile Include="CInhibitorSpawnState.cpp" />
+    <ClCompile Include="CJinxAttackState.cpp" />
     <ClCompile Include="CJinxDeathState.cpp" />
     <ClCompile Include="CJinxIdleState.cpp" />
     <ClCompile Include="CJinxQ.cpp" />

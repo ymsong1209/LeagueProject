@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CScriptMgr.h"
 
+#include "CAttackRangeScript.h"
 #include "CBasicAttackScript.h"
 #include "CCameraMoveScript.h"
 #include "CChampionScript.h"
@@ -19,6 +20,7 @@
 
 void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 {
+	_vec.push_back(L"CAttackRangeScript");
 	_vec.push_back(L"CBasicAttackScript");
 	_vec.push_back(L"CCameraMoveScript");
 	_vec.push_back(L"CChampionScript");
@@ -38,6 +40,8 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 
 CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 {
+	if (L"CAttackRangeScript" == _strScriptName)
+		return new CAttackRangeScript;
 	if (L"CBasicAttackScript" == _strScriptName)
 		return new CBasicAttackScript;
 	if (L"CCameraMoveScript" == _strScriptName)
@@ -75,6 +79,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 {
 	switch (_iScriptType)
 	{
+	case (UINT)SCRIPT_TYPE::ATTACKRANGESCRIPT:
+		return new CAttackRangeScript;
+		break;
 	case (UINT)SCRIPT_TYPE::BASICATTACKSCRIPT:
 		return new CBasicAttackScript;
 		break;
@@ -128,6 +135,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 {
 	switch ((SCRIPT_TYPE)_pScript->GetScriptType())
 	{
+	case SCRIPT_TYPE::ATTACKRANGESCRIPT:
+		return L"CAttackRangeScript";
+		break;
+
 	case SCRIPT_TYPE::BASICATTACKSCRIPT:
 		return L"CBasicAttackScript";
 		break;

@@ -4,12 +4,29 @@
 #include <Engine/ptr.h>
 #include "CUnitScript.h"
 #include "CChampionScript.h"
+#include "CBasicAttackScript.h"
 
 CBaseAttack::CBaseAttack()
 {
 	m_strSkillName = L"BaseAttack";
 	m_fCoolDown = 0.f;
 	m_iLevel = 1;
+
+	// 투사체 생성
+	CGameObject* Projectile = new CGameObject;
+	Projectile->AddComponent(new CTransform);
+	Projectile->AddComponent(new CCollider2D);
+	Projectile->AddComponent(new CBasicAttackScript);
+	Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+	Projectile->Collider2D()->SetOffsetScale(Vec2(5.f, 5.f));
+	Projectile->Collider2D()->SetOffsetRot(Vec3(90.f, 0.f, 0.f));
+	Projectile->SetName(L"Projectile");
+
+	Ptr<CPrefab> NewPrefab = new CPrefab;
+	CGameObject* PrefabObject = Projectile->Clone(); 
+	NewPrefab->RegisterProtoObject(PrefabObject);
+
+	m_vecSkillObj.push_back( NewPrefab);
 }
 
 CBaseAttack::~CBaseAttack()
@@ -28,7 +45,14 @@ bool CBaseAttack::Use()
 	if (m_vecSkillObj.size() == 0)
 		return false;
 
-	m_vecSkillObj[0]->Instantiate();
+	CGameObject* bullet = m_vecSkillObj[0]->Instantiate();
+	Vec3 OwnerPos = m_OwnerScript->GetOwner()->Transform()->GetRelativePos();
+
+	CBasicAttackScript* AttackScript = bullet->GetScript<CBasicAttackScript>();
+	AttackScript->SetTargetID(m_iTargetID);
+	AttackScript->SetUserID(m_iUserID);
+
+	SpawnGameObject(bullet, OwnerPos, 0);
 
 	return true;
 }

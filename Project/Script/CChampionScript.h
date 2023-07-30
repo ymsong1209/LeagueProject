@@ -81,6 +81,6 @@ public:
 public:
     int GetLevel() { return m_iLevel; }
     float GetDefencePower() { return m_fDefencePower; }
-    CSkill* GetSkill(int _i) { if (_i < 0 || _i >= 5) return nullptr; m_Skill[_i]; }
+    CSkill* GetSkill(int _i) { if (_i < 0 || _i >= 5) return nullptr; return m_Skill[_i]; }
 };
 

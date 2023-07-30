@@ -9,6 +9,7 @@
 #include "CGameEventMgr.h"
 
 #include "CSkill.h"
+#include "CAttackRangeScript.h"
 
 CChampionScript::CChampionScript(UINT ScriptType)
 	: CUnitScript(ScriptType)
@@ -130,100 +131,116 @@ void CChampionScript::GetInput()
 		CCamera* MainCam = CRenderMgr::GetInst()->GetMainCam();
 		tRay ray = MainCam->GetRay();
 
-		// 다른 오브젝트를 클릭했을 경우
-		// ...
-		/*
-		if (오브젝트 클릭)
+		// 현재 마우스 ray와 충돌 중인 오브젝트가 있는지 확인
+		vector<CGameObject*>& MouseOverlapObj = MainCam->GetMouseOverlapObj();
+		if (MouseOverlapObj.size() >= 1)
 		{
-			if(오브젝트의 진영이 나와 같지 않다면 공격 가능)
+			CGameObject* Unit = MouseOverlapObj[0];
+			CUnitScript* UnitScript = Unit->GetScript<CUnitScript>();
+
+			// 오브젝트가 현재 챔피언의 사거리 내에 있는지 확인
+			CGameObject* AttackRange = GetOwner()->FindChildObjByName(L"AttackRange");
+			CAttackRangeScript* AttackRangeScript = AttackRange->GetScript<CAttackRangeScript>();
+			vector<CGameObject*> UnitinRange = AttackRangeScript->GetUnitsInRange();
+
+			auto it = find(UnitinRange.begin(), UnitinRange.end(), Unit);
+
+			// 사거리 내에 있음
+			if (it != UnitinRange.end())
 			{
-				if (오브젝트 거리 - 플레이어 거리 < 공격 사거리)
+				// 공격 이벤트 발생
+				BaseAttackEvent* evn = dynamic_cast<BaseAttackEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_BASE_ATTACK));
+				if (evn != nullptr)
 				{
-					일반공격 이벤트 등록;
-					BaseAttackEvent* evn = dynamic_cast<BaseAttackEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_BASE_ATTACK));
-					if (evn != nullptr)
-					{
-						evn->Clear();
-						evn->SetPlayerID(GetOwner()->GetID());
-						evn->SetTargetID(클릭한 Obj ID);
-						
-						CGameEventMgr::GetInst()->NotifyEvent(*evn);
-					}
+					evn->Clear();
+					evn->SetUserID(GetOwner()->GetID());
+					evn->SetTargetID(UnitScript->GetOwner()->GetID());
+
+					CGameEventMgr::GetInst()->NotifyEvent(*evn);
 				}
+
 			}
+			// 사거리 내에 없음
+			else
+			{
+				// 사거리 내에 들어올 때까지 이동
+			}
+		}
 		else
 		{
-			오브젝트 방향으로 오브젝트 중심에서 사거리만큼 떨어진 곳까지 걸어감
-		}*/
+			// 그 외(땅을 클릭한 경우)
 
-		// 그 외(땅을 클릭한 경우)
+			// 움직일 수 없는 상황인 경우 return
+			if ((m_eRestraint & CAN_MOVE) == 0)
+				return;
 
-		// 움직일 수 없는 상황인 경우 return
-		if ((m_eRestraint & CAN_MOVE) == 0)
-			return;
-
-		CGameObject* Map = CLevelMgr::GetInst()->GetCurLevel()->FindObjectByName(L"LoLMapCollider");
-		IntersectResult result = MainCam->IsCollidingBtwRayRect(ray, Map);
-		Vec3 TargetPos = result.vCrossPoint;	// 클릭 좌표
-		PathFinder()->FindPath(TargetPos);
-	}
-
-
-	if (KEY_TAP(KEY::Q))
-	{
-		// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-		if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[0]->GetCost() > m_fMP)
-			return;
-
-		if (m_Skill[0]->Use())
-		{
-			// 스킬 이벤트
+			CGameObject* Map = CLevelMgr::GetInst()->GetCurLevel()->FindObjectByName(L"LoLMapCollider");
+			IntersectResult result = MainCam->IsCollidingBtwRayRect(ray, Map);
+			Vec3 TargetPos = result.vCrossPoint;	// 클릭 좌표
+			PathFinder()->FindPath(TargetPos);
 		}
-	}
-	if (KEY_TAP(KEY::W))
-	{
-		// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-		if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[1]->GetCost() > m_fMP)
-			return;
 
-		if (m_Skill[1]->Use())
+
+		if (KEY_TAP(KEY::Q))
 		{
-			// 스킬 이벤트
-		}
-	}
-	if (KEY_TAP(KEY::E))
-	{
-		// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-		if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[2]->GetCost() > m_fMP)
-			return;
+			// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
+			if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[0]->GetCost() > m_fMP)
+				return;
 
-		if (m_Skill[2]->Use())
+			if (m_Skill[0]->Use())
+			{
+				// 스킬 이벤트
+			}
+		}
+		if (KEY_TAP(KEY::W))
 		{
-			// 스킬 이벤트
-		}
-	}
-	if (KEY_TAP(KEY::R))
-	{
-		// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-		if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[3]->GetCost() > m_fMP)
-			return;
+			// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
+			if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[1]->GetCost() > m_fMP)
+				return;
 
-		if (m_Skill[3]->Use())
+			if (m_Skill[1]->Use())
+			{
+				// 스킬 이벤트
+			}
+		}
+		if (KEY_TAP(KEY::E))
 		{
-			// 스킬 이벤트
+			// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
+			if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[2]->GetCost() > m_fMP)
+				return;
+
+			if (m_Skill[2]->Use())
+			{
+				// 스킬 이벤트
+			}
 		}
+		if (KEY_TAP(KEY::R))
+		{
+			// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
+			if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[3]->GetCost() > m_fMP)
+				return;
+
+			if (m_Skill[3]->Use())
+			{
+				// 스킬 이벤트
+			}
+		}
+
+		// 소환사 주문
 	}
-
-	// 소환사 주문
-
 }
 
 void CChampionScript::CheckSkills()
 {
-	//for (int i = 0; i < 4; i++)
-	//{
-	//	m_Skill[i]->tick();
-	//}
+	
+
+	for (int i = 0; i < 5; i++)
+	{
+		if (m_Skill[i] == nullptr)
+			continue;
+
+		m_Skill[i]->tick();
+	}
 }
 
 void CChampionScript::Move()

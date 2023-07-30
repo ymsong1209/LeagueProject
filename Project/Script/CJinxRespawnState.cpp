@@ -19,8 +19,11 @@ void CJinxRespawnState::tick()
 
 void CJinxRespawnState::Enter()
 {
-	//GetOwner()->Animator3D()->Play(L"Jinx\\Respawn", true, 0.1f);
-	GetOwner()->Animator3D()->PlayOnce(L"Jinx\\Respawn");
+	wstring animName = L"Jinx\\Respawn";
+	GetOwner()->Animator3D()->PlayOnce(animName, true, 0.1f);
+
+	SendAnimPacket(animName, false, true, 0.1f);
+
 	CChampionRespawnState::Enter();
 }
 

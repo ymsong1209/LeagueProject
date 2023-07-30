@@ -30,6 +30,9 @@ void CChampionAttackState::Enter()
 	CChampionScript* ChampScript = GetOwnerFSM()->GetOwner()->GetScript<CChampionScript>();
 	CSkill* BaseAttack = ChampScript->GetSkill(0);
 	
+	BaseAttack->SetUserID(m_iUserID);
+	BaseAttack->SetTargetID(m_iTargetID);
+	
 	if (BaseAttack) 
 		BaseAttack->Use();
 

@@ -3,6 +3,7 @@
 
 CBasicAttackScript::CBasicAttackScript()
 	:CScript((UINT)SCRIPT_TYPE::BASICATTACKSCRIPT)
+	, m_fProjectileSpeed(100.f)
 {
 }
 
@@ -33,7 +34,7 @@ void CBasicAttackScript::tick()
 
 	// 투사체 이동
 	Vec3 ProjectilePos = GetOwner()->Transform()->GetRelativePos();
-	Vec3 NewPos = ProjectilePos + Direction * m_fProjectileSpeed * DT;
+	Vec3 NewPos = ProjectilePos + Direction * m_fProjectileSpeed * EditorDT;
 	GetOwner()->Transform()->SetRelativePos(NewPos);
 }
 

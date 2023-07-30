@@ -21,21 +21,10 @@ void CJinxIdleState::tick()
 
 void CJinxIdleState::Enter()
 {
-	GetOwner()->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true, 0.1f);
+	wstring animName = L"Jinx\\Idle1_Base";
+	GetOwner()->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true, true, 0.15f);
 
-	// server에 보낼 애니메이션 패킷 이벤트 등록
-	AnimInfo* animInfo = new AnimInfo();
-	animInfo->targetId = GetOwnerFSM()->GetOwner()->GetScript<CUnitScript>()->GetServerID();
-	animInfo->animName = L"Jinx\\Idle1_Base";
-	//animInfo->bRepeat = ?
-	animInfo->blend = true;
-	animInfo->blendTime = 0.1f;
-	
-	tServerEvent evn = {};
-	evn.Type = SERVER_EVENT_TYPE::SEND_ANIM_PACKET;
-	//evn.wParam = (DWORD_PTR);
-	evn.lParam = (DWORD_PTR)animInfo;
-	CSendServerEventMgr::GetInst()->AddServerSendEvent(evn);
+	SendAnimPacket(animName, true, true, 0.15f);
 	
 	CChampionIdleState::Enter();
 }

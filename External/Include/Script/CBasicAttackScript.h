@@ -26,5 +26,8 @@ public:
     virtual void tick() override;
 
     virtual void BeginOverlap(CCollider2D* _Other)  override;
+
+    void SetUserID(int _i) { m_iUserID = _i; };
+    void SetTargetID(int _i) { m_iTargetID = _i; }
 };
 

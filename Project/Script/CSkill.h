@@ -44,7 +44,7 @@ protected:
 	int						m_iLevel;		// 스킬 레벨
 	int						m_iMaxLevel;	// 최대 레벨 (QWE : 5, R : 3)
 
-	CScript*				m_OwnerScript;	// 챔피언 스크립트
+	CUnitScript*			m_OwnerScript;	// 챔피언 스크립트
 
 	vector<Ptr<CPrefab>>			m_vecSkillObj;	// 스킬 사용 시 생성할 투사체 등
 
@@ -63,7 +63,7 @@ public:
 
 public:
 	// 챔피언 스크립트 생성자에서 스킬 생성 후 Owner 등록
-	void SetOwnerScript(CScript* _script) { m_OwnerScript = _script; }
+	void SetOwnerScript(CUnitScript* _script) { m_OwnerScript = _script; }
 
 	// 스킬 사용가능 여부 (쿨타임만)
 	bool	IsReady() { return m_fCurCoolDown <= 0.0f; }
@@ -73,6 +73,9 @@ public:
 	SkillType GetSkillType() { return m_eSkillType; }
 	int		GetUserID() { return m_iUserID; }
 	int		GetTargetID() { return m_iTargetID; }
+
+	void SetUserID(int _i) { m_iUserID = _i; }
+	void SetTargetID(int _i) { m_iTargetID = _i; }
 
 	float	GetCurCoolDown() { return m_fCurCoolDown; }
 	float	GetCoolDown() { return m_fCoolDown; }

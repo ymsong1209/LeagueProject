@@ -30,7 +30,7 @@ void CChampionRespawnState::Enter()
 
 void CChampionRespawnState::Exit()
 {
-	CUnitState::Enter();
+	CUnitState::Exit();
 }
 
 void CChampionRespawnState::HandleEvent(CGameEvent& event)
