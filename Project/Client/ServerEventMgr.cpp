@@ -101,7 +101,14 @@ void ServerEventMgr::sendtick(ClientServiceRef _service)
 			skillInfo = nullptr;
 			break;
 		}
-
+		case SERVER_EVENT_TYPE::SEND_HIT_PACKET:
+		{
+			HitInfo* hitInfo = (HitInfo*)(_vecScriptEvent[i].wParam);
+			GameObjMgr::GetInst()->SendSkillHit(hitInfo, _service);
+			delete hitInfo; // 메모리 사용 해제
+			hitInfo = nullptr;
+			break;
+		}
 
 
 		}
