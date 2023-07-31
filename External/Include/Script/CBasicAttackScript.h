@@ -39,9 +39,12 @@ public:
     void SetServerUserID(int _i) { m_iServerUserID = _i; }
     void SetServerTargetID(int _i) { m_iServerUserID = _i; }
     void SetServeID(int _i) { m_iServerUserID = _i; }
+    void SetUserObj(CGameObject* _userObj) { m_UserObj = _userObj; }
+    void SetTargetObj(CGameObject* _targetObj) { m_TargetObj = _targetObj; }
 
     UINT64  GetServerUserID() { return m_iServerUserID; }
     UINT64  GetServerTargetID() { return m_iServerTargetID; }
     UINT64  GetServerID() { return m_iServerID; }
+    
 };
 

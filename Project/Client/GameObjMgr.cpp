@@ -304,6 +304,9 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 			Script->SetServeID(_projectileId);
 			Script->SetUserID(_skillInfo.OwnerId);   
 			Script->SetTargetID(_skillInfo.TargetId);
+			
+			Script->SetUserObj(FindAllObject(_skillInfo.OwnerId));
+			Script->SetTargetObj(FindAllObject(_skillInfo.TargetId));
 
 			pObj->SetName(L"Projectile");
 

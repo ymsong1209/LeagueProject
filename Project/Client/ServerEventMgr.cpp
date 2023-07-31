@@ -151,11 +151,11 @@ void ServerEventMgr::clienttick()
 			animInfo = nullptr;
 		}
 		break;
-		case SERVER_EVENT_TYPE::SKILL_PROJECTILE_PACKET:
-		{
-
-		}
-		break;
+		//case SERVER_EVENT_TYPE::SKILL_PROJECTILE_PACKET:
+		//{
+		//
+		//}
+		//break;
 		case SERVER_EVENT_TYPE::SKILL_HIT_PACKET:
 		{
 
