@@ -49,57 +49,33 @@
     <ClCompile Include="CUnitState.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Script.cpp" />
+    <ClCompile Include="CCharacterUIScript.cpp" />
+    <ClCompile Include="CCoolDownUIScript.cpp" />
+    <ClCompile Include="CExpRatioUIScript.cpp" />
+    <ClCompile Include="CHpMpRatioUIScript.cpp" />
+    <ClCompile Include="CInventoryUIScript.cpp" />
+    <ClCompile Include="CUIScript.cpp" />
+    <ClCompile Include="CWorldHPSpawnScript.cpp" />
+    <ClCompile Include="CWorldHPUIScript.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CMissileScript.h">
-      <Filter>Script</Filter>
-    </ClInclude>
-    <ClInclude Include="CMonsterScript.h">
-      <Filter>Script</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayerScript.h">
-      <Filter>Script</Filter>
-    </ClInclude>
-    <ClInclude Include="framework.h">
-      <Filter>Default</Filter>
-    </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>Default</Filter>
-    </ClInclude>
-    <ClInclude Include="CScriptMgr.h">
-      <Filter>ScriptMgr</Filter>
-    </ClInclude>
-    <ClInclude Include="CGravityScript.h">
-      <Filter>Script</Filter>
-    </ClInclude>
-    <ClInclude Include="CTestIdleState.h">
-      <Filter>Script\testCharacter</Filter>
-    </ClInclude>
-    <ClInclude Include="CInGameCameraScript.h">
-      <Filter>Script\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="CCameraMoveScript.h">
-      <Filter>Script\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="CUIScript.h" />
+    <ClInclude Include="CCameraMoveScript.h" />
+    <ClInclude Include="COtherPlayerScript.h" />
+    <ClInclude Include="CPlayerScript.h" />
+    <ClInclude Include="CScriptMgr.h" />
+    <ClInclude Include="framework.h" />
+    <ClInclude Include="CInGameCameraScript.h" />
+    <ClInclude Include="pch.h" />
     <ClInclude Include="CCharacterUIScript.h" />
-    <ClInclude Include="COtherPlayerScript.h">
-      <Filter>Script</Filter>
-    </ClInclude>
     <ClInclude Include="CCoolDownUIScript.h" />
     <ClInclude Include="CExpRatioUIScript.h" />
     <ClInclude Include="CHpMpRatioUIScript.h" />
-    <ClInclude Include="CWorldHPUIScript.h" />
-    <ClInclude Include="CWorldHPSpawnScript.h" />
     <ClInclude Include="CInventoryUIScript.h" />
+    <ClInclude Include="CUIScript.h" />
+    <ClInclude Include="CWorldHPSpawnScript.h" />
+    <ClInclude Include="CWorldHPUIScript.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CMissileScript.cpp">
-      <Filter>Script</Filter>
-    </ClCompile>
-    <ClCompile Include="CMonsterScript.cpp">
-      <Filter>Script</Filter>
-    </ClCompile>
     <ClCompile Include="CPlayerScript.cpp">
       <Filter>Script</Filter>
     </ClCompile>
@@ -112,29 +88,15 @@
     <ClCompile Include="CScriptMgr.cpp">
       <Filter>ScriptMgr</Filter>
     </ClCompile>
-    <ClCompile Include="CGravityScript.cpp">
-      <Filter>Script</Filter>
-    </ClCompile>
-    <ClCompile Include="CTestIdleState.cpp">
-      <Filter>Script\testCharacter</Filter>
-    </ClCompile>
     <ClCompile Include="CInGameCameraScript.cpp">
       <Filter>Script\Camera</Filter>
     </ClCompile>
     <ClCompile Include="CCameraMoveScript.cpp">
       <Filter>Script\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="CUIScript.cpp" />
-    <ClCompile Include="CCharacterUIScript.cpp" />
     <ClCompile Include="COtherPlayerScript.cpp">
       <Filter>Script</Filter>
     </ClCompile>
-    <ClCompile Include="CCoolDownUIScript.cpp" />
-    <ClCompile Include="CExpRatioUIScript.cpp" />
-    <ClCompile Include="CHpMpRatioUIScript.cpp" />
-    <ClCompile Include="CWorldHPUIScript.cpp" />
-    <ClCompile Include="CWorldHPSpawnScript.cpp" />
-    <ClCompile Include="CInventoryUIScript.cpp" />
     <ClInclude Include="CBaseAttack.h" />
     <ClInclude Include="CBasicAttackScript.h" />
     <ClInclude Include="CCameraMoveScript.h" />

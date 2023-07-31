@@ -21,8 +21,8 @@ private:
     CGameObject* Spell_D;
     CGameObject* Spell_F;
 
-    SUMMONERS_SPELL Spell_1;
-    SUMMONERS_SPELL Spell_2;
+    SUMMONERS_SPELL2 Spell_1;
+    SUMMONERS_SPELL2 Spell_2;
 
     CGameObject* HPBar;
     CGameObject* MPBar;

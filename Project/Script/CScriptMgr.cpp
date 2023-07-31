@@ -4,8 +4,13 @@
 #include "CBasicAttackScript.h"
 #include "CCameraMoveScript.h"
 #include "CChampionScript.h"
+#include "CCharacterUIScript.h"
+#include "CCoolDownUIScript.h"
+#include "CExpRatioUIScript.h"
+#include "CHpMpRatioUIScript.h"
 #include "CInGameCameraScript.h"
 #include "CInhibitorScript.h"
+#include "CInventoryUIScript.h"
 #include "CJinxScript.h"
 #include "CJungleMonsterScript.h"
 #include "CMinionScript.h"
@@ -15,15 +20,23 @@
 #include "CPlayerScript.h"
 #include "CStructureScript.h"
 #include "CTurretScript.h"
+#include "CUIScript.h"
 #include "CUnitScript.h"
+#include "CWorldHPSpawnScript.h"
+#include "CWorldHPUIScript.h"
 
 void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 {
 	_vec.push_back(L"CBasicAttackScript");
 	_vec.push_back(L"CCameraMoveScript");
 	_vec.push_back(L"CChampionScript");
+	_vec.push_back(L"CCharacterUIScript");
+	_vec.push_back(L"CCoolDownUIScript");
+	_vec.push_back(L"CExpRatioUIScript");
+	_vec.push_back(L"CHpMpRatioUIScript");
 	_vec.push_back(L"CInGameCameraScript");
 	_vec.push_back(L"CInhibitorScript");
+	_vec.push_back(L"CInventoryUIScript");
 	_vec.push_back(L"CJinxScript");
 	_vec.push_back(L"CJungleMonsterScript");
 	_vec.push_back(L"CMinionScript");
@@ -33,7 +46,10 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CPlayerScript");
 	_vec.push_back(L"CStructureScript");
 	_vec.push_back(L"CTurretScript");
+	_vec.push_back(L"CUIScript");
 	_vec.push_back(L"CUnitScript");
+	_vec.push_back(L"CWorldHPSpawnScript");
+	_vec.push_back(L"CWorldHPUIScript");
 }
 
 CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
@@ -44,10 +60,20 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CCameraMoveScript;
 	if (L"CChampionScript" == _strScriptName)
 		return new CChampionScript;
+	if (L"CCharacterUIScript" == _strScriptName)
+		return new CCharacterUIScript;
+	if (L"CCoolDownUIScript" == _strScriptName)
+		return new CCoolDownUIScript;
+	if (L"CExpRatioUIScript" == _strScriptName)
+		return new CExpRatioUIScript;
+	if (L"CHpMpRatioUIScript" == _strScriptName)
+		return new CHpMpRatioUIScript;
 	if (L"CInGameCameraScript" == _strScriptName)
 		return new CInGameCameraScript;
 	if (L"CInhibitorScript" == _strScriptName)
 		return new CInhibitorScript;
+	if (L"CInventoryUIScript" == _strScriptName)
+		return new CInventoryUIScript;
 	if (L"CJinxScript" == _strScriptName)
 		return new CJinxScript;
 	if (L"CJungleMonsterScript" == _strScriptName)
@@ -66,8 +92,14 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CStructureScript;
 	if (L"CTurretScript" == _strScriptName)
 		return new CTurretScript;
+	if (L"CUIScript" == _strScriptName)
+		return new CUIScript;
 	if (L"CUnitScript" == _strScriptName)
 		return new CUnitScript;
+	if (L"CWorldHPSpawnScript" == _strScriptName)
+		return new CWorldHPSpawnScript;
+	if (L"CWorldHPUIScript" == _strScriptName)
+		return new CWorldHPUIScript;
 	return nullptr;
 }
 
@@ -84,6 +116,15 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::CHAMPIONSCRIPT:
 		return new CChampionScript;
 		break;
+	case (UINT)SCRIPT_TYPE::CHARACTERUISCRIPT:
+		return new CCharacterUIScript;
+		break;
+	case (UINT)SCRIPT_TYPE::COOLDOWNUISCRIPT:
+		return new CCoolDownUIScript;
+		break;
+	case (UINT)SCRIPT_TYPE::EXPRATIOUISCRIPT:
+		return new CExpRatioUIScript;
+		break;
 	case (UINT)SCRIPT_TYPE::HPMPRATIOUISCRIPT:
 		return new CHpMpRatioUIScript;
 		break;
@@ -92,6 +133,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::INHIBITORSCRIPT:
 		return new CInhibitorScript;
+		break;
+	case (UINT)SCRIPT_TYPE::INVENTORYUISCRIPT:
+		return new CInventoryUIScript;
 		break;
 	case (UINT)SCRIPT_TYPE::JINXSCRIPT:
 		return new CJinxScript;
@@ -120,8 +164,17 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::TURRETSCRIPT:
 		return new CTurretScript;
 		break;
+	case (UINT)SCRIPT_TYPE::UISCRIPT:
+		return new CUIScript;
+		break;
 	case (UINT)SCRIPT_TYPE::UNITSCRIPT:
 		return new CUnitScript;
+		break;
+	case (UINT)SCRIPT_TYPE::WORLDHPSPAWNSCRIPT:
+		return new CWorldHPSpawnScript;
+		break;
+	case (UINT)SCRIPT_TYPE::WORLDHPUISCRIPT:
+		return new CWorldHPUIScript;
 		break;
 	}
 	return nullptr;
@@ -143,6 +196,18 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CChampionScript";
 		break;
 
+	case SCRIPT_TYPE::CHARACTERUISCRIPT:
+		return L"CCharacterUIScript";
+		break;
+
+	case SCRIPT_TYPE::COOLDOWNUISCRIPT:
+		return L"CCoolDownUIScript";
+		break;
+
+	case SCRIPT_TYPE::EXPRATIOUISCRIPT:
+		return L"CExpRatioUIScript";
+		break;
+
 	case SCRIPT_TYPE::HPMPRATIOUISCRIPT:
 		return L"CHpMpRatioUIScript";
 		break;
@@ -153,6 +218,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::INHIBITORSCRIPT:
 		return L"CInhibitorScript";
+		break;
+
+	case SCRIPT_TYPE::INVENTORYUISCRIPT:
+		return L"CInventoryUIScript";
 		break;
 
 	case SCRIPT_TYPE::JINXSCRIPT:
@@ -191,8 +260,20 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CTurretScript";
 		break;
 
+	case SCRIPT_TYPE::UISCRIPT:
+		return L"CUIScript";
+		break;
+
 	case SCRIPT_TYPE::UNITSCRIPT:
 		return L"CUnitScript";
+		break;
+
+	case SCRIPT_TYPE::WORLDHPSPAWNSCRIPT:
+		return L"CWorldHPSpawnScript";
+		break;
+
+	case SCRIPT_TYPE::WORLDHPUISCRIPT:
+		return L"CWorldHPUIScript";
 		break;
 
 	}

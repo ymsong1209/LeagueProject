@@ -184,14 +184,19 @@ call CodeGen.exe</Command>
     <ClInclude Include="CChampionScript.h" />
     <ClInclude Include="CChampionSkillState.h" />
     <ClInclude Include="CChampionWalkState.h" />
+    <ClInclude Include="CCharacterUIScript.h" />
+    <ClInclude Include="CCoolDownUIScript.h" />
+    <ClInclude Include="CExpRatioUIScript.h" />
     <ClInclude Include="CFlash.h" />
     <ClInclude Include="CGameEvent.h" />
     <ClInclude Include="CGameEventMgr.h" />
     <ClInclude Include="CHeal.h" />
+    <ClInclude Include="CHpMpRatioUIScript.h" />
     <ClInclude Include="CInhibitorBrokenState.h" />
     <ClInclude Include="CInhibitorIdleState.h" />
     <ClInclude Include="CInhibitorScript.h" />
     <ClInclude Include="CInhibitorSpawnState.h" />
+    <ClInclude Include="CInventoryUIScript.h" />
     <ClInclude Include="CJinxDeathState.h" />
     <ClInclude Include="CJinxIdleState.h" />
     <ClInclude Include="CJinxQ.h" />
@@ -217,8 +222,11 @@ call CodeGen.exe</Command>
     <ClInclude Include="CSkill.h" />
     <ClInclude Include="CStructureScript.h" />
     <ClInclude Include="CTurretScript.h" />
+    <ClInclude Include="CUIScript.h" />
     <ClInclude Include="CUnitScript.h" />
     <ClInclude Include="CUnitState.h" />
+    <ClInclude Include="CWorldHPSpawnScript.h" />
+    <ClInclude Include="CWorldHPUIScript.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="CInGameCameraScript.h" />
     <ClInclude Include="IGameEventListener.h" />
@@ -236,13 +244,18 @@ call CodeGen.exe</Command>
     <ClCompile Include="CChampionScript.cpp" />
     <ClCompile Include="CChampionSkillState.cpp" />
     <ClCompile Include="CChampionWalkState.cpp" />
+    <ClCompile Include="CCharacterUIScript.cpp" />
+    <ClCompile Include="CCoolDownUIScript.cpp" />
+    <ClCompile Include="CExpRatioUIScript.cpp" />
     <ClCompile Include="CFlash.cpp" />
     <ClCompile Include="CGameEventMgr.cpp" />
     <ClCompile Include="CHeal.cpp" />
+    <ClCompile Include="CHpMpRatioUIScript.cpp" />
     <ClCompile Include="CInhibitorBrokenState.cpp" />
     <ClCompile Include="CInhibitorIdleState.cpp" />
     <ClCompile Include="CInhibitorScript.cpp" />
     <ClCompile Include="CInhibitorSpawnState.cpp" />
+    <ClCompile Include="CInventoryUIScript.cpp" />
     <ClCompile Include="CJinxDeathState.cpp" />
     <ClCompile Include="CJinxIdleState.cpp" />
     <ClCompile Include="CJinxQ.cpp" />
@@ -269,8 +282,11 @@ call CodeGen.exe</Command>
     <ClCompile Include="CSkill.cpp" />
     <ClCompile Include="CStructureScript.cpp" />
     <ClCompile Include="CTurretScript.cpp" />
+    <ClCompile Include="CUIScript.cpp" />
     <ClCompile Include="CUnitScript.cpp" />
     <ClCompile Include="CUnitState.cpp" />
+    <ClCompile Include="CWorldHPSpawnScript.cpp" />
+    <ClCompile Include="CWorldHPUIScript.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

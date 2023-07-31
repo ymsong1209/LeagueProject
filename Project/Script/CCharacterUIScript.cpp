@@ -107,7 +107,7 @@ void CCharacterUIScript::SkillUILoad()
 	//머터리얼 이름은 CHARACTER_TYPE + "_" + SkillNum 형태로 되어있어야함 (ex: MALPHGITE_Q)
 	//그래야 알아서 캐릭터별로 머터리얼을 찾아옴
 	CUIScript::begin();
-	SetChampInFo(CHARACTER_TYPE::VEIN, SUMMONERS_SPELL::HEAL, SUMMONERS_SPELL::FLASH);
+	SetChampInFo(CHARACTER_TYPE::VEIN, SUMMONERS_SPELL2::HEAL, SUMMONERS_SPELL2::FLASH);
 
 	PrevCharacter = GetCharacterType();
 	wstring UIpath = L"material\\";
@@ -170,8 +170,8 @@ void CCharacterUIScript::SkillUILoad()
 void CCharacterUIScript::SpellUILoad()
 {
 	//--------------선택한 스펠 정보대로 UI 생성----------------
-	wstring DSpell = SUMMONERS_SPELL_WSTR[(UINT)GetSpellDType()];
-	wstring FSpell = SUMMONERS_SPELL_WSTR[(UINT)GetSpellFType()];
+	wstring DSpell = SUMMONERS_SPELL2_WSTR[(UINT)GetSpellDType()];
+	wstring FSpell = SUMMONERS_SPELL2_WSTR[(UINT)GetSpellFType()];
 	wstring UIpath = L"material\\";
 	wstring mtrl = L".mtrl";
 

@@ -1,8 +1,13 @@
 CBasicAttackScript
 CCameraMoveScript
 CChampionScript
+CCharacterUIScript
+CCoolDownUIScript
+CExpRatioUIScript
+CHpMpRatioUIScript
 CInGameCameraScript
 CInhibitorScript
+CInventoryUIScript
 CJinxScript
 CJungleMonsterScript
 CMinionScript
@@ -12,4 +17,7 @@ COtherPlayerScript
 CPlayerScript
 CStructureScript
 CTurretScript
+CUIScript
 CUnitScript
+CWorldHPSpawnScript
+CWorldHPUIScript

@@ -126,7 +126,7 @@ int ParamUI::Param_Vec4(const string& _strDesc, Vec4* _pData, bool _bDrag)
     return 0;
 }
 
-int ParamUI::Param_Tex(const string& _strDesc, Ptr<CTexture>& _Tex, UI* _UI, UI_DELEGATE_1 _Func)
+int ParamUI::Param_Tex(const string& _strDesc, Ptr<CTexture> _Tex, UI* _UI, UI_DELEGATE_1 _Func)
 {
     ImGui::Text(_strDesc.c_str());    
 
