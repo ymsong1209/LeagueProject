@@ -23,11 +23,14 @@ void CBasicAttackScript::begin()
 
 void CBasicAttackScript::tick()
 {
-	// 타겟을 향해 날아감. 
 
 	Vec3 TargetPos = m_TargetObj->Transform()->GetRelativePos();
 	Vec3 UserPos = m_UserObj->Transform()->GetRelativePos();
 	
+	// 타겟을 향해 날아감. 
+	if (TargetPos. x == UserPos.x)
+		return;
+
 	// 방향 계산
 	Vec3 Direction = Vec3(TargetPos.x - UserPos.x, 0.f, TargetPos.z - UserPos.z);
 	Direction.Normalize();
