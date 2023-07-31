@@ -51,6 +51,6 @@ void CBasicAttackScript::BeginOverlap(CCollider2D* _Other)
 
 
 		// 투사체 사라짐
-		Destroy();
+		//Destroy();
 	}
 }

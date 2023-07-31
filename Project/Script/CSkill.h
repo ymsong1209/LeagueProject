@@ -31,7 +31,7 @@ protected:
 
 	CUnitScript*			m_OwnerScript;	// 챔피언 스크립트
 
-	vector<Ptr<CPrefab>>			m_vecSkillObj;	// 스킬 사용 시 생성할 투사체 등
+	vector<Ptr<CPrefab>>	m_vecSkillObj;	// 스킬 사용 시 생성할 투사체 등
 
 	// ======== 도트딜 / 상태이상 관련 ========== 
 	bool					m_bIsDot;		// 지속하여 데미지/상태이상을 거는지 여부

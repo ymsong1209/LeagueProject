@@ -352,7 +352,6 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 			Script->SetServerID(_projectileId);
 			Script->SetFaction(Faction::NONE);
 			pObj->SetName(L"Projectile");
-			pObj->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 100.f));
 			
 			// 스킬쏜 주인 중점에서 투사체 생김
 			CGameObject* ownerObj = FindAllObject(_skillInfo.OwnerId);
