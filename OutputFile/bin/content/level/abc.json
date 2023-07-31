@@ -221,9 +221,9 @@
                                 "z": 0.0
                             },
                             "vRelativeScale": {
-                                "x": 0.18000000715255737,
-                                "y": 0.18000000715255737,
-                                "z": 0.18000000715255737
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
@@ -235,25 +235,8 @@
                             "GizmoBounding_Radius": 50.0,
                             "IsShootingRay": false,
                             "RayRange": 20.0,
-                            "UseMouseOutLine": true,
+                            "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
-                        },
-                        {
-                            "COLLIDER3D": 2,
-                            "vOffsetPos": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "vOffsetScale": {
-                                "x": 30.0,
-                                "y": 30.0,
-                                "z": 30.0
-                            },
-                            "bAbsolute": true,
-                            "Shape": 0,
-                            "bWall": false,
-                            "DrawCollision": false
                         },
                         {
                             "ANIMATOR3D": 4,
@@ -263,145 +246,10 @@
                             "fAnimSpeed": 1.0,
                             "mapAnim": [
                                 {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Attack1.002.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Attack2.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Attack3.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Attack_TumbleUlt.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Attack_Ult.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Channel.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Channel_Wndup.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Crit.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Dance_Intro.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Dance_Loop.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Death.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Idle1.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Idle2.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Idle3.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Idle_Homeguard.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Idle_TumbleUlt.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Idle_Ult.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Joke.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Laugh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Recall.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Recall_Winddown.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Respawn.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Run_Base.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Run_Fast.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Run_Haste.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Run_Homeguard.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Run_Tumble.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Run_Ult.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Spell1.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Spell3.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Spell3toIdle.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Spell3toRun.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Taunt.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Trans_Hg2hgidle.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\vayne_skin11_attack1_tumble.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\vayne_skin11_idle_tumble1.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\vayne_skin11_run2.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\vayne_skin11_run_tumble_ult.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\vayne_skin11_trans_run2idle.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\vayne_skin11_trans_runult2idleult.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\vayne_skin11_trans_tmbl2tmblidle.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\vayne_skin11_trans_tmblult2tmblidle.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Vayne\\vayne_skin11_winddown2idlehg.001.anim3d"
-                                },
-                                {
                                     "Anim3DRelativePath": "animation\\Vayne\\Vayne_Model-Vayne_AllAnim.anim3d"
                                 }
                             ],
-                            "strCurAnimName": "Vayne\\Idle1.001"
-                        },
-                        {
-                            "FSM": 8
-                        },
-                        {
-                            "PATHFINDER": 9
+                            "strCurAnimName": ""
                         },
                         {
                             "MESHRENDER": 10,
@@ -411,7 +259,7 @@
                                 "RelativePath": "mesh\\Vayne.mesh"
                             },
                             "fBounding": 150.0,
-                            "bFrustumCheck": false,
+                            "bFrustumCheck": true,
                             "bDynamicShadow": false,
                             "bShowDebugBoundShape": false,
                             "bRaySightCulling": false,
@@ -561,11 +409,7 @@
                         },
                         16
                     ],
-                    "scripts": [
-                        {
-                            "scriptName": "CVayneScript"
-                        }
-                    ],
+                    "scripts": [],
                     "children": []
                 },
                 {
@@ -2217,7 +2061,7 @@
                                         ],
                                         "arrTex[(UINT)TEX_PARAM::TEX_END]s": [
                                             {
-                                                "arrTex[0]": 1
+                                                "arrTex[0]": 0
                                             },
                                             {
                                                 "arrTex[1]": 0
@@ -2773,10 +2617,10 @@
                                         ],
                                         "arrTex[(UINT)TEX_PARAM::TEX_END]s": [
                                             {
-                                                "arrTex[0]": 1
+                                                "arrTex[0]": 0
                                             },
                                             {
-                                                "arrTex[1]": 1
+                                                "arrTex[1]": 0
                                             },
                                             {
                                                 "arrTex[2]": 0
@@ -3351,7 +3195,7 @@
                                         ],
                                         "arrTex[(UINT)TEX_PARAM::TEX_END]s": [
                                             {
-                                                "arrTex[0]": 1
+                                                "arrTex[0]": 0
                                             },
                                             {
                                                 "arrTex[1]": 0
@@ -3632,7 +3476,7 @@
                                         ],
                                         "arrFloat[12]s": [
                                             {
-                                                "arrFloat[0]": 1.0
+                                                "arrFloat[0]": 0.0
                                             },
                                             {
                                                 "arrFloat[1]": 0.0
@@ -4203,7 +4047,7 @@
                                         ],
                                         "arrFloat[12]s": [
                                             {
-                                                "arrFloat[0]": 1.0
+                                                "arrFloat[0]": 0.0
                                             },
                                             {
                                                 "arrFloat[1]": 0.0

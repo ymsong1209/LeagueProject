@@ -197,7 +197,7 @@ void CreateTestLevel()
 		//CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Vayne_Crossbow_Cover_Mtrl.mtrl")->SetTexParam(TEX_0, AlphaTex);
 		//CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Vayne_Crossbow_C_Blade_Mtrl.mtrl")->SetTexParam(TEX_0, AlphaTex);
 		//CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Vayne_Crossbow_Arm_Mtrl.mtrl")->SetTexParam(TEX_0, AlphaTex);
-		CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Vayne_Cape_Mtrl.mtrl")->SetTexParam(TEX_0, AlphaTex);
+		//CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Vayne_Cape_Mtrl.mtrl")->SetTexParam(TEX_0, AlphaTex);
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
 
 		pObj->Transform()->SetUseMouseOutline(true);
