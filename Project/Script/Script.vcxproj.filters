@@ -187,9 +187,6 @@
     <ClInclude Include="CHeal.h">
       <Filter>Skill\Spell</Filter>
     </ClInclude>
-    <ClInclude Include="CGameEvent.h">
-      <Filter>GameEvent</Filter>
-    </ClInclude>
     <ClInclude Include="CGameEventMgr.h">
       <Filter>GameEvent</Filter>
     </ClInclude>
@@ -315,6 +312,9 @@
     </ClInclude>
     <ClInclude Include="CSkillMgr.h">
       <Filter>Manager\3. SkillMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameEvent.h">
+      <Filter>GameEvent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
