@@ -56,5 +56,7 @@ void CBasicAttackScript::BeginOverlap(CCollider2D* _Other)
 
 		// 투사체 사라짐
 		//Destroy();
+		this->GetOwner()->Transform()->SetRelativePos(-666.f, -666.f, -666.f);
+		m_fProjectileSpeed = 0.f;
 	}
 }
