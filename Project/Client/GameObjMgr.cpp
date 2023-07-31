@@ -511,6 +511,30 @@ void GameObjMgr::SendSkillSpawn(SkillInfo* _skillInfo, ClientServiceRef _service
 	}
 }
 
+void GameObjMgr::SendSkillHit(HitInfo* _hitInfo, ClientServiceRef _service)
+{
+	// hitOjbId가 스킬을 맞았다고 보낸다. 
+	std::mutex m;
+	{
+		std::lock_guard<std::mutex> lock(m);
+
+		SkillInfo skillInfoPacket = {};
+		skillInfoPacket.OwnerId = _hitInfo->useObjId;
+		skillInfoPacket.SkillLevel = _hitInfo->SkillLevel;
+		skillInfoPacket.skillType = _hitInfo->skillType;
+		skillInfoPacket.TargetId = _hitInfo->hitObjId;
+
+		PKT_C_SKILL_HIT_WRITE  pktWriter(_hitInfo->hitObjId,skillInfoPacket);
+
+		// 서버에게 패킷 전송
+		std::cout << "Send C_SKILL_HIT Pakcet " << endl;
+		SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+		_service->Broadcast(sendBuffer);
+
+		std::cout << "===============================" << endl;
+	}
+}
+
 void GameObjMgr::SendObjectAnim(AnimInfo* _animInfo, ClientServiceRef _service)
 {
 	// _id 오브젝트의 애니메이션을 보낸다.
@@ -617,6 +641,23 @@ void GameObjMgr::E_ObjectAnim(AnimInfo _animInfo)
 		// AnimInfo 구조체의 포인터를 DWORD_PTR로 캐스팅하여 lParam에 저장
 		AnimInfo* animInfo = new AnimInfo(_animInfo);
 		evn.lParam = (DWORD_PTR)animInfo;
+
+		ServerEventMgr::GetInst()->AddEvent(evn);
+	}
+}
+
+void GameObjMgr::E_HitObject(uint64 _hit, SkillInfo _skillInfo)
+{
+	std::mutex m;
+	{
+		std::lock_guard<std::mutex> lock(m);
+
+		tServerEvent evn = {};
+		evn.Type = SERVER_EVENT_TYPE::SKILL_HIT_PACKET;
+		evn.wParam = static_cast<DWORD_PTR>(_hit);
+
+		SkillInfo* skillInfo = new SkillInfo(_skillInfo);
+		evn.lParam = (DWORD_PTR)skillInfo;
 
 		ServerEventMgr::GetInst()->AddEvent(evn);
 	}

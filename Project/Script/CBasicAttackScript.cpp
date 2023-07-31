@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CBasicAttackScript.h"
-
+#include "CSendServerEventMgr.h"
 CBasicAttackScript::CBasicAttackScript()
 	:CScript((UINT)SCRIPT_TYPE::BASICATTACKSCRIPT)
 	, m_fProjectileSpeed(100.f)
@@ -23,7 +23,6 @@ void CBasicAttackScript::begin()
 
 void CBasicAttackScript::tick()
 {
-
 	Vec3 TargetPos = m_TargetObj->Transform()->GetRelativePos();
 	Vec3 UserPos = m_UserObj->Transform()->GetRelativePos();
 
@@ -58,5 +57,7 @@ void CBasicAttackScript::BeginOverlap(CCollider2D* _Other)
 		//Destroy();
 		this->GetOwner()->Transform()->SetRelativePos(-666.f, -666.f, -666.f);
 		m_fProjectileSpeed = 0.f;
+
+		CSendServerEventMgr::GetInst()->SendHitPacket(m_iServerTargetID, m_iServerUserID, 1, SkillType::BASIC_ATTACK);
 	}
 }

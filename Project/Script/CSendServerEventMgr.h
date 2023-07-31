@@ -26,5 +26,9 @@ public:
     void ClearServerSendEvent() { m_vecServerSendEvent.clear(); }
 
 
+
+    void SendHitPacket(UINT64 _hitObj, UINT64 _useObj, int _skillLevel, SkillType _skillType);
+
+
 };
 

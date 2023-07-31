@@ -491,8 +491,10 @@ void ServerPacketHandler::Handle_S_SKILL_HIT(PacketSessionRef& session, BYTE* bu
 		return;
 	}
 
-	uint64 AttackedId = pkt->objecId;       // 스킬을 맞은 오브젝트 id
+	uint64	hitObjId = pkt->objecId;       // 스킬을 맞은 오브젝트 id
 	SkillInfo skillInfo = pkt->skillInfo;  // 맞은 스킬 정보
+
+	GameObjMgr::GetInst()->E_HitObject(hitObjId, skillInfo);
 
 
 	// 1. 스킬맞은 id가 플레이어 id면 걔 클라이언트에서 알아서 처리

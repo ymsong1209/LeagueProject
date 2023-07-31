@@ -30,13 +30,13 @@ public:
 	void SendObjectMove(uint64 _id, CGameObject* _obj, ClientServiceRef _service);
 	void SendTowerUpdate(uint64 _id, CGameObject* _obj, ClientServiceRef _service);
 	void SendSkillSpawn(SkillInfo* _skillInfo, ClientServiceRef _service);
+	void SendSkillHit(HitInfo* _hitInfo, ClientServiceRef _service);
 
-
-	// 서버에게 받은 패킷 처리
+	// 서버에게 받은 패킷 이벤트 등록 처리
 	void E_MovePlayer(uint64 _playerId, ObjectMove _playerMove);
 	void E_MoveObject(uint64 _objectId, ObjectMove _objectMove);
 	void E_ObjectAnim(AnimInfo _animInfo);
-
+	void E_HitObject(uint64 _hit, SkillInfo _skillInfo);
 public:
 	CGameObject* FindPlayer(uint64 _targetId);
 	CGameObject* FindObject(uint64 _targetId);

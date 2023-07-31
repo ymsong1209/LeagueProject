@@ -9,12 +9,12 @@ enum class SERVER_EVENT_TYPE
 	// Server Packet 
 	MOVE_PACKET,			// wParam : GameObject,  lParam : ObjectMove Update Move Packet
 	ANIM_PACKET,			// wParam : GameObject,  lParam : AnimInfo
-	SKILL_HIT_PACKET,
-	
+	SKILL_HIT_PACKET,		// WParam : uin64 hitId, lParam : SkillInfo
 
 	// Script Send Packet
 	SEND_ANIM_PACKET,		// wParam : X,  lParam : AnimInfo
 	SKILL_PROJECTILE_PACKET, // wParam : SkillInfo
+	SEND_HIT_PACKET, 	    // wParam : HitInfo, 
 };
 
 // Event
@@ -56,6 +56,13 @@ struct SkillInfo
 	SkillType skillType;  // 어떤 스킬인지 모아둔 enum 중 하나
 };
 
+struct HitInfo
+{
+	UINT64		 hitObjId;        // 맞은애
+	UINT64		 useObjId;   // 쏜애
+	int			 SkillLevel;    // 스킬레벨
+	SkillType	 skillType;     // 스킬타입
+};
 enum class Faction
 {
 	NONE,
