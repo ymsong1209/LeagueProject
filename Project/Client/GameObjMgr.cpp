@@ -30,6 +30,7 @@
 #include <Script\CBaseAttack.h>
 #include <Script/CBasicAttackScript.h>
 #include <Script/CAttackRangeScript.h>
+#include <Script/CMinionScript.h>
 
 #include <Script\COtherPlayerScript.h>
 #include "ServerEventMgr.h"
@@ -136,7 +137,6 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 			case ChampionType::AMUMU:
 			{
 			}break;
-
 		}
 
 		if (myPlayer)
@@ -148,9 +148,6 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 			MyPlayerScript->SetNickname(_info.nickname);
 			MyPlayerScript->SetHost(_info.host);
 			MyPlayerScript->SetFaction(_info.faction);
-
-
-
 
 			pObj->SetName(L"MyPlayer");
 
@@ -168,7 +165,7 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 
 		//pObj->SetName(_info.nickname);
 
-		// 사거리 자식 오브젝트 추가
+			// 사거리 자식 오브젝트 추가
 		CGameObject* AttackRange = new CGameObject;
 		AttackRange->AddComponent(new CTransform);
 		AttackRange->AddComponent(new CCollider2D);
@@ -178,6 +175,7 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 		AttackRange->AddComponent(new CAttackRangeScript);
 		AttackRange->SetName(L"AttackRange");
 		pObj->AddChild(AttackRange);
+		_objects.insert(std::make_pair(_info.id, AttackRange));
 
 
 		pObj->AddComponent(new CCollider3D);
@@ -222,19 +220,28 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 			//pObj->AddComponent(new CMeshRender);
 			pObj->AddComponent(new CTransform);
-			pObj->AddComponent(new COtherPlayerScript);
+			pObj->AddComponent(new CMinionScript);
 			pObj->AddComponent(new CCollider3D);
+			pObj->AddComponent(new CCollider2D);
+			pObj->AddComponent(new CAnimator3D);
 
-			COtherPlayerScript* Script = pObj->GetScript<COtherPlayerScript>();
-			Script->SetPlayerID(_objectId);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetScale(Vec2(50.f, 50.f));
+			pObj->Collider2D()->SetOffsetRot(Vec3(90.f, 0.f, 0.f));
+			pObj->SetName(L"Minion");
+
+			pObj->Animator3D()->LoadAnim(L"minion_melee/Attack1");
+			pObj->Animator3D()->PlayRepeat(L"minion_melee/Attack1", true, true, 0.1f);
+
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);
 			Script->SetFaction(_objectInfo.faction);
 			
-			pObj->SetName(L"Minion");
 
 			pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
 			pObj->Collider3D()->SetAbsolute(true);
 			pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
-			pObj->Collider3D()->SetDrawCollision(true);
+			//pObj->Collider3D()->SetDrawCollision(true);
 
 			pObj->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 100.f));
 
@@ -254,14 +261,18 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 			//pObj->AddComponent(new CMeshRender);
 			pObj->AddComponent(new CTransform);
-			pObj->AddComponent(new COtherPlayerScript);
+			pObj->AddComponent(new CUnitScript);
 			pObj->AddComponent(new CCollider3D);
+			pObj->AddComponent(new CCollider2D);
 
-			COtherPlayerScript* Script = pObj->GetScript<COtherPlayerScript>();
-			Script->SetPlayerID(_objectId);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetScale(Vec2(50.f, 50.f));
+			pObj->Collider2D()->SetOffsetRot(Vec3(90.f, 0.f, 0.f));
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);
 			Script->SetFaction(_objectInfo.faction);
 
-			pObj->SetName(L"Minion");
+			pObj->SetName(L"OtherMinion");
 
 			pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
 			pObj->Collider3D()->SetAbsolute(true);
@@ -315,7 +326,6 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 			SpawnGameObject(pObj, ownerObj->Transform()->GetRelativePos(), 0);
 
 			_objects.insert(std::make_pair(_projectileId, pObj));
-
 		}
 		else
 		{

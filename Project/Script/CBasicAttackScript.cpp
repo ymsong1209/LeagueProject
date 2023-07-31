@@ -13,12 +13,12 @@ CBasicAttackScript::~CBasicAttackScript()
 
 void CBasicAttackScript::begin()
 {
-	// ID값으로 검색한 결과 멤버로 저장
-	CGameObject* Target = CLevelMgr::GetInst()->GetCurLevel()->FindObjectByID(m_iTargetID);
-	m_TargetObj = Target;
-
-	CGameObject* User = CLevelMgr::GetInst()->GetCurLevel()->FindObjectByID(m_iUserID);
-	m_UserObj = User;
+	//// ID값으로 검색한 결과 멤버로 저장
+	//CGameObject* Target = CLevelMgr::GetInst()->GetCurLevel()->FindObjectByID(m_iTargetID);
+	//m_TargetObj = Target;
+	//
+	//CGameObject* User = CLevelMgr::GetInst()->GetCurLevel()->FindObjectByID(m_iUserID);
+	//m_UserObj = User;
 }
 
 void CBasicAttackScript::tick()

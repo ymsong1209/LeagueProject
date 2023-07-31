@@ -20,7 +20,7 @@ void CAttackRangeScript::BeginOverlap(CCollider2D* _Other)
 	CUnitScript* User = GetOwner()->GetParent()->GetScript<CUnitScript>();
 
 	// Å¸°Ù À¯´Ö
-	CUnitScript* Unit = _Other->GetOwner()->GetScript<CUnitScript>();
+	CUnitScript* Unit = _Other->GetOwner()->GetParent()->GetScript<CUnitScript>();
 	if (Unit == nullptr)
 		return;
 
