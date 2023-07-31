@@ -1,4 +1,0 @@
-Hide,0,24
-Idle1,25,49
-Spawn,50,218
-sru_baronspawn_odyssey_fog_1,219,379

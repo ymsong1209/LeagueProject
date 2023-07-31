@@ -1,7 +1,0 @@
-cannon_chaos_attack1,0,37
-cannon_chaos_attack2,38,75
-cannon_chaos_attack3,76,113
-cannon_chaos_death1,114,193
-cannon_chaos_idle1,194,290
-cannon_chaos_run1,291,387
-cannon_chaos_win1,388,408

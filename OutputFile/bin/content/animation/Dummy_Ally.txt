@@ -1,6 +1,0 @@
-Death_model.002,0,36
-Hit,37,60
-Idle1_Base,61,108
-Idle2_Base,109,180
-Spawn,181,218
-targetdummy_idle120,219,314

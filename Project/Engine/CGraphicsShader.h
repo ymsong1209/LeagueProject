@@ -20,21 +20,18 @@ class CGraphicsShader :
 {
 private:
     ComPtr<ID3DBlob>                m_VSBlob;
-    ComPtr<ID3DBlob>				m_VSInstBlob;
     ComPtr<ID3DBlob>                m_HSBlob;
     ComPtr<ID3DBlob>                m_DSBlob;
     ComPtr<ID3DBlob>                m_GSBlob;
     ComPtr<ID3DBlob>                m_PSBlob;
 
     ComPtr<ID3D11VertexShader>      m_VS;
-    ComPtr<ID3D11VertexShader>		m_VSInst;
     ComPtr<ID3D11HullShader>        m_HS;
     ComPtr<ID3D11DomainShader>      m_DS;
     ComPtr<ID3D11GeometryShader>    m_GS;
     ComPtr<ID3D11PixelShader>       m_PS;
 
     ComPtr<ID3D11InputLayout>	    m_Layout;
-    ComPtr<ID3D11InputLayout>       m_LayoutInst;
     D3D11_PRIMITIVE_TOPOLOGY        m_eTopology;
 
     RS_TYPE                         m_RSType;
@@ -61,13 +58,9 @@ public:
     RS_TYPE GetRSType() { return m_RSType; }
     DS_TYPE GetDSType() { return m_DSType; }
     BS_TYPE GetBSType() { return m_BSType; }
-
-
-    ComPtr<ID3D11VertexShader> GetVSInst() { return m_VSInst; }
     SHADER_DOMAIN GetDomain() { return m_Domain; }
 
     void UpdateData();
-    void UpdateData_Inst();
 
     void AddScalarParam(SCALAR_PARAM _Param, const string& _desc) { m_vecScalarParam.push_back(tScalarParam{ _Param, _desc }); }
     void AddTexParam(TEX_PARAM _Param, const string& _desc) { m_vecTexParam.push_back(tTexParam{ _Param, _desc }); }

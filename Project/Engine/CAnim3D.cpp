@@ -56,12 +56,11 @@ void CAnim3D::finaltick()
 	m_dCurTime = 0.f;
 	// Pause상태가 아닐 경우 현재 재생중인 Clip 의 시간을 진행한다.
 	if (!m_bPause) {
-		float speed = m_pOwner->GetSpeed();
 		if (m_pOwner->IsDebugAnimator()) {
-			m_fClipUpdateTime += EditorDT * speed;
+			m_fClipUpdateTime += EditorDT;
 		}
 		else {
-			m_fClipUpdateTime += EditorDT * speed;
+			m_fClipUpdateTime += EditorDT;
 		}
 	}
 
@@ -69,9 +68,6 @@ void CAnim3D::finaltick()
 	if (m_fClipUpdateTime >= m_pClip.dTimeLength)
 	{
 		m_bFinish = true;
-		m_fRatio = 0.f;
-		m_pOwner->SetFrameRatio(0.f);
-		return;
 	}
 
 	m_dCurTime = m_pClip.dStartTime + (double)m_fClipUpdateTime;

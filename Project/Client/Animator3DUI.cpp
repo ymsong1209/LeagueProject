@@ -34,7 +34,6 @@ int Animator3DUI::render_update()
 	SelectPlayMode();
 	SetRepeat();
 	SetBlendTime();
-	SetSpeed();
 	
 	SelectAnimation(); ImGui::SameLine();
 	DeleteCurrentAnimation();
@@ -175,17 +174,6 @@ void Animator3DUI::SetBlendTime()
 	}
 }
 
-void Animator3DUI::SetSpeed()
-{
-	ImGui::Text("Anim Speed : ");
-	ImGui::SameLine();
-	float speed = GetTarget()->Animator3D()->GetSpeed();
-	ImGui::SetNextItemWidth(100.f);
-	if (ImGui::DragFloat("##AnimSpeedAnimator3DUI", &speed, 0.1f, 2.0f)) {
-		GetTarget()->Animator3D()->SetSpeed(speed);
-	}
-}
-
 void Animator3DUI::SelectAnimation()
 {
 	vector<string> AnimList;
@@ -239,12 +227,7 @@ void Animator3DUI::SelectAnimation()
 					bool repeatblend = GetTarget()->Animator3D()->IsRepeatBlend();
 					bool isrepeat	= GetTarget()->Animator3D()->IsRepeat();
 					float blendtime = GetTarget()->Animator3D()->GetBlendTime();
-					if (isrepeat) {
-						GetTarget()->Animator3D()->PlayRepeat(wstrKey, repeatblend, false, blendtime);
-					}
-					else {
-						GetTarget()->Animator3D()->PlayOnce(wstrKey, false, blendtime);
-					}
+					GetTarget()->Animator3D()->Play(wstrKey, isrepeat, repeatblend, false, blendtime);
 				}
 			}
 

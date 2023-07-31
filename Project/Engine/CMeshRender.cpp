@@ -314,96 +314,52 @@ void CMeshRender::render()
         Animator3D()->ClearData();
 }
 
-void CMeshRender::render(UINT _iSubset)
-{
-	if (nullptr == GetMesh() || nullptr == GetMaterial(_iSubset))
-		return;
-
-	// Transform 에 UpdateData 요청
-	Transform()->UpdateData();
-
-	// MeshMoveData Update
-	CConstBuffer* pMeshMoveBuffer = CDevice::GetInst()->GetConstBuffer(CB_TYPE::MESHRENDER);
-
-	// Mesh Texture Update (PunctureTex, AdditiveTex만 바인딩한다. OutputTex는 Material에서 세팅됨)
-	if (m_arrMeshTex[MESH_TEX_PARAM::PUNCTURE] == nullptr)
-	{
-		m_tMeshMoveData.isPunctureTextureUsed = 0;
-		CTexture::Clear(14);
-	}
-
-	else
-	{
-		m_tMeshMoveData.isPunctureTextureUsed = 1;
-		m_arrMeshTex[MESH_TEX_PARAM::PUNCTURE]->UpdateData(14, PS_ALL_STAGES);
-	}
-
-	if (m_arrMeshTex[MESH_TEX_PARAM::ADDITIVE] == nullptr)
-	{
-		m_tMeshMoveData.isAdditiveTextureUsed = 0;
-		CTexture::Clear(15);
-	}
-
-	else
-	{
-		m_tMeshMoveData.isAdditiveTextureUsed = 1;
-		m_arrMeshTex[MESH_TEX_PARAM::ADDITIVE]->UpdateData(15, PS_ALL_STAGES);
-	}
-
-	pMeshMoveBuffer->SetData(&m_tMeshMoveData);
-	pMeshMoveBuffer->UpdateData();
-
-
-	// Animator2D 컴포넌트가 있다면
-	if (Animator2D())
-	{
-		Animator2D()->UpdateData();
-	}
-
-	// Animator3D 업데이트
-	if (Animator3D())
-	{
-		Animator3D()->UpdateData();
-		GetMaterial(_iSubset)->SetAnim3D(true); // Animation Mesh 알리기
-		GetMaterial(_iSubset)->SetBoneCount(Animator3D()->GetBoneCount());
-	}
-
-	// 사용할 재질 업데이트
-	GetMaterial(_iSubset)->UpdateData();
-
-	// 사용할 메쉬 업데이트 및 렌더링
-	GetMesh()->render(_iSubset);
-
-	// Animation 관련 정보 제거
-	if (Animator2D())
-		Animator2D()->Clear();
-
-	if (Animator3D())
-		Animator3D()->ClearData();
-}
-
-
-
 void CMeshRender::SaveToLevelFile(FILE* _File)
-{	
-	CRenderComponent::SaveToLevelFile(_File);
-	fwrite(&m_tMeshMoveData, sizeof(tMeshMoveData), 1, _File);
+{
+    //CRenderComponent::SaveToLevelFile(_File);
 
-	for (int i = 0; i < (int)MESH_TEX_PARAM::MESH_TEX_END; ++i)
-	{
-		SaveResRef(m_arrMeshTex[i].Get(), _File);
-	}
+    //
+    //fwrite(&m_bIsUsingMovingVec, sizeof(bool), 1, _File);
+
+    //// 만약에 MovingVec을 사용하고 있었다면 이에 대한 정보도 저장해줘야 하낟.
+    //if (m_bIsUsingMovingVec)
+    //{
+    //   //movingvec size 저장
+    //   int vecsize = m_vMovingVec.size();
+    //   fwrite(&vecsize, sizeof(int), 1, _File);
+
+    //   for (int i = 0; i < m_vMovingVec.size(); ++i)
+    //   {
+    //      fwrite(&m_vMovingVec[i], sizeof(MovingStruct), 1, _File);
+    //   }
+    //}    
 }
 
 void CMeshRender::LoadFromLevelFile(FILE* _File)
 {
-	CRenderComponent::LoadFromLevelFile(_File);
-	fread(&m_tMeshMoveData, sizeof(tMeshMoveData), 1, _File);
+    //CRenderComponent::LoadFromLevelFile(_File);
 
-	for (int i = 0; i < (int)MESH_TEX_PARAM::MESH_TEX_END; ++i)
-	{
-		LoadResRef(m_arrMeshTex[i], _File);
-	}
+    //fread(&m_bIsUsingMovingVec, sizeof(bool), 1, _File);
+
+    //if (m_bIsUsingMovingVec)
+    //{
+    //   SetUsingMovingVec(true);
+
+    //   //movingvec size 읽기
+    //   int vecsize;
+    //   fread(&vecsize, sizeof(int), 1, _File);
+
+    //   for (int i = 0; i < vecsize; ++i)
+    //   {
+    //      MovingStruct movestruct;
+    //      fread(&movestruct, sizeof(MovingStruct), 1, _File);
+    //      m_vMovingVec.push_back(movestruct);
+    //   }      
+    //}
+    //else
+    //{
+    //   SetUsingMovingVec(false);
+    //}
 }
 
 void CMeshRender::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)

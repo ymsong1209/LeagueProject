@@ -531,7 +531,7 @@ void Anim3DEditorUI::SelectMainAnimation()
 					string strKey = (char*)AnimList[i].c_str();
 					wstring wstrKey = wstring(strKey.begin(), strKey.end());
 					bool repeatblend = m_pTestObject->Animator3D()->IsRepeatBlend();
-					m_pTestObject->Animator3D()->PlayRepeat(wstrKey,repeatblend,false, m_fBlendTime);
+					m_pTestObject->Animator3D()->Play(wstrKey, m_bRepeat,repeatblend,false, m_fBlendTime);
 				}
 			}
 
@@ -762,7 +762,7 @@ void Anim3DEditorUI::SelectBlendTestPlayMode()
 			return;
 		}
 
-		m_pTestObject->Animator3D()->PlayOnce(m_pBaseAnim->GetName(), false, m_fBlendTime);
+		m_pTestObject->Animator3D()->Play(m_pBaseAnim->GetName(), false, m_fBlendTime);
 	}
 	ImGui::SameLine();
 
@@ -911,7 +911,7 @@ void Anim3DEditorUI::BlendAnim()
 
 		//baseanim이 끝나면 blendanim blend하면서 재생
 		if (curanim == m_pBaseAnim && curanim->IsFinish() && !m_pTestObject->Animator3D()->IsBlend()) {
-			m_pTestObject->Animator3D()->PlayOnce(m_pBlendAnim->GetName(), true, m_fBlendTime);
+			m_pTestObject->Animator3D()->Play(m_pBlendAnim->GetName(), true, m_fBlendTime);
 		}
 	}
 }

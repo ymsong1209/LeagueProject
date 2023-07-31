@@ -32,12 +32,10 @@ private:
 
     tRay                    m_ray;      // 마우스 방향을 향하는 직선
 
-    map<ULONG64, vector<tInstObj>>		m_mapInstGroup_D;	    // Deferred
-    map<ULONG64, vector<tInstObj>>		m_mapInstGroup_F;	    // Foward ( Opaque, Mask )	
-    map<INT_PTR, vector<tInstObj>>		m_mapSingleObj;		    // Single Object
-
-   
+    vector<CGameObject*>    m_vecDeferred;
     vector<CGameObject*>    m_vecDecal;
+    vector<CGameObject*>    m_vecOpaque;
+    vector<CGameObject*>    m_vecMask;
     vector<CGameObject*>    m_vecTransparent;
     vector<CGameObject*>    m_vecUI;
     vector<CGameObject*>    m_vecPost;
@@ -153,8 +151,8 @@ private:
 
     void render_merge();
 
-    //아직 함수 미완성
-    void render_forward();
+    void render_opaque();
+    void render_mask();
     void render_transparent();
     void render_postprocess();
     void render_ui();

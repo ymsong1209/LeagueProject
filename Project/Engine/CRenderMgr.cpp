@@ -239,9 +239,6 @@ void CRenderMgr::CalcRayForFog()
         m_FogFilterTime = 0.f;
     }
   
-
-    // 전장의 안개 테스트용 코드 (왜인지 터짐 흠...)
-    /*
     if (CKeyMgr::GetInst()->GetKeyState(KEY::Q) == KEY_STATE::TAP)
     {
         m_bIsQClicked = true;
@@ -275,7 +272,6 @@ void CRenderMgr::CalcRayForFog()
 
         delete[] data;
     }
-    */
       
 
 

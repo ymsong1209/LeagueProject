@@ -1,6 +1,0 @@
-sruap_chaosturret1_idle0.anm_skinned_mesh.001,0,44
-sruap_chaosturret1_idle1.anm_skinned_mesh.001,45,89
-sruap_chaosturret1_idle1_seq.anm_skinned_mesh.001,90,134
-sruap_chaosturret1_idle2.anm_skinned_mesh.001,135,238
-sruap_turret_chaos_cloth_stage1.anm_skinned_mesh.001,239,294
-sruap_turret_chaos_cloth_stage2.anm_skinned_mesh.001,295,342

@@ -294,7 +294,7 @@
                         {
                             "TRANSFORM": 0,
                             "vRelativePos": {
-                                "x": 151.47300720214844,
+                                "x": 264.47259521484375,
                                 "y": 14.286861419677734,
                                 "z": 364.4251708984375
                             },
@@ -304,9 +304,9 @@
                                 "z": 0.18000000715255737
                             },
                             "vRelativeRot": {
-                                "x": -3.1415908336639404,
-                                "y": -0.9501100182533264,
-                                "z": -3.1415908336639404
+                                "x": 0.0,
+                                "y": -8.4746675491333,
+                                "z": 0.0
                             },
                             "bAbsolute": false,
                             "IsNoGizmoObj": false,
@@ -338,7 +338,6 @@
                             "IsEmpty": false,
                             "MeshDataRelativePath": "meshdata\\Jinx.mdat",
                             "bRepeat": true,
-                            "fAnimSpeed": 1.0,
                             "mapAnim": [
                                 {
                                     "Anim3DRelativePath": "animation\\Jinx\\Jinx-Jinx_AllAnim.anim3d"
