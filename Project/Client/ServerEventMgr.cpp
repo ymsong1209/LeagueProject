@@ -133,11 +133,11 @@ void ServerEventMgr::clienttick()
 			CGameObject* NewObject = (CGameObject*)m_vecEvent[i].wParam;
 			ObjectMove* objectMove = (ObjectMove*)(m_vecEvent[i].lParam);
 
-			//NewObject->?()->SetLV(objectMove->LV);
-			//NewObject->?()->SetHP(objectMove->HP);
-			//NewObject->?()->SetMP(objectMove->MP);
-			//NewObject->?()->SetAD(objectMove->AD);
-			//NewObject->?()->SetDefence(objectMove->Defence);
+			// NewObject->GetScript<CUnitScript>()->SetLV(objectMove->LV);
+			NewObject->GetScript<CUnitScript>()->SetCurHP(objectMove->HP);
+			NewObject->GetScript<CUnitScript>()->SetCurMP(objectMove->MP);
+			NewObject->GetScript<CUnitScript>()->SetAttackPower(objectMove->AttackPower);
+			NewObject->GetScript<CUnitScript>()->SetDefencePower(objectMove->DefencePower);
 			NewObject->Transform()->SetRelativePos(Vec3(objectMove->pos.x, objectMove->pos.y, objectMove->pos.z));
 			NewObject->Transform()->SetRelativeRot(Vec3(objectMove->moveDir.x, objectMove->moveDir.y, objectMove->moveDir.z));
 

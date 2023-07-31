@@ -88,7 +88,11 @@ public:
     void             SetHost(bool isHost) { m_bHost = isHost; }
     void             SetFaction(Faction faction) { m_eFaction = faction; }
 
-
+    // 기타 필요한 Getter/Setter 함수 추가
+    float  GetAttackPower() { return m_fAttackPower; }
+    float  GetDefencePower() { return m_fDefencePower; }
+    void   SetAttackPower(float _attackPower) { m_fAttackPower = _attackPower; }
+    void   SetDefencePower(float _defencePower) { m_fDefencePower = _defencePower; }
 
 
     // 비동기
@@ -96,11 +100,6 @@ public:
 
 
 
-   // void             SetServerID(unsigned __int64 _id) { m_iServerID = _id; }
-
-    // 기타 필요한 Getter/Setter 함수 추가
-    float  GetAttackPower() { return m_fAttackPower; }
-    float   GetDefencePower() { return m_fDefencePower; }
-
+  
 };
 
