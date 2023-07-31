@@ -28,6 +28,7 @@
 
 #include <Script\CSkill.h>
 #include <Script\CBaseAttack.h>
+#include <Script/CBasicAttackScript.h>
 
 #include <Script\COtherPlayerScript.h>
 #include "ServerEventMgr.h"
@@ -268,16 +269,16 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 			// 원래라면 skillinfo에서 스킬타입에 따라 switch case로 해당 스킬을 AddComponent해준다.
 			pObj->AddComponent(new CMeshRender);
 			pObj->AddComponent(new CTransform);
-			pObj->AddComponent(new CUnitScript);
+			pObj->AddComponent(new CBasicAttackScript);
 			pObj->AddComponent(new CCollider2D);
 
 			// skillinfo 에 따라 세팅해줌 
-			CUnitScript* Script = pObj->GetScript<CUnitScript>();
-			Script->SetServerID(_projectileId);
+			CBasicAttackScript* Script = pObj->GetScript<CBasicAttackScript>();
+			Script->SetServeID(_projectileId);
+			Script->SetUserID(_skillInfo.OwnerId);   
+			Script->SetTargetID(_skillInfo.TargetId);
 
 			pObj->SetName(L"Projectile");
-
-
 
 			// 스킬쏜 주인 중점에서 투사체 생김
 			CGameObject* ownerObj = FindAllObject(_skillInfo.OwnerId);
