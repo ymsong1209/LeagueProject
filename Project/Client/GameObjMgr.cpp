@@ -158,7 +158,7 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 			AttackRange->AddComponent(new CCollider2D);
 			AttackRange->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
 			AttackRange->Collider2D()->SetOffsetScale(Vec2(2000.f, 2000.f));
-			AttackRange->Collider2D()->SetOffsetRot(Vec3(90.f, 0.f, 0.f));
+			AttackRange->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
 			AttackRange->AddComponent(new CAttackRangeScript);
 			AttackRange->SetName(L"AttackRange");
 			pObj->AddChild(AttackRange);
@@ -188,7 +188,7 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 		pObj->AddComponent(new CCollider2D);
 		pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
 		pObj->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
-		pObj->Collider2D()->SetOffsetRot(Vec3(90.f, 0, 0));
+		pObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0, 0));
 
 
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
@@ -229,7 +229,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 			//pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
 			//pObj->Collider2D()->SetOffsetScale(Vec2(50.f, 50.f));
-			//pObj->Collider2D()->SetOffsetRot(Vec3(90.f, 0.f, 0.f));
+			//pObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
 			pObj->SetName(L"Minion");
 
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\minion_melee");
@@ -274,7 +274,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 			//pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
 			//pObj->Collider2D()->SetOffsetScale(Vec2(50.f, 50.f));
-			//pObj->Collider2D()->SetOffsetRot(Vec3(90.f, 0.f, 0.f));
+			//pObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
 			CUnitScript* Script = pObj->GetScript<CUnitScript>();
 			Script->SetServerID(_objectId);
 			Script->SetFaction(_objectInfo.faction);
@@ -318,7 +318,7 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 			pObj->AddComponent(new CCollider2D);
 			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
 			pObj->Collider2D()->SetOffsetScale(Vec2(15, 15));
-			pObj->Collider2D()->SetOffsetRot(Vec3(90.f, 0, 0));
+			pObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0, 0));
 
 			// skillinfo 에 따라 세팅해줌 
 			CBasicAttackScript* Script = pObj->GetScript<CBasicAttackScript>();
@@ -347,7 +347,7 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 			pObj->AddComponent(new CCollider2D);
 			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
 			pObj->Collider2D()->SetOffsetScale(Vec2(15, 15));
-			pObj->Collider2D()->SetOffsetRot(Vec3(90.f, 0, 0));
+			pObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0, 0));
 			CUnitScript* Script = pObj->GetScript<CUnitScript>();
 			Script->SetServerID(_projectileId);
 			Script->SetFaction(Faction::NONE);
