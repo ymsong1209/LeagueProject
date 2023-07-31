@@ -19,14 +19,6 @@
     <ClCompile Include="CInhibitorIdleState.cpp" />
     <ClCompile Include="CInhibitorScript.cpp" />
     <ClCompile Include="CInhibitorSpawnState.cpp" />
-    <ClCompile Include="CJinxDeathState.cpp" />
-    <ClCompile Include="CJinxIdleState.cpp" />
-    <ClCompile Include="CJinxQ.cpp" />
-    <ClCompile Include="CJinxQState.cpp" />
-    <ClCompile Include="CJinxRespawnState.cpp" />
-    <ClCompile Include="CJinxScript.cpp" />
-    <ClCompile Include="CJinxW.cpp" />
-    <ClCompile Include="CJinxWalkState.cpp" />
     <ClCompile Include="CJungleAttackState.cpp" />
     <ClCompile Include="CJungleChaseState.cpp" />
     <ClCompile Include="CJungleDeathState.cpp" />
@@ -49,6 +41,54 @@
     <ClCompile Include="CUnitState.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Script.cpp" />
+    <ClCompile Include="CJinxDeathState.cpp">
+      <Filter>Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxIdleState.cpp">
+      <Filter>Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxQ.cpp">
+      <Filter>Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxQState.cpp">
+      <Filter>Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxRespawnState.cpp">
+      <Filter>Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxScript.cpp">
+      <Filter>Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxW.cpp">
+      <Filter>Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxWalkState.cpp">
+      <Filter>Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CVayneScript.cpp">
+      <Filter>Vayne</Filter>
+    </ClCompile>
+    <ClCompile Include="CVayneWalkState.cpp">
+      <Filter>Vayne</Filter>
+    </ClCompile>
+    <ClCompile Include="CVayneRespawnState.cpp">
+      <Filter>Vayne</Filter>
+    </ClCompile>
+    <ClCompile Include="CVayneW.cpp">
+      <Filter>Vayne</Filter>
+    </ClCompile>
+    <ClCompile Include="CVayneQState.cpp">
+      <Filter>Vayne</Filter>
+    </ClCompile>
+    <ClCompile Include="CVayneQ.cpp">
+      <Filter>Vayne</Filter>
+    </ClCompile>
+    <ClCompile Include="CVayneIdleState.cpp">
+      <Filter>Vayne</Filter>
+    </ClCompile>
+    <ClCompile Include="CVayneDeathState.cpp">
+      <Filter>Vayne</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CBaseAttack.h" />
@@ -70,14 +110,6 @@
     <ClInclude Include="CInhibitorIdleState.h" />
     <ClInclude Include="CInhibitorScript.h" />
     <ClInclude Include="CInhibitorSpawnState.h" />
-    <ClInclude Include="CJinxDeathState.h" />
-    <ClInclude Include="CJinxIdleState.h" />
-    <ClInclude Include="CJinxQ.h" />
-    <ClInclude Include="CJinxQState.h" />
-    <ClInclude Include="CJinxRespawnState.h" />
-    <ClInclude Include="CJinxScript.h" />
-    <ClInclude Include="CJinxW.h" />
-    <ClInclude Include="CJinxWalkState.h" />
     <ClInclude Include="CJungleAttackState.h" />
     <ClInclude Include="CJungleChaseState.h" />
     <ClInclude Include="CJungleDeathState.h" />
@@ -101,5 +133,61 @@
     <ClInclude Include="CInGameCameraScript.h" />
     <ClInclude Include="IGameEventListener.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="CJinxDeathState.h">
+      <Filter>Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxIdleState.h">
+      <Filter>Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxQ.h">
+      <Filter>Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxQState.h">
+      <Filter>Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxRespawnState.h">
+      <Filter>Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxScript.h">
+      <Filter>Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxW.h">
+      <Filter>Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxWalkState.h">
+      <Filter>Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CVayneScript.h">
+      <Filter>Vayne</Filter>
+    </ClInclude>
+    <ClInclude Include="CVayneWalkState.h">
+      <Filter>Vayne</Filter>
+    </ClInclude>
+    <ClInclude Include="CVayneRespawnState.h">
+      <Filter>Vayne</Filter>
+    </ClInclude>
+    <ClInclude Include="CVayneW.h">
+      <Filter>Vayne</Filter>
+    </ClInclude>
+    <ClInclude Include="CVayneQState.h">
+      <Filter>Vayne</Filter>
+    </ClInclude>
+    <ClInclude Include="CVayneQ.h">
+      <Filter>Vayne</Filter>
+    </ClInclude>
+    <ClInclude Include="CVayneIdleState.h">
+      <Filter>Vayne</Filter>
+    </ClInclude>
+    <ClInclude Include="CVayneDeathState.h">
+      <Filter>Vayne</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Jinx">
+      <UniqueIdentifier>{d18a9b90-5d17-4f1d-ac14-ab1e49b5c273}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Vayne">
+      <UniqueIdentifier>{263b0304-9ee8-4c23-9c5b-76deadd0bca1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

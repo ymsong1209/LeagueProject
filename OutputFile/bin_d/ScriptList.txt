@@ -13,3 +13,4 @@ CPlayerScript
 CStructureScript
 CTurretScript
 CUnitScript
+CVayneScript

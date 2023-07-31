@@ -1,35 +1,37 @@
 #include "pch.h"
-#include "CJinxWalkState.h"
+#include "CVayneWalkState.h"
 #include <Engine/CAnimator3D.h>
 #include <Engine\CAnim3D.h>
 
-CJinxWalkState::CJinxWalkState()
+CVayneWalkState::CVayneWalkState()
 {
 	SetName(L"Run");
 }
 
-CJinxWalkState::~CJinxWalkState()
+CVayneWalkState::~CVayneWalkState()
 {
 }
 
-void CJinxWalkState::tick()
+void CVayneWalkState::tick()
 {
 	// SFX / Voice Àç»ý
 }
 
-void CJinxWalkState::Enter()
+void CVayneWalkState::Enter()
 {
 	GetOwner()->Animator3D()->PlayRepeat(L"Vayne\\Run_Base.001", true, 0.15f);
 	CChampionWalkState::Enter();
 }
 
-void CJinxWalkState::Exit()
+void CVayneWalkState::Exit()
 {
-	GetOwner()->Animator3D()->FindAnim(L"Vayne\\Run_Base")->Reset();
+	GetOwner()->Animator3D()->FindAnim(L"Vayne\\Run_Base.001")->Reset();
 	CChampionWalkState::Exit();
 }
 
-void CJinxWalkState::HandleEvent(CGameEvent& event)
+void CVayneWalkState::HandleEvent(CGameEvent& event)
 {
 	CChampionWalkState::HandleEvent(event);
 }
+
+ 

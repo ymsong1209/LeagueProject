@@ -16,7 +16,7 @@ CChampionScript::CChampionScript(UINT ScriptType)
 	, m_fExp(0)
 	, m_EquippedSpell{}
 	, m_fRespawnTime(5)
-	, m_eCurCC(NONE)
+	, m_eCurCC(NONE_CC)
 	, m_eRestraint(DEFAULT)
 	, m_Skill{}
 {
@@ -183,13 +183,13 @@ void CChampionScript::GetInput()
 	if (KEY_TAP(KEY::W))
 	{
 		// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-		if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[1]->GetCost() > m_fMana)
-			return;
+		//if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[1]->GetCost() > m_fMana)
+		//	return;
 
-		if (m_Skill[1]->Use())
-		{
-			// 스킬 이벤트
-		}
+		//if (m_Skill[1]->Use())
+		//{
+		//	// 스킬 이벤트
+		//}
 	}
 	if (KEY_TAP(KEY::E))
 	{

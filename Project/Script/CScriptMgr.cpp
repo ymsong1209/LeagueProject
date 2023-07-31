@@ -16,6 +16,7 @@
 #include "CStructureScript.h"
 #include "CTurretScript.h"
 #include "CUnitScript.h"
+#include "CVayneScript.h"
 
 void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 {
@@ -34,6 +35,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CStructureScript");
 	_vec.push_back(L"CTurretScript");
 	_vec.push_back(L"CUnitScript");
+	_vec.push_back(L"CVayneScript");
 }
 
 CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
@@ -68,6 +70,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CTurretScript;
 	if (L"CUnitScript" == _strScriptName)
 		return new CUnitScript;
+	if (L"CVayneScript" == _strScriptName)
+		return new CVayneScript;
 	return nullptr;
 }
 
@@ -119,6 +123,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::UNITSCRIPT:
 		return new CUnitScript;
+		break;
+	case (UINT)SCRIPT_TYPE::VAYNESCRIPT:
+		return new CVayneScript;
 		break;
 	}
 	return nullptr;
@@ -186,6 +193,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::UNITSCRIPT:
 		return L"CUnitScript";
+		break;
+
+	case SCRIPT_TYPE::VAYNESCRIPT:
+		return L"CVayneScript";
 		break;
 
 	}

@@ -1,0 +1,29 @@
+#pragma once
+#include "CSkill.h"
+class CVayneQ :
+    public CSkill
+{
+public:
+    CVayneQ();
+    ~CVayneQ();
+
+private:
+    int         m_iWeaponMode;
+
+    float       m_fSkillDamage;
+    float       m_fSkillAttackSpeed;
+    float       m_fSkillAttackRange;
+
+public:
+    void tick() override;
+
+    virtual bool Use() override;
+
+    float   GetSkillDamage() { return m_fSkillDamage; }
+    float   GetSkillAttackSpeed() { return m_fSkillAttackSpeed; }
+    float   GetSkillAttackRange() { return m_fSkillAttackRange; }
+
+};
+
+ 
+

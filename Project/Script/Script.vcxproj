@@ -219,6 +219,14 @@ call CodeGen.exe</Command>
     <ClInclude Include="CTurretScript.h" />
     <ClInclude Include="CUnitScript.h" />
     <ClInclude Include="CUnitState.h" />
+    <ClInclude Include="CVayneDeathState.h" />
+    <ClInclude Include="CVayneIdleState.h" />
+    <ClInclude Include="CVayneQ.h" />
+    <ClInclude Include="CVayneQState.h" />
+    <ClInclude Include="CVayneRespawnState.h" />
+    <ClInclude Include="CVayneScript.h" />
+    <ClInclude Include="CVayneW.h" />
+    <ClInclude Include="CVayneWalkState.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="CInGameCameraScript.h" />
     <ClInclude Include="IGameEventListener.h" />
@@ -271,6 +279,14 @@ call CodeGen.exe</Command>
     <ClCompile Include="CTurretScript.cpp" />
     <ClCompile Include="CUnitScript.cpp" />
     <ClCompile Include="CUnitState.cpp" />
+    <ClCompile Include="CVayneDeathState.cpp" />
+    <ClCompile Include="CVayneIdleState.cpp" />
+    <ClCompile Include="CVayneQ.cpp" />
+    <ClCompile Include="CVayneQState.cpp" />
+    <ClCompile Include="CVayneRespawnState.cpp" />
+    <ClCompile Include="CVayneScript.cpp" />
+    <ClCompile Include="CVayneW.cpp" />
+    <ClCompile Include="CVayneWalkState.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

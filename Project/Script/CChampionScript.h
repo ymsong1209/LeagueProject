@@ -4,7 +4,7 @@
 // 군중 제어기
 enum CC
 {
-    NONE = 0,
+    NONE_CC = 0,
     SLOW = 1 << 0,
     SILENCE = 1 << 1,
     ROOT = 1 << 2,

@@ -14,6 +14,9 @@
 #include <Script\CCameraMoveScript.h>
 #include <Engine\CPathFindMgr.h>
 
+#include <Script\CJinxScript.h>
+#include <Script\CVayneScript.h>
+
 
 #include "CLevelSaveLoad.h"
 #include <Script/CScriptMgr.h>
@@ -161,6 +164,49 @@ void CreateTestLevel()
 	SpawnGameObject(LoLMapCollider, Vec3(0.f, 0.f, 0.f), 6);
 
 
+	// ==============
+	// Vayne Loading
+	// ==============
+	{
+		Ptr<CMeshData> pMeshData = nullptr;
+		CGameObject* pObj = nullptr;
+
+		pMeshData = nullptr;
+		pObj = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Vayne.fbx");
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"Vayne");
+		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Vayne");
+		pObj->GetRenderComponent()->SetFrustumCheck(false);
+		pObj->AddComponent(new CVayneScript);
+		pObj->AddComponent(new CPathFinder);
+		pObj->AddComponent(new CCollider3D);
+		pObj->AddComponent(new CFsm);
+
+		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+		pObj->Collider3D()->SetAbsolute(true);
+		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
+		pObj->Collider3D()->SetDrawCollision(false);
+		pObj->Animator3D()->PlayRepeat(L"Vayne\\Idle1.001", true, true, 0.1f);
+		Ptr<CTexture> AlphaTex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png");
+		CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Vayne_Vehicle_Mtrl.mtrl")->SetTexParam(TEX_0, AlphaTex);
+		CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Vayne_Drone_Mtrl.mtrl")->SetTexParam(TEX_0, AlphaTex);
+		//CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Vayne_Remote_Mtrl.mtrl")->SetTexParam(TEX_0, AlphaTex);
+		//CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Vayne_MAT_Mtrl.mtrl")->SetTexParam(TEX_0, AlphaTex);
+		//CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Vayne_Mask_Mtrl.mtrl")->SetTexParam(TEX_0, AlphaTex);
+		//CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Vayne_Crossbow_Cover_Mtrl.mtrl")->SetTexParam(TEX_0, AlphaTex);
+		//CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Vayne_Crossbow_C_Blade_Mtrl.mtrl")->SetTexParam(TEX_0, AlphaTex);
+		//CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Vayne_Crossbow_Arm_Mtrl.mtrl")->SetTexParam(TEX_0, AlphaTex);
+		CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Vayne_Cape_Mtrl.mtrl")->SetTexParam(TEX_0, AlphaTex);
+		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+
+		pObj->Transform()->SetUseMouseOutline(true);
+
+		SpawnGameObject(pObj, Vec3(0, 0, 0), 0);
+
+	}
+
+
 
 	// ============
 	// FBX Loading
@@ -169,27 +215,28 @@ void CreateTestLevel()
 		Ptr<CMeshData> pMeshData = nullptr;
 		CGameObject* pObj = nullptr;
 
-		pMeshData = nullptr;
-		pObj = nullptr;
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
-		pObj = pMeshData->Instantiate();
-		pObj->SetName(L"Jinx");
-		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
-		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->AddComponent(new CPlayerScript);
-		pObj->AddComponent(new CPathFinder);
-		pObj->AddComponent(new CCollider3D);
+		//pMeshData = nullptr;
+		//pObj = nullptr;
+		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
+		//pObj = pMeshData->Instantiate();
+		//pObj->SetName(L"Jinx");
+		//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
+		//pObj->GetRenderComponent()->SetFrustumCheck(false);
+		//pObj->AddComponent(new CJinxScript);
+		//pObj->AddComponent(new CPathFinder);
+		//pObj->AddComponent(new CCollider3D);
+		//pObj->AddComponent(new CFsm);
 
-		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
-		pObj->Collider3D()->SetAbsolute(true);
-		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
-		pObj->Collider3D()->SetDrawCollision(false);
-		pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true,true,0.1f);
-		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+		//pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+		//pObj->Collider3D()->SetAbsolute(true);
+		//pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
+		//pObj->Collider3D()->SetDrawCollision(false);
+		//pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true,true,0.1f);
+		//pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
 
-		pObj->Transform()->SetUseMouseOutline(true);
+		//pObj->Transform()->SetUseMouseOutline(true);
 
-		SpawnGameObject(pObj, Vec3(0, 0, 0), 0);
+		//SpawnGameObject(pObj, Vec3(0, 0, 0), 0);
 
 
 		//-------------------------------넥서스-----------------------------------------
