@@ -16,7 +16,7 @@ CChampionScript::CChampionScript(UINT ScriptType)
 	, m_fExp(0)
 	, m_EquippedSpell{}
 	, m_fRespawnTime(5)
-	, m_eCurCC(NONE)
+	, m_eCurCC(NONE_CC)
 	, m_eRestraint(DEFAULT)
 	, m_Skill{}
 {

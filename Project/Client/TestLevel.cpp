@@ -20,6 +20,7 @@
 #include <Script/CWorldHPSpawnScript.h>
 #include <Script\CWorldHPUIScript.h>
 #include <Script\CInventoryUIScript.h>
+#include <Script/CJinxScript.h>
 
 
 void CreateTestLevel()
@@ -223,9 +224,10 @@ void CreateTestLevel()
 		pObj->SetName(L"Jinx");
 		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->AddComponent(new CPlayerScript);
 		pObj->AddComponent(new CPathFinder);
 		pObj->AddComponent(new CCollider3D);
+		pObj->AddComponent(new CFsm);
+		pObj->AddComponent(new CJinxScript);
 
 		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
 		pObj->Collider3D()->SetAbsolute(true);

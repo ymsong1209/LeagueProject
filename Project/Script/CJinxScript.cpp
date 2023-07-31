@@ -13,6 +13,7 @@ CJinxScript::CJinxScript()
 	:CChampionScript((UINT)JINXSCRIPT)
 {
 	m_fMaxHP = 5;
+	m_fHP = 5;
 }
 
 CJinxScript::~CJinxScript()
