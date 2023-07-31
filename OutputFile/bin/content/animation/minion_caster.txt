@@ -1,0 +1,6 @@
+minion_caster_attack,0,39
+minion_caster_attack2,40,79
+minion_caster_chaos_death,80,156
+minion_caster_chaos_death_2,157,237
+minion_caster_idle,238,274
+minion_caster_run,276,312

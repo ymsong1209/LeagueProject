@@ -121,7 +121,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;_HAS_STD_BYTE=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -130,6 +130,7 @@
       <MaxFilesInUnityFile>20</MaxFilesInUnityFile>
       <MinUnityFiles>1</MinUnityFiles>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -147,7 +148,7 @@ call EngineCopy.bat</Command>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;_HAS_STD_BYTE=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -156,6 +157,7 @@ call EngineCopy.bat</Command>
       <MaxFilesInUnityFile>20</MaxFilesInUnityFile>
       <MinUnityFiles>1</MinUnityFiles>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -182,6 +184,7 @@ call EngineCopy.bat</Command>
     <ClInclude Include="CComponent.h" />
     <ClInclude Include="CComputeShader.h" />
     <ClInclude Include="CConstBuffer.h" />
+    <ClInclude Include="CCopyBoneShader.h" />
     <ClInclude Include="CDecal.h" />
     <ClInclude Include="CDevice.h" />
     <ClInclude Include="CEngine.h" />
@@ -196,6 +199,7 @@ call EngineCopy.bat</Command>
     <ClInclude Include="CGameObject.h" />
     <ClInclude Include="CGraphicsShader.h" />
     <ClInclude Include="CHeightMapShader.h" />
+    <ClInclude Include="CInstancingBuffer.h" />
     <ClInclude Include="CKeyMgr.h" />
     <ClInclude Include="CLandScape.h" />
     <ClInclude Include="CLayer.h" />
@@ -304,6 +308,7 @@ call EngineCopy.bat</Command>
     <ClCompile Include="CComponent.cpp" />
     <ClCompile Include="CComputeShader.cpp" />
     <ClCompile Include="CConstBuffer.cpp" />
+    <ClCompile Include="CCopyBoneShader.cpp" />
     <ClCompile Include="CDecal.cpp" />
     <ClCompile Include="CDevice.cpp" />
     <ClCompile Include="CEngine.cpp">
@@ -321,6 +326,7 @@ call EngineCopy.bat</Command>
     <ClCompile Include="CGameObject.cpp" />
     <ClCompile Include="CGraphicsShader.cpp" />
     <ClCompile Include="CHeightMapShader.cpp" />
+    <ClCompile Include="CInstancingBuffer.cpp" />
     <ClCompile Include="CKeyMgr.cpp" />
     <ClCompile Include="CLandScape.cpp" />
     <ClCompile Include="CLayer.cpp" />
@@ -385,6 +391,12 @@ call EngineCopy.bat</Command>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </ObjectFileOutput>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="copybone.fx">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Effect</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
@@ -499,6 +511,12 @@ call EngineCopy.bat</Command>
       </ObjectFileOutput>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Effect</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="minimap.fx">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="particle_render.fx">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>

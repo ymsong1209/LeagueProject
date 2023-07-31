@@ -4,6 +4,7 @@
 #include "CoreMacro.h"
 
 #include "ServerFunc.h"
+
 enum
 {
 	S_TEST = 0,
@@ -12,18 +13,34 @@ enum
 	S_LOGIN = 2,
 	C_PICK_FACTION = 3,
 	S_PICK_FACTION = 4,
-	C_PICK_CHAMPION_AND_START = 5,
-	S_PICK_CHAMPION_AND_START = 6,
+	C_PICK_CHAMPION = 5,
+	S_PICK_CHAMPION = 6,
 
 	S_GAME_START = 7,
 
-	C_PLAYER_UPDATE = 8,
-	S_PLAYER_UPDATE = 9,
+	C_PLAYER_MOVE = 8,
+	S_PLAYER_MOVE = 9,
 
-	C_MOVE = 10,
-	S_MOVE = 11,
+	C_OBJECT_ANIM = 10,
+	S_OBJECT_ANIM = 11,
+
+	S_SPAWN_OBJECT = 12,
+
+	C_OBJECT_MOVE = 13,
+	S_OBJECT_MOVE = 14,
+
+	C_SKILL_PROJECTILE = 15,
+	S_SKILL_PROJECTILE = 16,
+
+	C_SKILL_HIT = 17,
+	S_SKILL_HIT = 18,
+
+	C_SKILL_DAMAGE = 19,
+	S_SKILL_DAMAGE = 20,
+
+	C_SKILL_CC = 21,
+	S_SKILL_CC = 22,
 };
-
 class ServerPacketHandler
 {
 public:
@@ -32,9 +49,17 @@ public:
 	static void Handle_S_TEST(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_LOGIN(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_PICK_FACTION(PacketSessionRef& session, BYTE* buffer, int32 len);
-	static void Handle_S_PICK_CHAMPION_AND_START(PacketSessionRef& session, BYTE* buffer, int32 len);
+	static void Handle_S_PICK_CHAMPION(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_GAME_START(PacketSessionRef& session, BYTE* buffer, int32 len);
-	static void Handle_S_MOVE(PacketSessionRef& session, BYTE* buffer, int32 len);
+	static void Handle_S_PLAYER_MOVE(PacketSessionRef& session, BYTE* buffer, int32 len);
+
+	static void Handle_S_OBJECT_ANIM(PacketSessionRef& session, BYTE* buffer, int32 len);
+	static void Handle_S_SPAWN_OBJECT(PacketSessionRef& session, BYTE* buffer, int32 len);
+	static void Handle_S_OBJECT_MOVE(PacketSessionRef& session, BYTE* buffer, int32 len);
+	static void Handle_S_SKILL_PROJECTILE(PacketSessionRef& session, BYTE* buffer, int32 len);
+	static void Handle_S_SKILL_HIT(PacketSessionRef& session, BYTE* buffer, int32 len);
+	static void Handle_S_SKILL_DAMAGE(PacketSessionRef& session, BYTE* buffer, int32 len);
+	static void Handle_S_SKILL_CC(PacketSessionRef& session, BYTE* buffer, int32 len);
 
 private:
 	USE_LOCK;
@@ -212,6 +237,7 @@ struct PKT_S_LOGIN
 	{
 		uint64 playerId;
 		FactionType playerFaction;
+		bool            host;
 
 		uint16 nickNameOffset;
 		uint16 nickNameCount;
@@ -326,9 +352,8 @@ struct PKT_S_PICK_FACTION
 };
 #pragma pack()
 
-
 #pragma pack(1)
-struct PKT_C_PICK_CHAMPION_AND_START
+struct PKT_C_PICK_CHAMPION
 {
 	uint16 packetSize;
 	uint16 packetId;
@@ -337,7 +362,7 @@ struct PKT_C_PICK_CHAMPION_AND_START
 	bool Validate()
 	{
 		uint32 size = 0;
-		size += sizeof(PKT_C_PICK_CHAMPION_AND_START);
+		size += sizeof(PKT_C_PICK_CHAMPION);
 		if (packetSize < size)
 			return false;
 
@@ -350,7 +375,7 @@ struct PKT_C_PICK_CHAMPION_AND_START
 #pragma pack()
 
 #pragma pack(1)
-struct PKT_S_PICK_CHAMPION_AND_START
+struct PKT_S_PICK_CHAMPION
 {
 	uint16 packetSize;
 	uint16 packetId;
@@ -361,7 +386,7 @@ struct PKT_S_PICK_CHAMPION_AND_START
 	bool Validate()
 	{
 		uint32 size = 0;
-		size += sizeof(PKT_C_PICK_CHAMPION_AND_START);
+		size += sizeof(PKT_C_PICK_CHAMPION);
 		if (packetSize < size)
 			return false;
 
@@ -425,18 +450,17 @@ struct PKT_S_GAME_START {
 };
 #pragma pack()
 
-
 #pragma pack(1)
-struct PKT_C_MOVE
+struct PKT_C_PLAYER_MOVE
 {
 	uint16 packetSize;
 	uint16 packetId;
-	PlayerMove playerMove;
+	ObjectMove playerMove;
 
 	bool Validate()
 	{
 		uint32 size = 0;
-		size += sizeof(PKT_C_MOVE);
+		size += sizeof(PKT_C_PLAYER_MOVE);
 		if (packetSize < size)
 			return false;
 
@@ -449,17 +473,17 @@ struct PKT_C_MOVE
 #pragma pack()
 
 #pragma pack(1)
-struct PKT_S_MOVE
+struct PKT_S_PLAYER_MOVE
 {
 	uint16 packetSize;
 	uint16 packetId;
 	uint64 playerId;
-	PlayerMove playerMove;
+	ObjectMove playerMove;
 
 	bool Validate()
 	{
 		uint32 size = 0;
-		size += sizeof(PKT_S_MOVE);
+		size += sizeof(PKT_S_PLAYER_MOVE);
 		if (packetSize < size)
 			return false;
 
@@ -471,7 +495,315 @@ struct PKT_S_MOVE
 };
 #pragma pack()
 
+#pragma pack(1)
+struct PKT_C_OBJECT_ANIM {
+	uint16 packetSize;
+	uint16 packetId;
+	uint64 targetId;
+	AnimInfoPacket animInfo;
 
+	bool Validate()
+	{
+		uint32 size = 0;
+		size += sizeof(PKT_C_OBJECT_ANIM);
+		if (packetSize < size)
+			return false;
+
+		if (animInfo.Validate((BYTE*)this, packetSize, OUT size) == false)
+			return false;
+
+		if (size != packetSize)
+			return false;
+
+		return true;
+	}
+
+	using AnimNameList = PacketList<AnimInfoPacket::animNameItem>;
+
+	AnimNameList GetAnimNameList()
+	{
+		BYTE* data = reinterpret_cast<BYTE*>(this);
+		data += animInfo.animNameOffset;
+		return AnimNameList(reinterpret_cast<AnimInfoPacket::animNameItem*>(data), animInfo.animNameCount);
+	}
+};
+#pragma pack()
+
+#pragma pack(1)
+struct PKT_S_OBJECT_ANIM {
+	uint16 packetSize;
+	uint16 packetId;
+	uint64 targetId;
+	AnimInfoPacket animInfo;
+
+	bool Validate()
+	{
+		uint32 size = 0;
+		size += sizeof(PKT_S_OBJECT_ANIM);
+		if (packetSize < size)
+			return false;
+
+		if (animInfo.Validate((BYTE*)this, packetSize, OUT size) == false)
+			return false;
+
+		if (size != packetSize)
+			return false;
+
+		return true;
+	}
+
+	using AnimNameList = PacketList<AnimInfoPacket::animNameItem>;
+
+	AnimNameList GetAnimNameList()
+	{
+		BYTE* data = reinterpret_cast<BYTE*>(this);
+		data += animInfo.animNameOffset;
+		return AnimNameList(reinterpret_cast<AnimInfoPacket::animNameItem*>(data), animInfo.animNameCount);
+	}
+};
+#pragma pack()
+
+#pragma pack(1)
+struct PKT_S_SPAWN_OBJECT {
+	uint16 packetSize;
+	uint16 packetId;
+	ObjectInfo objectInfo;
+
+	bool Validate()
+	{
+		uint32 size = 0;
+		size += sizeof(PKT_S_SPAWN_OBJECT);
+		if (packetSize < size)
+			return false;
+
+		if (size != packetSize)
+			return false;
+
+		return true;
+	}
+};
+#pragma pack()
+
+#pragma pack(1)
+struct PKT_C_OBJECT_MOVE {
+	uint16 packetSize;
+	uint16 packetId;
+	uint64 objectId;
+	ObjectMove objectMove;
+
+	bool Validate()
+	{
+		uint32 size = 0;
+		size += sizeof(PKT_C_OBJECT_MOVE);
+		if (packetSize < size)
+			return false;
+
+		if (size != packetSize)
+			return false;
+
+		return true;
+	}
+};
+#pragma pack()
+
+#pragma pack(1)
+struct PKT_S_OBJECT_MOVE {
+	uint16 packetSize;
+	uint16 packetId;
+	uint64 objectId;
+	ObjectMove objectMove;
+
+	bool Validate()
+	{
+		uint32 size = 0;
+		size += sizeof(PKT_S_OBJECT_MOVE);
+		if (packetSize < size)
+			return false;
+
+		if (size != packetSize)
+			return false;
+
+		return true;
+	}
+};
+#pragma pack()
+
+#pragma pack(1)
+struct PKT_C_SKILL_PROJECTILE {
+	uint16 packetSize;
+	uint16 packetId;
+	SkillInfo skillInfo;
+
+	bool Validate()
+	{
+		uint32 size = 0;
+		size += sizeof(PKT_C_SKILL_PROJECTILE);
+		if (packetSize < size)
+			return false;
+
+		if (size != packetSize)
+			return false;
+
+		return true;
+	}
+};
+#pragma pack()
+
+#pragma pack(1)
+struct PKT_S_SKILL_PROJECTILE {
+	uint16 packetSize;
+	uint16 packetId;
+	uint64 projectileId;
+	SkillInfo skillInfo;
+
+	bool Validate()
+	{
+		uint32 size = 0;
+		size += sizeof(PKT_S_SKILL_PROJECTILE);
+		if (packetSize < size)
+			return false;
+
+		if (size != packetSize)
+			return false;
+
+		return true;
+	}
+};
+#pragma pack()
+
+#pragma pack(1)
+struct PKT_C_SKILL_HIT {
+	uint16 packetSize;
+	uint16 packetId;
+	uint64 objecId;
+	SkillInfo skillInfo;
+
+	bool Validate()
+	{
+		uint32 size = 0;
+		size += sizeof(PKT_C_SKILL_HIT);
+		if (packetSize < size)
+			return false;
+
+		if (size != packetSize)
+			return false;
+
+		return true;
+	}
+};
+#pragma pack()
+
+#pragma pack(1)
+struct PKT_S_SKILL_HIT {
+	uint16 packetSize;
+	uint16 packetId;
+	uint64 objecId;
+	SkillInfo skillInfo;
+
+	bool Validate()
+	{
+		uint32 size = 0;
+		size += sizeof(PKT_S_SKILL_HIT);
+		if (packetSize < size)
+			return false;
+
+		if (size != packetSize)
+			return false;
+
+		return true;
+	}
+};
+#pragma pack()
+
+#pragma pack(1)
+struct PKT_C_SKILL_DAMAGE {
+	uint16   packetSize;
+	uint16   packetId;
+	uint64   objecId;
+	float      damage;
+
+	bool Validate()
+	{
+		uint32 size = 0;
+		size += sizeof(PKT_C_SKILL_DAMAGE);
+		if (packetSize < size)
+			return false;
+
+		if (size != packetSize)
+			return false;
+
+		return true;
+	}
+};
+#pragma pack()
+
+#pragma pack(1)
+struct PKT_S_SKILL_DAMAGE {
+	uint16   packetSize;
+	uint16   packetId;
+	uint64   objecId;
+	float      damage;
+
+	bool Validate()
+	{
+		uint32 size = 0;
+		size += sizeof(PKT_S_SKILL_DAMAGE);
+		if (packetSize < size)
+			return false;
+
+		if (size != packetSize)
+			return false;
+
+		return true;
+	}
+};
+#pragma pack()
+
+#pragma pack(1)
+struct PKT_C_SKILL_CC {
+	uint16   packetSize;
+	uint16   packetId;
+	uint64   objecId;
+	CC_TYPE CCType;
+	float      time;
+
+	bool Validate()
+	{
+		uint32 size = 0;
+		size += sizeof(PKT_C_SKILL_CC);
+		if (packetSize < size)
+			return false;
+
+		if (size != packetSize)
+			return false;
+
+		return true;
+	}
+};
+#pragma pack()
+
+#pragma pack(1)
+struct PKT_S_SKILL_CC {
+	uint16   packetSize;
+	uint16   packetId;
+	uint64   objecId;
+	CC_TYPE CCType;
+	float      time;
+
+	bool Validate()
+	{
+		uint32 size = 0;
+		size += sizeof(PKT_S_SKILL_CC);
+		if (packetSize < size)
+			return false;
+
+		if (size != packetSize)
+			return false;
+
+		return true;
+	}
+};
+#pragma pack()
 //=====================================
 // 이 밑은 패킷 Write 클래스 모음입니다. |
 //=====================================
@@ -546,16 +878,16 @@ private:
 #pragma pack()
 
 #pragma pack(1)
-class PKT_C_PICK_CHAMPION_AND_START_WRITE
+class PKT_C_PICK_CHAMPION_WRITE
 {
 public:
-	PKT_C_PICK_CHAMPION_AND_START_WRITE(ChampionType _champion) {
+	PKT_C_PICK_CHAMPION_WRITE(ChampionType _champion) {
 		_sendBuffer = GSendBufferManager->Open(4096);
 		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
 
-		_pkt = _bw.Reserve<PKT_C_PICK_CHAMPION_AND_START>();
+		_pkt = _bw.Reserve<PKT_C_PICK_CHAMPION>();
 		_pkt->packetSize = 0;
-		_pkt->packetId = C_PICK_CHAMPION_AND_START;
+		_pkt->packetId = C_PICK_CHAMPION;
 		_pkt->champion = _champion;
 	}
 
@@ -569,24 +901,24 @@ public:
 	}
 
 private:
-	PKT_C_PICK_CHAMPION_AND_START* _pkt = nullptr;
+	PKT_C_PICK_CHAMPION* _pkt = nullptr;
 	SendBufferRef _sendBuffer;
 	BufferWriter _bw;
 };
 #pragma pack()
 
 #pragma pack(1)
-class PKT_C_MOVE_WRITE
+class PKT_C_PLAYER_MOVE_WRITE
 {
 public:
-	PKT_C_MOVE_WRITE(PlayerMove _playerMove) {
+	PKT_C_PLAYER_MOVE_WRITE(ObjectMove _playerMove) {
 		_sendBuffer = GSendBufferManager->Open(4096);
 		// 초기화
 		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
 
-		_pkt = _bw.Reserve<PKT_C_MOVE>();
+		_pkt = _bw.Reserve<PKT_C_PLAYER_MOVE>();
 		_pkt->packetSize = 0; // To Fill
-		_pkt->packetId = C_MOVE;
+		_pkt->packetId = C_PLAYER_MOVE;
 		_pkt->playerMove = _playerMove;
 	}
 
@@ -600,7 +932,204 @@ public:
 	}
 
 private:
-	PKT_C_MOVE* _pkt = nullptr;
+	PKT_C_PLAYER_MOVE* _pkt = nullptr;
+	SendBufferRef _sendBuffer;
+	BufferWriter _bw;
+};
+#pragma pack()
+
+#pragma pack(1)
+class PKT_C_OBJECT_ANIM_WRITE {
+public:
+	using AnimNameList = PacketList<AnimInfoPacket::animNameItem>;
+	using AnimNameItem = AnimInfoPacket::animNameItem;
+
+	PKT_C_OBJECT_ANIM_WRITE(uint64 _targetId, /*animName은 가변 배열임으로 넣어주지 말것*/ AnimInfoPacket _animInfo)
+	{
+		_sendBuffer = GSendBufferManager->Open(4096);
+		// 초기화
+		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
+
+		_pkt = _bw.Reserve<PKT_C_OBJECT_ANIM>();
+		_pkt->packetSize = 0; // To Fill
+		_pkt->packetId = C_OBJECT_ANIM;
+		_pkt->targetId = _targetId;
+		_pkt->animInfo = _animInfo;
+	}
+
+	AnimNameList ReserveAnimNameList(uint16 animCount) {
+		AnimNameItem* firstBuffsListItem = _bw.Reserve<AnimNameItem>(animCount);
+		_pkt->animInfo.animNameOffset = (uint64)firstBuffsListItem - (uint64)_pkt;
+		_pkt->animInfo.animNameCount = animCount;
+		return AnimNameList(firstBuffsListItem, animCount);
+	}
+
+	SendBufferRef CloseAndReturn()
+	{
+		// 패킷 사이즈 계산
+		_pkt->packetSize = _bw.WriteSize();
+
+		_sendBuffer->Close(_bw.WriteSize());
+		return _sendBuffer;
+	}
+
+private:
+	PKT_C_OBJECT_ANIM* _pkt = nullptr;
+	SendBufferRef _sendBuffer;
+	BufferWriter _bw;
+};
+#pragma pack()
+
+#pragma pack(1)
+class PKT_C_OBJECT_MOVE_WRITE {
+public:
+	PKT_C_OBJECT_MOVE_WRITE(uint64 _objectId, ObjectMove _objectMove) {
+		_sendBuffer = GSendBufferManager->Open(4096);
+		// 초기화
+		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
+
+		_pkt = _bw.Reserve<PKT_C_OBJECT_MOVE>();
+		_pkt->packetSize = 0; // To Fill
+		_pkt->packetId = C_OBJECT_MOVE;
+		_pkt->objectId = _objectId;
+		_pkt->objectMove = _objectMove;
+	}
+
+	SendBufferRef CloseAndReturn()
+	{
+		// 패킷 사이즈 계산
+		_pkt->packetSize = _bw.WriteSize();
+
+		_sendBuffer->Close(_bw.WriteSize());
+		return _sendBuffer;
+	}
+
+private:
+	PKT_C_OBJECT_MOVE* _pkt = nullptr;
+	SendBufferRef _sendBuffer;
+	BufferWriter _bw;
+};
+#pragma pack()
+
+#pragma pack(1)
+class PKT_C_SKILL_PROJECTILE_WRITE {
+public:
+	PKT_C_SKILL_PROJECTILE_WRITE(SkillInfo _skillInfo) {
+		_sendBuffer = GSendBufferManager->Open(4096);
+		// 초기화
+		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
+
+		_pkt = _bw.Reserve<PKT_C_SKILL_PROJECTILE>();
+		_pkt->packetSize = 0; // To Fill
+		_pkt->packetId = C_SKILL_PROJECTILE;
+		_pkt->skillInfo = _skillInfo;
+	}
+
+	SendBufferRef CloseAndReturn()
+	{
+		// 패킷 사이즈 계산
+		_pkt->packetSize = _bw.WriteSize();
+
+		_sendBuffer->Close(_bw.WriteSize());
+		return _sendBuffer;
+	}
+
+private:
+	PKT_C_SKILL_PROJECTILE* _pkt = nullptr;
+	SendBufferRef _sendBuffer;
+	BufferWriter _bw;
+};
+#pragma pack()
+
+#pragma pack(1)
+class PKT_C_SKILL_HIT_WRITE {
+public:
+	PKT_C_SKILL_HIT_WRITE(uint64 _objectId, SkillInfo _skillInfo) {
+		_sendBuffer = GSendBufferManager->Open(4096);
+		// 초기화
+		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
+
+		_pkt = _bw.Reserve<PKT_C_SKILL_HIT>();
+		_pkt->packetSize = 0; // To Fill
+		_pkt->packetId = C_SKILL_HIT;
+		_pkt->objecId = _objectId;
+		_pkt->skillInfo = _skillInfo;
+	}
+
+	SendBufferRef CloseAndReturn()
+	{
+		// 패킷 사이즈 계산
+		_pkt->packetSize = _bw.WriteSize();
+
+		_sendBuffer->Close(_bw.WriteSize());
+		return _sendBuffer;
+	}
+
+private:
+	PKT_C_SKILL_HIT* _pkt = nullptr;
+	SendBufferRef _sendBuffer;
+	BufferWriter _bw;
+};
+#pragma pack()
+
+#pragma pack(1)
+class PKT_C_SKILL_DAMAGE_WRITE {
+public:
+	PKT_C_SKILL_DAMAGE_WRITE(uint64 _objectId, float _damage) {
+		_sendBuffer = GSendBufferManager->Open(4096);
+		// 초기화
+		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
+
+		_pkt = _bw.Reserve<PKT_C_SKILL_DAMAGE>();
+		_pkt->packetSize = 0; // To Fill
+		_pkt->packetId = C_SKILL_DAMAGE;
+		_pkt->objecId = _objectId;
+		_pkt->damage = _damage;
+	}
+
+	SendBufferRef CloseAndReturn()
+	{
+		// 패킷 사이즈 계산
+		_pkt->packetSize = _bw.WriteSize();
+
+		_sendBuffer->Close(_bw.WriteSize());
+		return _sendBuffer;
+	}
+
+private:
+	PKT_C_SKILL_DAMAGE* _pkt = nullptr;
+	SendBufferRef _sendBuffer;
+	BufferWriter _bw;
+};
+#pragma pack()
+
+#pragma pack(1)
+class PKT_C_SKILL_CC_WRITE {
+public:
+	PKT_C_SKILL_CC_WRITE(uint64 _objectId, CC_TYPE _CCType, float _time) {
+		_sendBuffer = GSendBufferManager->Open(4096);
+		// 초기화
+		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
+
+		_pkt = _bw.Reserve<PKT_C_SKILL_CC>();
+		_pkt->packetSize = 0; // To Fill
+		_pkt->packetId = C_SKILL_CC;
+		_pkt->objecId = _objectId;
+		_pkt->CCType = _CCType;
+		_pkt->time = _time;
+	}
+
+	SendBufferRef CloseAndReturn()
+	{
+		// 패킷 사이즈 계산
+		_pkt->packetSize = _bw.WriteSize();
+
+		_sendBuffer->Close(_bw.WriteSize());
+		return _sendBuffer;
+	}
+
+private:
+	PKT_C_SKILL_CC* _pkt = nullptr;
 	SendBufferRef _sendBuffer;
 	BufferWriter _bw;
 };

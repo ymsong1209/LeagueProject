@@ -10,6 +10,7 @@
 #include "CLevel.h"
 #include "CLayer.h"
 #include "CGameObject.h"
+#include "CAnimator3D.h"
 #include "CRenderComponent.h"
 #include "CMaterial.h"
 #include "CGraphicsShader.h"
@@ -26,6 +27,7 @@
 #include "CEngine.h"
 
 #include "CStructuredBuffer.h"
+#include "CInstancingBuffer.h"
 
 
 
@@ -510,43 +512,87 @@ void CCamera::SortObject()
 						continue;
 					}
 				}
+				// 메테리얼 개수만큼 반복
+				UINT iMtrlCount = pRenderCom->GetMtrlCount();
 
-
-
-				// 쉐이더 도메인에 따른 분류
-				SHADER_DOMAIN eDomain = pRenderCom->GetMaterial(0)->GetShader()->GetDomain();
-				switch (eDomain)
+				for (UINT iMtrl = 0; iMtrl < iMtrlCount; ++iMtrl)
 				{
-				case SHADER_DOMAIN::DOMAIN_DEFERRED:
-					m_vecDeferred.push_back(vecObject[j]);
+					// 재질이 없거나, 재질의 쉐이더가 설정이 안된 경우
+					if (nullptr == pRenderCom->GetMaterial(iMtrl)
+						|| nullptr == pRenderCom->GetMaterial(iMtrl)->GetShader())
+					{
+						continue;
+					}
+
+					// 쉐이더 도메인에 따른 분류
+					SHADER_DOMAIN eDomain = pRenderCom->GetMaterial(iMtrl)->GetShader()->GetDomain();
+					Ptr<CGraphicsShader> pShader = pRenderCom->GetMaterial(iMtrl)->GetShader();
+
+					switch (eDomain)
+					{
+					case SHADER_DOMAIN::DOMAIN_DEFERRED:
+					case SHADER_DOMAIN::DOMAIN_OPAQUE:
+					case SHADER_DOMAIN::DOMAIN_MASK:
+					{
+						// Shader 의 POV 에 따라서 인스턴싱 그룹을 분류한다.
+						map<ULONG64, vector<tInstObj>>* pMap = NULL;
+						Ptr<CMaterial> pMtrl = pRenderCom->GetMaterial(iMtrl);
+
+						if (pShader->GetDomain() == SHADER_DOMAIN::DOMAIN_DEFERRED)
+						{
+							pMap = &m_mapInstGroup_D;
+						}
+						else if (pShader->GetDomain() == SHADER_DOMAIN::DOMAIN_OPAQUE
+							|| pShader->GetDomain() == SHADER_DOMAIN::DOMAIN_MASK)
+						{
+							pMap = &m_mapInstGroup_F;
+						}
+						else
+						{
+							assert(nullptr);
+							continue;
+						}
+
+						uInstID uID = {};
+						uID.llID = pRenderCom->GetInstID(iMtrl);
+
+						// ID 가 0 다 ==> Mesh 나 Material 이 셋팅되지 않았다.
+						if (0 == uID.llID)
+							continue;
+
+						map<ULONG64, vector<tInstObj>>::iterator iter = pMap->find(uID.llID);
+						if (iter == pMap->end())
+						{
+							pMap->insert(make_pair(uID.llID, vector<tInstObj>{tInstObj{ vecObject[j], iMtrl }}));
+						}
+						else
+						{
+							iter->second.push_back(tInstObj{ vecObject[j], iMtrl });
+						}
+					}
 					break;
-				case SHADER_DOMAIN::DOMAIN_DECAL:
-					m_vecDecal.push_back(vecObject[j]);
-					break;
-				case SHADER_DOMAIN::DOMAIN_OPAQUE:
-					m_vecOpaque.push_back(vecObject[j]);
-					break;
-				case SHADER_DOMAIN::DOMAIN_MASK:
-					m_vecMask.push_back(vecObject[j]);
-					break;
-				case SHADER_DOMAIN::DOMAIN_TRANSPARENT:
-					m_vecTransparent.push_back(vecObject[j]);
-					break;
-				case SHADER_DOMAIN::DOMAIN_POSTPROCESS:
-					m_vecPost.push_back(vecObject[j]);
-					break;
-				case SHADER_DOMAIN::DOMAIN_UI:
-					m_vecUI.push_back(vecObject[j]);
-					break;
-				case SHADER_DOMAIN::DOMAIN_UI_OPAQUE:
-					m_vecUIOpaque.push_back(vecObject[j]);
-					break;
-				case SHADER_DOMAIN::DOMAIN_UI_MASK:
-					m_vecUIMask.push_back(vecObject[j]);
-					break;
-				case SHADER_DOMAIN::DOMAIN_UI_TRANSPARENT:
-					m_vecUITransparent.push_back(vecObject[j]);
-					break;
+					case SHADER_DOMAIN::DOMAIN_UI_OPAQUE:
+						m_vecUIOpaque.push_back(vecObject[j]);
+						break;
+					case SHADER_DOMAIN::DOMAIN_UI_MASK:
+						m_vecUIMask.push_back(vecObject[j]);
+						break;
+					case SHADER_DOMAIN::DOMAIN_UI_TRANSPARENT:
+						m_vecUITransparent.push_back(vecObject[j]);
+						break;
+					case SHADER_DOMAIN::DOMAIN_DECAL:
+						m_vecDecal.push_back(vecObject[j]);
+						break;
+					case SHADER_DOMAIN::DOMAIN_TRANSPARENT:
+						m_vecTransparent.push_back(vecObject[j]);
+						break;
+					case SHADER_DOMAIN::DOMAIN_POSTPROCESS:
+						m_vecPost.push_back(vecObject[j]);
+						break;
+					case SHADER_DOMAIN::DOMAIN_UI:
+						m_vecUI.push_back(vecObject[j]);
+						break;
+					}
 				}
 			}
 		}
@@ -647,25 +693,23 @@ void CCamera::render()
 		render_merge();
 
 		// Forward Object	
-		render_opaque();
-		render_mask();
+		render_forward();
 		render_transparent();
 
 		// Outline :포스트 프로세스 단계에 넣어도 상관은없지만 정리를 위해 따로. 테두리는 깊이 모두 기록된후에 마지막에 진행
-		if (m_vecContour.size() > 0) //아웃라인을 출력해야하는 오브젝트가 있을경우에만 시행
+		if(m_vecContour.size() > 0) //아웃라인을 출력해야하는 오브젝트가 있을경우에만 시행
 			render_Outline();
 
 		// PostProcess
 		render_postprocess();
+		// UI
 		render_ui();
 	}
-
 	else//지금 왜 이런 처리가 생겼는지 갸우뚱? 하시는 분들이 있을텐데 그건 나중에 회의때 말씀드리도록 하겠습니다..
 	{							   //간단하게 말씀드리면 지금 카메라가 하나 더생성되면 디퍼드 렌더링 관련해서 뭔가 버그가 있는거같아요 (디렉셔널 라이트도 카메라가 추가되면 더 밝게 보이거나 함)
 		// UI
 		render_uicamera();
 	}
-
 }
 
 void CCamera::render_depthmap()
@@ -958,10 +1002,11 @@ IntersectResult CCamera::IntersecrRayFog(Vec3 _Vertices0, Vec3 _Vertices1, Vec3 
 
 void CCamera::clear()
 {
-	m_vecDeferred.clear();
+	for (auto& pair : m_mapInstGroup_D)
+		pair.second.clear();
+	for (auto& pair : m_mapInstGroup_F)
+		pair.second.clear();
 	m_vecDecal.clear();
-	m_vecOpaque.clear();
-	m_vecMask.clear();
 	m_vecTransparent.clear();
 	m_vecContour.clear();
 	m_vecPost.clear();
@@ -974,19 +1019,139 @@ void CCamera::clear()
 
 void CCamera::render_deferred()
 {
-	for (size_t i = 0; i < m_vecDeferred.size(); ++i)
+	for (auto& pair : m_mapSingleObj)
 	{
-		//DataTex에 자신의 LayerNum을 집어넣는다.
-		if (m_vecDeferred[i]->GetLayerIndex() != -1) {
-			//layer는 0~31이지만 비트연산을 위해 한칸씩 옮김
-			//layernum = 1~32
-			float layernum = m_vecDeferred[i]->GetLayerIndex() + 1;
-			UINT matsize = m_vecDeferred[i]->GetRenderComponent()->GetMtrlCount();
-			for (UINT j = 0; j < matsize; ++j) {
-				m_vecDeferred[i]->GetRenderComponent()->GetMaterial(j)->SetScalarParam(FLOAT_0, &layernum);
+		pair.second.clear();
+	}
+
+	// Deferred object render
+	tInstancingData tInstData = {};
+
+
+	//같은 재질, Mtrl을 들고 있어도, LayerNum이 다르면 또 분류를 해줘야한다.
+	//first : layernum , second : mtrlnum, cgameobject
+	map<int, map<int, vector<CGameObject*>>> ObjDividedByLayer;
+	for (auto& pair : m_mapInstGroup_D)
+	{
+		// 그룹 오브젝트가 없거나, 쉐이더가 없는 경우
+		if (pair.second.empty())
+			continue;
+
+		// instancing 개수 조건 미만이거나
+		// Animation2D 오브젝트거나(스프라이트 애니메이션 오브젝트)
+		// Shader 가 Instancing 을 지원하지 않는경우
+		if (pair.second.size() <= 1
+			|| pair.second[0].pObj->Animator2D()
+			|| pair.second[0].pObj->GetRenderComponent()->GetMaterial(pair.second[0].iMtrlIdx)->GetShader()->GetVSInst() == nullptr)
+		{
+			// 해당 물체들은 단일 랜더링으로 전환
+			for (UINT i = 0; i < pair.second.size(); ++i)
+			{
+				map<INT_PTR, vector<tInstObj>>::iterator iter
+					= m_mapSingleObj.find((INT_PTR)pair.second[i].pObj);
+
+				if (iter != m_mapSingleObj.end())
+					iter->second.push_back(pair.second[i]);
+				else
+				{
+					m_mapSingleObj.insert(make_pair((INT_PTR)pair.second[i].pObj, vector<tInstObj>{pair.second[i]}));
+				}
+			}
+			continue;
+		}
+
+		for (UINT i = 0; i < pair.second.size(); ++i) {
+			ObjDividedByLayer[pair.second[i].pObj->GetLayerIndex()][pair.second[i].iMtrlIdx].push_back(pair.second[i].pObj);
+		}
+	}
+
+	for (auto& LayerPair : ObjDividedByLayer) {
+
+		for (auto& MaterialPair : LayerPair.second) {
+			CGameObject* pObj = MaterialPair.second[0];
+			Ptr<CMesh> pMesh = pObj->GetRenderComponent()->GetMesh();
+			Ptr<CMaterial> pMtrl = pObj->GetRenderComponent()->GetMaterial(MaterialPair.first);
+
+			// Instancing 버퍼 클리어
+			CInstancingBuffer::GetInst()->Clear();
+
+			int iRowIdx = 0;
+			bool bHasAnim3D = false;
+			for (UINT i = 0; i < MaterialPair.second.size(); ++i)
+			{
+				tInstData.matWorld = MaterialPair.second[i]->Transform()->GetWorldMat();
+				tInstData.matWV = tInstData.matWorld * m_matView;
+				tInstData.matWVP = tInstData.matWV * m_matProj;
+
+				if (MaterialPair.second[i]->Animator3D())
+				{
+					MaterialPair.second[i]->Animator3D()->UpdateData();
+					tInstData.iRowIdx = iRowIdx++;
+					CInstancingBuffer::GetInst()->AddInstancingBoneMat(MaterialPair.second[i]->Animator3D()->GetFinalBoneMat());
+					bHasAnim3D = true;
+				}
+				else
+					tInstData.iRowIdx = -1;
+
+				CInstancingBuffer::GetInst()->AddInstancingData(tInstData);
+
+				if (MaterialPair.second[i]->GetLayerIndex() != -1) {
+					//layer는 0~31이지만 비트연산을 위해 한칸씩 옮김
+					//layernum = 1~32
+					float layernum = MaterialPair.second[i]->GetLayerIndex() + 1;
+					pMtrl->SetScalarParam(FLOAT_0, &layernum);
+				}
+			}
+
+			// 인스턴싱에 필요한 데이터를 세팅(SysMem -> GPU Mem)
+			CInstancingBuffer::GetInst()->SetData();
+
+			if (bHasAnim3D)
+			{
+				pMtrl->SetAnim3D(true); // Animation Mesh 알리기
+				pMtrl->SetBoneCount(pMesh->GetBoneCount());
+			}
+
+			pMtrl->UpdateData_Inst();
+			pMesh->render_instancing(MaterialPair.first);
+
+			// 정리
+			if (bHasAnim3D)
+			{
+				pMtrl->SetAnim3D(false); // Animation Mesh 알리기
+				pMtrl->SetBoneCount(0);
 			}
 		}
-		m_vecDeferred[i]->render();
+	}
+
+	// 개별 랜더링
+	for (auto& pair : m_mapSingleObj)
+	{
+		if (pair.second.empty())
+			continue;
+
+		pair.second[0].pObj->Transform()->UpdateData();
+
+		//DataTex에 자신의 LayerNum을 집어넣는다.
+		if (pair.second[0].pObj->GetLayerIndex() != -1) {
+			//layer는 0~31이지만 비트연산을 위해 한칸씩 옮김
+			//layernum = 1~32
+			float layernum = pair.second[0].pObj->GetLayerIndex() + 1;
+			UINT matsize = pair.second[0].pObj->GetRenderComponent()->GetMtrlCount();
+			for (UINT j = 0; j < matsize; ++j) {
+				pair.second[0].pObj->GetRenderComponent()->GetMaterial(j)->SetScalarParam(FLOAT_0, &layernum);
+			}
+		}
+
+		for (auto& instObj : pair.second)
+		{
+			instObj.pObj->GetRenderComponent()->render(instObj.iMtrlIdx);
+		}
+
+		if (pair.second[0].pObj->Animator3D())
+		{
+			pair.second[0].pObj->Animator3D()->ClearData();
+		}
 	}
 }
 
@@ -1012,19 +1177,144 @@ void CCamera::render_merge()
 	pMesh->render(0);
 }
 
-void CCamera::render_opaque()
-{
-	for (size_t i = 0; i < m_vecOpaque.size(); ++i)
-	{
-		m_vecOpaque[i]->render();
-	}
-}
 
-void CCamera::render_mask()
+
+void CCamera::render_forward()
 {
-	for (size_t i = 0; i < m_vecMask.size(); ++i)
+
+	for (auto& pair : m_mapSingleObj)
 	{
-		m_vecMask[i]->render();
+		pair.second.clear();
+	}
+
+	// Deferred object render
+	tInstancingData tInstData = {};
+
+
+	//같은 재질, Mtrl을 들고 있어도, LayerNum이 다르면 또 분류를 해줘야한다.
+	//first : layernum , second : mtrlnum, cgameobject
+	map<int, map<int, vector<CGameObject*>>> ObjDividedByLayer;
+	for (auto& pair : m_mapInstGroup_F)
+	{
+		// 그룹 오브젝트가 없거나, 쉐이더가 없는 경우
+		if (pair.second.empty())
+			continue;
+
+		// instancing 개수 조건 미만이거나
+		// Animation2D 오브젝트거나(스프라이트 애니메이션 오브젝트)
+		// Shader 가 Instancing 을 지원하지 않는경우
+		if (pair.second.size() <= 1
+			|| pair.second[0].pObj->Animator2D()
+			|| pair.second[0].pObj->GetRenderComponent()->GetMaterial(pair.second[0].iMtrlIdx)->GetShader()->GetVSInst() == nullptr)
+		{
+			// 해당 물체들은 단일 랜더링으로 전환
+			for (UINT i = 0; i < pair.second.size(); ++i)
+			{
+				map<INT_PTR, vector<tInstObj>>::iterator iter
+					= m_mapSingleObj.find((INT_PTR)pair.second[i].pObj);
+
+				if (iter != m_mapSingleObj.end())
+					iter->second.push_back(pair.second[i]);
+				else
+				{
+					m_mapSingleObj.insert(make_pair((INT_PTR)pair.second[i].pObj, vector<tInstObj>{pair.second[i]}));
+				}
+			}
+			continue;
+		}
+
+		for (UINT i = 0; i < pair.second.size(); ++i) {
+			ObjDividedByLayer[pair.second[i].pObj->GetLayerIndex()][pair.second[i].iMtrlIdx].push_back(pair.second[i].pObj);
+		}
+	}
+
+	for (auto& LayerPair : ObjDividedByLayer) {
+
+		for (auto& MaterialPair : LayerPair.second) {
+			CGameObject* pObj = MaterialPair.second[0];
+			Ptr<CMesh> pMesh = pObj->GetRenderComponent()->GetMesh();
+			Ptr<CMaterial> pMtrl = pObj->GetRenderComponent()->GetMaterial(MaterialPair.first);
+
+			// Instancing 버퍼 클리어
+			CInstancingBuffer::GetInst()->Clear();
+
+			int iRowIdx = 0;
+			bool bHasAnim3D = false;
+			for (UINT i = 0; i < MaterialPair.second.size(); ++i)
+			{
+				tInstData.matWorld = MaterialPair.second[i]->Transform()->GetWorldMat();
+				tInstData.matWV = tInstData.matWorld * m_matView;
+				tInstData.matWVP = tInstData.matWV * m_matProj;
+
+				if (MaterialPair.second[i]->Animator3D())
+				{
+					MaterialPair.second[i]->Animator3D()->UpdateData();
+					tInstData.iRowIdx = iRowIdx++;
+					CInstancingBuffer::GetInst()->AddInstancingBoneMat(MaterialPair.second[i]->Animator3D()->GetFinalBoneMat());
+					bHasAnim3D = true;
+				}
+				else
+					tInstData.iRowIdx = -1;
+
+				CInstancingBuffer::GetInst()->AddInstancingData(tInstData);
+
+				if (MaterialPair.second[i]->GetLayerIndex() != -1) {
+					//layer는 0~31이지만 비트연산을 위해 한칸씩 옮김
+					//layernum = 1~32
+					float layernum = MaterialPair.second[i]->GetLayerIndex() + 1;
+					pMtrl->SetScalarParam(FLOAT_0, &layernum);
+				}
+			}
+
+			// 인스턴싱에 필요한 데이터를 세팅(SysMem -> GPU Mem)
+			CInstancingBuffer::GetInst()->SetData();
+
+			if (bHasAnim3D)
+			{
+				pMtrl->SetAnim3D(true); // Animation Mesh 알리기
+				pMtrl->SetBoneCount(pMesh->GetBoneCount());
+			}
+
+			pMtrl->UpdateData_Inst();
+			pMesh->render_instancing(MaterialPair.first);
+
+			// 정리
+			if (bHasAnim3D)
+			{
+				pMtrl->SetAnim3D(false); // Animation Mesh 알리기
+				pMtrl->SetBoneCount(0);
+			}
+		}
+	}
+
+	// 개별 랜더링
+	for (auto& pair : m_mapSingleObj)
+	{
+		if (pair.second.empty())
+			continue;
+
+		pair.second[0].pObj->Transform()->UpdateData();
+
+		//DataTex에 자신의 LayerNum을 집어넣는다.
+		if (pair.second[0].pObj->GetLayerIndex() != -1) {
+			//layer는 0~31이지만 비트연산을 위해 한칸씩 옮김
+			//layernum = 1~32
+			float layernum = pair.second[0].pObj->GetLayerIndex() + 1;
+			UINT matsize = pair.second[0].pObj->GetRenderComponent()->GetMtrlCount();
+			for (UINT j = 0; j < matsize; ++j) {
+				pair.second[0].pObj->GetRenderComponent()->GetMaterial(j)->SetScalarParam(FLOAT_0, &layernum);
+			}
+		}
+
+		for (auto& instObj : pair.second)
+		{
+			instObj.pObj->GetRenderComponent()->render(instObj.iMtrlIdx);
+		}
+
+		if (pair.second[0].pObj->Animator3D())
+		{
+			pair.second[0].pObj->Animator3D()->ClearData();
+		}
 	}
 }
 
