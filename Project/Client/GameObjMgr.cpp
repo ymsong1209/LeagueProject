@@ -29,6 +29,7 @@
 #include <Script\CSkill.h>
 #include <Script\CBaseAttack.h>
 #include <Script/CBasicAttackScript.h>
+#include <Script/CAttackRangeScript.h>
 
 #include <Script\COtherPlayerScript.h>
 #include "ServerEventMgr.h"
@@ -148,7 +149,20 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 			MyPlayerScript->SetHost(_info.host);
 			MyPlayerScript->SetFaction(_info.faction);
 
+			CGameObject* AttackRange = new CGameObject;
+			AttackRange->AddComponent(new CTransform);
+			AttackRange->AddComponent(new CCollider2D);
+			AttackRange->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			AttackRange->Collider2D()->SetOffsetScale(Vec2(1000.f, 1000.f));
+			AttackRange->Collider2D()->SetOffsetRot(Vec3(90.f, 0.f, 0.f));
+			AttackRange->AddComponent(new CAttackRangeScript);
+
+			pObj->AddChild(AttackRange);
+
+
+
 			pObj->SetName(L"MyPlayer");
+
 		}
 		else
 		{
