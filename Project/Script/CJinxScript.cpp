@@ -44,7 +44,7 @@ void CJinxScript::begin()
 
 
 	// Áø¿µ
-	SetFaction(Faction::BLUE);
+	// SetFaction(Faction::BLUE);
 
 	CChampionScript::begin();
 }

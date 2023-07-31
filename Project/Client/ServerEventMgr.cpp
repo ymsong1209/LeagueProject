@@ -45,6 +45,8 @@ void ServerEventMgr::sendtick(ClientServiceRef _service)
 			for (auto& pair : _objects) {
 				uint64 id = pair.first; 
 				CGameObject* obj = pair.second; 
+				if (obj == nullptr) // 이미 죽어서 사라진 오브젝트
+					continue;
 				GameObjMgr::GetInst()->SendObjectMove(id, obj, _service);
 			}
 

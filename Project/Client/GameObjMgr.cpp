@@ -157,7 +157,7 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 			AttackRange->AddComponent(new CTransform);
 			AttackRange->AddComponent(new CCollider2D);
 			AttackRange->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-			AttackRange->Collider2D()->SetOffsetScale(Vec2(1000.f, 1000.f));
+			AttackRange->Collider2D()->SetOffsetScale(Vec2(2000.f, 2000.f));
 			AttackRange->Collider2D()->SetOffsetRot(Vec3(90.f, 0.f, 0.f));
 			AttackRange->AddComponent(new CAttackRangeScript);
 			AttackRange->SetName(L"AttackRange");
@@ -225,11 +225,11 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 			pObj->AddComponent(new CMinionScript);
 			pObj->AddComponent(new CCollider3D);
-			pObj->AddComponent(new CCollider2D);
+			//pObj->AddComponent(new CCollider2D);
 
-			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-			pObj->Collider2D()->SetOffsetScale(Vec2(50.f, 50.f));
-			pObj->Collider2D()->SetOffsetRot(Vec3(90.f, 0.f, 0.f));
+			//pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			//pObj->Collider2D()->SetOffsetScale(Vec2(50.f, 50.f));
+			//pObj->Collider2D()->SetOffsetRot(Vec3(90.f, 0.f, 0.f));
 			pObj->SetName(L"Minion");
 
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\minion_melee");
@@ -266,15 +266,15 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			
 			pObj->AddComponent(new CUnitScript);
 			pObj->AddComponent(new CCollider3D);
-			pObj->AddComponent(new CCollider2D);
+			//pObj->AddComponent(new CCollider2D);
 
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\minion_melee");
 			pObj->Animator3D()->PlayRepeat(L"minion_melee\\Attack1", true, true, 0.1f);
 
 
-			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-			pObj->Collider2D()->SetOffsetScale(Vec2(50.f, 50.f));
-			pObj->Collider2D()->SetOffsetRot(Vec3(90.f, 0.f, 0.f));
+			//pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			//pObj->Collider2D()->SetOffsetScale(Vec2(50.f, 50.f));
+			//pObj->Collider2D()->SetOffsetRot(Vec3(90.f, 0.f, 0.f));
 			CUnitScript* Script = pObj->GetScript<CUnitScript>();
 			Script->SetServerID(_objectId);
 			Script->SetFaction(_objectInfo.faction);
@@ -352,7 +352,6 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 			Script->SetServerID(_projectileId);
 			Script->SetFaction(Faction::NONE);
 			pObj->SetName(L"Projectile");
-
 			pObj->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 100.f));
 			
 			// 스킬쏜 주인 중점에서 투사체 생김
