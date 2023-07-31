@@ -48,6 +48,8 @@ protected:
     RESTRAINT               m_eRestraint;
 
     CSkill*                 m_Skill[5];
+    int                     m_SkillLevel[5];
+   
     SUMMONERS_SPELL*        m_EquippedSpell;    // 장착 소환사 주문(2칸 배열)
 
 
@@ -80,5 +82,6 @@ public:
     int     GetLevel() { return m_iLevel; }
     float   GetDefencePower() { return m_fDefencePower; }
     CSkill* GetSkill(int _i) { if (_i < 0 || _i >= 5) return nullptr; return m_Skill[_i]; }
+    int     GetSkillLevel(int _i) { return m_SkillLevel[_i]; }
 };
 

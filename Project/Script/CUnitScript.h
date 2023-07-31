@@ -101,5 +101,6 @@ public:
     // 기타 필요한 Getter/Setter 함수 추가
     float  GetAttackPower() { return m_fAttackPower; }
     float   GetDefencePower() { return m_fDefencePower; }
+
 };
 

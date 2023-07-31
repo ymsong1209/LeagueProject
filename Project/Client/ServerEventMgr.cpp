@@ -177,7 +177,7 @@ void ServerEventMgr::clienttick()
 				{
 					evn->Clear();
 					evn->SetUserObj(skillOwnerObj);
-					evn->SetSkillType(UnitScript->GetOwner()->GetID());
+					evn->SetSkillType(skillInfo->skillType);
 
 					CGameEventMgr::GetInst()->NotifyEvent(*evn);
 				}
@@ -192,9 +192,8 @@ void ServerEventMgr::clienttick()
 				if (evn != nullptr)
 				{
 					evn->Clear();
-					evn->SetUserObj(skillOwnerObj);
-					//evn->SetSkillType(UnitScript->GetOwner()->GetID());
-
+					evn->SetUserObj(skillOwnerObj); 
+					evn->SetSkillType(skillInfo->skillType);
 					CGameEventMgr::GetInst()->NotifyEvent(*evn);
 				}
 			}

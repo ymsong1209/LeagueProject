@@ -44,7 +44,7 @@ public:
 	virtual void tick() = 0;		// 쿨타임 계산해줌. 필수!
 	virtual bool Use() = 0;			// 각 스킬마다 다른 사용 효과 작성. 필수!
 	
-	virtual	void GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript) {};	// 투사체 등이 맞았을 때 호출되는 함수
+	virtual	void GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _skillLevel) {};	// 투사체 등이 맞았을 때 호출되는 함수
 
 public:
 	// 챔피언 스크립트 생성자에서 스킬 생성 후 Owner 등록

@@ -3,6 +3,8 @@
 #include "CSkillMgr.h"
 #include "CSkill.h"
 
+#include "CChampionScript.h"
+
 CUnitScript::CUnitScript(UINT ScriptType)
 	: CScript(ScriptType)
 	, m_fHP(0)
@@ -109,6 +111,40 @@ void CUnitScript::GetHit(SkillType _type, CGameObject* _SkillUser)
 	CSkill* Skill = CSkillMgr::GetInst()->FindSkill(_type);
 	if (Skill != nullptr)
 	{
-		Skill->GetHit(_SkillUser->GetScript<CUnitScript>(), this);
+		int SkillLevel = 0;
+		
+		// 스킬 레벨 받아오기
+		switch (_type)
+		{
+		case SkillType::BASIC_ATTACK:
+			SkillLevel = 1;
+			break;
+		case SkillType::JINX_Q:
+			_SkillUser->GetScript<CChampionScript>()->GetSkillLevel(1);
+			break;
+		case SkillType::JINX_W:
+			_SkillUser->GetScript<CChampionScript>()->GetSkillLevel(2);
+			break;
+		case SkillType::JINX_E:
+			_SkillUser->GetScript<CChampionScript>()->GetSkillLevel(3);
+			break;
+		case SkillType::JINX_R:
+			_SkillUser->GetScript<CChampionScript>()->GetSkillLevel(4);
+			break;
+		case SkillType::DARIUS_Q:
+			_SkillUser->GetScript<CChampionScript>()->GetSkillLevel(1);
+			break;
+		case SkillType::DARIUS_W:
+			_SkillUser->GetScript<CChampionScript>()->GetSkillLevel(2);
+			break;
+		case SkillType::DARIUS_E:
+			_SkillUser->GetScript<CChampionScript>()->GetSkillLevel(3);
+			break;
+		case SkillType::DARIUS_R:
+			_SkillUser->GetScript<CChampionScript>()->GetSkillLevel(4);
+			break;
+		}
+			
+		Skill->GetHit(_SkillUser->GetScript<CUnitScript>(), this, SkillLevel);
 	}
 }

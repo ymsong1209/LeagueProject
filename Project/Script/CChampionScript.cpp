@@ -21,6 +21,7 @@ CChampionScript::CChampionScript(UINT ScriptType)
 	, m_eCurCC(CC::CLEAR)
 	, m_eRestraint(RESTRAINT::DEFAULT)
 	, m_Skill{}
+	, m_SkillLevel{}
 {
 	m_eUnitType = UnitType::CHAMPION;
 
@@ -42,6 +43,10 @@ void CChampionScript::begin()
 {
 	CUnitScript::begin();
 
+	// 스킬 레벨 초기화
+	m_SkillLevel[0] = 1;
+
+	
 	// 소환사 주문 배열에 넣어주기
 }
 
