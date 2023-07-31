@@ -512,4 +512,5 @@ void CreateTestLevel()
 
 	// 충돌 시킬 레이어 짝 지정
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");
+	CCollisionMgr::GetInst()->LayerCheck(L"Default", L"Default");
 }

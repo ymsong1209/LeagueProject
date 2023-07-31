@@ -134,11 +134,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             {
                 Send_CLogin(service, L"KIYO");
             }
-            else if (KEY_TAP(KEY::NUM_1))
+            else if (KEY_TAP(KEY::N))
             {
                 Send_CPickFaction(service);
             }
-            else if (KEY_TAP(KEY::NUM_2))
+            else if (KEY_TAP(KEY::M))
             {
                 Send_CPickChampion(service,ChampionType::JINX);
             }
