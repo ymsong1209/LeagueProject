@@ -253,6 +253,18 @@ struct PS_ContourPaint_OUT
 
 PS_ContourPaint_OUT PS_ContourPaint_Deferred(VS_ContourPaint_OUT _in) : SV_Target6
 {
+    float4 vObjectColor = float4(0.f, 0.f, 0.f, 1.f);
+    if (g_btex_0)
+    {
+        vObjectColor = g_tex_0.Sample(g_sam_0, _in.vUV);
+    }
+    
+    if (vObjectColor.a <= 0.f)
+    {
+        discard;
+    }
+    
+    
     PS_ContourPaint_OUT output = (PS_ContourPaint_OUT) 0.f;
     output.vContour = float4(0.f, 0.f, 1.f, 1.f);
         
@@ -303,6 +315,17 @@ struct PS_DefaultObjWrite_OUT
 
 PS_DefaultObjWrite_OUT PS_DefaultObjWrite(VS_DefaultObjWrite_OUT _in) : SV_Target5
 {
+    float4 vObjectColor = float4(0.f, 0.f, 0.f, 1.f);
+    if (g_btex_0)
+    {
+        vObjectColor = g_tex_0.Sample(g_sam_0, _in.vUV);
+    }
+    
+    if (vObjectColor.a <= 0.f)
+    {
+        discard;
+    }
+    
     PS_DefaultObjWrite_OUT output = (PS_DefaultObjWrite_OUT) 0.f;
     output.vDefaultContour = float4(0.f, 1.f, 0.f, 1.f);
     return output;
