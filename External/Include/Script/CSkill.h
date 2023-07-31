@@ -16,7 +16,6 @@
 //};
 
 class CUnitScript;
-enum CC;
 class CPrefab;
 #include <Engine\ptr.h>
 

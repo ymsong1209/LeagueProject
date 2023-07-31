@@ -9,8 +9,8 @@ class GameObjMgr
 private:
 	map<uint64, CGameObject*> _allObjects; // 맵에 있는 모든 오브젝트
 	map<uint64, CGameObject*> _players;
-	map<uint64, CGameObject*> _objects; // 미니언, 정글몹, 스킬 투사체
-	map<uint64, CGameObject*> _towers; // 포탑, 억제기, 넥서스 (맵 처음)
+	map<uint64, CGameObject*> _objects; // 미니언, 정글몹, 스킬 투사체, 이펙트
+	map<uint64, CGameObject*> _towers; // 포탑, 억제기, 넥서스 (배치형 오브젝터, 맵 처음)
 
 	// My Player 관련
 	CChampionScript* MyPlayerScript;
@@ -21,7 +21,7 @@ private:
 
 public:
 	map<uint64, CGameObject*> GetObjects() { return _objects; }
-
+	map<uint64, CGameObject*> GetTowers() { return _towers; }
 
 public: 
 	// 서버에게 패킷을 보낸다.
@@ -29,6 +29,8 @@ public:
 	void SendObjectAnim(AnimInfo* _animInfo, ClientServiceRef _service);
 	void SendObjectMove(uint64 _id, CGameObject* _obj, ClientServiceRef _service);
 	void SendTowerUpdate(uint64 _id, CGameObject* _obj, ClientServiceRef _service);
+	void SendSkillSpawn(SkillInfo* _skillInfo, ClientServiceRef _service);
+
 
 	// 서버에게 받은 패킷 처리
 	void E_MovePlayer(uint64 _playerId, ObjectMove _playerMove);
@@ -43,6 +45,7 @@ public:
 	void AddPlayer(PlayerInfo info, bool myPlayer = false);
 	void AddObject(uint64 _objectId, ObjectInfo _objectInfo);
 	// void AddTower();
+	void AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo);
 
 	CChampionScript* GetMyPlayerScript() { return MyPlayerScript; }
 

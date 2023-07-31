@@ -6,6 +6,7 @@
 enum class ObjectType {
     PLAYER,
 
+    // 여기 TOP,BOTTOM, MID 미니언 별로 나눠야할듯
     MELEE_MINION,
     RANGED_MINION,
     SIEGE_MINION,
@@ -22,6 +23,7 @@ enum class ObjectType {
     NEXUS,
 
     PROJECTILE,
+    EFFECT,
 
     END,
 };
@@ -76,44 +78,44 @@ public:
     };
 public:
     ObjectMove() {}
-    ObjectMove(int _LV, float _HP, float _MP, float _AD, float _Defence, ObjectMove::MoveDir _moveDir, ObjectMove::Pos _pos, CC_TYPE _CCType)
+    ObjectMove(int _LV, float _HP, float _MP, float _AttackPower, float _DefencePower, ObjectMove::MoveDir _moveDir, ObjectMove::Pos _pos, CC _CC)
         : LV(_LV)
         , HP(_HP)
         , MP(_MP)
-        , AD(_AD)
-        , Defence(_Defence)
+        , AttackPower(_AttackPower)
+        , DefencePower(_DefencePower)
         , moveDir(_moveDir)
         , pos(_pos)
-        , CCType(_CCType)
+        , CC(_CC)
     {}
     ~ObjectMove() {}
 
     int   LV;
     float HP;
     float MP;
-    float AD;
-    float Defence;
+    float AttackPower;
+    float DefencePower;
 
     MoveDir moveDir;
     Pos pos;
-    CC_TYPE CCType;
+    CC  CC;
 };
 
 struct ObjectInfo {
     ObjectInfo() {}
-    ObjectInfo(uint64 _objectId, ObjectType _objectType, FactionType _factionType, LaneType _laneType, ObjectMove _objectMove)
+    ObjectInfo(uint64 _objectId, ObjectType _objectType, Faction _faction, Lane _lane, ObjectMove _objectMove)
         : objectId(_objectId)
         , objectType(_objectType)
-        , factionType(_factionType)
-        , laneType(_laneType)
+        , faction(_faction)
+        , lane(_lane)
         , objectMove(_objectMove)
     {}
     ~ObjectInfo() {}
 
     uint64 objectId;
     ObjectType objectType;
-    FactionType factionType;
-    LaneType    laneType;
+    Faction    faction;
+    Lane       lane;
     ObjectMove objectMove;
 };
 
@@ -121,7 +123,7 @@ struct PlayerInfo
 {
     uint64  id;
     wstring nickname;
-    FactionType faction;
+    Faction faction;
     ChampionType champion;
     bool host;
 
@@ -131,7 +133,7 @@ struct PlayerInfo
 struct PlayerInfoPacket
 {
     uint64  id;
-    FactionType faction;
+    Faction faction;
     ChampionType champion;
     bool host;
     ObjectMove posInfo;

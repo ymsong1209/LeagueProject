@@ -9,12 +9,12 @@ enum class SERVER_EVENT_TYPE
 	// Server Packet 
 	MOVE_PACKET,			// wParam : GameObject,  lParam : ObjectMove Update Move Packet
 	ANIM_PACKET,			// wParam : GameObject,  lParam : AnimInfo
-	SKILL_PROJECTILE_PACKET,
 	SKILL_HIT_PACKET,
 	
 
 	// Script Send Packet
 	SEND_ANIM_PACKET,		// wParam : X,  lParam : AnimInfo
+	SKILL_PROJECTILE_PACKET, // wParam : SkillInfo
 };
 
 // Event
@@ -47,11 +47,12 @@ enum class SkillType
 	DARIUS_R,
 };
 
-struct SkillInfo {
-	UINT64    OwnerId;
-	UINT64    TargetId;
-	UINT16    SkillLevel;
-	SkillType skillType;
+struct SkillInfo
+{
+	UINT64    OwnerId;    // 스킬을 사용한 플레이어 id
+	UINT64    TargetId;   // 타겟팅일시 맞을 플레이어 id (논타겟일 경우 -1)
+	UINT16    SkillLevel; // 스킬레벨
+	SkillType skillType;  // 어떤 스킬인지 모아둔 enum 중 하나
 };
 
 enum class Faction
@@ -59,6 +60,7 @@ enum class Faction
 	NONE,
 	RED,
 	BLUE,
+	END,
 };
 
 enum class Lane
@@ -67,18 +69,11 @@ enum class Lane
 	TOP,
 	MID,
 	BOTTOM,
-};
-
-enum class MinionType
-{
-	MELEE,      // 근거리
-	RANGED,     // 원거리
-	SEIGE,      // 대포
-	SUPER,      // 슈퍼
+	END,
 };
 
 // 군중 제어기
-enum CC
+enum class CC
 {
 	CLEAR = 0,
 	SLOW = 1 << 0,
@@ -88,32 +83,10 @@ enum CC
 	AIRBORNE = 1 << 4,
 };
 
-// =====오늘 이내로 변경예정============
-// 다혜꺼, 하은님껄로 교체중이라 남겨둠
-// ====================================
-enum class FactionType
+enum class MinionType
 {
-	BLUE = 0,
-	RED = 1,
-	NONE = 2, // 비선공몬스터(모두를 적대함. 선빵x)
-	END = 3,
-};
-
-enum class CC_TYPE
-{
-	NONE,
-	STUN, // 기절
-	SLOW, // 둔화
-	SILENCE, // 침묵
-	SNARE, // 속박
-	BLEED, // 출혈
-	AIRBORNE, // 에어본
-};
-
-enum class LaneType {
-	NONE,
-	TOP,
-	MID,
-	BOTTOM,
-	END,
+	MELEE,      // 근거리
+	RANGED,     // 원거리
+	SEIGE,      // 대포
+	SUPER,      // 슈퍼
 };

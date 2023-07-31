@@ -142,7 +142,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             {
                 Send_CPickChampion(service,ChampionType::JINX);
             }
-            
             else if (KEY_TAP(KEY::NUM_4))
             {
                 std::cout << "C_OBJECT_ANIM Pakcet" << endl;

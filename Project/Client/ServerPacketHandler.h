@@ -235,9 +235,9 @@ struct PKT_S_LOGIN
 {
 	struct PlayerListItem
 	{
-		uint64 playerId;
-		FactionType playerFaction;
-		bool            host;
+		uint64  playerId;
+		Faction playerFaction;
+		bool    host;
 
 		uint16 nickNameOffset;
 		uint16 nickNameCount;
@@ -764,8 +764,8 @@ struct PKT_C_SKILL_CC {
 	uint16   packetSize;
 	uint16   packetId;
 	uint64   objecId;
-	CC_TYPE CCType;
-	float      time;
+	CC		 CC;
+	float    time;
 
 	bool Validate()
 	{
@@ -787,8 +787,8 @@ struct PKT_S_SKILL_CC {
 	uint16   packetSize;
 	uint16   packetId;
 	uint64   objecId;
-	CC_TYPE CCType;
-	float      time;
+	CC       CC;
+	float    time;
 
 	bool Validate()
 	{
@@ -1106,7 +1106,7 @@ private:
 #pragma pack(1)
 class PKT_C_SKILL_CC_WRITE {
 public:
-	PKT_C_SKILL_CC_WRITE(uint64 _objectId, CC_TYPE _CCType, float _time) {
+	PKT_C_SKILL_CC_WRITE(uint64 _objectId, CC _CC, float _time) {
 		_sendBuffer = GSendBufferManager->Open(4096);
 		// ÃÊ±âÈ­
 		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
@@ -1115,7 +1115,7 @@ public:
 		_pkt->packetSize = 0; // To Fill
 		_pkt->packetId = C_SKILL_CC;
 		_pkt->objecId = _objectId;
-		_pkt->CCType = _CCType;
+		_pkt->CC = _CC;
 		_pkt->time = _time;
 	}
 

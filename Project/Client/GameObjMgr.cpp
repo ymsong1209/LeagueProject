@@ -21,11 +21,15 @@
 #include <Engine\CPathFindMgr.h>
 #include <Engine\CAnim3D.h>
 
-#include <Script\CPlayerScript.h>
-#include <Script\CJinxScript.h>
+#include <Script\CUnitScript.h>
 #include <Script\CChampionScript.h>
-#include <Script\COtherPlayerScript.h>
+#include <Script\CJinxScript.h>
 #include <Script\CCameraMoveScript.h>
+
+#include <Script\CSkill.h>
+#include <Script\CBaseAttack.h>
+
+#include <Script\COtherPlayerScript.h>
 #include "ServerEventMgr.h"
 
 GameObjMgr::GameObjMgr()
@@ -101,91 +105,76 @@ CGameObject* GameObjMgr::FindAllObject(uint64 _targetId)
 
 void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 {
-
 	std::mutex m;
 	{
 		std::lock_guard<std::mutex> lock(m);
 
 		Ptr<CMeshData> pMeshData = nullptr;
 		CGameObject* pObj = nullptr;
-		
+
+		switch (_info.champion)
+		{
+			case ChampionType::JINX:
+			{
+				pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
+				pObj = pMeshData->Instantiate();
+
+				if (myPlayer)
+					pObj->AddComponent(new CJinxScript);
+				else
+					pObj->AddComponent(new CUnitScript);
+
+
+				pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
+				pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true, true, 0.1f);
+				pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+
+			}break;
+
+			case ChampionType::AMUMU:
+			{
+			}break;
+
+		}
+
 		if (myPlayer)
 		{
-			// playerScript에 _info 변수들 추가하기.
-
-			Ptr<CMeshData> pMeshData = nullptr;
-			CGameObject* pObj = new CGameObject;
-
-			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
-			pObj = pMeshData->Instantiate();
-
-			pObj->AddComponent(new CJinxScript);
 			pObj->AddComponent(new CPathFinder);
 			pObj->AddComponent(new CFsm);
-			//pObj->AddComponent(new CCollider3D);
-
 			MyPlayerScript = pObj->GetScript<CChampionScript>();
-			MyPlayerScript->SetServerID(MyPlayer.id);
-			//MyPlayerScript->SetNickName(MyPlayer.nickname);
-			//MyPlayerScript->SetFaction(MyPlayer.faction);
+			MyPlayerScript->SetServerID(_info.id);
+			MyPlayerScript->SetNickname(_info.nickname);
+			MyPlayerScript->SetHost(_info.host);
+			MyPlayerScript->SetFaction(_info.faction);
 
-			//pObj->SetName(MyPlayer.nickname);
-			pObj->SetName(L"My Player");
-			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
-			pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true, 0.1f);
-			//pObj->Animator3D()->SetRepeat(true);
-
-			//pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
-			//pObj->Collider3D()->SetAbsolute(true);
-			//pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
-			//pObj->Collider3D()->SetDrawCollision(false);
-
-			//pObj->GetRenderComponent()->SetFrustumCheck(false);
-
-			pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-
-
-			Vec3 spawnPos = Vec3(_info.posInfo.pos.x, _info.posInfo.pos.y, _info.posInfo.pos.z);
-			SpawnGameObject(pObj, spawnPos, 0);
-
-			_players.insert(std::make_pair(MyPlayer.id, pObj));
+			pObj->SetName(L"MyPlayer");
 		}
 		else
 		{
-			Ptr<CMeshData> pMeshData = nullptr;
-			CGameObject* pObj = new CGameObject;
+			CUnitScript* unit = pObj->GetScript<CUnitScript>();
+			unit->SetServerID(_info.id);
+			unit->SetNickname(_info.nickname);
+			unit->SetHost(_info.host);
+			unit->SetFaction(_info.faction);
 
-			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
-			pObj = pMeshData->Instantiate();
-
-			pObj->AddComponent(new COtherPlayerScript);
-			pObj->AddComponent(new CPathFinder);
-			pObj->AddComponent(new CCollider3D);
-
-			COtherPlayerScript* player = pObj->GetScript<COtherPlayerScript>();
-			player->SetPlayerID(_info.id);
-			player->SetNickName(_info.nickname);
-			player->SetFaction(_info.faction);
-
-			//pObj->SetName(_info.nickname);
 			pObj->SetName(L"OtherPlayer");
-			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
-			pObj->Animator3D()->SetRepeat(true);
-			pObj->Animator3D()->PlayRepeat (L"Jinx\\Idle1_Base", true, 0.15f);
-
-			pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
-			pObj->Collider3D()->SetAbsolute(true);
-			pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
-			pObj->Collider3D()->SetDrawCollision(false);
-
-			pObj->GetRenderComponent()->SetFrustumCheck(false);
-			pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-
-			Vec3 spawnPos = Vec3(_info.posInfo.pos.x, _info.posInfo.pos.y, _info.posInfo.pos.z);
-			SpawnGameObject(pObj, spawnPos, 0);
-
-			_players.insert(std::make_pair(_info.id, pObj));
 		}
+
+		//pObj->SetName(_info.nickname);
+
+		pObj->AddComponent(new CCollider3D);
+		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+		pObj->Collider3D()->SetAbsolute(true);
+		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
+		pObj->Collider3D()->SetDrawCollision(false);
+
+		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+		pObj->Transform()->SetUseMouseOutline(true);
+		Vec3 spawnPos = Vec3(_info.posInfo.pos.x, _info.posInfo.pos.y, _info.posInfo.pos.z);
+		SpawnGameObject(pObj, spawnPos, 0);
+
+
+		_players.insert(std::make_pair(_info.id, pObj));
 	}
 }
 
@@ -210,7 +199,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 			COtherPlayerScript* Script = pObj->GetScript<COtherPlayerScript>();
 			Script->SetPlayerID(_objectId);
-			Script->SetFaction(_objectInfo.factionType);
+			Script->SetFaction(_objectInfo.faction);
 			
 			pObj->SetName(L"Minion");
 
@@ -242,7 +231,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 			COtherPlayerScript* Script = pObj->GetScript<COtherPlayerScript>();
 			Script->SetPlayerID(_objectId);
-			Script->SetFaction(_objectInfo.factionType);
+			Script->SetFaction(_objectInfo.faction);
 
 			pObj->SetName(L"Minion");
 
@@ -265,6 +254,66 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 	}
 }
 
+void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
+{
+	std::mutex m;
+	{
+		std::lock_guard<std::mutex> lock(m);
+
+		// 방장만 진짜를 생성한다. 나머지는 가짜를 생성한다.
+		if (MyPlayer.host)
+		{
+			CGameObject* pObj = new CGameObject;
+			
+			// 원래라면 skillinfo에서 스킬타입에 따라 switch case로 해당 스킬을 AddComponent해준다.
+			pObj->AddComponent(new CMeshRender);
+			pObj->AddComponent(new CTransform);
+			pObj->AddComponent(new CUnitScript);
+			pObj->AddComponent(new CCollider2D);
+
+			// skillinfo 에 따라 세팅해줌 
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_projectileId);
+
+			pObj->SetName(L"Projectile");
+
+
+
+			// 스킬쏜 주인 중점에서 투사체 생김
+			CGameObject* ownerObj = FindAllObject(_skillInfo.OwnerId);
+			SpawnGameObject(pObj, ownerObj->Transform()->GetRelativePos(), 0);
+
+			_objects.insert(std::make_pair(_projectileId, pObj));
+
+		}
+		else
+		{
+			CGameObject* pObj = new CGameObject;
+
+			pObj->AddComponent(new CMeshRender);
+			pObj->AddComponent(new CTransform);
+			pObj->AddComponent(new CUnitScript);
+
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_projectileId);
+			Script->SetFaction(Faction::NONE);
+			pObj->SetName(L"Projectile");
+
+			pObj->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 100.f));
+			
+			// 스킬쏜 주인 중점에서 투사체 생김
+			CGameObject* ownerObj = FindAllObject(_skillInfo.OwnerId);
+			
+			SpawnGameObject(pObj, ownerObj->Transform()->GetRelativePos(), 0);
+
+			_objects.insert(std::make_pair(_projectileId, pObj));
+		}
+
+
+
+	}
+}
+
 
 void GameObjMgr::SendMyPlayerMove(ClientServiceRef _service)
 {
@@ -281,25 +330,26 @@ void GameObjMgr::SendMyPlayerMove(ClientServiceRef _service)
 		if (obj->GetLayerIndex() == -1)
 			return;
 
-		Vec3 CurPos = obj->Transform()->GetRelativePos();
-		Vec3 CurRot = obj->Transform()->GetRelativeRot();
-		// float CurLV = obj->?()->GetLV();
-		// float CurHP = obj->?()->GetHP();
-		// float CurMP = obj->?()->GetMP();
-		// float CurAD = obj->?()->GetAD();
-		// float CurDefence = obj->?()->GetDefence();
+		Vec3  CurPos = obj->Transform()->GetRelativePos();
 
 		if (PrevPos == CurPos) // 이전 좌표와 변화가 없다면 move packet을 보내지 않는다. return
 			return;
 
 		PrevPos = CurPos;
 
+		Vec3  CurRot = obj->Transform()->GetRelativeRot();
+		//float CurLV = obj->GetScript<CUnitScript>()->GetLV();
+		float CurHP = obj->GetScript<CUnitScript>()->GetCurHP();
+		float CurMP = obj->GetScript<CUnitScript>()->GetCurMP();
+		float CurAttackPower = obj->GetScript<CUnitScript>()->GetAttackPower();
+		float CurDefencePower = obj->GetScript<CUnitScript>()->GetDefencePower();
+
 		ObjectMove move = {};
 		//move.LV = CurLV;
-		//move.HP = CurHP;
-		//move.MP = CurMP;
-		//move.AD = CurAD;
-		//move.Defence = CurDefence;
+		move.HP = CurHP;
+		move.MP = CurMP;
+		move.AttackPower = CurAttackPower;
+		move.DefencePower = CurDefencePower;
 		move.pos.x = CurPos.x;
 		move.pos.y = CurPos.y;
 		move.pos.z = CurPos.z;
@@ -313,7 +363,6 @@ void GameObjMgr::SendMyPlayerMove(ClientServiceRef _service)
 		SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
 		_service->Broadcast(sendBuffer);
 		std::cout << "===============================" << endl;
-		//sendBuffer->Close(sendBuffer->WriteSize());
 	}
 }
 
@@ -326,14 +375,10 @@ void GameObjMgr::SendObjectMove(uint64 _id, CGameObject* _obj, ClientServiceRef 
 
 		CGameObject* obj = FindObject(_id);
 
-		if (obj == nullptr)
+		if (obj == nullptr || obj->GetLayerIndex() == -1)
 			return;
 
-		if (obj->GetLayerIndex() == -1)
-			return;
-
-		Vec3 CurPos = obj->Transform()->GetRelativePos();
-		Vec3 CurRot = obj->Transform()->GetRelativeRot();
+		Vec3  CurPos = obj->Transform()->GetRelativePos();
 
 		auto it = _objectsPrevPos.find(_id);
 		if (it != _objectsPrevPos.end()) // PrevPos가 있다. 	
@@ -343,19 +388,20 @@ void GameObjMgr::SendObjectMove(uint64 _id, CGameObject* _obj, ClientServiceRef 
 				return;
 
 			_objectsPrevPos.at(_id) = CurPos; // 현재 좌표를 이전좌표로 저장
-
-			// float CurLV = obj->?()->GetLV();
-			// float CurHP = obj->?()->GetHP();
-			// float CurMP = obj->?()->GetMP();
-			// float CurAD = obj->?()->GetAD();
-			// float CurDefence = obj->?()->GetDefence();
+			
+			Vec3  CurRot = obj->Transform()->GetRelativeRot();
+			//float CurLV = obj->GetScript<CUnitScript>()->GetLV();
+			float CurHP = obj->GetScript<CUnitScript>()->GetCurHP();
+			float CurMP = obj->GetScript<CUnitScript>()->GetCurMP();
+			float CurAttackPower = obj->GetScript<CUnitScript>()->GetAttackPower();
+			float CurDefencePower = obj->GetScript<CUnitScript>()->GetDefencePower();
 
 			ObjectMove move = {};
 			//move.LV = CurLV;
-			//move.HP = CurHP;
-			//move.MP = CurMP;
-			//move.AD = CurAD;
-			//move.Defence = CurDefence;
+			move.HP = CurHP;
+			move.MP = CurMP;
+			move.AttackPower = CurAttackPower;
+			move.DefencePower = CurDefencePower;
 			move.pos.x = CurPos.x;
 			move.pos.y = CurPos.y;
 			move.pos.z = CurPos.z;
@@ -382,6 +428,30 @@ void GameObjMgr::SendObjectMove(uint64 _id, CGameObject* _obj, ClientServiceRef 
 
 void GameObjMgr::SendTowerUpdate(uint64 _id, CGameObject* _obj, ClientServiceRef _service)
 {
+}
+
+void GameObjMgr::SendSkillSpawn(SkillInfo* _skillInfo, ClientServiceRef _service)
+{
+	// 스킬을 쏜 오브젝트가 생성 패킷을 보낸다. 
+	std::mutex m;
+	{
+		std::lock_guard<std::mutex> lock(m);
+
+		SkillInfo skillInfoPacket = {};
+		skillInfoPacket.OwnerId = _skillInfo->OwnerId;
+		skillInfoPacket.SkillLevel = _skillInfo->SkillLevel;
+		skillInfoPacket.skillType = _skillInfo->skillType;
+		skillInfoPacket.TargetId = _skillInfo->TargetId;
+
+		PKT_C_SKILL_PROJECTILE_WRITE  pktWriter(skillInfoPacket);
+
+		// 서버에게 패킷 전송
+		std::cout << "Send C_SKILL_PROJECTILE Pakcet " << endl;
+		SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+		_service->Broadcast(sendBuffer);
+
+		std::cout << "===============================" << endl;
+	}
 }
 
 void GameObjMgr::SendObjectAnim(AnimInfo* _animInfo, ClientServiceRef _service)
@@ -461,13 +531,14 @@ void GameObjMgr::E_MoveObject(uint64 _objectId, ObjectMove _objectMove)
 
 		// ObjectMove 구조체의 포인터를 DWORD_PTR로 캐스팅하여 lParam에 저장
 		ObjectMove* objMove = new ObjectMove();
-		objMove->AD = _objectMove.AD;
-		objMove->Defence = _objectMove.Defence;
-		objMove->HP = _objectMove.HP;
 		objMove->LV = _objectMove.LV;
-		objMove->moveDir = _objectMove.moveDir;
+		objMove->HP = _objectMove.HP;
 		objMove->MP = _objectMove.MP;
+		objMove->AttackPower = _objectMove.AttackPower;
+		objMove->DefencePower = _objectMove.DefencePower;
+		objMove->moveDir = _objectMove.moveDir;
 		objMove->pos = _objectMove.pos;
+
 		evn.lParam = (DWORD_PTR)objMove;
 
 		ServerEventMgr::GetInst()->AddEvent(evn);

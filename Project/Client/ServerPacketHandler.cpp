@@ -466,18 +466,9 @@ void ServerPacketHandler::Handle_S_SKILL_PROJECTILE(PacketSessionRef& session, B
 
 	// 투사체 objectId Id
 	uint64 _objectId = pkt->projectileId;
+	SkillInfo _skillInfo = pkt->skillInfo;
 
-	 // 여기 작성중
-	 // 
-	 // 
-	 // 
-	// 방장은 진짜 투사체 생성 
-	//if (!MyPlayer.host)
-	//{
-	//	//ObjectMove playerMove = pkt->objectMove;
-	//
-	//	GameObjMgr::GetInst()->E_MoveObject(_objectId, playerMove);
-	//}
+	GameObjMgr::GetInst()->AddSkillProjectile(_objectId, _skillInfo);
 
 	std::cout << "===============================" << endl;
 
