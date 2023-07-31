@@ -11,7 +11,6 @@
 #include <Engine\CCollisionMgr.h>
 
 #include <Script\CPlayerScript.h>
-#include <Script\CMonsterScript.h>
 #include <Script\CCameraMoveScript.h>
 #include <Engine\CPathFindMgr.h>
 #include <Script\CCharacterUIScript.h>
@@ -232,9 +231,8 @@ void CreateTestLevel()
 		pObj->Collider3D()->SetAbsolute(true);
 		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
 		pObj->Collider3D()->SetDrawCollision(false);
-		pObj->Animator3D()->SetRepeat(true);
-		pObj->Animator3D()->Play(L"Jinx\\Idle1_Base", true, 0.1f);
-		pObj->Transform()->SetRelativeScale(Vec3(0.195f, 0.195f, 0.195f));
+		pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true,true,0.1f);
+		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
 
 		pObj->Transform()->SetUseMouseOutline(true);
 
@@ -257,8 +255,7 @@ void CreateTestLevel()
 		pObj->SetName(L"blue_nexus");
 		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\nexus");
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->Animator3D()->SetRepeat(true);
-		pObj->Animator3D()->Play(L"nexus\\sruap_order_idle.anm_skinned_mesh.001", true, 0.1f);
+		pObj->Animator3D()->PlayRepeat(L"nexus\\sruap_order_idle.anm_skinned_mesh.001", true,true,0.1f);
 		pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\sruap_ordernexus_tx_cm_clear.png"));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
@@ -282,8 +279,7 @@ void CreateTestLevel()
 		pObj->SetName(L"blue_Inhibitor");
 		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->Animator3D()->SetRepeat(true);
-		pObj->Animator3D()->Play(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true, 0.1f);
+		pObj->Animator3D()->PlayRepeat(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true,true, 0.1f);
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(-45.48f), 0.f));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
@@ -296,8 +292,7 @@ void CreateTestLevel()
 		pObj->SetName(L"blue_Inhibitor2");
 		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->Animator3D()->SetRepeat(true);
-		pObj->Animator3D()->Play(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true, 0.1f);
+		pObj->Animator3D()->PlayRepeat(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001",true, true, 0.1f);
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(-89.48f), 0.f));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
@@ -310,8 +305,7 @@ void CreateTestLevel()
 		pObj->SetName(L"blue_Inhibitor2");
 		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->Animator3D()->SetRepeat(true);
-		pObj->Animator3D()->Play(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true, 0.1f);
+		pObj->Animator3D()->PlayRepeat(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true,true, 0.1f);
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(2.f), 0.f));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
@@ -326,8 +320,7 @@ void CreateTestLevel()
 		pObj->SetName(L"red_nexus");
 		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\nexus");
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->Animator3D()->SetRepeat(true);
-		pObj->Animator3D()->Play(L"nexus\\sruap_order_idle.anm_skinned_mesh.001", true, 0.1f);
+		pObj->Animator3D()->PlayRepeat(L"nexus\\sruap_order_idle.anm_skinned_mesh.001", true,true, 0.1f);
 		pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\nexus_Mat_Red.mtrl"), 1);
 		pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
@@ -340,8 +333,7 @@ void CreateTestLevel()
 		pObj->SetName(L"red_Inhibitor1");
 		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->Animator3D()->SetRepeat(true);
-		pObj->Animator3D()->Play(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true, 0.1f);
+		pObj->Animator3D()->PlayRepeat(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true,true, 0.1f);
 		pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\inhibitor_red_Mtrl.mtrl"), 0);
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(0.f), XMConvertToRadians(-180.f)));
@@ -355,8 +347,7 @@ void CreateTestLevel()
 		pObj->SetName(L"red_Inhibitor2");
 		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->Animator3D()->SetRepeat(true);
-		pObj->Animator3D()->Play(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true, 0.1f);
+		pObj->Animator3D()->PlayRepeat(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true,true, 0.1f);
 		pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\inhibitor_red_Mtrl.mtrl"), 0);
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(45.f), XMConvertToRadians(-180.f)));
@@ -370,8 +361,7 @@ void CreateTestLevel()
 		pObj->SetName(L"red_Inhibitor3");
 		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->Animator3D()->SetRepeat(true);
-		pObj->Animator3D()->Play(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true, 0.1f);
+		pObj->Animator3D()->PlayRepeat(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true, true, 0.1f);
 		pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\inhibitor_red_Mtrl.mtrl"), 0);
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(90.f), XMConvertToRadians(-180.f)));
@@ -410,6 +400,119 @@ void CreateTestLevel()
 	}
 
 
+	// // TestFastForward
+	// CGameObject* pRectFast = new CGameObject;
+	// pRectFast->SetName(L"ReftFast");
+	// pRectFast->AddComponent(new CMeshRender);
+	// pRectFast->AddComponent(new CTransform);
+	// pRectFast->AddComponent(new CCollider2D);
+
+	// pRectFast->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
+	// pRectFast->Transform()->SetUseMouseOutline(true);
+
+	// pRectFast->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	// pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
+	// pRectFast->MeshRender()->GetDynamicMaterial(0);
+	// pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Fighter.bmp"));
+
+	// pRectFast->Collider2D()->SetAbsolute(false);
+	// pRectFast->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+	// pRectFast->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f,0.f));
+	// pRectFast->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
+
+	// SpawnGameObject(pRectFast, Vec3(-600.f, 0.f, 500.f), 0);
+
+
+	// // MiniMap
+	// CGameObject* MiniMap = new CGameObject;
+	// MiniMap->SetName(L"MiniMap");
+	// MiniMap->AddComponent(new CMeshRender);
+	// MiniMap->AddComponent(new CTransform);
+
+	// MiniMap->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
+	// MiniMap->Transform()->SetUseMouseOutline(false);
+	
+	// MiniMap->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	// MiniMap->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MiniMapMtrl"), 0);
+	// MiniMap->MeshRender()->GetDynamicMaterial(0);
+	// MiniMap->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\MiniMap.dds"));
+	// MiniMap->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"FogFilterMap"));
+
+
+	// SpawnGameObject(MiniMap, Vec3(-600.f, 300.f, 700.f), 0);
+
+
+
+
+	// // Ray Test Object1
+	// CGameObject* RayTestObj1 = new CGameObject;
+	// RayTestObj1->SetName(L"RayTestObj1");
+
+	// RayTestObj1->AddComponent(new CMeshRender);
+	// RayTestObj1->AddComponent(new CTransform);
+	// RayTestObj1->AddComponent(new CCollider2D);
+
+	// RayTestObj1->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
+	// RayTestObj1->Transform()->SetUseMouseOutline(true);
+	// //RayTestObj1->MeshRender()->SetUsingMovingVec(true);
+
+	// RayTestObj1->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	// RayTestObj1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
+	// RayTestObj1->MeshRender()->GetDynamicMaterial(0);
+	// RayTestObj1->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\link.png"));
+
+	// RayTestObj1->Collider2D()->SetAbsolute(false);
+	// RayTestObj1->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+	// RayTestObj1->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f,0.f));
+	// RayTestObj1->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
+
+
+	// SpawnGameObject(RayTestObj1, Vec3(-600.f, 0.f, 600.f), 0);
+
+	// // Ray Cube Test Object 1
+	// CGameObject* RayCubeTestObj1 = new CGameObject;
+	// RayCubeTestObj1->SetName(L"RayCubeTestObj1");
+
+	// RayCubeTestObj1->AddComponent(new CMeshRender);
+	// RayCubeTestObj1->AddComponent(new CTransform);
+	// RayCubeTestObj1->AddComponent(new CCollider3D);
+	// RayCubeTestObj1->Transform()->SetUseMouseOutline(true);
+
+	// RayCubeTestObj1->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
+	// RayCubeTestObj1->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
+	// RayCubeTestObj1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
+	// RayCubeTestObj1->MeshRender()->GetDynamicMaterial(0);
+
+	// RayCubeTestObj1->Collider3D()->SetAbsolute(false);
+	// RayCubeTestObj1->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
+	// RayCubeTestObj1->Collider3D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+	// RayCubeTestObj1->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::CUBE);
+
+
+	// SpawnGameObject(RayCubeTestObj1, Vec3(-600.f, -450.f, 700.f), 0);
+
+
+	// // Ray Cube Test Object 2
+	// CGameObject* RayCubeTestObj2 = new CGameObject;
+	// RayCubeTestObj2->SetName(L"RayCubeTestObj2");
+
+	// RayCubeTestObj2->AddComponent(new CMeshRender);
+	// RayCubeTestObj2->AddComponent(new CTransform);
+	// RayCubeTestObj2->AddComponent(new CCollider3D);
+	// RayCubeTestObj2->Transform()->SetUseMouseOutline(true);
+
+	// RayCubeTestObj2->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
+	// RayCubeTestObj2->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
+	// RayCubeTestObj2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
+	// RayCubeTestObj2->MeshRender()->GetDynamicMaterial(0);
+
+	// RayCubeTestObj2->Collider3D()->SetAbsolute(false);
+	// RayCubeTestObj2->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
+	// RayCubeTestObj2->Collider3D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+	// RayCubeTestObj2->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::CUBE);
+
+
+	// SpawnGameObject(RayCubeTestObj2, Vec3(-600.f, -450.f, 960.f), 0);
 
 	// TestFastForward
 	//CGameObject* pRectFast2 = new CGameObject;

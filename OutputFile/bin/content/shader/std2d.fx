@@ -29,9 +29,22 @@ struct VS_OUT
 #define Offset                      g_vec2_2
 #define BackSize                    g_vec2_3
 
-// MeshRender 관련 Material에서 받는 값
+// MeshRender관련
+#define TexMove                     g_int_1
+#define OutputTexMoveOffset         g_vec2_4
+#define PunctureTexMoveOffset       g_vec2_5
 #define IsOutputTextureExist        g_btex_0
+#define IsAdditiveTextureExist      g_btex_2
+#define IsPunctureTextureExist      g_btex_3
 #define Output_Texture              g_tex_0
+#define Additive_Texture            g_tex_2
+#define Puncture_Texture            g_tex_3
+#define Additive_Color              g_vec4_0
+
+
+
+// Ray Tex용 숫자
+#define RayTest          g_int_2
 // ============================
 VS_OUT VS_Std2D(VS_IN _in)
 {
@@ -48,6 +61,21 @@ float4 PS_Std2D(VS_OUT _in) : SV_Target
 {
     float4 vOutColor = float4(0.f, 0.f, 0.f, 1.f);
 
+
+    // Ray Test용 Code
+    if (RayTest == 30)
+    {
+        vOutColor = float4(0.f, 1.f, 0.f, 1.f);
+        return vOutColor;
+    }
+
+    else if (RayTest == 20)
+    {
+        vOutColor = float4(0.f, 0.f, 1.f, 1.f);
+        return vOutColor;
+    }
+
+       
     // Sample Texture가 없는 경우
     // g_btex_0 값이 왜 0, 1 로 바뀔 수 있는 지 알기 위해선 
     // CMaterial::UpdateData() 참고
@@ -75,60 +103,71 @@ float4 PS_Std2D(VS_OUT _in) : SV_Target
                 discard;
         }
 
-       else
-       {
-           // 참조해야하는 UV값의 Offset
-           float2 Offset = float2(0.f, 0.f);
+        else
+        {
+            // 참조해야하는 UV값의 Offset
+            float2 Offset = float2(0.f, 0.f);
 
-           // Output Texture가 움직여야 하는지 확인
-           if (OutputTexMovingStyle != 0)
-           {
-               Offset = OutputTexPreviousPos;
-           }
+            // Output Texture가 움직여야 하는지 확인
+            int assist_bit = 1;
+            assist_bit = g_int_1 & (assist_bit);
 
-           vOutColor = Output_Texture.Sample(g_sam_0, _in.vUV + Offset);
+            if (!assist_bit)
+            {
+                Offset = g_vec2_4;
+            }
 
-           if (vOutColor.w == 0.f)
-               discard;
-       }
+            vOutColor = Output_Texture.Sample(g_sam_0, _in.vUV + Offset);
+
+            if (vOutColor.w == 0.f)
+                discard;
+        }
     }
 
 
-    // 구멍뚫기 (알파값 처리) 
-    if (isPunctureTextureUsed)
+    // 구멍뚫기 (알파값 처리)
+    if (IsPunctureTextureExist)
     {
         // 참조해야하는 UV값의 Offset
         float2 Offset = float2(0.f, 0.f);
 
         // Puncture Texture 가 움직여야 되는지 확인 
-        if (PunctureTexMovingStyle != 0)
+        int assist_bit = 2;
+        assist_bit = g_int_1 & (assist_bit);
+
+        if (!assist_bit)
         {
-            Offset = PunctureTexPreviousPos;
+            Offset = g_vec2_5;
         }
 
-        float4 vPunctureSample = g_puncture_tex.Sample(g_sam_0, _in.vUV + Offset);
+        float4 vPunctureSample = Puncture_Texture.Sample(g_sam_0, _in.vUV + Offset);
 
         vOutColor = float4(vOutColor.xyz, vPunctureSample.x);
     }
 
 
     // 색상 첨가 (Color Additive)
-    if (isAdditiveTextureUsed)
+    if (IsAdditiveTextureExist)
     {
-        float4 vAdditiveSample = g_additive_tex.Sample(g_sam_0, _in.vUV);
+        float4 vAdditiveSample = Additive_Texture.Sample(g_sam_0, _in.vUV);
 
         if (vAdditiveSample.w != 0)
         {
-            vOutColor = float4(vOutColor.x + saturate(AdditiveColor.x) * vAdditiveSample.x * vOutColor.w * vAdditiveSample.w,
-                                vOutColor.y + saturate(AdditiveColor.y) * vAdditiveSample.y * vOutColor.w * vAdditiveSample.w,
-                                vOutColor.z + saturate(AdditiveColor.z) * vAdditiveSample.z * vOutColor.w * vAdditiveSample.w,
+            vOutColor = float4( vOutColor.x + saturate(Additive_Color.x) * vAdditiveSample.x * vOutColor.w * vAdditiveSample.w,
+                                vOutColor.y + saturate(Additive_Color.y) * vAdditiveSample.y * vOutColor.w * vAdditiveSample.w,
+                                vOutColor.z + saturate(Additive_Color.z) * vAdditiveSample.z * vOutColor.w * vAdditiveSample.w,
                                 vOutColor.w);
         }  
     }
-    
-    
     return vOutColor;
 }
+
+
+
+
+
+
+
 
 
 // ======================================

@@ -13,6 +13,7 @@ public:
     void SelectPlayMode();
     void SetRepeat();
     void SetBlendTime();
+    void SetSpeed();
     void SelectAnimation();
     void DeleteCurrentAnimation();
     void DeleteEveryAnim();
