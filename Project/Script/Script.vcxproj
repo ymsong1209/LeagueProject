@@ -219,6 +219,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CScriptMgr.h" />
     <ClInclude Include="CSendServerEventMgr.h" />
     <ClInclude Include="CSkill.h" />
+    <ClInclude Include="CSkillMgr.h" />
     <ClInclude Include="CStructureScript.h" />
     <ClInclude Include="CTurretScript.h" />
     <ClInclude Include="CUnitScript.h" />
@@ -274,6 +275,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CInGameCameraScript.cpp" />
     <ClCompile Include="CSendServerEventMgr.cpp" />
     <ClCompile Include="CSkill.cpp" />
+    <ClCompile Include="CSkillMgr.cpp" />
     <ClCompile Include="CStructureScript.cpp" />
     <ClCompile Include="CTurretScript.cpp" />
     <ClCompile Include="CUnitScript.cpp" />

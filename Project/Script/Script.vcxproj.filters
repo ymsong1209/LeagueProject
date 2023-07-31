@@ -150,6 +150,9 @@
     <ClCompile Include="CJinxAttackState.cpp">
       <Filter>State\Unit\Champion\Jinx</Filter>
     </ClCompile>
+    <ClCompile Include="CSkillMgr.cpp">
+      <Filter>Manager\3. SkillMgr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="COtherPlayerScript.h" />
@@ -310,6 +313,9 @@
     <ClInclude Include="CJinxAttackState.h">
       <Filter>State\Unit\Champion\Jinx</Filter>
     </ClInclude>
+    <ClInclude Include="CSkillMgr.h">
+      <Filter>Manager\3. SkillMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scripts">
@@ -392,6 +398,9 @@
     </Filter>
     <Filter Include="Scripts\Unit\Champion\AttackRange">
       <UniqueIdentifier>{a7c3d51d-9c52-45c8-b476-76cfb8db9b44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\3. SkillMgr">
+      <UniqueIdentifier>{8ab591cf-556e-4154-a01a-73b25fd2f125}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
