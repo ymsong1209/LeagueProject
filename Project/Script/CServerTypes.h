@@ -36,6 +36,7 @@ struct AnimInfo
 
 enum class SkillType
 {
+	NONE,
 	BASIC_ATTACK,		// 모든 종류의 평타 (미니언/정글몹의 기본공격 포함)
 	JINX_Q,
 	JINX_W,

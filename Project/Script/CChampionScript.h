@@ -67,8 +67,6 @@ public:
     void    Move();
 
 
-    // 비동기
-    void    GetHit(CSkill* _skill);       // 피격시 
     
     // =========== Skill     ==============
 public:
@@ -79,8 +77,8 @@ public:
 
 
 public:
-    int GetLevel() { return m_iLevel; }
-    float GetDefencePower() { return m_fDefencePower; }
+    int     GetLevel() { return m_iLevel; }
+    float   GetDefencePower() { return m_fDefencePower; }
     CSkill* GetSkill(int _i) { if (_i < 0 || _i >= 5) return nullptr; return m_Skill[_i]; }
 };
 

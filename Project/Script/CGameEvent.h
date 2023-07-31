@@ -11,6 +11,7 @@ enum class GAME_EVENT_TYPE
 	PLAYER_BASE_ATTACK,
 	PLAYER_RECALL,
 	PLAYER_ABILITY_MODIFY,
+	PLAYER_GET_HIT,
 	PLAYER_SKILL_Q,
 	PLAYER_SKILL_W,
 	PLAYER_SKILL_E,
@@ -123,6 +124,33 @@ public:
 	void Clear() override { m_iUserID = -1; m_iTargetID = -1; }
 };
 
+
+class GetHitEvent :
+	public CGameEvent
+{
+public:
+	GetHitEvent()
+		: m_iUserObj(nullptr)
+		, m_eSkillType{SkillType::NONE}
+	{
+		m_eEventType = GAME_EVENT_TYPE::PLAYER_GET_HIT;
+	}
+
+private:
+	CGameObject*    m_iUserObj;
+	SkillType		m_eSkillType;
+
+
+public:
+	void	SetUserObj(CGameObject* _Obj) { m_iUserObj = _Obj; }
+	void	SetSkillType(SkillType _type) { m_eSkillType = _type; }
+
+	CGameObject* GetUserObj() { return m_iUserObj; }
+	SkillType	 GetSkillType() { return m_eSkillType; }
+
+
+	void Clear() override { m_iUserObj = nullptr; m_eSkillType = SkillType::NONE; }
+};
 
 
 

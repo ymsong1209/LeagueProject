@@ -2,6 +2,7 @@
 #include "CChampionWalkState.h"
 #include <Engine/CFsm.h>
 
+#include "CUnitScript.h"
 #include "CChampionAttackState.h"
 #include "CGameEvent.h"
 
@@ -52,6 +53,17 @@ void CChampionWalkState::HandleEvent(CGameEvent& event)
 			AttackState->SetTargetID(AttackEvent->GetTargetID());
 		}
 		GetOwnerFSM()->ChangeState(L"Attack");
+	}
+	break;
+
+	case GAME_EVENT_TYPE::PLAYER_GET_HIT:
+	{
+		GetHitEvent* HitEvent = dynamic_cast<GetHitEvent*>(&event);
+		{
+			HitEvent->GetUserObj();
+			HitEvent->GetSkillType();
+		}
+		GetOwnerFSM()->GetOwner()->GetScript<CUnitScript>()->
 	}
 	break;
 

@@ -289,16 +289,4 @@ void CChampionScript::Move()
 	}
 }
 
-void CChampionScript::GetHit(CSkill* _skill)
-{
-	// 스킬 매니저 등에서 스킬 맵을 가지고 와 스킬을 까봄
 
-	// 시전자 정보
-	CGameObject* User = CUR_LEVEL->FindObjectByID(_skill->GetUserID());
-	CUnitScript* UserScript = User->GetScript<CUnitScript>();
-
-	float	UserAttackPower = UserScript->GetAttackPower();
-
-	// 미완
-
-}

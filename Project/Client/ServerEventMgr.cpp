@@ -11,8 +11,10 @@
 #include "GameObjMgr.h"
 #include <Engine/components.h>
 #include <Script/CSendServerEventMgr.h>
-
 #include <Script/CChampionScript.h>
+#include <Script/CGameEvent.h>
+#include <Script/CGameEventMgr.h>
+
 
 ServerEventMgr::ServerEventMgr()
 {
@@ -160,7 +162,19 @@ void ServerEventMgr::clienttick()
 		//break;
 		case SERVER_EVENT_TYPE::SKILL_HIT_PACKET:
 		{
+			// 서버 아이디로 GameObject 찾아오기
+			CGameObject* Obj = GameObjMgr::GetInst()->FindAllObject(//서버 아이디);
 
+			// 공격 이벤트 발생
+			GetHitEvent* evn = dynamic_cast<GetHitEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_GET_HIT));
+			if (evn != nullptr)
+			{
+				evn->Clear();
+				evn->SetUserObj(Obj);
+				//evn->SetSkillType(UnitScript->GetOwner()->GetID());
+			
+				CGameEventMgr::GetInst()->NotifyEvent(*evn);
+			}
 		}
 		break;
 		}

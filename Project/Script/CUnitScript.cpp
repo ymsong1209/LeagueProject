@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "CUnitScript.h"
+#include "CSkillMgr.h"
+#include "CSkill.h"
 
 CUnitScript::CUnitScript(UINT ScriptType)
 	: CScript(ScriptType)
@@ -98,5 +100,15 @@ bool CUnitScript::PathFindMove(float _fSpeed, bool _IsRotation)
 			}
 			return true;
 		}
+	}
+}
+
+void CUnitScript::GetHit(SkillType _type, CGameObject* _SkillUser)
+{
+	// 스킬 매니저에서 해당 타입으로 스킬을 검색해 CSkill 클래스를 받아옴.
+	CSkill* Skill = CSkillMgr::GetInst()->FindSkill(_type);
+	if (Skill != nullptr)
+	{
+		Skill->GetHit(_SkillUser->GetScript<CUnitScript>(), this);
 	}
 }
