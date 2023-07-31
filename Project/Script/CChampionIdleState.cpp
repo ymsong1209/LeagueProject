@@ -5,6 +5,8 @@
 #include "CChampionAttackState.h"
 #include "CGameEvent.h"
 
+#include "CUnitScript.h"
+
 CChampionIdleState::CChampionIdleState()
 {
 }
@@ -52,6 +54,16 @@ void CChampionIdleState::HandleEvent(CGameEvent& event)
 		GetOwnerFSM()->ChangeState(L"Attack");
 	}
 		break;
+	case GAME_EVENT_TYPE::PLAYER_GET_HIT:
+	{
+		GetHitEvent* HitEvent = dynamic_cast<GetHitEvent*>(&event);
+
+		CGameObject* SkillUser = HitEvent->GetUserObj();
+		SkillType skilltype = HitEvent->GetSkillType();
+
+		GetOwnerFSM()->GetOwner()->GetScript<CUnitScript>()->GetHit(skilltype, SkillUser);
+	}
+	break;
 
 	case GAME_EVENT_TYPE::PLAYER_MOVE:
 		GetOwnerFSM()->ChangeState(L"Walk");

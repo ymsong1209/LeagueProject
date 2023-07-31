@@ -59,11 +59,11 @@ void CChampionWalkState::HandleEvent(CGameEvent& event)
 	case GAME_EVENT_TYPE::PLAYER_GET_HIT:
 	{
 		GetHitEvent* HitEvent = dynamic_cast<GetHitEvent*>(&event);
-		{
-			HitEvent->GetUserObj();
-			HitEvent->GetSkillType();
-		}
-		//GetOwnerFSM()->GetOwner()->GetScript<CUnitScript>()->
+		
+			CGameObject* SkillUser = HitEvent->GetUserObj();
+			SkillType skilltype = HitEvent->GetSkillType();
+		
+		GetOwnerFSM()->GetOwner()->GetScript<CUnitScript>()->GetHit(skilltype, SkillUser);
 	}
 	break;
 
