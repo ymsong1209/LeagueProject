@@ -149,15 +149,6 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 			MyPlayerScript->SetHost(_info.host);
 			MyPlayerScript->SetFaction(_info.faction);
 
-			CGameObject* AttackRange = new CGameObject;
-			AttackRange->AddComponent(new CTransform);
-			AttackRange->AddComponent(new CCollider2D);
-			AttackRange->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-			AttackRange->Collider2D()->SetOffsetScale(Vec2(1000.f, 1000.f));
-			AttackRange->Collider2D()->SetOffsetRot(Vec3(90.f, 0.f, 0.f));
-			AttackRange->AddComponent(new CAttackRangeScript);
-
-			pObj->AddChild(AttackRange);
 
 
 
@@ -177,14 +168,36 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 
 		//pObj->SetName(_info.nickname);
 
+		// 사거리 자식 오브젝트 추가
+		CGameObject* AttackRange = new CGameObject;
+		AttackRange->AddComponent(new CTransform);
+		AttackRange->AddComponent(new CCollider2D);
+		AttackRange->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+		AttackRange->Collider2D()->SetOffsetScale(Vec2(1000.f, 1000.f));
+		AttackRange->Collider2D()->SetOffsetRot(Vec3(90.f, 0.f, 0.f));
+		AttackRange->AddComponent(new CAttackRangeScript);
+		AttackRange->SetName(L"AttackRange");
+		pObj->AddChild(AttackRange);
+
+
 		pObj->AddComponent(new CCollider3D);
 		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
 		pObj->Collider3D()->SetAbsolute(true);
 		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
 		pObj->Collider3D()->SetDrawCollision(false);
 
+		pObj->AddComponent(new CCollider2D);
+		pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+		pObj->Collider2D()->SetOffsetScale(Vec2(15.f, 15.f));
+		pObj->Collider2D()->SetOffsetRot(Vec3(90.f, 0, 0));
+
+
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
 		pObj->Transform()->SetUseMouseOutline(true);
+
+
+
+
 		Vec3 spawnPos = Vec3(_info.posInfo.pos.x, _info.posInfo.pos.y, _info.posInfo.pos.z);
 		SpawnGameObject(pObj, spawnPos, 0);
 
