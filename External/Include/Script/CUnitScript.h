@@ -91,7 +91,8 @@ public:
 
 
 
-
+    // ºñµ¿±â
+    void GetHit(SkillType _type, CGameObject* _SkillUser);
 
 
 

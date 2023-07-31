@@ -162,18 +162,41 @@ void ServerEventMgr::clienttick()
 		//break;
 		case SERVER_EVENT_TYPE::SKILL_HIT_PACKET:
 		{
-			// 서버 아이디로 GameObject 찾아오기
-			CGameObject* Obj = GameObjMgr::GetInst()->FindAllObject(//서버 아이디);
+			uint64 hitId = static_cast<uint64>(m_vecEvent[i].wParam);
+			SkillInfo* skillInfo = (SkillInfo*)m_vecEvent[i].lParam;
 
-			// 공격 이벤트 발생
-			GetHitEvent* evn = dynamic_cast<GetHitEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_GET_HIT));
-			if (evn != nullptr)
+			// 내가 맞음 계산
+			if (hitId == MyPlayer.id)
 			{
-				evn->Clear();
-				evn->SetUserObj(Obj);
-				//evn->SetSkillType(UnitScript->GetOwner()->GetID());
-			
-				CGameEventMgr::GetInst()->NotifyEvent(*evn);
+				// 스킬 쏜애
+				CGameObject* skillOwnerObj = GameObjMgr::GetInst()->FindAllObject(skillInfo->OwnerId);
+				
+				// 공격 이벤트 발생
+				GetHitEvent* evn = dynamic_cast<GetHitEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_GET_HIT));
+				if (evn != nullptr)
+				{
+					evn->Clear();
+					evn->SetUserObj(skillOwnerObj);
+					evn->SetSkillType(UnitScript->GetOwner()->GetID());
+
+					CGameEventMgr::GetInst()->NotifyEvent(*evn);
+				}
+			}
+			// 오브젝트가 맞음. 방장이 계산.
+			else if (MyPlayer.host)
+			{
+				// 스킬 쏜애
+				CGameObject* skillOwnerObj = GameObjMgr::GetInst()->FindAllObject(skillInfo->OwnerId);
+				// 공격 이벤트 발생
+				GetHitEvent* evn = dynamic_cast<GetHitEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_GET_HIT));
+				if (evn != nullptr)
+				{
+					evn->Clear();
+					evn->SetUserObj(skillOwnerObj);
+					//evn->SetSkillType(UnitScript->GetOwner()->GetID());
+
+					CGameEventMgr::GetInst()->NotifyEvent(*evn);
+				}
 			}
 		}
 		break;

@@ -63,7 +63,7 @@ void CChampionWalkState::HandleEvent(CGameEvent& event)
 			HitEvent->GetUserObj();
 			HitEvent->GetSkillType();
 		}
-		GetOwnerFSM()->GetOwner()->GetScript<CUnitScript>()->
+		//GetOwnerFSM()->GetOwner()->GetScript<CUnitScript>()->
 	}
 	break;
 
