@@ -316,6 +316,9 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 			pObj->AddComponent(new CTransform);
 			pObj->AddComponent(new CBasicAttackScript);
 			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetScale(Vec2(15, 15));
+			pObj->Collider2D()->SetOffsetRot(Vec3(90.f, 0, 0));
 
 			// skillinfo 에 따라 세팅해줌 
 			CBasicAttackScript* Script = pObj->GetScript<CBasicAttackScript>();
@@ -341,7 +344,10 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 			pObj->AddComponent(new CMeshRender);
 			pObj->AddComponent(new CTransform);
 			pObj->AddComponent(new CUnitScript);
-
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetScale(Vec2(15, 15));
+			pObj->Collider2D()->SetOffsetRot(Vec3(90.f, 0, 0));
 			CUnitScript* Script = pObj->GetScript<CUnitScript>();
 			Script->SetServerID(_projectileId);
 			Script->SetFaction(Faction::NONE);
@@ -439,17 +445,22 @@ void GameObjMgr::SendObjectMove(uint64 _id, CGameObject* _obj, ClientServiceRef 
 			
 			Vec3  CurRot = obj->Transform()->GetRelativeRot();
 			//float CurLV = obj->GetScript<CUnitScript>()->GetLV();
-			float CurHP = obj->GetScript<CUnitScript>()->GetCurHP();
-			float CurMP = obj->GetScript<CUnitScript>()->GetCurMP();
-			float CurAttackPower = obj->GetScript<CUnitScript>()->GetAttackPower();
-			float CurDefencePower = obj->GetScript<CUnitScript>()->GetDefencePower();
 
 			ObjectMove move = {};
+			if (FindObject(_id)->GetScript<CUnitScript>() != nullptr)
+			{
+				float CurHP = obj->GetScript<CUnitScript>()->GetCurHP();
+				float CurMP = obj->GetScript<CUnitScript>()->GetCurMP();
+				float CurAttackPower = obj->GetScript<CUnitScript>()->GetAttackPower();
+				float CurDefencePower = obj->GetScript<CUnitScript>()->GetDefencePower();
+
+				move.HP = CurHP;
+				move.MP = CurMP;
+				move.AttackPower = CurAttackPower;
+				move.DefencePower = CurDefencePower;
+			}
+
 			//move.LV = CurLV;
-			move.HP = CurHP;
-			move.MP = CurMP;
-			move.AttackPower = CurAttackPower;
-			move.DefencePower = CurDefencePower;
 			move.pos.x = CurPos.x;
 			move.pos.y = CurPos.y;
 			move.pos.z = CurPos.z;

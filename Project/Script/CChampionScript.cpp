@@ -149,16 +149,16 @@ void CChampionScript::GetInput()
 			// 사거리 내에 있음
 			if (it != UnitinRange.end())
 			{
-				// 공격 이벤트 발생
-				BaseAttackEvent* evn = dynamic_cast<BaseAttackEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_BASE_ATTACK));
-				if (evn != nullptr)
-				{
-					evn->Clear();
-					evn->SetUserID(GetOwner()->GetID());
-					evn->SetTargetID(UnitScript->GetOwner()->GetID());
-
-					CGameEventMgr::GetInst()->NotifyEvent(*evn);
-				}
+				//// 공격 이벤트 발생
+				//BaseAttackEvent* evn = dynamic_cast<BaseAttackEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_BASE_ATTACK));
+				//if (evn != nullptr)
+				//{
+				//	evn->Clear();
+				//	evn->SetUserID(GetOwner()->GetID());
+				//	evn->SetTargetID(UnitScript->GetOwner()->GetID());
+				//
+				//	CGameEventMgr::GetInst()->NotifyEvent(*evn);
+				//}
 
 				// 서버에게 보낼 이벤트
 				SkillInfo* skillInfo = new SkillInfo;
