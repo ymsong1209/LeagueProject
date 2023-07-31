@@ -16,6 +16,7 @@ CJinxScript::CJinxScript()
 	:CChampionScript((UINT)JINXSCRIPT)
 {
 	m_fMaxHP = 5;
+	m_fAttackPower = 5.f;
 }
 
 CJinxScript::~CJinxScript()
