@@ -30,6 +30,8 @@ public:
     virtual void tick() override;
     virtual void BeginOverlap(CCollider2D* _Other) override;
 
+    void PosSetting(int _i);
+
     CLONE(CInventoryUIScript);
 
 public:

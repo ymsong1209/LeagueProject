@@ -22,16 +22,16 @@ void CInventoryUIScript::begin()
 	Inventory->SetName(L"Inventory");
 	Inventory->AddComponent(new CTransform);
 	Inventory->Transform()->SetRelativeScale(Vec3(1.f, 1.f, 0.1f)); //현재 우리가 사용하는 아이템 이름과 아이템 머터리얼 이름이 같아야함
-	SpawnGameObject(Inventory, Vec3(45.f, -108.f, 100.f), 31);
-	//--------------디버깅용  임시 아이템 지정 (원래 챔피언 스크립트에서 받아와야함)------------------
-	for (size_t i = 0; i < 4; ++i)
+	SpawnGameObject(Inventory, Vec3(45.f, -108.f, 400.f), 31);
+	//==============디버깅용  임시 아이템 지정 (원래 챔피언 스크립트에서 받아와야함)==================
+	for (size_t i = 0; i < 6; ++i)
 	{
 		m_Inventory[i] = new CItem();
 
 		switch (i)
 		{
 		case 0:
-			m_Inventory[i]->SetName(L"item_imperialmandate"); //아이템 이름을 지정 (챔피언 스크립트에서 받아올 예정)
+			m_Inventory[i]->SetName(L"item_Boots");
 			break;
 		case 1:
 			m_Inventory[i]->SetName(L"item_noonquiver");
@@ -40,11 +40,21 @@ void CInventoryUIScript::begin()
 			m_Inventory[i]->SetName(L"item_theCollector");
 			break;
 		case 3:
-			m_Inventory[i]->SetName(L"BootsMtrl");
+			m_Inventory[i]->SetName(L"item_imperialmandate"); //아이템 이름을 지정 (챔피언 스크립트에서 받아올 예정)
+			break;
+		case 4:
+			m_Inventory[i]->SetName(L"Item_zeal");
+			break;
+		case 5:
+			m_Inventory[i]->SetName(L"Item_shardoftrueice");
 			break;
 		}
 	}
-	//----------------------------초반 아이템 칸 생성------------------------------------
+	//===============================================================
+
+
+
+
 
 	wstring material = L"material\\";
 	wstring mtrl = L".mtrl";
@@ -65,11 +75,13 @@ void CInventoryUIScript::begin()
 			Item->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(fullname), 0);
 		}
 
-		Item->Transform()->SetRelativeScale(Vec3(6.4f, 6.4f, 0.1f));
+		Item->Transform()->SetRelativeScale(Vec3(7.0f, 7.0f, 0.1f));
 		Item->Transform()->SetAbsolute(true);
 		Item->Transform()->SetRelativePos(Vec3(0.f, 0.f, 100.f));
 		m_vecItemObj.push_back(Item);
 		Inventory->AddChild(Item);
+
+		PosSetting(i);
 	}
 }
 
@@ -102,5 +114,31 @@ void CInventoryUIScript::tick()
 
 void CInventoryUIScript::BeginOverlap(CCollider2D* _Other)
 {
+}
+
+void CInventoryUIScript::PosSetting(int _i)
+{
+	CTransform* Transform = m_vecItemObj[_i]->Transform();
+	switch (_i)
+	{
+	case 0:
+		Transform->SetRelativePos(Vec3(-8.32f, 4.2f, 100.f));
+		break;
+	case 1:
+		Transform->SetRelativePos(Vec3(-0.48f, 4.2f, 100.f));
+		break;
+	case 2:
+		Transform->SetRelativePos(Vec3(7.32f, 4.2f, 100.f));
+		break;
+	case 3:
+		Transform->SetRelativePos(Vec3(-8.32f, -3.56f, 100.f));
+		break;
+	case 4:
+		Transform->SetRelativePos(Vec3(-0.48f, -3.56f, 100.f));
+		break;
+	case 5:
+		Transform->SetRelativePos(Vec3(7.32f, -3.56f, 100.f));
+		break;
+	}
 }
 

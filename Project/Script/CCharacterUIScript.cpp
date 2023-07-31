@@ -184,22 +184,18 @@ void CCharacterUIScript::SpellUILoad()
 		Spell->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
 		Spell->Transform()->SetAbsolute(true);
 
-		switch (i) //스킬별 위치 지정
-		{
-		case 0:
+
+		if (i == 0)
 		{
 			Spell_D = Spell;
 			Spell_D->SetName(L"Spell_D");
 			Spell_D->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(UIpath + DSpell + mtrl), 0);
 		}
-		break;
-		case 1:
+		else
 		{
 			Spell_F = Spell;
 			Spell_F->SetName(L"Spell_F");
 			Spell_F->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(UIpath + FSpell + mtrl), 0);
-		}
-		break;
 		}
 		GetUIBackPanel()->AddChild(Spell);
 	}

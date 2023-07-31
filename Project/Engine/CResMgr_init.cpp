@@ -881,6 +881,28 @@ void CResMgr::CreateDefaultGraphicsShader()
 	AddRes(pShader->GetKey(), pShader);
 
 	// ============================
+	// TransMaskUIShader
+	// RasterizerState      : CULL_NONE
+	// BlendState           : MASK
+	// DepthStencilState    : Less
+	//
+	// Parameter
+	// g_tex_0              : Output Texture
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"TransMaskUIShader");
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_Std2D");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_Std2D");
+
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::MASK);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI_TRANSPARENT);
+	// Param
+	pShader->AddTexParam(TEX_0, "Output Texture");
+	AddRes(pShader->GetKey(), pShader);
+
+	// ============================
 	// CoolDownShader
 	// RasterizerState      : CULL_NONE
 	// BlendState           : ALPHA_BLEND
