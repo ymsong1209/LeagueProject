@@ -30,7 +30,7 @@ bool CJinxW::Use()
 	
 }
 
-void CJinxW::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript)
+void CJinxW::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _SkillLevel)
 {
 	// 징크스 w 투사체가 적과 충돌시 이 함수에 본인 스크립트 넣어서 호출할 것임
 
