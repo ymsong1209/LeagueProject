@@ -8,6 +8,7 @@
 #include "CGravityScript.h"
 #include "CHpMpRatioUIScript.h"
 #include "CInGameCameraScript.h"
+#include "CInventoryUIScript.h"
 #include "CMissileScript.h"
 #include "CMonsterScript.h"
 #include "COtherPlayerScript.h"
@@ -25,6 +26,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CGravityScript");
 	_vec.push_back(L"CHpMpRatioUIScript");
 	_vec.push_back(L"CInGameCameraScript");
+	_vec.push_back(L"CInventoryUIScript");
 	_vec.push_back(L"CMissileScript");
 	_vec.push_back(L"CMonsterScript");
 	_vec.push_back(L"COtherPlayerScript");
@@ -50,6 +52,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CHpMpRatioUIScript;
 	if (L"CInGameCameraScript" == _strScriptName)
 		return new CInGameCameraScript;
+	if (L"CInventoryUIScript" == _strScriptName)
+		return new CInventoryUIScript;
 	if (L"CMissileScript" == _strScriptName)
 		return new CMissileScript;
 	if (L"CMonsterScript" == _strScriptName)
@@ -91,6 +95,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::INGAMECAMERASCRIPT:
 		return new CInGameCameraScript;
+		break;
+	case (UINT)SCRIPT_TYPE::INVENTORYUISCRIPT:
+		return new CInventoryUIScript;
 		break;
 	case (UINT)SCRIPT_TYPE::MISSILESCRIPT:
 		return new CMissileScript;
@@ -147,6 +154,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::INGAMECAMERASCRIPT:
 		return L"CInGameCameraScript";
+		break;
+
+	case SCRIPT_TYPE::INVENTORYUISCRIPT:
+		return L"CInventoryUIScript";
 		break;
 
 	case SCRIPT_TYPE::MISSILESCRIPT:

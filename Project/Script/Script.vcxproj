@@ -178,6 +178,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CExpRatioUIScript.h" />
     <ClInclude Include="CGravityScript.h" />
     <ClInclude Include="CHpMpRatioUIScript.h" />
+    <ClInclude Include="CInventoryUIScript.h" />
     <ClInclude Include="CMissileScript.h" />
     <ClInclude Include="CMonsterScript.h" />
     <ClInclude Include="COtherPlayerScript.h" />
@@ -198,6 +199,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CExpRatioUIScript.cpp" />
     <ClCompile Include="CGravityScript.cpp" />
     <ClCompile Include="CHpMpRatioUIScript.cpp" />
+    <ClCompile Include="CInventoryUIScript.cpp" />
     <ClCompile Include="CMissileScript.cpp" />
     <ClCompile Include="CMonsterScript.cpp" />
     <ClCompile Include="COtherPlayerScript.cpp" />

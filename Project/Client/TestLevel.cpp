@@ -20,6 +20,7 @@
 #include <Script/CScriptMgr.h>
 #include <Script/CWorldHPSpawnScript.h>
 #include <Script\CWorldHPUIScript.h>
+#include <Script\CInventoryUIScript.h>
 
 
 void CreateTestLevel()
@@ -80,6 +81,9 @@ void CreateTestLevel()
 	UIObj->SetName(L"UIObj");
 	UIObj->AddComponent(new CTransform);
 	UIObj->AddComponent(new CCharacterUIScript);
+	UIObj->AddComponent(new CWorldHPSpawnScript);
+	UIObj->AddComponent(new CInventoryUIScript);
+
 	SpawnGameObject(UIObj, Vec3(0.f, 0.f, 0.f), 31);
 
 
@@ -223,7 +227,6 @@ void CreateTestLevel()
 		pObj->AddComponent(new CPlayerScript);
 		pObj->AddComponent(new CPathFinder);
 		pObj->AddComponent(new CCollider3D);
-		pObj->AddComponent(new CWorldHPSpawnScript);
 
 		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
 		pObj->Collider3D()->SetAbsolute(true);
@@ -259,6 +262,11 @@ void CreateTestLevel()
 		pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\sruap_ordernexus_tx_cm_clear.png"));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+		pObj->AddComponent(new CCollider3D);
+		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+		pObj->Collider3D()->SetAbsolute(true);
+		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
+		pObj->Transform()->SetUseMouseOutline(true);
 		SpawnGameObject(pObj, Vec3(229.7f, 15.9f, 241.5f), 0);
 
 		//------------------------------------------------------------------------------

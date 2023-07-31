@@ -29,72 +29,72 @@ void CCharacterUIScript::begin()
 void CCharacterUIScript::tick()
 {
 	//============================디버깅용 (필요x)============================
-	if (KEY_TAP(KEY::F5))
-	{
-		if(GetCharacterType() == CHARACTER_TYPE::MALPHIGHT)
-			SetCharacterType(CHARACTER_TYPE::JINX);
-		else if(GetCharacterType() == CHARACTER_TYPE::JINX)
-			SetCharacterType(CHARACTER_TYPE::MALPHIGHT);
-	}
+	//if (KEY_TAP(KEY::F5))
+	//{
+	//	if(GetCharacterType() == CHARACTER_TYPE::MALPHIGHT)
+	//		SetCharacterType(CHARACTER_TYPE::JINX);
+	//	else if(GetCharacterType() == CHARACTER_TYPE::JINX)
+	//		SetCharacterType(CHARACTER_TYPE::MALPHIGHT);
+	//}
 
-	//----혹시라도 디버깅을 위해 챔피언을 변경한다면 스킬 머터리얼들도 변경-----
-	CHARACTER_TYPE Champ = GetCharacterType();
-	if (PrevCharacter != Champ)
-	{
-		wstring mtrl = L".mtrl";
-		wstring under = L"_";
-		wstring CharacterType = CHARACTER_TYPE_WSTR[(UINT)GetCharacterType()];
-		wstring ChampMtrlPath = L"material\\" + CharacterType + under + L"CIRCLE" + mtrl;
+	////----혹시라도 디버깅을 위해 챔피언을 변경한다면 스킬 머터리얼들도 변경-----
+	//CHARACTER_TYPE Champ = GetCharacterType();
+	//if (PrevCharacter != Champ)
+	//{
+	//	wstring mtrl = L".mtrl";
+	//	wstring under = L"_";
+	//	wstring CharacterType = CHARACTER_TYPE_WSTR[(UINT)GetCharacterType()];
+	//	wstring ChampMtrlPath = L"material\\" + CharacterType + under + L"CIRCLE" + mtrl;
 
-		CharacterImage->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(ChampMtrlPath), 0);
+	//	CharacterImage->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(ChampMtrlPath), 0);
 
-		for (UINT i = 0; i < (UINT)SkillNum::END; ++i)  //스킬 이미지 Q,W,E,R,Passive 배치 
-		{
-			SkillNumber = (SkillNum)i;
-			wstring UIpath = L"material\\";
-			wstring SkillName = CharacterType + under + SKILL_TYPE_WSTR[i];
-			wstring fullpath = UIpath + SkillName + mtrl;
+	//	for (UINT i = 0; i < (UINT)SkillNum::END; ++i)  //스킬 이미지 Q,W,E,R,Passive 배치 
+	//	{
+	//		SkillNumber = (SkillNum)i;
+	//		wstring UIpath = L"material\\";
+	//		wstring SkillName = CharacterType + under + SKILL_TYPE_WSTR[i];
+	//		wstring fullpath = UIpath + SkillName + mtrl;
 
-			switch (i) //스킬별 위치 지정
-			{
-			case 0:
-			{
-				Skill_Q_Image->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(fullpath), 0);
-				Skill_Q_Image->SetName(SkillName);
-			}
-				break;
-			case 1:
-			{
-				Skill_W_Image->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(fullpath), 0);
-				Skill_W_Image->SetName(SkillName);
-			}
-				break;
-			case 2:
-			{
-				Skill_E_Image->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(fullpath), 0);
-				Skill_E_Image->SetName(SkillName);
-			}
-				break;
-			case 3:
-			{
-				Skill_R_Image->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(fullpath), 0);
-				Skill_R_Image->SetName(SkillName);
-			}
-				break;
-			case 4:
-			{
-				Skill_PASSIVE_Image->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(fullpath), 0);
-				Skill_PASSIVE_Image->SetName(SkillName);
-			}
-				break;
-			}
-		}
+	//		switch (i) //스킬별 위치 지정
+	//		{
+	//		case 0:
+	//		{
+	//			Skill_Q_Image->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(fullpath), 0);
+	//			Skill_Q_Image->SetName(SkillName);
+	//		}
+	//			break;
+	//		case 1:
+	//		{
+	//			Skill_W_Image->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(fullpath), 0);
+	//			Skill_W_Image->SetName(SkillName);
+	//		}
+	//			break;
+	//		case 2:
+	//		{
+	//			Skill_E_Image->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(fullpath), 0);
+	//			Skill_E_Image->SetName(SkillName);
+	//		}
+	//			break;
+	//		case 3:
+	//		{
+	//			Skill_R_Image->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(fullpath), 0);
+	//			Skill_R_Image->SetName(SkillName);
+	//		}
+	//			break;
+	//		case 4:
+	//		{
+	//			Skill_PASSIVE_Image->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(fullpath), 0);
+	//			Skill_PASSIVE_Image->SetName(SkillName);
+	//		}
+	//			break;
+	//		}
+	//	}
 
-		ScriptInspectorReload();
-	}
+	//	ScriptInspectorReload();
+	//}
 
 
-	PrevCharacter = Champ;
+	//PrevCharacter = Champ;
 }
 
 void CCharacterUIScript::BeginOverlap(CCollider2D* _Other)

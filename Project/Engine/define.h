@@ -408,3 +408,4 @@ enum class BARTYPE
 	MP,
 	END,
 };
+

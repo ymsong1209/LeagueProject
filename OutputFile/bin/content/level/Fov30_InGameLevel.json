@@ -589,9 +589,6 @@
                         {
                             "scriptName": "CPlayerScript",
                             "fSpeed": 200.0
-                        },
-                        {
-                            "scriptName": "CWorldHPSpawnScript"
                         }
                     ],
                     "children": []
@@ -8505,6 +8502,12 @@
                     "scripts": [
                         {
                             "scriptName": "CCharacterUIScript"
+                        },
+                        {
+                            "scriptName": "CWorldHPSpawnScript"
+                        },
+                        {
+                            "scriptName": "CInventoryUIScript"
                         }
                     ],
                     "children": []

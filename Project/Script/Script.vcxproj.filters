@@ -58,6 +58,7 @@
     <ClInclude Include="CHpMpRatioUIScript.h" />
     <ClInclude Include="CWorldHPUIScript.h" />
     <ClInclude Include="CWorldHPSpawnScript.h" />
+    <ClInclude Include="CInventoryUIScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CMissileScript.cpp">
@@ -100,5 +101,6 @@
     <ClCompile Include="CHpMpRatioUIScript.cpp" />
     <ClCompile Include="CWorldHPUIScript.cpp" />
     <ClCompile Include="CWorldHPSpawnScript.cpp" />
+    <ClCompile Include="CInventoryUIScript.cpp" />
   </ItemGroup>
 </Project>

@@ -5,6 +5,7 @@ CExpRatioUIScript
 CGravityScript
 CHpMpRatioUIScript
 CInGameCameraScript
+CInventoryUIScript
 CMissileScript
 CMonsterScript
 COtherPlayerScript
