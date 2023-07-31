@@ -151,6 +151,19 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 
 			pObj->SetName(L"MyPlayer");
 
+
+			// 사거리 자식 오브젝트 추가
+			CGameObject* AttackRange = new CGameObject;
+			AttackRange->AddComponent(new CTransform);
+			AttackRange->AddComponent(new CCollider2D);
+			AttackRange->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			AttackRange->Collider2D()->SetOffsetScale(Vec2(1000.f, 1000.f));
+			AttackRange->Collider2D()->SetOffsetRot(Vec3(90.f, 0.f, 0.f));
+			AttackRange->AddComponent(new CAttackRangeScript);
+			AttackRange->SetName(L"AttackRange");
+			pObj->AddChild(AttackRange);
+
+
 		}
 		else
 		{
@@ -165,18 +178,6 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 
 		//pObj->SetName(_info.nickname);
 
-			// 사거리 자식 오브젝트 추가
-		CGameObject* AttackRange = new CGameObject;
-		AttackRange->AddComponent(new CTransform);
-		AttackRange->AddComponent(new CCollider2D);
-		AttackRange->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-		AttackRange->Collider2D()->SetOffsetScale(Vec2(1000.f, 1000.f));
-		AttackRange->Collider2D()->SetOffsetRot(Vec3(90.f, 0.f, 0.f));
-		AttackRange->AddComponent(new CAttackRangeScript);
-		AttackRange->SetName(L"AttackRange");
-		pObj->AddChild(AttackRange);
-		_objects.insert(std::make_pair(_info.id, AttackRange));
-
 
 		pObj->AddComponent(new CCollider3D);
 		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
@@ -186,15 +187,12 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 
 		pObj->AddComponent(new CCollider2D);
 		pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-		pObj->Collider2D()->SetOffsetScale(Vec2(15.f, 15.f));
+		pObj->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
 		pObj->Collider2D()->SetOffsetRot(Vec3(90.f, 0, 0));
 
 
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
 		pObj->Transform()->SetUseMouseOutline(true);
-
-
-
 
 		Vec3 spawnPos = Vec3(_info.posInfo.pos.x, _info.posInfo.pos.y, _info.posInfo.pos.z);
 		SpawnGameObject(pObj, spawnPos, 0);
@@ -211,27 +209,31 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 	{
 		std::lock_guard<std::mutex> lock(m);
 
+		Ptr<CMeshData> pMeshData = nullptr;
+		CGameObject* pObj = nullptr;
+
 		// 방장만 진짜를 생성한다. 나머지는 가짜를 생성한다.
 		if (MyPlayer.host)
 		{
 			// 미니언 스크립트
 			// 디버깅용으로 구체 띄워야지
+
 			CGameObject* pObj = new CGameObject;
 
-			//pObj->AddComponent(new CMeshRender);
-			pObj->AddComponent(new CTransform);
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\minion_melee.fbx");
+			pObj = pMeshData->Instantiate();
+
 			pObj->AddComponent(new CMinionScript);
 			pObj->AddComponent(new CCollider3D);
 			pObj->AddComponent(new CCollider2D);
-			pObj->AddComponent(new CAnimator3D);
 
 			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
 			pObj->Collider2D()->SetOffsetScale(Vec2(50.f, 50.f));
 			pObj->Collider2D()->SetOffsetRot(Vec3(90.f, 0.f, 0.f));
 			pObj->SetName(L"Minion");
 
-			pObj->Animator3D()->LoadAnim(L"minion_melee/Attack1");
-			pObj->Animator3D()->PlayRepeat(L"minion_melee/Attack1", true, true, 0.1f);
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\minion_melee");
+			pObj->Animator3D()->PlayRepeat(L"minion_melee\\Attack1", true, true, 0.1f);
 
 			CUnitScript* Script = pObj->GetScript<CUnitScript>();
 			Script->SetServerID(_objectId);
@@ -259,11 +261,16 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			// 디버깅용으로 구체 띄워야지
 			CGameObject* pObj = new CGameObject;
 
-			//pObj->AddComponent(new CMeshRender);
-			pObj->AddComponent(new CTransform);
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\minion_melee.fbx");
+			pObj = pMeshData->Instantiate();
+			
 			pObj->AddComponent(new CUnitScript);
 			pObj->AddComponent(new CCollider3D);
 			pObj->AddComponent(new CCollider2D);
+
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\minion_melee");
+			pObj->Animator3D()->PlayRepeat(L"minion_melee\\Attack1", true, true, 0.1f);
+
 
 			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
 			pObj->Collider2D()->SetOffsetScale(Vec2(50.f, 50.f));
@@ -277,7 +284,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
 			pObj->Collider3D()->SetAbsolute(true);
 			pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
-			pObj->Collider3D()->SetDrawCollision(true);
+			//pObj->Collider3D()->SetDrawCollision(true);
 
 			pObj->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 100.f));
 
