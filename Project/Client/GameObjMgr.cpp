@@ -31,6 +31,7 @@
 #include <Script/CBasicAttackScript.h>
 #include <Script/CAttackRangeScript.h>
 #include <Script/CMinionScript.h>
+#include <Script/CSkillMgr.h>
 
 #include <Script\COtherPlayerScript.h>
 #include "ServerEventMgr.h"
@@ -312,22 +313,33 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 			CGameObject* pObj = new CGameObject;
 			
 			// 원래라면 skillinfo에서 스킬타입에 따라 switch case로 해당 스킬을 AddComponent해준다.
-			pObj->AddComponent(new CMeshRender);
-			pObj->AddComponent(new CTransform);
-			pObj->AddComponent(new CBasicAttackScript);
-			pObj->AddComponent(new CCollider2D);
-			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-			pObj->Collider2D()->SetOffsetScale(Vec2(15, 15));
-			pObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0, 0));
+			//pObj->AddComponent(new CMeshRender);
+			//pObj->AddComponent(new CTransform);
+			//pObj->AddComponent(new CBasicAttackScript);
+			//pObj->AddComponent(new CCollider2D);
+			//pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			//pObj->Collider2D()->SetOffsetScale(Vec2(15, 15));
+			//pObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0, 0));
+			//
+			//// skillinfo 에 따라 세팅해줌 
+			//CBasicAttackScript* Script = pObj->GetScript<CBasicAttackScript>();
+			//Script->SetServeID(_projectileId);
+			//Script->SetServerUserID(_skillInfo.OwnerId);
+			//Script->SetServerTargetID(_skillInfo.TargetId);
+			//
+			//Script->SetUserObj(FindAllObject(_skillInfo.OwnerId));
+			//Script->SetTargetObj(FindAllObject(_skillInfo.TargetId));
 
-			// skillinfo 에 따라 세팅해줌 
-			CBasicAttackScript* Script = pObj->GetScript<CBasicAttackScript>();
-			Script->SetServeID(_projectileId);
-			Script->SetServerUserID(_skillInfo.OwnerId);
-			Script->SetServerTargetID(_skillInfo.TargetId);
-			
-			Script->SetUserObj(FindAllObject(_skillInfo.OwnerId));
-			Script->SetTargetObj(FindAllObject(_skillInfo.TargetId));
+			CGameObject* UserObj = FindAllObject(_skillInfo.OwnerId);
+			CGameObject* TargetObj = FindAllObject(_skillInfo.TargetId);
+	
+			// _SkillInfo를 까서, 어떤 Skill인지 가지고 옴
+			CSkill* skill = CSkillMgr::GetInst()->FindSkill(_skillInfo.skillType);
+
+			// skill에 사용자 / 피격자 정보 등록
+			skill->SetUserObj(UserObj);
+
+
 
 			pObj->SetName(L"Projectile");
 

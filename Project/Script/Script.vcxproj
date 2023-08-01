@@ -189,6 +189,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CGameEvent.h" />
     <ClInclude Include="CGameEventMgr.h" />
     <ClInclude Include="CJinxAttackState.h" />
+    <ClInclude Include="CJinxWState.h" />
     <ClInclude Include="CServerTypes.h" />
     <ClInclude Include="CHeal.h" />
     <ClInclude Include="CInhibitorBrokenState.h" />
@@ -258,6 +259,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CJinxScript.cpp" />
     <ClCompile Include="CJinxW.cpp" />
     <ClCompile Include="CJinxWalkState.cpp" />
+    <ClCompile Include="CJinxWState.cpp" />
     <ClCompile Include="CJungleAttackState.cpp" />
     <ClCompile Include="CJungleChaseState.cpp" />
     <ClCompile Include="CJungleDeathState.cpp" />

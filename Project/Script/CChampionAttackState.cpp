@@ -6,10 +6,11 @@
 
 #include "CChampionScript.h"
 #include "CSkill.h"
+#include "CSendServerEventMgr.h"
 
 CChampionAttackState::CChampionAttackState()
-	: m_iUserID(-1)
-	, m_iTargetID(-1)
+	: m_iUserObj(nullptr)
+	, m_iTargetObj(nullptr)
 {
 }
 
@@ -26,15 +27,28 @@ void CChampionAttackState::tick()
 
 void CChampionAttackState::Enter()
 {
-	// 공격 투사체 생성 (여긴 사실 서버가 방장컴에만 호출해줘야하는것)
-	CChampionScript* ChampScript = GetOwnerFSM()->GetOwner()->GetScript<CChampionScript>();
-	CSkill* BaseAttack = ChampScript->GetSkill(0);
-	
-	BaseAttack->SetUserID(m_iUserID);
-	BaseAttack->SetTargetID(m_iTargetID);
-	
-	if (BaseAttack) 
-		BaseAttack->Use();
+	// ==== 서버에게 평타 이벤트 Send  ==== //
+	SkillInfo* skillInfo = new SkillInfo;
+	skillInfo->OwnerId = GetOwnerFSM()->GetOwner()->GetScript<CUnitScript>()->GetServerID();
+	skillInfo->TargetId = m_iTargetObj->GetScript<CUnitScript>()->GetServerID();
+	skillInfo->SkillLevel = 1;
+	skillInfo->skillType = SkillType::BASIC_ATTACK;
+
+	tServerEvent serverEvn = {};
+	serverEvn.Type = SERVER_EVENT_TYPE::SKILL_PROJECTILE_PACKET;
+	serverEvn.wParam = (DWORD_PTR)skillInfo;
+	//serverEvn.lParam 
+	CSendServerEventMgr::GetInst()->AddServerSendEvent(serverEvn);
+
+	// 서버 없을 때 호출할 코드
+	//CChampionScript* ChampScript = GetOwnerFSM()->GetOwner()->GetScript<CChampionScript>();
+	//CSkill* BaseAttack = ChampScript->GetSkill(0);
+	//
+	//BaseAttack->SetUserID(m_iUserID);
+	//BaseAttack->SetTargetID(m_iTargetID);
+	//
+	//if (BaseAttack) 
+	//	BaseAttack->Use();
 
 	CUnitState::Enter();
 }
@@ -42,8 +56,8 @@ void CChampionAttackState::Enter()
 void CChampionAttackState::Exit()
 {
 	// 변수 초기화
-	m_iUserID = -1;
-	m_iTargetID = -1;
+	m_iUserObj = nullptr;
+	m_iTargetObj = nullptr;
 
 	CUnitState::Exit();
 }

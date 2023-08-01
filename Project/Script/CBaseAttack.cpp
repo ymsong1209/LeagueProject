@@ -19,7 +19,7 @@ CBaseAttack::CBaseAttack()
 	Projectile->AddComponent(new CBasicAttackScript);
 	Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
 	Projectile->Collider2D()->SetOffsetScale(Vec2(5.f, 5.f));
-	Projectile->Collider2D()->SetOffsetRot(Vec3(90.f, 0.f, 0.f));
+	Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
 	Projectile->SetName(L"Projectile");
 
 	Ptr<CPrefab> NewPrefab = new CPrefab;
@@ -49,8 +49,8 @@ bool CBaseAttack::Use()
 	Vec3 OwnerPos = m_OwnerScript->GetOwner()->Transform()->GetRelativePos();
 
 	CBasicAttackScript* AttackScript = bullet->GetScript<CBasicAttackScript>();
-	AttackScript->SetTargetID(m_iTargetID);
-	AttackScript->SetUserID(m_iUserID);
+	//AttackScript->SetTargetID(m_iTargetID);
+	//AttackScript->SetUserID(m_iUserID);
 
 	SpawnGameObject(bullet, OwnerPos, 0);
 

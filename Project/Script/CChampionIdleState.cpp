@@ -45,15 +45,15 @@ void CChampionIdleState::HandleEvent(CGameEvent& event)
 	{
 		BaseAttackEvent* AttackEvent = dynamic_cast<BaseAttackEvent*>(&event);
 
-		CChampionAttackState* AttackState =  dynamic_cast<CChampionAttackState*>(GetOwnerFSM()->FindState(L"Attack"));
+		CChampionAttackState* AttackState = dynamic_cast<CChampionAttackState*>(GetOwnerFSM()->FindState(L"Attack"));
 		if (AttackState != nullptr)
 		{
-			AttackState->SetUserID(AttackEvent->GetUserID());
-			AttackState->SetTargetID(AttackEvent->GetTargetID());
+			AttackState->SetUserObj(AttackEvent->GetUserObj());
+			AttackState->SetTargetObj(AttackEvent->GetTargetObj());
 		}
 		GetOwnerFSM()->ChangeState(L"Attack");
 	}
-		break;
+	break;
 	case GAME_EVENT_TYPE::PLAYER_GET_HIT:
 	{
 		GetHitEvent* HitEvent = dynamic_cast<GetHitEvent*>(&event);

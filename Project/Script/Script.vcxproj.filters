@@ -54,9 +54,6 @@
     <ClCompile Include="CJinxIdleState.cpp">
       <Filter>State\Unit\Champion\Jinx</Filter>
     </ClCompile>
-    <ClCompile Include="CJinxQState.cpp">
-      <Filter>State\Unit\Champion\Jinx</Filter>
-    </ClCompile>
     <ClCompile Include="CJinxRespawnState.cpp">
       <Filter>State\Unit\Champion\Jinx</Filter>
     </ClCompile>
@@ -153,6 +150,12 @@
     <ClCompile Include="CSkillMgr.cpp">
       <Filter>Manager\3. SkillMgr</Filter>
     </ClCompile>
+    <ClCompile Include="CJinxQState.cpp">
+      <Filter>State\Unit\Champion\Jinx\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxWState.cpp">
+      <Filter>State\Unit\Champion\Jinx\Skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="COtherPlayerScript.h" />
@@ -209,9 +212,6 @@
       <Filter>State\Unit\Champion\Jinx</Filter>
     </ClInclude>
     <ClInclude Include="CJinxIdleState.h">
-      <Filter>State\Unit\Champion\Jinx</Filter>
-    </ClInclude>
-    <ClInclude Include="CJinxQState.h">
       <Filter>State\Unit\Champion\Jinx</Filter>
     </ClInclude>
     <ClInclude Include="CJinxRespawnState.h">
@@ -316,6 +316,12 @@
     <ClInclude Include="CGameEvent.h">
       <Filter>GameEvent</Filter>
     </ClInclude>
+    <ClInclude Include="CJinxQState.h">
+      <Filter>State\Unit\Champion\Jinx\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxWState.h">
+      <Filter>State\Unit\Champion\Jinx\Skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scripts">
@@ -401,6 +407,9 @@
     </Filter>
     <Filter Include="Manager\3. SkillMgr">
       <UniqueIdentifier>{8ab591cf-556e-4154-a01a-73b25fd2f125}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\Unit\Champion\Jinx\Skill">
+      <UniqueIdentifier>{7cb92db4-5965-4df5-a562-88b6c4b7c57b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

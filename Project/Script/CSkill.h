@@ -17,8 +17,8 @@ protected:
 	float					m_fCoolDown;	// 쿨타임
 	float					m_fCurCoolDown;	// 현재 쿨타임
 
-	int						m_iUserID;		// 사용자 ID
-	int						m_iTargetID;	// 타겟 ID
+	CGameObject*			m_iUserObj;		// 사용자 
+	CGameObject*			m_iTargetObj;	// 타겟 (논타겟일시 -1)
 
 	SkillType				m_eSkillType;	// 스킬 타입
 
@@ -56,8 +56,9 @@ public:
 	wstring GetSkillName() { return m_strSkillName; }
 
 	SkillType GetSkillType() { return m_eSkillType; }
-	int		GetUserID() { return m_iUserID; }
-	int		GetTargetID() { return m_iTargetID; }
+
+	CGameObject*		GetUserObj() { return m_iUserObj; }
+	CGameObject*		GetTargetObj() { return m_iTargetObj; }
 
 	void SetUserID(int _i) { m_iUserID = _i; }
 	void SetTargetID(int _i) { m_iTargetID = _i; }
