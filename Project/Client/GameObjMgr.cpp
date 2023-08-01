@@ -243,7 +243,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
 			pObj->Collider3D()->SetAbsolute(true);
 			pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
-			//pObj->Collider3D()->SetDrawCollision(true);
+			pObj->Collider3D()->SetDrawCollision(false);
 
 			pObj->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 100.f));
 
@@ -284,7 +284,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
 			pObj->Collider3D()->SetAbsolute(true);
 			pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
-			//pObj->Collider3D()->SetDrawCollision(true);
+			pObj->Collider3D()->SetDrawCollision(false);
 
 			pObj->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 100.f));
 
