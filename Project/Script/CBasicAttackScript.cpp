@@ -25,24 +25,24 @@ void CBasicAttackScript::tick()
 {
 	Vec3 TargetPos = m_TargetObj->Transform()->GetRelativePos();
 	Vec3 UserPos = m_UserObj->Transform()->GetRelativePos();
+	Vec3 ProjectilePos = GetOwner()->Transform()->GetRelativePos();
 
 	// 방향 계산
-	Vec3 Direction = Vec3(TargetPos.x - UserPos.x, 0.f, TargetPos.z - UserPos.z);
+	Vec3 Direction = Vec3(TargetPos.x - ProjectilePos.x, 0.f, TargetPos.z - ProjectilePos.z);
 	Direction.Normalize();
 
 	// 투사체 이동
-	Vec3 ProjectilePos = GetOwner()->Transform()->GetRelativePos();
 	Vec3 NewPos = ProjectilePos + Direction * m_fProjectileSpeed * EditorDT;
 
 	// 타겟을 향해 날아감. 
-	if (abs(NewPos.x - TargetPos.x) < 1.f)
+	if (abs(NewPos.x - TargetPos.x) < 3.f)
 		return;
 
 	GetOwner()->Transform()->SetRelativePos(NewPos);
 }
 
 
-void CBasicAttackScript::BeginOverlap(CCollider2D* _Other)
+void CBasicAttackScript::OnOverlap(CCollider2D* _Other)
 {
 	if (m_TargetObj == nullptr)
 		return;

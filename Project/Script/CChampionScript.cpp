@@ -86,7 +86,7 @@ bool CChampionScript::CheckDeath()
 		// 아무것도 못하는 상태
 		m_eRestraint = BLOCK;
 
-		m_fRespawnTime -= DT;
+		m_fRespawnTime -= EditorDT;
 		// 부활 대기시간 끝나면
 		if (m_fRespawnTime <= 0)
 		{
