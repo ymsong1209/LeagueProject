@@ -59,9 +59,10 @@ void CChampionIdleState::HandleEvent(CGameEvent& event)
 		GetHitEvent* HitEvent = dynamic_cast<GetHitEvent*>(&event);
 
 		CGameObject* SkillUser = HitEvent->GetUserObj();
+		CGameObject* SkillTarget = HitEvent->GetTargetObj();
 		SkillType skilltype = HitEvent->GetSkillType();
 
-		GetOwnerFSM()->GetOwner()->GetScript<CUnitScript>()->GetHit(skilltype, SkillUser);
+		GetOwnerFSM()->GetOwner()->GetScript<CUnitScript>()->GetHit(skilltype, SkillTarget, SkillUser);
 	}
 	break;
 

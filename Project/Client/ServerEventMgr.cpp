@@ -177,13 +177,17 @@ void ServerEventMgr::clienttick()
 			{
 				// 스킬 쏜애
 				CGameObject* skillOwnerObj = GameObjMgr::GetInst()->FindAllObject(skillInfo->OwnerId);
+
+				// 스킬 맞은 애(본인)
+				CGameObject* skillTargetObj = GameObjMgr::GetInst()->FindAllObject(skillInfo->TargetId);
 				
-				// 공격 이벤트 발생
+				// 피격 이벤트 발생
 				GetHitEvent* evn = dynamic_cast<GetHitEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_GET_HIT));
 				if (evn != nullptr)
 				{
 					evn->Clear();
 					evn->SetUserObj(skillOwnerObj);
+					evn->SetTargetObj(skillTargetObj);
 					evn->SetSkillType(skillInfo->skillType);
 
 					CGameEventMgr::GetInst()->NotifyEvent(*evn);
@@ -194,12 +198,17 @@ void ServerEventMgr::clienttick()
 			{
 				// 스킬 쏜애
 				CGameObject* skillOwnerObj = GameObjMgr::GetInst()->FindAllObject(skillInfo->OwnerId);
+
+				// 스킬 맞은 애(타인)
+				CGameObject* skillTargetObj = GameObjMgr::GetInst()->FindAllObject(skillInfo->TargetId);
+
 				// 공격 이벤트 발생
 				GetHitEvent* evn = dynamic_cast<GetHitEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_GET_HIT));
 				if (evn != nullptr)
 				{
 					evn->Clear();
 					evn->SetUserObj(skillOwnerObj); 
+					evn->SetTargetObj(skillTargetObj);
 					evn->SetSkillType(skillInfo->skillType);
 					CGameEventMgr::GetInst()->NotifyEvent(*evn);
 				}

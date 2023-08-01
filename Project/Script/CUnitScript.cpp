@@ -105,7 +105,7 @@ bool CUnitScript::PathFindMove(float _fSpeed, bool _IsRotation)
 	}
 }
 
-void CUnitScript::GetHit(SkillType _type, CGameObject* _SkillUser)
+void CUnitScript::GetHit(SkillType _type, CGameObject* _SkillTarget, CGameObject* _SkillUser)
 {
 	// 스킬 매니저에서 해당 타입으로 스킬을 검색해 CSkill 클래스를 받아옴.
 	CSkill* Skill = CSkillMgr::GetInst()->FindSkill(_type);
@@ -145,6 +145,8 @@ void CUnitScript::GetHit(SkillType _type, CGameObject* _SkillUser)
 			break;
 		}
 			
-		Skill->GetHit(_SkillUser->GetScript<CUnitScript>(), this, SkillLevel);
+		CUnitScript* TargetScript = _SkillTarget->GetScript<CUnitScript>();
+
+		Skill->GetHit(_SkillUser->GetScript<CUnitScript>(), TargetScript, SkillLevel);
 	}
 }

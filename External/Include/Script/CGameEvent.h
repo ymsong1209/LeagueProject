@@ -111,7 +111,7 @@ public:
 private:
 	int             m_iUserID;
 	int             m_iTargetID;
-	
+
 
 public:
 	void	SetUserID(int _i) { m_iUserID = _i; }
@@ -125,19 +125,22 @@ public:
 };
 
 
+class CGameObject;
+enum class SkillType;
+
 class GetHitEvent :
 	public CGameEvent
 {
 public:
 	GetHitEvent()
 		: m_iUserObj(nullptr)
-		, m_eSkillType{SkillType::NONE}
+		, m_eSkillType{ SkillType::NONE }
 	{
 		m_eEventType = GAME_EVENT_TYPE::PLAYER_GET_HIT;
 	}
 
 private:
-	CGameObject*    m_iUserObj;
+	CGameObject* m_iUserObj;
 	SkillType		m_eSkillType;
 
 
