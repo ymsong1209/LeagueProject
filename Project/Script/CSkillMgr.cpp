@@ -7,6 +7,7 @@ CSkillMgr::CSkillMgr()
 {
     CBaseAttack* BaseAttack = new CBaseAttack;
     m_mapSkills.insert(make_pair(SkillType::BASIC_ATTACK, BaseAttack));
+
 }
 
 CSkillMgr::~CSkillMgr()

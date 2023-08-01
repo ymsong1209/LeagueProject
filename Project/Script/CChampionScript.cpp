@@ -82,6 +82,8 @@ bool CChampionScript::CheckDeath()
 		{
 			CGameEventMgr::GetInst()->NotifyEvent(*evn);
 		}
+		
+
 
 		// 아무것도 못하는 상태
 		m_eRestraint = BLOCK;
@@ -154,6 +156,10 @@ void CChampionScript::GetInput()
 			// 사거리 내에 있음
 			if (it != UnitinRange.end())
 			{
+				// 해당 유닛이 죽었다면 return
+				if (UnitScript->IsUnitDead())
+					return;
+
 				//// 공격 이벤트 발생
 				//BaseAttackEvent* evn = dynamic_cast<BaseAttackEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_BASE_ATTACK));
 				//if (evn != nullptr)
@@ -252,7 +258,6 @@ void CChampionScript::GetInput()
 void CChampionScript::CheckSkills()
 {
 	
-
 	for (int i = 0; i < 5; i++)
 	{
 		if (m_Skill[i] == nullptr)
