@@ -35,8 +35,8 @@ void CBasicAttackScript::tick()
 	Vec3 NewPos = ProjectilePos + Direction * m_fProjectileSpeed * EditorDT;
 
 	// 타겟을 향해 날아감. 
-	if (abs(NewPos.x - TargetPos.x) < 3.f)
-		return;
+	//if (abs(NewPos.x - TargetPos.x) < 3.f)
+		//return;
 
 	GetOwner()->Transform()->SetRelativePos(NewPos);
 }
@@ -50,22 +50,22 @@ void CBasicAttackScript::OnOverlap(CCollider2D* _Other)
 	// 타겟과 부딪치면
 	if (_Other == m_TargetObj->Collider2D())
 	{
-		Vec3 TargetPos = m_TargetObj->Transform()->GetRelativePos();
-		Vec3 ProjectilePos = GetOwner()->Transform()->GetRelativePos();
+		//Vec3 TargetPos = m_TargetObj->Transform()->GetRelativePos();
+		//Vec3 ProjectilePos = GetOwner()->Transform()->GetRelativePos();
 		// 방장컴이 서버에게 이 투사체가 피격자와 충돌했다고 전달
-
-			// 타겟을 향해 날아감. 
-		if (abs(ProjectilePos.x - TargetPos.x) < 3.f)
-		{
-			// 투사체 사라짐
+		// 투사체 사라짐
 			//Destroy();
-			this->GetOwner()->Transform()->SetRelativePos(-666.f, -666.f, -666.f);
-			m_fProjectileSpeed = 0.f;
+		this->GetOwner()->Transform()->SetRelativePos(-666.f, -666.f, -666.f);
+		m_fProjectileSpeed = 0.f;
 
-			UINT64 projectileId = m_iServerID; // 스킬 투사체 id
-			UINT64 userId = m_iServerUserID; // 스킬 사용자 id
-			UINT64 hitId = m_iServerTargetID; // 스킬 피격자 id
-			CSendServerEventMgr::GetInst()->SendHitPacket(m_iServerTargetID, m_iServerUserID, 1, SkillType::BASIC_ATTACK);
+		UINT64 projectileId = m_iServerID; // 스킬 투사체 id
+		UINT64 userId = m_iServerUserID; // 스킬 사용자 id
+		UINT64 hitId = m_iServerTargetID; // 스킬 피격자 id
+		CSendServerEventMgr::GetInst()->SendHitPacket(m_iServerTargetID, m_iServerUserID, 1, SkillType::BASIC_ATTACK);
+			// 타겟을 향해 날아감. 
+		//if (abs(ProjectilePos.x - TargetPos.x) < 3.f)
+		{
+			
 		}
 		
 	}
