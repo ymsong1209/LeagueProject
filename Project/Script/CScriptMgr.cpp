@@ -14,6 +14,7 @@
 #include "COtherPlayerScript.h"
 #include "CPlayerScript.h"
 #include "CStructureScript.h"
+#include "CTurretAttackScript.h"
 #include "CTurretScript.h"
 #include "CUnitScript.h"
 
@@ -32,6 +33,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"COtherPlayerScript");
 	_vec.push_back(L"CPlayerScript");
 	_vec.push_back(L"CStructureScript");
+	_vec.push_back(L"CTurretAttackScript");
 	_vec.push_back(L"CTurretScript");
 	_vec.push_back(L"CUnitScript");
 }
@@ -64,6 +66,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CPlayerScript;
 	if (L"CStructureScript" == _strScriptName)
 		return new CStructureScript;
+	if (L"CTurretAttackScript" == _strScriptName)
+		return new CTurretAttackScript;
 	if (L"CTurretScript" == _strScriptName)
 		return new CTurretScript;
 	if (L"CUnitScript" == _strScriptName)
@@ -113,6 +117,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::STRUCTURESCRIPT:
 		return new CStructureScript;
+		break;
+	case (UINT)SCRIPT_TYPE::TURRETATTACKSCRIPT:
+		return new CTurretAttackScript;
 		break;
 	case (UINT)SCRIPT_TYPE::TURRETSCRIPT:
 		return new CTurretScript;
@@ -178,6 +185,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::STRUCTURESCRIPT:
 		return L"CStructureScript";
+		break;
+
+	case SCRIPT_TYPE::TURRETATTACKSCRIPT:
+		return L"CTurretAttackScript";
 		break;
 
 	case SCRIPT_TYPE::TURRETSCRIPT:

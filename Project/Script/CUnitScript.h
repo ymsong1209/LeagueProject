@@ -1,6 +1,6 @@
-#pragma once
+#ifndef _CUNITSRIPT_H
+#define _CUNITSRIPT_H
 #include <Engine\CScript.h>
-
 // LoL 게임 내에서 플레이어가 상호작용할 수 있는 모든 오브젝트
 
 enum class UnitType
@@ -80,4 +80,4 @@ public:
     float  GetAttackPower() { return m_fAttackPower; }
     float   GetDefencePower() { return m_fDefencePower; }
 };
-
+#endif // _CUNITSRIPT_H

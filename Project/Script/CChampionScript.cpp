@@ -19,6 +19,7 @@ CChampionScript::CChampionScript(UINT ScriptType)
 	, m_eCurCC(NONE)
 	, m_eRestraint(DEFAULT)
 	, m_Skill{}
+	, m_bIsAttackingChampion(false)
 {
 	m_eUnitType = UnitType::CHAMPION;
 

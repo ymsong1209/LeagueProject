@@ -17,6 +17,8 @@
 
 #include "CLevelSaveLoad.h"
 #include <Script/CScriptMgr.h>
+#include <Script/CTurretScript.h>
+#include <Script/CJinxScript.h>
 
 
 void CreateTestLevel()
@@ -34,6 +36,9 @@ void CreateTestLevel()
 	pCurLevel->GetLayer(4)->SetName(L"PlayerProjectile");
 	pCurLevel->GetLayer(5)->SetName(L"MonsterProjectile");
 	pCurLevel->GetLayer(6)->SetName(L"LoLMap");
+	pCurLevel->GetLayer(7)->SetName(L"Minion");
+	pCurLevel->GetLayer(8)->SetName(L"Champion");
+	pCurLevel->GetLayer(9)->SetName(L"Projectile");
 	//롤맵 레이어에는 롤맵만 넣을것!
 	pCurLevel->GetLayer(31)->SetName(L"ViewPort UI");
 
@@ -177,8 +182,15 @@ void CreateTestLevel()
 		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
 		pObj->GetRenderComponent()->SetFrustumCheck(false);
 		pObj->AddComponent(new CPlayerScript);
+		pObj->AddComponent(new CJinxScript);
 		pObj->AddComponent(new CPathFinder);
 		pObj->AddComponent(new CCollider3D);
+		pObj->AddComponent(new CCollider2D);
+
+		pObj->Collider2D()->SetAbsolute(false);
+		pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+		pObj->Collider2D()->SetOffsetScale(Vec2(20.f, 20.f));
+		pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
 
 		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
 		pObj->Collider3D()->SetAbsolute(true);
@@ -189,7 +201,7 @@ void CreateTestLevel()
 
 		pObj->Transform()->SetUseMouseOutline(true);
 
-		SpawnGameObject(pObj, Vec3(0, 0, 0), 0);
+		SpawnGameObject(pObj, Vec3(0, 0, 0), L"Champion");
 
 
 		//-------------------------------넥서스-----------------------------------------
@@ -320,32 +332,32 @@ void CreateTestLevel()
 
 
 	// LoLMap 로딩
-	{
-	
-		Ptr<CMeshData> pMeshData = nullptr;
-		CGameObject* pObj = nullptr;
-		for (int i = 0; i <= 25; ++i) 
-		{
-			wstring num = std::to_wstring(i);
-			wstring FBXFilePath = L"fbx\\land";
-			FBXFilePath += num;
-			FBXFilePath += L".fbx";
+	//{
+	//
+	//	Ptr<CMeshData> pMeshData = nullptr;
+	//	CGameObject* pObj = nullptr;
+	//	for (int i = 0; i <= 25; ++i) 
+	//	{
+	//		wstring num = std::to_wstring(i);
+	//		wstring FBXFilePath = L"fbx\\land";
+	//		FBXFilePath += num;
+	//		FBXFilePath += L".fbx";
 
-			wstring FBXFileName = L"land";
-			FBXFileName += num;
+	//		wstring FBXFileName = L"land";
+	//		FBXFileName += num;
 
-			pMeshData = CResMgr::GetInst()->LoadFBX(FBXFilePath);
-			pObj = pMeshData->Instantiate();
-			pObj->SetName(FBXFileName);
+	//		pMeshData = CResMgr::GetInst()->LoadFBX(FBXFilePath);
+	//		pObj = pMeshData->Instantiate();
+	//		pObj->SetName(FBXFileName);
 
-			//맵이 다 (0,0,0) 기준 컬링인거같아 불편해서 잠시 끕니다.
-			pObj->GetRenderComponent()->SetFrustumCheck(false);
+	//		//맵이 다 (0,0,0) 기준 컬링인거같아 불편해서 잠시 끕니다.
+	//		pObj->GetRenderComponent()->SetFrustumCheck(false);
 
-			pObj->GetRenderComponent()->SetShowDebugBound(false);
-			pObj->Transform()->SetGizmoObjExcept(false);
-			SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 6);
-		}
-	}
+	//		pObj->GetRenderComponent()->SetShowDebugBound(false);
+	//		pObj->Transform()->SetGizmoObjExcept(false);
+	//		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 6);
+	//	}
+	//}
 
 
 	// TestFastForward
@@ -461,6 +473,23 @@ void CreateTestLevel()
 
 
 	SpawnGameObject(RayCubeTestObj2, Vec3(-600.f, -450.f, 960.f), 0);
+
+
+	CGameObject* TestTurret = new CGameObject;
+	TestTurret->AddComponent(new CTransform);
+	TestTurret->AddComponent(new CCollider2D);
+	TestTurret->SetName(L"TestTurret");
+	TestTurret->AddComponent(new CTurretScript);
+	TestTurret->AddComponent(new CMeshRender);
+	TestTurret->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
+	TestTurret->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
+	TestTurret->Transform()->SetRelativeScale(40.f, 40.f, 40.f);
+	TestTurret->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+	TestTurret->Collider2D()->SetAbsolute(true);
+	TestTurret->Collider2D()->SetOffsetScale(Vec2(250.f, 250.f));
+	TestTurret->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+	SpawnGameObject(TestTurret, Vec3(200.f, 0.f, 200.f), 0);
+
 
 
 	// TestFastForward

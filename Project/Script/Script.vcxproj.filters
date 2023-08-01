@@ -49,6 +49,7 @@
     <ClCompile Include="CUnitState.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Script.cpp" />
+    <ClCompile Include="CTurretAttackScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CBaseAttack.h" />
@@ -101,5 +102,7 @@
     <ClInclude Include="CInGameCameraScript.h" />
     <ClInclude Include="IGameEventListener.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="CUnitClassEnum.h" />
+    <ClInclude Include="CTurretAttackScript.h" />
   </ItemGroup>
 </Project>

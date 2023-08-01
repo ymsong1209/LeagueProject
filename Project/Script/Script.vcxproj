@@ -216,6 +216,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CScriptMgr.h" />
     <ClInclude Include="CSkill.h" />
     <ClInclude Include="CStructureScript.h" />
+    <ClInclude Include="CTurretAttackScript.h" />
     <ClInclude Include="CTurretScript.h" />
     <ClInclude Include="CUnitScript.h" />
     <ClInclude Include="CUnitState.h" />
@@ -223,6 +224,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CInGameCameraScript.h" />
     <ClInclude Include="IGameEventListener.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="CUnitClassEnum.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CBaseAttack.cpp" />
@@ -268,6 +270,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CInGameCameraScript.cpp" />
     <ClCompile Include="CSkill.cpp" />
     <ClCompile Include="CStructureScript.cpp" />
+    <ClCompile Include="CTurretAttackScript.cpp" />
     <ClCompile Include="CTurretScript.cpp" />
     <ClCompile Include="CUnitScript.cpp" />
     <ClCompile Include="CUnitState.cpp" />

@@ -11,5 +11,6 @@ CNexusScript
 COtherPlayerScript
 CPlayerScript
 CStructureScript
+CTurretAttackScript
 CTurretScript
 CUnitScript
