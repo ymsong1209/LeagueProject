@@ -510,6 +510,14 @@ void CAnimator3D::check_mesh(Ptr<CMesh> _pMesh)
 }
 
 
+	//Matrix CAnimator3D::GetBoneMat(int _iBoneIdx, int _iRowIdx)
+	//{
+	//	UINT iBufferSize = m_pBoneFinalMatBuffer->GetBufferSize();
+	//
+	//
+	//
+	//}
+
 void CAnimator3D::SaveToLevelFile(FILE* _pFile)
 {
 	// 빈 애니메이터는 저장 안함

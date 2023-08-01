@@ -50,6 +50,7 @@
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Script.cpp" />
     <ClCompile Include="CTurretAttackScript.cpp" />
+    <ClCompile Include="CUpdateBoneScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CBaseAttack.h" />
@@ -104,5 +105,6 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="CUnitClassEnum.h" />
     <ClInclude Include="CTurretAttackScript.h" />
+    <ClInclude Include="CUpdateBoneScript.h" />
   </ItemGroup>
 </Project>

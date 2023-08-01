@@ -82,6 +82,27 @@ VS_OUT VS_Std3D_Deferred(VS_IN _in)
     }
         
     output.vPosition = mul(float4(_in.vPos, 1.f), g_matWVP);
+
+    if (g_int_11 == 100)
+    {
+
+        float3 AnimLocalPos = float3(g_vec4_6.x, g_vec4_6.y, g_vec4_6.z);
+
+        /* if (g_vec4_6.x >= 23 && g_vec4_6.x <= 26)
+         {
+             output.vPosition.x += 100;
+         }*/
+
+
+        AnimLocalPos = TrackSkinning(AnimLocalPos, g_vec4_10, g_vec4_11, 0, g_int_10);
+        output.vPosition.x += AnimLocalPos.x;
+        output.vPosition.y += AnimLocalPos.y;
+        output.vPosition.z += AnimLocalPos.z;
+
+
+
+    }
+
     output.vUV = _in.vUV;
     
     output.vViewPos = mul(float4(_in.vPos, 1.f), g_matWV);
@@ -101,7 +122,29 @@ VS_OUT VS_Std3D_Deferred_Inst(VTX_IN_INST _in)
         Skinning(_in.vPos, _in.vTangent, _in.vBinormal, _in.vNormal, _in.vWeights, _in.vIndices, _in.iRowIndex);
     }
 
+  
+
     output.vPosition = mul(float4(_in.vPos, 1.f), _in.matWVP);
+
+    float3 T = float3(0.03f * g_float_0, 0.f, 0.f);
+
+
+    if (g_int_11 == 100)
+    {
+       
+        float3 AnimLocalPos = float3(g_vec4_6.x, g_vec4_6.y, g_vec4_6.z);
+
+
+        AnimLocalPos = TrackSkinning(AnimLocalPos, g_vec4_10, g_vec4_11, 0, g_int_10);
+        //AnimLocalPos = mul(float4(AnimLocalPos, 1.f), g_mat_3);
+        output.vPosition.x += AnimLocalPos.x + g_vec4_9.x;
+        output.vPosition.y += AnimLocalPos.y + g_vec4_9.y;
+        output.vPosition.z += AnimLocalPos.z + g_vec4_9.z;
+
+       
+
+    }
+
     output.vUV = _in.vUV;
 
     output.vViewPos = mul(float4(_in.vPos, 1.f), _in.matWV);
@@ -131,29 +174,15 @@ PS_OUT PS_Std3D_Deferred(VS_OUT _in) : SV_Target
     
     float3 vViewNormal = _in.vViewNormal;
 
-    // Ray Test¿ë Code
-    if (RayTest == 30)
-    {
-
-        PS_OUT TempOut = (PS_OUT)0.f;
-
-        TempOut.vColor = float4(0.f, 1.f, 0.f, 1.f);
-        TempOut.vNormal = float4(vViewNormal.xyz, 1.f);
-        TempOut.vPosition = float4(_in.vViewPos.xyz, 1.f);
- 
-        return TempOut;
-    }
-
-    else if (RayTest == 20)
+    if (g_int_11 == 100)
     {
         PS_OUT TempOut = (PS_OUT)0.f;
 
-        TempOut.vColor = float4(0.f, 0.f, 1.f, 1.f);
+        TempOut.vColor = float4(0.f, 1.f, 1.f, 1.f);
         TempOut.vNormal = float4(vViewNormal.xyz, 1.f);
         TempOut.vPosition = float4(_in.vViewPos.xyz, 1.f);
 
         return TempOut;
- 
     }
 
      

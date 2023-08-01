@@ -220,6 +220,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CTurretScript.h" />
     <ClInclude Include="CUnitScript.h" />
     <ClInclude Include="CUnitState.h" />
+    <ClInclude Include="CUpdateBoneScript.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="CInGameCameraScript.h" />
     <ClInclude Include="IGameEventListener.h" />
@@ -274,6 +275,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CTurretScript.cpp" />
     <ClCompile Include="CUnitScript.cpp" />
     <ClCompile Include="CUnitState.cpp" />
+    <ClCompile Include="CUpdateBoneScript.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

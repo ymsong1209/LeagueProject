@@ -318,6 +318,11 @@ matrix GetBoneMat(int _iBoneIdx, int _iRowIdx)
     return g_arrBoneMat[(g_iBoneCount * _iRowIdx) + _iBoneIdx];
 }
 
+matrix GetTrackBoneMat(int _iBoneIdx, int _iRowIdx, int _BoneCount)
+{
+    return g_arrBoneMatTracking[(_BoneCount * _iRowIdx) + _iBoneIdx];
+}
+
 void Skinning(inout float3 _vPos, inout float3 _vTangent, inout float3 _vBinormal, inout float3 _vNormal
     , inout float4 _vWeight, inout float4 _vIndices
     , int _iRowIdx)
@@ -344,6 +349,29 @@ void Skinning(inout float3 _vPos, inout float3 _vTangent, inout float3 _vBinorma
     _vTangent = normalize(info.vTangent);
     _vBinormal = normalize(info.vBinormal);
     _vNormal = normalize(info.vNormal);
+}
+
+float3 TrackSkinning(float3 _vPos,   float4 _vWeight,  float4 _vIndices ,int _iRowIdx, int _BoneCount)
+{
+    tSkinningInfo info = (tSkinningInfo)0.f;
+
+  /*  if (_iRowIdx == -1)
+        return float3(0.f, 0.f, 0.f);*/
+
+    for (int i = 0; i < 4; ++i)
+    {
+        if (0.f == _vWeight[i])
+            continue;
+
+        matrix matBone = GetTrackBoneMat((int)_vIndices[i], _iRowIdx, _BoneCount);
+
+        info.vPos += (mul(float4(_vPos, 1.f), matBone) * _vWeight[i]).xyz;
+    }
+
+    float3 ReturnValue = float3(0.f, 0.f, 0.f);
+    ReturnValue = info.vPos;
+    return ReturnValue;
+ 
 }
 
 

@@ -19,6 +19,7 @@
 #include <Script/CScriptMgr.h>
 #include <Script/CTurretScript.h>
 #include <Script/CJinxScript.h>
+#include <Script/CUpdateBoneScript.h>
 
 
 void CreateTestLevel()
@@ -167,6 +168,9 @@ void CreateTestLevel()
 
 
 
+
+
+
 	// ============
 	// FBX Loading
 	// ============	
@@ -186,6 +190,7 @@ void CreateTestLevel()
 		pObj->AddComponent(new CPathFinder);
 		pObj->AddComponent(new CCollider3D);
 		pObj->AddComponent(new CCollider2D);
+		pObj->AddComponent(new CFsm);
 
 		pObj->Collider2D()->SetAbsolute(false);
 		pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
@@ -201,7 +206,25 @@ void CreateTestLevel()
 
 		pObj->Transform()->SetUseMouseOutline(true);
 
+		//pObj->AddChild(TestBoneChild);
+
 		SpawnGameObject(pObj, Vec3(0, 0, 0), L"Champion");
+
+
+
+		CGameObject* TestBoneChild = new CGameObject;
+		TestBoneChild->SetName(L"TestBoneChild");
+		TestBoneChild->AddComponent(new CTransform);
+		TestBoneChild->AddComponent(new CMeshRender);
+		TestBoneChild->AddComponent(new CUpdateBoneScript);
+		TestBoneChild->GetScript<CUpdateBoneScript>()->SetTrackObject(pObj);
+		TestBoneChild->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
+		TestBoneChild->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
+
+		TestBoneChild->Transform()->SetRelativeScale(10.f, 10.f, 10.f);
+		//TestBoneChild->Transform()->SetAbsolute(true);
+
+		SpawnGameObject(TestBoneChild, Vec3(0.f, 0.f, 0.f), 0);
 
 
 		//-------------------------------넥서스-----------------------------------------

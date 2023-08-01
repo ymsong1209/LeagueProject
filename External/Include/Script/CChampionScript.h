@@ -5,14 +5,14 @@
 #define CHAMPION_ENUM_DEFINED
 
 // 군중 제어기
-enum class CC
+enum CC
 {
-    NONE = 0,
-    SLOW = 1 << 0,
-    SILENCE = 1 << 1,
-    ROOT = 1 << 2,
-    STUN = 1 << 3,
-    AIRBORNE = 1 << 4,
+    NONE_CC = 0,
+    SLOW_CC = 1 << 0,
+    SILENCE_CC = 1 << 1,
+    ROOT_CC = 1 << 2,
+    STUN_CC = 1 << 3,
+    AIRBORNE_CC = 1 << 4,
 };
 
 // 행동 제약

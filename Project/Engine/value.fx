@@ -133,6 +133,9 @@ StructuredBuffer<tLightInfo> g_Light3DBuffer : register(t13);
 // Animation3D Bone Matrix Buffer
 StructuredBuffer<Matrix> g_arrBoneMat : register(t30);
 
+// Bone의 위치를 추적할때 사용하는 구조화버퍼  
+StructuredBuffer<Matrix> g_arrBoneMatTracking : register(t29);
+
 
 SamplerState g_sam_0 : register(s0);
 SamplerState g_sam_1 : register(s1);

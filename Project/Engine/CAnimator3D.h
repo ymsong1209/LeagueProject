@@ -64,6 +64,8 @@ private:
 
     wstring                     m_MeshDataRelativePath; //애니메이션은 mesh랑 material이 세팅되어야함. 
 
+ 
+
 
 public:
     virtual void finaltick() override;
@@ -128,6 +130,10 @@ public:
 
 private:
     void check_mesh(Ptr<CMesh> _pMesh);
+
+
+public:
+  //  Matrix GetBoneMat(int _iBoneIdx, int _iRowIdx);
 
 public:
     virtual void SaveToLevelFile(FILE* _pFile) override;

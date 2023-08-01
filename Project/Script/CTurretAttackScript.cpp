@@ -40,6 +40,7 @@ void CTurretAttackScript::tick()
 		//}
 
 		m_vTargetPos = m_pTarget->Transform()->GetRelativePos();
+
 	}
 	
 	Vec3 Dir = m_vTargetPos - curpos;

@@ -17,6 +17,7 @@
 #include "CTurretAttackScript.h"
 #include "CTurretScript.h"
 #include "CUnitScript.h"
+#include "CUpdateBoneScript.h"
 
 void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 {
@@ -36,6 +37,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CTurretAttackScript");
 	_vec.push_back(L"CTurretScript");
 	_vec.push_back(L"CUnitScript");
+	_vec.push_back(L"CUpdateBoneScript");
 }
 
 CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
@@ -72,6 +74,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CTurretScript;
 	if (L"CUnitScript" == _strScriptName)
 		return new CUnitScript;
+	if (L"CUpdateBoneScript" == _strScriptName)
+		return new CUpdateBoneScript;
 	return nullptr;
 }
 
@@ -126,6 +130,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::UNITSCRIPT:
 		return new CUnitScript;
+		break;
+	case (UINT)SCRIPT_TYPE::UPDATEBONESCRIPT:
+		return new CUpdateBoneScript;
 		break;
 	}
 	return nullptr;
@@ -197,6 +204,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::UNITSCRIPT:
 		return L"CUnitScript";
+		break;
+
+	case SCRIPT_TYPE::UPDATEBONESCRIPT:
+		return L"CUpdateBoneScript";
 		break;
 
 	}
