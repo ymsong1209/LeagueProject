@@ -646,7 +646,7 @@ void GameObjMgr::E_ObjectAnim(AnimInfo _animInfo)
 	}
 }
 
-void GameObjMgr::E_HitObject(uint64 _hit, SkillInfo _skillInfo)
+void GameObjMgr::E_HitObject(uint64 _hitTarget, SkillInfo _skillInfo)
 {
 	std::mutex m;
 	{
@@ -654,7 +654,7 @@ void GameObjMgr::E_HitObject(uint64 _hit, SkillInfo _skillInfo)
 
 		tServerEvent evn = {};
 		evn.Type = SERVER_EVENT_TYPE::SKILL_HIT_PACKET;
-		evn.wParam = static_cast<DWORD_PTR>(_hit);
+		evn.wParam = static_cast<DWORD_PTR>(_hitTarget);
 
 		SkillInfo* skillInfo = new SkillInfo(_skillInfo);
 		evn.lParam = (DWORD_PTR)skillInfo;

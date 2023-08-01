@@ -36,7 +36,7 @@ public:
 	void E_MovePlayer(uint64 _playerId, ObjectMove _playerMove);
 	void E_MoveObject(uint64 _objectId, ObjectMove _objectMove);
 	void E_ObjectAnim(AnimInfo _animInfo);
-	void E_HitObject(uint64 _hit, SkillInfo _skillInfo);
+	void E_HitObject(uint64 _hitTarget, SkillInfo _skillInfo);
 public:
 	CGameObject* FindPlayer(uint64 _targetId);
 	CGameObject* FindObject(uint64 _targetId);

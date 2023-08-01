@@ -140,19 +140,24 @@ public:
 	}
 
 private:
-	CGameObject* m_iUserObj;
+	CGameObject*	m_iUserObj;
+	CGameObject*	m_iTargetObj;
 	SkillType		m_eSkillType;
 
 
 public:
-	void	SetUserObj(CGameObject* _Obj) { m_iUserObj = _Obj; }
-	void	SetSkillType(SkillType _type) { m_eSkillType = _type; }
+	
+	void	SetUserObj(CGameObject* _Obj)	{ m_iUserObj = _Obj; }
+	void	SetTargetObj(CGameObject* _Obj) { m_iTargetObj = _Obj; }
+	void	SetSkillType(SkillType _type)	{ m_eSkillType = _type; }
+
 
 	CGameObject* GetUserObj() { return m_iUserObj; }
+	CGameObject* GetTargetObj() { return m_iTargetObj; }
 	SkillType	 GetSkillType() { return m_eSkillType; }
 
 
-	void Clear() override { m_iUserObj = nullptr; m_eSkillType = SkillType::NONE; }
+	void Clear() override { m_iUserObj = nullptr; m_iTargetObj = nullptr;  m_eSkillType = SkillType::NONE; }
 };
 
 
