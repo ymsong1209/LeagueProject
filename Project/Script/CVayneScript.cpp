@@ -78,7 +78,7 @@ void CVayneScript::tick()
 	
 
 
-		for (int i = 0; i < 7000; ++i)
+		for (int i = 0; i < 8918; ++i)
 		{
 			//int temp = IndexInfo_0[i];
 
@@ -93,7 +93,7 @@ void CVayneScript::tick()
 
 			
 	/*		Matrix WorldMat = GetOwner()->Transform()->GetWorldMat();
-			Matrix ViewMat = CRenderMgr::GetInst()->GetMainCam()->GetViewMat();
+			//Matrix ViewMat = CRenderMgr::GetInst()->GetMainCam()->GetViewMat();
 			Matrix ProjMat = CRenderMgr::GetInst()->GetMainCam()->GetProjMat();*/
 
 
@@ -110,15 +110,15 @@ void CVayneScript::tick()
 			//Matrix WorldMat = GetOwner()->Transform()->GetWorldMat();
 
 
-			Matrix ScaleMat = XMMatrixIdentity(); // 단위행렬 만들기
-			ScaleMat = XMMatrixScaling(30, 30, 30); // 크기행렬 만듬
-			Matrix RotMat = GetOwner()->Transform()->GetWorldRotMat(); // 회전 가져옴
-			Matrix TransMat = GetOwner()->Transform()->GetWorldPosMat(); // 이동 가져옴
+			//Matrix ScaleMat = XMMatrixIdentity(); // 단위행렬 만들기
+			//ScaleMat = XMMatrixScaling(30, 30, 30); // 크기행렬 만듬
+			//Matrix RotMat = GetOwner()->Transform()->GetWorldRotMat(); // 회전 가져옴
+			//Matrix TransMat = GetOwner()->Transform()->GetWorldPosMat(); // 이동 가져옴
 
-			Matrix FinalMat = ScaleMat * RotMat * TransMat;
+			//Matrix FinalMat = ScaleMat * RotMat * TransMat;
 
 
-			Vec4 FinalPos = XMVector3TransformCoord(Vertex.vPos, FinalMat);
+			//Vec4 FinalPos = XMVector3TransformCoord(Vertex.vPos, FinalMat);
 
 
 
@@ -133,10 +133,10 @@ void CVayneScript::tick()
 		 
 
 			MeshObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3DMtrl"), 0);
-			MeshObj->Transform()->SetRelativeScale(Vec3(1.f, 1.f, 1.f));
+			MeshObj->Transform()->SetRelativeScale(Vec3(8.f, 8.f, 8.f));
 
 
-			SpawnGameObject(MeshObj, Vec3(FinalPos.x, FinalPos.y, FinalPos.z), 0);
+			SpawnGameObject(MeshObj, Vec3(Vertex.vPos.x, Vertex.vPos.y, Vertex.vPos.z), 0);
 			
 		}
 
@@ -162,6 +162,10 @@ void CVayneScript::Skinning(Vec3& _vPos, Vec3& _vTangent, Vec3& _vBinormal, Vec3
 {
 	tSkinningInfo info;
 
+	int TempX = _vPos.x;
+	int TempY = _vPos.y;
+	int TempZ = _vPos.z;
+
 	if (_iRowIdx == -1)
 		return;
 
@@ -172,14 +176,16 @@ void CVayneScript::Skinning(Vec3& _vPos, Vec3& _vTangent, Vec3& _vBinormal, Vec3
 
 		Matrix matBone = GetBoneMat((int)(_vIndices[i]), _iRowIdx, _arrBoneMat, _iBoneCount);
 
-		Matrix a;
-		Matrix b;
-		Matrix c = a * b;
+
 
 		Vec4 Temp;
 
+
 		//info.vPos += 
+		Vec3 TempPos = XMVector3TransformCoord(_vPos, matBone);
+		Vec3 TempPos2 = XMVector3Transform(Vec4(_vPos, 1), matBone);
 		Temp =(XMVector3TransformCoord(_vPos, matBone) * _vWeight[i]);
+		Temp = XMVector3Transform(Vec4(_vPos, 1), matBone) * _vWeight[i];
 		info.vPos = Vec3(Temp.x, Temp.y, Temp.z);
 
 		Temp = (XMVector3TransformNormal(_vTangent, matBone) * _vWeight[i]);
@@ -214,6 +220,7 @@ Matrix CVayneScript::GetBoneMat(int _iBoneIdx, int _iRowIdx,  CStructuredBuffer*
  
 
 	Matrix TargetData = data[(_iBoneCount * _iRowIdx) + _iBoneIdx];
+	TargetData = TargetData.Transpose();
 
 	delete[] data;
 

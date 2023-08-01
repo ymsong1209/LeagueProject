@@ -323,7 +323,7 @@ void Skinning(inout float3 _vPos, inout float3 _vTangent, inout float3 _vBinorma
     , int _iRowIdx)
 {
     tSkinningInfo info = (tSkinningInfo)0.f;
-
+    
     if (_iRowIdx == -1)
         return;
 
