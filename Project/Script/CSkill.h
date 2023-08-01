@@ -31,7 +31,9 @@ protected:
 
 	CUnitScript*			m_OwnerScript;	// 챔피언 스크립트
 
-	vector<Ptr<CPrefab>>	m_vecSkillObj;	// 스킬 사용 시 생성할 투사체 등
+	vector<Ptr<CPrefab>>	m_vecSkillObj;			// 스킬 사용 시 생성할 투사체 등
+	int						m_iProjectileCount;		// 투사체 개수
+
 
 	// ======== 도트딜 / 상태이상 관련 ========== 
 	bool					m_bIsDot;		// 지속하여 데미지/상태이상을 거는지 여부
@@ -60,8 +62,8 @@ public:
 	CGameObject*		GetUserObj() { return m_iUserObj; }
 	CGameObject*		GetTargetObj() { return m_iTargetObj; }
 
-	void SetUserID(int _i) { m_iUserID = _i; }
-	void SetTargetID(int _i) { m_iTargetID = _i; }
+	void SetUserObj(CGameObject*	_obj) { m_iUserObj = _obj; }
+	void SetTargetObj(CGameObject* _obj) { m_iTargetObj = _obj; }
 
 	float	GetCurCoolDown() { return m_fCurCoolDown; }
 	float	GetCoolDown() { return m_fCoolDown; }
@@ -71,6 +73,8 @@ public:
 	int		GetLevel() { return m_iLevel; }
 
 	void	SetProjectileObj(Ptr<CPrefab> _prefab) { m_vecSkillObj.push_back(_prefab); }
+
+
 
 };
 
