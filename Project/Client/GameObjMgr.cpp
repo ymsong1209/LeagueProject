@@ -323,8 +323,8 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 			// skillinfo 에 따라 세팅해줌 
 			CBasicAttackScript* Script = pObj->GetScript<CBasicAttackScript>();
 			Script->SetServeID(_projectileId);
-			Script->SetUserID(_skillInfo.OwnerId);   
-			Script->SetTargetID(_skillInfo.TargetId);
+			Script->SetServerUserID(_skillInfo.OwnerId);
+			Script->SetServerTargetID(_skillInfo.TargetId);
 			
 			Script->SetUserObj(FindAllObject(_skillInfo.OwnerId));
 			Script->SetTargetObj(FindAllObject(_skillInfo.TargetId));

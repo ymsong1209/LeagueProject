@@ -37,8 +37,8 @@ public:
     void SetUserID(int _i) { m_iUserID = _i; };
     void SetTargetID(int _i) { m_iTargetID = _i; }
     void SetServerUserID(int _i) { m_iServerUserID = _i; }
-    void SetServerTargetID(int _i) { m_iServerUserID = _i; }
-    void SetServeID(int _i) { m_iServerUserID = _i; }
+    void SetServerTargetID(int _i) { m_iServerTargetID = _i; }
+    void SetServeID(int _i) { m_iServerID = _i; }
     void SetUserObj(CGameObject* _userObj) { m_UserObj = _userObj; }
     void SetTargetObj(CGameObject* _targetObj) { m_TargetObj = _targetObj; }
 
