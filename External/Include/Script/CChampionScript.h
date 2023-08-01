@@ -5,7 +5,7 @@
 #define CHAMPION_ENUM_DEFINED
 
 // 군중 제어기
-enum class CC
+enum CC
 {
     NONE = 0,
     SLOW = 1 << 0,

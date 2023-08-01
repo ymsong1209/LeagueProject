@@ -1,7 +1,7 @@
 #pragma once
-#include "CUnitState.h"
-class CJungleAttackState :
-    public CUnitState
+#include "CJungleDeathState.h"
+class CGrompDeathState :
+    public CJungleDeathState
 {
 public:
     virtual void Enter() override;
@@ -9,7 +9,7 @@ public:
     virtual void tick() override;
 
 public:
-    CJungleAttackState();
-    ~CJungleAttackState();
+    CGrompDeathState();
+    ~CGrompDeathState();
 };
 

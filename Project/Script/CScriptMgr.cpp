@@ -4,6 +4,7 @@
 #include "CBasicAttackScript.h"
 #include "CCameraMoveScript.h"
 #include "CChampionScript.h"
+#include "CGrompScript.h"
 #include "CInGameCameraScript.h"
 #include "CInhibitorScript.h"
 #include "CJinxScript.h"
@@ -23,6 +24,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CBasicAttackScript");
 	_vec.push_back(L"CCameraMoveScript");
 	_vec.push_back(L"CChampionScript");
+	_vec.push_back(L"CGrompScript");
 	_vec.push_back(L"CInGameCameraScript");
 	_vec.push_back(L"CInhibitorScript");
 	_vec.push_back(L"CJinxScript");
@@ -46,6 +48,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CCameraMoveScript;
 	if (L"CChampionScript" == _strScriptName)
 		return new CChampionScript;
+	if (L"CGrompScript" == _strScriptName)
+		return new CGrompScript;
 	if (L"CInGameCameraScript" == _strScriptName)
 		return new CInGameCameraScript;
 	if (L"CInhibitorScript" == _strScriptName)
@@ -87,6 +91,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::CHAMPIONSCRIPT:
 		return new CChampionScript;
+		break;
+	case (UINT)SCRIPT_TYPE::GROMPSCRIPT:
+		return new CGrompScript;
 		break;
 	case (UINT)SCRIPT_TYPE::INGAMECAMERASCRIPT:
 		return new CInGameCameraScript;
@@ -145,6 +152,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::CHAMPIONSCRIPT:
 		return L"CChampionScript";
+		break;
+
+	case SCRIPT_TYPE::GROMPSCRIPT:
+		return L"CGrompScript";
 		break;
 
 	case SCRIPT_TYPE::INGAMECAMERASCRIPT:

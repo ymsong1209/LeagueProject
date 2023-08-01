@@ -27,11 +27,6 @@
     <ClCompile Include="CJinxScript.cpp" />
     <ClCompile Include="CJinxW.cpp" />
     <ClCompile Include="CJinxWalkState.cpp" />
-    <ClCompile Include="CJungleAttackState.cpp" />
-    <ClCompile Include="CJungleChaseState.cpp" />
-    <ClCompile Include="CJungleDeathState.cpp" />
-    <ClCompile Include="CJungleIdleState.cpp" />
-    <ClCompile Include="CJungleMonsterScript.cpp" />
     <ClCompile Include="CMinionAttackState.cpp" />
     <ClCompile Include="CMinionDeathState.cpp" />
     <ClCompile Include="CMinionScript.cpp" />
@@ -50,6 +45,54 @@
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Script.cpp" />
     <ClCompile Include="CTurretAttackScript.cpp" />
+    <ClCompile Include="CGrompScript.cpp">
+      <Filter>Gromp</Filter>
+    </ClCompile>
+    <ClCompile Include="CGrompChaseState.cpp">
+      <Filter>Gromp</Filter>
+    </ClCompile>
+    <ClCompile Include="CGrompIdleState.cpp">
+      <Filter>Gromp</Filter>
+    </ClCompile>
+    <ClCompile Include="CGrompSpawnState.cpp">
+      <Filter>Gromp</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleAlertState.cpp">
+      <Filter>JungleMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleAttackState.cpp">
+      <Filter>JungleMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleChaseState.cpp">
+      <Filter>JungleMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleDeathState.cpp">
+      <Filter>JungleMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleIdleState.cpp">
+      <Filter>JungleMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleMonsterScript.cpp">
+      <Filter>JungleMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleReturnState.cpp">
+      <Filter>JungleMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleSpawnState.cpp">
+      <Filter>JungleMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="CGrompAttackState.cpp">
+      <Filter>Gromp</Filter>
+    </ClCompile>
+    <ClCompile Include="CGrompDeathState.cpp">
+      <Filter>Gromp</Filter>
+    </ClCompile>
+    <ClCompile Include="CGrompReturnState.cpp">
+      <Filter>Gromp</Filter>
+    </ClCompile>
+    <ClCompile Include="CGrompAlertState.cpp">
+      <Filter>Gromp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CBaseAttack.h" />
@@ -79,11 +122,6 @@
     <ClInclude Include="CJinxScript.h" />
     <ClInclude Include="CJinxW.h" />
     <ClInclude Include="CJinxWalkState.h" />
-    <ClInclude Include="CJungleAttackState.h" />
-    <ClInclude Include="CJungleChaseState.h" />
-    <ClInclude Include="CJungleDeathState.h" />
-    <ClInclude Include="CJungleIdleState.h" />
-    <ClInclude Include="CJungleMonsterScript.h" />
     <ClInclude Include="CMinionAttackState.h" />
     <ClInclude Include="CMinionDeathState.h" />
     <ClInclude Include="CMinionScript.h" />
@@ -102,7 +140,62 @@
     <ClInclude Include="CInGameCameraScript.h" />
     <ClInclude Include="IGameEventListener.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="CUnitClassEnum.h" />
     <ClInclude Include="CTurretAttackScript.h" />
+    <ClInclude Include="CGrompScript.h">
+      <Filter>Gromp</Filter>
+    </ClInclude>
+    <ClInclude Include="CGrompChaseState.h">
+      <Filter>Gromp</Filter>
+    </ClInclude>
+    <ClInclude Include="CGrompIdleState.h">
+      <Filter>Gromp</Filter>
+    </ClInclude>
+    <ClInclude Include="CGrompSpawnState.h">
+      <Filter>Gromp</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleAlertState.h">
+      <Filter>JungleMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleAttackState.h">
+      <Filter>JungleMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleChaseState.h">
+      <Filter>JungleMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleDeathState.h">
+      <Filter>JungleMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleIdleState.h">
+      <Filter>JungleMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleMonsterScript.h">
+      <Filter>JungleMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleReturnState.h">
+      <Filter>JungleMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleSpawnState.h">
+      <Filter>JungleMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="CGrompAttackState.h">
+      <Filter>Gromp</Filter>
+    </ClInclude>
+    <ClInclude Include="CGrompDeathState.h">
+      <Filter>Gromp</Filter>
+    </ClInclude>
+    <ClInclude Include="CGrompReturnState.h">
+      <Filter>Gromp</Filter>
+    </ClInclude>
+    <ClInclude Include="CGrompAlertState.h">
+      <Filter>Gromp</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Gromp">
+      <UniqueIdentifier>{17c15e8a-0b55-4215-8413-ca47dae3ade0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JungleMonster">
+      <UniqueIdentifier>{df08843b-93b3-4e43-abd8-1a0eaf60c941}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

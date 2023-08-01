@@ -187,6 +187,14 @@ call CodeGen.exe</Command>
     <ClInclude Include="CFlash.h" />
     <ClInclude Include="CGameEvent.h" />
     <ClInclude Include="CGameEventMgr.h" />
+    <ClInclude Include="CGrompAlertState.h" />
+    <ClInclude Include="CGrompAttackState.h" />
+    <ClInclude Include="CGrompChaseState.h" />
+    <ClInclude Include="CGrompDeathState.h" />
+    <ClInclude Include="CGrompIdleState.h" />
+    <ClInclude Include="CGrompReturnState.h" />
+    <ClInclude Include="CGrompScript.h" />
+    <ClInclude Include="CGrompSpawnState.h" />
     <ClInclude Include="CHeal.h" />
     <ClInclude Include="CInhibitorBrokenState.h" />
     <ClInclude Include="CInhibitorIdleState.h" />
@@ -200,11 +208,14 @@ call CodeGen.exe</Command>
     <ClInclude Include="CJinxScript.h" />
     <ClInclude Include="CJinxW.h" />
     <ClInclude Include="CJinxWalkState.h" />
+    <ClInclude Include="CJungleAlertState.h" />
     <ClInclude Include="CJungleAttackState.h" />
     <ClInclude Include="CJungleChaseState.h" />
     <ClInclude Include="CJungleDeathState.h" />
     <ClInclude Include="CJungleIdleState.h" />
     <ClInclude Include="CJungleMonsterScript.h" />
+    <ClInclude Include="CJungleReturnState.h" />
+    <ClInclude Include="CJungleSpawnState.h" />
     <ClInclude Include="CMinionAttackState.h" />
     <ClInclude Include="CMinionDeathState.h" />
     <ClInclude Include="CMinionScript.h" />
@@ -224,7 +235,6 @@ call CodeGen.exe</Command>
     <ClInclude Include="CInGameCameraScript.h" />
     <ClInclude Include="IGameEventListener.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="CUnitClassEnum.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CBaseAttack.cpp" />
@@ -240,6 +250,14 @@ call CodeGen.exe</Command>
     <ClCompile Include="CChampionWalkState.cpp" />
     <ClCompile Include="CFlash.cpp" />
     <ClCompile Include="CGameEventMgr.cpp" />
+    <ClCompile Include="CGrompAlertState.cpp" />
+    <ClCompile Include="CGrompAttackState.cpp" />
+    <ClCompile Include="CGrompChaseState.cpp" />
+    <ClCompile Include="CGrompDeathState.cpp" />
+    <ClCompile Include="CGrompIdleState.cpp" />
+    <ClCompile Include="CGrompReturnState.cpp" />
+    <ClCompile Include="CGrompScript.cpp" />
+    <ClCompile Include="CGrompSpawnState.cpp" />
     <ClCompile Include="CHeal.cpp" />
     <ClCompile Include="CInhibitorBrokenState.cpp" />
     <ClCompile Include="CInhibitorIdleState.cpp" />
@@ -253,11 +271,14 @@ call CodeGen.exe</Command>
     <ClCompile Include="CJinxScript.cpp" />
     <ClCompile Include="CJinxW.cpp" />
     <ClCompile Include="CJinxWalkState.cpp" />
+    <ClCompile Include="CJungleAlertState.cpp" />
     <ClCompile Include="CJungleAttackState.cpp" />
     <ClCompile Include="CJungleChaseState.cpp" />
     <ClCompile Include="CJungleDeathState.cpp" />
     <ClCompile Include="CJungleIdleState.cpp" />
     <ClCompile Include="CJungleMonsterScript.cpp" />
+    <ClCompile Include="CJungleReturnState.cpp" />
+    <ClCompile Include="CJungleSpawnState.cpp" />
     <ClCompile Include="CMinionAttackState.cpp" />
     <ClCompile Include="CMinionDeathState.cpp" />
     <ClCompile Include="CMinionScript.cpp" />

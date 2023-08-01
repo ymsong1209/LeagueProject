@@ -1,6 +1,7 @@
 CBasicAttackScript
 CCameraMoveScript
 CChampionScript
+CGrompScript
 CInGameCameraScript
 CInhibitorScript
 CJinxScript
