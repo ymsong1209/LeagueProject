@@ -26,7 +26,9 @@ void CJinxWalkState::Enter()
 	wstring animName = L"Jinx\\Run_Base";
 	GetOwner()->Animator3D()->PlayRepeat(L"Jinx\\Run_Base", true, true, 0.15f);
 
-	SendAnimPacket(animName, true, true, 0.15f);
+
+	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, true, true, 0.15f);
 
 	CChampionWalkState::Enter();
 }

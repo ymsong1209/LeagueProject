@@ -172,17 +172,10 @@ void CChampionScript::GetInput()
 				//}
 
 				// 서버에게 보낼 이벤트
-				SkillInfo* skillInfo = new SkillInfo;
-				skillInfo->OwnerId = GetServerID();
-				skillInfo->TargetId = UnitScript->GetServerID();
-				skillInfo->SkillLevel = 1;
-				skillInfo->skillType = SkillType::BASIC_ATTACK;
-
-				tServerEvent serverEvn = {};
-				serverEvn.Type = SERVER_EVENT_TYPE::SKILL_PROJECTILE_PACKET;
-				serverEvn.wParam = (DWORD_PTR)skillInfo;
-				//serverEvn.lParam 
-				CSendServerEventMgr::GetInst()->AddServerSendEvent(serverEvn);
+				// 1 적혀있는 스킬레벨은 추후 GetSklilLevel()로 변경
+				CSendServerEventMgr::GetInst()->SendUseSkillPacket(
+					GetServerID(), UnitScript->GetServerID(),
+					1, SkillType::BASIC_ATTACK, Vec3(0, 0, 0));
 			}
 
 			// 사거리 내에 없음

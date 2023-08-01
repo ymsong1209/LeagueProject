@@ -24,7 +24,8 @@ void CJinxIdleState::Enter()
 	wstring animName = L"Jinx\\Idle1_Base";
 	GetOwner()->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true, true, 0.15f);
 
-	SendAnimPacket(animName, true, true, 0.15f);
+	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, true, 0.15f);
 	
 	CChampionIdleState::Enter();
 }

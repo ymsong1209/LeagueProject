@@ -2,18 +2,6 @@
 #include <Engine\CScript.h>
 
 
-// LoL 게임 내에서 플레이어가 상호작용할 수 있는 모든 오브젝트
-
-enum class UnitType
-{
-    CHAMPION,
-    STRUCTURE,
-    MINION,
-    JUNGLEMONSTER,
-    DRAGON,
-    BARON,
-};
-
 
 class CUnitScript :
     public CScript

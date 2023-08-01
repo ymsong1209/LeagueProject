@@ -50,18 +50,31 @@ enum class SkillType
 
 struct SkillInfo
 {
+public:
+	struct OffsetPos
+	{
+		float x;
+		float y;
+		float z;
+	};
+
+	UINT64    SkillId;    // 스킬 투사체 id
 	UINT64    OwnerId;    // 스킬을 사용한 플레이어 id
 	UINT64    TargetId;   // 타겟팅일시 맞을 플레이어 id (논타겟일 경우 -1)
+	
 	UINT16    SkillLevel; // 스킬레벨
 	SkillType skillType;  // 어떤 스킬인지 모아둔 enum 중 하나
+
+	OffsetPos offsetPos;  // 중점기준 offset
 };
 
 struct HitInfo
 {
-	UINT64		 hitObjId;        // 맞은애
-	UINT64		 useObjId;   // 쏜애
-	int			 SkillLevel;    // 스킬레벨
-	SkillType	 skillType;     // 스킬타입
+	UINT64       skillObjId;     // 스킬 투사체 
+	UINT64		 hitObjId;       // 맞은애
+	UINT64		 useObjId;       // 쏜애
+	int			 SkillLevel;     // 스킬레벨
+	SkillType	 skillType;      // 스킬타입
 };
 enum class Faction
 {
@@ -97,4 +110,33 @@ enum class MinionType
 	RANGED,     // 원거리
 	SEIGE,      // 대포
 	SUPER,      // 슈퍼
+};
+
+// LoL 게임 내에서 플레이어가 상호작용할 수 있는 모든 오브젝트
+enum class UnitType
+{
+	CHAMPION,
+
+	MELEE_MINION,  
+	RANGED_MINION,
+	SIEGE_MINION,
+	SUPER_MINION,
+
+	RAPTORS, // 엄마, 자식들
+	WOLF,    // 대장, 부하
+	KRUG,    // 돌거북 큰애, 작은 애
+	DRAGON,
+	BARON,   // 렌더링만
+
+	JUNGLE_RED,  // 붉은 덩굴정령
+	JUNGLE_BLUE, // 푸른 파수꾼
+
+	TURRET,
+	INHIBITOR,
+	NEXUS,
+
+	PROJECTILE,
+	EFFECT,
+
+	END,
 };

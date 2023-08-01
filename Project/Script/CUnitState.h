@@ -38,6 +38,5 @@ public:
     virtual void Enter() override;
     virtual void Exit() override;
 
-    void SendAnimPacket(wstring _animName, bool _repeat, bool _blend, float _blentTime);
 };
 

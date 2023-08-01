@@ -51,10 +51,7 @@ void CBasicAttackScript::OnOverlap(CCollider2D* _Other)
 		m_fProjectileSpeed = 0.f;
 
 		// 방장컴이 서버에게 이 투사체가 피격자와 충돌했다고 전달
-		UINT64 projectileId = m_iServerID; // 스킬 투사체 id
-		UINT64 userId = m_iServerUserID; // 스킬 사용자 id
-		UINT64 hitId = m_iServerTargetID; // 스킬 피격자 id
-		CSendServerEventMgr::GetInst()->SendHitPacket(m_iServerTargetID, m_iServerUserID, 1, SkillType::BASIC_ATTACK);
+		CSendServerEventMgr::GetInst()->SendHitPacket(GetServerID(), m_iServerTargetID, m_iServerUserID, 1, SkillType::BASIC_ATTACK);
 		
 	}
 }

@@ -2,32 +2,6 @@
 
 //#include <Script/CServerTypes.h>
 
-
-enum class ObjectType {
-    PLAYER,
-
-    // 여기 TOP,BOTTOM, MID 미니언 별로 나눠야할듯
-    MELEE_MINION,
-    RANGED_MINION,
-    SIEGE_MINION,
-    SUPER_MINION,
-
-    RAPTORS,
-    WOLF,
-    KRUG,
-    DRAGON,
-    BARON,
-
-    TOWER,
-    INHIBITOR,
-    NEXUS,
-
-    PROJECTILE,
-    EFFECT,
-
-    END,
-};
-
 enum ChampionType
 {
     NONE,
@@ -103,17 +77,17 @@ public:
 
 struct ObjectInfo {
     ObjectInfo() {}
-    ObjectInfo(uint64 _objectId, ObjectType _objectType, Faction _faction, Lane _lane, ObjectMove _objectMove)
+    ObjectInfo(uint64 _objectId, UnitType _unitType, Faction _faction, Lane _lane, ObjectMove _objectMove)
         : objectId(_objectId)
-        , objectType(_objectType)
+        , unitType(_unitType)
         , faction(_faction)
         , lane(_lane)
         , objectMove(_objectMove)
     {}
     ~ObjectInfo() {}
 
-    uint64 objectId;
-    ObjectType objectType;
+    uint64     objectId;
+    UnitType   unitType;
     Faction    faction;
     Lane       lane;
     ObjectMove objectMove;

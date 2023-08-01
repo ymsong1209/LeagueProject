@@ -12,6 +12,7 @@
 
 #include <Engine\global.h>
 #include "CServerTypes.h"
+#include "CSendServerEventMgr.h"
 
 #include "CScriptMgr.h"
 
