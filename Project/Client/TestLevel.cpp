@@ -189,8 +189,8 @@ void CreateTestLevel()
 		pObj->Collider3D()->SetDrawCollision(false);
 		pObj->Animator3D()->PlayRepeat(L"Vayne\\Idle1.001", true, true, 0.1f);
 		Ptr<CTexture> AlphaTex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png");
-		CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Vayne_Vehicle_Mtrl.mtrl")->SetTexParam(TEX_0, AlphaTex);
-		CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Vayne_Drone_Mtrl.mtrl")->SetTexParam(TEX_0, AlphaTex);
+		CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Vayne_Vehicle.mtrl")->SetTexParam(TEX_0, AlphaTex);
+		CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Vayne_Drone.mtrl")->SetTexParam(TEX_0, AlphaTex);
 		//CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Vayne_Remote_Mtrl.mtrl")->SetTexParam(TEX_0, AlphaTex);
 		//CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Vayne_MAT_Mtrl.mtrl")->SetTexParam(TEX_0, AlphaTex);
 		//CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Vayne_Mask_Mtrl.mtrl")->SetTexParam(TEX_0, AlphaTex);
@@ -198,11 +198,15 @@ void CreateTestLevel()
 		//CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Vayne_Crossbow_C_Blade_Mtrl.mtrl")->SetTexParam(TEX_0, AlphaTex);
 		//CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Vayne_Crossbow_Arm_Mtrl.mtrl")->SetTexParam(TEX_0, AlphaTex);
 		//CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Vayne_Cape_Mtrl.mtrl")->SetTexParam(TEX_0, AlphaTex);
-		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+
+		Ptr<CGraphicsShader> GlowShader = CResMgr::GetInst()->FindRes<CGraphicsShader>(L"GlowShader");
+	     CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Vayne_Cape.mtrl")->SetShader(GlowShader);
+
+		pObj->Transform()->SetRelativeScale(Vec3(1.f, 1.f, 1.f));
 
 		pObj->Transform()->SetUseMouseOutline(true);
 
-		SpawnGameObject(pObj, Vec3(0, 0, 0), 0);
+		SpawnGameObject(pObj, Vec3(100.f, 0, 100.f), 0);
 
 	}
 

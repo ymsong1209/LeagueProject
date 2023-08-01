@@ -82,6 +82,9 @@
     <FxCompile Include="copybone.fx">
       <Filter>Source\08. ShaderCode\03. Compute\CopyBone</Filter>
     </FxCompile>
+    <FxCompile Include="glowshader.fx">
+      <Filter>Source\08. ShaderCode\02. Render\Overall</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CRes.cpp">
@@ -903,6 +906,9 @@
     </Filter>
     <Filter Include="Source\08. ShaderCode\03. Compute\CopyBone">
       <UniqueIdentifier>{66ee0490-5f2f-42c2-8e98-4138949f6c4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\08. ShaderCode\02. Render\Overall">
+      <UniqueIdentifier>{d873cc66-8f9a-41df-a481-83de6b54cd6f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

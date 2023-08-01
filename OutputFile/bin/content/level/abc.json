@@ -227,7 +227,7 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": 0.0,
+                                "y": -0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
@@ -246,7 +246,7 @@
                             "fAnimSpeed": 1.0,
                             "mapAnim": [
                                 {
-                                    "Anim3DRelativePath": "animation\\Vayne\\Vayne_Model-Vayne_AllAnim.anim3d"
+                                    "Anim3DRelativePath": "animation\\Vayne\\Vayne_model-Vayne_AllAction.anim3d"
                                 }
                             ],
                             "strCurAnimName": ""
@@ -272,53 +272,53 @@
                             "iMtrlCount": 10,
                             "vecMtrls[0]SharedMtrl": {
                                 "IsNull": false,
-                                "Key": "material\\Vayne_Vehicle_Mtrl.mtrl",
-                                "RelativePath": "material\\Vayne_Vehicle_Mtrl.mtrl"
+                                "Key": "material\\Vayne_Vehicle.mtrl",
+                                "RelativePath": "material\\Vayne_Vehicle.mtrl"
                             },
                             "vecMtrls[1]SharedMtrl": {
                                 "IsNull": false,
-                                "Key": "material\\Vayne_Cape_Mtrl.mtrl",
-                                "RelativePath": "material\\Vayne_Cape_Mtrl.mtrl"
+                                "Key": "material\\Vayne_Cape.mtrl",
+                                "RelativePath": "material\\Vayne_Cape.mtrl"
                             },
                             "vecMtrls[2]SharedMtrl": {
                                 "IsNull": false,
-                                "Key": "material\\Vayne_Drone_Mtrl.mtrl",
-                                "RelativePath": "material\\Vayne_Drone_Mtrl.mtrl"
+                                "Key": "material\\Vayne_Drone.mtrl",
+                                "RelativePath": "material\\Vayne_Drone.mtrl"
                             },
                             "vecMtrls[3]SharedMtrl": {
                                 "IsNull": false,
-                                "Key": "material\\Vayne_Mask_Mtrl.mtrl",
-                                "RelativePath": "material\\Vayne_Mask_Mtrl.mtrl"
+                                "Key": "material\\Vayne_Mask.mtrl",
+                                "RelativePath": "material\\Vayne_Mask.mtrl"
                             },
                             "vecMtrls[4]SharedMtrl": {
                                 "IsNull": false,
-                                "Key": "material\\Vayne_MAT_Mtrl.mtrl",
-                                "RelativePath": "material\\Vayne_MAT_Mtrl.mtrl"
+                                "Key": "material\\Vayne_Vayne_MAT.mtrl",
+                                "RelativePath": "material\\Vayne_Vayne_MAT.mtrl"
                             },
                             "vecMtrls[5]SharedMtrl": {
                                 "IsNull": false,
-                                "Key": "material\\Vayne_Crossbow_Cover_Mtrl.mtrl",
-                                "RelativePath": "material\\Vayne_Crossbow_Cover_Mtrl.mtrl"
+                                "Key": "material\\Vayne_Crossbow_Cover.mtrl",
+                                "RelativePath": "material\\Vayne_Crossbow_Cover.mtrl"
                             },
                             "vecMtrls[6]SharedMtrl": {
                                 "IsNull": false,
-                                "Key": "material\\Vayne_Crossbow_Arm_Mtrl.mtrl",
-                                "RelativePath": "material\\Vayne_Crossbow_Arm_Mtrl.mtrl"
+                                "Key": "material\\Vayne_Crossbow_Arm.mtrl",
+                                "RelativePath": "material\\Vayne_Crossbow_Arm.mtrl"
                             },
                             "vecMtrls[7]SharedMtrl": {
                                 "IsNull": false,
-                                "Key": "material\\Vayne_Crossbow_C_Blade_Mtrl.mtrl",
-                                "RelativePath": "material\\Vayne_Crossbow_C_Blade_Mtrl.mtrl"
+                                "Key": "material\\Vayne_Crossbow_C_Blade.mtrl",
+                                "RelativePath": "material\\Vayne_Crossbow_C_Blade.mtrl"
                             },
                             "vecMtrls[8]SharedMtrl": {
                                 "IsNull": false,
-                                "Key": "material\\Vayne_Vayne1_Mtrl.mtrl",
-                                "RelativePath": "material\\Vayne_Vayne1_Mtrl.mtrl"
+                                "Key": "material\\Vayne_Vayne1.mtrl",
+                                "RelativePath": "material\\Vayne_Vayne1.mtrl"
                             },
                             "vecMtrls[9]SharedMtrl": {
                                 "IsNull": false,
-                                "Key": "material\\Vayne_Remote_Mtrl.mtrl",
-                                "RelativePath": "material\\Vayne_Remote_Mtrl.mtrl"
+                                "Key": "material\\Vayne_Remote.mtrl",
+                                "RelativePath": "material\\Vayne_Remote.mtrl"
                             },
                             "DynamicMtrls": [
                                 {
@@ -3476,7 +3476,7 @@
                                         ],
                                         "arrFloat[12]s": [
                                             {
-                                                "arrFloat[0]": 0.0
+                                                "arrFloat[0]": 1.0
                                             },
                                             {
                                                 "arrFloat[1]": 0.0
