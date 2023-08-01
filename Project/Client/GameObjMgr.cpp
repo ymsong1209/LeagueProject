@@ -216,6 +216,8 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 		if (MyPlayer.host)
 		{
 			// 미니언 스크립트
+			// 디버깅용으로 구체 띄워야지
+
 			CGameObject* pObj = new CGameObject;
 
 			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\minion_melee.fbx");
@@ -223,8 +225,8 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 			pObj->AddComponent(new CMinionScript);
 			pObj->AddComponent(new CCollider3D);
-
 			//pObj->AddComponent(new CCollider2D);
+
 			//pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
 			//pObj->Collider2D()->SetOffsetScale(Vec2(50.f, 50.f));
 			//pObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
@@ -241,7 +243,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
 			pObj->Collider3D()->SetAbsolute(true);
 			pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
-			pObj->Collider3D()->SetDrawCollision(false);
+			//pObj->Collider3D()->SetDrawCollision(true);
 
 			pObj->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 100.f));
 
@@ -282,7 +284,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
 			pObj->Collider3D()->SetAbsolute(true);
 			pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
-			pObj->Collider3D()->SetDrawCollision(false);
+			//pObj->Collider3D()->SetDrawCollision(true);
 
 			pObj->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 100.f));
 
