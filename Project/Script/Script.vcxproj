@@ -214,6 +214,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="COtherPlayerScript.h" />
     <ClInclude Include="CPlayerScript.h" />
     <ClInclude Include="CScriptMgr.h" />
+    <ClInclude Include="CSoundTestScript.h" />
     <ClInclude Include="CSkill.h" />
     <ClInclude Include="CStructureScript.h" />
     <ClInclude Include="CTurretAttackScript.h" />
@@ -267,6 +268,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="COtherPlayerScript.cpp" />
     <ClCompile Include="CPlayerScript.cpp" />
     <ClCompile Include="CScriptMgr.cpp" />
+    <ClCompile Include="CSoundTestScript.cpp" />
     <ClCompile Include="CInGameCameraScript.cpp" />
     <ClCompile Include="CSkill.cpp" />
     <ClCompile Include="CStructureScript.cpp" />

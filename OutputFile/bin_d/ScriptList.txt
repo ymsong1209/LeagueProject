@@ -10,6 +10,7 @@ CMobScript
 CNexusScript
 COtherPlayerScript
 CPlayerScript
+CSoundTestScript
 CStructureScript
 CTurretAttackScript
 CTurretScript
