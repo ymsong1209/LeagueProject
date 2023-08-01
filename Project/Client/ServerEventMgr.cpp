@@ -169,11 +169,12 @@ void ServerEventMgr::clienttick()
 		//break;
 		case SERVER_EVENT_TYPE::SKILL_HIT_PACKET:
 		{
-			uint64 hitId = static_cast<uint64>(m_vecEvent[i].wParam);
+			//uint64 hitId = static_cast<uint64>(m_vecEvent[i].wParam);
 			SkillInfo* skillInfo = (SkillInfo*)m_vecEvent[i].lParam;
+			uint64 hitId = skillInfo->TargetId;
 
 			// 내가 맞음 계산
-			if (hitId == MyPlayer.id)
+			if (skillInfo->TargetId == MyPlayer.id)
 			{
 				// 스킬 쏜애
 				CGameObject* skillOwnerObj = GameObjMgr::GetInst()->FindAllObject(skillInfo->OwnerId);

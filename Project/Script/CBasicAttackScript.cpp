@@ -58,6 +58,9 @@ void CBasicAttackScript::BeginOverlap(CCollider2D* _Other)
 		this->GetOwner()->Transform()->SetRelativePos(-666.f, -666.f, -666.f);
 		m_fProjectileSpeed = 0.f;
 
+		UINT64 projectileId = m_iServerID; // 스킬 투사체 id
+		UINT64 userId = m_iServerUserID; // 스킬 사용자 id
+		UINT64 hitId = m_iServerTargetID; // 스킬 피격자 id
 		CSendServerEventMgr::GetInst()->SendHitPacket(m_iServerTargetID, m_iServerUserID, 1, SkillType::BASIC_ATTACK);
 	}
 }
