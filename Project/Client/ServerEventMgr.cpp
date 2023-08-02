@@ -109,6 +109,13 @@ void ServerEventMgr::sendtick(ClientServiceRef _service)
 			hitInfo = nullptr;
 			break;
 		}
+		case SERVER_EVENT_TYPE::SEND_DESPAWN_PACKET:
+		{
+			UINT64 objId = (UINT64)(_vecScriptEvent[i].wParam);
+			float lifeSpan = (float)(_vecScriptEvent[i].lParam);
+			GameObjMgr::GetInst()->SendDespawn(objId, lifeSpan, _service);
+			break;
+		}
 
 
 		}
@@ -151,12 +158,12 @@ void ServerEventMgr::clienttick()
 		{
 			CGameObject* NewObject = (CGameObject*)m_vecEvent[i].wParam;
 			AnimInfo* animInfo = (AnimInfo*)(m_vecEvent[i].lParam);
-			
-			if(animInfo->bRepeat)
+
+			if (animInfo->bRepeat)
 				NewObject->Animator3D()->PlayRepeat(animInfo->animName, true, animInfo->blend, animInfo->blendTime);
 			else
 				NewObject->Animator3D()->PlayOnce(animInfo->animName, animInfo->blend, animInfo->blendTime);
-			
+
 			// 사용이 끝난 후에는 메모리를 해제
 			delete animInfo;
 			animInfo = nullptr;
@@ -181,7 +188,7 @@ void ServerEventMgr::clienttick()
 
 				// 스킬 맞은 애(본인)
 				CGameObject* skillTargetObj = GameObjMgr::GetInst()->FindAllObject(skillInfo->TargetId);
-				
+
 				// 피격 이벤트 발생
 				GetHitEvent* evn = dynamic_cast<GetHitEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_GET_HIT));
 				if (evn != nullptr)
@@ -219,11 +226,20 @@ void ServerEventMgr::clienttick()
 					}
 				}
 			}
+
+		}
+		break;
+
+		case SERVER_EVENT_TYPE::DESPAWN_PACKET:
+		{
+			uint64	despawnId = m_vecEvent[i].wParam;
+			float   lifespan = m_vecEvent[i].lParam;
 			
+			CGameObject* despawnObj =GameObjMgr::GetInst()->DeleteObjectInMap(despawnId);
+			despawnObj->SetLifeSpan(lifespan);
 		}
 		break;
 		}
-
 	}
 
 	m_vecEvent.clear(); 

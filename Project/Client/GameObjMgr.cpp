@@ -107,6 +107,18 @@ CGameObject* GameObjMgr::FindAllObject(uint64 _targetId)
 	}
 }
 
+CGameObject* GameObjMgr::DeleteObjectInMap(uint64 _id)
+{
+	CGameObject* obj = FindAllObject(_id);
+
+	_allObjects.erase(_id);
+	_players.erase(_id);
+	_objects.erase(_id);
+	_towers.erase(_id);
+
+	return obj;
+}
+
 void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 {
 	std::mutex m;
@@ -540,6 +552,24 @@ void GameObjMgr::SendSkillHit(HitInfo* _hitInfo, ClientServiceRef _service)
 
 		// 서버에게 패킷 전송
 		std::cout << "Send C_SKILL_HIT Pakcet " << endl;
+		SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+		_service->Broadcast(sendBuffer);
+
+		std::cout << "===============================" << endl;
+	}
+}
+
+void GameObjMgr::SendDespawn(UINT64 _despawnId, float lifespan, ClientServiceRef _service)
+{
+	// 이 오브젝트를 lifespan시간뒤에 삭제하라고 서버에게 보낸다.
+	std::mutex m;
+	{
+		std::lock_guard<std::mutex> lock(m);
+
+		PKT_C_DESPAWN_OBJECT_WRITE  pktWriter(_despawnId, lifespan);
+
+		// 서버에게 패킷 전송
+		std::cout << "Send C_DESPAWN_OBJECT Pakcet " << endl;
 		SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
 		_service->Broadcast(sendBuffer);
 

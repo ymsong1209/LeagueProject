@@ -61,3 +61,20 @@ void CSendServerEventMgr::SendUseSkillPacket(UINT64 _ownerId, UINT64 _targetObjI
 	//serverEvn.lParam 
 	CSendServerEventMgr::GetInst()->AddServerSendEvent(serverEvn);
 }
+
+void CSendServerEventMgr::SendDespawnPacket(UINT64 _objId, float _lifeSpan)
+{
+	tServerEvent serverEvn = {};
+	serverEvn.Type = SERVER_EVENT_TYPE::SEND_DESPAWN_PACKET;
+	serverEvn.wParam = _objId;
+	serverEvn.lParam = _lifeSpan;
+	CSendServerEventMgr::GetInst()->AddServerSendEvent(serverEvn);
+}
+
+void CSendServerEventMgr::SendDeadPacket(SkillType _skillType)
+{
+}
+
+void CSendServerEventMgr::SendSoundPacket()
+{
+}

@@ -6,6 +6,7 @@
 #include "ServerFunc.h"
 #include "GameObjMgr.h"
 #include "TestLevel.h"
+#include "ServerEventMgr.h"
 
 void ServerPacketHandler::HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
@@ -66,6 +67,10 @@ void ServerPacketHandler::HandlePacket(PacketSessionRef& session, BYTE* buffer, 
 
 	case S_SKILL_CC:
 		Handle_S_SKILL_CC(session, buffer, len);
+		break;
+
+    case S_DESPAWN_OBJECT:
+		Handle_S_DESPAWN_OBJECT(session, buffer, len);
 		break;
 	}
 }
@@ -509,6 +514,35 @@ void ServerPacketHandler::Handle_S_SKILL_HIT(PacketSessionRef& session, BYTE* bu
 	m.unlock();
 }
 
+void ServerPacketHandler::Handle_S_DESPAWN_OBJECT(PacketSessionRef& session, BYTE* buffer, int32 len)
+{
+	std::mutex m;
+	m.lock();
+
+	cout << "S_DESPAWN_OBJECT Packet" << endl;
+	BufferReader br(buffer, len);
+
+	PKT_S_DESPAWN_OBJECT* pkt = reinterpret_cast<PKT_S_DESPAWN_OBJECT*>(buffer);
+
+	if (pkt->Validate() == false)
+	{
+		m.unlock();
+		return;
+	}
+
+	uint64	despawnId = pkt->objId;    
+	float   lifespan = pkt->time;  
+
+	tServerEvent evn = {};
+	evn.Type = SERVER_EVENT_TYPE::DESPAWN_PACKET;
+	evn.wParam = despawnId;
+	evn.lParam = lifespan;
+
+	ServerEventMgr::GetInst()->AddEvent(evn);
+
+	std::cout << "===============================" << endl;
+	m.unlock();
+}
 
 // ¾È¾¸
 void ServerPacketHandler::Handle_S_SKILL_DAMAGE(PacketSessionRef& session, BYTE* buffer, int32 len)
@@ -518,3 +552,4 @@ void ServerPacketHandler::Handle_S_SKILL_DAMAGE(PacketSessionRef& session, BYTE*
 void ServerPacketHandler::Handle_S_SKILL_CC(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
 }
+

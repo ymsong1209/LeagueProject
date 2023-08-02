@@ -31,6 +31,7 @@ public:
 	void SendTowerUpdate(uint64 _id, CGameObject* _obj, ClientServiceRef _service);
 	void SendSkillSpawn(SkillInfo* _skillInfo, ClientServiceRef _service);
 	void SendSkillHit(HitInfo* _hitInfo, ClientServiceRef _service);
+	void SendDespawn(UINT64 _despawnId, float lifespan, ClientServiceRef _service);
 
 	// 서버에게 받은 패킷 이벤트 등록 처리
 	void E_MovePlayer(uint64 _playerId, ObjectMove _playerMove);
@@ -41,6 +42,8 @@ public:
 	CGameObject* FindPlayer(uint64 _targetId);
 	CGameObject* FindObject(uint64 _targetId);
 	CGameObject* FindAllObject(uint64 _targetId);
+	
+	CGameObject* DeleteObjectInMap(uint64 _id);
 
 	void AddPlayer(PlayerInfo info, bool myPlayer = false);
 	void AddObject(uint64 _objectId, ObjectInfo _objectInfo);

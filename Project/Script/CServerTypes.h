@@ -10,11 +10,17 @@ enum class SERVER_EVENT_TYPE
 	MOVE_PACKET,			// wParam : GameObject,  lParam : ObjectMove Update Move Packet
 	ANIM_PACKET,			// wParam : GameObject,  lParam : AnimInfo
 	SKILL_HIT_PACKET,		// WParam : uin64 hitId, lParam : SkillInfo
+	DESPAWN_PACKET,
+	DEAD_PACKET,
+	SOUND_PACKET,
 
 	// Script Send Packet
-	SEND_ANIM_PACKET,		// wParam : X,  lParam : AnimInfo
-	SKILL_PROJECTILE_PACKET, // wParam : SkillInfo
-	SEND_HIT_PACKET, 	    // wParam : HitInfo, 
+	SEND_ANIM_PACKET,		  // wParam : X,  lParam : AnimInfo
+	SKILL_PROJECTILE_PACKET,  // wParam : SkillInfo
+	SEND_HIT_PACKET, 	      // wParam : HitInfo, 
+	SEND_DESPAWN_PACKET,      // wParam : objId,  lParam : lifeSpanTime
+	SEND_DEAD_PACKET,		  //
+	SEND_SOUND_PACKET,
 };
 
 // Event
