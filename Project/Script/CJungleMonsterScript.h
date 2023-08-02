@@ -21,9 +21,10 @@ enum class JungleType
 class CJungleMonsterScript :
     public CMobScript
 {
-private:
+protected:
     JungleType      m_eJungleType;
-    Vec3            m_vSpawnPos;
+    Vec3            m_vSpawnPos;   
+    Vec3            m_vSpawnRot;
 
     CGameObject*    m_pTarget;
 
@@ -42,9 +43,11 @@ public:
     void    CheckReturnTime();
 
     void    SetSpawnPos(Vec3 _pos) { m_vSpawnPos = _pos; }
-    
+    Vec3    GetSpawnPos() { return m_vSpawnPos; }
+    void    SetSpawnRot(Vec3 _rot) { m_vSpawnRot = _rot; }
+    Vec3    GetSpawnRot() { return m_vSpawnRot; }
    
-
+    CGameObject* GetTarget() { return m_pTarget; }
 
 public:
     virtual void begin() override;
@@ -55,7 +58,8 @@ public:
     virtual void EndOverlap(CCollider2D* _Other) override;
 
 public:
-    CJungleMonsterScript(JungleType _type);
+    CJungleMonsterScript(UINT ScriptType);
+    CJungleMonsterScript();
     ~CJungleMonsterScript();
 
     CLONE(CJungleMonsterScript);

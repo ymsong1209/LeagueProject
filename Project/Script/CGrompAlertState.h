@@ -5,7 +5,6 @@ class CGrompAlertState :
 {
 private:
     int         m_iAggroAnimNum;
-    bool        m_bEnterAnimPlayed;
 public:
     virtual void Enter() override;
     virtual void tick() override;

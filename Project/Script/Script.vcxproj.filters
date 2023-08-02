@@ -93,6 +93,18 @@
     <ClCompile Include="CGrompAlertState.cpp">
       <Filter>Gromp</Filter>
     </ClCompile>
+    <ClCompile Include="CJungleA2NState.cpp">
+      <Filter>JungleMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="CGrompA2NState.cpp">
+      <Filter>Gromp</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleN2AState.cpp">
+      <Filter>JungleMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="CGrompN2AState.cpp">
+      <Filter>Gromp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CBaseAttack.h" />
@@ -187,6 +199,18 @@
       <Filter>Gromp</Filter>
     </ClInclude>
     <ClInclude Include="CGrompAlertState.h">
+      <Filter>Gromp</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleA2NState.h">
+      <Filter>JungleMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="CGrompA2NState.h">
+      <Filter>Gromp</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleN2AState.h">
+      <Filter>JungleMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="CGrompN2AState.h">
       <Filter>Gromp</Filter>
     </ClInclude>
   </ItemGroup>

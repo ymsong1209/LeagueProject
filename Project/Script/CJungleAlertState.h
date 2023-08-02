@@ -1,19 +1,17 @@
 #pragma once
 #include "CUnitState.h"
-
 class CJungleAlertState :
     public CUnitState
 {
+private:
+    bool        m_bDetectChampion;
 public:
-    CJungleAlertState();
-    virtual ~CJungleAlertState();
-
-public:
-    virtual void tick() override;
     virtual void Enter() override;
+    virtual void tick() override;
     virtual void Exit() override;
 
-protected:
-    void HandleEvent(CGameEvent& event) override;
+public:
+    CJungleAlertState();
+    ~CJungleAlertState();
 };
 

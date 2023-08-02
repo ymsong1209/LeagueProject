@@ -13,12 +13,9 @@ enum class SkillType
 	DARIUS_R,
 
 };
-
-class CUnitScript;
-enum CC;
 class CPrefab;
 #include <Engine\ptr.h>
-
+#include "CChampionScript.h"
 class CSkill
 {
 public:

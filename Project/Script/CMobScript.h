@@ -5,7 +5,7 @@ class CMobScript :
 {
 protected:
     CMobScript(UINT ScriptType);
-    s
+    
 public:
     CMobScript();
     virtual ~CMobScript();
@@ -26,5 +26,6 @@ public:
 public:
     int GetTargetID() { return m_iAttackTargetID; }
     void SetAggroRange(float _range) { m_fAggroRange = _range; }
+    float GetAggroRange() { return m_fAggroRange; }
 };
 

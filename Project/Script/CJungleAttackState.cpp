@@ -12,6 +12,14 @@ CJungleAttackState::~CJungleAttackState()
 
 void CJungleAttackState::Enter()
 {
+	//m_ptarget에 공격로직을 줌
+}
+
+void CJungleAttackState::tick()
+{
+	if (GetOwner()->Animator3D()->GetCurAnim()->IsFinish()) {
+		GetOwner()->Fsm()->ChangeState(L"Chase");
+	}
 }
 
 void CJungleAttackState::Exit()
@@ -19,12 +27,5 @@ void CJungleAttackState::Exit()
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
 }
 
-void CJungleAttackState::tick()
-{
-	if (GetOwner()->Animator3D()->GetCurAnim()->IsFinish()) {
-		//m_ptarget에 공격을함
-		
-	}
-}
 
 

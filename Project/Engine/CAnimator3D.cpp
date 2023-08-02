@@ -199,6 +199,7 @@ void CAnimator3D::PlayRepeat(const wstring& _strName, bool _RepeatBlend, bool _b
 		if (GetCurAnim()) {
 			m_pCurAnim->Reset();
 			m_bBlend = true;
+			m_bRepeat = true;
 			m_fCurBlendTime = 0.f;
 			m_fMaxBlendTime = _blendtime;
 			m_iBlendStartFrm = GetCurAnim()->GetCurFrameIdx();

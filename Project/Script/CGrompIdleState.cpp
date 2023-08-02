@@ -26,11 +26,12 @@ void CGrompIdleState::tick()
 		GetOwner()->Animator3D()->GetCurAnim()->Reset();
 		GetOwner()->Animator3D()->PlayOnce(basestring);
 	}
+	CJungleIdleState::tick();
 }
 
 void CGrompIdleState::Exit()
 {
-	GetOwner()->Animator3D()->GetCurAnim()->Reset();
 	m_iIdleAnimNum = 1;
+	CJungleIdleState::Exit();
 }
 

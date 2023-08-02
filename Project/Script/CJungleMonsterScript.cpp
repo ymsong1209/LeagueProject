@@ -8,15 +8,24 @@
 
 #include "CChampionScript.h"
 
-CJungleMonsterScript::CJungleMonsterScript(JungleType _type)
-	:CMobScript((UINT)SCRIPT_TYPE::JUNGLEMONSTERSCRIPT)
-	, m_eJungleType(_type)
+CJungleMonsterScript::CJungleMonsterScript(UINT ScriptType)
+	: CMobScript(ScriptType)
+	, m_eJungleType(JungleType::DEFAULT)
+	, m_vSpawnPos()
+	, m_pTarget(nullptr)
+	, m_bReturnActive(false)
 	, m_fMaxReturnTime(3.f)
 	, m_fCurReturnTime(0.f)
 	, m_bTest(false)
 {
 	//몬스터가 스폰된 이후에 aggro범위, hitbox생성해야함
 	m_fAggroRange = 0.f;
+	m_fAttackRange = 100.f;
+}
+
+CJungleMonsterScript::CJungleMonsterScript()
+	:CMobScript((UINT)SCRIPT_TYPE::JUNGLEMONSTERSCRIPT)\
+{
 }
 
 CJungleMonsterScript::~CJungleMonsterScript()
@@ -31,20 +40,35 @@ void CJungleMonsterScript::begin()
 
 void CJungleMonsterScript::tick()
 {
+	if (CLevelMgr::GetInst()->GetCurLevel()->GetState() == LEVEL_STATE::STOP) return;
 	if (CheckDeath()) return;
-	if (KEY_TAP(KEY::P)) {
+	
+	//test code, 징크스가 junglemob을 공격했다고 가정
+	if (KEY_TAP(KEY::O)) {
 		m_bTest = !m_bTest;
+		if (m_pTarget) {
+			m_pTarget = nullptr;
+		}
+		else {
+			m_pTarget = CLevelMgr::GetInst()->GetCurLevel()->FindObjectByName(L"Jinx");
+		}
+		
 	}
 
 
 	if (//공격을 받았음 && 현재 state가 attack state가 아님, && 어그로가 풀려서 돌아가는중이 아님
 		m_bTest && 
 		GetOwner()->Fsm()->GetCurState() != GetOwner()->Fsm()->FindState(L"Attack") &&
-		GetOwner()->Fsm()->GetCurState() != GetOwner()->Fsm()->FindState(L"Return")) {
-		GetOwner()->Fsm()->ChangeState(L"Attack");
+		GetOwner()->Fsm()->GetCurState() != GetOwner()->Fsm()->FindState(L"Return") &&
+		GetOwner()->Fsm()->GetCurState() != GetOwner()->Fsm()->FindState(L"Chase")) {
+		GetOwner()->Fsm()->ChangeState(L"Chase");
 	}
 
-	//Target이 있는 경우 어그로 체크를 해야함
+	//어그로가 풀려서 돌아가는 중이면 하단의 코드는 진행 안해도됨
+	if (GetOwner()->Fsm()->GetCurState() == GetOwner()->Fsm()->FindState(L"Return")) return;
+
+
+	//Target이 있는 경우 어그로 범위 밖에 정글몹이 있는지 체크를 해야함
 	if (m_pTarget == nullptr) return;
 	CheckReturnActive();
 	if (m_bReturnActive) {
@@ -78,12 +102,13 @@ bool CJungleMonsterScript::CheckDeath()
 	if (m_fHP <= 0)
 	{
 		// 죽음 이벤트 서버에 쏴야함?
-		DeathEvent* evn = dynamic_cast<DeathEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_KILL_MOB));
-		if (evn != nullptr)
-		{
-			CGameEventMgr::GetInst()->NotifyEvent(*evn);
-		}
-		GetOwner()->Fsm()->ChangeState(L"Dead");
+		//DeathEvent* evn = dynamic_cast<DeathEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_KILL_MOB));
+		//if (evn != nullptr)
+		//{
+		//	CGameEventMgr::GetInst()->NotifyEvent(*evn);
+		//}
+		GetOwner()->Fsm()->ChangeState(L"Death");
+		return true;
 	}
 	return false;
 }
@@ -91,12 +116,16 @@ bool CJungleMonsterScript::CheckDeath()
 void CJungleMonsterScript::CheckReturnTime()
 {
 	//나중에 DT로 바꿔야함
-	m_fCurReturnTime += EditorDT;
+	m_fCurReturnTime += DT;
 	
 	CChampionScript* ChampScript = m_pTarget->GetScript<CChampionScript>();
 	
 	if (m_fMaxReturnTime < m_fCurReturnTime || ChampScript->IsUnitDead()) {
 		GetOwner()->Fsm()->ChangeState(L"Return");
+		m_pTarget = nullptr;
+		m_bTest = false;
+		m_bReturnActive = false;
+		m_fCurReturnTime = 0.f;
 	}
 }
 
@@ -106,9 +135,9 @@ void CJungleMonsterScript::CheckReturnActive()
 
 	Vec3 Targetpos = m_pTarget->Transform()->GetRelativePos();
 	float distance = sqrt(pow(m_vSpawnPos.x - Targetpos.x, 2.f) + pow(m_vSpawnPos.z - Targetpos.z, 2.f));
-	if (distance > m_fAggroRange && !m_bReturnActive)
+	if (distance > m_fAggroRange && m_bReturnActive == false)
 		m_bReturnActive = true;
-	else {
+	else if(distance < m_fAggroRange && m_bReturnActive == true){
 		m_bReturnActive = false;
 		m_fCurReturnTime = 0.f;
 	}
