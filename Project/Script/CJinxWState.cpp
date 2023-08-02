@@ -22,6 +22,12 @@ void CJinxWState::Enter()
 	SkillInfo* skillInfo = new SkillInfo;
 	skillInfo->OwnerId = GetOwner()->GetScript<CChampionScript>()->GetServerID();
 	skillInfo->TargetId = -1;
+
+	skillInfo->UseMouseDir = true;
+	skillInfo->MouseDir.x = GetMouseDir().x;
+	skillInfo->MouseDir.y = GetMouseDir().y;
+	skillInfo->MouseDir.z = GetMouseDir().z;
+
 	skillInfo->SkillLevel = GetOwner()->GetScript<CChampionScript>()->GetSkillLevel(2);
 	skillInfo->skillType = SkillType::JINX_W;
 

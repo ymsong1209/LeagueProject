@@ -45,6 +45,7 @@ void CChampionScript::begin()
 
 	// 스킬 레벨 초기화
 	m_SkillLevel[0] = 1;
+	m_SkillLevel[2] = 1;
 
 	
 	// 소환사 주문 배열에 넣어주기
@@ -205,7 +206,7 @@ void CChampionScript::GetInput()
 			if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[0]->GetCost() > m_fMP)
 				return;
 
-			if (m_Skill[0]->Use())
+			if (m_Skill[1]->Use())
 			{
 				// 스킬 이벤트
 			}
@@ -216,9 +217,15 @@ void CChampionScript::GetInput()
 			if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[1]->GetCost() > m_fMP)
 				return;
 
-			if (m_Skill[1]->Use())
+			if (m_Skill[2]->Use())
 			{
-				// 스킬 이벤트
+				// W 이벤트 발생
+				PlayerWEvent* evn = dynamic_cast<PlayerWEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_SKILL_W));
+				if (evn != nullptr)
+				{
+					evn->Clear();
+					CGameEventMgr::GetInst()->NotifyEvent(*evn);
+				}
 			}
 		}
 		if (KEY_TAP(KEY::E))
@@ -227,9 +234,15 @@ void CChampionScript::GetInput()
 			if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[2]->GetCost() > m_fMP)
 				return;
 
-			if (m_Skill[2]->Use())
+			if (m_Skill[3]->Use())
 			{
-				// 스킬 이벤트
+				// E 이벤트 발생
+				PlayerEEvent* evn = dynamic_cast<PlayerEEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_SKILL_E));
+				if (evn != nullptr)
+				{
+					evn->Clear();
+					CGameEventMgr::GetInst()->NotifyEvent(*evn);
+				}
 			}
 		}
 		if (KEY_TAP(KEY::R))
@@ -238,7 +251,7 @@ void CChampionScript::GetInput()
 			if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[3]->GetCost() > m_fMP)
 				return;
 
-			if (m_Skill[3]->Use())
+			if (m_Skill[4]->Use())
 			{
 				// 스킬 이벤트
 			}

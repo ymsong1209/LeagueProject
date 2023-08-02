@@ -34,18 +34,18 @@ bool CJinxW::Use()
 
 	
 		//2) 이펙트가 사라지고, 실제 충돌체를 가진 오브젝트 발사 
-			CGameObject* Projectile = new CGameObject;
-			Projectile->AddComponent(new CTransform);
-			Projectile->AddComponent(new CCollider2D);
-			Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
-			Projectile->Collider2D()->SetOffsetScale(Vec2(20.f, 5.f));
-			Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
-			Projectile->SetName(L"Projectile");
-
-
-			Projectile->AddComponent(new CJinxWScript);
-			Vec3 OwnerPos = m_OwnerScript->GetOwner()->Transform()->GetRelativePos();
-			Projectile->GetScript<CJinxWScript>()->SetSpawnPos(OwnerPos);
+			//CGameObject* Projectile = new CGameObject;
+			//Projectile->AddComponent(new CTransform);
+			//Projectile->AddComponent(new CCollider2D);
+			//Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
+			//Projectile->Collider2D()->SetOffsetScale(Vec2(20.f, 5.f));
+			//Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
+			//Projectile->SetName(L"Projectile");
+			//
+			//
+			//Projectile->AddComponent(new CJinxWScript);
+			//Vec3 OwnerPos = m_OwnerScript->GetOwner()->Transform()->GetRelativePos();
+			//Projectile->GetScript<CJinxWScript>()->SetSpawnPos(OwnerPos);
 
 			//Ptr<CPrefab> NewPrefab = new CPrefab;
 			//CGameObject* PrefabObject = Projectile->Clone();

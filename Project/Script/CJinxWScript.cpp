@@ -34,8 +34,10 @@ void CJinxWScript::tick()
 	// 시전자로부터 스킬 사거리까지 발사되었다면 사라짐
 	float distance = sqrt((pow(m_vSpawnPos.x - NewPos.x, 2) + pow(m_vSpawnPos.z - NewPos.z, 2)));
 	if (distance >= m_fSkillRange)
-		return;
-
+	{
+		this->GetOwner()->Transform()->SetRelativePos(-666.f, -666.f, -666.f);
+		m_fProjectileSpeed = 0.f;
+	}
 }
 
 void CJinxWScript::OnOverlap(CCollider2D* _Other)
