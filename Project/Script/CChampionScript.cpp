@@ -176,7 +176,7 @@ void CChampionScript::GetInput()
 				// 1 적혀있는 스킬레벨은 추후 GetSklilLevel()로 변경
 				CSendServerEventMgr::GetInst()->SendUseSkillPacket(
 					GetServerID(), UnitScript->GetServerID(),
-					1, SkillType::BASIC_ATTACK, Vec3(0, 0, 0));
+					1, SkillType::BASIC_ATTACK, Vec3(0, 0, 0),false,Vec3(0,0,0),false,Vec3(0,0,0));
 			}
 
 			// 사거리 내에 없음
