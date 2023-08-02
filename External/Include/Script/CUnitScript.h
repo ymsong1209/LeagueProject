@@ -82,6 +82,7 @@ public:
     void   SetAttackPower(float _attackPower) { m_fAttackPower = _attackPower; }
     void   SetDefencePower(float _defencePower) { m_fDefencePower = _defencePower; }
 
+    float   GetFaceRot() { return m_fFaceRot; }
 
     // ºñµ¿±â
     void GetHit(SkillType _type, CGameObject* _SkillTarget, CGameObject* _SkillUser);

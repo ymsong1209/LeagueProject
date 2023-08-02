@@ -8,6 +8,7 @@
 #include "CInGameCameraScript.h"
 #include "CInhibitorScript.h"
 #include "CJinxScript.h"
+#include "CJinxWScript.h"
 #include "CJungleMonsterScript.h"
 #include "CMinionScript.h"
 #include "CMobScript.h"
@@ -27,6 +28,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CInGameCameraScript");
 	_vec.push_back(L"CInhibitorScript");
 	_vec.push_back(L"CJinxScript");
+	_vec.push_back(L"CJinxWScript");
 	_vec.push_back(L"CJungleMonsterScript");
 	_vec.push_back(L"CMinionScript");
 	_vec.push_back(L"CMobScript");
@@ -54,6 +56,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CInhibitorScript;
 	if (L"CJinxScript" == _strScriptName)
 		return new CJinxScript;
+	if (L"CJinxWScript" == _strScriptName)
+		return new CJinxWScript;
 	if (L"CJungleMonsterScript" == _strScriptName)
 		return new CJungleMonsterScript;
 	if (L"CMinionScript" == _strScriptName)
@@ -99,6 +103,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::JINXSCRIPT:
 		return new CJinxScript;
+		break;
+	case (UINT)SCRIPT_TYPE::JINXWSCRIPT:
+		return new CJinxWScript;
 		break;
 	case (UINT)SCRIPT_TYPE::JUNGLEMONSTERSCRIPT:
 		return new CJungleMonsterScript;
@@ -161,6 +168,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::JINXSCRIPT:
 		return L"CJinxScript";
+		break;
+
+	case SCRIPT_TYPE::JINXWSCRIPT:
+		return L"CJinxWScript";
 		break;
 
 	case SCRIPT_TYPE::JUNGLEMONSTERSCRIPT:

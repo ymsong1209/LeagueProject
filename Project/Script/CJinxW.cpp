@@ -2,6 +2,7 @@
 #include "CJinxW.h"
 #include "CUnitScript.h"
 #include "CChampionScript.h"
+#include "CJinxWScript.h"
 
 CJinxW::CJinxW()
 {
@@ -27,6 +28,37 @@ bool CJinxW::Use()
 		return false;
 
 	// W 투사체 발사
+	/*
+	징크스 w를 예시로 들면
+		1) 범위표시 이펙트가 나타났다 사라짐(2d 애니메이션)*/
+
+	
+		//2) 이펙트가 사라지고, 실제 충돌체를 가진 오브젝트 발사 
+			CGameObject* Projectile = new CGameObject;
+			Projectile->AddComponent(new CTransform);
+			Projectile->AddComponent(new CCollider2D);
+			Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
+			Projectile->Collider2D()->SetOffsetScale(Vec2(20.f, 5.f));
+			Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
+			Projectile->SetName(L"Projectile");
+
+
+			Projectile->AddComponent(new CJinxWScript);
+			Vec3 OwnerPos = m_OwnerScript->GetOwner()->Transform()->GetRelativePos();
+			Projectile->GetScript<CJinxWScript>()->SetSpawnPos(OwnerPos);
+
+			//Ptr<CPrefab> NewPrefab = new CPrefab;
+			//CGameObject* PrefabObject = Projectile->Clone();
+			//NewPrefab->RegisterProtoObject(Projectile);
+
+			//m_vecSkillObj.push_back(NewPrefab);
+			
+			/*
+			2-1) 오브젝트의 자식으로 그림자 이펙트, 주변 파티클, 꼬리 등이 따라감 (부모-자식 구조)
+
+			3) 오브젝트가 특정 거리까지 발사되거나 (아무도 안맞는 경우)
+			누군가가 맞게 되면 사라짐. (이 경우에는 피격)
+			*/
 	
 }
 

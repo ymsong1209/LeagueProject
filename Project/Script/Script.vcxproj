@@ -189,8 +189,8 @@ call CodeGen.exe</Command>
     <ClInclude Include="CGameEvent.h" />
     <ClInclude Include="CGameEventMgr.h" />
     <ClInclude Include="CJinxAttackState.h" />
+    <ClInclude Include="CJinxWScript.h" />
     <ClInclude Include="CJinxWState.h" />
-    <ClInclude Include="CServerTypes.h" />
     <ClInclude Include="CHeal.h" />
     <ClInclude Include="CInhibitorBrokenState.h" />
     <ClInclude Include="CInhibitorIdleState.h" />
@@ -219,6 +219,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CPlayerScript.h" />
     <ClInclude Include="CScriptMgr.h" />
     <ClInclude Include="CSendServerEventMgr.h" />
+    <ClInclude Include="CServerTypes.h" />
     <ClInclude Include="CSkill.h" />
     <ClInclude Include="CSkillMgr.h" />
     <ClInclude Include="CStructureScript.h" />
@@ -259,6 +260,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CJinxScript.cpp" />
     <ClCompile Include="CJinxW.cpp" />
     <ClCompile Include="CJinxWalkState.cpp" />
+    <ClCompile Include="CJinxWScript.cpp" />
     <ClCompile Include="CJinxWState.cpp" />
     <ClCompile Include="CJungleAttackState.cpp" />
     <ClCompile Include="CJungleChaseState.cpp" />
@@ -273,8 +275,8 @@ call CodeGen.exe</Command>
     <ClCompile Include="CNexusScript.cpp" />
     <ClCompile Include="COtherPlayerScript.cpp" />
     <ClCompile Include="CPlayerScript.cpp" />
-    <ClCompile Include="CScriptMgr.cpp" />
     <ClCompile Include="CInGameCameraScript.cpp" />
+    <ClCompile Include="CScriptMgr.cpp" />
     <ClCompile Include="CSendServerEventMgr.cpp" />
     <ClCompile Include="CSkill.cpp" />
     <ClCompile Include="CSkillMgr.cpp" />

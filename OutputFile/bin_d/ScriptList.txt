@@ -5,6 +5,7 @@ CChampionScript
 CInGameCameraScript
 CInhibitorScript
 CJinxScript
+CJinxWScript
 CJungleMonsterScript
 CMinionScript
 CMobScript
