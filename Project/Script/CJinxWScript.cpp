@@ -23,7 +23,7 @@ void CJinxWScript::tick()
 	Vec3 ProjectilePos = GetOwner()->Transform()->GetRelativePos();
 
 	// 방향 계산
-	Vec3 Direction = Vec3(0.f, m_fFaceRot, 0.f);
+	Vec3 Direction = m_vDir;
 	Direction.Normalize();
 
 	// 투사체 이동
