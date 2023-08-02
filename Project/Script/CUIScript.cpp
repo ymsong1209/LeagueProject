@@ -3,9 +3,7 @@
 
 void CUIScript::begin()
 {
-	CharacterType = CHARACTER_TYPE::JINX;
-	SpellType_D = SUMMONERS_SPELL2::IGNITE;
-	SpellType_F = SUMMONERS_SPELL2::CLEANSE;
+	SetChampInFo(CHARACTER_TYPE::VEIN, SUMMONERS_SPELL::CLEANSE, SUMMONERS_SPELL::EXHAUST);
 
 	m_UIBackPanel = new CGameObject;
 	m_UIBackPanel->SetName(L"UIBackPanel");

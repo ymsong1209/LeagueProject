@@ -10,8 +10,10 @@ CInhibitorScript
 CInventoryUIScript
 CJinxScript
 CJungleMonsterScript
+CMinimapUIScript
 CMinionScript
 CMobScript
+CMouseCursorUIScript
 CNexusScript
 COtherPlayerScript
 CPlayerScript

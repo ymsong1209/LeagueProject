@@ -41,8 +41,6 @@ struct VS_OUT
 #define Puncture_Texture            g_tex_3
 #define Additive_Color              g_vec4_0
 
-
-
 // Ray Tex¿ë ¼ýÀÚ
 #define RayTest          g_int_2
 // ============================
@@ -161,11 +159,6 @@ float4 PS_Std2D(VS_OUT _in) : SV_Target
     }
     return vOutColor;
 }
-
-
-
-
-
 
 
 

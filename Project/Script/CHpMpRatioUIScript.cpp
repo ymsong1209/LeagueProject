@@ -5,7 +5,8 @@
 CHpMpRatioUIScript::CHpMpRatioUIScript(BARTYPE _Type)
 	:CScript((UINT)SCRIPT_TYPE::HPMPRATIOUISCRIPT)
 	,BarType(_Type)
-	,Total(100.f)
+	, m_fTotal(100.f)
+	, m_fCurrent(100.f)
 {
 }
 
@@ -35,19 +36,19 @@ void CHpMpRatioUIScript::tick()
 	if (BarType == BARTYPE::HP)
 	{
 		if (KEY_PRESSED(KEY::B))
-			Current += DT * 50.f;
+			m_fTotal += DT * 50.f;
 
 		if (KEY_PRESSED(KEY::V))
-			Current -= DT * 50.f;
+			m_fTotal -= DT * 50.f;
 	}
 
 	if (BarType == BARTYPE::MP)
 	{
 		if (KEY_PRESSED(KEY::G))
-			Current += DT * 50.f;
+			m_fTotal += DT * 50.f;
 
 		if (KEY_PRESSED(KEY::F))
-			Current -= DT * 50.f;
+			m_fTotal -= DT * 50.f;
 	}
 	//--------------------------------
 
@@ -58,14 +59,14 @@ void CHpMpRatioUIScript::tick()
 	//if (CurrentExp <= 0.f)
 	//	CurrentExp = 0.f;
 
-	CurrentRatio = Current / Total;
-	if (Current >= Total)
-		Current = Total;
+	m_fCurrentRatio = m_fCurrent / m_fTotal;
+	if (m_fCurrent >= m_fTotal)
+		m_fCurrent = m_fTotal;
 
-	if (Current <= 0.f)
-		Current = 0.f;
+	if (m_fCurrent <= 0.f)
+		m_fCurrent = 0.f;
 
-	MeshRender()->GetMaterial(0)->SetScalarParam(FLOAT_0, &CurrentRatio);
+	MeshRender()->GetMaterial(0)->SetScalarParam(FLOAT_0, &m_fCurrentRatio);
 }
 
 void CHpMpRatioUIScript::BeginOverlap(CCollider2D* _Other)

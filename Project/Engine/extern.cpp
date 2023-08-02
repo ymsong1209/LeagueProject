@@ -102,7 +102,7 @@ extern const wchar_t* SKILL_TYPE_WSTR[(UINT)SkillNum::END] =
 };
 
 
-extern const wchar_t* SUMMONERS_SPELL2_WSTR[(UINT)SUMMONERS_SPELL2::END] =
+extern const wchar_t* SUMMONERS_SPELL_WSTR[(UINT)SUMMONERS_SPELL::END] =
 {
 	L"FLASH",
 	L"HEAL",

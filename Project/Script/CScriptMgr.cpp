@@ -13,8 +13,10 @@
 #include "CInventoryUIScript.h"
 #include "CJinxScript.h"
 #include "CJungleMonsterScript.h"
+#include "CMinimapUIScript.h"
 #include "CMinionScript.h"
 #include "CMobScript.h"
+#include "CMouseCursorUIScript.h"
 #include "CNexusScript.h"
 #include "COtherPlayerScript.h"
 #include "CPlayerScript.h"
@@ -39,8 +41,10 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CInventoryUIScript");
 	_vec.push_back(L"CJinxScript");
 	_vec.push_back(L"CJungleMonsterScript");
+	_vec.push_back(L"CMinimapUIScript");
 	_vec.push_back(L"CMinionScript");
 	_vec.push_back(L"CMobScript");
+	_vec.push_back(L"CMouseCursorUIScript");
 	_vec.push_back(L"CNexusScript");
 	_vec.push_back(L"COtherPlayerScript");
 	_vec.push_back(L"CPlayerScript");
@@ -78,10 +82,14 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CJinxScript;
 	if (L"CJungleMonsterScript" == _strScriptName)
 		return new CJungleMonsterScript;
+	if (L"CMinimapUIScript" == _strScriptName)
+		return new CMinimapUIScript;
 	if (L"CMinionScript" == _strScriptName)
 		return new CMinionScript;
 	if (L"CMobScript" == _strScriptName)
 		return new CMobScript;
+	if (L"CMouseCursorUIScript" == _strScriptName)
+		return new CMouseCursorUIScript;
 	if (L"CNexusScript" == _strScriptName)
 		return new CNexusScript;
 	if (L"COtherPlayerScript" == _strScriptName)
@@ -143,11 +151,17 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::JUNGLEMONSTERSCRIPT:
 		return new CJungleMonsterScript;
 		break;
+	case (UINT)SCRIPT_TYPE::MINIMAPUISCRIPT:
+		return new CMinimapUIScript;
+		break;
 	case (UINT)SCRIPT_TYPE::MINIONSCRIPT:
 		return new CMinionScript;
 		break;
 	case (UINT)SCRIPT_TYPE::MOBSCRIPT:
 		return new CMobScript;
+		break;
+	case (UINT)SCRIPT_TYPE::MOUSECURSORUISCRIPT:
+		return new CMouseCursorUIScript;
 		break;
 	case (UINT)SCRIPT_TYPE::NEXUSSCRIPT:
 		return new CNexusScript;
@@ -232,12 +246,20 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CJungleMonsterScript";
 		break;
 
+	case SCRIPT_TYPE::MINIMAPUISCRIPT:
+		return L"CMinimapUIScript";
+		break;
+
 	case SCRIPT_TYPE::MINIONSCRIPT:
 		return L"CMinionScript";
 		break;
 
 	case SCRIPT_TYPE::MOBSCRIPT:
 		return L"CMobScript";
+		break;
+
+	case SCRIPT_TYPE::MOUSECURSORUISCRIPT:
+		return L"CMouseCursorUIScript";
 		break;
 
 	case SCRIPT_TYPE::NEXUSSCRIPT:

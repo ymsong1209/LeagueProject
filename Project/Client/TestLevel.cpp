@@ -21,6 +21,7 @@
 #include <Script\CWorldHPUIScript.h>
 #include <Script\CInventoryUIScript.h>
 #include <Script/CJinxScript.h>
+#include <Script\CMinimapUIScript.h>
 
 
 void CreateTestLevel()
@@ -83,9 +84,9 @@ void CreateTestLevel()
 	UIObj->AddComponent(new CCharacterUIScript);
 	UIObj->AddComponent(new CWorldHPSpawnScript);
 	UIObj->AddComponent(new CInventoryUIScript);
+	UIObj->AddComponent(new CMinimapUIScript);
 
 	SpawnGameObject(UIObj, Vec3(0.f, 0.f, 0.f), 31);
-
 
 
 
@@ -234,6 +235,75 @@ void CreateTestLevel()
 		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
 		pObj->Collider3D()->SetDrawCollision(false);
 		pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true,true,0.1f);
+		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+
+		pObj->Transform()->SetUseMouseOutline(true); 
+
+		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0), 0);
+
+		pMeshData = nullptr;
+		pObj = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"Jinx2");
+		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
+		pObj->GetRenderComponent()->SetFrustumCheck(false);
+		pObj->AddComponent(new CPathFinder);
+		pObj->AddComponent(new CCollider3D);
+		pObj->AddComponent(new CFsm);
+		pObj->AddComponent(new CJinxScript);
+
+		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+		pObj->Collider3D()->SetAbsolute(true);
+		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
+		pObj->Collider3D()->SetDrawCollision(false);
+		pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true, true, 0.1f);
+		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+
+		pObj->Transform()->SetUseMouseOutline(true);
+
+		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0), 0);
+
+		pMeshData = nullptr;
+		pObj = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"Jinx3");
+		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
+		pObj->GetRenderComponent()->SetFrustumCheck(false);
+		pObj->AddComponent(new CPathFinder);
+		pObj->AddComponent(new CCollider3D);
+		pObj->AddComponent(new CFsm);
+		pObj->AddComponent(new CJinxScript);
+
+		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+		pObj->Collider3D()->SetAbsolute(true);
+		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
+		pObj->Collider3D()->SetDrawCollision(false);
+		pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true, true, 0.1f);
+		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+
+		pObj->Transform()->SetUseMouseOutline(true);
+
+		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0), 0);
+
+		pMeshData = nullptr;
+		pObj = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"Jinx4");
+		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
+		pObj->GetRenderComponent()->SetFrustumCheck(false);
+		pObj->AddComponent(new CPathFinder);
+		pObj->AddComponent(new CCollider3D);
+		pObj->AddComponent(new CFsm);
+		pObj->AddComponent(new CJinxScript);
+
+		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+		pObj->Collider3D()->SetAbsolute(true);
+		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
+		pObj->Collider3D()->SetDrawCollision(false);
+		pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true, true, 0.1f);
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
 
 		pObj->Transform()->SetUseMouseOutline(true);
@@ -423,27 +493,6 @@ void CreateTestLevel()
 	// pRectFast->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
 
 	// SpawnGameObject(pRectFast, Vec3(-600.f, 0.f, 500.f), 0);
-
-
-	// // MiniMap
-	// CGameObject* MiniMap = new CGameObject;
-	// MiniMap->SetName(L"MiniMap");
-	// MiniMap->AddComponent(new CMeshRender);
-	// MiniMap->AddComponent(new CTransform);
-
-	// MiniMap->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
-	// MiniMap->Transform()->SetUseMouseOutline(false);
-	
-	// MiniMap->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	// MiniMap->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MiniMapMtrl"), 0);
-	// MiniMap->MeshRender()->GetDynamicMaterial(0);
-	// MiniMap->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\MiniMap.dds"));
-	// MiniMap->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"FogFilterMap"));
-
-
-	// SpawnGameObject(MiniMap, Vec3(-600.f, 300.f, 700.f), 0);
-
-
 
 
 	// // Ray Test Object1

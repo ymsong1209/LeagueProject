@@ -21,8 +21,8 @@ private:
     CGameObject* Spell_D;
     CGameObject* Spell_F;
 
-    SUMMONERS_SPELL2 Spell_1;
-    SUMMONERS_SPELL2 Spell_2;
+    SUMMONERS_SPELL Spell_1;
+    SUMMONERS_SPELL Spell_2;
 
     CGameObject* HPBar;
     CGameObject* MPBar;
@@ -39,12 +39,6 @@ public:
     void BarUILoad();
 
 public:
-    virtual void SaveToLevelFile(FILE* _File) override;
-    virtual void LoadFromLevelFile(FILE* _FILE) override;
-
-    virtual void SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)override;
-    virtual void LoadFromLevelJsonFile(const Value& _componentValue)override;
-
     void UISetting();
 
     CLONE(CCharacterUIScript);

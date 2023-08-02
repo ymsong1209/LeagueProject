@@ -1054,9 +1054,9 @@ void CResMgr::CreateDefaultGraphicsShader()
 
 	pShader->SetRSType(RS_TYPE::CULL_BACK);
 	pShader->SetDSType(DS_TYPE::LESS_EQUAL);
-	pShader->SetBSType(BS_TYPE::MASK);
+	pShader->SetBSType(BS_TYPE::ALPHA_BLEND);
 
-	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI_MASK);
 
 	AddRes(pShader->GetKey(), pShader);
 

@@ -23,17 +23,7 @@ enum RESTRAINT
     BLOCK = 0,
 };
 
-// 소환사 주문(임시)
-enum class SUMMONERS_SPELL
-{
-    FLASH,      // 점멸
-    HEAL,       // 회복
-    GHOST,      // 유체화
-    IGNITE,     // 점화
-    SMITE,      // 강타
-    EXHAUST,    // 탈진
-    CLEANSE,    // 정화
-};
+
 
 class CSkill;
 
@@ -63,8 +53,7 @@ protected:
     CSkill*                 m_Skill[5];
     SUMMONERS_SPELL*        m_EquippedSpell;    // 장착 소환사 주문(2칸 배열)
 
-
- // =========== Script   ============
+    // =========== Script   ============
 public:
     virtual void begin() override;
     virtual void tick() override;

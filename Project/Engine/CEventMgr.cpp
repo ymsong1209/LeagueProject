@@ -19,7 +19,6 @@ CEventMgr::~CEventMgr()
 
 }
 
-
 void CEventMgr::tick()
 {
 	m_LevelChanged = false;
@@ -80,8 +79,6 @@ void CEventMgr::tick()
 
 			m_LevelChanged = true;
 		}
-			
-
 		
 			break;
 		case EVENT_TYPE::DELETE_RESOURCE:
@@ -126,26 +123,6 @@ void CEventMgr::tick()
 			}
 		}
 			break;		
-
-
-		case EVENT_TYPE::MOVE_PACKET:
-		{
-			//std::mutex m;
-			//m.lock();
-			//CGameObject* NewObject = (CGameObject*)m_vecEvent[i].wParam;
-			//PlayerMove* playerMove = (PlayerMove*)(m_vecEvent[i].lParam);
-
-			//// 이제 obj와 playerMove를 사용하여 이동 이벤트를 처리할 수 있습니다.
-
-			//CTransform* trans = (CTransform*)NewObject->GetComponent(COMPONENT_TYPE::TRANSFORM);
-			//trans->SetRelativePos(Vec3(playerMove->pos.x, playerMove->pos.y, playerMove->pos.z));
-
-			//// 사용이 끝난 후에는 메모리를 해제하는 것을 잊지 마세요.
-			////delete playerMove;
-			//m.unlock();
-		}
-
-		break;
 
 		//스크립트 시점에서 오브젝트의 특정 정보를 변경해줄경우 인스펙터에 반영이 안됨 (스크립트에서 오브젝트 이름변경 등..) - 이미 이벤트 매니저 호출 끝나고 스크립트 변경사항이 추가되니까 소용이 없는거같음
 		//그래서 이벤트매니저에 ui 리로드 이벤트 추가

@@ -11,20 +11,20 @@ void CExpRatioUIScript::tick()
 {
 	//------µð¹ö±ë¿ë-------------
 	if (KEY_PRESSED(KEY::P))
-		CurrentExp += DT * 50.f;
+		m_fCurrentExp += DT * 50.f;
 
 	if (KEY_PRESSED(KEY::O))
-		CurrentExp -= DT * 50.f;
+		m_fCurrentExp -= DT * 50.f;
 	//--------------------------------
 	
-	CurrentExpRatio = CurrentExp / LevelTotalExp;
+	m_fCurrentExpRatio = m_fCurrentExp / m_fLevelTotalExp;
 
-	if (CurrentExp >= LevelTotalExp)
-		CurrentExp = LevelTotalExp;
-	if (CurrentExp <= 0.f)
-		CurrentExp = 0.f;
+	if (m_fCurrentExp >= m_fLevelTotalExp)
+		m_fCurrentExp = m_fLevelTotalExp;
+	if (m_fCurrentExp <= 0.f)
+		m_fCurrentExp = 0.f;
 
-	MeshRender()->GetMaterial(0)->SetScalarParam(FLOAT_0, &CurrentExpRatio);
+	MeshRender()->GetMaterial(0)->SetScalarParam(FLOAT_0, &m_fCurrentExpRatio);
 }
 
 void CExpRatioUIScript::BeginOverlap(CCollider2D* _Other)
@@ -33,8 +33,8 @@ void CExpRatioUIScript::BeginOverlap(CCollider2D* _Other)
 
 CExpRatioUIScript::CExpRatioUIScript()
 	:CScript((UINT)SCRIPT_TYPE::EXPRATIOUISCRIPT)
-	, LevelTotalExp(100.f)
-	, CurrentExp(0.f)
+	, m_fLevelTotalExp(100.f)
+	, m_fCurrentExp(100.f)
 {
 
 }
