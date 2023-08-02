@@ -71,8 +71,6 @@ void ServerEventMgr::sendtick(ClientServiceRef _service)
 	vector<tServerEvent> _vecScriptEvent = CSendServerEventMgr::GetInst()->GetVecEvent();
 	for (int i = 0; i < _vecScriptEvent.size(); ++i)
 	{
-		if (_vecScriptEvent.size() == 0) break;
-
 		switch (_vecScriptEvent[i].Type)
 		{
 
@@ -128,93 +126,61 @@ void ServerEventMgr::sendtick(ClientServiceRef _service)
 void ServerEventMgr::clienttick()
 {
 	std::mutex m;
-	m.lock();
-
-	for (size_t i = 0; i < m_vecEvent.size(); ++i)
 	{
-		switch (m_vecEvent[i].Type)
+		std::lock_guard<std::mutex> lock(m);
+
+		for (size_t i = 0; i < m_vecEvent.size(); ++i)
 		{
-
-		case SERVER_EVENT_TYPE::MOVE_PACKET:
-		{
-			CGameObject* NewObject = (CGameObject*)m_vecEvent[i].wParam;
-			ObjectMove* objectMove = (ObjectMove*)(m_vecEvent[i].lParam);
-
-			// NewObject->GetScript<CUnitScript>()->SetLV(objectMove->LV);
-			NewObject->GetScript<CUnitScript>()->SetCurHP(objectMove->HP);
-			NewObject->GetScript<CUnitScript>()->SetCurMP(objectMove->MP);
-			NewObject->GetScript<CUnitScript>()->SetAttackPower(objectMove->AttackPower);
-			NewObject->GetScript<CUnitScript>()->SetDefencePower(objectMove->DefencePower);
-			NewObject->Transform()->SetRelativePos(Vec3(objectMove->pos.x, objectMove->pos.y, objectMove->pos.z));
-			NewObject->Transform()->SetRelativeRot(Vec3(objectMove->moveDir.x, objectMove->moveDir.y, objectMove->moveDir.z));
-
-			// 사용이 끝난 후에는 메모리를 해제
-			delete objectMove;
-			objectMove = nullptr;
-		}
-		break;
-
-		case SERVER_EVENT_TYPE::ANIM_PACKET:
-		{
-			CGameObject* NewObject = (CGameObject*)m_vecEvent[i].wParam;
-			AnimInfo* animInfo = (AnimInfo*)(m_vecEvent[i].lParam);
-
-			if (animInfo->bRepeat)
-				NewObject->Animator3D()->PlayRepeat(animInfo->animName, true, animInfo->blend, animInfo->blendTime);
-			else
-				NewObject->Animator3D()->PlayOnce(animInfo->animName, animInfo->blend, animInfo->blendTime);
-
-			// 사용이 끝난 후에는 메모리를 해제
-			delete animInfo;
-			animInfo = nullptr;
-		}
-		break;
-		//case SERVER_EVENT_TYPE::SKILL_PROJECTILE_PACKET:
-		//{
-		//
-		//}
-		//break;
-		case SERVER_EVENT_TYPE::SKILL_HIT_PACKET:
-		{
-			//uint64 hitId = static_cast<uint64>(m_vecEvent[i].wParam);
-			SkillInfo* skillInfo = (SkillInfo*)m_vecEvent[i].lParam;
-			uint64 hitId = skillInfo->TargetId;
-
-			// 내가 맞음 계산
-			if (skillInfo->TargetId == MyPlayer.id)
+			switch (m_vecEvent[i].Type)
 			{
-				// 스킬 쏜애
-				CGameObject* skillOwnerObj = GameObjMgr::GetInst()->FindAllObject(skillInfo->OwnerId);
 
-				// 스킬 맞은 애(본인)
-				CGameObject* skillTargetObj = GameObjMgr::GetInst()->FindAllObject(skillInfo->TargetId);
+			case SERVER_EVENT_TYPE::MOVE_PACKET:
+			{
+				CGameObject* NewObject = (CGameObject*)m_vecEvent[i].wParam;
+				ObjectMove* objectMove = (ObjectMove*)(m_vecEvent[i].lParam);
 
-				// 피격 이벤트 발생
-				GetHitEvent* evn = dynamic_cast<GetHitEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_GET_HIT));
-				if (evn != nullptr)
-				{
-					evn->Clear();
-					evn->SetUserObj(skillOwnerObj);
-					evn->SetTargetObj(skillTargetObj);
-					evn->SetSkillType(skillInfo->skillType);
+				// NewObject->GetScript<CUnitScript>()->SetLV(objectMove->LV);
+				NewObject->GetScript<CUnitScript>()->SetCurHP(objectMove->HP);
+				NewObject->GetScript<CUnitScript>()->SetCurMP(objectMove->MP);
+				NewObject->GetScript<CUnitScript>()->SetAttackPower(objectMove->AttackPower);
+				NewObject->GetScript<CUnitScript>()->SetDefencePower(objectMove->DefencePower);
+				NewObject->Transform()->SetRelativePos(Vec3(objectMove->pos.x, objectMove->pos.y, objectMove->pos.z));
+				NewObject->Transform()->SetRelativeRot(Vec3(objectMove->moveDir.x, objectMove->moveDir.y, objectMove->moveDir.z));
 
-					CGameEventMgr::GetInst()->NotifyEvent(*evn);
-				}
+				// 사용이 끝난 후에는 메모리를 해제
+				delete objectMove;
 			}
+			break;
 
-			// 맞은애가 플레이어가 아니면(미니언)
-			else if (GameObjMgr::GetInst()->FindPlayer(skillInfo->TargetId) == nullptr)
+			case SERVER_EVENT_TYPE::ANIM_PACKET:
 			{
-				// 오브젝트가 맞음. 방장이 계산.
-				if (MyPlayer.host)
+				CGameObject* NewObject = (CGameObject*)m_vecEvent[i].wParam;
+				AnimInfo* animInfo = (AnimInfo*)(m_vecEvent[i].lParam);
+
+				if (animInfo->bRepeat)
+					NewObject->Animator3D()->PlayRepeat(animInfo->animName, true, animInfo->blend, animInfo->blendTime);
+				else
+					NewObject->Animator3D()->PlayOnce(animInfo->animName, animInfo->blend, animInfo->blendTime);
+
+				// 사용이 끝난 후에는 메모리를 해제
+				delete animInfo;
+			}
+			break;
+			case SERVER_EVENT_TYPE::SKILL_HIT_PACKET:
+			{
+				uint64 hitId = (uint64)(m_vecEvent[i].wParam);
+				SkillInfo* skillInfo = (SkillInfo*)m_vecEvent[i].lParam;
+
+				// 내가 맞음 계산
+				if (skillInfo->TargetId == MyPlayer.id)
 				{
 					// 스킬 쏜애
 					CGameObject* skillOwnerObj = GameObjMgr::GetInst()->FindAllObject(skillInfo->OwnerId);
 
-					// 스킬 맞은 애(타인)
+					// 스킬 맞은 애(본인)
 					CGameObject* skillTargetObj = GameObjMgr::GetInst()->FindAllObject(skillInfo->TargetId);
 
-					// 공격 이벤트 발생
+					// 피격 이벤트 발생
 					GetHitEvent* evn = dynamic_cast<GetHitEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_GET_HIT));
 					if (evn != nullptr)
 					{
@@ -222,26 +188,51 @@ void ServerEventMgr::clienttick()
 						evn->SetUserObj(skillOwnerObj);
 						evn->SetTargetObj(skillTargetObj);
 						evn->SetSkillType(skillInfo->skillType);
+
 						CGameEventMgr::GetInst()->NotifyEvent(*evn);
 					}
 				}
+
+				// 맞은애가 플레이어가 아니면(미니언)
+				else if (GameObjMgr::GetInst()->FindPlayer(skillInfo->TargetId) == nullptr)
+				{
+					// 오브젝트가 맞음. 방장이 계산.
+					if (MyPlayer.host)
+					{
+						// 스킬 쏜애
+						CGameObject* skillOwnerObj = GameObjMgr::GetInst()->FindAllObject(skillInfo->OwnerId);
+
+						// 스킬 맞은 애(타인)
+						CGameObject* skillTargetObj = GameObjMgr::GetInst()->FindAllObject(skillInfo->TargetId);
+
+						// 공격 이벤트 발생
+						GetHitEvent* evn = dynamic_cast<GetHitEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_GET_HIT));
+						if (evn != nullptr)
+						{
+							evn->Clear();
+							evn->SetUserObj(skillOwnerObj);
+							evn->SetTargetObj(skillTargetObj);
+							evn->SetSkillType(skillInfo->skillType);
+							CGameEventMgr::GetInst()->NotifyEvent(*evn);
+						}
+					}
+				}
+
 			}
+			break;
 
-		}
-		break;
+			case SERVER_EVENT_TYPE::DESPAWN_PACKET:
+			{
+				uint64	despawnId = m_vecEvent[i].wParam;
+				float   lifespan = m_vecEvent[i].lParam;
 
-		case SERVER_EVENT_TYPE::DESPAWN_PACKET:
-		{
-			uint64	despawnId = m_vecEvent[i].wParam;
-			float   lifespan = m_vecEvent[i].lParam;
-			
-			CGameObject* despawnObj =GameObjMgr::GetInst()->DeleteObjectInMap(despawnId);
-			despawnObj->SetLifeSpan(lifespan);
-		}
-		break;
+				CGameObject* despawnObj = GameObjMgr::GetInst()->DeleteObjectInMap(despawnId);
+				despawnObj->SetLifeSpan(lifespan);
+			}
+			break;
+			}
 		}
 	}
 
 	m_vecEvent.clear(); 
-	m.unlock();
 }

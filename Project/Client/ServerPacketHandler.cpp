@@ -321,31 +321,45 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 void ServerPacketHandler::Handle_S_PLAYER_MOVE(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
 	std::mutex m;
-	m.lock();
-
-	cout << "S_PLAYER_MOVE Packet" << endl;
-	BufferReader br(buffer, len);
-
-	PKT_S_PLAYER_MOVE* pkt = reinterpret_cast<PKT_S_PLAYER_MOVE*>(buffer);
-
-	if (pkt->Validate() == false)
 	{
-		m.unlock();
-		return;
+		std::lock_guard<std::mutex> lock(m);
+
+		cout << "S_PLAYER_MOVE Packet" << endl;
+		BufferReader br(buffer, len);
+
+		PKT_S_PLAYER_MOVE* pkt = reinterpret_cast<PKT_S_PLAYER_MOVE*>(buffer);
+
+		if (pkt->Validate() == false)
+			return;
+
+		// 내 플레이어가 보낸 움직임은 반영하지 않아도 된다. 
+		uint64 _PlayerId = pkt->playerId;
+		if (_PlayerId == MyPlayer.id)
+			return;
+		
+		ObjectMove _playerMove = pkt->playerMove;
+		CGameObject* obj = GameObjMgr::GetInst()->FindPlayer(_PlayerId);
+
+		tServerEvent evn = {};
+		evn.Type = SERVER_EVENT_TYPE::MOVE_PACKET;
+		evn.wParam = (DWORD_PTR)obj;
+
+		ObjectMove* objMove = new ObjectMove();
+		objMove->AttackPower = _playerMove.AttackPower;
+		objMove->CC = _playerMove.CC;
+		objMove->DefencePower = _playerMove.DefencePower;
+		objMove->HP = _playerMove.HP;
+		objMove->MP = _playerMove.MP;
+		objMove->LV = _playerMove.LV;
+		objMove->pos = _playerMove.pos;
+		objMove->moveDir = _playerMove.moveDir;
+		objMove->CC = _playerMove.CC;
+		evn.lParam = (DWORD_PTR)objMove;
+
+		ServerEventMgr::GetInst()->AddEvent(evn);
+
+		std::cout << "===============================" << endl;
 	}
-
-	// 해당 Id 플레이어가 움직임.
-	uint64 _PlayerId = pkt->playerId;
-	if (_PlayerId != MyPlayer.id)
-	{
-		ObjectMove playerMove = pkt->playerMove;
-
-		GameObjMgr::GetInst()->E_MovePlayer(_PlayerId, playerMove);
-	}
-
-	std::cout << "===============================" << endl;
-
-	m.unlock();
 }
 
 void ServerPacketHandler::Handle_S_OBJECT_ANIM(PacketSessionRef& session, BYTE* buffer, int32 len)
@@ -381,10 +395,22 @@ void ServerPacketHandler::Handle_S_OBJECT_ANIM(PacketSessionRef& session, BYTE* 
 		AnimInfo _AnimInfo = {};
 		_AnimInfo.targetId = _AnimInfoPacket.targetId;
 		_AnimInfo.animName = _animName;
+		_AnimInfo.bRepeat = _AnimInfoPacket.bRepeat;
 		_AnimInfo.blend = _AnimInfoPacket.blend;
 		_AnimInfo.blendTime = _AnimInfoPacket.blendTime;
 
-		GameObjMgr::GetInst()->E_ObjectAnim(_AnimInfo);
+
+		CGameObject* obj = GameObjMgr::GetInst()->FindAllObject(_AnimInfo.targetId);
+
+		tServerEvent evn = {};
+		evn.Type = SERVER_EVENT_TYPE::ANIM_PACKET;
+		evn.wParam = (DWORD_PTR)obj;
+
+		// AnimInfo 구조체의 포인터를 DWORD_PTR로 캐스팅하여 lParam에 저장
+		AnimInfo* animInfo = new AnimInfo(_AnimInfo);
+		evn.lParam = (DWORD_PTR)animInfo;
+
+		ServerEventMgr::GetInst()->AddEvent(evn);
 	}
 
 	std::cout << "===============================" << endl;
@@ -443,9 +469,31 @@ void ServerPacketHandler::Handle_S_OBJECT_MOVE(PacketSessionRef& session, BYTE* 
 	// 방장을 제외한 클라이언트만 해당 움직임을 받는다.
 	if (!MyPlayer.host)
 	{
-		ObjectMove playerMove = pkt->objectMove;
+		ObjectMove _objectMove = pkt->objectMove;
 
-		GameObjMgr::GetInst()->E_MoveObject(_objectId, playerMove);
+
+		if (_objectId == MyPlayer.id) // 내 플레이어가 움직인건 반영하지 않아도 된다. 
+			return;
+
+		CGameObject* obj = GameObjMgr::GetInst()->FindObject(_objectId);
+
+		tServerEvent evn = {};
+		evn.Type = SERVER_EVENT_TYPE::MOVE_PACKET;
+		evn.wParam = (DWORD_PTR)obj;
+
+		// ObjectMove 구조체의 포인터를 DWORD_PTR로 캐스팅하여 lParam에 저장
+		ObjectMove* objMove = new ObjectMove();
+		objMove->LV = _objectMove.LV;
+		objMove->HP = _objectMove.HP;
+		objMove->MP = _objectMove.MP;
+		objMove->AttackPower = _objectMove.AttackPower;
+		objMove->DefencePower = _objectMove.DefencePower;
+		objMove->moveDir = _objectMove.moveDir;
+		objMove->pos = _objectMove.pos;
+
+		evn.lParam = (DWORD_PTR)objMove;
+
+		ServerEventMgr::GetInst()->AddEvent(evn);
 	}
 
 	std::cout << "===============================" << endl;
@@ -499,16 +547,15 @@ void ServerPacketHandler::Handle_S_SKILL_HIT(PacketSessionRef& session, BYTE* bu
 	uint64	hitObjId = pkt->objecId;       // 스킬을 맞은 오브젝트 id
 	SkillInfo skillInfo = pkt->skillInfo;  // 맞은 스킬 정보
 
-	GameObjMgr::GetInst()->E_HitObject(hitObjId, skillInfo);
 
+	tServerEvent evn = {};
+	evn.Type = SERVER_EVENT_TYPE::SKILL_HIT_PACKET;
+	evn.wParam = (DWORD_PTR)hitObjId;
 
-	// 1. 스킬맞은 id가 플레이어 id면 걔 클라이언트에서 알아서 처리
-	// 2. 스킬맞은 id가 오브젝트 id면(미니언,포탑) 방장 클라이언트에서 알아서 처리
+	SkillInfo* _skillInfo = new SkillInfo(skillInfo);
+	evn.lParam = (DWORD_PTR)_skillInfo;
 
-	// 여기서 스킬 타입에 따라서 
-	// CSkill curSkill = SkillMgr::GetInst()->AttackedSkill(skillInfo.skillType) 
-
-
+	ServerEventMgr::GetInst()->AddEvent(evn);
 
 	std::cout << "===============================" << endl;
 	m.unlock();

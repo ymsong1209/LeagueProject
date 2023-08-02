@@ -37,7 +37,7 @@ void CSendServerEventMgr::SendAnimPacket(UINT64 _targetId, wstring _animName, bo
 
 	tServerEvent evn = {};
 	evn.Type = SERVER_EVENT_TYPE::SEND_ANIM_PACKET;
-	//evn.wParam = (DWORD_PTR);
+	//evn.wParam
 	evn.lParam = (DWORD_PTR)animInfo;
 	CSendServerEventMgr::GetInst()->AddServerSendEvent(evn);
 }
@@ -46,7 +46,7 @@ void CSendServerEventMgr::SendUseSkillPacket(UINT64 _ownerId, UINT64 _targetObjI
 {
 
 	// 서버에게 보낼 이벤트
-	SkillInfo* skillInfo = new SkillInfo;
+	SkillInfo* skillInfo = new SkillInfo();
 	skillInfo->OwnerId = _ownerId;
 	skillInfo->TargetId = _targetObjId;
 	skillInfo->SkillLevel = _skillLevel;

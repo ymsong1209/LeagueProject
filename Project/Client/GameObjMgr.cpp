@@ -39,11 +39,9 @@
 
 GameObjMgr::GameObjMgr()
 {
-
 }
 GameObjMgr::~GameObjMgr()
 {
-
 }
 
 
@@ -120,6 +118,11 @@ CGameObject* GameObjMgr::DeleteObjectInMap(uint64 _id)
 	return obj;
 }
 
+
+
+// ===============================================
+//   Add
+// ===============================================
 void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 {
 	std::mutex m;
@@ -442,6 +445,11 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 }
 
 
+
+
+// ===============================================
+//   Send 
+// ===============================================
 void GameObjMgr::SendMyPlayerMove(ClientServiceRef _service)
 {
 	// 본인 플레이어의 움직임을 서버에 보낸다. 
@@ -662,97 +670,4 @@ void GameObjMgr::SendObjectAnim(AnimInfo* _animInfo, ClientServiceRef _service)
 	}
 }
 
-
-void GameObjMgr::E_MovePlayer(uint64 _playerId, ObjectMove _playerMove)
-{
-	std::mutex m;
-	{
-		std::lock_guard<std::mutex> lock(m);
-
-		if (_playerId == MyPlayer.id) // 내 플레이어가 움직인건 반영하지 않아도 된다. 
-			return;
-
-		CGameObject* obj = FindPlayer(_playerId);
-
-		tServerEvent evn = {};
-
-		evn.Type = SERVER_EVENT_TYPE::MOVE_PACKET;
-		evn.wParam = (DWORD_PTR)obj;
-
-		// ObjectMove 구조체의 포인터를 DWORD_PTR로 캐스팅하여 lParam에 저장
-		ObjectMove* objMove = new ObjectMove(_playerMove);
-		evn.lParam = (DWORD_PTR)objMove;
-
-		ServerEventMgr::GetInst()->AddEvent(evn);
-	}
-}
-
-void GameObjMgr::E_MoveObject(uint64 _objectId, ObjectMove _objectMove)
-{
-	std::mutex m;
-	{
-		std::lock_guard<std::mutex> lock(m);
-
-		if (_objectId == MyPlayer.id) // 내 플레이어가 움직인건 반영하지 않아도 된다. 
-			return;
-
-		CGameObject* obj = FindObject(_objectId);
-
-		tServerEvent evn = {};
-
-		evn.Type = SERVER_EVENT_TYPE::MOVE_PACKET;
-		evn.wParam = (DWORD_PTR)obj;
-
-		// ObjectMove 구조체의 포인터를 DWORD_PTR로 캐스팅하여 lParam에 저장
-		ObjectMove* objMove = new ObjectMove();
-		objMove->LV = _objectMove.LV;
-		objMove->HP = _objectMove.HP;
-		objMove->MP = _objectMove.MP;
-		objMove->AttackPower = _objectMove.AttackPower;
-		objMove->DefencePower = _objectMove.DefencePower;
-		objMove->moveDir = _objectMove.moveDir;
-		objMove->pos = _objectMove.pos;
-
-		evn.lParam = (DWORD_PTR)objMove;
-
-		ServerEventMgr::GetInst()->AddEvent(evn);
-	}
-}
-
-void GameObjMgr::E_ObjectAnim(AnimInfo _animInfo)
-{
-	std::mutex m;
-	{
-		std::lock_guard<std::mutex> lock(m);
-
-		CGameObject* obj = FindAllObject(_animInfo.targetId);
-
-		tServerEvent evn = {};
-		evn.Type = SERVER_EVENT_TYPE::ANIM_PACKET;
-		evn.wParam = (DWORD_PTR)obj;
-
-		// AnimInfo 구조체의 포인터를 DWORD_PTR로 캐스팅하여 lParam에 저장
-		AnimInfo* animInfo = new AnimInfo(_animInfo);
-		evn.lParam = (DWORD_PTR)animInfo;
-
-		ServerEventMgr::GetInst()->AddEvent(evn);
-	}
-}
-
-void GameObjMgr::E_HitObject(uint64 _hitTarget, SkillInfo _skillInfo)
-{
-	std::mutex m;
-	{
-		std::lock_guard<std::mutex> lock(m);
-
-		tServerEvent evn = {};
-		evn.Type = SERVER_EVENT_TYPE::SKILL_HIT_PACKET;
-		evn.wParam = static_cast<DWORD_PTR>(_hitTarget);
-
-		SkillInfo* skillInfo = new SkillInfo(_skillInfo);
-		evn.lParam = (DWORD_PTR)skillInfo;
-
-		ServerEventMgr::GetInst()->AddEvent(evn);
-	}
-}
 
