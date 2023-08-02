@@ -19,7 +19,6 @@ void CJinxWScript::begin()
 
 void CJinxWScript::tick()
 {
-
 	// 징크스 본인의 방향으로 발사
 	Vec3 ProjectilePos = GetOwner()->Transform()->GetRelativePos();
 
@@ -29,6 +28,7 @@ void CJinxWScript::tick()
 
 	// 투사체 이동
 	Vec3 NewPos = ProjectilePos + Direction * m_fProjectileSpeed * EditorDT;
+	NewPos = Vec3(NewPos.x, 0.f, NewPos.z);
 	GetOwner()->Transform()->SetRelativePos(NewPos);
 
 	// 시전자로부터 스킬 사거리까지 발사되었다면 사라짐

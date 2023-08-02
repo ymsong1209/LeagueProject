@@ -375,13 +375,15 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 			Vec3 OwnerPos = UserObj->Transform()->GetRelativePos();
 			float OwnerFace = UserObj->GetScript<CUnitScript>()->GetFaceRot();
 
+			Projectile->GetScript<CJinxWScript>()->SetUserObj(UserObj);
 			Projectile->GetScript<CJinxWScript>()->SetSpawnPos(OwnerPos);
 			Projectile->GetScript<CJinxWScript>()->SetFaceRot(OwnerFace);
+			Projectile->GetScript<CJinxWScript>()->SetDir(UserObj->Transform()->GetRelativeRot());
 
 			// 스킬쏜 주인 중점에서 투사체 생김
 			SpawnGameObject(Projectile, OwnerPos, 0);
 
-			_objects.insert(std::make_pair(_projectileId, pObj));
+			_objects.insert(std::make_pair(_projectileId, Projectile));
 		}
 		else
 		{

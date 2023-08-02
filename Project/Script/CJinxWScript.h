@@ -25,6 +25,7 @@ private:
     Vec3            m_vSpawnPos;        // 시전 위치
 
     float           m_fFaceRot;                 // 투사체 방향
+    Vec3            m_vDir;
     float           m_fProjectileSpeed;         // 투사체 속도
     float           m_fSkillRange;
 
@@ -52,5 +53,7 @@ public:
     void    SetSpawnPos(Vec3 _v) { m_vSpawnPos = _v; }
 
     void    SetFaceRot(float _f) { m_fFaceRot = _f; }
+
+    void SetDir(Vec3 _v) { m_vDir = _v; }
 };
 
