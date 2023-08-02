@@ -35,6 +35,7 @@ void CJinxWScript::tick()
 	float distance = sqrt((pow(m_vSpawnPos.x - NewPos.x, 2) + pow(m_vSpawnPos.z - NewPos.z, 2)));
 	if (distance >= m_fSkillRange)
 		return;
+
 }
 
 void CJinxWScript::OnOverlap(CCollider2D* _Other)

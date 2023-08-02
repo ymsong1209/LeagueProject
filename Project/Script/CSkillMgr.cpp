@@ -3,10 +3,16 @@
 #include "CSkill.h"
 #include "CBaseAttack.h"
 
+#include "CJinxW.h"
+
 CSkillMgr::CSkillMgr()
 {
     CBaseAttack* BaseAttack = new CBaseAttack;
     m_mapSkills.insert(make_pair(SkillType::BASIC_ATTACK, BaseAttack));
+
+    CJinxW* JinxW = new CJinxW;
+    m_mapSkills.insert(make_pair(SkillType::JINX_W, JinxW));
+
 
 }
 
