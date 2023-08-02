@@ -42,9 +42,11 @@ void CSendServerEventMgr::SendAnimPacket(UINT64 _targetId, wstring _animName, bo
 	CSendServerEventMgr::GetInst()->AddServerSendEvent(evn);
 }
 
-void CSendServerEventMgr::SendUseSkillPacket(UINT64 _ownerId, UINT64 _targetObjId, int _skillLevel, SkillType _skillType, Vec3 _offsetPos)
+void CSendServerEventMgr::SendUseSkillPacket(UINT64 _ownerId, UINT64 _targetObjId
+							, int _skillLevel, SkillType _skillType, Vec3 _offsetPos
+							, bool _useMousePos, Vec3 _mousePos
+							, bool _useMouseDir, Vec3 _mouseDir)
 {
-
 	// 서버에게 보낼 이벤트
 	SkillInfo* skillInfo = new SkillInfo();
 	skillInfo->OwnerId = _ownerId;
@@ -54,6 +56,15 @@ void CSendServerEventMgr::SendUseSkillPacket(UINT64 _ownerId, UINT64 _targetObjI
 	skillInfo->offsetPos.x = _offsetPos.x;
 	skillInfo->offsetPos.y = _offsetPos.y;
 	skillInfo->offsetPos.z = _offsetPos.z;
+
+	skillInfo->UseMousePos = _useMousePos;
+	skillInfo->MousePos.x = _mousePos.x;
+	skillInfo->MousePos.y = _mousePos.y;
+	skillInfo->MousePos.z = _mousePos.z;
+	skillInfo->UseMouseDir = _useMouseDir;
+	skillInfo->MouseDir.x = _mouseDir.x;
+	skillInfo->MouseDir.y = _mouseDir.y;
+	skillInfo->MouseDir.z = _mouseDir.z;
 
 	tServerEvent serverEvn = {};
 	serverEvn.Type = SERVER_EVENT_TYPE::SKILL_PROJECTILE_PACKET;

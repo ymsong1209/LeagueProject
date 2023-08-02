@@ -57,21 +57,28 @@ enum class SkillType
 struct SkillInfo
 {
 public:
-	struct OffsetPos
+	struct vec3Server
 	{
 		float x;
 		float y;
 		float z;
 	};
 
-	UINT64    SkillId;    // 스킬 투사체 id
-	UINT64    OwnerId;    // 스킬을 사용한 플레이어 id
-	UINT64    TargetId;   // 타겟팅일시 맞을 플레이어 id (논타겟일 경우 -1)
-	
-	UINT16    SkillLevel; // 스킬레벨
-	SkillType skillType;  // 어떤 스킬인지 모아둔 enum 중 하나
+	UINT64		SkillId;    // 스킬 투사체 id
+	UINT64		OwnerId;    // 스킬을 사용한 플레이어 id
+	UINT64		TargetId;   // 타겟팅일시 맞을 플레이어 id (논타겟일 경우 -1)
 
-	OffsetPos offsetPos;  // 중점기준 offset
+	UINT16		SkillLevel; // 스킬레벨
+	SkillType	skillType;  // 어떤 스킬인지 모아둔 enum 중 하나
+
+	vec3Server	offsetPos;  // 중점기준 offset
+
+	// TargetId == -1일 경우 사용
+	bool		UseMousePos;    // mousePos에 생겨야하는 스킬
+	vec3Server  MousePos;
+
+	bool		UseMouseDir;    // 이 방향으로 생겨야 하는 스킬
+	vec3Server  MouseDir;
 };
 
 struct HitInfo

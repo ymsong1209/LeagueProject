@@ -587,10 +587,16 @@ void GameObjMgr::SendSkillSpawn(SkillInfo* _skillInfo, ClientServiceRef _service
 		std::lock_guard<std::mutex> lock(m);
 
 		SkillInfo skillInfoPacket = {};
+		skillInfoPacket.SkillId = _skillInfo->SkillId;
 		skillInfoPacket.OwnerId = _skillInfo->OwnerId;
+		skillInfoPacket.TargetId = _skillInfo->TargetId;
 		skillInfoPacket.SkillLevel = _skillInfo->SkillLevel;
 		skillInfoPacket.skillType = _skillInfo->skillType;
-		skillInfoPacket.TargetId = _skillInfo->TargetId;
+		skillInfoPacket.offsetPos = _skillInfo->offsetPos;
+		skillInfoPacket.UseMousePos = _skillInfo->UseMousePos;
+		skillInfoPacket.MousePos = _skillInfo->MousePos;
+		skillInfoPacket.UseMouseDir = _skillInfo->UseMouseDir;
+		skillInfoPacket.MouseDir = _skillInfo->MouseDir;
 
 		PKT_C_SKILL_PROJECTILE_WRITE  pktWriter(skillInfoPacket);
 
@@ -611,10 +617,11 @@ void GameObjMgr::SendSkillHit(HitInfo* _hitInfo, ClientServiceRef _service)
 		std::lock_guard<std::mutex> lock(m);
 
 		SkillInfo skillInfoPacket = {};
-		skillInfoPacket.OwnerId = _hitInfo->useObjId;
-		skillInfoPacket.SkillLevel = _hitInfo->SkillLevel;
-		skillInfoPacket.skillType = _hitInfo->skillType;
-		skillInfoPacket.TargetId = _hitInfo->hitObjId;
+		skillInfoPacket.SkillId =		_hitInfo->skillObjId;
+		skillInfoPacket.OwnerId =		_hitInfo->useObjId;
+		skillInfoPacket.TargetId =		_hitInfo->hitObjId;
+		skillInfoPacket.SkillLevel =	_hitInfo->SkillLevel;
+		skillInfoPacket.skillType =		_hitInfo->skillType;
 
 		PKT_C_SKILL_HIT_WRITE  pktWriter(_hitInfo->hitObjId,skillInfoPacket);
 
