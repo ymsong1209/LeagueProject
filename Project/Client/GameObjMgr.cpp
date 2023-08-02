@@ -377,8 +377,7 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 
 			Projectile->GetScript<CJinxWScript>()->SetUserObj(UserObj);
 			Projectile->GetScript<CJinxWScript>()->SetSpawnPos(OwnerPos);
-			Projectile->GetScript<CJinxWScript>()->SetFaceRot(OwnerFace);
-			Projectile->GetScript<CJinxWScript>()->SetTargetPos(UserObj->Transform()->GetRelativePos());
+			Projectile->GetScript<CJinxWScript>()->SetTargetPos(TargetObj->Transform()->GetRelativePos());
 
 			// 스킬쏜 주인 중점에서 투사체 생김
 			SpawnGameObject(Projectile, OwnerPos, 0);
