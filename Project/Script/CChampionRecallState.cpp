@@ -56,8 +56,8 @@ void CChampionRecallState::HandleEvent(CGameEvent& event)
 		CChampionAttackState* AttackState = dynamic_cast<CChampionAttackState*>(GetOwnerFSM()->FindState(L"Attack"));
 		if (AttackState != nullptr)
 		{
-			AttackState->SetUserID(AttackEvent->GetUserID());
-			AttackState->SetTargetID(AttackEvent->GetTargetID());
+			AttackState->SetUserObj(AttackEvent->GetUserObj());
+			AttackState->SetTargetObj(AttackEvent->GetTargetObj());
 		}
 		GetOwnerFSM()->ChangeState(L"Attack");
 	}

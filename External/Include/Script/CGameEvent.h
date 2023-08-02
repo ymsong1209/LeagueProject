@@ -102,26 +102,26 @@ class BaseAttackEvent :
 {
 public:
 	BaseAttackEvent()
-		: m_iUserID(-1)
-		, m_iTargetID(-1)
+		: m_UserObj(nullptr)
+		, m_TargetObj(nullptr)
 	{
 		m_eEventType = GAME_EVENT_TYPE::PLAYER_BASE_ATTACK;
 	}
 
 private:
-	int             m_iUserID;
-	int             m_iTargetID;
+	CGameObject*             m_UserObj;
+	CGameObject*             m_TargetObj;
 
 
 public:
-	void	SetUserID(int _i) { m_iUserID = _i; }
-	void	SetTargetID(int _i) { m_iTargetID = _i; }
+	void	SetUserObj(CGameObject* _obj) { m_UserObj = _obj; }
+	void	SetTargetObj(CGameObject* _obj) { m_TargetObj = _obj; }
 
-	int		GetUserID() { return m_iUserID; }
-	int		GetTargetID() { return m_iTargetID; }
+	CGameObject*		GetUserObj() { return m_UserObj; }
+	CGameObject*		GetTargetObj() { return m_TargetObj; }
 
 
-	void Clear() override { m_iUserID = -1; m_iTargetID = -1; }
+	void Clear() override { m_UserObj = nullptr; m_TargetObj = nullptr; }
 };
 
 
