@@ -8,7 +8,7 @@
 #include "CJinxAttackState.h"
 #include "CJinxWState.h"
 
-#include "CBaseAttack.h"
+#include "CBasicAttack.h"
 #include "CJinxQ.h"
 #include "CJinxw.h"
 
@@ -34,7 +34,7 @@ void CJinxScript::begin()
 	GetOwner()->Fsm()->AddState(L"W", new CJinxWState);
 
 	// Skill¿¡ Jinx Skill Ãß°¡
-	m_Skill[0] = new CBaseAttack;
+	m_Skill[0] = new CBasicAttack;
 	m_Skill[0]->SetOwnerScript(this);
 	m_Skill[1] = new CJinxQ;
 	m_Skill[1]->SetOwnerScript(this);

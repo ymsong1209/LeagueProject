@@ -44,9 +44,9 @@ void CChampionRespawnState::HandleEvent(CGameEvent& event)
 		GetOwnerFSM()->ChangeState(L"Death");
 		break;
 
-	case GAME_EVENT_TYPE::PLAYER_BASE_ATTACK:
+	case GAME_EVENT_TYPE::PLAYER_BASIC_ATTACK:
 	{
-		BaseAttackEvent* AttackEvent = dynamic_cast<BaseAttackEvent*>(&event);
+		BasicAttackEvent* AttackEvent = dynamic_cast<BasicAttackEvent*>(&event);
 
 		CChampionAttackState* AttackState = dynamic_cast<CChampionAttackState*>(GetOwnerFSM()->FindState(L"Attack"));
 		if (AttackState != nullptr)

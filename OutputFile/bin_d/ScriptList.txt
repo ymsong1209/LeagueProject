@@ -12,6 +12,7 @@ CMobScript
 CNexusScript
 COtherPlayerScript
 CPlayerScript
+CProjectileScript
 CStructureScript
 CTurretScript
 CUnitScript

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CJinxWState.h"
 #include "CChampionScript.h"
+#include "CSkill.h"
 
 CJinxWState::CJinxWState()
 {
@@ -18,27 +19,34 @@ void CJinxWState::tick()
 
 void CJinxWState::Enter()
 {
-	// 징크스 w 쓰겠다고 서버에 요청
-	SkillInfo* skillInfo = new SkillInfo();
-	skillInfo->OwnerId = GetOwner()->GetScript<CChampionScript>()->GetServerID();
-	skillInfo->TargetId = -1;
-
-	skillInfo->UseMouseDir = true;
-	skillInfo->MouseDir.x = GetMouseDir().x;
-	skillInfo->MouseDir.y = GetMouseDir().y;
-	skillInfo->MouseDir.z = GetMouseDir().z;
-
-	skillInfo->SkillLevel = 1;//GetOwner()->GetScript<CChampionScript>()->GetSkillLevel(2);
-	skillInfo->skillType = SkillType::JINX_W;
-
-	tServerEvent serverEvn = {};
-	serverEvn.Type = SERVER_EVENT_TYPE::SKILL_PROJECTILE_PACKET;
-	serverEvn.wParam = (DWORD_PTR)skillInfo;
-	//serverEvn.lParam 
-	CSendServerEventMgr::GetInst()->AddServerSendEvent(serverEvn);
-
-
 	CChampionSkillState::Enter();
+	// 징크스 w 쓰겠다고 서버에 요청
+	//SkillInfo* skillInfo = new SkillInfo();
+	//skillInfo->OwnerId = GetOwner()->GetScript<CChampionScript>()->GetServerID();
+	//skillInfo->TargetId = -1;
+	//
+	//skillInfo->UseMouseDir = true;
+	//skillInfo->MouseDir.x = GetMouseDir().x;
+	//skillInfo->MouseDir.y = GetMouseDir().y;
+	//skillInfo->MouseDir.z = GetMouseDir().z;
+	//
+	//skillInfo->SkillLevel = 1;//GetOwner()->GetScript<CChampionScript>()->GetSkillLevel(2);
+	//skillInfo->skillType = SkillType::JINX_W;
+	//
+	//tServerEvent serverEvn = {};
+	//serverEvn.Type = SERVER_EVENT_TYPE::SKILL_PROJECTILE_PACKET;
+	//serverEvn.wParam = (DWORD_PTR)skillInfo;
+	////serverEvn.lParam 
+	//CSendServerEventMgr::GetInst()->AddServerSendEvent(serverEvn);
+
+	CSkill* JinxW = GetOwner()->GetScript<CChampionScript>()->GetSkill(2);
+	JinxW->SetUserObj(m_UserObj);
+	JinxW->SetTargetObj(m_TargetObj);
+	JinxW->SetOwnerScript(GetOwner()->GetScript<CChampionScript>());
+
+	JinxW->Use();
+
+	
 }
 
 void CJinxWState::Exit()

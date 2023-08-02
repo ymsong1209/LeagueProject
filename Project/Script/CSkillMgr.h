@@ -3,6 +3,7 @@
 
 class CSkill;
 
+
 class CSkillMgr :
     public CSingleton<CSkillMgr>
 {
@@ -13,6 +14,6 @@ private:
 
 public:
     CSkill* FindSkill(SkillType _type);
-
+    CProjectileScript* FindProjectileScript(SkillType _Type);
 };
 

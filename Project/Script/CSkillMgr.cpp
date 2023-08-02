@@ -1,14 +1,16 @@
 #include "pch.h"
 #include "CSkillMgr.h"
 #include "CSkill.h"
-#include "CBaseAttack.h"
+#include "CBasicAttack.h"
+#include "CBasicAttackScript.h"
+#include "CJinxWScript.h"
 
 #include "CJinxW.h"
 
 CSkillMgr::CSkillMgr()
 {
-    CBaseAttack* BaseAttack = new CBaseAttack;
-    m_mapSkills.insert(make_pair(SkillType::BASIC_ATTACK, BaseAttack));
+    CBasicAttack* BasicAttack = new CBasicAttack;
+    m_mapSkills.insert(make_pair(SkillType::BASIC_ATTACK, BasicAttack));
 
     CJinxW* JinxW = new CJinxW;
     m_mapSkills.insert(make_pair(SkillType::JINX_W, JinxW));
@@ -34,4 +36,30 @@ CSkill* CSkillMgr::FindSkill(SkillType _type)
     }
     return nullptr; 
 }
+
+CProjectileScript* CSkillMgr::FindProjectileScript(SkillType _Type)
+{
+    switch (_Type)
+    {
+    case SkillType::BASIC_ATTACK:
+        return new CBasicAttackScript;
+        break;
+    case SkillType::JINX_W:
+        return new CJinxWScript;
+        break;
+    case SkillType::JINX_E:
+        break;
+    case SkillType::JINX_R:
+        break;
+    case SkillType::DARIUS_Q:
+        break;
+    case SkillType::DARIUS_W:
+        break;
+    case SkillType::DARIUS_E:
+        break;
+    case SkillType::DARIUS_R:
+        break;
+    }
+}
+
 

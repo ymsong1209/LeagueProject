@@ -38,7 +38,5 @@ public:
     virtual void Enter() override;
     virtual void Exit() override;
 
-    Vec3 GetMousePos();
-    Vec3 GetMouseDir();
 };
 

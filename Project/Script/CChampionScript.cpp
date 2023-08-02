@@ -84,7 +84,8 @@ bool CChampionScript::CheckDeath()
 			CGameEventMgr::GetInst()->NotifyEvent(*evn);
 		}
 		
-
+		// 죽음 체크
+		m_bUnitDead = true;
 
 		// 아무것도 못하는 상태
 		m_eRestraint = BLOCK;
@@ -161,22 +162,18 @@ void CChampionScript::GetInput()
 				if (UnitScript->IsUnitDead())
 					return;
 
-				//// 공격 이벤트 발생
-				//BaseAttackEvent* evn = dynamic_cast<BaseAttackEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_BASE_ATTACK));
-				//if (evn != nullptr)
-				//{
-				//	evn->Clear();
-				//	evn->SetUserID(GetOwner()->GetID());
-				//	evn->SetTargetID(UnitScript->GetOwner()->GetID());
-				//
-				//	CGameEventMgr::GetInst()->NotifyEvent(*evn);
-				//}
+				// 공격 이벤트 발생
+				BasicAttackEvent* evn = dynamic_cast<BasicAttackEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_BASIC_ATTACK));
+				if (evn != nullptr)
+				{
+					evn->Clear();
+					evn->SetUserObj(GetOwner());
+					evn->SetTargetObj(UnitScript->GetOwner());
+				
+					CGameEventMgr::GetInst()->NotifyEvent(*evn);
+				}
 
-				// 서버에게 보낼 이벤트
-				// 1 적혀있는 스킬레벨은 추후 GetSklilLevel()로 변경
-				CSendServerEventMgr::GetInst()->SendUseSkillPacket(
-					GetServerID(), UnitScript->GetServerID(),
-					1, SkillType::BASIC_ATTACK, Vec3(0, 0, 0), false, Vec3(0, 0, 0), false, Vec3(0, 0, 0));
+
 			}
 
 			// 사거리 내에 없음
@@ -206,24 +203,26 @@ void CChampionScript::GetInput()
 			if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[0]->GetCost() > m_fMP)
 				return;
 
-			if (m_Skill[1]->Use())
+			if (m_Skill[1]->CSkill::Use())
 			{
 				// 스킬 이벤트
 			}
 		}
-		if (KEY_TAP(KEY::F))
+		if (KEY_TAP(KEY::W))
 		{
 			// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
 			if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[1]->GetCost() > m_fMP)
 				return;
 
-			if (m_Skill[2]->Use())
+			if (m_Skill[2]->CSkill::Use())
 			{
 				// W 이벤트 발생
 				PlayerWEvent* evn = dynamic_cast<PlayerWEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_SKILL_W));
 				if (evn != nullptr)
 				{
 					evn->Clear();
+					evn->SetUserObj(GetOwner());
+					evn->SetTargetObj(nullptr);
 					CGameEventMgr::GetInst()->NotifyEvent(*evn);
 				}
 			}
@@ -234,7 +233,7 @@ void CChampionScript::GetInput()
 			if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[2]->GetCost() > m_fMP)
 				return;
 
-			if (m_Skill[3]->Use())
+			if (m_Skill[3]->CSkill::Use())
 			{
 				// E 이벤트 발생
 				PlayerEEvent* evn = dynamic_cast<PlayerEEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_SKILL_E));
@@ -251,7 +250,7 @@ void CChampionScript::GetInput()
 			if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[3]->GetCost() > m_fMP)
 				return;
 
-			if (m_Skill[4]->Use())
+			if (m_Skill[4]->CSkill::Use())
 			{
 				// 스킬 이벤트
 			}

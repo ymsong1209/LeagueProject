@@ -15,6 +15,7 @@
 #include "CNexusScript.h"
 #include "COtherPlayerScript.h"
 #include "CPlayerScript.h"
+#include "CProjectileScript.h"
 #include "CStructureScript.h"
 #include "CTurretScript.h"
 #include "CUnitScript.h"
@@ -35,6 +36,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CNexusScript");
 	_vec.push_back(L"COtherPlayerScript");
 	_vec.push_back(L"CPlayerScript");
+	_vec.push_back(L"CProjectileScript");
 	_vec.push_back(L"CStructureScript");
 	_vec.push_back(L"CTurretScript");
 	_vec.push_back(L"CUnitScript");
@@ -70,6 +72,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new COtherPlayerScript;
 	if (L"CPlayerScript" == _strScriptName)
 		return new CPlayerScript;
+	if (L"CProjectileScript" == _strScriptName)
+		return new CProjectileScript;
 	if (L"CStructureScript" == _strScriptName)
 		return new CStructureScript;
 	if (L"CTurretScript" == _strScriptName)
@@ -124,6 +128,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::PLAYERSCRIPT:
 		return new CPlayerScript;
+		break;
+	case (UINT)SCRIPT_TYPE::PROJECTILESCRIPT:
+		return new CProjectileScript;
 		break;
 	case (UINT)SCRIPT_TYPE::STRUCTURESCRIPT:
 		return new CStructureScript;
@@ -196,6 +203,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::PLAYERSCRIPT:
 		return L"CPlayerScript";
+		break;
+
+	case SCRIPT_TYPE::PROJECTILESCRIPT:
+		return L"CProjectileScript";
 		break;
 
 	case SCRIPT_TYPE::STRUCTURESCRIPT:

@@ -10,6 +10,23 @@ CJinxW::CJinxW()
 	m_fCoolDown = 0.f;
 	m_iMaxLevel = 5;
 	m_fCost = 50.f;
+
+	CGameObject* Projectile = new CGameObject;
+	Projectile->AddComponent(new CTransform);
+	Projectile->AddComponent(new CCollider2D);
+	Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
+	Projectile->Collider2D()->SetOffsetScale(Vec2(5.f, 20.f));
+	Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
+	Projectile->SetName(L"JinxW");
+	
+	Ptr<CPrefab> NewPrefab = new CPrefab;
+	CGameObject* PrefabObject = Projectile->Clone();
+	NewPrefab->RegisterProtoObject(Projectile);
+
+	m_vecSkillObj.push_back(NewPrefab);
+
+	// 투사체 스크립트
+	m_ProjectileScript = new CJinxWScript;
 }
 
 CJinxW::~CJinxW()
@@ -27,6 +44,19 @@ bool CJinxW::Use()
 	if (!CSkill::Use())
 		return false;
 
+	// 서버에게 기본 공격 사용 신호를 전달
+	CSendServerEventMgr::GetInst()->SendUseSkillPacket(
+		m_UserObj->GetScript<CUnitScript>()->GetServerID(),
+		-1,
+		m_UserObj->GetScript<CChampionScript>()->GetSkillLevel(2),
+		SkillType::JINX_W,
+		Vec3(0, 0, 0),
+		false,
+		Vec3(0, 0, 0),
+		false,
+		Vec3(0, 0, 0));
+
+	return true;
 	// W 투사체 발사
 	/*
 	징크스 w를 예시로 들면
@@ -34,24 +64,7 @@ bool CJinxW::Use()
 
 	
 		//2) 이펙트가 사라지고, 실제 충돌체를 가진 오브젝트 발사 
-			//CGameObject* Projectile = new CGameObject;
-			//Projectile->AddComponent(new CTransform);
-			//Projectile->AddComponent(new CCollider2D);
-			//Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
-			//Projectile->Collider2D()->SetOffsetScale(Vec2(20.f, 5.f));
-			//Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
-			//Projectile->SetName(L"Projectile");
-			//
-			//
-			//Projectile->AddComponent(new CJinxWScript);
-			//Vec3 OwnerPos = m_OwnerScript->GetOwner()->Transform()->GetRelativePos();
-			//Projectile->GetScript<CJinxWScript>()->SetSpawnPos(OwnerPos);
-
-			//Ptr<CPrefab> NewPrefab = new CPrefab;
-			//CGameObject* PrefabObject = Projectile->Clone();
-			//NewPrefab->RegisterProtoObject(Projectile);
-
-			//m_vecSkillObj.push_back(NewPrefab);
+		
 			
 			/*
 			2-1) 오브젝트의 자식으로 그림자 이펙트, 주변 파티클, 꼬리 등이 따라감 (부모-자식 구조)

@@ -3,6 +3,7 @@
 
 class CUnitScript;
 class CPrefab;
+class CProjectileScript;
 #include <Engine\ptr.h>
 
 class CSkill
@@ -17,8 +18,8 @@ protected:
 	float					m_fCoolDown;	// 쿨타임
 	float					m_fCurCoolDown;	// 현재 쿨타임
 
-	CGameObject*			m_iUserObj;		// 사용자 
-	CGameObject*			m_iTargetObj;	// 타겟 (논타겟일시 -1)
+	CGameObject*			m_UserObj;		// 사용자 
+	CGameObject*			m_TargetObj;	// 타겟 (논타겟일시 -1)
 
 	SkillType				m_eSkillType;	// 스킬 타입
 
@@ -30,6 +31,7 @@ protected:
 	int						m_iMaxLevel;	// 최대 레벨 (QWE : 5, R : 3)
 
 	CUnitScript*			m_OwnerScript;	// 챔피언 스크립트
+	CProjectileScript*		m_ProjectileScript;
 
 	vector<Ptr<CPrefab>>	m_vecSkillObj;			// 스킬 사용 시 생성할 투사체 등
 	int						m_iProjectileCount;		// 투사체 개수
@@ -45,9 +47,12 @@ protected:
 public:
 	virtual void tick() = 0;		// 쿨타임 계산해줌. 필수!
 	virtual bool Use() = 0;			// 각 스킬마다 다른 사용 효과 작성. 필수!
-	virtual CGameObject* GetProjectile() { return m_vecSkillObj[0]->Instantiate(); }
-	
+	virtual vector<CGameObject*>& GetProjectile();
+
 	virtual	void GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _skillLevel) {};	// 투사체 등이 맞았을 때 호출되는 함수
+
+	Vec3 GetMousePos();
+	Vec3 GetMouseDir();
 
 public:
 	// 챔피언 스크립트 생성자에서 스킬 생성 후 Owner 등록
@@ -60,11 +65,11 @@ public:
 
 	SkillType GetSkillType() { return m_eSkillType; }
 
-	CGameObject*		GetUserObj() { return m_iUserObj; }
-	CGameObject*		GetTargetObj() { return m_iTargetObj; }
+	CGameObject*		GetUserObj() { return m_UserObj; }
+	CGameObject*		GetTargetObj() { return m_TargetObj; }
 
-	void SetUserObj(CGameObject*	_obj) { m_iUserObj = _obj; }
-	void SetTargetObj(CGameObject* _obj) { m_iTargetObj = _obj; }
+	void SetUserObj(CGameObject*	_obj) { m_UserObj = _obj; }
+	void SetTargetObj(CGameObject* _obj) { m_TargetObj = _obj; }
 
 	float	GetCurCoolDown() { return m_fCurCoolDown; }
 	float	GetCoolDown() { return m_fCoolDown; }
@@ -75,7 +80,7 @@ public:
 
 	void	SetProjectileObj(Ptr<CPrefab> _prefab) { m_vecSkillObj.push_back(_prefab); }
 
-
+	int		GetProjectileCount() { return m_iProjectileCount; }
 
 };
 

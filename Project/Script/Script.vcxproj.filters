@@ -9,11 +9,8 @@
     <ClCompile Include="pch.cpp">
       <Filter>Default</Filter>
     </ClCompile>
-    <ClCompile Include="CBaseAttack.cpp">
+    <ClCompile Include="CBasicAttack.cpp">
       <Filter>Skill</Filter>
-    </ClCompile>
-    <ClCompile Include="CBasicAttackScript.cpp">
-      <Filter>Scripts\Projectile</Filter>
     </ClCompile>
     <ClCompile Include="CCameraMoveScript.cpp">
       <Filter>Scripts\Camera</Filter>
@@ -147,9 +144,6 @@
     <ClCompile Include="CJinxWState.cpp">
       <Filter>State\Unit\Champion\Jinx\Skill</Filter>
     </ClCompile>
-    <ClCompile Include="CJinxWScript.cpp">
-      <Filter>Scripts\Projectile\Jinx</Filter>
-    </ClCompile>
     <ClCompile Include="CScriptMgr.cpp">
       <Filter>Manager\1. ScriptMgr</Filter>
     </ClCompile>
@@ -158,6 +152,15 @@
     </ClCompile>
     <ClCompile Include="CSkillMgr.cpp">
       <Filter>Manager\3. SkillMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CBasicAttackScript.cpp">
+      <Filter>Scripts\SkilProjectile</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxWScript.cpp">
+      <Filter>Scripts\SkilProjectile</Filter>
+    </ClCompile>
+    <ClCompile Include="CProjectileScript.cpp">
+      <Filter>Scripts\SkilProjectile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -169,11 +172,8 @@
     <ClInclude Include="framework.h">
       <Filter>Default</Filter>
     </ClInclude>
-    <ClInclude Include="CBaseAttack.h">
+    <ClInclude Include="CBasicAttack.h">
       <Filter>Skill</Filter>
-    </ClInclude>
-    <ClInclude Include="CBasicAttackScript.h">
-      <Filter>Scripts\Projectile</Filter>
     </ClInclude>
     <ClInclude Include="CCameraMoveScript.h">
       <Filter>Scripts\Camera</Filter>
@@ -313,9 +313,6 @@
     <ClInclude Include="CJinxWState.h">
       <Filter>State\Unit\Champion\Jinx\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="CJinxWScript.h">
-      <Filter>Scripts\Projectile\Jinx</Filter>
-    </ClInclude>
     <ClInclude Include="CScriptMgr.h">
       <Filter>Manager\1. ScriptMgr</Filter>
     </ClInclude>
@@ -327,6 +324,15 @@
     </ClInclude>
     <ClInclude Include="CSkillMgr.h">
       <Filter>Manager\3. SkillMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CBasicAttackScript.h">
+      <Filter>Scripts\SkilProjectile</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxWScript.h">
+      <Filter>Scripts\SkilProjectile</Filter>
+    </ClInclude>
+    <ClInclude Include="CProjectileScript.h">
+      <Filter>Scripts\SkilProjectile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -347,9 +353,6 @@
     </Filter>
     <Filter Include="Scripts\UI">
       <UniqueIdentifier>{6e669bf3-3887-4288-8df9-483252ceaa63}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\Projectile">
-      <UniqueIdentifier>{934e3c0f-16f2-4daa-9017-dee4282d83d3}</UniqueIdentifier>
     </Filter>
     <Filter Include="State\Unit">
       <UniqueIdentifier>{f5d8f510-6bc7-4e51-8f94-5caeee609d21}</UniqueIdentifier>
@@ -405,9 +408,6 @@
     <Filter Include="State\Unit\Champion\Jinx\Skill">
       <UniqueIdentifier>{7cb92db4-5965-4df5-a562-88b6c4b7c57b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\Projectile\Jinx">
-      <UniqueIdentifier>{df94a958-1626-4b4f-b9b4-59e53800f6bb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Manager">
       <UniqueIdentifier>{3cf7d8d5-e3bf-4290-a8c3-65602e55dfd1}</UniqueIdentifier>
     </Filter>
@@ -419,6 +419,9 @@
     </Filter>
     <Filter Include="Manager\3. SkillMgr">
       <UniqueIdentifier>{95d51c4b-cc38-4d54-9963-8ee29a26ac5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\SkilProjectile">
+      <UniqueIdentifier>{8d8b1b86-be40-49a4-b3e9-10b5122267ff}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

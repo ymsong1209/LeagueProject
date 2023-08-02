@@ -1,12 +1,12 @@
 #include "pch.h"
-#include "CBaseAttack.h"
+#include "CBasicAttack.h"
 #include <Engine/CPrefab.h>
 #include <Engine/ptr.h>
 #include "CUnitScript.h"
 #include "CChampionScript.h"
 #include "CBasicAttackScript.h"
 
-CBaseAttack::CBaseAttack()
+CBasicAttack::CBasicAttack()
 {
 	m_strSkillName = L"BaseAttack";
 	m_fCoolDown = 0.f;
@@ -27,37 +27,40 @@ CBaseAttack::CBaseAttack()
 	NewPrefab->RegisterProtoObject(PrefabObject);
 
 	m_vecSkillObj.push_back( NewPrefab);
+
+	// 투사체 스크립트
+	m_ProjectileScript = new CBasicAttackScript;
 }
 
-CBaseAttack::~CBaseAttack()
+CBasicAttack::~CBasicAttack()
 {
+	//if (m_ProjectileScript != nullptr)
+	//	delete m_ProjectileScript;
 }
 
-void CBaseAttack::tick()
+void CBasicAttack::tick()
 {
 	// 쿨타임 계산 필요 없음
 }
 
-bool CBaseAttack::Use()
+bool CBasicAttack::Use()
 {
-	// 평타 투사체 생성
-
-	if (m_vecSkillObj.size() == 0)
-		return false;
-
-	CGameObject* bullet = m_vecSkillObj[0]->Instantiate();
-	Vec3 OwnerPos = m_OwnerScript->GetOwner()->Transform()->GetRelativePos();
-
-	CBasicAttackScript* AttackScript = bullet->GetScript<CBasicAttackScript>();
-	//AttackScript->SetTargetID(m_iTargetID);
-	//AttackScript->SetUserID(m_iUserID);
-
-	SpawnGameObject(bullet, OwnerPos, 0);
+	// 서버에게 기본 공격 사용 신호를 전달
+	CSendServerEventMgr::GetInst()->SendUseSkillPacket(
+		m_UserObj->GetScript<CUnitScript>()->GetServerID(),
+		m_TargetObj->GetScript<CUnitScript>()->GetServerID(),
+		1,				// 기본 공격의 레벨은 언제나 1
+		SkillType::BASIC_ATTACK,
+		Vec3(0, 0, 0),
+		false,
+		Vec3(0, 0, 0),
+		false,
+		Vec3(0, 0, 0));
 
 	return true;
 }
 
-void CBaseAttack::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _Skilllevel)
+void CBasicAttack::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _Skilllevel)
 {
 	// 평타 투사체가 적과 충돌시 이 함수에 본인 스크립트 넣어서 호출할 것임
 

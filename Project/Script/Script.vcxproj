@@ -174,7 +174,7 @@ call CodeGen.exe</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CAttackRangeScript.h" />
-    <ClInclude Include="CBaseAttack.h" />
+    <ClInclude Include="CBasicAttack.h" />
     <ClInclude Include="CBasicAttackScript.h" />
     <ClInclude Include="CCameraMoveScript.h" />
     <ClInclude Include="CChampionAttackState.h" />
@@ -217,6 +217,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CNexusScript.h" />
     <ClInclude Include="COtherPlayerScript.h" />
     <ClInclude Include="CPlayerScript.h" />
+    <ClInclude Include="CProjectileScript.h" />
     <ClInclude Include="CScriptMgr.h" />
     <ClInclude Include="CSendServerEventMgr.h" />
     <ClInclude Include="CServerTypes.h" />
@@ -233,7 +234,7 @@ call CodeGen.exe</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CAttackRangeScript.cpp" />
-    <ClCompile Include="CBaseAttack.cpp" />
+    <ClCompile Include="CBasicAttack.cpp" />
     <ClCompile Include="CBasicAttackScript.cpp" />
     <ClCompile Include="CCameraMoveScript.cpp" />
     <ClCompile Include="CChampionAttackState.cpp" />
@@ -276,6 +277,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="COtherPlayerScript.cpp" />
     <ClCompile Include="CPlayerScript.cpp" />
     <ClCompile Include="CInGameCameraScript.cpp" />
+    <ClCompile Include="CProjectileScript.cpp" />
     <ClCompile Include="CScriptMgr.cpp" />
     <ClCompile Include="CSendServerEventMgr.cpp" />
     <ClCompile Include="CSkill.cpp" />

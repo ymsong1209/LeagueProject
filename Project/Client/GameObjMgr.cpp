@@ -30,6 +30,7 @@
 #include <Script\CSkill.h>
 #include <Script\CBaseAttack.h>
 #include <Script/CBasicAttackScript.h>
+#include <Script/CProjectileScript.h>
 #include <Script/CAttackRangeScript.h>
 #include <Script/CMinionScript.h>
 #include <Script/CSkillMgr.h>
@@ -326,7 +327,7 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 		// 방장만 진짜를 생성한다. 나머지는 가짜를 생성한다.
 		if (MyPlayer.host)
 		{
-			CGameObject* pObj = new CGameObject;
+			//CGameObject* pObj = new CGameObject;
 			
 			// 원래라면 skillinfo에서 스킬타입에 따라 switch case로 해당 스킬을 AddComponent해준다.
 			//pObj->AddComponent(new CMeshRender);
@@ -345,48 +346,63 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 			//
 			//Script->SetUserObj(FindAllObject(_skillInfo.OwnerId));
 			//Script->SetTargetObj(FindAllObject(_skillInfo.TargetId));
+			
+			// _SkillInfo를 까서, 어떤 Skill인지 가지고 옴
+			CSkill* skill = CSkillMgr::GetInst()->FindSkill(_skillInfo.skillType);
 
 			CGameObject* UserObj = FindAllObject(_skillInfo.OwnerId);
 			CGameObject* TargetObj = FindAllObject(_skillInfo.TargetId);
-	
-			// _SkillInfo를 까서, 어떤 Skill인지 가지고 옴
-			//CSkill* skill = CSkillMgr::GetInst()->FindSkill(_skillInfo.skillType);
+
+			// Skill Projectile 오브젝트 가지고 와서, 해당 투사체 스크립트와 서버 아이디 붙여줌
+			vector<CGameObject*> vecProj = skill->GetProjectile();
+
+			for (int i = 0; i < vecProj.size(); i++)
+			{
+				vecProj[i]->AddComponent(CSkillMgr::GetInst()->FindProjectileScript(_skillInfo.skillType));
+				vecProj[i]->GetScript<CProjectileScript>()->SetServerID(_projectileId + i);
+				vecProj[i]->GetScript<CProjectileScript>()->SetServerUserID(_skillInfo.OwnerId);
+				vecProj[i]->GetScript<CProjectileScript>()->SetServerTargetID(_skillInfo.TargetId);
+				vecProj[i]->GetScript<CProjectileScript>()->SetUserObj(UserObj);
+				vecProj[i]->GetScript<CProjectileScript>()->SetTargetObj(TargetObj);
+				vecProj[i]->GetScript<CProjectileScript>()->SetDir(Vec3(_skillInfo.MouseDir.x, _skillInfo.MouseDir.y, _skillInfo.MouseDir.z));
+
+				if (_skillInfo.UseMousePos)
+					SpawnGameObject(vecProj[i], Vec3(_skillInfo.MousePos.x, _skillInfo.MousePos.y, _skillInfo.MousePos.z), 0);
+				else
+				{
+					Vec3 OwnerPos = UserObj->Transform()->GetRelativePos();
+					SpawnGameObject(vecProj[i]
+						, OwnerPos + Vec3(_skillInfo.offsetPos.x, _skillInfo.offsetPos.y, _skillInfo.offsetPos.z)
+						, 0);
+				}
+				_objects.insert(std::make_pair(_projectileId, vecProj[i]));
+			}
+
+			//CGameObject* Projectile = new CGameObject;
+			//Projectile->AddComponent(new CTransform);
+			//Projectile->AddComponent(new CCollider2D);
 			//
-			//// skill에 사용자 / 피격자 정보 등록
-			//skill->SetUserObj(UserObj);
-			//skill->SetTargetObj(TargetObj);
-
-			// skill에 정보 등록
-			//skill->Use();
-
-			// skill 꺼내옴
-			//CGameObject* projectile = skill->GetProjectile();
-
-			CGameObject* Projectile = new CGameObject;
-			Projectile->AddComponent(new CTransform);
-			Projectile->AddComponent(new CCollider2D);
-
-			Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
-			Projectile->Collider2D()->SetOffsetScale(Vec2(20.f, 5.f));
-			Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
-			Projectile->SetName(L"JinxW");
-
-			Projectile->AddComponent(new CJinxWScript);
-			Vec3 OwnerPos = UserObj->Transform()->GetRelativePos();
-			float OwnerFace = UserObj->GetScript<CUnitScript>()->GetFaceRot();
-
-			Projectile->GetScript<CJinxWScript>()->SetUserObj(UserObj);
-			Projectile->GetScript<CJinxWScript>()->SetSpawnPos(OwnerPos);
-			//Projectile->GetScript<CJinxWScript>()->SetTargetPos(TargetObj->Transform()->GetRelativePos());
-			Projectile->GetScript<CJinxWScript>()->SetDir(Vec3(_skillInfo.MouseDir.x, _skillInfo.MouseDir.y, _skillInfo.MouseDir.z));
-			Projectile->GetScript<CJinxWScript>()->SetServeID(_projectileId);
-			Projectile->GetScript<CJinxWScript>()->SetServerUserID(_skillInfo.OwnerId);
-			//Projectile->GetScript<CJinxWScript>()->SetServerTargetID(_skillInfo.TargetId);
-
-			// 스킬쏜 주인 중점에서 투사체 생김
-			SpawnGameObject(Projectile, OwnerPos, 0);
-
-			_objects.insert(std::make_pair(_projectileId, Projectile));
+			//Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
+			//Projectile->Collider2D()->SetOffsetScale(Vec2(20.f, 5.f));
+			//Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
+			//Projectile->SetName(L"JinxW");
+			//
+			//Projectile->AddComponent(new CJinxWScript);
+			//Vec3 OwnerPos = UserObj->Transform()->GetRelativePos();
+			//float OwnerFace = UserObj->GetScript<CUnitScript>()->GetFaceRot();
+			//
+			//Projectile->GetScript<CJinxWScript>()->SetUserObj(UserObj);
+			//Projectile->GetScript<CJinxWScript>()->SetSpawnPos(OwnerPos);
+			////Projectile->GetScript<CJinxWScript>()->SetTargetPos(TargetObj->Transform()->GetRelativePos());
+			//Projectile->GetScript<CJinxWScript>()->SetDir(Vec3(_skillInfo.MouseDir.x, _skillInfo.MouseDir.y, _skillInfo.MouseDir.z));
+			//Projectile->GetScript<CJinxWScript>()->SetServeID(_projectileId);
+			//Projectile->GetScript<CJinxWScript>()->SetServerUserID(_skillInfo.OwnerId);
+			////Projectile->GetScript<CJinxWScript>()->SetServerTargetID(_skillInfo.TargetId);
+			//
+			//// 스킬쏜 주인 중점에서 투사체 생김
+			//SpawnGameObject(Projectile, OwnerPos, 0);
+			//
+			//_objects.insert(std::make_pair(_projectileId, Projectile));
 		}
 		else
 		{
@@ -407,8 +423,8 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 			//// 스킬쏜 주인 중점에서 투사체 생김
 			//CGameObject* ownerObj = FindAllObject(_skillInfo.OwnerId);
 
-			CGameObject* UserObj = FindAllObject(_skillInfo.OwnerId);
-			CGameObject* TargetObj = FindAllObject(_skillInfo.TargetId);
+			//CGameObject* UserObj = FindAllObject(_skillInfo.OwnerId);
+			//CGameObject* TargetObj = FindAllObject(_skillInfo.TargetId);
 
 			// _SkillInfo를 까서, 어떤 Skill인지 가지고 옴
 			//CSkill* skill = CSkillMgr::GetInst()->FindSkill(_skillInfo.skillType);
@@ -427,25 +443,51 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 			//CGameObject* ownerObj = FindAllObject(_skillInfo.OwnerId);
 			//SpawnGameObject(projectile, ownerObj->Transform()->GetRelativePos(), 0);
 
-			CGameObject* Projectile = new CGameObject;
-			Projectile->AddComponent(new CTransform);
-			Projectile->AddComponent(new CCollider2D);
+			//CGameObject* Projectile = new CGameObject;
+			//Projectile->AddComponent(new CTransform);
+			//Projectile->AddComponent(new CCollider2D);
+			//
+			//Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
+			//Projectile->Collider2D()->SetOffsetScale(Vec2(20.f, 5.f));
+			//Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
+			//Projectile->SetName(L"JinxW");
+			//
+			//Vec3 OwnerPos = UserObj->Transform()->GetRelativePos();
+			//
+			//Projectile->AddComponent(new CUnitScript);
+			//Projectile->GetScript<CUnitScript>()->SetServerID(_projectileId);
+			//
+			//
+			//// 스킬쏜 주인 중점에서 투사체 생김
+			//SpawnGameObject(Projectile, OwnerPos, 0);
+			//
+			//_objects.insert(std::make_pair(_projectileId, Projectile));
 
-			Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
-			Projectile->Collider2D()->SetOffsetScale(Vec2(20.f, 5.f));
-			Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
-			Projectile->SetName(L"JinxW");
+			// _SkillInfo를 까서, 어떤 Skill인지 가지고 옴
+			CSkill* skill = CSkillMgr::GetInst()->FindSkill(_skillInfo.skillType);
 
-			Vec3 OwnerPos = UserObj->Transform()->GetRelativePos();
+			CGameObject* UserObj = FindAllObject(_skillInfo.OwnerId);
+			CGameObject* TargetObj = FindAllObject(_skillInfo.TargetId);
 
-			Projectile->AddComponent(new CUnitScript);
-			Projectile->GetScript<CUnitScript>()->SetServerID(_projectileId);
+			// Skill Projectile 오브젝트 가지고 와서, 빈 UnitScript 스크립트와 서버 아이디 붙여줌
+			vector<CGameObject*> vecProj = skill->GetProjectile();
 
+			for (int i = 0; i < vecProj.size(); i++)
+			{
+				vecProj[i]->AddComponent(new CUnitScript);
+				vecProj[i]->GetScript<CUnitScript>()->SetServerID(_projectileId + i);
 
-			// 스킬쏜 주인 중점에서 투사체 생김
-			SpawnGameObject(Projectile, OwnerPos, 0);
-
-			_objects.insert(std::make_pair(_projectileId, Projectile));
+				if (_skillInfo.UseMousePos)
+					SpawnGameObject(vecProj[i], Vec3(_skillInfo.MousePos.x, _skillInfo.MousePos.y, _skillInfo.MousePos.z), 0);
+				else
+				{
+					Vec3 OwnerPos = UserObj->Transform()->GetRelativePos();
+					SpawnGameObject(vecProj[i]
+						, OwnerPos + Vec3(_skillInfo.offsetPos.x, _skillInfo.offsetPos.y, _skillInfo.offsetPos.z)
+						, 0);
+				}
+				_objects.insert(std::make_pair(_projectileId, vecProj[i]));
+			}
 		}
 
 
