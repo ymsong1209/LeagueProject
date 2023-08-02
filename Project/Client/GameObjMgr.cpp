@@ -379,6 +379,10 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 			Projectile->GetScript<CJinxWScript>()->SetSpawnPos(OwnerPos);
 			Projectile->GetScript<CJinxWScript>()->SetTargetPos(TargetObj->Transform()->GetRelativePos());
 
+			Projectile->GetScript<CJinxWScript>()->SetServeID(_projectileId);
+			Projectile->GetScript<CJinxWScript>()->SetServerUserID(_skillInfo.OwnerId);
+			Projectile->GetScript<CJinxWScript>()->SetServerTargetID(_skillInfo.TargetId);
+
 			// 스킬쏜 주인 중점에서 투사체 생김
 			SpawnGameObject(Projectile, OwnerPos, 0);
 
@@ -433,6 +437,10 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 			Projectile->SetName(L"JinxW");
 
 			Vec3 OwnerPos = UserObj->Transform()->GetRelativePos();
+
+			Projectile->AddComponent(new CUnitScript);
+			Projectile->GetScript<CUnitScript>()->SetServerID(_projectileId);
+
 
 			// 스킬쏜 주인 중점에서 투사체 생김
 			SpawnGameObject(Projectile, OwnerPos, 0);

@@ -5,7 +5,7 @@
 CJinxWScript::CJinxWScript()
 	:CScript((UINT)SCRIPT_TYPE::JINXWSCRIPT)
 	, m_fProjectileSpeed(100.f)
-	, m_fSkillRange(1000.f)
+	, m_fSkillRange(500.f)
 {
 }
 
