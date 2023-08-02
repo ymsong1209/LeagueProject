@@ -53,5 +53,7 @@ public:
     void    SetSpawnPos(Vec3 _v) { m_vSpawnPos = _v; }
 
     void SetTargetPos(Vec3 _v) { m_vTargetPos = _v; }
+
+    void SetDir(Vec3 _v) { m_vDir = _v; }
 };
 

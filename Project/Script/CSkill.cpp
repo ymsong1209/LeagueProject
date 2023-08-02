@@ -5,7 +5,7 @@
 CSkill::CSkill()
 	: m_strSkillName{}
 	, m_fCurCoolDown(0.0f)
-	, m_iLevel(0)
+	, m_iLevel(1)
 	, m_OwnerScript(nullptr)
 	, m_vecSkillObj{}
 {

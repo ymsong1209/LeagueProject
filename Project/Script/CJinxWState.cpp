@@ -19,7 +19,7 @@ void CJinxWState::tick()
 void CJinxWState::Enter()
 {
 	// 징크스 w 쓰겠다고 서버에 요청
-	SkillInfo* skillInfo = new SkillInfo;
+	SkillInfo* skillInfo = new SkillInfo();
 	skillInfo->OwnerId = GetOwner()->GetScript<CChampionScript>()->GetServerID();
 	skillInfo->TargetId = -1;
 
@@ -28,7 +28,7 @@ void CJinxWState::Enter()
 	skillInfo->MouseDir.y = GetMouseDir().y;
 	skillInfo->MouseDir.z = GetMouseDir().z;
 
-	skillInfo->SkillLevel = GetOwner()->GetScript<CChampionScript>()->GetSkillLevel(2);
+	skillInfo->SkillLevel = 1;//GetOwner()->GetScript<CChampionScript>()->GetSkillLevel(2);
 	skillInfo->skillType = SkillType::JINX_W;
 
 	tServerEvent serverEvn = {};

@@ -7,7 +7,7 @@
 CJinxW::CJinxW()
 {
 	m_strSkillName = L"Zap!";
-	m_fCoolDown = 4.f;
+	m_fCoolDown = 0.f;
 	m_iMaxLevel = 5;
 	m_fCost = 50.f;
 }

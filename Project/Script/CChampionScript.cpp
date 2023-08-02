@@ -176,7 +176,7 @@ void CChampionScript::GetInput()
 				// 1 적혀있는 스킬레벨은 추후 GetSklilLevel()로 변경
 				CSendServerEventMgr::GetInst()->SendUseSkillPacket(
 					GetServerID(), UnitScript->GetServerID(),
-					1, SkillType::BASIC_ATTACK, Vec3(0, 0, 0),false,Vec3(0,0,0),false,Vec3(0,0,0));
+					1, SkillType::BASIC_ATTACK, Vec3(0, 0, 0), false, Vec3(0, 0, 0), false, Vec3(0, 0, 0));
 			}
 
 			// 사거리 내에 없음
@@ -198,7 +198,7 @@ void CChampionScript::GetInput()
 			Vec3 TargetPos = result.vCrossPoint;	// 클릭 좌표
 			PathFinder()->FindPath(TargetPos);
 		}
-
+	}
 
 		if (KEY_TAP(KEY::Q))
 		{
@@ -211,7 +211,7 @@ void CChampionScript::GetInput()
 				// 스킬 이벤트
 			}
 		}
-		if (KEY_TAP(KEY::W))
+		if (KEY_TAP(KEY::F))
 		{
 			// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
 			if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[1]->GetCost() > m_fMP)
@@ -259,7 +259,7 @@ void CChampionScript::GetInput()
 
 		// 소환사 주문
 	}
-}
+
 
 void CChampionScript::CheckSkills()
 {

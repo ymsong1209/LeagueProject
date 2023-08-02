@@ -5,7 +5,7 @@
 CJinxWScript::CJinxWScript()
 	:CScript((UINT)SCRIPT_TYPE::JINXWSCRIPT)
 	, m_fProjectileSpeed(100.f)
-	, m_fSkillRange(500.f)
+	, m_fSkillRange(100.f)
 {
 }
 
@@ -19,15 +19,16 @@ void CJinxWScript::begin()
 
 void CJinxWScript::tick()
 {
+	static bool dead = false; 
+
+	if (dead)
+		return;
+
 	// 징크스 본인의 방향으로 발사
 	Vec3 ProjectilePos = GetOwner()->Transform()->GetRelativePos();
 
-	// 방향 계산
-	Vec3 Direction = Vec3(m_vTargetPos.x - ProjectilePos.x, 0.f, m_vTargetPos.z - ProjectilePos.z);
-	Direction.Normalize();
-
 	// 투사체 이동
-	Vec3 NewPos = ProjectilePos + Direction * m_fProjectileSpeed * EditorDT;
+	Vec3 NewPos = ProjectilePos + m_vDir * m_fProjectileSpeed * EditorDT;
 	NewPos = Vec3(NewPos.x, 0.f, NewPos.z);
 	GetOwner()->Transform()->SetRelativePos(NewPos);
 
@@ -37,6 +38,7 @@ void CJinxWScript::tick()
 	{
 		this->GetOwner()->Transform()->SetRelativePos(-666.f, -666.f, -666.f);
 		m_fProjectileSpeed = 0.f;
+		dead = true;
 	}
 }
 

@@ -6,7 +6,7 @@
 #include "CJinxDeathState.h"
 #include "CJinxRespawnState.h"
 #include "CJinxAttackState.h"
-
+#include "CJinxWState.h"
 
 #include "CBaseAttack.h"
 #include "CJinxQ.h"
@@ -31,6 +31,7 @@ void CJinxScript::begin()
 	GetOwner()->Fsm()->AddState(L"Death", new CJinxDeathState);
 	GetOwner()->Fsm()->AddState(L"Respawn", new CJinxRespawnState);
 	GetOwner()->Fsm()->AddState(L"Attack", new CJinxAttackState);
+	GetOwner()->Fsm()->AddState(L"W", new CJinxWState);
 
 	// Skill¿¡ Jinx Skill Ãß°¡
 	m_Skill[0] = new CBaseAttack;

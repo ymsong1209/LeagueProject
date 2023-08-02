@@ -377,11 +377,11 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 
 			Projectile->GetScript<CJinxWScript>()->SetUserObj(UserObj);
 			Projectile->GetScript<CJinxWScript>()->SetSpawnPos(OwnerPos);
-			Projectile->GetScript<CJinxWScript>()->SetTargetPos(TargetObj->Transform()->GetRelativePos());
-			Projectile->GetScript<CJinxWScript>()->SetDir(_skillInfo.MouseDir);
+			//Projectile->GetScript<CJinxWScript>()->SetTargetPos(TargetObj->Transform()->GetRelativePos());
+			Projectile->GetScript<CJinxWScript>()->SetDir(Vec3(_skillInfo.MouseDir.x, _skillInfo.MouseDir.y, _skillInfo.MouseDir.z));
 			Projectile->GetScript<CJinxWScript>()->SetServeID(_projectileId);
 			Projectile->GetScript<CJinxWScript>()->SetServerUserID(_skillInfo.OwnerId);
-			Projectile->GetScript<CJinxWScript>()->SetServerTargetID(_skillInfo.TargetId);
+			//Projectile->GetScript<CJinxWScript>()->SetServerTargetID(_skillInfo.TargetId);
 
 			// 스킬쏜 주인 중점에서 투사체 생김
 			SpawnGameObject(Projectile, OwnerPos, 0);

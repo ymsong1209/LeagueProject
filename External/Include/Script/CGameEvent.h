@@ -161,6 +161,56 @@ public:
 };
 
 
+class PlayerQEvent :
+	public CGameEvent
+{
+public:
+	PlayerQEvent()
+	{
+		m_eEventType = GAME_EVENT_TYPE::PLAYER_SKILL_Q;
+	}
+public:
+	virtual void Clear() {};
+};
+
+class PlayerWEvent :
+	public CGameEvent
+{
+public:
+	PlayerWEvent()
+	{
+		m_eEventType = GAME_EVENT_TYPE::PLAYER_SKILL_W;
+	}
+public:
+	virtual void Clear() {};
+};
+
+class PlayerEEvent :
+	public CGameEvent
+{
+public:
+	PlayerEEvent()
+	{
+		m_eEventType = GAME_EVENT_TYPE::PLAYER_SKILL_E;
+	}
+public:
+	virtual void Clear() {};
+};
+
+class PlayerREvent :
+	public CGameEvent
+{
+public:
+	PlayerREvent()
+	{
+		m_eEventType = GAME_EVENT_TYPE::PLAYER_SKILL_R;
+	}
+public:
+	virtual void Clear() {};
+};
+
+
+
 
 /*
 enum Ability
