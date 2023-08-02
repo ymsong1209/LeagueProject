@@ -112,6 +112,27 @@ cbuffer GLOBAL : register(b2)
     int    g_globalpadding;
 }
 
+cbuffer MESHMOVEDATA : register(b3)
+{
+    // Output Texture에 대한 정보
+    float4 OutputTexFuncValue;
+    float2 OutputTexPreviousPos;
+    int OutputTexMovingStyle; // 0. None, 1. Horizontal, 2. Vertical, 3. Linear, 4. Parabola, 5. Sin, 6. Cos
+
+
+    // Additive Texture에 대한 정보
+    int isAdditiveTextureUsed;
+    float4 AdditiveColor;
+
+
+    // Puncture Texture에 대한 정보
+    float4 PunctureTexFuncValue;
+    float2  PunctureTexPreviousPos;
+    int isPunctureTextureUsed;
+    int PunctureTexMovingStyle; // 0. None, 1. Horizontal,  2. Vertical, 3. Linear, 4. Parabola, 5. Sin, 6. Cos
+
+}
+
 Texture2D g_tex_0 : register(t0);
 Texture2D g_tex_1 : register(t1);
 Texture2D g_tex_2 : register(t2);
@@ -129,6 +150,9 @@ Texture2DArray g_texarr_1 : register(t11);
 
 StructuredBuffer<tLightInfo> g_Light2DBuffer : register(t12);
 StructuredBuffer<tLightInfo> g_Light3DBuffer : register(t13);
+
+Texture2D g_puncture_tex : register(t14);
+Texture2D g_additive_tex : register(t15);
 
 // Animation3D Bone Matrix Buffer
 StructuredBuffer<Matrix> g_arrBoneMat : register(t30);

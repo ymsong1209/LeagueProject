@@ -472,27 +472,27 @@ void CreateTestLevel()
 	}
 
 
-	// // TestFastForward
-	// CGameObject* pRectFast = new CGameObject;
-	// pRectFast->SetName(L"ReftFast");
-	// pRectFast->AddComponent(new CMeshRender);
-	// pRectFast->AddComponent(new CTransform);
-	// pRectFast->AddComponent(new CCollider2D);
+	 // TestFastForward
+	 CGameObject* pRectFast = new CGameObject;
+	 pRectFast->SetName(L"ReftFast");
+	 pRectFast->AddComponent(new CMeshRender);
+	 pRectFast->AddComponent(new CTransform);
+	 pRectFast->AddComponent(new CCollider2D);
 
-	// pRectFast->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
-	// pRectFast->Transform()->SetUseMouseOutline(true);
+	 pRectFast->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
+	 pRectFast->Transform()->SetUseMouseOutline(true);
 
-	// pRectFast->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	// pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
-	// pRectFast->MeshRender()->GetDynamicMaterial(0);
-	// pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Fighter.bmp"));
+	 pRectFast->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	 pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
+	 //pRectFast->MeshRender()->GetDynamicMaterial(0);
+	 pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Fighter.bmp"));
 
-	// pRectFast->Collider2D()->SetAbsolute(false);
-	// pRectFast->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
-	// pRectFast->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f,0.f));
-	// pRectFast->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
+	 pRectFast->Collider2D()->SetAbsolute(false);
+	 pRectFast->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+	 pRectFast->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f,0.f));
+	 pRectFast->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
 
-	// SpawnGameObject(pRectFast, Vec3(-600.f, 0.f, 500.f), 0);
+	 SpawnGameObject(pRectFast, Vec3(-600.f, 0.f, 500.f), 0);
 
 
 	// // Ray Test Object1
