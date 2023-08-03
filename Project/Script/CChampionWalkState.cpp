@@ -2,6 +2,7 @@
 #include "CChampionWalkState.h"
 #include <Engine/CFsm.h>
 
+#include "CUnitScript.h"
 #include "CChampionAttackState.h"
 #include "CGameEvent.h"
 
@@ -41,17 +42,30 @@ void CChampionWalkState::HandleEvent(CGameEvent& event)
 		GetOwnerFSM()->ChangeState(L"Death");
 		break;
 
-	case GAME_EVENT_TYPE::PLAYER_BASE_ATTACK:
+	case GAME_EVENT_TYPE::PLAYER_BASIC_ATTACK:
 	{
-		BaseAttackEvent* AttackEvent = dynamic_cast<BaseAttackEvent*>(&event);
+		BasicAttackEvent* AttackEvent = dynamic_cast<BasicAttackEvent*>(&event);
 
 		CChampionAttackState* AttackState = dynamic_cast<CChampionAttackState*>(GetOwnerFSM()->FindState(L"Attack"));
 		if (AttackState != nullptr)
 		{
-			AttackState->SetUserID(AttackEvent->GetUserID());
-			AttackState->SetTargetID(AttackEvent->GetTargetID());
+			AttackState->SetUserObj(AttackEvent->GetUserObj());
+			AttackState->SetTargetObj(AttackEvent->GetTargetObj());
 		}
 		GetOwnerFSM()->ChangeState(L"Attack");
+	}
+	break;
+
+	case GAME_EVENT_TYPE::PLAYER_GET_HIT:
+	{
+		GetHitEvent* HitEvent = dynamic_cast<GetHitEvent*>(&event);
+
+		CGameObject* SkillUser = HitEvent->GetUserObj();
+		CGameObject* SkillTarget = HitEvent->GetTargetObj();
+		SkillType skilltype = HitEvent->GetSkillType();
+		int	SkillLevel = HitEvent->GetSkillLevel();
+
+		GetOwnerFSM()->GetOwner()->GetScript<CUnitScript>()->GetHit(skilltype, SkillTarget, SkillUser, SkillLevel);
 	}
 	break;
 

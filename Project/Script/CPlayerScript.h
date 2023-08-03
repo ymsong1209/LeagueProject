@@ -9,7 +9,7 @@ class CPlayerScript :
 private:
     UINT64      m_id;
     wstring     m_nickname;
-    FactionType m_faction;
+    Faction     m_faction;
     bool        m_bHost;
     
     float       m_fSpeed;
@@ -26,13 +26,13 @@ public:
 
     UINT64 GetPlayerID() { return m_id; }
     wstring GetNickName() {return m_nickname;}
-    FactionType GetFaction() {return m_faction;}
+    Faction GetFaction() {return m_faction;}
     bool   GetIsHost() { return m_bHost; }
 
 
     void SetPlayerID(UINT64 _id) { m_id = _id; }
     void SetNickName(wstring _nickname) { m_nickname = _nickname; }
-    void SetFaction(FactionType _fection) { m_faction = _fection; }
+    void SetFaction(Faction _fection) { m_faction = _fection; }
     void SetHost(bool _bHost) { m_bHost = _bHost; }
 
 private:

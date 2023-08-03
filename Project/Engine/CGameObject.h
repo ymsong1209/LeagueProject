@@ -63,6 +63,8 @@ public:
 
     CComponent* GetComponent(COMPONENT_TYPE _ComType) { return m_arrCom[(UINT)_ComType]; }
     const vector<CGameObject*>& GetChild() { return m_vecChild; }
+    CGameObject* FindChildObjByName(wstring _name);
+
 
     CGameObject* GetParent() const { return m_Parent; }
 

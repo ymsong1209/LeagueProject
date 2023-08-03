@@ -3,6 +3,8 @@
 #include <Engine\CAnimator3D.h>
 #include <Engine\CAnim3D.h>
 
+#include "CSendServerEventMgr.h"
+#include "CUnitScript.h"
 CJinxIdleState::CJinxIdleState()
 {
 	SetName(L"Idle");
@@ -19,8 +21,12 @@ void CJinxIdleState::tick()
 
 void CJinxIdleState::Enter()
 {
-	GetOwner()->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true, 0.1f);
-	//GetOwner()->Animator3D()->PlayLoop(L"Jinx\\Idle1_Base", true, true, 0.1f);
+	wstring animName = L"Jinx\\Idle1_Base";
+	GetOwner()->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true, true, 0.15f);
+
+	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, true, true, 0.15f);
+	
 	CChampionIdleState::Enter();
 }
 
