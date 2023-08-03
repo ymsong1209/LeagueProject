@@ -333,33 +333,7 @@ void CreateTestLevel()
 	}
 
 
-	 //LoLMap 로딩
-	{
-	
-		Ptr<CMeshData> pMeshData = nullptr;
-		CGameObject* pObj = nullptr;
-		for (int i = 0; i <= 25; ++i) 
-		{
-			wstring num = std::to_wstring(i);
-			wstring FBXFilePath = L"fbx\\land";
-			FBXFilePath += num;
-			FBXFilePath += L".fbx";
-
-			wstring FBXFileName = L"land";
-			FBXFileName += num;
-
-			pMeshData = CResMgr::GetInst()->LoadFBX(FBXFilePath);
-			pObj = pMeshData->Instantiate();
-			pObj->SetName(FBXFileName);
-
-			//맵이 다 (0,0,0) 기준 컬링인거같아 불편해서 잠시 끕니다.
-			pObj->GetRenderComponent()->SetFrustumCheck(false);
-
-			pObj->GetRenderComponent()->SetShowDebugBound(false);
-			pObj->Transform()->SetGizmoObjExcept(false);
-			SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 6);
-		}
-	}
+	PlaceLand();
 
 
 	// TestFastForward
@@ -577,4 +551,48 @@ void CreateTestLevel()
 	 
 	// 충돌 시킬 레이어 짝 지정
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");
+}
+
+void PlaceLand()
+{
+	//LoLMap 로딩
+	{
+		Ptr<CMeshData> pMeshData = nullptr;
+		CGameObject* pObj = nullptr;
+
+		// 파일 경로 만들기
+		wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
+		strFilePath+= L"lolmap.txt";
+
+		// 읽기모드로 파일열기
+		std::wifstream file(strFilePath);
+		std::wstring line;
+
+		while (std::getline(file, line))
+		{
+			std::wistringstream iss(line);
+			std::wstring landName;
+			std::wstring ignore;
+			float scale;
+			Vec3 offset;
+
+			if (!(iss >> landName >> ignore >> scale >> ignore >> offset.x >> offset.y >> offset.z)) { break; }
+
+			wstring FBXFilePath = L"fbx\\" + landName + L".fbx";
+			wstring FBXFileName = landName + L".fbx";
+			pMeshData = CResMgr::GetInst()->LoadFBX(FBXFilePath);
+			pObj = pMeshData->Instantiate();
+			pObj->SetName(FBXFileName);
+
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetShowDebugBound(false);
+			pObj->Transform()->SetGizmoObjExcept(false);
+
+			pObj->GetRenderComponent()->SetBounding(scale);
+			pObj->GetRenderComponent()->SetBoundingBoxOffsetUse(true);
+			pObj->GetRenderComponent()->SetBoundingBoxOffset(offset);
+
+			SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 6);
+		}
+	}
 }
