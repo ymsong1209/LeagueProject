@@ -82,8 +82,13 @@ void CSendServerEventMgr::SendDespawnPacket(UINT64 _objId, float _lifeSpan)
 	CSendServerEventMgr::GetInst()->AddServerSendEvent(serverEvn);
 }
 
-void CSendServerEventMgr::SendDeadPacket(SkillType _skillType)
+void CSendServerEventMgr::SendKDACSPacket(UINT64 _killerId, UnitType _deadObjUnitType)
 {
+	tServerEvent serverEvn = {};	
+	serverEvn.Type = SERVER_EVENT_TYPE::SEND_KDA_CS_PACKET;
+	serverEvn.wParam = _killerId;
+	serverEvn.lParam = (DWORD_PTR)_deadObjUnitType;
+	CSendServerEventMgr::GetInst()->AddServerSendEvent(serverEvn);
 }
 
 void CSendServerEventMgr::SendSoundPacket()

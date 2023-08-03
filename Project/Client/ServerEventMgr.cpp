@@ -115,6 +115,15 @@ void ServerEventMgr::sendtick(ClientServiceRef _service)
 			break;
 		}
 
+		case SERVER_EVENT_TYPE::SEND_KDA_CS_PACKET:
+		{
+			UINT64 _killerId = (UINT64)(_vecScriptEvent[i].wParam);
+			UnitType _deadObjUnitType = (UnitType)(_vecScriptEvent[i].lParam);
+			// ÀÛ¼ºÁß
+			//GameObjMgr::GetInst()->SendKDACS(_killerId, _deadObjUnitType, _service);
+			break;
+		}
+
 
 		}
 

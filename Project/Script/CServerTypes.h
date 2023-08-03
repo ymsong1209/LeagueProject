@@ -20,7 +20,7 @@ enum class SERVER_EVENT_TYPE
 	SKILL_PROJECTILE_PACKET,  // wParam : SkillInfo
 	SEND_HIT_PACKET, 	      // wParam : HitInfo, 
 	SEND_DESPAWN_PACKET,      // wParam : objId,  lParam : lifeSpanTime
-	SEND_DEAD_PACKET,		  //
+	SEND_KDA_CS_PACKET,		  // wParam : killerId, lParam : UnitType _deadObjUnitType
 	SEND_SOUND_PACKET,
 };
 
