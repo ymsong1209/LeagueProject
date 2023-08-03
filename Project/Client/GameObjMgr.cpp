@@ -242,7 +242,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 
 			pObj->AddComponent(new CMinionScript);
-			pObj->AddComponent(new CCollider3D);
+			//pObj->AddComponent(new CCollider3D);
 			//pObj->AddComponent(new CCollider2D);
 
 			//pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
@@ -258,12 +258,12 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetFaction(_objectInfo.faction);
 			
 
-			pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
-			pObj->Collider3D()->SetAbsolute(true);
-			pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
-			pObj->Collider3D()->SetDrawCollision(false);
+			//pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+			//pObj->Collider3D()->SetAbsolute(true);
+			//pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
+			//pObj->Collider3D()->SetDrawCollision(false);
 
-			pObj->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 100.f));
+			pObj->Transform()->SetRelativeScale(Vec3(0.1f, 0.1f, 0.1f));
 
 
 			Vec3 spawnPos = Vec3(100.f + (50 * _objects.size()), 30.f, 100.f);

@@ -2,6 +2,7 @@
 
 //#include <Script/CServerTypes.h>
 
+
 enum ChampionType
 {
     NONE,
@@ -30,6 +31,39 @@ struct AnimInfoPacket {
             return false;
 
         size += animNameCount * sizeof(animNameItem);
+        return true;
+    }
+};
+
+struct SoundInfoPacket
+{
+    struct vec3Server
+    {
+        float x;
+        float y;
+        float z;
+    };
+
+    DimensionType   dimensionType;
+    Faction         faction;
+    int             iRoopCount;
+    float           fVolume;
+    bool            bOverlap;
+    float           fRange;
+    vec3Server      soundPos;
+
+    uint16 soundNameOffset;
+    uint16 soundNameCount;
+
+    struct soundNameItem {
+        wchar_t soundName;
+    };
+
+    bool Validate(BYTE* packetStart, uint16 packetSize, OUT uint32& size) {
+        if (soundNameOffset + soundNameCount * sizeof(soundNameItem) > packetSize)
+            return false;
+
+        size += soundNameCount * sizeof(soundNameItem);
         return true;
     }
 };

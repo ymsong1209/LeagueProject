@@ -40,6 +40,12 @@ struct AnimInfo
 	float   blendTime;
 };
 
+enum class DimensionType
+{
+	TwoD,
+	ThreeD,
+};
+
 enum class SkillType
 {
 	NONE,
@@ -89,6 +95,27 @@ struct HitInfo
 	int			 SkillLevel;     // 스킬레벨
 	SkillType	 skillType;      // 스킬타입
 };
+
+
+struct SoundInfo
+{
+	struct vec3Server
+	{
+		float x;
+		float y;
+		float z;
+	};
+
+	wstring			soundName;
+	DimensionType   dimensionType;
+	Faction         faction;
+	int             iRoopCount;
+	float           fVolume;
+	bool            bOverlap;
+	float           fRange;
+	vec3Server      soundPos;
+};
+
 enum class Faction
 {
 	NONE,

@@ -42,7 +42,17 @@ enum
 
 	C_DESPAWN_OBJECT = 23,
 	S_DESPAWN_OBJECT = 24,
+
+	C_KDA_CS = 25,
+	S_KDA_CS = 26,
+
+	C_SOUND = 27,
+	S_SOUND = 28,
+
+	C_TIME = 29,
+	S_TIME = 30,
 };
+
 class ServerPacketHandler
 {
 public:
@@ -852,6 +862,160 @@ struct PKT_S_DESPAWN_OBJECT {
 };
 #pragma pack()
 
+
+#pragma pack(1)
+struct PKT_C_KDA_CS {
+	uint16      packetSize;
+	uint16      packetId;
+	uint64      killerId;
+	UnitType   deadObjUnitType;
+
+	bool Validate()
+	{
+		uint32 size = 0;
+		size += sizeof(PKT_C_KDA_CS);
+		if (packetSize < size)
+			return false;
+
+		if (size != packetSize)
+			return false;
+
+		return true;
+	}
+};
+#pragma pack()
+
+
+#pragma pack(1)
+struct PKT_S_KDA_CS {
+	uint16      packetSize;
+	uint16      packetId;
+	uint64      killerId;
+	UnitType   deadObjUnitType;
+
+	bool Validate()
+	{
+		uint32 size = 0;
+		size += sizeof(PKT_S_KDA_CS);
+		if (packetSize < size)
+			return false;
+
+		if (size != packetSize)
+			return false;
+
+		return true;
+	}
+};
+#pragma pack()
+
+#pragma pack(1)
+struct PKT_C_SOUND {
+	uint16 packetSize;
+	uint16 packetId;
+	SoundInfoPacket soundInfo;
+
+	bool Validate() {
+		{
+			uint32 size = 0;
+			size += sizeof(PKT_C_SOUND);
+			if (packetSize < size)
+				return false;
+
+			if (soundInfo.Validate((BYTE*)this, packetSize, OUT size) == false)
+				return false;
+
+			if (size != packetSize)
+				return false;
+
+			return true;
+		}
+	}
+
+	using SoundNameList = PacketList<SoundInfoPacket::soundNameItem>;
+
+	SoundNameList GetSoundNameList() {
+		BYTE* data = reinterpret_cast<BYTE*>(this);
+		data += soundInfo.soundNameOffset;
+		return SoundNameList(reinterpret_cast<SoundInfoPacket::soundNameItem*>(data), soundInfo.soundNameCount);
+	}
+};
+#pragma pack()
+
+#pragma pack(1)
+struct PKT_S_SOUND {
+	uint16 packetSize;
+	uint16 packetId;
+	SoundInfoPacket soundInfo;
+
+	bool Validate() {
+		{
+			uint32 size = 0;
+			size += sizeof(PKT_S_SOUND);
+			if (packetSize < size)
+				return false;
+
+			if (soundInfo.Validate((BYTE*)this, packetSize, OUT size) == false)
+				return false;
+
+			if (size != packetSize)
+				return false;
+
+			return true;
+		}
+	}
+
+	using SoundNameList = PacketList<SoundInfoPacket::soundNameItem>;
+
+	SoundNameList GetSoundNameList() {
+		BYTE* data = reinterpret_cast<BYTE*>(this);
+		data += soundInfo.soundNameOffset;
+		return SoundNameList(reinterpret_cast<SoundInfoPacket::soundNameItem*>(data), soundInfo.soundNameCount);
+	}
+};
+#pragma pack()
+
+#pragma pack(1)
+struct PKT_C_TIME {
+	uint16      packetSize;
+	uint16      packetId;
+	float         second;
+
+	bool Validate()
+	{
+		uint32 size = 0;
+		size += sizeof(PKT_C_TIME);
+		if (packetSize < size)
+			return false;
+
+		if (size != packetSize)
+			return false;
+
+		return true;
+	}
+};
+#pragma pack()
+
+#pragma pack(1)
+struct PKT_S_TIME {
+	uint16      packetSize;
+	uint16      packetId;
+	float         second;
+
+	bool Validate()
+	{
+		uint32 size = 0;
+		size += sizeof(PKT_S_TIME);
+		if (packetSize < size)
+			return false;
+
+		if (size != packetSize)
+			return false;
+
+		return true;
+	}
+};
+#pragma pack()
+
 //=====================================
 // 이 밑은 패킷 Write 클래스 모음입니다. |
 //=====================================
@@ -1193,7 +1357,7 @@ public:
 
 		_pkt = _bw.Reserve<PKT_C_DESPAWN_OBJECT>();
 		_pkt->packetSize = 0; // To Fill
-		_pkt->packetId = S_SKILL_CC;
+		_pkt->packetId = C_DESPAWN_OBJECT;
 		_pkt->objId = _objId;
 		_pkt->time = _time;
 	}
@@ -1209,6 +1373,118 @@ public:
 
 private:
 	PKT_C_DESPAWN_OBJECT* _pkt = nullptr;
+	SendBufferRef _sendBuffer;
+	BufferWriter _bw;
+};
+#pragma pack()
+
+#pragma pack(1)
+class PKT_C_SOUND_WRITE {
+public:
+	using SoundNameList = PacketList<SoundInfoPacket::soundNameItem>;
+	using SoundNameItem = SoundInfoPacket::soundNameItem;
+
+	PKT_C_SOUND_WRITE(SoundInfoPacket _soundInfo)
+	{
+		_sendBuffer = GSendBufferManager->Open(4096);
+		// 초기화
+		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
+
+		_pkt = _bw.Reserve<PKT_C_SOUND>();
+		_pkt->packetSize = 0; // To Fill
+		_pkt->packetId = C_SOUND;
+		_pkt->soundInfo = _soundInfo;
+	}
+
+	SoundNameList ReserveAnimNameList(uint16 _soundNameCount) {
+		SoundNameItem* firstBuffsListItem = _bw.Reserve<SoundNameItem>(_soundNameCount);
+		_pkt->soundInfo.soundNameOffset = (uint64)firstBuffsListItem - (uint64)_pkt;
+		_pkt->soundInfo.soundNameCount = _soundNameCount;
+		return SoundNameList(firstBuffsListItem, _soundNameCount);
+	}
+
+	SendBufferRef CloseAndReturn()
+	{
+		// 패킷 사이즈 계산
+		_pkt->packetSize = _bw.WriteSize();
+
+		_sendBuffer->Close(_bw.WriteSize());
+		return _sendBuffer;
+	}
+
+private:
+	PKT_C_SOUND* _pkt = nullptr;
+	SendBufferRef _sendBuffer;
+	BufferWriter _bw;
+};
+#pragma pack()
+
+#pragma pack(1)
+class PKT_S_SOUND_WRITE {
+public:
+	using SoundNameList = PacketList<SoundInfoPacket::soundNameItem>;
+	using SoundNameItem = SoundInfoPacket::soundNameItem;
+
+	PKT_S_SOUND_WRITE(SoundInfoPacket _soundInfo)
+	{
+		_sendBuffer = GSendBufferManager->Open(4096);
+		// 초기화
+		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
+
+		_pkt = _bw.Reserve<PKT_S_SOUND>();
+		_pkt->packetSize = 0; // To Fill
+		_pkt->packetId = S_SOUND;
+		_pkt->soundInfo = _soundInfo;
+	}
+
+	SoundNameList ReserveAnimNameList(uint16 _soundNameCount) {
+		SoundNameItem* firstBuffsListItem = _bw.Reserve<SoundNameItem>(_soundNameCount);
+		_pkt->soundInfo.soundNameOffset = (uint64)firstBuffsListItem - (uint64)_pkt;
+		_pkt->soundInfo.soundNameCount = _soundNameCount;
+		return SoundNameList(firstBuffsListItem, _soundNameCount);
+	}
+
+	SendBufferRef CloseAndReturn()
+	{
+		// 패킷 사이즈 계산
+		_pkt->packetSize = _bw.WriteSize();
+
+		_sendBuffer->Close(_bw.WriteSize());
+		return _sendBuffer;
+	}
+
+private:
+	PKT_S_SOUND* _pkt = nullptr;
+	SendBufferRef _sendBuffer;
+	BufferWriter _bw;
+};
+#pragma pack()
+
+#pragma pack(1)
+class PKT_C_TIME_WRITE {
+public:
+	PKT_C_TIME_WRITE(float _seconds) {
+		_sendBuffer = GSendBufferManager->Open(4096);
+		// 초기화
+		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
+
+		_pkt = _bw.Reserve<PKT_C_TIME>();
+		_pkt->packetSize = 0; // To Fill
+		_pkt->packetId = C_TIME;
+		_pkt->second = _seconds;
+	}
+
+	SendBufferRef CloseAndReturn()
+	{
+		// 패킷 사이즈 계산
+		_pkt->packetSize = _bw.WriteSize();
+
+		_sendBuffer->Close(_bw.WriteSize());
+		return _sendBuffer;
+	}
+
+private:
+	PKT_C_TIME* _pkt = nullptr;
 	SendBufferRef _sendBuffer;
 	BufferWriter _bw;
 };
