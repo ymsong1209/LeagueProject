@@ -46,7 +46,8 @@ wstring GetRelativePath(const wstring& _strBase, const wstring& _strPath);
 // FbxMatrix -> Matrix
 Matrix GetMatrixFromFbxMatrix(FbxAMatrix& _mat);
 
-
+// DXGI_FORMAT -> Size(Byte)
+int GetSizeofFormat(DXGI_FORMAT _eFormat);
 
 
 // Save / Load

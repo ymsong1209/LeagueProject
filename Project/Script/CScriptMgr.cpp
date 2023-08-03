@@ -1,36 +1,42 @@
 #include "pch.h"
 #include "CScriptMgr.h"
 
+#include "CAttackRangeScript.h"
 #include "CBasicAttackScript.h"
 #include "CCameraMoveScript.h"
 #include "CChampionScript.h"
 #include "CInGameCameraScript.h"
 #include "CInhibitorScript.h"
 #include "CJinxScript.h"
+#include "CJinxWScript.h"
 #include "CJungleMonsterScript.h"
 #include "CMinionScript.h"
 #include "CMobScript.h"
 #include "CNexusScript.h"
 #include "COtherPlayerScript.h"
 #include "CPlayerScript.h"
+#include "CProjectileScript.h"
 #include "CStructureScript.h"
 #include "CTurretScript.h"
 #include "CUnitScript.h"
 
 void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 {
+	_vec.push_back(L"CAttackRangeScript");
 	_vec.push_back(L"CBasicAttackScript");
 	_vec.push_back(L"CCameraMoveScript");
 	_vec.push_back(L"CChampionScript");
 	_vec.push_back(L"CInGameCameraScript");
 	_vec.push_back(L"CInhibitorScript");
 	_vec.push_back(L"CJinxScript");
+	_vec.push_back(L"CJinxWScript");
 	_vec.push_back(L"CJungleMonsterScript");
 	_vec.push_back(L"CMinionScript");
 	_vec.push_back(L"CMobScript");
 	_vec.push_back(L"CNexusScript");
 	_vec.push_back(L"COtherPlayerScript");
 	_vec.push_back(L"CPlayerScript");
+	_vec.push_back(L"CProjectileScript");
 	_vec.push_back(L"CStructureScript");
 	_vec.push_back(L"CTurretScript");
 	_vec.push_back(L"CUnitScript");
@@ -38,6 +44,8 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 
 CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 {
+	if (L"CAttackRangeScript" == _strScriptName)
+		return new CAttackRangeScript;
 	if (L"CBasicAttackScript" == _strScriptName)
 		return new CBasicAttackScript;
 	if (L"CCameraMoveScript" == _strScriptName)
@@ -50,6 +58,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CInhibitorScript;
 	if (L"CJinxScript" == _strScriptName)
 		return new CJinxScript;
+	if (L"CJinxWScript" == _strScriptName)
+		return new CJinxWScript;
 	if (L"CJungleMonsterScript" == _strScriptName)
 		return new CJungleMonsterScript;
 	if (L"CMinionScript" == _strScriptName)
@@ -62,6 +72,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new COtherPlayerScript;
 	if (L"CPlayerScript" == _strScriptName)
 		return new CPlayerScript;
+	if (L"CProjectileScript" == _strScriptName)
+		return new CProjectileScript;
 	if (L"CStructureScript" == _strScriptName)
 		return new CStructureScript;
 	if (L"CTurretScript" == _strScriptName)
@@ -75,6 +87,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 {
 	switch (_iScriptType)
 	{
+	case (UINT)SCRIPT_TYPE::ATTACKRANGESCRIPT:
+		return new CAttackRangeScript;
+		break;
 	case (UINT)SCRIPT_TYPE::BASICATTACKSCRIPT:
 		return new CBasicAttackScript;
 		break;
@@ -92,6 +107,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::JINXSCRIPT:
 		return new CJinxScript;
+		break;
+	case (UINT)SCRIPT_TYPE::JINXWSCRIPT:
+		return new CJinxWScript;
 		break;
 	case (UINT)SCRIPT_TYPE::JUNGLEMONSTERSCRIPT:
 		return new CJungleMonsterScript;
@@ -111,6 +129,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::PLAYERSCRIPT:
 		return new CPlayerScript;
 		break;
+	case (UINT)SCRIPT_TYPE::PROJECTILESCRIPT:
+		return new CProjectileScript;
+		break;
 	case (UINT)SCRIPT_TYPE::STRUCTURESCRIPT:
 		return new CStructureScript;
 		break;
@@ -128,6 +149,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 {
 	switch ((SCRIPT_TYPE)_pScript->GetScriptType())
 	{
+	case SCRIPT_TYPE::ATTACKRANGESCRIPT:
+		return L"CAttackRangeScript";
+		break;
+
 	case SCRIPT_TYPE::BASICATTACKSCRIPT:
 		return L"CBasicAttackScript";
 		break;
@@ -152,6 +177,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CJinxScript";
 		break;
 
+	case SCRIPT_TYPE::JINXWSCRIPT:
+		return L"CJinxWScript";
+		break;
+
 	case SCRIPT_TYPE::JUNGLEMONSTERSCRIPT:
 		return L"CJungleMonsterScript";
 		break;
@@ -174,6 +203,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::PLAYERSCRIPT:
 		return L"CPlayerScript";
+		break;
+
+	case SCRIPT_TYPE::PROJECTILESCRIPT:
+		return L"CProjectileScript";
 		break;
 
 	case SCRIPT_TYPE::STRUCTURESCRIPT:

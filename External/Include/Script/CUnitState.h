@@ -4,6 +4,7 @@
 #include "IGameEventListener.h"
 #include "CGameEvent.h"
 #include "CGameEventMgr.h"
+#include <Engine/components.h>
 
 class CUnitState :
     public CState

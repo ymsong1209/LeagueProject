@@ -44,6 +44,12 @@ void CFsm::tick()
 
 void CFsm::AddState(const wstring& _strName, CState* _pState)
 {
+	//해당 name의 state가 이미 있음
+	if (FindState(_strName)) {
+		delete _pState;
+		return;
+	}
+
 	// State 맵에 해당 State를 추가한다
 	m_mapState.insert(make_pair(_strName, _pState));
 
@@ -67,6 +73,11 @@ void CFsm::ChangeState(const wstring& _strStateName)
 {
 	CState* pNextState = FindState(_strStateName);
 	assert(pNextState);		// 해당 State가 없을 시 Assert
+	
+	// 같은 state로 두번 이상 들어오려함. 방어처리
+	if (m_pCurState != nullptr && m_pCurState == pNextState) {
+		return;
+	}
 
 	// 현재 상태의 Exit 호출
 	if (m_pCurState != nullptr)

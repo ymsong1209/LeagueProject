@@ -4,7 +4,6 @@
 CStructureScript::CStructureScript(UINT ScriptType)
 	:CUnitScript(ScriptType)
 {
-	m_eUnitType = UnitType::STRUCTURE;
 }
 
 CStructureScript::CStructureScript()

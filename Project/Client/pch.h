@@ -31,4 +31,6 @@
 #endif
 
 #include "CorePch.h"
+
+#include <Script/CServerTypes.h>
 #include "ServerFunc.h"
