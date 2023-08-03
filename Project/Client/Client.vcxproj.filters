@@ -143,7 +143,7 @@
     <Filter Include="ClientMain">
       <UniqueIdentifier>{157ccfee-ae53-4453-970c-60967f1a6f16}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ServerMgr">
+    <Filter Include="GameObjMgr">
       <UniqueIdentifier>{0cc43779-28e7-4de9-becc-90cd6f7a0e78}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -306,7 +306,7 @@
       <Filter>UI\InspectorUI\ComponentUI\15. PathFinderUI</Filter>
     </ClInclude>
     <ClInclude Include="GameObjMgr.h">
-      <Filter>ServerMgr</Filter>
+      <Filter>GameObjMgr</Filter>
     </ClInclude>
     <ClInclude Include="ServerFunc.h">
       <Filter>ClientMain</Filter>
@@ -316,9 +316,6 @@
     </ClInclude>
     <ClInclude Include="ServerSession.h">
       <Filter>ClientMain</Filter>
-    </ClInclude>
-    <ClInclude Include="ServerEventMgr.h">
-      <Filter>ServerMgr</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -488,7 +485,7 @@
       <Filter>UI\InspectorUI\ComponentUI\15. PathFinderUI</Filter>
     </ClCompile>
     <ClCompile Include="GameObjMgr.cpp">
-      <Filter>ServerMgr</Filter>
+      <Filter>GameObjMgr</Filter>
     </ClCompile>
     <ClCompile Include="ServerPacketHandler.cpp">
       <Filter>ClientMain</Filter>
@@ -498,9 +495,6 @@
     </ClCompile>
     <ClCompile Include="ServerSession.cpp">
       <Filter>ClientMain</Filter>
-    </ClCompile>
-    <ClCompile Include="ServerEventMgr.cpp">
-      <Filter>ServerMgr</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

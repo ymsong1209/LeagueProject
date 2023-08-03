@@ -7,8 +7,6 @@
 #include <Engine/CLevel.h>
 #include <Engine/CEngine.h>
 #include <Engine/CRenderMgr.h>
-#include <Engine/CSound.h>
-#include <Engine/CResMgr.h>
 
 CCameraMoveScript::CCameraMoveScript()
 	: CScript((UINT)SCRIPT_TYPE::CAMERAMOVESCRIPT)
@@ -34,12 +32,6 @@ void CCameraMoveScript::tick()
 		CRenderMgr::GetInst()->GetMainCam() != this->GetOwner()->Camera()) {
 		return;
 	}
-
-	Vec3 CamPos = GetOwner()->Transform()->GetRelativePos();
-	Vec3 CamForward = GetOwner()->Transform()->GetWorldDir(DIR_TYPE::FRONT);
-	Vec3 CamUp = GetOwner()->Transform()->GetWorldDir(DIR_TYPE::UP);
-	CSound::UpdateListenerAttributes(CamPos, CamForward, CamUp);
-	
 
 	if (PROJ_TYPE::ORTHOGRAPHIC == Camera()->GetProjType())
 		Camera2DMove();

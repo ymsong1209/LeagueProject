@@ -8,10 +8,9 @@ enum class GAME_EVENT_TYPE
 	PLAYER_MOVE,
 	PLAYER_KILL_CHAMPION,
 	PLAYER_KILL_MOB,
-	PLAYER_BASIC_ATTACK,
+	PLAYER_BASE_ATTACK,
 	PLAYER_RECALL,
 	PLAYER_ABILITY_MODIFY,
-	PLAYER_GET_HIT,
 	PLAYER_SKILL_Q,
 	PLAYER_SKILL_W,
 	PLAYER_SKILL_E,
@@ -97,156 +96,31 @@ public:
 	void Clear() override { m_iPlayerID = -1; m_vTargetPos = {}; m_fFaceRot = 0; }
 };
 
-class BasicAttackEvent :
+class BaseAttackEvent :
 	public CGameEvent
 {
 public:
-	BasicAttackEvent()
-		: m_UserObj(nullptr)
-		, m_TargetObj(nullptr)
+	BaseAttackEvent()
+		: m_iUserID(-1)
+		, m_iTargetID(-1)
 	{
-		m_eEventType = GAME_EVENT_TYPE::PLAYER_BASIC_ATTACK;
+		m_eEventType = GAME_EVENT_TYPE::PLAYER_BASE_ATTACK;
 	}
 
 private:
-	CGameObject*             m_UserObj;
-	CGameObject*             m_TargetObj;
-
-
-public:
-	void	SetUserObj(CGameObject* _obj) { m_UserObj = _obj; }
-	void	SetTargetObj(CGameObject* _obj) { m_TargetObj = _obj; }
-
-	CGameObject*		GetUserObj() { return m_UserObj; }
-	CGameObject*		GetTargetObj() { return m_TargetObj; }
-
-	void Clear() override { m_UserObj = nullptr; m_TargetObj = nullptr; }
-};
-
-
-class CGameObject;
-enum class SkillType;
-
-class GetHitEvent :
-	public CGameEvent
-{
-public:
-	GetHitEvent()
-		: m_iUserObj(nullptr)
-		, m_eSkillType{ SkillType::NONE }
-	{
-		m_eEventType = GAME_EVENT_TYPE::PLAYER_GET_HIT;
-	}
-
-private:
-	CGameObject*	m_iUserObj;
-	CGameObject*	m_iTargetObj;
-	SkillType		m_eSkillType;
-	int				m_iSkillLevel;
-
-
-public:
+	int             m_iUserID;
+	int             m_iTargetID;
 	
-	void	SetUserObj(CGameObject* _Obj)	{ m_iUserObj = _Obj; }
-	void	SetTargetObj(CGameObject* _Obj) { m_iTargetObj = _Obj; }
-	void	SetSkillType(SkillType _type)	{ m_eSkillType = _type; }
-	void	SetSkillLevel(int _i) { m_iSkillLevel = _i; }
-
-	CGameObject* GetUserObj() { return m_iUserObj; }
-	CGameObject* GetTargetObj() { return m_iTargetObj; }
-	SkillType	 GetSkillType() { return m_eSkillType; }
-	int			 GetSkillLevel() { return m_iSkillLevel; }
-
-	void Clear() override { m_iUserObj = nullptr; m_iTargetObj = nullptr;  m_eSkillType = SkillType::NONE; m_iSkillLevel = 0; }
-};
-
-
-class PlayerQEvent :
-	public CGameEvent
-{
-public:
-	PlayerQEvent()
-	{
-		m_eEventType = GAME_EVENT_TYPE::PLAYER_SKILL_Q;
-	}
-private:
-	CGameObject* m_UserObj;
-	CGameObject* m_TargetObj;
 
 public:
-	void	SetUserObj(CGameObject* _obj) { m_UserObj = _obj; }
-	void	SetTargetObj(CGameObject* _obj) { m_TargetObj = _obj; }
+	void	SetUserID(int _i) { m_iUserID = _i; }
+	void	SetTargetID(int _i) { m_iTargetID = _i; }
 
-	CGameObject* GetUserObj() { return m_UserObj; }
-	CGameObject* GetTargetObj() { return m_TargetObj; }
+	int		GetUserID() { return m_iUserID; }
+	int		GetTargetID() { return m_iTargetID; }
 
-	void Clear() override { m_UserObj = nullptr; m_TargetObj = nullptr; }
-};
 
-class PlayerWEvent :
-	public CGameEvent
-{
-public:
-	PlayerWEvent()
-	{
-		m_eEventType = GAME_EVENT_TYPE::PLAYER_SKILL_W;
-	}
-private:
-	CGameObject* m_UserObj;
-	CGameObject* m_TargetObj;
-
-public:
-	void	SetUserObj(CGameObject* _obj) { m_UserObj = _obj; }
-	void	SetTargetObj(CGameObject* _obj) { m_TargetObj = _obj; }
-
-	CGameObject* GetUserObj() { return m_UserObj; }
-	CGameObject* GetTargetObj() { return m_TargetObj; }
-
-	void Clear() override { m_UserObj = nullptr; m_TargetObj = nullptr; }
-};
-
-class PlayerEEvent :
-	public CGameEvent
-{
-public:
-	PlayerEEvent()
-	{
-		m_eEventType = GAME_EVENT_TYPE::PLAYER_SKILL_E;
-	}
-private:
-	CGameObject* m_UserObj;
-	CGameObject* m_TargetObj;
-
-public:
-	void	SetUserObj(CGameObject* _obj) { m_UserObj = _obj; }
-	void	SetTargetObj(CGameObject* _obj) { m_TargetObj = _obj; }
-
-	CGameObject* GetUserObj() { return m_UserObj; }
-	CGameObject* GetTargetObj() { return m_TargetObj; }
-
-	void Clear() override { m_UserObj = nullptr; m_TargetObj = nullptr; }
-};
-
-class PlayerREvent :
-	public CGameEvent
-{
-public:
-	PlayerREvent()
-	{
-		m_eEventType = GAME_EVENT_TYPE::PLAYER_SKILL_R;
-	}
-private:
-	CGameObject* m_UserObj;
-	CGameObject* m_TargetObj;
-
-public:
-	void	SetUserObj(CGameObject* _obj) { m_UserObj = _obj; }
-	void	SetTargetObj(CGameObject* _obj) { m_TargetObj = _obj; }
-
-	CGameObject* GetUserObj() { return m_UserObj; }
-	CGameObject* GetTargetObj() { return m_TargetObj; }
-
-	void Clear() override { m_UserObj = nullptr; m_TargetObj = nullptr; }
+	void Clear() override { m_iUserID = -1; m_iTargetID = -1; }
 };
 
 

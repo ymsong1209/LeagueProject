@@ -6,7 +6,6 @@
 #include "ServerFunc.h"
 #include "GameObjMgr.h"
 #include "TestLevel.h"
-#include "ServerEventMgr.h"
 
 void ServerPacketHandler::HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
@@ -20,70 +19,22 @@ void ServerPacketHandler::HandlePacket(PacketSessionRef& session, BYTE* buffer, 
 	case S_TEST:
 		Handle_S_TEST(session, buffer, len);
 		break;
-
 	case S_LOGIN:
 		Handle_S_LOGIN(session, buffer, len);
 		break;
-
 	case S_PICK_FACTION:
 		Handle_S_PICK_FACTION(session, buffer, len);
 		break;
-
-	case S_PICK_CHAMPION:
-		Handle_S_PICK_CHAMPION(session, buffer, len);
+	case S_PICK_CHAMPION_AND_START:
+		Handle_S_PICK_CHAMPION_AND_START(session, buffer, len);
 		break;
-
 	case S_GAME_START:
 		Handle_S_GAME_START(session, buffer, len);
-		break;
-
-	case S_PLAYER_MOVE:
-		Handle_S_PLAYER_MOVE(session, buffer, len);
-		break;
-
-	case S_OBJECT_ANIM:
-		Handle_S_OBJECT_ANIM(session, buffer, len);
-		break;
-
-	case S_SPAWN_OBJECT:
-		Handle_S_SPAWN_OBJECT(session, buffer, len);
-		break;
-
-	case S_OBJECT_MOVE:
-		Handle_S_OBJECT_MOVE(session, buffer, len);
-		break;
-
-	case S_SKILL_PROJECTILE:
-		Handle_S_SKILL_PROJECTILE(session, buffer, len);
-		break;
-
-	case S_SKILL_HIT:
-		Handle_S_SKILL_HIT(session, buffer, len);
-		break;
-
-	case S_SKILL_DAMAGE:
-		Handle_S_SKILL_DAMAGE(session, buffer, len);
-		break;
-
-	case S_SKILL_CC:
-		Handle_S_SKILL_CC(session, buffer, len);
-		break;
-
-    case S_DESPAWN_OBJECT:
-		Handle_S_DESPAWN_OBJECT(session, buffer, len);
-		break;
-
-	case S_KDA_CS:
-		Handle_S_KDA_CS(session, buffer, len);
-		break;
-
-	case S_SOUND:
-		Handle_S_SOUND(session, buffer, len);
-		break;
-
-	case S_TIME:
-		Handle_S_TIME(session, buffer, len);
-		break;
+	case S_MOVE:
+		Handle_S_MOVE(session, buffer, len);
+	//case S_PLAYER_UPDATE:
+	//	Handle_S_PLAYER_UPDATE(session, buffer, len);
+	//	break;
 	}
 }
 
@@ -134,15 +85,9 @@ void ServerPacketHandler::Handle_S_LOGIN(PacketSessionRef& session, BYTE* buffer
 	uint64 _PlayerId = pkt->playerId;
 	if (_Success)
 		cout << "S_LOGIN Success" << endl;
-	else
-		cout << "S_LOGIN Fail" << endl;
-
 
 	if(MyPlayer.id == 0)
 		MyPlayer.id = _PlayerId;
-
-	// 진영 선택 레벨 
-	//CreateFactionLevel();
 
 	PKT_S_LOGIN::PlayerList playerIdBuffs = pkt->GetPlayerList();
 	for (auto& playerIdBuff : playerIdBuffs)
@@ -168,10 +113,6 @@ void ServerPacketHandler::Handle_S_LOGIN(PacketSessionRef& session, BYTE* buffer
 		{
 			MyPlayer.faction = playerIdBuff.playerFaction;
 			MyPlayer.nickname = playerNickName;
-			MyPlayer.host = playerIdBuff.host;
-
-			if(MyPlayer.host)
-				cout << "!!!! You are a HOST !!!! " << endl;
 
 			cout << "My Id : " << MyPlayer.id
 				<< ", My Faction : " << (int)MyPlayer.faction
@@ -200,24 +141,20 @@ void ServerPacketHandler::Handle_S_PICK_FACTION(PacketSessionRef& session, BYTE*
 
 	bool _Success = pkt->success;
 	WaitingStatus waiting = pkt->waiting;
-	
+
 	if(_Success)
 		cout << "S_PICK_FACTION Success" << endl;
-	else
-		cout << "S_PICK_FACTION Fail" << endl;
-	// 챔피언 픽 레벨로 이동
-	//CreateChampionPickLevel();
 
 	std::cout << "===============================" << endl;
 }
 
-void ServerPacketHandler::Handle_S_PICK_CHAMPION(PacketSessionRef& session, BYTE* buffer, int32 len)
+void ServerPacketHandler::Handle_S_PICK_CHAMPION_AND_START(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
-	cout << "S_PICK_CHAMPION Packet" << endl;
+	cout << "S_PICK_CHAMPION_AND_START Packet" << endl;
 
 	BufferReader br(buffer, len);
 
-	PKT_S_PICK_CHAMPION* pkt = reinterpret_cast<PKT_S_PICK_CHAMPION*>(buffer);
+	PKT_S_PICK_CHAMPION_AND_START* pkt = reinterpret_cast<PKT_S_PICK_CHAMPION_AND_START*>(buffer);
 
 	if (pkt->Validate() == false)
 		return;
@@ -225,17 +162,7 @@ void ServerPacketHandler::Handle_S_PICK_CHAMPION(PacketSessionRef& session, BYTE
 	bool _Success = pkt->success;
 
 	if (_Success)
-		cout << "S_PICK_CHAMPION Success" << endl;
-	else
-		cout << "S_PICK_CHAMPION Fail" << endl;
-
-	// 내가 챔피언을 변경했을 시 업데이트
-	if (MyPlayer.id == pkt->PlayerID)
-	{
-		MyPlayer.champion = pkt->champion;
-
-		cout << "My Pick Champion is " << (int)MyPlayer.champion << endl;
-	}
+		cout << "S_PICK_CHAMPION_AND_START Success" << endl;
 
 	std::cout << "===============================" << endl;
 
@@ -251,10 +178,7 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 	PKT_S_GAME_START* pkt = reinterpret_cast<PKT_S_GAME_START*>(buffer);
 
 	if (pkt->Validate() == false)
-	{
-		m.unlock();
 		return;
-	}
 
 	bool _Success = pkt->success;
 
@@ -290,7 +214,7 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 				GameObjMgr::GetInst()->AddPlayer(MyPlayer, true);
 				
 				cout << "My Champion : " << (int)MyPlayer.champion
-					<< ", My PosInfo : " << (float)MyPlayer.posInfo.pos.x
+					<< " My PosInfo : " << (float)MyPlayer.posInfo.pos.x
 					<< ", " << (float)MyPlayer.posInfo.pos.y
 					<< ", " << (float)MyPlayer.posInfo.pos.z
 					<< endl;
@@ -318,11 +242,8 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 	}
 	else
 	{
-		cout << "S_GAME_START Fail" << endl;
-		
 		IsInGame = false;
 		// 다시 진영 선택 레벨로 간다.
-		//CreateFactionLevel();
 	}
 
 	std::cout << "===============================" << endl;
@@ -330,59 +251,15 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 	m.unlock();
 }
 
-void ServerPacketHandler::Handle_S_PLAYER_MOVE(PacketSessionRef& session, BYTE* buffer, int32 len)
-{
-	std::mutex m;
-	{
-		std::lock_guard<std::mutex> lock(m);
-
-		cout << "S_PLAYER_MOVE Packet" << endl;
-		BufferReader br(buffer, len);
-
-		PKT_S_PLAYER_MOVE* pkt = reinterpret_cast<PKT_S_PLAYER_MOVE*>(buffer);
-
-		if (pkt->Validate() == false)
-			return;
-
-		// 내 플레이어가 보낸 움직임은 반영하지 않아도 된다. 
-		uint64 _PlayerId = pkt->playerId;
-		if (_PlayerId == MyPlayer.id)
-			return;
-		
-		ObjectMove _playerMove = pkt->playerMove;
-		CGameObject* obj = GameObjMgr::GetInst()->FindPlayer(_PlayerId);
-
-		tServerEvent evn = {};
-		evn.Type = SERVER_EVENT_TYPE::MOVE_PACKET;
-		evn.wParam = (DWORD_PTR)obj;
-
-		ObjectMove* objMove = new ObjectMove();
-		objMove->AttackPower = _playerMove.AttackPower;
-		objMove->CC = _playerMove.CC;
-		objMove->DefencePower = _playerMove.DefencePower;
-		objMove->HP = _playerMove.HP;
-		objMove->MP = _playerMove.MP;
-		objMove->LV = _playerMove.LV;
-		objMove->pos = _playerMove.pos;
-		objMove->moveDir = _playerMove.moveDir;
-		objMove->CC = _playerMove.CC;
-		evn.lParam = (DWORD_PTR)objMove;
-
-		ServerEventMgr::GetInst()->AddEvent(evn);
-
-		std::cout << "===============================" << endl;
-	}
-}
-
-void ServerPacketHandler::Handle_S_OBJECT_ANIM(PacketSessionRef& session, BYTE* buffer, int32 len)
+void ServerPacketHandler::Handle_S_MOVE(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
 	std::mutex m;
 	m.lock();
 
-	cout << "S_OBJECT_ANIM Packet" << endl;
+	cout << "S_MOVE Packet" << endl;
 	BufferReader br(buffer, len);
 
-	PKT_S_OBJECT_ANIM* pkt = reinterpret_cast<PKT_S_OBJECT_ANIM*>(buffer);
+	PKT_S_MOVE* pkt = reinterpret_cast<PKT_S_MOVE*>(buffer);
 
 	if (pkt->Validate() == false)
 	{
@@ -390,334 +267,16 @@ void ServerPacketHandler::Handle_S_OBJECT_ANIM(PacketSessionRef& session, BYTE* 
 		return;
 	}
 
-	// 보낸이가 본인일 경우 처리 x
-	uint64 _sendId = pkt->sendId;
-	if (_sendId != MyPlayer.id)
+	// 해당 Id 플레이어가 움직임.
+	uint64 _PlayerId = pkt->playerId;
+	if (_PlayerId != MyPlayer.id)
 	{
-		AnimInfoPacket _AnimInfoPacket = pkt->animInfo;
+		PlayerMove playerMove = pkt->playerMove;
 
-		// 애니메이션 이름
-		PKT_S_OBJECT_ANIM::AnimNameList AnimNameBuffs = pkt->GetAnimNameList();
-		wstring _animName = L"";
-		for (auto& AnimNameBuff : AnimNameBuffs)
-		{
-			_animName.push_back(AnimNameBuff.animName);
-		}
-
-		AnimInfo _AnimInfo = {};
-		_AnimInfo.targetId = _AnimInfoPacket.targetId;
-		_AnimInfo.animName = _animName;
-		_AnimInfo.bRepeat = _AnimInfoPacket.bRepeat;
-		_AnimInfo.blend = _AnimInfoPacket.blend;
-		_AnimInfo.blendTime = _AnimInfoPacket.blendTime;
-
-
-		CGameObject* obj = GameObjMgr::GetInst()->FindAllObject(_AnimInfo.targetId);
-
-		tServerEvent evn = {};
-		evn.Type = SERVER_EVENT_TYPE::ANIM_PACKET;
-		evn.wParam = (DWORD_PTR)obj;
-
-		// AnimInfo 구조체의 포인터를 DWORD_PTR로 캐스팅하여 lParam에 저장
-		AnimInfo* animInfo = new AnimInfo(_AnimInfo);
-		evn.lParam = (DWORD_PTR)animInfo;
-
-		ServerEventMgr::GetInst()->AddEvent(evn);
+		GameObjMgr::GetInst()->MovePlayer(_PlayerId, playerMove);
 	}
 
 	std::cout << "===============================" << endl;
 
 	m.unlock();
 }
-
-void ServerPacketHandler::Handle_S_SPAWN_OBJECT(PacketSessionRef& session, BYTE* buffer, int32 len)
-{
-	std::mutex m;
-	m.lock();
-
-	cout << "S_SPAWN_OBJECT Packet" << endl;
-	BufferReader br(buffer, len);
-
-	PKT_S_SPAWN_OBJECT* pkt = reinterpret_cast<PKT_S_SPAWN_OBJECT*>(buffer);
-
-	if (pkt->Validate() == false)
-	{
-		cout << "S_SPAWN_OBJECT Validate Fail" << endl;
-		m.unlock();
-		return;
-	}
-
-	ObjectInfo _objectInfo = pkt->objectInfo;
-	uint64 _objectId = pkt->objectInfo.objectId;
-
-	cout << "Id : " << _objectId << endl;
-
-	GameObjMgr::GetInst()->AddObject(_objectId, _objectInfo);
-
-	std::cout << "===============================" << endl;
-
-	m.unlock();
-}
-
-void ServerPacketHandler::Handle_S_OBJECT_MOVE(PacketSessionRef& session, BYTE* buffer, int32 len)
-{
-	std::mutex m;
-	m.lock();
-
-	cout << "S_OBJECT_MOVE Packet" << endl;
-	BufferReader br(buffer, len);
-
-	PKT_S_OBJECT_MOVE* pkt = reinterpret_cast<PKT_S_OBJECT_MOVE*>(buffer);
-
-	if (pkt->Validate() == false)
-	{
-		m.unlock();
-		cout << "S_OBJECT_MOVE Packet Validate Fail " << endl;
-		return;
-	}
-
-	// 해당 Id 오브젝트가 움직임.
-	uint64 _objectId = pkt->objectId;
-
-	// 방장을 제외한 클라이언트만 해당 움직임을 받는다.
-	if (!MyPlayer.host)
-	{
-		ObjectMove _objectMove = pkt->objectMove;
-
-		CGameObject* obj = GameObjMgr::GetInst()->FindObject(_objectId);
-
-		tServerEvent evn = {};
-		evn.Type = SERVER_EVENT_TYPE::MOVE_PACKET;
-		evn.wParam = (DWORD_PTR)obj;
-
-		// ObjectMove 구조체의 포인터를 DWORD_PTR로 캐스팅하여 lParam에 저장
-		ObjectMove* objMove = new ObjectMove();
-		objMove->LV = _objectMove.LV;
-		objMove->HP = _objectMove.HP;
-		objMove->MP = _objectMove.MP;
-		objMove->AttackPower = _objectMove.AttackPower;
-		objMove->DefencePower = _objectMove.DefencePower;
-		objMove->moveDir = _objectMove.moveDir;
-		objMove->pos = _objectMove.pos;
-
-		evn.lParam = (DWORD_PTR)objMove;
-
-		ServerEventMgr::GetInst()->AddEvent(evn);
-	}
-
-	std::cout << "===============================" << endl;
-
-	m.unlock();
-}
-
-void ServerPacketHandler::Handle_S_SKILL_PROJECTILE(PacketSessionRef& session, BYTE* buffer, int32 len)
-{
-	std::mutex m;
-	m.lock();
-
-	cout << "S_SKILL_PROJECTILE Packet" << endl;
-	BufferReader br(buffer, len);
-
-	PKT_S_SKILL_PROJECTILE* pkt = reinterpret_cast<PKT_S_SKILL_PROJECTILE*>(buffer);
-
-	if (pkt->Validate() == false)
-	{
-		cout << "S_SKILL_PROJECTILE Packet Validate False" << endl;
-		m.unlock();
-		return;
-	}
-
-	// 투사체 objectId Id
-	uint64 _objectId = pkt->projectileId;
-	SkillInfo _skillInfo = pkt->skillInfo;
-
-	GameObjMgr::GetInst()->AddSkillProjectile(_objectId, _skillInfo);
-
-	std::cout << "===============================" << endl;
-
-	m.unlock();
-}
-
-void ServerPacketHandler::Handle_S_SKILL_HIT(PacketSessionRef& session, BYTE* buffer, int32 len)
-{
-	std::mutex m;
-	m.lock();
-
-	cout << "S_SKILL_HIT Packet" << endl;
-	BufferReader br(buffer, len);
-
-	PKT_S_SKILL_HIT* pkt = reinterpret_cast<PKT_S_SKILL_HIT*>(buffer);
-
-	if (pkt->Validate() == false)
-	{
-		cout << "S_SKILL_HIT Packet Validate False" << endl;
-		m.unlock();
-		return;
-	}
-
-	uint64	hitObjId = pkt->objecId;       // 스킬을 맞은 오브젝트 id
-	SkillInfo skillInfo = pkt->skillInfo;  // 맞은 스킬 정보
-
-
-	tServerEvent evn = {};
-	evn.Type = SERVER_EVENT_TYPE::SKILL_HIT_PACKET;
-	evn.wParam = (DWORD_PTR)hitObjId;
-
-	SkillInfo* _skillInfo = new SkillInfo(skillInfo);
-	evn.lParam = (DWORD_PTR)_skillInfo;
-
-	ServerEventMgr::GetInst()->AddEvent(evn);
-
-	std::cout << "===============================" << endl;
-	m.unlock();
-}
-
-void ServerPacketHandler::Handle_S_DESPAWN_OBJECT(PacketSessionRef& session, BYTE* buffer, int32 len)
-{
-	std::mutex m;
-	m.lock();
-
-	cout << "S_DESPAWN_OBJECT Packet" << endl;
-	BufferReader br(buffer, len);
-
-	PKT_S_DESPAWN_OBJECT* pkt = reinterpret_cast<PKT_S_DESPAWN_OBJECT*>(buffer);
-
-	if (pkt->Validate() == false)
-	{
-		cout << "S_DESPAWN_OBJECT Validate False" << endl;
-		m.unlock();
-		return;
-	}
-
-	uint64	despawnId = pkt->objId;    
-	float   lifespan = pkt->time;  
-
-	tServerEvent evn = {};
-	evn.Type = SERVER_EVENT_TYPE::DESPAWN_PACKET;
-	evn.wParam = despawnId;
-	evn.lParam = lifespan;
-
-	ServerEventMgr::GetInst()->AddEvent(evn);
-
-	std::cout << "===============================" << endl;
-	m.unlock();
-}
-
-void ServerPacketHandler::Handle_S_KDA_CS(PacketSessionRef& session, BYTE* buffer, int32 len)
-{
-	std::mutex m;
-	m.lock();
-
-	cout << "S_KDA_CS Packet" << endl;
-	BufferReader br(buffer, len);
-
-	PKT_S_KDA_CS* pkt = reinterpret_cast<PKT_S_KDA_CS*>(buffer);
-
-	if (pkt->Validate() == false)
-	{
-		cout << "S_KDA_CS Validate False" << endl;
-		m.unlock();
-		return;
-	}
-
-	uint64	  _killerId = pkt->killerId;
-	UnitType  _deadObjUnitType = pkt->deadObjUnitType;
-
-	tServerEvent evn = {};
-	evn.Type = SERVER_EVENT_TYPE::KDA_CS_PACKET;
-	evn.wParam = _killerId;
-	evn.lParam = (DWORD_PTR)_deadObjUnitType;
-
-	ServerEventMgr::GetInst()->AddEvent(evn);
-
-	std::cout << "===============================" << endl;
-	m.unlock();
-}
-
-void ServerPacketHandler::Handle_S_SOUND(PacketSessionRef& session, BYTE* buffer, int32 len)
-{
-	std::mutex m;
-	m.lock();
-
-	cout << "S_SOUND Packet" << endl;
-	BufferReader br(buffer, len);
-
-	PKT_S_SOUND* pkt = reinterpret_cast<PKT_S_SOUND*>(buffer);
-
-	if (pkt->Validate() == false)
-	{
-		cout << "S_SOUND Validate False" << endl;
-		m.unlock();
-		return;
-	}
-
-	SoundInfoPacket	 _soundInfoPacket = pkt->soundInfo;
-	PKT_S_SOUND::SoundNameList soundNameBuffs = pkt->GetSoundNameList();
-	
-	// sound 이름
-	wstring _soundName = L"";
-	for (auto& soundNameBuff : soundNameBuffs)
-	{
-		_soundName.push_back(soundNameBuff.soundName);
-	}
-
-	SoundInfo* soundInfo = new SoundInfo();
-	soundInfo->soundName	 = _soundName;
-	soundInfo->dimensionType = _soundInfoPacket.dimensionType;
-	soundInfo->faction		 = _soundInfoPacket.faction;
-	soundInfo->iRoopCount	 = _soundInfoPacket.iRoopCount;
-	soundInfo->fVolume		 = _soundInfoPacket.fVolume;
-	soundInfo->bOverlap		 = _soundInfoPacket.bOverlap;
-	soundInfo->fRange		 = _soundInfoPacket.fRange;
-	soundInfo->soundPos.x    = _soundInfoPacket.soundPos.x;
-	soundInfo->soundPos.y    = _soundInfoPacket.soundPos.y;
-	soundInfo->soundPos.z    = _soundInfoPacket.soundPos.z;
-
-
-	tServerEvent evn = {};
-	evn.Type = SERVER_EVENT_TYPE::SOUND_PACKET;
-	evn.wParam = (DWORD_PTR)soundInfo;
-
-	ServerEventMgr::GetInst()->AddEvent(evn);
-
-	std::cout << "===============================" << endl;
-	m.unlock();
-}
-
-void ServerPacketHandler::Handle_S_TIME(PacketSessionRef& session, BYTE* buffer, int32 len)
-{
-	std::mutex m;
-	m.lock();
-
-	cout << "S_TIME Packet" << endl;
-	BufferReader br(buffer, len);
-
-	PKT_S_TIME* pkt = reinterpret_cast<PKT_S_TIME*>(buffer);
-
-	if (pkt->Validate() == false)
-	{
-		cout << "S_TIME Validate False" << endl;
-		m.unlock();
-		return;
-	}
-
-	float	  _killerId = pkt->second;
-
-	// 모두가 본인의 시간을 업데이트 하는 코드 추가 필요
-
-	std::cout << "===============================" << endl;
-	m.unlock();
-}
-
-
-
-
-// 안씀
-void ServerPacketHandler::Handle_S_SKILL_DAMAGE(PacketSessionRef& session, BYTE* buffer, int32 len)
-{
-}
-
-void ServerPacketHandler::Handle_S_SKILL_CC(PacketSessionRef& session, BYTE* buffer, int32 len)
-{
-}
-

@@ -6,7 +6,6 @@ CMinionScript::CMinionScript()
 	, m_eLane(Lane::NONE)
 	, m_vecTargetPoint{}
 {
-	AddScriptParam(SCRIPT_PARAM::INT, &m_eMinionType, "Type");
 }
 
 CMinionScript::~CMinionScript()
@@ -15,11 +14,6 @@ CMinionScript::~CMinionScript()
 
 void CMinionScript::begin()
 {
-
-	GetOwner()->Transform()->SetUseMouseOutline(true);
-	// 진영
-	SetFaction(Faction::RED);
-
 	// 본인의 Lane, MinionType에 따라 정보 변경
 
 	switch (m_eLane)
@@ -62,7 +56,7 @@ void CMinionScript::begin()
 	m_fHP = m_fMaxHP;
 }
 
-void CMinionScript::tick() 
+void CMinionScript::tick()
 {
 	/*
 	1. 라인별 타겟 포인트로 전진한다.

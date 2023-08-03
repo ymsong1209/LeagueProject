@@ -1,6 +1,14 @@
 #pragma once
 #include "CMobScript.h"
 
+enum class MinionType
+{
+    MELEE,      // 근거리
+    RANGED,     // 원거리
+    SEIGE,      // 대포
+    SUPER,      // 슈퍼
+};
+
 class CMinionScript :
     public CMobScript
 {

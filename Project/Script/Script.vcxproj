@@ -123,14 +123,13 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions);_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;_HAS_STD_BYTE=0</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <MinFilesInUnityFile>10</MinFilesInUnityFile>
       <MaxFilesInUnityFile>20</MaxFilesInUnityFile>
       <UnityFilesDirectory>$(ProjectDir)</UnityFilesDirectory>
-      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -150,7 +149,7 @@ call CodeGen.exe</Command>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions);_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;_HAS_STD_BYTE=0</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -173,8 +172,7 @@ call CodeGen.exe</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CAttackRangeScript.h" />
-    <ClInclude Include="CBasicAttack.h" />
+    <ClInclude Include="CBaseAttack.h" />
     <ClInclude Include="CBasicAttackScript.h" />
     <ClInclude Include="CCameraMoveScript.h" />
     <ClInclude Include="CChampionAttackState.h" />
@@ -188,9 +186,6 @@ call CodeGen.exe</Command>
     <ClInclude Include="CFlash.h" />
     <ClInclude Include="CGameEvent.h" />
     <ClInclude Include="CGameEventMgr.h" />
-    <ClInclude Include="CJinxAttackState.h" />
-    <ClInclude Include="CJinxWScript.h" />
-    <ClInclude Include="CJinxWState.h" />
     <ClInclude Include="CHeal.h" />
     <ClInclude Include="CInhibitorBrokenState.h" />
     <ClInclude Include="CInhibitorIdleState.h" />
@@ -217,12 +212,8 @@ call CodeGen.exe</Command>
     <ClInclude Include="CNexusScript.h" />
     <ClInclude Include="COtherPlayerScript.h" />
     <ClInclude Include="CPlayerScript.h" />
-    <ClInclude Include="CProjectileScript.h" />
     <ClInclude Include="CScriptMgr.h" />
-    <ClInclude Include="CSendServerEventMgr.h" />
-    <ClInclude Include="CServerTypes.h" />
     <ClInclude Include="CSkill.h" />
-    <ClInclude Include="CSkillMgr.h" />
     <ClInclude Include="CStructureScript.h" />
     <ClInclude Include="CTurretScript.h" />
     <ClInclude Include="CUnitScript.h" />
@@ -233,8 +224,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CAttackRangeScript.cpp" />
-    <ClCompile Include="CBasicAttack.cpp" />
+    <ClCompile Include="CBaseAttack.cpp" />
     <ClCompile Include="CBasicAttackScript.cpp" />
     <ClCompile Include="CCameraMoveScript.cpp" />
     <ClCompile Include="CChampionAttackState.cpp" />
@@ -252,7 +242,6 @@ call CodeGen.exe</Command>
     <ClCompile Include="CInhibitorIdleState.cpp" />
     <ClCompile Include="CInhibitorScript.cpp" />
     <ClCompile Include="CInhibitorSpawnState.cpp" />
-    <ClCompile Include="CJinxAttackState.cpp" />
     <ClCompile Include="CJinxDeathState.cpp" />
     <ClCompile Include="CJinxIdleState.cpp" />
     <ClCompile Include="CJinxQ.cpp" />
@@ -261,8 +250,6 @@ call CodeGen.exe</Command>
     <ClCompile Include="CJinxScript.cpp" />
     <ClCompile Include="CJinxW.cpp" />
     <ClCompile Include="CJinxWalkState.cpp" />
-    <ClCompile Include="CJinxWScript.cpp" />
-    <ClCompile Include="CJinxWState.cpp" />
     <ClCompile Include="CJungleAttackState.cpp" />
     <ClCompile Include="CJungleChaseState.cpp" />
     <ClCompile Include="CJungleDeathState.cpp" />
@@ -276,12 +263,9 @@ call CodeGen.exe</Command>
     <ClCompile Include="CNexusScript.cpp" />
     <ClCompile Include="COtherPlayerScript.cpp" />
     <ClCompile Include="CPlayerScript.cpp" />
-    <ClCompile Include="CInGameCameraScript.cpp" />
-    <ClCompile Include="CProjectileScript.cpp" />
     <ClCompile Include="CScriptMgr.cpp" />
-    <ClCompile Include="CSendServerEventMgr.cpp" />
+    <ClCompile Include="CInGameCameraScript.cpp" />
     <ClCompile Include="CSkill.cpp" />
-    <ClCompile Include="CSkillMgr.cpp" />
     <ClCompile Include="CStructureScript.cpp" />
     <ClCompile Include="CTurretScript.cpp" />
     <ClCompile Include="CUnitScript.cpp" />

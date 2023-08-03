@@ -1,8 +1,7 @@
 #include "pch.h"
 #include "CChampionSkillState.h"
+#include <Engine/CTimeMgr.h>
 #include <Engine/CFsm.h>
-#include <Engine/CAnimator3D.h>
-#include <Engine/CAnim3D.h>
 
 CChampionSkillState::CChampionSkillState()
 {
@@ -14,10 +13,13 @@ CChampionSkillState::~CChampionSkillState()
 
 void CChampionSkillState::tick()
 {
-	// 애니메이션이 끝날 경우, Idle로 전환
-	if (GetOwnerFSM()->GetOwner()->Animator3D()->GetCurAnim()->IsFinish())
-		GetOwnerFSM()->ChangeState(L"Idle");
+	// 캐스팅 시간
+	if (m_fCurCastingTime > 0.f)
+		m_fCurCastingTime -= DT;
+	else
+		m_fCurCastingTime = 0.f;
 
+	// 애니메이션 끝났고, 캐스팅타임 끝났으면 Idle로 전환
 }
 
 void CChampionSkillState::Enter()
@@ -28,6 +30,7 @@ void CChampionSkillState::Enter()
 void CChampionSkillState::Exit()
 {
 	CUnitState::Exit();
+	m_fCurCastingTime = m_fCastingTime;
 }
 
 void CChampionSkillState::HandleEvent(CGameEvent& event)

@@ -1,8 +1,16 @@
 #pragma once
 #include "CUnitScript.h"
 
-#ifndef CHAMPION_ENUM_DEFINED
-#define CHAMPION_ENUM_DEFINED
+// 군중 제어기
+enum CC
+{
+    NONE = 0,
+    SLOW = 1 << 0,
+    SILENCE = 1 << 1,
+    ROOT = 1 << 2,
+    STUN = 1 << 3,
+    AIRBORNE = 1 << 4,
+};
 
 // 행동 제약
 enum RESTRAINT
@@ -26,11 +34,6 @@ enum class SUMMONERS_SPELL
     EXHAUST,    // 탈진
     CLEANSE,    // 정화
 };
-#endif
-
-#ifndef CHAMPION_CLASS_DEFINED
-#define CHAMPION_CLASS_DEFINED
-
 
 class CSkill;
 
@@ -49,6 +52,8 @@ protected:
     int                     m_iLevel;           // 레벨
     float                   m_fExp;             // 경험치
 
+    float                   m_fMana;            // 마나
+    float                   m_fMaxMana;         // 전체 마나
 
     float                   m_fRespawnTime;     // 부활 대기시간
 
@@ -56,11 +61,7 @@ protected:
     RESTRAINT               m_eRestraint;
 
     CSkill*                 m_Skill[5];
-    int                     m_SkillLevel[5];
-   
     SUMMONERS_SPELL*        m_EquippedSpell;    // 장착 소환사 주문(2칸 배열)
-
-    bool                    m_bIsAttackingChampion;
 
 
  // =========== Script   ============
@@ -77,10 +78,10 @@ public:
     void    GetInput();     // 입력 받기
     void    CheckSkills();  // 스킬 체크
     void    Move();
-    bool    IsAttackingChampion() { return m_bIsAttackingChampion; }
-    
 
 
+    // 비동기
+    void    GetHit(CSkill* _skill);       // 피격시 
     
     // =========== Skill     ==============
 public:
@@ -91,9 +92,8 @@ public:
 
 
 public:
-    int     GetLevel() { return m_iLevel; }
-    float   GetDefencePower() { return m_fDefencePower; }
-    CSkill* GetSkill(int _i) { if (_i < 0 || _i >= 5) return nullptr; return m_Skill[_i]; }
-    int     GetSkillLevel(int _i) { return m_SkillLevel[_i]; }
+    int GetLevel() { return m_iLevel; }
+    float GetDefencePower() { return m_fDefencePower; }
+    CSkill* GetSkill(int _i) { if (_i < 0 || _i >= 5) return nullptr; m_Skill[_i]; }
 };
-#endif
+

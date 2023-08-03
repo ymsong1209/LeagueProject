@@ -19,7 +19,6 @@ CCollider2D::CCollider2D(const CCollider2D& _other)
 	: CComponent(COMPONENT_TYPE::COLLIDER2D)
 	, m_vOffsetPos(_other.m_vOffsetPos)
 	, m_vOffsetScale(_other.m_vOffsetScale)
-	, m_vOffsetRot(_other.m_vOffsetRot)
 	, m_bAbsolute(_other.m_bAbsolute)
 	, m_Shape(_other.m_Shape)
 

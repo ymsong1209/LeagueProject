@@ -49,15 +49,15 @@ void CChampionRecallState::HandleEvent(CGameEvent& event)
 		GetOwnerFSM()->ChangeState(L"Death");
 		break;
 
-	case GAME_EVENT_TYPE::PLAYER_BASIC_ATTACK:
+	case GAME_EVENT_TYPE::PLAYER_BASE_ATTACK:
 	{
-		BasicAttackEvent* AttackEvent = dynamic_cast<BasicAttackEvent*>(&event);
+		BaseAttackEvent* AttackEvent = dynamic_cast<BaseAttackEvent*>(&event);
 
 		CChampionAttackState* AttackState = dynamic_cast<CChampionAttackState*>(GetOwnerFSM()->FindState(L"Attack"));
 		if (AttackState != nullptr)
 		{
-			AttackState->SetUserObj(AttackEvent->GetUserObj());
-			AttackState->SetTargetObj(AttackEvent->GetTargetObj());
+			AttackState->SetUserID(AttackEvent->GetUserID());
+			AttackState->SetTargetID(AttackEvent->GetTargetID());
 		}
 		GetOwnerFSM()->ChangeState(L"Attack");
 	}

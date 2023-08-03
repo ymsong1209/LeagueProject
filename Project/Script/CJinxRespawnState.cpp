@@ -2,7 +2,6 @@
 #include "CJinxRespawnState.h"
 #include <Engine\CAnimator3D.h>
 #include <Engine\CAnim3D.h>
-#include "CUnitScript.h"
 
 CJinxRespawnState::CJinxRespawnState()
 {
@@ -20,13 +19,8 @@ void CJinxRespawnState::tick()
 
 void CJinxRespawnState::Enter()
 {
-	wstring animName = L"Jinx\\Respawn";
-	GetOwner()->Animator3D()->PlayOnce(animName, true, 0.1f);
-
-
-	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
-	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, true, 0.1f);
-	
+	//GetOwner()->Animator3D()->Play(L"Jinx\\Respawn", true, 0.1f);
+	GetOwner()->Animator3D()->PlayOnce(L"Jinx\\Respawn");
 	CChampionRespawnState::Enter();
 }
 

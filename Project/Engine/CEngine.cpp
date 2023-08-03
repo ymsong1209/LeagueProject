@@ -5,7 +5,6 @@
 #include "CPathMgr.h"
 #include "CKeyMgr.h"
 #include "CTimeMgr.h"
-#include "CInstancingBuffer.h"
 #include "CResMgr.h"
 #include "CLevelMgr.h"
 #include "CCollisionMgr.h"
@@ -54,8 +53,6 @@ int CEngine::init(HWND _hWnd, UINT _iWidth, UINT _iHeight)
 	CTimeMgr::GetInst()->init();
 
 	CResMgr::GetInst()->init();
-
-	CInstancingBuffer::GetInst()->init();
 
 	CRenderMgr::GetInst()->init();
 

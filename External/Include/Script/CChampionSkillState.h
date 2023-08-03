@@ -8,8 +8,8 @@ public:
     ~CChampionSkillState();
 
 protected:
-    CGameObject* m_UserObj;
-    CGameObject* m_TargetObj;
+    float       m_fCastingTime;
+    float       m_fCurCastingTime;
 
 public:
     virtual void tick() override;
@@ -18,9 +18,5 @@ public:
 
 protected:
     void HandleEvent(CGameEvent& event) override;
-
-public:
-    void SetUserObj(CGameObject* _obj) { m_UserObj = _obj; }
-    void SetTargetObj(CGameObject* _obj) { m_TargetObj = _obj; }
 };
 

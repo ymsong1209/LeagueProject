@@ -18,20 +18,10 @@ private:
     bool        m_bIsAttacking;
 
     bool        m_bShowAttackRange;     // 포탑 사거리 보일지 여부
-    float       m_fAttackCoolTime;
-
-    vector<CGameObject*>    m_vecCollidingMinion;
-    vector<CGameObject*>    m_vecCollidingChampion;
-    CGameObject*            m_pTarget;
 
 public:
     virtual void begin() override;
     virtual void tick() override;
-
-    virtual void BeginOverlap(CCollider2D* _Other) override;
-    virtual void OnOverlap(CCollider2D* _Other) override;
-    virtual void EndOverlap(CCollider2D* _Other) override;
-
 
 public:
     void CheckStatus();

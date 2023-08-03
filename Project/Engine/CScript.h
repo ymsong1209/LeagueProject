@@ -44,6 +44,8 @@ private:
     vector<tScriptParam>    m_vecParam;
     vector<tScriptTexParam> m_vecTexParam;
 
+    float                   m_fcurrentYaw;
+
 public:
     void Destroy() { DestroyObject(GetOwner()); }
     void SetLifeSpan(float _Time) { GetOwner()->SetLifeSpan(_Time); }

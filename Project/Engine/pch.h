@@ -13,6 +13,8 @@
 #include <stdlib.h>
 #include <Windows.h>
 
+#include "serverpacket.h"
 #include "global.h"
+
 
 #endif //PCH_H

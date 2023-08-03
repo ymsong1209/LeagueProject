@@ -229,20 +229,6 @@ void CGameObject::AddChild(CGameObject* _Object)
 	m_vecChild.push_back(_Object);
 }
 
-CGameObject* CGameObject::FindChildObjByName(wstring _name)
-{
-	// 해당 오브젝트의 자식 벡터를 가져와서 이름으로 검색한다.
-	const vector<CGameObject*>& vecChild = m_vecChild;
-	for (size_t i = 0; i < m_vecChild.size(); ++i)
-	{
-		// 가장 먼저 찾아진 오브젝트 한 개를 반환한다.
-		if (_name == m_vecChild[i]->GetName())
-			return m_vecChild[i];
-	}
-
-	return nullptr;
-}
-
 
 bool CGameObject::IsAncestor(CGameObject* _Target)
 {
