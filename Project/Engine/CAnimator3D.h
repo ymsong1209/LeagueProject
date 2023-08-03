@@ -67,7 +67,7 @@ private:
 
 public:
     virtual void finaltick() override;
-    void UpdateData();
+    bool UpdateData();
 
 public:
     void SetBones(const vector<tMTBone>* _vecBones) { m_pVecBones = _vecBones; m_vecFinalBoneMat.resize(m_pVecBones->size()); }
