@@ -484,10 +484,6 @@ void ServerPacketHandler::Handle_S_OBJECT_MOVE(PacketSessionRef& session, BYTE* 
 	{
 		ObjectMove _objectMove = pkt->objectMove;
 
-
-		if (_objectId == MyPlayer.id) // 내 플레이어가 움직인건 반영하지 않아도 된다. 
-			return;
-
 		CGameObject* obj = GameObjMgr::GetInst()->FindObject(_objectId);
 
 		tServerEvent evn = {};

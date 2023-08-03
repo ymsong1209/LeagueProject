@@ -48,15 +48,17 @@ void CJinxWScript::tick()
 void CJinxWScript::OnOverlap(CCollider2D* _Other)
 {
 	if (m_bUnitDead) return;
-
-	if (_Other->GetOwner()->GetScript<CUnitScript>() == nullptr)
+	
+	// 방장이면, _Other->GetOwner() 까지
+	// 방장이 아니면  _Other->GetOwner()->GetParent()
+	if (_Other->GetOwner()->GetParent()->GetScript<CUnitScript>() == nullptr)
 		return;
 	
 	// 시전자와 다른 진영의 오브젝트가 부딪친다면
-	if (_Other->GetOwner()->GetScript<CUnitScript>()->GetFaction() != m_UserObj->GetScript<CUnitScript>()->GetFaction())
+	if (_Other->GetOwner()->GetParent()->GetScript<CUnitScript>()->GetFaction() != m_UserObj->GetScript<CUnitScript>()->GetFaction())
 	{
 		// 피격자의 서버 아이디
-		UINT64 TargetServerID = _Other->GetOwner()->GetScript<CUnitScript>()->GetServerID();
+		UINT64 TargetServerID = _Other->GetOwner()->GetParent()->GetScript<CUnitScript>()->GetServerID();
 		// 방장컴이 서버에게 이 투사체가 피격자와 충돌했다고 전달
 		
 

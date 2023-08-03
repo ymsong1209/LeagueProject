@@ -48,6 +48,8 @@ GameObjMgr::~GameObjMgr()
 
 CGameObject* GameObjMgr::FindPlayer(uint64 _targetId)
 {
+	std::mutex m;
+	m.lock();
 	// find 함수를 사용하여 원하는 키 값을 가진 원소를 찾습니다.
 	std::map<uint64, CGameObject*>::iterator iter = _players.find(_targetId);
 
@@ -56,17 +58,21 @@ CGameObject* GameObjMgr::FindPlayer(uint64 _targetId)
 
 		// 원하는 원소를 찾았을 때의 처리
 		CGameObject* pObj = iter->second;
+		m.unlock();
 		return iter->second;
 	}
 	else {
 		// 원하는 원소가 없을 때의 처리
 		cout << "Id is not playerId in Server (FindPlayers)" << endl;
+		m.unlock();
 		return nullptr;
 	}
 }
 
 CGameObject* GameObjMgr::FindObject(uint64 _targetId)
-{	
+{
+	std::mutex m;
+	m.lock();
 	// find 함수를 사용하여 원하는 키 값을 가진 원소를 찾습니다.
 	std::map<uint64, CGameObject*>::iterator iter = _objects.find(_targetId);
 
@@ -75,17 +81,22 @@ CGameObject* GameObjMgr::FindObject(uint64 _targetId)
 
 		// 원하는 원소를 찾았을 때의 처리
 		CGameObject* pObj = iter->second;
+		m.unlock();
 		return iter->second;
 	}
 	else {
 		// 원하는 원소가 없을 때의 처리
 		cout << "Id is not objectId in Server (FindObject)" << endl;
+		m.unlock();
 		return nullptr;
 	}
 }
 
 CGameObject* GameObjMgr::FindPlacedObject(uint64 _targetId)
 {
+	std::mutex m;
+	m.lock();
+
 	// find 함수를 사용하여 원하는 키 값을 가진 원소를 찾습니다.
 	std::map<uint64, CGameObject*>::iterator iter = _placedObjects.find(_targetId);
 
@@ -94,17 +105,22 @@ CGameObject* GameObjMgr::FindPlacedObject(uint64 _targetId)
 
 		// 원하는 원소를 찾았을 때의 처리
 		CGameObject* pObj = iter->second;
+		m.unlock();
 		return iter->second;
 	}
 	else {
 		// 원하는 원소가 없을 때의 처리
 		cout << "Id is not placedObjectId in Server (FindPlacedObject)" << endl;
+		m.unlock();
 		return nullptr;
 	}
 }
 
 CGameObject* GameObjMgr::FindAllObject(uint64 _targetId)
 {
+	std::mutex m;
+	m.lock();
+
 	_allObjects.insert(_players.begin(), _players.end());
 	_allObjects.insert(_objects.begin(), _objects.end());
 	_allObjects.insert(_placedObjects.begin(), _placedObjects.end());
@@ -117,17 +133,24 @@ CGameObject* GameObjMgr::FindAllObject(uint64 _targetId)
 
 		// 원하는 원소를 찾았을 때의 처리
 		CGameObject* pObj = iter->second;
+
+		m.unlock();
 		return iter->second;
 	}
 	else {
 		// 원하는 원소가 없을 때의 처리
 		cout << "Id is not in Server (FindAllObject)" << endl;
+
+		m.unlock();
 		return nullptr;
 	}
 }
 
 CGameObject* GameObjMgr::DeleteObjectInMap(uint64 _id)
 {
+	std::mutex m;
+	m.lock();
+
 	CGameObject* obj = FindAllObject(_id);
 
 	_allObjects.erase(_id);
@@ -135,6 +158,7 @@ CGameObject* GameObjMgr::DeleteObjectInMap(uint64 _id)
 	_objects.erase(_id);
 	_placedObjects.erase(_id);
 
+	m.unlock();
 	return obj;
 }
 
@@ -224,7 +248,7 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 
 		pObj->AddComponent(new CCollider2D);
 		pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-		pObj->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
+		pObj->Collider2D()->SetOffsetScale(Vec2(100.f, 100.f));
 		pObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0, 0));
 
 
