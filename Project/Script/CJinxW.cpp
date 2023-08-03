@@ -48,7 +48,7 @@ bool CJinxW::Use()
 	// 서버에게 기본 공격 사용 신호를 전달
 	CSendServerEventMgr::GetInst()->SendUseSkillPacket(
 		m_UserObj->GetScript<CUnitScript>()->GetServerID(),
-		-1,
+		UINT64_MAX,
 		m_UserObj->GetScript<CChampionScript>()->GetSkillLevel(2),
 		SkillType::JINX_W,
 		Vec3(0, 0, 0),
@@ -80,7 +80,7 @@ void CJinxW::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _S
 {
 	// 징크스 w 투사체가 적과 충돌시 이 함수에 본인 스크립트 넣어서 호출할 것임
 
-	float Damage;
+	float Damage = 0;
 
 	// 시전자의 레벨, 기본 공격력 등에 따라 데미지 계산
 	CChampionScript* ChampScript = dynamic_cast<CChampionScript*>(_UserScript);
