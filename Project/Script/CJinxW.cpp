@@ -52,6 +52,7 @@ bool CJinxW::Use()
 		m_UserObj->GetScript<CChampionScript>()->GetSkillLevel(2),
 		SkillType::JINX_W,
 		Vec3(0, 0, 0),
+		m_iProjectileCount,
 		false,
 		Vec3(0, 0, 0),
 		true,

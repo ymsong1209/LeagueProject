@@ -52,6 +52,7 @@ bool CBasicAttack::Use()
 		1,				// 기본 공격의 레벨은 언제나 1
 		SkillType::BASIC_ATTACK,
 		Vec3(0, 0, 0),
+		m_iProjectileCount,
 		false,
 		Vec3(0, 0, 0),
 		false,
