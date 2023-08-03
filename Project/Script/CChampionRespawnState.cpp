@@ -30,7 +30,7 @@ void CChampionRespawnState::Enter()
 
 void CChampionRespawnState::Exit()
 {
-	CUnitState::Enter();
+	CUnitState::Exit();
 }
 
 void CChampionRespawnState::HandleEvent(CGameEvent& event)
@@ -44,15 +44,15 @@ void CChampionRespawnState::HandleEvent(CGameEvent& event)
 		GetOwnerFSM()->ChangeState(L"Death");
 		break;
 
-	case GAME_EVENT_TYPE::PLAYER_BASE_ATTACK:
+	case GAME_EVENT_TYPE::PLAYER_BASIC_ATTACK:
 	{
-		BaseAttackEvent* AttackEvent = dynamic_cast<BaseAttackEvent*>(&event);
+		BasicAttackEvent* AttackEvent = dynamic_cast<BasicAttackEvent*>(&event);
 
 		CChampionAttackState* AttackState = dynamic_cast<CChampionAttackState*>(GetOwnerFSM()->FindState(L"Attack"));
 		if (AttackState != nullptr)
 		{
-			AttackState->SetUserID(AttackEvent->GetUserID());
-			AttackState->SetTargetID(AttackEvent->GetTargetID());
+			AttackState->SetUserObj(AttackEvent->GetUserObj());
+			AttackState->SetTargetObj(AttackEvent->GetTargetObj());
 		}
 		GetOwnerFSM()->ChangeState(L"Attack");
 	}

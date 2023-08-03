@@ -32,10 +32,12 @@ private:
 
     tRay                    m_ray;      // 마우스 방향을 향하는 직선
 
-    vector<CGameObject*>    m_vecDeferred;
+    map<ULONG64, vector<tInstObj>>		m_mapInstGroup_D;	    // Deferred
+    map<ULONG64, vector<tInstObj>>		m_mapInstGroup_F;	    // Foward ( Opaque, Mask )	
+    map<INT_PTR, vector<tInstObj>>		m_mapSingleObj;		    // Single Object
+
+   
     vector<CGameObject*>    m_vecDecal;
-    vector<CGameObject*>    m_vecOpaque;
-    vector<CGameObject*>    m_vecMask;
     vector<CGameObject*>    m_vecTransparent;
     vector<CGameObject*>    m_vecUI;
     vector<CGameObject*>    m_vecPost;
@@ -50,9 +52,9 @@ private:
 
     bool                    m_bViewGizmoBounding; //기즈모 클릭범위(바운딩콜리전) 를 보여줘야하는경우 true, 안보여줘도 되는경우 false
 
-    int        m_isGizmoEditMode; // 0: 디폴트 모드 (기즈모x) 1: 에디트 모드 (기즈모o)  : 모드가 추가될수도 있으므로, bool대신 int로함
+    int                     m_isGizmoEditMode; // 0: 디폴트 모드 (기즈모x) 1: 에디트 모드 (기즈모o)  : 모드가 추가될수도 있으므로, bool대신 int로함
 
-    float       m_fFov; //fov값
+    float                   m_fFov; //fov값
 
    
 
@@ -124,10 +126,13 @@ protected:
 public:
     IntersectResult IsCollidingBtwRayRect(tRay& _ray, CGameObject* _Object);
     IntersectResult IsCollidingBtwRayCube(tRay& _ray, CGameObject* _Object);
+
     IntersectResult IntersectsLay(Vec3* _vertices, tRay _ray);
 
     IntersectResult IntersecrRayFog(Vec3 _Vertices0, Vec3 _Vertices1, Vec3 _Vertices2, tRay _Ray);
 
+
+    vector<CGameObject*>& GetMouseOverlapObj() { return m_vecContour; }
 
     bool IsCollidingBtwRayWall(Vec2& RayObjPos, Vec2& _CollideObjPos, float& _Raidus, float& _RayObjRadius, ColliderStruct& _ColliderData);
 
@@ -144,8 +149,8 @@ private:
 
     void render_merge();
 
-    void render_opaque();
-    void render_mask();
+    //아직 함수 미완성
+    void render_forward();
     void render_transparent();
     void render_postprocess();
     void render_ui();

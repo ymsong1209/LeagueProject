@@ -40,6 +40,7 @@ public:
     void SetBoneCount(int _iBoneCount) { m_Const.arrAnimData[1] = _iBoneCount; }
 
     void UpdateData();
+    void UpdateData_Inst();
 
 private:
     virtual int Load(const wstring& _strFilePath);

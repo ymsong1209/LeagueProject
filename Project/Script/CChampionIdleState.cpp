@@ -3,7 +3,10 @@
 #include <Engine/CFsm.h>
 
 #include "CChampionAttackState.h"
+#include "CChampionSkillState.h"
 #include "CGameEvent.h"
+
+#include "CUnitScript.h"
 
 CChampionIdleState::CChampionIdleState()
 {
@@ -19,6 +22,7 @@ void CChampionIdleState::tick()
 
 void CChampionIdleState::Enter()
 {
+
 	CUnitState::Enter();
 }
 
@@ -38,19 +42,31 @@ void CChampionIdleState::HandleEvent(CGameEvent& event)
 		GetOwnerFSM()->ChangeState(L"Death");
 		break;
 		
-	case GAME_EVENT_TYPE::PLAYER_BASE_ATTACK:
+	case GAME_EVENT_TYPE::PLAYER_BASIC_ATTACK:
 	{
-		BaseAttackEvent* AttackEvent = dynamic_cast<BaseAttackEvent*>(&event);
+		BasicAttackEvent* AttackEvent = dynamic_cast<BasicAttackEvent*>(&event);
 
-		CChampionAttackState* AttackState =  dynamic_cast<CChampionAttackState*>(GetOwnerFSM()->FindState(L"Attack"));
+		CChampionAttackState* AttackState = dynamic_cast<CChampionAttackState*>(GetOwnerFSM()->FindState(L"Attack"));
 		if (AttackState != nullptr)
 		{
-			AttackState->SetUserID(AttackEvent->GetUserID());
-			AttackState->SetTargetID(AttackEvent->GetTargetID());
+			AttackState->SetUserObj(AttackEvent->GetUserObj());
+			AttackState->SetTargetObj(AttackEvent->GetTargetObj());
 		}
 		GetOwnerFSM()->ChangeState(L"Attack");
 	}
-		break;
+	break;
+	case GAME_EVENT_TYPE::PLAYER_GET_HIT:
+	{
+		GetHitEvent* HitEvent = dynamic_cast<GetHitEvent*>(&event);
+
+		CGameObject* SkillUser = HitEvent->GetUserObj();
+		CGameObject* SkillTarget = HitEvent->GetTargetObj();
+		SkillType skilltype = HitEvent->GetSkillType();
+		int	skillLevel = HitEvent->GetSkillLevel();
+
+		GetOwnerFSM()->GetOwner()->GetScript<CUnitScript>()->GetHit(skilltype, SkillTarget, SkillUser, skillLevel);
+	}
+	break;
 
 	case GAME_EVENT_TYPE::PLAYER_MOVE:
 		GetOwnerFSM()->ChangeState(L"Walk");
@@ -64,7 +80,17 @@ void CChampionIdleState::HandleEvent(CGameEvent& event)
 	case GAME_EVENT_TYPE::PLAYER_SKILL_W:
 	{
 		if (GetOwnerFSM()->FindState(L"W") != nullptr)
+		{
+			PlayerWEvent* WEvent = dynamic_cast<PlayerWEvent*>(&event);
+
+			CChampionSkillState* SkillState = dynamic_cast<CChampionSkillState*>(GetOwnerFSM()->FindState(L"W"));
+			if (SkillState != nullptr)
+			{
+				SkillState->SetUserObj(WEvent->GetUserObj());
+				SkillState->SetTargetObj(WEvent->GetTargetObj());
+			}
 			GetOwnerFSM()->ChangeState(L"W");
+		}
 		break;
 	}
 	case GAME_EVENT_TYPE::PLAYER_SKILL_E:

@@ -1,5 +1,10 @@
 #include "pch.h"
 #include "CUnitState.h"
+#include <Engine\CFsm.h>
+#include <Engine\CRenderMgr.h>
+#include "CUnitScript.h"
+#include "CSendServerEventMgr.h"
+#include "CChampionScript.h"
 
 CUnitState::CUnitState()
 	: m_Listener(new CUnitScriptEventListener(this))
@@ -24,3 +29,5 @@ void CUnitState::Exit()
 {
 	CState::Exit();
 }
+
+

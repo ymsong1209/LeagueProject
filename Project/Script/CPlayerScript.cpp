@@ -12,6 +12,7 @@ CPlayerScript::CPlayerScript()
 	: CScript((UINT)SCRIPT_TYPE::PLAYERSCRIPT)
 	, m_fSpeed(200.f)
 	, m_vTargetPosTest(Vec3(0.f, 0.f, 0.f))
+	, m_bHost(false)
 {
 	AddScriptParam(SCRIPT_PARAM::FLOAT, &m_fSpeed, "Speed");
 	AddScriptParam(SCRIPT_PARAM::VEC4, &m_vTargetPosTest, "TargetPos");
@@ -48,7 +49,6 @@ void CPlayerScript::tick()
 		CurState = PLAYER_STATE::IDLE;
 	else
 		CurState = PLAYER_STATE::RUN;
-
 
 
 	if (PrevState != CurState)

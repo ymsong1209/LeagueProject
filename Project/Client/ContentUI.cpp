@@ -11,6 +11,7 @@
 #include "LevelUI.h"
 #include "CLevelSaveLoad.h"
 
+#include <filesystem>
 ContentUI::ContentUI()
     : UI("##Content")
 {
@@ -137,7 +138,7 @@ void ContentUI::Reload()
 				continue;
 
 			wstring strFilePath = strContentPath + pair.first;
-			if (!filesystem::exists(strFilePath))
+			if (!std::filesystem::exists(strFilePath))
 			{
 				tEvent evn = {};
 				evn.Type = EVENT_TYPE::DELETE_RESOURCE;

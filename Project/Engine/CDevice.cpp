@@ -342,4 +342,5 @@ void CDevice::CreateConstBuffer()
 
     m_arrConstBuffer[(UINT)CB_TYPE::MESHRENDER] = new CConstBuffer((UINT)CB_TYPE::MESHRENDER);
     m_arrConstBuffer[(UINT)CB_TYPE::MESHRENDER]->Create(sizeof(tMeshMoveData), 1);
+
 }

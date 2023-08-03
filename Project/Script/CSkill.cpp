@@ -1,11 +1,16 @@
 #include "pch.h"
 #include "CSkill.h"
 #include <Engine\CTimeMgr.h>
+#include <Engine\CPrefab.h>
+#include <Engine\CGameObject.h>
+#include <Engine\CRenderMgr.h>
+#include <Engine\CCamera.h>
+#include <Engine\CTransform.h>
 
 CSkill::CSkill()
 	: m_strSkillName{}
 	, m_fCurCoolDown(0.0f)
-	, m_iLevel(0)
+	, m_iLevel(1)
 	, m_OwnerScript(nullptr)
 	, m_vecSkillObj{}
 {
@@ -53,3 +58,44 @@ bool CSkill::Use()
 
 
 }
+
+vector<CGameObject*> CSkill::GetProjectile()
+{
+	vector<CGameObject*> vecProj = {};
+
+	for (int i = 0; i < m_iProjectileCount; i++)
+	{
+		vecProj.push_back(m_vecSkillObj[i]->Instantiate());	
+	}
+
+	return vecProj;
+}
+
+Vec3 CSkill::GetMousePos()
+{
+	CCamera* MainCam = CRenderMgr::GetInst()->GetMainCam();
+	tRay ray = MainCam->GetRay();
+
+	CGameObject* Map = CUR_LEVEL->FindObjectByName(L"LoLMapCollider");
+	IntersectResult result = MainCam->IsCollidingBtwRayRect(ray, Map);
+	Vec3 MousePos = result.vCrossPoint;	// 마우스 좌표
+
+	return MousePos;
+}
+
+Vec3 CSkill::GetMouseDir()
+{
+	CCamera* MainCam = CRenderMgr::GetInst()->GetMainCam();
+	tRay ray = MainCam->GetRay();
+
+	CGameObject* Map = CUR_LEVEL->FindObjectByName(L"LoLMapCollider");
+	IntersectResult result = MainCam->IsCollidingBtwRayRect(ray, Map);
+	Vec3 TargetPos = result.vCrossPoint;	// 마우스 좌표
+
+	// 두 좌표 사이의 방향을 구함
+	Vec3 MyPos = m_UserObj->Transform()->GetRelativePos();
+
+	Vec3 MouseDir = (TargetPos - MyPos).Normalize();
+	return MouseDir;
+}
+

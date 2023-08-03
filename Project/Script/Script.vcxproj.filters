@@ -1,105 +1,427 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="CBaseAttack.cpp" />
-    <ClCompile Include="CBasicAttackScript.cpp" />
-    <ClCompile Include="CCameraMoveScript.cpp" />
-    <ClCompile Include="CChampionAttackState.cpp" />
-    <ClCompile Include="CChampionDeathState.cpp" />
-    <ClCompile Include="CChampionIdleState.cpp" />
-    <ClCompile Include="CChampionRecallState.cpp" />
-    <ClCompile Include="CChampionRespawnState.cpp" />
-    <ClCompile Include="CChampionScript.cpp" />
-    <ClCompile Include="CChampionSkillState.cpp" />
-    <ClCompile Include="CChampionWalkState.cpp" />
-    <ClCompile Include="CFlash.cpp" />
-    <ClCompile Include="CGameEventMgr.cpp" />
-    <ClCompile Include="CHeal.cpp" />
-    <ClCompile Include="CInhibitorBrokenState.cpp" />
-    <ClCompile Include="CInhibitorIdleState.cpp" />
-    <ClCompile Include="CInhibitorScript.cpp" />
-    <ClCompile Include="CInhibitorSpawnState.cpp" />
-    <ClCompile Include="CJinxDeathState.cpp" />
-    <ClCompile Include="CJinxIdleState.cpp" />
-    <ClCompile Include="CJinxQ.cpp" />
-    <ClCompile Include="CJinxQState.cpp" />
-    <ClCompile Include="CJinxRespawnState.cpp" />
-    <ClCompile Include="CJinxScript.cpp" />
-    <ClCompile Include="CJinxW.cpp" />
-    <ClCompile Include="CJinxWalkState.cpp" />
-    <ClCompile Include="CJungleAttackState.cpp" />
-    <ClCompile Include="CJungleChaseState.cpp" />
-    <ClCompile Include="CJungleDeathState.cpp" />
-    <ClCompile Include="CJungleIdleState.cpp" />
-    <ClCompile Include="CJungleMonsterScript.cpp" />
-    <ClCompile Include="CMinionAttackState.cpp" />
-    <ClCompile Include="CMinionDeathState.cpp" />
-    <ClCompile Include="CMinionScript.cpp" />
-    <ClCompile Include="CMinionWalkState.cpp" />
-    <ClCompile Include="CMobScript.cpp" />
-    <ClCompile Include="CNexusScript.cpp" />
     <ClCompile Include="COtherPlayerScript.cpp" />
     <ClCompile Include="CPlayerScript.cpp" />
-    <ClCompile Include="CScriptMgr.cpp" />
-    <ClCompile Include="CInGameCameraScript.cpp" />
-    <ClCompile Include="CSkill.cpp" />
-    <ClCompile Include="CStructureScript.cpp" />
-    <ClCompile Include="CTurretScript.cpp" />
-    <ClCompile Include="CUnitScript.cpp" />
-    <ClCompile Include="CUnitState.cpp" />
-    <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Script.cpp" />
+    <ClCompile Include="Script.cpp">
+      <Filter>Default</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Default</Filter>
+    </ClCompile>
+    <ClCompile Include="CBasicAttack.cpp">
+      <Filter>Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="CCameraMoveScript.cpp">
+      <Filter>Scripts\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CChampionScript.cpp">
+      <Filter>Scripts\Unit\Champion</Filter>
+    </ClCompile>
+    <ClCompile Include="CFlash.cpp">
+      <Filter>Skill\Spell</Filter>
+    </ClCompile>
+    <ClCompile Include="CHeal.cpp">
+      <Filter>Skill\Spell</Filter>
+    </ClCompile>
+    <ClCompile Include="CGameEventMgr.cpp">
+      <Filter>GameEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="CInGameCameraScript.cpp">
+      <Filter>Scripts\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CInhibitorBrokenState.cpp">
+      <Filter>State\Unit\Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="CInhibitorIdleState.cpp">
+      <Filter>State\Unit\Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="CInhibitorScript.cpp">
+      <Filter>Scripts\Unit\Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="CInhibitorSpawnState.cpp">
+      <Filter>State\Unit\Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxDeathState.cpp">
+      <Filter>State\Unit\Champion\Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxIdleState.cpp">
+      <Filter>State\Unit\Champion\Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxRespawnState.cpp">
+      <Filter>State\Unit\Champion\Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxScript.cpp">
+      <Filter>Scripts\Unit\Champion</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxWalkState.cpp">
+      <Filter>State\Unit\Champion\Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxQ.cpp">
+      <Filter>Skill\Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxW.cpp">
+      <Filter>Skill\Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CChampionAttackState.cpp">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClCompile>
+    <ClCompile Include="CChampionDeathState.cpp">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClCompile>
+    <ClCompile Include="CChampionIdleState.cpp">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClCompile>
+    <ClCompile Include="CChampionRecallState.cpp">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClCompile>
+    <ClCompile Include="CChampionRespawnState.cpp">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClCompile>
+    <ClCompile Include="CChampionSkillState.cpp">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClCompile>
+    <ClCompile Include="CChampionWalkState.cpp">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleAttackState.cpp">
+      <Filter>State\Unit\Jungle</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleChaseState.cpp">
+      <Filter>State\Unit\Jungle</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleDeathState.cpp">
+      <Filter>State\Unit\Jungle</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleIdleState.cpp">
+      <Filter>State\Unit\Jungle</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleMonsterScript.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle</Filter>
+    </ClCompile>
+    <ClCompile Include="CMinionAttackState.cpp">
+      <Filter>State\Unit\Minion</Filter>
+    </ClCompile>
+    <ClCompile Include="CMinionDeathState.cpp">
+      <Filter>State\Unit\Minion</Filter>
+    </ClCompile>
+    <ClCompile Include="CMinionScript.cpp">
+      <Filter>Scripts\Unit\Mob\Minion</Filter>
+    </ClCompile>
+    <ClCompile Include="CMinionWalkState.cpp">
+      <Filter>State\Unit\Minion</Filter>
+    </ClCompile>
+    <ClCompile Include="CMobScript.cpp">
+      <Filter>Scripts\Unit\Mob</Filter>
+    </ClCompile>
+    <ClCompile Include="CNexusScript.cpp">
+      <Filter>Scripts\Unit\Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="CStructureScript.cpp">
+      <Filter>Scripts\Unit\Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="CTurretScript.cpp">
+      <Filter>Scripts\Unit\Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="CSkill.cpp">
+      <Filter>Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="CUnitScript.cpp">
+      <Filter>Scripts\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="CUnitState.cpp">
+      <Filter>State\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="CAttackRangeScript.cpp">
+      <Filter>Scripts\Unit\Champion\AttackRange</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxAttackState.cpp">
+      <Filter>State\Unit\Champion\Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxQState.cpp">
+      <Filter>State\Unit\Champion\Jinx\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxWState.cpp">
+      <Filter>State\Unit\Champion\Jinx\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="CScriptMgr.cpp">
+      <Filter>Manager\1. ScriptMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CSendServerEventMgr.cpp">
+      <Filter>Manager\2. SendServerEventMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CSkillMgr.cpp">
+      <Filter>Manager\3. SkillMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CBasicAttackScript.cpp">
+      <Filter>Scripts\SkilProjectile</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxWScript.cpp">
+      <Filter>Scripts\SkilProjectile</Filter>
+    </ClCompile>
+    <ClCompile Include="CProjectileScript.cpp">
+      <Filter>Scripts\SkilProjectile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CBaseAttack.h" />
-    <ClInclude Include="CBasicAttackScript.h" />
-    <ClInclude Include="CCameraMoveScript.h" />
-    <ClInclude Include="CChampionAttackState.h" />
-    <ClInclude Include="CChampionDeathState.h" />
-    <ClInclude Include="CChampionIdleState.h" />
-    <ClInclude Include="CChampionRecallState.h" />
-    <ClInclude Include="CChampionRespawnState.h" />
-    <ClInclude Include="CChampionScript.h" />
-    <ClInclude Include="CChampionSkillState.h" />
-    <ClInclude Include="CChampionWalkState.h" />
-    <ClInclude Include="CFlash.h" />
-    <ClInclude Include="CGameEvent.h" />
-    <ClInclude Include="CGameEventMgr.h" />
-    <ClInclude Include="CHeal.h" />
-    <ClInclude Include="CInhibitorBrokenState.h" />
-    <ClInclude Include="CInhibitorIdleState.h" />
-    <ClInclude Include="CInhibitorScript.h" />
-    <ClInclude Include="CInhibitorSpawnState.h" />
-    <ClInclude Include="CJinxDeathState.h" />
-    <ClInclude Include="CJinxIdleState.h" />
-    <ClInclude Include="CJinxQ.h" />
-    <ClInclude Include="CJinxQState.h" />
-    <ClInclude Include="CJinxRespawnState.h" />
-    <ClInclude Include="CJinxScript.h" />
-    <ClInclude Include="CJinxW.h" />
-    <ClInclude Include="CJinxWalkState.h" />
-    <ClInclude Include="CJungleAttackState.h" />
-    <ClInclude Include="CJungleChaseState.h" />
-    <ClInclude Include="CJungleDeathState.h" />
-    <ClInclude Include="CJungleIdleState.h" />
-    <ClInclude Include="CJungleMonsterScript.h" />
-    <ClInclude Include="CMinionAttackState.h" />
-    <ClInclude Include="CMinionDeathState.h" />
-    <ClInclude Include="CMinionScript.h" />
-    <ClInclude Include="CMinionWalkState.h" />
-    <ClInclude Include="CMobScript.h" />
-    <ClInclude Include="CNexusScript.h" />
     <ClInclude Include="COtherPlayerScript.h" />
     <ClInclude Include="CPlayerScript.h" />
-    <ClInclude Include="CScriptMgr.h" />
-    <ClInclude Include="CSkill.h" />
-    <ClInclude Include="CStructureScript.h" />
-    <ClInclude Include="CTurretScript.h" />
-    <ClInclude Include="CUnitScript.h" />
-    <ClInclude Include="CUnitState.h" />
-    <ClInclude Include="framework.h" />
-    <ClInclude Include="CInGameCameraScript.h" />
-    <ClInclude Include="IGameEventListener.h" />
-    <ClInclude Include="pch.h" />
+    <ClInclude Include="pch.h">
+      <Filter>Default</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>Default</Filter>
+    </ClInclude>
+    <ClInclude Include="CBasicAttack.h">
+      <Filter>Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="CCameraMoveScript.h">
+      <Filter>Scripts\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CChampionScript.h">
+      <Filter>Scripts\Unit\Champion</Filter>
+    </ClInclude>
+    <ClInclude Include="CFlash.h">
+      <Filter>Skill\Spell</Filter>
+    </ClInclude>
+    <ClInclude Include="CHeal.h">
+      <Filter>Skill\Spell</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameEventMgr.h">
+      <Filter>GameEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="CInGameCameraScript.h">
+      <Filter>Scripts\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CInhibitorBrokenState.h">
+      <Filter>State\Unit\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="CInhibitorIdleState.h">
+      <Filter>State\Unit\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="CInhibitorScript.h">
+      <Filter>Scripts\Unit\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="CInhibitorSpawnState.h">
+      <Filter>State\Unit\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxDeathState.h">
+      <Filter>State\Unit\Champion\Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxIdleState.h">
+      <Filter>State\Unit\Champion\Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxRespawnState.h">
+      <Filter>State\Unit\Champion\Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxScript.h">
+      <Filter>Scripts\Unit\Champion</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxWalkState.h">
+      <Filter>State\Unit\Champion\Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxQ.h">
+      <Filter>Skill\Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxW.h">
+      <Filter>Skill\Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CChampionAttackState.h">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClInclude>
+    <ClInclude Include="CChampionDeathState.h">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClInclude>
+    <ClInclude Include="CChampionIdleState.h">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClInclude>
+    <ClInclude Include="CChampionRecallState.h">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClInclude>
+    <ClInclude Include="CChampionRespawnState.h">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClInclude>
+    <ClInclude Include="CChampionSkillState.h">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClInclude>
+    <ClInclude Include="CChampionWalkState.h">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleAttackState.h">
+      <Filter>State\Unit\Jungle</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleChaseState.h">
+      <Filter>State\Unit\Jungle</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleDeathState.h">
+      <Filter>State\Unit\Jungle</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleIdleState.h">
+      <Filter>State\Unit\Jungle</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleMonsterScript.h">
+      <Filter>Scripts\Unit\Mob\Jungle</Filter>
+    </ClInclude>
+    <ClInclude Include="CMinionAttackState.h">
+      <Filter>State\Unit\Minion</Filter>
+    </ClInclude>
+    <ClInclude Include="CMinionDeathState.h">
+      <Filter>State\Unit\Minion</Filter>
+    </ClInclude>
+    <ClInclude Include="CMinionScript.h">
+      <Filter>Scripts\Unit\Mob\Minion</Filter>
+    </ClInclude>
+    <ClInclude Include="CMinionWalkState.h">
+      <Filter>State\Unit\Minion</Filter>
+    </ClInclude>
+    <ClInclude Include="CMobScript.h">
+      <Filter>Scripts\Unit\Mob</Filter>
+    </ClInclude>
+    <ClInclude Include="CNexusScript.h">
+      <Filter>Scripts\Unit\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="CStructureScript.h">
+      <Filter>Scripts\Unit\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="CTurretScript.h">
+      <Filter>Scripts\Unit\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="CSkill.h">
+      <Filter>Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="CUnitScript.h">
+      <Filter>Scripts\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="CUnitState.h">
+      <Filter>State\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="IGameEventListener.h">
+      <Filter>GameEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="CAttackRangeScript.h">
+      <Filter>Scripts\Unit\Champion\AttackRange</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxAttackState.h">
+      <Filter>State\Unit\Champion\Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameEvent.h">
+      <Filter>GameEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxQState.h">
+      <Filter>State\Unit\Champion\Jinx\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxWState.h">
+      <Filter>State\Unit\Champion\Jinx\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="CScriptMgr.h">
+      <Filter>Manager\1. ScriptMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CSendServerEventMgr.h">
+      <Filter>Manager\2. SendServerEventMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CSkillMgr.h">
+      <Filter>Manager\3. SkillMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CBasicAttackScript.h">
+      <Filter>Scripts\SkilProjectile</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxWScript.h">
+      <Filter>Scripts\SkilProjectile</Filter>
+    </ClInclude>
+    <ClInclude Include="CProjectileScript.h">
+      <Filter>Scripts\SkilProjectile</Filter>
+    </ClInclude>
+    <ClInclude Include="CServerTypes.h">
+      <Filter>Default</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Scripts">
+      <UniqueIdentifier>{d9def97f-4966-409c-8d68-706865917eb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Default">
+      <UniqueIdentifier>{e47d8c20-ceb0-4b46-b728-7655108937b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State">
+      <UniqueIdentifier>{7a331946-ae8e-4e9f-b525-0321ca9958c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Unit">
+      <UniqueIdentifier>{a0d2c8f0-dd71-455d-9894-df89362f5c81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Camera">
+      <UniqueIdentifier>{f71a995f-689f-4c0c-b282-eedb679dbedf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\UI">
+      <UniqueIdentifier>{6e669bf3-3887-4288-8df9-483252ceaa63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\Unit">
+      <UniqueIdentifier>{f5d8f510-6bc7-4e51-8f94-5caeee609d21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\Unit\Champion">
+      <UniqueIdentifier>{429e05eb-b92b-4c3a-b371-1fa2e03e04a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Unit\Champion">
+      <UniqueIdentifier>{9f330673-d5a3-4d89-93e1-0708ea7213ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\Unit\Structure">
+      <UniqueIdentifier>{7742cf9e-f56e-466c-b63c-f9779a3945aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Unit\Structure">
+      <UniqueIdentifier>{d88d366d-3179-47db-9bab-3f7128c38f26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\Unit\Jungle">
+      <UniqueIdentifier>{5c1fca6a-234d-4e71-b48b-72dc20ccb666}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\Unit\Champion\Jinx">
+      <UniqueIdentifier>{cd011c0e-ffa5-4089-85f4-55421f46ce52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\Unit\Champion\ChampionBase">
+      <UniqueIdentifier>{678773c6-6730-434f-b695-45a8bdf860e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\Unit\Minion">
+      <UniqueIdentifier>{1cc1770a-16b2-4bee-8eed-d5251f6f0430}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Unit\Mob">
+      <UniqueIdentifier>{4ccd4ea6-8ed1-4c88-be4b-7a2a7eef8bdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Unit\Mob\Minion">
+      <UniqueIdentifier>{2e6233d1-e66a-45e0-855c-86c83f3acf8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Unit\Mob\Jungle">
+      <UniqueIdentifier>{2a2c65d9-9311-4665-ac69-94eedb4f383c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Skill">
+      <UniqueIdentifier>{1f126d1b-8e12-4d67-90cc-de1ca062e204}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Skill\Spell">
+      <UniqueIdentifier>{56c4dd61-4131-40f8-b8b9-5badeef97111}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Skill\Jinx">
+      <UniqueIdentifier>{e9ec3ad8-60b0-494b-8051-a7d0936fdf71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEvent">
+      <UniqueIdentifier>{17fc3d2f-1241-4508-8e58-a71b39cda8b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Unit\Champion\AttackRange">
+      <UniqueIdentifier>{a7c3d51d-9c52-45c8-b476-76cfb8db9b44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\Unit\Champion\Jinx\Skill">
+      <UniqueIdentifier>{7cb92db4-5965-4df5-a562-88b6c4b7c57b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{3cf7d8d5-e3bf-4290-a8c3-65602e55dfd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\1. ScriptMgr">
+      <UniqueIdentifier>{2d0e74da-23d5-48e4-bc9f-e06578f5c29c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\2. SendServerEventMgr">
+      <UniqueIdentifier>{bfb869ff-0193-4f80-9dcf-3e5f193def53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\3. SkillMgr">
+      <UniqueIdentifier>{95d51c4b-cc38-4d54-9963-8ee29a26ac5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\SkilProjectile">
+      <UniqueIdentifier>{8d8b1b86-be40-49a4-b3e9-10b5122267ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
