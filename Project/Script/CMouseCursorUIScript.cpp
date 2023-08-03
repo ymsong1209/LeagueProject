@@ -28,24 +28,14 @@ void CMouseCursorUIScript::begin()
 
 void CMouseCursorUIScript::tick()
 {
-	//Vec2 Pos = CKeyMgr::GetInst()->GetMousePos();
 	Vec2 Resolution = CEngine::GetInst()->GetWindowResolution();
-	POINT mouseScreenPos;
-	GetCursorPos(&mouseScreenPos);
-	//// 스크린 좌표를 클라이언트 영역 좌표로 변환
-	ScreenToClient(CEngine::GetInst()->GetMainWnd(), &mouseScreenPos);
-	// 마우스의 뷰포트 좌표로 변환
-	float mouseX = mouseScreenPos.x;
-	float mouseY = mouseScreenPos.y;
-
+	Vec2 Pos = CKeyMgr::GetInst()->GetMousePos();
 	if (Mouse)
 	{
-
 		CTransform* Transform = Mouse->Transform();
 		Vec3 Scale = Transform->GetRelativeScale();
 		Scale /= 2.f;
-		Transform->SetRelativePos(mouseX - (Resolution.x / 2) + Scale.x, -mouseY + (Resolution.y / 2) - Scale.y, 1.f);
-		// 이 예제 코드는 다이렉트X 11을 사용한 예제입니다. 실제 코드는 여러분의 환경에 따라 다를 수 있습니다.
+		Transform->SetRelativePos(Pos.x - (Resolution.x / 2) + Scale.x, -Pos.y + (Resolution.y / 2) - Scale.y, 1.f);
 	}
 
 	//=======================

@@ -101,7 +101,7 @@ void CCamera::finaltick()
 	// 마우스방향 직선 계산
 	CalRay();
 
-	//CollideRay();
+	CollideRay();
 
 }
 
