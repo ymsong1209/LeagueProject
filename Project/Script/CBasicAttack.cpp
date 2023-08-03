@@ -26,9 +26,10 @@ CBasicAttack::CBasicAttack()
 	CGameObject* PrefabObject = Projectile->Clone(); 
 	NewPrefab->RegisterProtoObject(PrefabObject);
 
-	m_vecSkillObj.push_back( NewPrefab);
+	m_vecSkillObj.push_back(NewPrefab);
 
 	// 투사체 스크립트
+	m_iProjectileCount = 1;
 	m_ProjectileScript = new CBasicAttackScript;
 }
 

@@ -14,8 +14,6 @@ public:
     CLONE(CProjectileScript);
 
 protected:
-    // 서버용
-    UINT64          m_iServerID;        // 투사체 본인의 서버 아이디
 
     CGameObject*    m_UserObj;          // 시전자 
     UINT64          m_iServerUserID;
@@ -40,13 +38,11 @@ public:
 
     void SetServerUserID(int _i) { m_iServerUserID = _i; }
     void SetServerTargetID(int _i) { m_iServerTargetID = _i; }
-    void SetServerID(int _i) { m_iServerID = _i; }
     void SetUserObj(CGameObject* _userObj) { m_UserObj = _userObj; }
     void SetTargetObj(CGameObject* _targetObj) { m_TargetObj = _targetObj; }
 
     UINT64  GetServerUserID() { return m_iServerUserID; }
     UINT64  GetServerTargetID() { return m_iServerTargetID; }
-    UINT64  GetServerID() { return m_iServerID; }
     CGameObject* GetUserObj() { return m_UserObj; }
     CGameObject* GetTargetObj() { return m_TargetObj; }
 

@@ -31,8 +31,10 @@ CSkill* CSkillMgr::FindSkill(SkillType _type)
     {
         if (_type == it->first)
         {
-            return it->second; 
+            return it->second;
         }
+        else
+            it++;
     }
     return nullptr; 
 }

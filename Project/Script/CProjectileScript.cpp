@@ -2,8 +2,7 @@
 #include "CProjectileScript.h"
 
 CProjectileScript::CProjectileScript(UINT ScriptType)
-	: m_iServerID(-999)
-	, m_UserObj(nullptr)
+	: m_UserObj(nullptr)
 	, m_iServerUserID(-999)
 	, m_TargetObj(nullptr)
 	, m_iServerTargetID(-999)

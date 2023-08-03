@@ -20,24 +20,6 @@ void CJinxWState::tick()
 void CJinxWState::Enter()
 {
 	CChampionSkillState::Enter();
-	// 징크스 w 쓰겠다고 서버에 요청
-	//SkillInfo* skillInfo = new SkillInfo();
-	//skillInfo->OwnerId = GetOwner()->GetScript<CChampionScript>()->GetServerID();
-	//skillInfo->TargetId = -1;
-	//
-	//skillInfo->UseMouseDir = true;
-	//skillInfo->MouseDir.x = GetMouseDir().x;
-	//skillInfo->MouseDir.y = GetMouseDir().y;
-	//skillInfo->MouseDir.z = GetMouseDir().z;
-	//
-	//skillInfo->SkillLevel = 1;//GetOwner()->GetScript<CChampionScript>()->GetSkillLevel(2);
-	//skillInfo->skillType = SkillType::JINX_W;
-	//
-	//tServerEvent serverEvn = {};
-	//serverEvn.Type = SERVER_EVENT_TYPE::SKILL_PROJECTILE_PACKET;
-	//serverEvn.wParam = (DWORD_PTR)skillInfo;
-	////serverEvn.lParam 
-	//CSendServerEventMgr::GetInst()->AddServerSendEvent(serverEvn);
 
 	CSkill* JinxW = GetOwner()->GetScript<CChampionScript>()->GetSkill(2);
 	JinxW->SetUserObj(m_UserObj);
@@ -45,6 +27,13 @@ void CJinxWState::Enter()
 	JinxW->SetOwnerScript(GetOwner()->GetScript<CChampionScript>());
 
 	JinxW->Use();
+
+	// 애니메이션
+	wstring animName = L"Jinx\\Spell2";
+	GetOwner()->Animator3D()->PlayOnce(animName, true);
+
+	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, true, 0.1f);
 
 	
 }

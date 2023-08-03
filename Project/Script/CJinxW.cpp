@@ -26,6 +26,7 @@ CJinxW::CJinxW()
 	m_vecSkillObj.push_back(NewPrefab);
 
 	// 투사체 스크립트
+	m_iProjectileCount = 1;
 	m_ProjectileScript = new CJinxWScript;
 }
 
@@ -53,8 +54,8 @@ bool CJinxW::Use()
 		Vec3(0, 0, 0),
 		false,
 		Vec3(0, 0, 0),
-		false,
-		Vec3(0, 0, 0));
+		true,
+		GetMouseDir());
 
 	return true;
 	// W 투사체 발사

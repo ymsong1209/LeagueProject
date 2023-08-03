@@ -59,7 +59,7 @@ bool CSkill::Use()
 
 }
 
-vector<CGameObject*>& CSkill::GetProjectile()
+vector<CGameObject*> CSkill::GetProjectile()
 {
 	vector<CGameObject*> vecProj = {};
 
@@ -70,6 +70,7 @@ vector<CGameObject*>& CSkill::GetProjectile()
 
 	return vecProj;
 }
+
 Vec3 CSkill::GetMousePos()
 {
 	CCamera* MainCam = CRenderMgr::GetInst()->GetMainCam();

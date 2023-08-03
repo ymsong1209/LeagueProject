@@ -35,7 +35,7 @@ void CJinxWScript::tick()
 	float distance = sqrt((pow(m_vSpawnPos.x - NewPos.x, 2) + pow(m_vSpawnPos.z - NewPos.z, 2)));
 	if (distance >= m_fSkillRange)
 	{
-		this->GetOwner()->Transform()->SetRelativePos(-666.f, -666.f, -666.f);
+		//this->GetOwner()->Transform()->SetRelativePos(-666.f, -666.f, -666.f);
 		m_fProjectileSpeed = 0.f;
 		m_bUnitDead = true;
 	}
@@ -43,11 +43,16 @@ void CJinxWScript::tick()
 
 void CJinxWScript::OnOverlap(CCollider2D* _Other)
 {
+	if (_Other->GetOwner()->GetScript<CUnitScript>() == nullptr)
+		return;
+	
 	// 시전자와 다른 진영의 오브젝트가 부딪친다면
 	if (_Other->GetOwner()->GetScript<CUnitScript>()->GetFaction() != m_UserObj->GetScript<CUnitScript>()->GetFaction())
 	{
+		// 피격자의 서버 아이디
+		UINT64 TargetServerID = _Other->GetOwner()->GetScript<CUnitScript>()->GetServerID();
 		// 방장컴이 서버에게 이 투사체가 피격자와 충돌했다고 전달
-		CSendServerEventMgr::GetInst()->SendHitPacket(GetServerID(), m_iServerTargetID, m_iServerUserID, 1, SkillType::JINX_W);
+		CSendServerEventMgr::GetInst()->SendHitPacket(GetServerID(), TargetServerID, m_iServerUserID, 1, SkillType::JINX_W);
 
 		// 이후 사라짐
 		this->GetOwner()->Transform()->SetRelativePos(-666.f, -666.f, -666.f);
