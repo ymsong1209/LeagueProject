@@ -5,7 +5,7 @@
 CBasicAttackScript::CBasicAttackScript()
 	:CProjectileScript((UINT)SCRIPT_TYPE::BASICATTACKSCRIPT)
 {
-	m_fProjectileSpeed = 300.f;
+	m_fProjectileSpeed = 100.f;
 }
 
 CBasicAttackScript::~CBasicAttackScript()

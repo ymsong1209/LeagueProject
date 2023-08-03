@@ -16,7 +16,6 @@ CBasicAttack::CBasicAttack()
 	CGameObject* Projectile = new CGameObject;
 	Projectile->AddComponent(new CTransform);
 	Projectile->AddComponent(new CCollider2D);
-	Projectile->AddComponent(new CBasicAttackScript);
 	Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
 	Projectile->Collider2D()->SetOffsetScale(Vec2(5.f, 5.f));
 	Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));

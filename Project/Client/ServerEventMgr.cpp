@@ -189,6 +189,7 @@ void ServerEventMgr::clienttick()
 					evn->SetUserObj(skillOwnerObj);
 					evn->SetTargetObj(skillTargetObj);
 					evn->SetSkillType(skillInfo->skillType);
+					evn->SetSkillType(skillInfo->SkillLevel);
 
 					CGameEventMgr::GetInst()->NotifyEvent(*evn);
 				}
@@ -214,6 +215,7 @@ void ServerEventMgr::clienttick()
 						evn->SetUserObj(skillOwnerObj);
 						evn->SetTargetObj(skillTargetObj);
 						evn->SetSkillType(skillInfo->skillType);
+						evn->SetSkillType(skillInfo->SkillLevel);
 						CGameEventMgr::GetInst()->NotifyEvent(*evn);
 					}
 				}

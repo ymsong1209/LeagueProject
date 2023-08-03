@@ -105,48 +105,14 @@ bool CUnitScript::PathFindMove(float _fSpeed, bool _IsRotation)
 	}
 }
 
-void CUnitScript::GetHit(SkillType _type, CGameObject* _SkillTarget, CGameObject* _SkillUser)
+void CUnitScript::GetHit(SkillType _type, CGameObject* _SkillTarget, CGameObject* _SkillUser, int _SkillLevel)
 {
 	// 스킬 매니저에서 해당 타입으로 스킬을 검색해 CSkill 클래스를 받아옴.
 	CSkill* Skill = CSkillMgr::GetInst()->FindSkill(_type);
 	if (Skill != nullptr)
 	{
-		int SkillLevel = 0;
-		
-		// 스킬 레벨 받아오기
-		switch (_type)
-		{
-		case SkillType::BASIC_ATTACK:
-			SkillLevel = 1;
-			break;
-		case SkillType::JINX_Q:
-			_SkillUser->GetScript<CChampionScript>()->GetSkillLevel(1);
-			break;
-		case SkillType::JINX_W:
-			_SkillUser->GetScript<CChampionScript>()->GetSkillLevel(2);
-			break;
-		case SkillType::JINX_E:
-			_SkillUser->GetScript<CChampionScript>()->GetSkillLevel(3);
-			break;
-		case SkillType::JINX_R:
-			_SkillUser->GetScript<CChampionScript>()->GetSkillLevel(4);
-			break;
-		case SkillType::DARIUS_Q:
-			_SkillUser->GetScript<CChampionScript>()->GetSkillLevel(1);
-			break;
-		case SkillType::DARIUS_W:
-			_SkillUser->GetScript<CChampionScript>()->GetSkillLevel(2);
-			break;
-		case SkillType::DARIUS_E:
-			_SkillUser->GetScript<CChampionScript>()->GetSkillLevel(3);
-			break;
-		case SkillType::DARIUS_R:
-			_SkillUser->GetScript<CChampionScript>()->GetSkillLevel(4);
-			break;
-		}
-			
 		CUnitScript* TargetScript = _SkillTarget->GetScript<CUnitScript>();
 
-		Skill->GetHit(_SkillUser->GetScript<CUnitScript>(), TargetScript, SkillLevel);
+		Skill->GetHit(_SkillUser->GetScript<CUnitScript>(), TargetScript, _SkillLevel);
 	}
 }
