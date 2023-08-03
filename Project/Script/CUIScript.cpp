@@ -9,21 +9,21 @@ void CUIScript::begin()
 	m_UIBackPanel->SetName(L"UIBackPanel");
 	m_UIBackPanel->AddComponent(new CTransform);
 	m_UIBackPanel->AddComponent(new CMeshRender);
-	m_UIBackPanel->Transform()->SetRelativeScale(Vec3(135.75f, 27.75f, 0.01f));
+	m_UIBackPanel->Transform()->SetRelativeScale(Vec3(616.545f, 126.715f, 0.009f));
 	m_UIBackPanel->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
 	m_UIBackPanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\UIBackMaterial.mtrl"),0);
 	m_UIBackPanel->MeshRender()->SetRaySightCulling(false);
-	SpawnGameObject(m_UIBackPanel, Vec3(0.f, -109.5f, 373.f), 31);
+	SpawnGameObject(m_UIBackPanel, Vec3(0.f, -446.805f, 353.145f), 31);
 
 	m_UIFrontPanel = new CGameObject;
 	m_UIFrontPanel->SetName(L"UIFrontPanel");
 	m_UIFrontPanel->AddComponent(new CTransform);
 	m_UIFrontPanel->AddComponent(new CMeshRender);
-	m_UIFrontPanel->Transform()->SetRelativeScale(Vec3(135.75f, 27.75f, 0.01f));
+	m_UIFrontPanel->Transform()->SetRelativeScale(Vec3(616.545f, 126.715f, 0.01f));
 	m_UIFrontPanel->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
 	m_UIFrontPanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\UIFrontMaterial.mtrl"), 0);
 	m_UIFrontPanel->MeshRender()->SetRaySightCulling(false);
-	SpawnGameObject(m_UIFrontPanel, Vec3(-1.f, -110.f, 369.f), 31);
+	SpawnGameObject(m_UIFrontPanel, Vec3(0.f, -446.805f, 333.f), 31);
 	//UI들끼리 앞뒤를 지정해주기 위해서는 깊이체크가 필요함.
 }
 

@@ -119,11 +119,11 @@ void CCharacterUIScript::SkillUILoad()
 	CharacterImage->SetName(L"UICharacterPanel");
 	CharacterImage->AddComponent(new CTransform);
 	CharacterImage->AddComponent(new CMeshRender);
-	CharacterImage->Transform()->SetRelativeScale(Vec3(20.f, 20.f, 20.f));
+	CharacterImage->Transform()->SetRelativeScale(Vec3(82.f, 82.f, 20.f));
 	CharacterImage->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
 	CharacterImage->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(ChampMtrlPath), 0);
 	CharacterImage->Transform()->SetAbsolute(true);
-	CharacterImage->Transform()->SetRelativePos(Vec3(-55.f, 0.f, 2.f));
+	CharacterImage->Transform()->SetRelativePos(Vec3(-250.f, 0.f, 2.f));
 	GetUIFrontPanel()->AddChild(CharacterImage);
 
 
@@ -137,7 +137,7 @@ void CCharacterUIScript::SkillUILoad()
 		Obj->AddComponent(new CTransform);
 		Obj->AddComponent(new CMeshRender);
 		Obj->AddComponent(new CCoolDownUIScript);
-		Obj->Transform()->SetRelativeScale(Vec3(10.f, 10.f, 10.f));
+		Obj->Transform()->SetRelativeScale(Vec3(45.f, 45.f, 10.f));
 		Obj->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
 		Obj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(fullpath), 0);
 		Obj->Transform()->SetAbsolute(true);
@@ -250,22 +250,22 @@ void CCharacterUIScript::BarUILoad()
 void CCharacterUIScript::UISetting()
 {
 	//---스킬 고정 위치---
-	Skill_Q_Image->Transform()->SetRelativePos(Vec3(-28.68f, 4.2f, 2.f));
-	Skill_W_Image->Transform()->SetRelativePos(Vec3(-17.5f, 4.2f, 2.f));
-	Skill_E_Image->Transform()->SetRelativePos(Vec3(-5.8f, 4.2f, 2.f));
-	Skill_R_Image->Transform()->SetRelativePos(Vec3(5.48f, 4.2f, 2.f));
-	Skill_PASSIVE_Image->Transform()->SetRelativeScale(Vec3(7.f, 7.f, 7.f));
-	Skill_PASSIVE_Image->Transform()->SetRelativePos(Vec3(-38.4f, 5.2f, 2.f));
-	Spell_D->Transform()->SetRelativeScale(Vec3(7.f, 7.f, 7.f));
-	Spell_D->Transform()->SetRelativePos(Vec3(16.f, 5.2f, 2.f));
-	Spell_F->Transform()->SetRelativeScale(Vec3(7.f, 7.f, 7.f));
-	Spell_F->Transform()->SetRelativePos(Vec3(24.52f, 5.2f, 2.f));
-	HPBar->Transform()->SetRelativeScale(Vec3(68.4f, 3.f, 1.f));
-	HPBar->Transform()->SetRelativePos(Vec3(-7.f, -5.76f, -1.f));
-	MPBar->Transform()->SetRelativeScale(Vec3(68.4f, 3.f, 1.f));
-	MPBar->Transform()->SetRelativePos(Vec3(-7.f, -9.12f, -1.f));
-	EXPBar->Transform()->SetRelativeScale(Vec3(7.f, 18.7f, 1.f));
-	EXPBar->Transform()->SetRelativePos(Vec3(-48.f, 1.f, -1.f));
-	WadingTotem->Transform()->SetRelativeScale(Vec3(6.f, 6.f, 1.f));
-	WadingTotem->Transform()->SetRelativePos(Vec3(60.32f, 5.68f, 7.f));
+	Skill_Q_Image->Transform()->SetRelativePos(Vec3(-130.68f, 18.2f, 2.f));
+	Skill_W_Image->Transform()->SetRelativePos(Vec3(-78.5f, 18.2f, 2.f));
+	Skill_E_Image->Transform()->SetRelativePos(Vec3(-26.8f, 18.2f, 2.f));
+	Skill_R_Image->Transform()->SetRelativePos(Vec3(25.48f, 18.2f, 2.f));
+	Skill_PASSIVE_Image->Transform()->SetRelativeScale(Vec3(32.f, 32.f, 7.f));
+	Skill_PASSIVE_Image->Transform()->SetRelativePos(Vec3(-174.4f, 25.2f, 2.f));
+	Spell_D->Transform()->SetRelativeScale(Vec3(32.f, 32.f, 7.f));
+	Spell_D->Transform()->SetRelativePos(Vec3(73.f, 25.2f, 2.f));
+	Spell_F->Transform()->SetRelativeScale(Vec3(32.f, 32.f, 7.f));
+	Spell_F->Transform()->SetRelativePos(Vec3(110.52f, 25.2f, 2.f));
+	HPBar->Transform()->SetRelativeScale(Vec3(312.4f, 13.f, 1.f));
+	HPBar->Transform()->SetRelativePos(Vec3(-32.f, -25.76f, -1.f));
+	MPBar->Transform()->SetRelativeScale(Vec3(312.4f, 13.f, 1.f));
+	MPBar->Transform()->SetRelativePos(Vec3(-32.f, -41.12f, -1.f));
+	EXPBar->Transform()->SetRelativeScale(Vec3(36.f, 87.f, 1.f));
+	EXPBar->Transform()->SetRelativePos(Vec3(-213.f, 7.f, -1.f));
+	WadingTotem->Transform()->SetRelativeScale(Vec3(25.f, 25.f, 1.f));
+	WadingTotem->Transform()->SetRelativePos(Vec3(272.32f, 24.68f, 7.f));
 }

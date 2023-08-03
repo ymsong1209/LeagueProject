@@ -44,8 +44,9 @@ void CWorldHPSpawnScript::begin()
 		}
 
 		WorldBar->MeshRender()->SetRaySightCulling(false);
-		WorldBar->Transform()->SetRelativeScale(Vec3(31.92f, 6.96f, 100.f));
-		WorldBar->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
+		WorldBar->Transform()->SetRelativeScale(Vec3(133.f, 29.f, 17.02f));
+		//WorldBar->Transform()->SetRelativeScale(Vec3(34.83f, 7.594f, 17.02f));
+		//WorldBar->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(60.f), 0.f, 0.f));
 		Vec3 Pos = m_vOtherplayerInfo[i].Pos;
 
 		CGameObject* Jinx = CLevelMgr::GetInst()->GetCurLevel()->FindObjectByName(L"Jinx");
@@ -58,41 +59,47 @@ void CWorldHPSpawnScript::tick()
 {
 	for (size_t i = 0; i < m_vOtherplayerInfo.size(); ++i)
 	{
-		CGameObject* Jinx = CLevelMgr::GetInst()->GetCurLevel()->FindObjectByName(L"Jinx");
-		Vec3 Pos = Jinx->Transform()->GetRelativePos();
-		CCamera* MainCam = CRenderMgr::GetInst()->GetMainCam();
+		if (CUR_LEVEL->GetState() == LEVEL_STATE::PLAY)
+		{
+			CGameObject* Jinx = CLevelMgr::GetInst()->GetCurLevel()->FindObjectByName(L"Jinx");
+			Vec3 Pos = Jinx->Transform()->GetRelativePos();
+			//m_vWorldBar[i]->Transform()->SetRelativePos(Vec3(Pos.x + 5.f, Pos.y + 46.f, Pos.z + 15.782f));
+			// 
+			// 
+			CCamera* MainCam = CRenderMgr::GetInst()->GetMainCam();
 
-		Matrix viewmat = MainCam->GetViewMat();
-		Matrix projmat = MainCam->GetProjMat();
-		Matrix MatViewProj = viewmat * projmat;
+			Matrix viewmat = MainCam->GetViewMat();
+			Matrix projmat = MainCam->GetProjMat();
+			Matrix MatViewProj = viewmat * projmat;
 
-		// 4D 벡터로 변환 (w 요소를 1로 설정)
-		Vec4 Pos4 = Vec4(Pos.x, Pos.y, Pos.z, 1.0f);
+			// 4D 벡터로 변환 (w 요소를 1로 설정)
+			Vec4 Pos4 = Vec4(Pos.x, Pos.y, Pos.z, 1.0f);
 
-		// MatViewProj에 곱해줌
-		Vec4 ProjPos = Pos4.Transform(Pos4, MatViewProj);
+			// MatViewProj에 곱해줌
+			Vec4 ProjPos = Pos4.Transform(Pos4, MatViewProj);
 
-		// w로 나눠서 클리핑(ndc) 좌표계로 변환
-		ProjPos /= ProjPos.w;
+			// w로 나눠서 클리핑(ndc) 좌표계로 변환
+			ProjPos /= ProjPos.w;
 
-		// 이 시점에서, projPos의 xy 좌표는 -1.0에서 1.0 사이의 값을 가지게 됩니다.
-		// 이 좌표를 사용해서 스크린 좌표를 계산하려면 뷰포트 크기를 알아야 합니다.
-		Vec2 Resolution = CEngine::GetInst()->GetWindowResolution();  //화면 해상도를 가져옴
-		Vec2 screenSize(Resolution.x, Resolution.y);
-		Vec2 ObjscreenPos = ((Vec2(ProjPos.x, ProjPos.y) + Vec2(1.f, 1.f)) / Vec2(2.f, 2.f)) * screenSize;
+			// 이 시점에서, projPos의 xy 좌표는 -1.0에서 1.0 사이의 값을 가지게 됩니다.
+			// 이 좌표를 사용해서 스크린 좌표를 계산하려면 뷰포트 크기를 알아야 합니다.
+			Vec2 Resolution = CEngine::GetInst()->GetWindowResolution();  //화면 해상도를 가져옴
+			Vec2 screenSize(Resolution.x, Resolution.y);
+			Vec2 ObjscreenPos = ((Vec2(ProjPos.x, ProjPos.y) + Vec2(1.f, 1.f)) / Vec2(2.f, 2.f)) * screenSize;
 
-		// Create a vector in normalized device coordinates
-		Vec4 ndcVec = Vec4((2.0f * ObjscreenPos.x) / Resolution.x - 1.0f, 1.0f - (2.0f * ObjscreenPos.y) / Resolution.y, 1.f,1.f);
-		CCamera* UICam = CRenderMgr::GetInst()->GetCamerafromIdx(1);
+			// Create a vector in normalized device coordinates
+			Vec4 ndcVec = Vec4((2.0f * ObjscreenPos.x) / Resolution.x - 1.0f, 1.0f - (2.0f * ObjscreenPos.y) / Resolution.y, 1.f, 1.f);
+			CCamera* UICam = CRenderMgr::GetInst()->GetCamerafromIdx(1);
 
-		// Get the inverse of the view-projection matrix
-		Matrix viewInvMatrix = UICam->GetViewMatInv(); 
-		Matrix projInvMatrix = UICam->GetProjMatInv(); 
-		Matrix invViewProjMatrix = viewInvMatrix * projInvMatrix;
+			// Get the inverse of the view-projection matrix
+			Matrix viewInvMatrix = UICam->GetViewMatInv();
+			Matrix projInvMatrix = UICam->GetProjMatInv();
+			Matrix invViewProjMatrix = viewInvMatrix * projInvMatrix;
 
-		// Transform to world coordinates
-		Vec3 worldVec = XMVector3TransformCoord(ndcVec, invViewProjMatrix);
-		m_vWorldBar[i]->Transform()->SetRelativePos(Vec3(worldVec.x- 3.f, -worldVec.y + 37.f, 700.f)); 
+			// Transform to world coordinates
+			Vec3 worldVec = XMVector3TransformCoord(ndcVec, invViewProjMatrix);
+			m_vWorldBar[i]->Transform()->SetRelativePos(Vec3(worldVec.x - 3.f, -worldVec.y + 117.f, 700.f));
+		}
 	}
 }
 

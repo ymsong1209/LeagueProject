@@ -14,8 +14,8 @@ void CMinimapUIScript::begin()
 	MinimapFrame->SetName(L"MiniMapFrame");
 	MinimapFrame->AddComponent(new CMeshRender);
 	MinimapFrame->AddComponent(new CTransform);
-	MinimapFrame->Transform()->SetRelativeScale(Vec3(63.f, 63.f, 0.1f));
-	MinimapFrame->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
+	MinimapFrame->Transform()->SetRelativeScale(Vec3(270.f, 270.f, 0.1f));
+	MinimapFrame->Transform()->SetRelativePos(Vec3(501.f, -275.f, 0.f));
 	MinimapFrame->Transform()->SetAbsolute(true);
 	MinimapFrame->Transform()->SetUseMouseOutline(false);
 	MinimapFrame->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
@@ -27,9 +27,9 @@ void CMinimapUIScript::begin()
 	Minimap->SetName(L"MiniMap");
 	Minimap->AddComponent(new CMeshRender);
 	Minimap->AddComponent(new CTransform);
-	Minimap->Transform()->SetRelativeScale(Vec3(60.f, 60.f, 0.1f));
+	Minimap->Transform()->SetRelativeScale(Vec3(255.f, 255.f, 0.1f));
 	Minimap->Transform()->SetAbsolute(true);
-	Minimap->Transform()->SetRelativePos(Vec3(1.f, 0.f, 27.f));
+	Minimap->Transform()->SetRelativePos(Vec3(505.f, -275.f, 27.f));
 	Minimap->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
 	Minimap->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MiniMapMtrl"), 0);
 	Minimap->MeshRender()->GetDynamicMaterial(0);

@@ -30,6 +30,8 @@ class CMeshRender :
 private:
     tMeshMoveData           m_tMeshMoveData;
     Ptr<CTexture>           m_arrMeshTex[MESH_TEX_PARAM::MESH_TEX_END];
+    bool                    m_UvInit;
+    int                     m_iTurnNumber; // UV¹Ýº¹ È½¼ö
 
 public:
     void SetOutputTexture(Ptr<CTexture> _Tex);
@@ -50,6 +52,7 @@ public:
     Vec4 GetAdditiveTexColor() { return m_tMeshMoveData.AdditiveColor; }
     Vec2 GetOffsetValue(MovTexType _TexType);
 
+    int GetTurnNumber() { return m_iTurnNumber; }
 public:
     void CalculateNextOffset(int  _MoveStyle, Vec2& _PreviousPos, Vec4 _FunctionValue, float _DT);
 

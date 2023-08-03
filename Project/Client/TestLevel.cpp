@@ -22,7 +22,7 @@
 #include <Script\CInventoryUIScript.h>
 #include <Script/CJinxScript.h>
 #include <Script\CMinimapUIScript.h>
-
+#include <Script\CMouseCursorUIScript.h>
 
 void CreateTestLevel()
 {
@@ -85,7 +85,7 @@ void CreateTestLevel()
 	UIObj->AddComponent(new CWorldHPSpawnScript);
 	UIObj->AddComponent(new CInventoryUIScript);
 	UIObj->AddComponent(new CMinimapUIScript);
-
+	UIObj->AddComponent(new CMouseCursorUIScript);
 	SpawnGameObject(UIObj, Vec3(0.f, 0.f, 0.f), 31);
 
 
@@ -240,6 +240,19 @@ void CreateTestLevel()
 		pObj->Transform()->SetUseMouseOutline(true); 
 
 		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0), 0);
+
+		//=======================================
+		pMeshData = nullptr;
+		pObj = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\arrow.fbx");
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"arrow");
+		pObj->GetRenderComponent()->SetFrustumCheck(false);
+		pObj->Transform()->SetRelativeScale(Vec3(1.f, 1.f, 1.f));
+		pObj->Transform()->SetUseMouseOutline(true);
+		SpawnGameObject(pObj, Vec3(-300, 100, 0), 0);
+		//=======================================
+
 
 		pMeshData = nullptr;
 		pObj = nullptr;

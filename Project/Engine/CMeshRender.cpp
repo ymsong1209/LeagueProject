@@ -23,6 +23,7 @@
 
 CMeshRender::CMeshRender()
     : CRenderComponent(COMPONENT_TYPE::MESHRENDER)
+    , m_iTurnNumber(0)
 {
     memset(&m_tMeshMoveData, 0, sizeof(struct tMeshMoveData));
 
@@ -162,19 +163,25 @@ void CMeshRender::CalculateNextOffset(int _MoveStyle, Vec2& _PreviousPos, Vec4 _
     {
         // FunctionValue.x : dx / dt
         _PreviousPos.x += _DT * _FunctionValue.x;
+        m_iTurnNumber = static_cast<int>(std::floor(fabsf(_PreviousPos.x)));
     }
     else if (_MoveStyle == 2) // Vertical
     {
         // FunctionValue.x : dy / dt
         _PreviousPos.y += _DT * _FunctionValue.x;
+
+        m_iTurnNumber = static_cast<int>(std::floor(fabsf(_PreviousPos.y)));
     }
     else if (_MoveStyle == 3) // Linear
     {
         // FunctionValue.x : dx / dt;
         // FunctionValue.y : x 계수
         // FunctionValue.z : y 절편
+
+
         _PreviousPos.x += _DT * _FunctionValue.x;
         _PreviousPos.y = _FunctionValue.y * _PreviousPos.x + _FunctionValue.z;
+        m_iTurnNumber = static_cast<int>(std::floor(fabsf(_PreviousPos.y)));
     }
     else if (_MoveStyle == 4) // Parabola
     {
@@ -184,7 +191,7 @@ void CMeshRender::CalculateNextOffset(int _MoveStyle, Vec2& _PreviousPos, Vec4 _
         // FuncValue.w : y 절편
         _PreviousPos.x += _DT * _FunctionValue.x;
         _PreviousPos.y = _FunctionValue.y * _PreviousPos.x * _PreviousPos.x + _FunctionValue.z * _PreviousPos.x + _FunctionValue.w;
-
+        m_iTurnNumber = static_cast<int>(std::floor(fabsf(_PreviousPos.y)));
     }
     else if (_MoveStyle == 5) // Sin
     {
@@ -194,6 +201,7 @@ void CMeshRender::CalculateNextOffset(int _MoveStyle, Vec2& _PreviousPos, Vec4 _
         // FuncValue.w : y절편
         _PreviousPos.x += _DT * _FunctionValue.x;
         _PreviousPos.y = _FunctionValue.y + sin(_FunctionValue.z * _PreviousPos.x) + _FunctionValue.w;
+        m_iTurnNumber = static_cast<int>(std::floor(fabsf(_PreviousPos.y)));
     }
     else if (_MoveStyle == 6) // Cos
     {
@@ -203,6 +211,7 @@ void CMeshRender::CalculateNextOffset(int _MoveStyle, Vec2& _PreviousPos, Vec4 _
         // FuncValue.w : y절편
         _PreviousPos.x += _DT * _FunctionValue.x;
         _PreviousPos.y = _FunctionValue.y * cos(_FunctionValue.z * _PreviousPos.x) + _FunctionValue.w;
+        m_iTurnNumber = static_cast<int>(std::floor(fabsf(_PreviousPos.y)));
     }
 }
 

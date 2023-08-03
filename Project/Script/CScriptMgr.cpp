@@ -17,6 +17,7 @@
 #include "CMinionScript.h"
 #include "CMobScript.h"
 #include "CMouseCursorUIScript.h"
+#include "CMoveCursorUIScript.h"
 #include "CNexusScript.h"
 #include "COtherPlayerScript.h"
 #include "CPlayerScript.h"
@@ -45,6 +46,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CMinionScript");
 	_vec.push_back(L"CMobScript");
 	_vec.push_back(L"CMouseCursorUIScript");
+	_vec.push_back(L"CMoveCursorUIScript");
 	_vec.push_back(L"CNexusScript");
 	_vec.push_back(L"COtherPlayerScript");
 	_vec.push_back(L"CPlayerScript");
@@ -90,6 +92,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CMobScript;
 	if (L"CMouseCursorUIScript" == _strScriptName)
 		return new CMouseCursorUIScript;
+	if (L"CMoveCursorUIScript" == _strScriptName)
+		return new CMoveCursorUIScript;
 	if (L"CNexusScript" == _strScriptName)
 		return new CNexusScript;
 	if (L"COtherPlayerScript" == _strScriptName)
@@ -162,6 +166,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::MOUSECURSORUISCRIPT:
 		return new CMouseCursorUIScript;
+		break;
+	case (UINT)SCRIPT_TYPE::MOVECURSORUISCRIPT:
+		return new CMoveCursorUIScript;
 		break;
 	case (UINT)SCRIPT_TYPE::NEXUSSCRIPT:
 		return new CNexusScript;
@@ -260,6 +267,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::MOUSECURSORUISCRIPT:
 		return L"CMouseCursorUIScript";
+		break;
+
+	case SCRIPT_TYPE::MOVECURSORUISCRIPT:
+		return L"CMoveCursorUIScript";
 		break;
 
 	case SCRIPT_TYPE::NEXUSSCRIPT:

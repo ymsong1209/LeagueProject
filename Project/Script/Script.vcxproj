@@ -217,6 +217,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CMinionWalkState.h" />
     <ClInclude Include="CMobScript.h" />
     <ClInclude Include="CMouseCursorUIScript.h" />
+    <ClInclude Include="CMoveCursorUIScript.h" />
     <ClInclude Include="CNexusScript.h" />
     <ClInclude Include="COtherPlayerScript.h" />
     <ClInclude Include="CPlayerScript.h" />
@@ -278,6 +279,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CMinionWalkState.cpp" />
     <ClCompile Include="CMobScript.cpp" />
     <ClCompile Include="CMouseCursorUIScript.cpp" />
+    <ClCompile Include="CMoveCursorUIScript.cpp" />
     <ClCompile Include="CNexusScript.cpp" />
     <ClCompile Include="COtherPlayerScript.cpp" />
     <ClCompile Include="CPlayerScript.cpp" />

@@ -75,6 +75,7 @@
     </ClCompile>
     <ClCompile Include="CMinimapUIScript.cpp" />
     <ClCompile Include="CMouseCursorUIScript.cpp" />
+    <ClCompile Include="CMoveCursorUIScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -110,6 +111,7 @@
     </ClInclude>
     <ClInclude Include="CMinimapUIScript.h" />
     <ClInclude Include="CMouseCursorUIScript.h" />
+    <ClInclude Include="CMoveCursorUIScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">

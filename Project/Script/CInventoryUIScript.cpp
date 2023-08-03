@@ -75,7 +75,7 @@ void CInventoryUIScript::begin()
 			Item->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(fullname), 0);
 		}
 
-		Item->Transform()->SetRelativeScale(Vec3(7.0f, 7.0f, 0.1f));
+		Item->Transform()->SetRelativeScale(Vec3(32.f, 32.f, 0.1f));
 		Item->Transform()->SetAbsolute(true);
 		Item->Transform()->SetRelativePos(Vec3(0.f, 0.f, 100.f));
 		m_vecItemObj.push_back(Item);
@@ -122,22 +122,22 @@ void CInventoryUIScript::PosSetting(int _i)
 	switch (_i)
 	{
 	case 0:
-		Transform->SetRelativePos(Vec3(-8.32f, 4.2f, 100.f));
+		Transform->SetRelativePos(Vec3(120.68f, -313.8f, 100.f));
 		break;
 	case 1:
-		Transform->SetRelativePos(Vec3(-0.48f, 4.2f, 100.f));
+		Transform->SetRelativePos(Vec3(158.52f, -313.8f, 100.f));
 		break;
 	case 2:
-		Transform->SetRelativePos(Vec3(7.32f, 4.2f, 100.f));
+		Transform->SetRelativePos(Vec3(192.32f, -313.8f, 100.f));
 		break;
 	case 3:
-		Transform->SetRelativePos(Vec3(-8.32f, -3.56f, 100.f));
+		Transform->SetRelativePos(Vec3(120.68f, -347.56f, 100.f));
 		break;
 	case 4:
-		Transform->SetRelativePos(Vec3(-0.48f, -3.56f, 100.f));
+		Transform->SetRelativePos(Vec3(158.52f, -347.56f, 100.f));
 		break;
 	case 5:
-		Transform->SetRelativePos(Vec3(7.32f, -3.56f, 100.f));
+		Transform->SetRelativePos(Vec3(192.32f, -347.56f, 100.f));
 		break;
 	}
 }

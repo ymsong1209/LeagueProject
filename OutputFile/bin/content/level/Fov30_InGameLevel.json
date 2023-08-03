@@ -36,7 +36,7 @@
                             "CAMERA": 7,
                             "fAspectRatio": 1.600000023841858,
                             "fWidth": 1600.0,
-                            "fScale": 4.099999904632568,
+                            "fScale": 1.0,
                             "ProjType": 1,
                             "iLayerMask": 2147483647,
                             "iCamIdx": 0,
@@ -86,7 +86,7 @@
                             "CAMERA": 7,
                             "fAspectRatio": 1.600000023841858,
                             "fWidth": 1600.0,
-                            "fScale": 4.099999904632568,
+                            "fScale": 1.0,
                             "ProjType": 0,
                             "iLayerMask": 2147483648,
                             "iCamIdx": 1,
@@ -594,6 +594,114 @@
                             "scriptName": "CJinxScript"
                         }
                     ],
+                    "children": []
+                },
+                {
+                    "ObjName": "arrow",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": -300.0,
+                                "y": 100.0,
+                                "z": 0.0
+                            },
+                            "vRelativeScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": true,
+                            "Outlinethickness": 0.07199999690055847
+                        },
+                        {
+                            "MESHRENDER": 10,
+                            "Mesh": {
+                                "IsNull": false,
+                                "Key": "mesh\\arrow.mesh",
+                                "RelativePath": "mesh\\arrow.mesh"
+                            },
+                            "fBounding": 150.0,
+                            "bFrustumCheck": false,
+                            "bDynamicShadow": false,
+                            "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": false,
+                            "vBoundingBoxOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "iMtrlCount": 1,
+                            "vecMtrls[0]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "material\\movement_indicator_1.mtrl",
+                                "RelativePath": "material\\movement_indicator_1.mtrl"
+                            },
+                            "DynamicMtrls": [
+                                {
+                                    "vecMtrls[0]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                }
+                            ],
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
+                        },
+                        16
+                    ],
+                    "scripts": [],
                     "children": []
                 },
                 {
@@ -2794,6 +2902,135 @@
                                 },
                                 {
                                     "vecMtrls[1]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                }
+                            ],
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
+                        },
+                        16
+                    ],
+                    "scripts": [],
+                    "children": []
+                },
+                {
+                    "ObjName": "ReftFast",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": -600.0,
+                                "y": 0.0,
+                                "z": 500.0
+                            },
+                            "vRelativeScale": {
+                                "x": 200.0,
+                                "y": 200.0,
+                                "z": 0.0
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": true,
+                            "Outlinethickness": 0.07199999690055847
+                        },
+                        {
+                            "COLLIDER2D": 1,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "vOffsetRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "Shape": 0,
+                            "DrawCollision": true
+                        },
+                        {
+                            "MESHRENDER": 10,
+                            "Mesh": {
+                                "IsNull": false,
+                                "Key": "RectMesh",
+                                "RelativePath": ""
+                            },
+                            "fBounding": 150.0,
+                            "bFrustumCheck": true,
+                            "bDynamicShadow": false,
+                            "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": false,
+                            "vBoundingBoxOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "iMtrlCount": 1,
+                            "vecMtrls[0]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "Std2DMtrl",
+                                "RelativePath": ""
+                            },
+                            "DynamicMtrls": [
+                                {
+                                    "vecMtrls[0]DynamicMtrl": null,
                                     "IsDynamicMtrlExist": false
                                 }
                             ],
@@ -7263,6 +7500,9 @@
                         },
                         {
                             "scriptName": "CMinimapUIScript"
+                        },
+                        {
+                            "scriptName": "CMouseCursorUIScript"
                         }
                     ],
                     "children": []

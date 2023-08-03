@@ -14,6 +14,7 @@ CMinimapUIScript
 CMinionScript
 CMobScript
 CMouseCursorUIScript
+CMoveCursorUIScript
 CNexusScript
 COtherPlayerScript
 CPlayerScript

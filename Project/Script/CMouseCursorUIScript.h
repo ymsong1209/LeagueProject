@@ -5,7 +5,9 @@ class CMouseCursorUIScript :
     public CScript
 {
 private:
-
+    CGameObject* Mouse;
+    bool    m_bOnlyMouseCursorOn;
+    CGameObject* MoveArrow;
 
 public:
     virtual void begin() override;
