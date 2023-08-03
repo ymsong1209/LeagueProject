@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <ClCompile Include="CBaseAttack.cpp" />
     <ClCompile Include="CBasicAttackScript.cpp" />
     <ClCompile Include="CCameraMoveScript.cpp" />
     <ClCompile Include="CChampionAttackState.cpp" />
@@ -48,11 +49,9 @@
     <ClCompile Include="CUnitState.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Script.cpp" />
-    <ClCompile Include="CBaseAttack.cpp">
-      <Filter>Skills</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CBaseAttack.h" />
     <ClInclude Include="CBasicAttackScript.h" />
     <ClInclude Include="CCameraMoveScript.h" />
     <ClInclude Include="CChampionAttackState.h" />
@@ -102,25 +101,5 @@
     <ClInclude Include="CInGameCameraScript.h" />
     <ClInclude Include="IGameEventListener.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="CBaseAttack.h">
-      <Filter>Skills</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="State">
-      <UniqueIdentifier>{12428a69-7a52-45ff-a064-952de9d98594}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="State\Base">
-      <UniqueIdentifier>{2ed30f18-5163-47f9-9b9d-ac5d9879eb8f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="State\Jinx">
-      <UniqueIdentifier>{60296e4a-a190-46ae-8222-e8cb269f897a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Skills">
-      <UniqueIdentifier>{34a29917-987c-4192-a0a7-dc9245f32caf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameEvent">
-      <UniqueIdentifier>{9b3dc42c-ed65-4e4e-a177-65e357a6a5fa}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
 </Project>
