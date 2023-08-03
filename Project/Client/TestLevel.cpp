@@ -300,7 +300,7 @@ void CreateTestLevel()
 		pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(0.f), XMConvertToRadians(-180.f)));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
 		SpawnGameObject(pObj, Vec3(1661.7f, 14.8f, 2013.9f), 0);
-
+		
 		pMeshData = nullptr;
 		pObj = nullptr;
 		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Inhibitor.fbx");
@@ -314,7 +314,7 @@ void CreateTestLevel()
 		pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(45.f), XMConvertToRadians(-180.f)));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
 		SpawnGameObject(pObj, Vec3(1711.f, 14.8f, 1721.f), 0);
-
+		
 		pMeshData = nullptr;
 		pObj = nullptr;
 		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Inhibitor.fbx");
@@ -501,7 +501,7 @@ void CreateTestLevel()
 		Gromp->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
 		Gromp->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(270.f), 0.f));
 		SpawnGameObject(Gromp, Vec3(323.f, 0.f, 1242.f), 0);
-
+	
 		CGameObject* GrompAggro = new CGameObject;
 		GrompAggro->SetName(L"GrompAggroRadius");
 		GrompAggro->AddComponent(new CTransform);

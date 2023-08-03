@@ -1859,7 +1859,7 @@
                                         ],
                                         "arrTex[(UINT)TEX_PARAM::TEX_END]s": [
                                             {
-                                                "arrTex[0]": 0
+                                                "arrTex[0]": 1
                                             },
                                             {
                                                 "arrTex[1]": 0
@@ -2415,10 +2415,10 @@
                                         ],
                                         "arrTex[(UINT)TEX_PARAM::TEX_END]s": [
                                             {
-                                                "arrTex[0]": 0
+                                                "arrTex[0]": 1
                                             },
                                             {
-                                                "arrTex[1]": 0
+                                                "arrTex[1]": 1
                                             },
                                             {
                                                 "arrTex[2]": 0
@@ -2993,7 +2993,7 @@
                                         ],
                                         "arrTex[(UINT)TEX_PARAM::TEX_END]s": [
                                             {
-                                                "arrTex[0]": 0
+                                                "arrTex[0]": 1
                                             },
                                             {
                                                 "arrTex[1]": 0
@@ -3845,7 +3845,7 @@
                                         ],
                                         "arrFloat[12]s": [
                                             {
-                                                "arrFloat[0]": 0.0
+                                                "arrFloat[0]": 1.0
                                             },
                                             {
                                                 "arrFloat[1]": 0.0
