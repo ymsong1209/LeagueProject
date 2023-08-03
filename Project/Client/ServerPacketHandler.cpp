@@ -472,6 +472,7 @@ void ServerPacketHandler::Handle_S_OBJECT_MOVE(PacketSessionRef& session, BYTE* 
 	if (pkt->Validate() == false)
 	{
 		m.unlock();
+		cout << "S_OBJECT_MOVE Packet Validate Fail " << endl;
 		return;
 	}
 

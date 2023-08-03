@@ -824,15 +824,15 @@ struct PKT_S_SKILL_CC {
 
 #pragma pack(1)
 struct PKT_C_DESPAWN_OBJECT {
-	uint16      packetSize;
-	uint16      packetId;
-	uint64      objId;
-	float      time;
+	uint16		packetSize;
+	uint16		packetId;
+	uint64		objId;
+	float		time;
 
 	bool Validate()
 	{
 		uint32 size = 0;
-		size += sizeof(PKT_S_SKILL_CC);
+		size += sizeof(PKT_C_DESPAWN_OBJECT);
 		if (packetSize < size)
 			return false;
 
@@ -846,15 +846,15 @@ struct PKT_C_DESPAWN_OBJECT {
 
 #pragma pack(1)
 struct PKT_S_DESPAWN_OBJECT {
-	uint16      packetSize;
-	uint16      packetId;
-	uint64      objId;
-	float      time;
+	uint16		packetSize;
+	uint16		packetId;
+	uint64		objId;
+	float		time;
 
 	bool Validate()
 	{
 		uint32 size = 0;
-		size += sizeof(PKT_S_SKILL_CC);
+		size += sizeof(PKT_S_DESPAWN_OBJECT);
 		if (packetSize < size)
 			return false;
 
@@ -865,7 +865,6 @@ struct PKT_S_DESPAWN_OBJECT {
 	}
 };
 #pragma pack()
-
 
 #pragma pack(1)
 struct PKT_C_KDA_CS {

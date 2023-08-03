@@ -21,6 +21,8 @@ void CJinxWScript::begin()
 
 void CJinxWScript::tick()
 {
+	if (m_bUnitDead) return;
+
 	CProjectileScript::tick();
 
 	// 징크스 본인의 방향으로 발사
@@ -35,9 +37,8 @@ void CJinxWScript::tick()
 	float distance = sqrt((pow(m_vSpawnPos.x - NewPos.x, 2) + pow(m_vSpawnPos.z - NewPos.z, 2)));
 	if (distance >= m_fSkillRange)
 	{
-
-		// 이후 사라짐
-		//CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 2.f);
+		if(!m_bUnitDead) // 이후 사라짐
+			CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 2.f);
 		//this->GetOwner()->Transform()->SetRelativePos(-666.f, -666.f, -666.f);
 		m_fProjectileSpeed = 0.f;
 		m_bUnitDead = true;
@@ -46,6 +47,8 @@ void CJinxWScript::tick()
 
 void CJinxWScript::OnOverlap(CCollider2D* _Other)
 {
+	if (m_bUnitDead) return;
+
 	if (_Other->GetOwner()->GetScript<CUnitScript>() == nullptr)
 		return;
 	
@@ -55,11 +58,15 @@ void CJinxWScript::OnOverlap(CCollider2D* _Other)
 		// 피격자의 서버 아이디
 		UINT64 TargetServerID = _Other->GetOwner()->GetScript<CUnitScript>()->GetServerID();
 		// 방장컴이 서버에게 이 투사체가 피격자와 충돌했다고 전달
-		CSendServerEventMgr::GetInst()->SendHitPacket(GetServerID(), TargetServerID, m_iServerUserID, 1, SkillType::JINX_W);
+		
 
-		// 이후 사라짐
-		//CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 0.5f);
-		this->GetOwner()->Transform()->SetRelativePos(-666.f, -666.f, -666.f);
+		if (!m_bUnitDead)// 이후 사라짐
+		{
+			CSendServerEventMgr::GetInst()->SendHitPacket(GetServerID(), TargetServerID, m_iServerUserID, 1, SkillType::JINX_W);
+			CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 0.5f);
+		}
+			
+		//this->GetOwner()->Transform()->SetRelativePos(-666.f, -666.f, -666.f);
 		m_fProjectileSpeed = 0.f;
 		m_bUnitDead = true;
 	}

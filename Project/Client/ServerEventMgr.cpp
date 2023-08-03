@@ -239,7 +239,8 @@ void ServerEventMgr::clienttick()
 			float   lifespan =  (float)m_vecEvent[i].lParam;
 
 			CGameObject* despawnObj = GameObjMgr::GetInst()->DeleteObjectInMap(despawnId);
-			despawnObj->SetLifeSpan(lifespan);
+			DestroyObject(despawnObj);
+			//despawnObj->SetLifeSpan(lifespan); // DT 고장나서 임시로 DestroyObject 사용중(즉시 삭제)
 		}
 		break;
 
