@@ -60,7 +60,7 @@ CGameObject* GameObjMgr::FindPlayer(uint64 _targetId)
 	}
 	else {
 		// 원하는 원소가 없을 때의 처리
-		cout << "Id is not playerId in Server" << endl;
+		cout << "Id is not playerId in Server (FindPlayers)" << endl;
 		return nullptr;
 	}
 }
@@ -79,7 +79,26 @@ CGameObject* GameObjMgr::FindObject(uint64 _targetId)
 	}
 	else {
 		// 원하는 원소가 없을 때의 처리
-		cout << "Id is not objectId in Server" << endl;
+		cout << "Id is not objectId in Server (FindObject)" << endl;
+		return nullptr;
+	}
+}
+
+CGameObject* GameObjMgr::FindPlacedObject(uint64 _targetId)
+{
+	// find 함수를 사용하여 원하는 키 값을 가진 원소를 찾습니다.
+	std::map<uint64, CGameObject*>::iterator iter = _placedObjects.find(_targetId);
+
+	// 원하는 원소가 존재하는지 확인합니다.
+	if (iter != _placedObjects.end()) {
+
+		// 원하는 원소를 찾았을 때의 처리
+		CGameObject* pObj = iter->second;
+		return iter->second;
+	}
+	else {
+		// 원하는 원소가 없을 때의 처리
+		cout << "Id is not placedObjectId in Server (FindPlacedObject)" << endl;
 		return nullptr;
 	}
 }
@@ -88,7 +107,7 @@ CGameObject* GameObjMgr::FindAllObject(uint64 _targetId)
 {
 	_allObjects.insert(_players.begin(), _players.end());
 	_allObjects.insert(_objects.begin(), _objects.end());
-	_allObjects.insert(_towers.begin(), _towers.end());
+	_allObjects.insert(_placedObjects.begin(), _placedObjects.end());
 
 	// find 함수를 사용하여 원하는 키 값을 가진 원소를 찾습니다.
 	std::map<uint64, CGameObject*>::iterator iter = _allObjects.find(_targetId);
@@ -102,7 +121,7 @@ CGameObject* GameObjMgr::FindAllObject(uint64 _targetId)
 	}
 	else {
 		// 원하는 원소가 없을 때의 처리
-		cout << "Id is not in Server" << endl;
+		cout << "Id is not in Server (FindAllObject)" << endl;
 		return nullptr;
 	}
 }
@@ -114,7 +133,7 @@ CGameObject* GameObjMgr::DeleteObjectInMap(uint64 _id)
 	_allObjects.erase(_id);
 	_players.erase(_id);
 	_objects.erase(_id);
-	_towers.erase(_id);
+	_placedObjects.erase(_id);
 
 	return obj;
 }
@@ -181,9 +200,8 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 			AttackRange->AddComponent(new CAttackRangeScript);
 			AttackRange->SetName(L"AttackRange");
 			pObj->AddChild(AttackRange);
-
-
 		}
+
 		else
 		{
 			CUnitScript* unit = pObj->GetScript<CUnitScript>();
@@ -493,121 +511,156 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 void GameObjMgr::SendMyPlayerMove(ClientServiceRef _service)
 {
 	// 본인 플레이어의 움직임을 서버에 보낸다. 
-	std::mutex m;
+	CGameObject* obj = FindPlayer(MyPlayer.id);
+
+	if (obj == nullptr || obj->GetLayerIndex() == -1)
+		return;
+
+	Vec3  CurPos = obj->Transform()->GetRelativePos();
+
+	if (PrevPos == CurPos) // 이전 좌표와 변화가 없다면 move packet을 보내지 않는다. return
+		return;
+
+	PrevPos = CurPos;
+
+	Vec3  CurRot = obj->Transform()->GetRelativeRot();
+	//float CurLV = obj->GetScript<CUnitScript>()->GetLV();
+	float CurHP = obj->GetScript<CUnitScript>()->GetCurHP();
+	float CurMP = obj->GetScript<CUnitScript>()->GetCurMP();
+	float CurAttackPower = obj->GetScript<CUnitScript>()->GetAttackPower();
+	float CurDefencePower = obj->GetScript<CUnitScript>()->GetDefencePower();
+
+	ObjectMove move = {};
+	//move.LV = CurLV;
+	move.HP = CurHP;
+	move.MP = CurMP;
+	move.AttackPower = CurAttackPower;
+	move.DefencePower = CurDefencePower;
+	move.pos.x = CurPos.x;
+	move.pos.y = CurPos.y;
+	move.pos.z = CurPos.z;
+	move.moveDir.x = CurRot.x;
+	move.moveDir.y = CurRot.y;
+	move.moveDir.z = CurRot.z;
+
+	// 서버에게 패킷 전송
+	std::cout << "C_PLAYER_MOVE Pakcet. id : "<< MyPlayer.id << endl;
+	PKT_C_PLAYER_MOVE_WRITE pktWriter(move);
+	SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+	_service->Broadcast(sendBuffer);
+	std::cout << "===============================" << endl;
+
+}
+
+void GameObjMgr::SendObjectMove(uint64 _id, CGameObject* _obj, ClientServiceRef _service)
+{
+	// 오브젝트의 움직임을 서버에 보낸다.
+	CGameObject* obj = FindObject(_id);
+	
+	if (obj == nullptr || obj->GetLayerIndex() == -1)
+		return;
+	
+	Vec3  CurPos = obj->Transform()->GetRelativePos();
+	
+	auto it = _objectsPrevPos.find(_id);
+	if (it != _objectsPrevPos.end()) // PrevPos가 있다. 	
 	{
-		std::lock_guard<std::mutex> lock(m);
-
-		CGameObject* obj = FindPlayer(MyPlayer.id);
-
-		if (obj == nullptr)
+		// 이전 좌표와 똑같다면 move packet을 보내지 않는다. return
+		if (_objectsPrevPos.at(_id) == CurPos) 
 			return;
-
-		if (obj->GetLayerIndex() == -1)
-			return;
-
-		Vec3  CurPos = obj->Transform()->GetRelativePos();
-
-		if (PrevPos == CurPos) // 이전 좌표와 변화가 없다면 move packet을 보내지 않는다. return
-			return;
-
-		PrevPos = CurPos;
-
+	
+		_objectsPrevPos.at(_id) = CurPos; // 현재 좌표를 이전좌표로 저장
+		
 		Vec3  CurRot = obj->Transform()->GetRelativeRot();
 		//float CurLV = obj->GetScript<CUnitScript>()->GetLV();
-		float CurHP = obj->GetScript<CUnitScript>()->GetCurHP();
-		float CurMP = obj->GetScript<CUnitScript>()->GetCurMP();
-		float CurAttackPower = obj->GetScript<CUnitScript>()->GetAttackPower();
-		float CurDefencePower = obj->GetScript<CUnitScript>()->GetDefencePower();
-
+	
 		ObjectMove move = {};
+		if (FindObject(_id)->GetScript<CUnitScript>() != nullptr)
+		{
+			float CurHP = obj->GetScript<CUnitScript>()->GetCurHP();
+			float CurMP = obj->GetScript<CUnitScript>()->GetCurMP();
+			float CurAttackPower = obj->GetScript<CUnitScript>()->GetAttackPower();
+			float CurDefencePower = obj->GetScript<CUnitScript>()->GetDefencePower();
+	
+			move.HP = CurHP;
+			move.MP = CurMP;
+			move.AttackPower = CurAttackPower;
+			move.DefencePower = CurDefencePower;
+		}
+	
 		//move.LV = CurLV;
-		move.HP = CurHP;
-		move.MP = CurMP;
-		move.AttackPower = CurAttackPower;
-		move.DefencePower = CurDefencePower;
 		move.pos.x = CurPos.x;
 		move.pos.y = CurPos.y;
 		move.pos.z = CurPos.z;
 		move.moveDir.x = CurRot.x;
 		move.moveDir.y = CurRot.y;
 		move.moveDir.z = CurRot.z;
-
+	
 		// 서버에게 패킷 전송
-		std::cout << "C_PLAYER_MOVE Pakcet. id : "<< MyPlayer.id << endl;
-		PKT_C_PLAYER_MOVE_WRITE pktWriter(move);
+		std::cout << "C_OBJECT_MOVE Pakcet. id : " << _id << endl;
+	
+		PKT_C_OBJECT_MOVE_WRITE pktWriter(_id, move);
 		SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
 		_service->Broadcast(sendBuffer);
 		std::cout << "===============================" << endl;
 	}
-}
-
-void GameObjMgr::SendObjectMove(uint64 _id, CGameObject* _obj, ClientServiceRef _service)
-{
-	// 오브젝트의 움직임을 서버에 보낸다. 
-	std::mutex m;
+	else
 	{
-		std::lock_guard<std::mutex> lock(m);
-
-		CGameObject* obj = FindObject(_id);
-
-		if (obj == nullptr || obj->GetLayerIndex() == -1)
-			return;
-
-		Vec3  CurPos = obj->Transform()->GetRelativePos();
-
-		auto it = _objectsPrevPos.find(_id);
-		if (it != _objectsPrevPos.end()) // PrevPos가 있다. 	
-		{
-			// 이전 좌표와 똑같다면 move packet을 보내지 않는다. return
-			if (_objectsPrevPos.at(_id) == CurPos) 
-				return;
-
-			_objectsPrevPos.at(_id) = CurPos; // 현재 좌표를 이전좌표로 저장
-			
-			Vec3  CurRot = obj->Transform()->GetRelativeRot();
-			//float CurLV = obj->GetScript<CUnitScript>()->GetLV();
-
-			ObjectMove move = {};
-			if (FindObject(_id)->GetScript<CUnitScript>() != nullptr)
-			{
-				float CurHP = obj->GetScript<CUnitScript>()->GetCurHP();
-				float CurMP = obj->GetScript<CUnitScript>()->GetCurMP();
-				float CurAttackPower = obj->GetScript<CUnitScript>()->GetAttackPower();
-				float CurDefencePower = obj->GetScript<CUnitScript>()->GetDefencePower();
-
-				move.HP = CurHP;
-				move.MP = CurMP;
-				move.AttackPower = CurAttackPower;
-				move.DefencePower = CurDefencePower;
-			}
-
-			//move.LV = CurLV;
-			move.pos.x = CurPos.x;
-			move.pos.y = CurPos.y;
-			move.pos.z = CurPos.z;
-			move.moveDir.x = CurRot.x;
-			move.moveDir.y = CurRot.y;
-			move.moveDir.z = CurRot.z;
-
-			// 서버에게 패킷 전송
-			std::cout << "C_OBJECT_MOVE Pakcet. id : " << _id << endl;
-
-			PKT_C_OBJECT_MOVE_WRITE pktWriter(_id, move);
-			SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
-			_service->Broadcast(sendBuffer);
-			std::cout << "===============================" << endl;
-		}
-		else
-		{
-			_objectsPrevPos.insert(pair(_id, CurPos));
-		}
-
-		
+		_objectsPrevPos.insert(pair(_id, CurPos));
 	}
 }
 
-void GameObjMgr::SendTowerUpdate(uint64 _id, CGameObject* _obj, ClientServiceRef _service)
+void GameObjMgr::SendPlacedObjectUpdate(uint64 _id, CGameObject* _obj, ClientServiceRef _service)
 {
+	// 배치형 오브젝트의 업데이트를 서버에 보낸다. (HP 변경시에만)
+	CGameObject* obj = FindObject(_id);
+
+	if (obj == nullptr || obj->GetLayerIndex() == -1)
+		return;
+
+	float CurHP = obj->GetScript<CUnitScript>()->GetCurHP();
+	auto it = _placedObjectsPrevHP.find(_id);
+	if (it != _placedObjectsPrevHP.end()) // PrevHP가 있다. 	
+	{
+		// 이전 HP와 똑같다면 move packet을 보내지 않는다. return
+		if (_placedObjectsPrevHP.at(_id) == CurHP)
+			return;
+
+		_placedObjectsPrevHP.at(_id) = CurHP; // 현재 HP를 이전 HP로 저장
+
+		ObjectMove updatePlacedObject = {};
+
+		float CurMP = obj->GetScript<CUnitScript>()->GetCurMP();
+		float CurAttackPower = obj->GetScript<CUnitScript>()->GetAttackPower();
+		float CurDefencePower = obj->GetScript<CUnitScript>()->GetDefencePower();
+
+		updatePlacedObject.HP = CurHP;
+		updatePlacedObject.MP = CurMP;
+		updatePlacedObject.AttackPower = CurAttackPower;
+		updatePlacedObject.DefencePower = CurDefencePower;
+
+		Vec3 CurPos = obj->Transform()->GetRelativePos();
+		Vec3 CurRot = obj->Transform()->GetRelativeRot();
+
+		updatePlacedObject.pos.x = CurPos.x;
+		updatePlacedObject.pos.y = CurPos.y;
+		updatePlacedObject.pos.z = CurPos.z;
+		updatePlacedObject.moveDir.x = CurRot.x;
+		updatePlacedObject.moveDir.y = CurRot.y;
+		updatePlacedObject.moveDir.z = CurRot.z;
+
+		// 서버에게 패킷 전송
+		std::cout << "C_OBJECT_MOVE Pakcet.(placedObject) id : " << _id << endl;
+
+		PKT_C_OBJECT_MOVE_WRITE pktWriter(_id, updatePlacedObject);
+		SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+		_service->Broadcast(sendBuffer);
+		std::cout << "===============================" << endl;
+	}
+	else
+	{
+		_placedObjectsPrevHP.insert(pair(_id, CurHP));
+	}
 }
 
 void GameObjMgr::SendSkillSpawn(SkillInfo* _skillInfo, ClientServiceRef _service)
@@ -624,6 +677,7 @@ void GameObjMgr::SendSkillSpawn(SkillInfo* _skillInfo, ClientServiceRef _service
 		skillInfoPacket.SkillLevel = _skillInfo->SkillLevel;
 		skillInfoPacket.skillType = _skillInfo->skillType;
 		skillInfoPacket.offsetPos = _skillInfo->offsetPos;
+		skillInfoPacket.projectileCount = _skillInfo->projectileCount;
 		skillInfoPacket.UseMousePos = _skillInfo->UseMousePos;
 		skillInfoPacket.MousePos = _skillInfo->MousePos;
 		skillInfoPacket.UseMouseDir = _skillInfo->UseMouseDir;

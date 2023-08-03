@@ -33,7 +33,7 @@ void ServerEventMgr::sendtick(ClientServiceRef _service)
 	// ========================================
 	// 규칙 패킷(MovePacket) : 100ms = 1/10 sec
     // ========================================
-	if (time_diff.count() >= 100)  // 나중에 20으로 고침
+	if (time_diff.count() >= 100)  // 나중에 40으로 고침
     {     
         // 1. 본인 플레이어 move 패킷을 서버에 보낸다. (ObjectMove)
 		// 문제점 : 안움직일땐 move 패킷을 안보내서 LV,HP,MP 등 업데이트가 안됌...그냥 움직여라는 뜻.(나중에는 안움직일때도 패킷보내게 변경예정)
@@ -53,11 +53,11 @@ void ServerEventMgr::sendtick(ClientServiceRef _service)
 			}
 
 			// 배치형 오브젝트는 움직임이 없으니 HP에 변동이 생길때만 보낸다.(SendTowersUpdate)
-			map<uint64, CGameObject*> _towers = GameObjMgr::GetInst()->GetTowers();
-			for (auto& pair : _towers) {
+			map<uint64, CGameObject*> _placedObject = GameObjMgr::GetInst()->GetPlacedObjects();
+			for (auto& pair : _placedObject) {
 				uint64 id = pair.first;
 				CGameObject* obj = pair.second;
-				GameObjMgr::GetInst()->SendTowerUpdate(id, obj, _service);
+				GameObjMgr::GetInst()->SendPlacedObjectUpdate(id, obj, _service);
 			}
 		}
 		
