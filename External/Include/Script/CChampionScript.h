@@ -1,6 +1,9 @@
 #pragma once
 #include "CUnitScript.h"
 
+#ifndef CHAMPION_ENUM_DEFINED
+#define CHAMPION_ENUM_DEFINED
+
 // 행동 제약
 enum RESTRAINT
 {
@@ -23,6 +26,11 @@ enum class SUMMONERS_SPELL
     EXHAUST,    // 탈진
     CLEANSE,    // 정화
 };
+#endif
+
+#ifndef CHAMPION_CLASS_DEFINED
+#define CHAMPION_CLASS_DEFINED
+
 
 class CSkill;
 
@@ -52,6 +60,8 @@ protected:
    
     SUMMONERS_SPELL*        m_EquippedSpell;    // 장착 소환사 주문(2칸 배열)
 
+    bool                    m_bIsAttackingChampion;
+
 
  // =========== Script   ============
 public:
@@ -67,6 +77,8 @@ public:
     void    GetInput();     // 입력 받기
     void    CheckSkills();  // 스킬 체크
     void    Move();
+    bool    IsAttackingChampion() { return m_bIsAttackingChampion; }
+    
 
 
     
@@ -84,4 +96,4 @@ public:
     CSkill* GetSkill(int _i) { if (_i < 0 || _i >= 5) return nullptr; return m_Skill[_i]; }
     int     GetSkillLevel(int _i) { return m_SkillLevel[_i]; }
 };
-
+#endif

@@ -1,6 +1,6 @@
-#pragma once
+#ifndef _CUNITSRIPT_H
+#define _CUNITSRIPT_H
 #include <Engine\CScript.h>
-
 
 
 class CUnitScript :
@@ -56,6 +56,7 @@ public:
 
 public:
     float GetCurHP() { return m_fHP; }
+    float GetMaxHP() { return m_fMaxHP; }
     void  SetCurHP(float _f) { m_fHP = _f; }         // 현재 체력 = 인자값
     void  SetCurHPVar(float _f) { m_fHP += _f; }     // 현재 체력 += 인자값
     float GetMaxHP() const { return m_fMaxHP; }
@@ -79,16 +80,16 @@ public:
     // 기타 필요한 Getter/Setter 함수 추가
     float  GetAttackPower() { return m_fAttackPower; }
     float  GetDefencePower() { return m_fDefencePower; }
+    float   GetAttackRange() { return m_fAttackRange; }
+
     void   SetAttackPower(float _attackPower) { m_fAttackPower = _attackPower; }
     void   SetDefencePower(float _defencePower) { m_fDefencePower = _defencePower; }
+    void    SetAttackRange(float _range) { m_fAttackRange = _range; }
 
     float   GetFaceRot() { return m_fFaceRot; }
 
     // 비동기
     void GetHit(SkillType _type, CGameObject* _SkillTarget, CGameObject* _SkillUser, int _SkillLevel);
 
-
-
-  
 };
-
+#endif // _CUNITSRIPT_H

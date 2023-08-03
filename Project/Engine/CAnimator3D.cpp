@@ -139,9 +139,9 @@ void CAnimator3D::finaltick()
 	}
 }
 
-void CAnimator3D::UpdateData()
+bool CAnimator3D::UpdateData()
 {
-	if (!m_pCurAnim) return;
+	if (!m_pCurAnim) return false;
 
 
 	// Animation3D Update Compute Shader
@@ -169,10 +169,12 @@ void CAnimator3D::UpdateData()
 
 	// t30 레지스터에 최종행렬 데이터(구조버퍼) 바인딩		
 	m_pBoneFinalMatBuffer->UpdateData(30, PIPELINE_STAGE::PS_VERTEX);
+	return true;
 }
 
 void CAnimator3D::ClearData()
 {
+	if (!m_pCurAnim) return;
 	m_pBoneFinalMatBuffer->Clear();
 
 	UINT iMtrlCount = MeshRender()->GetMtrlCount();
@@ -222,6 +224,7 @@ void CAnimator3D::PlayRepeat(const wstring& _strName, bool _RepeatBlend, bool _b
 
 	m_bRepeat = true;
 	m_bRepeatBlend = _RepeatBlend;
+
 }
 void CAnimator3D::PlayOnce(const wstring& _strName, bool _blend, float _blendtime)
 {
@@ -352,6 +355,7 @@ CAnim3D* CAnimator3D::CreateAnimation(const tMTAnimClip& _OriginalVecClip, const
 void CAnimator3D::DeleteCurrentAnim()
 {
 	assert(m_pCurAnim);
+	ClearData();
 	wstring animname = m_pCurAnim->GetClipList().strAnimName;
 	m_mapAnim.erase(animname);
 	delete m_pCurAnim;
@@ -360,6 +364,7 @@ void CAnimator3D::DeleteCurrentAnim()
 
 void CAnimator3D::DeleteEveryAnim()
 {
+	ClearData();
 	m_pCurAnim = nullptr;
 	if (m_mapAnim.empty()) return;
 	for (auto it = m_mapAnim.begin(); it != m_mapAnim.end(); ++it) {

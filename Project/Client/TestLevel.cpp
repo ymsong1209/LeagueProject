@@ -12,6 +12,7 @@
 
 #include <Script\CPlayerScript.h>
 #include <Script\CCameraMoveScript.h>
+#include <Script\CSoundTestScript.h>
 #include <Engine\CPathFindMgr.h>
 
 
@@ -19,6 +20,9 @@
 #include <Script/CScriptMgr.h>
 #include <Script/CJinxScript.h>
 
+#include <Script/CTurretScript.h>
+#include <Script/CJinxScript.h>
+#include <Script/CGrompScript.h>
 
 void CreateTestLevel()
 {
@@ -27,16 +31,8 @@ void CreateTestLevel()
 	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
 	pCurLevel->ChangeState(LEVEL_STATE::PLAY);
 
-	// Layer 이름설정
-	//pCurLevel->GetLayer(0)->SetName(L"Default");
-	//pCurLevel->GetLayer(1)->SetName(L"Tile");
-	//pCurLevel->GetLayer(2)->SetName(L"Player");
-	//pCurLevel->GetLayer(3)->SetName(L"Monster");
-	//pCurLevel->GetLayer(4)->SetName(L"PlayerProjectile");
-	//pCurLevel->GetLayer(5)->SetName(L"MonsterProjectile");
-	//pCurLevel->GetLayer(6)->SetName(L"LoLMap");
-	////롤맵 레이어에는 롤맵만 넣을것!
-	//pCurLevel->GetLayer(31)->SetName(L"ViewPort UI");
+
+	//롤맵 레이어에는 롤맵만 넣을것!
 	pCurLevel->GetLayer(0)->SetName(L"Default");
 	pCurLevel->GetLayer(1)->SetName(L"Lolmap");   // land
 	pCurLevel->GetLayer(2)->SetName(L"Map_Wall");   // map_wall (맵 벽)
@@ -60,7 +56,7 @@ void CreateTestLevel()
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Map_Wall");
 	CCollisionMgr::GetInst()->LayerCheck(L"Mob", L"Map_Wall");
 
-	// Main Camera Object 생성
+	 //Main Camera Object 생성
 	CGameObject* pMainCam = new CGameObject;
 	pMainCam->SetName(L"MainCamera");
 
@@ -189,7 +185,7 @@ void CreateTestLevel()
 	{
 		Ptr<CMeshData> pMeshData = nullptr;
 		CGameObject* pObj = nullptr;
-		
+
 		//pMeshData = nullptr;
 		//pObj = nullptr;
 		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
@@ -197,11 +193,17 @@ void CreateTestLevel()
 		//pObj->SetName(L"Jinx");
 		//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
 		//pObj->GetRenderComponent()->SetFrustumCheck(false);
+		//pObj->AddComponent(new CPlayerScript);
 		//pObj->AddComponent(new CJinxScript);
 		//pObj->AddComponent(new CPathFinder);
+		//pObj->AddComponent(new CCollider3D);
+		//pObj->AddComponent(new CCollider2D);
 		//pObj->AddComponent(new CFsm);
 		//
-		//pObj->AddComponent(new CCollider3D);
+		//pObj->Collider2D()->SetAbsolute(false);
+		//pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+		//pObj->Collider2D()->SetOffsetScale(Vec2(20.f, 20.f));
+		//pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
 		//
 		//pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
 		//pObj->Collider3D()->SetAbsolute(true);
@@ -212,7 +214,8 @@ void CreateTestLevel()
 		//
 		//pObj->Transform()->SetUseMouseOutline(true);
 		//
-		//SpawnGameObject(pObj, Vec3(0, 0, 0), 0);
+		//SpawnGameObject(pObj, Vec3(0, 0, 0), L"Champion");
+
 
 
 		//-------------------------------넥서스-----------------------------------------
@@ -325,6 +328,7 @@ void CreateTestLevel()
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
 		SpawnGameObject(pObj, Vec3(1711.f, 14.8f, 1721.f), L"Structure");
 
+
 		pMeshData = nullptr;
 		pObj = nullptr;
 		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Inhibitor.fbx");
@@ -342,33 +346,7 @@ void CreateTestLevel()
 	}
 
 
-	// LoLMap 로딩
-	{
-	
-		Ptr<CMeshData> pMeshData = nullptr;
-		CGameObject* pObj = nullptr;
-		for (int i = 0; i <= 25; ++i) 
-		{
-			wstring num = std::to_wstring(i);
-			wstring FBXFilePath = L"fbx\\land";
-			FBXFilePath += num;
-			FBXFilePath += L".fbx";
-
-			wstring FBXFileName = L"land";
-			FBXFileName += num;
-
-			pMeshData = CResMgr::GetInst()->LoadFBX(FBXFilePath);
-			pObj = pMeshData->Instantiate();
-			pObj->SetName(FBXFileName);
-
-			//맵이 다 (0,0,0) 기준 컬링인거같아 불편해서 잠시 끕니다.
-			pObj->GetRenderComponent()->SetFrustumCheck(false);
-
-			pObj->GetRenderComponent()->SetShowDebugBound(false);
-			pObj->Transform()->SetGizmoObjExcept(false);
-			SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), L"Lolmap");
-		}
-	}
+	PlaceLand();
 
 
 	// TestFastForward
@@ -486,6 +464,45 @@ void CreateTestLevel()
 	SpawnGameObject(RayCubeTestObj2, Vec3(-600.f, -450.f, 960.f), 0);
 
 
+	CGameObject* TestTurret = new CGameObject;
+	TestTurret->AddComponent(new CTransform);
+	TestTurret->AddComponent(new CCollider2D);
+	TestTurret->SetName(L"TestTurret");
+	TestTurret->AddComponent(new CTurretScript);
+	TestTurret->AddComponent(new CMeshRender);
+	TestTurret->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
+	TestTurret->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
+	TestTurret->Transform()->SetRelativeScale(40.f, 40.f, 40.f);
+	TestTurret->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+	TestTurret->Collider2D()->SetAbsolute(true);
+	TestTurret->Collider2D()->SetOffsetScale(Vec2(250.f, 250.f));
+	TestTurret->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+	SpawnGameObject(TestTurret, Vec3(200.f, 0.f, 200.f), 0);
+
+	{
+		Ptr<CMeshData> pMeshData = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\gromp.fbx");
+		CGameObject* Gromp = nullptr;
+		Gromp = pMeshData->Instantiate();
+		Gromp->AddComponent(new CGrompScript);
+		Gromp->SetName(L"Gromp");
+		Gromp->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
+		Gromp->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(270.f), 0.f));
+		SpawnGameObject(Gromp, Vec3(323.f, 0.f, 1242.f), 0);
+	
+		CGameObject* GrompAggro = new CGameObject;
+		GrompAggro->SetName(L"GrompAggroRadius");
+		GrompAggro->AddComponent(new CTransform);
+		GrompAggro->AddComponent(new CCollider2D);
+		GrompAggro->Transform()->SetRelativeScale(Vec3(150.f, 150.f, 150.f));
+		GrompAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+		GrompAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+		GrompAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+		SpawnGameObject(GrompAggro, Vec3(323.f, 0.f, 1242.f), 0);
+	}
+	
+
+
 	// TestFastForward
 	//CGameObject* pRectFast2 = new CGameObject;
 	//pRectFast2->SetName(L"MoveSphere");
@@ -525,13 +542,71 @@ void CreateTestLevel()
 
 	//SpawnGameObject(pAnimTestObj, Vec3(0.f, 0.f, 0.f), 0.f);
 
+	
+
+	CGameObject* pSoundTestObj = new CGameObject;
+	pSoundTestObj->SetName(L"pSoundTestObj");
+	
+	pSoundTestObj->AddComponent(new CMeshRender);
+	pSoundTestObj->AddComponent(new CTransform);
+	pSoundTestObj->AddComponent(new CSoundTestScript);
+
+	pSoundTestObj->Transform()->SetRelativeScale(Vec3(45.f, 45.f, 45.f));
+	pSoundTestObj->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+	pSoundTestObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
 
 		
 	
 
 
 
+	SpawnGameObject(pSoundTestObj, Vec3(0.f, 0.f, 0.f), 0.f);
+	 
 	// 충돌 시킬 레이어 짝 지정
 	//CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");
 	//CCollisionMgr::GetInst()->LayerCheck(L"Default", L"Default");
+}
+
+void PlaceLand()
+{
+	//LoLMap 로딩
+	{
+		Ptr<CMeshData> pMeshData = nullptr;
+		CGameObject* pObj = nullptr;
+
+		// 파일 경로 만들기
+		wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
+		strFilePath+= L"lolmap.txt";
+
+		// 읽기모드로 파일열기
+		std::wifstream file(strFilePath);
+		std::wstring line;
+
+		while (std::getline(file, line))
+		{
+			std::wistringstream iss(line);
+			std::wstring landName;
+			std::wstring ignore;
+			float scale;
+			Vec3 offset;
+
+			if (!(iss >> landName >> ignore >> scale >> ignore >> offset.x >> offset.y >> offset.z)) { break; }
+
+			wstring FBXFilePath = L"fbx\\" + landName + L".fbx";
+			wstring FBXFileName = landName + L".fbx";
+			pMeshData = CResMgr::GetInst()->LoadFBX(FBXFilePath);
+			pObj = pMeshData->Instantiate();
+			pObj->SetName(FBXFileName);
+
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetShowDebugBound(false);
+			pObj->Transform()->SetGizmoObjExcept(false);
+
+			pObj->GetRenderComponent()->SetBounding(scale);
+			pObj->GetRenderComponent()->SetBoundingBoxOffsetUse(true);
+			pObj->GetRenderComponent()->SetBoundingBoxOffset(offset);
+
+			SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 6);
+		}
+	}
 }

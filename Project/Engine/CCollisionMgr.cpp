@@ -10,7 +10,7 @@
 #include "CTransform.h"
 
 CCollisionMgr::CCollisionMgr()
-	: m_matrix{}
+    : m_matrix{}
 {
 
 }
@@ -161,8 +161,13 @@ bool CCollisionMgr::CollisionBtw2DCollider(CCollider2D* _pLeft, CCollider2D* _pR
 {
 
 	//XZ 평면끼리 검사
-	if (_pLeft->GetOffsetRot() == Vec3(XMConvertToRadians(90.f), 0.f, 0.f) &&
-		_pRight->GetOffsetRot() == Vec3(XMConvertToRadians(90.f), 0.f, 0.f)) {
+	if (
+		(_pLeft->GetOffsetRot() == Vec3(XMConvertToRadians(90.f), 0.f, 0.f) &&
+		_pRight->GetOffsetRot() == Vec3(XMConvertToRadians(90.f), 0.f, 0.f))
+		||
+		(_pLeft->GetOffsetRot() == Vec3(XM_PI / 2.f, 0.f, 0.f) &&
+		_pRight->GetOffsetRot() == Vec3(XM_PI / 2.f, 0.f, 0.f))
+		) {
 		//사각형, 사각형
 		if (_pLeft->GetCollider2DType() == COLLIDER2D_TYPE::RECT && _pRight->GetCollider2DType() == COLLIDER2D_TYPE::RECT)
 		{
@@ -546,7 +551,7 @@ bool CCollisionMgr::CollisionBtw2DCollider(CCollider2D* _pLeft, CCollider2D* _pR
 	}
 
 
-
+	
 
 	return false;
 }

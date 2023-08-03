@@ -22,6 +22,7 @@ CChampionScript::CChampionScript(UINT ScriptType)
 	, m_eRestraint(RESTRAINT::DEFAULT)
 	, m_Skill{}
 	, m_SkillLevel{}
+	, m_bIsAttackingChampion(false)
 {
 	m_eUnitType = UnitType::CHAMPION;
 
@@ -190,11 +191,14 @@ void CChampionScript::GetInput()
 			if ((m_eRestraint & CAN_MOVE) == 0)
 				return;
 
-			CGameObject* Map = CLevelMgr::GetInst()->GetCurLevel()->FindObjectByName(L"LoLMapCollider");
-			IntersectResult result = MainCam->IsCollidingBtwRayRect(ray, Map);
-			Vec3 TargetPos = result.vCrossPoint;	// 클릭 좌표
-			PathFinder()->FindPath(TargetPos);
-		}
+		// 움직일 수 없는 상황인 경우 return
+		if ((m_eRestraint & CAN_MOVE) == 0)
+			return;
+
+		CGameObject* Map = CLevelMgr::GetInst()->GetCurLevel()->FindParentObjectByName(L"LoLMapCollider");
+		IntersectResult result = MainCam->IsCollidingBtwRayRect(ray, Map);
+		Vec3 TargetPos = result.vCrossPoint;	// 클릭 좌표
+		PathFinder()->FindPath(TargetPos);
 	}
 
 		if (KEY_TAP(KEY::Q))

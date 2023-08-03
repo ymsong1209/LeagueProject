@@ -1,11 +1,11 @@
 #pragma once
 
+#include <Engine\ptr.h>
+#include "CChampionScript.h"
 
 class CUnitScript;
 class CPrefab;
 class CProjectileScript;
-#include <Engine\ptr.h>
-
 class CSkill
 {
 public:
