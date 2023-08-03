@@ -51,7 +51,7 @@ void CreateTestLevel()
 	CCollisionMgr::GetInst()->LayerCheck(L"Mob", L"Mob");
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Player");
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"SkillProjectile");
-	CCollisionMgr::GetInst()->LayerCheck(L"Mob", L"SkillProjectile ");
+	CCollisionMgr::GetInst()->LayerCheck(L"Mob", L"SkillProjectile");
 	CCollisionMgr::GetInst()->LayerCheck(L"Structure", L"SkillProjectile");
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Structure");
 	CCollisionMgr::GetInst()->LayerCheck(L"AttackRange", L"Player");
