@@ -1,8 +1,11 @@
 #pragma once
 #include "CUnitScript.h"
 
+#ifndef CHAMPION_ENUM_DEFINED
+#define CHAMPION_ENUM_DEFINED
+
 // 군중 제어기
-enum CC
+enum class CC
 {
     NONE_CC = 0,
     SLOW_CC = 1 << 0,
@@ -23,6 +26,21 @@ enum RESTRAINT
     BLOCK = 0,
 };
 
+// 소환사 주문(임시)
+enum class SUMMONERS_SPELL
+{
+    FLASH,      // 점멸
+    HEAL,       // 회복
+    GHOST,      // 유체화
+    IGNITE,     // 점화
+    SMITE,      // 강타
+    EXHAUST,    // 탈진
+    CLEANSE,    // 정화
+};
+#endif
+
+#ifndef CHAMPION_CLASS_DEFINED
+#define CHAMPION_CLASS_DEFINED
 
 
 class CSkill;
@@ -53,7 +71,10 @@ protected:
     CSkill*                 m_Skill[5];
     SUMMONERS_SPELL*        m_EquippedSpell;    // 장착 소환사 주문(2칸 배열)
 
-    // =========== Script   ============
+    bool                    m_bIsAttackingChampion;
+
+
+ // =========== Script   ============
 public:
     virtual void begin() override;
     virtual void tick() override;
@@ -67,6 +88,8 @@ public:
     void    GetInput();     // 입력 받기
     void    CheckSkills();  // 스킬 체크
     void    Move();
+    bool    IsAttackingChampion() { return m_bIsAttackingChampion; }
+    
 
 
     // 비동기
@@ -85,4 +108,4 @@ public:
     float GetDefencePower() { return m_fDefencePower; }
     CSkill* GetSkill(int _i) { if (_i < 0 || _i >= 5) return nullptr; m_Skill[_i]; }
 };
-
+#endif

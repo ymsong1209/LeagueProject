@@ -8,6 +8,7 @@
 #include "CCoolDownUIScript.h"
 #include "CExpRatioUIScript.h"
 #include "CHpMpRatioUIScript.h"
+#include "CGrompScript.h"
 #include "CInGameCameraScript.h"
 #include "CInhibitorScript.h"
 #include "CInventoryUIScript.h"
@@ -21,7 +22,9 @@
 #include "CNexusScript.h"
 #include "COtherPlayerScript.h"
 #include "CPlayerScript.h"
+#include "CSoundTestScript.h"
 #include "CStructureScript.h"
+#include "CTurretAttackScript.h"
 #include "CTurretScript.h"
 #include "CUIScript.h"
 #include "CUnitScript.h"
@@ -37,6 +40,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CCoolDownUIScript");
 	_vec.push_back(L"CExpRatioUIScript");
 	_vec.push_back(L"CHpMpRatioUIScript");
+	_vec.push_back(L"CGrompScript");
 	_vec.push_back(L"CInGameCameraScript");
 	_vec.push_back(L"CInhibitorScript");
 	_vec.push_back(L"CInventoryUIScript");
@@ -50,7 +54,9 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CNexusScript");
 	_vec.push_back(L"COtherPlayerScript");
 	_vec.push_back(L"CPlayerScript");
+	_vec.push_back(L"CSoundTestScript");
 	_vec.push_back(L"CStructureScript");
+	_vec.push_back(L"CTurretAttackScript");
 	_vec.push_back(L"CTurretScript");
 	_vec.push_back(L"CUIScript");
 	_vec.push_back(L"CUnitScript");
@@ -74,6 +80,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CExpRatioUIScript;
 	if (L"CHpMpRatioUIScript" == _strScriptName)
 		return new CHpMpRatioUIScript;
+	if (L"CGrompScript" == _strScriptName)
+		return new CGrompScript;
 	if (L"CInGameCameraScript" == _strScriptName)
 		return new CInGameCameraScript;
 	if (L"CInhibitorScript" == _strScriptName)
@@ -100,8 +108,12 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new COtherPlayerScript;
 	if (L"CPlayerScript" == _strScriptName)
 		return new CPlayerScript;
+	if (L"CSoundTestScript" == _strScriptName)
+		return new CSoundTestScript;
 	if (L"CStructureScript" == _strScriptName)
 		return new CStructureScript;
+	if (L"CTurretAttackScript" == _strScriptName)
+		return new CTurretAttackScript;
 	if (L"CTurretScript" == _strScriptName)
 		return new CTurretScript;
 	if (L"CUIScript" == _strScriptName)
@@ -139,6 +151,8 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::HPMPRATIOUISCRIPT:
 		return new CHpMpRatioUIScript;
+	case (UINT)SCRIPT_TYPE::GROMPSCRIPT:
+		return new CGrompScript;
 		break;
 	case (UINT)SCRIPT_TYPE::INGAMECAMERASCRIPT:
 		return new CInGameCameraScript;
@@ -179,8 +193,14 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::PLAYERSCRIPT:
 		return new CPlayerScript;
 		break;
+	case (UINT)SCRIPT_TYPE::SOUNDTESTSCRIPT:
+		return new CSoundTestScript;
+		break;
 	case (UINT)SCRIPT_TYPE::STRUCTURESCRIPT:
 		return new CStructureScript;
+		break;
+	case (UINT)SCRIPT_TYPE::TURRETATTACKSCRIPT:
+		return new CTurretAttackScript;
 		break;
 	case (UINT)SCRIPT_TYPE::TURRETSCRIPT:
 		return new CTurretScript;
@@ -231,6 +251,8 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::HPMPRATIOUISCRIPT:
 		return L"CHpMpRatioUIScript";
+	case SCRIPT_TYPE::GROMPSCRIPT:
+		return L"CGrompScript";
 		break;
 
 	case SCRIPT_TYPE::INGAMECAMERASCRIPT:
@@ -285,8 +307,16 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CPlayerScript";
 		break;
 
+	case SCRIPT_TYPE::SOUNDTESTSCRIPT:
+		return L"CSoundTestScript";
+		break;
+
 	case SCRIPT_TYPE::STRUCTURESCRIPT:
 		return L"CStructureScript";
+		break;
+
+	case SCRIPT_TYPE::TURRETATTACKSCRIPT:
+		return L"CTurretAttackScript";
 		break;
 
 	case SCRIPT_TYPE::TURRETSCRIPT:

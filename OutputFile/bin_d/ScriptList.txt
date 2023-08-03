@@ -5,6 +5,7 @@ CCharacterUIScript
 CCoolDownUIScript
 CExpRatioUIScript
 CHpMpRatioUIScript
+CGrompScript
 CInGameCameraScript
 CInhibitorScript
 CInventoryUIScript
@@ -18,7 +19,9 @@ CMoveCursorUIScript
 CNexusScript
 COtherPlayerScript
 CPlayerScript
+CSoundTestScript
 CStructureScript
+CTurretAttackScript
 CTurretScript
 CUIScript
 CUnitScript

@@ -2,9 +2,12 @@
 #include "CTurretScript.h"
 #include <Engine\CAnim3D.h>
 #include <Engine\CAnimator3D.h>
+#include "CChampionScript.h"
+#include "CTurretAttackScript.h"
 
 CTurretScript::CTurretScript()
 	:CStructureScript((UINT)SCRIPT_TYPE::TURRETSCRIPT)
+	, m_fAttackCoolTime(3.0f)
 {
 	m_fAttackPower = 50;
 	m_fDefencePower = 100;
@@ -31,6 +34,71 @@ void CTurretScript::tick()
 
 	if (m_bUnitDead)
 		return;
+
+	CLevel* CurLevel = CLevelMgr::GetInst()->GetCurLevel();
+
+	//포탑 공격 쿨타임
+	if (m_fAttackCoolTime > 0.f) {
+		//디버깅용 나중에 DT로 바꿔야함
+		m_fAttackCoolTime -= EditorDT;
+	}
+	else {
+		//타겟이 있다면
+		if (m_pTarget) {
+			//타겟이 미니언이면, 포탑다이브 하는 챔피언 있나 확인해야함
+			if (m_pTarget->GetLayerIndex() == CurLevel->FindLayerByName(L"Minion")->GetLayerIndex()) {
+				for (size_t i = 0; i < m_vecCollidingChampion.size(); ++i) {
+					CGameObject* Champ = m_vecCollidingChampion[i];
+					CChampionScript* Chamscript = m_vecCollidingChampion[i]->GetScript<CChampionScript>();
+					if (!Champ->IsDead() && Chamscript->IsAttackingChampion()) {
+						m_pTarget = m_vecCollidingChampion[i];
+						//공격해야함
+						m_fAttackCoolTime = 0.f;
+						break;
+					}
+				}
+			}
+
+		}
+		//타겟이 없다면 타겟 설정, 단, 미니언 먼저
+		else {
+			if (m_vecCollidingMinion.empty()) {
+				if (!m_vecCollidingChampion.empty()) {
+					m_pTarget = m_vecCollidingChampion[0];
+				}
+			}
+			else {
+				m_pTarget = m_vecCollidingMinion[0];
+			}
+		}
+
+
+		//타겟 확정나면 공격
+		if (m_pTarget) {
+			//나중에는 prefab로 소환해야함
+			//CGameObject* TurretAttack = CResMgr::GetInst()->FindRes<CPrefab>(L"TurretAttack")->Instantiate();
+			CGameObject* TurretAttack = new CGameObject;
+			TurretAttack->SetName(L"TurretAttack");
+			TurretAttack->AddComponent(new CTransform);
+			TurretAttack->AddComponent(new CTurretAttackScript);
+			TurretAttack->AddComponent(new CMeshRender);
+			TurretAttack->Transform()->SetRelativeScale(Vec3(20.f, 20.f, 20.f));
+			TurretAttack->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+			TurretAttack->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
+			Vec3 TowerPos = GetOwner()->Transform()->GetRelativePos();
+			CTurretAttackScript* script = TurretAttack->GetScript<CTurretAttackScript>();
+			//포탑 공격의 target설정
+			script->SetTarget(m_pTarget);
+			SpawnGameObject(TurretAttack, Vec3(TowerPos.x, TowerPos.y + 50.f, TowerPos.z), L"Projectile");
+			//공격 구체 소환하고 나서 포탑 쿨타임 초기화
+			m_fAttackCoolTime = 3.f;
+		}
+	}
+
+	
+	
+	
+
 
 	/*
 	if(공격중이 아니라면)
@@ -75,6 +143,71 @@ void CTurretScript::tick()
 	// 죽음 이벤트 알림
 
 	*/
+}
+
+void CTurretScript::BeginOverlap(CCollider2D* _Other)
+{
+	CLevel* CurLevel = CLevelMgr::GetInst()->GetCurLevel();
+	if (_Other->GetOwner()->GetLayerIndex() == CurLevel->FindLayerByName(L"Minion")->GetLayerIndex()) {
+		m_vecCollidingMinion.push_back(_Other->GetOwner());
+		//Faction아직 설정 안되어있음
+		//if (GetFaction() != _Other->GetOwner()->GetScript<CUnitScript>()->GetFaction()) {
+		//	m_vecCollidingMinion.push_back(_Other->GetOwner());
+		//}
+	}
+
+	if (_Other->GetOwner()->GetLayerIndex() == CurLevel->FindLayerByName(L"Champion")->GetLayerIndex()) {
+
+		m_vecCollidingChampion.push_back(_Other->GetOwner());
+		//Faction이 아직 설정 안되어있음
+		//if (GetFaction() != _Other->GetOwner()->GetScript<CUnitScript>()->GetFaction()) {
+		//	m_vecCollidingChampion.push_back(_Other->GetOwner());
+		//}
+	}
+}
+
+void CTurretScript::OnOverlap(CCollider2D* _Other)
+{
+}
+
+void CTurretScript::EndOverlap(CCollider2D* _Other)
+{
+	CLevel* CurLevel = CLevelMgr::GetInst()->GetCurLevel();
+	if (_Other->GetOwner()->GetLayerIndex() == CurLevel->FindLayerByName(L"Minion")->GetLayerIndex()) {
+		if (GetFaction() != _Other->GetOwner()->GetScript<CUnitScript>()->GetFaction()) {
+			auto it = find(m_vecCollidingMinion.begin(), m_vecCollidingMinion.end(), _Other->GetOwner());
+			if (it != m_vecCollidingMinion.end()) {
+				m_vecCollidingMinion.erase(it);
+			}
+		}
+
+		//포탑 사거리에서 벗어나면, 타겟이였던 애는 해제되어야함
+		if (m_pTarget == _Other->GetOwner()) {
+			m_pTarget = nullptr;
+		}
+	}
+
+	if (_Other->GetOwner()->GetLayerIndex() == CurLevel->FindLayerByName(L"Champion")->GetLayerIndex()) {
+
+		auto it = find(m_vecCollidingChampion.begin(), m_vecCollidingChampion.end(), _Other->GetOwner());
+		if (it != m_vecCollidingChampion.end()) {
+			m_vecCollidingChampion.erase(it);
+		}
+
+
+		//faction이 아직 안들어감
+		/*if (GetFaction() != _Other->GetOwner()->GetScript<CUnitScript>()->GetFaction()) {
+			auto it = find(m_vecCollidingChampion.begin(), m_vecCollidingChampion.end(), _Other->GetOwner());
+			if (it != m_vecCollidingChampion.end()) {
+				m_vecCollidingChampion.erase(it);
+			}
+		}*/
+
+		//포탑 사거리에서 벗어나면, 타겟이였던 애는 해제되어야함
+		if (m_pTarget == _Other->GetOwner()) {
+			m_pTarget = nullptr;
+		}
+	}
 }
 
 void CTurretScript::ChangeAnim()

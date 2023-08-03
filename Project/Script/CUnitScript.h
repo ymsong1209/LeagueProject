@@ -1,6 +1,6 @@
-#pragma once
+#ifndef _CUNITSRIPT_H
+#define _CUNITSRIPT_H
 #include <Engine\CScript.h>
-
 // LoL 게임 내에서 플레이어가 상호작용할 수 있는 모든 오브젝트
 
 enum class UnitType
@@ -73,11 +73,18 @@ public:
 
 public:
     float GetCurHP() { return m_fHP; }
+    float GetMaxHP() { return m_fMaxHP; }
     void  SetCurHP(float _f) { m_fHP = _f; }         // 현재 체력 = 인자값
     void  SetCurHPVar(float _f) { m_fHP += _f; }     // 현재 체력 += 인자값
 
     // 기타 필요한 Getter/Setter 함수 추가
-    float  GetAttackPower() { return m_fAttackPower; }
+    float   GetAttackPower() { return m_fAttackPower; }
     float   GetDefencePower() { return m_fDefencePower; }
-};
+    float   GetAttackRange() { return m_fAttackRange; }
 
+    void    SetAttackPower(float _pow) { m_fAttackPower = _pow; }
+    void    SetDefencePower(float _pow) { m_fDefencePower = _pow; }
+    void    SetAttackRange(float _range) { m_fAttackRange = _range; }
+
+};
+#endif // _CUNITSRIPT_H
