@@ -27,16 +27,16 @@ enum RESTRAINT
 };
 
 // 소환사 주문(임시)
-enum class SUMMONERS_SPELL
-{
-    FLASH,      // 점멸
-    HEAL,       // 회복
-    GHOST,      // 유체화
-    IGNITE,     // 점화
-    SMITE,      // 강타
-    EXHAUST,    // 탈진
-    CLEANSE,    // 정화
-};
+//enum class SUMMONERS_SPELL
+//{
+//    FLASH,      // 점멸
+//    HEAL,       // 회복
+//    GHOST,      // 유체화
+//    IGNITE,     // 점화
+//    SMITE,      // 강타
+//    EXHAUST,    // 탈진
+//    CLEANSE,    // 정화
+//};
 #endif
 
 #ifndef CHAMPION_CLASS_DEFINED

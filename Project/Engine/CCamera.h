@@ -130,6 +130,7 @@ protected:
 public:
     IntersectResult IsCollidingBtwRayRect(tRay& _ray, CGameObject* _Object);
     IntersectResult IsCollidingBtwRayCube(tRay& _ray, CGameObject* _Object);
+    IntersectResult IsCollidingBtwRaySphere(tRay& _ray, CGameObject* _Object);
     IntersectResult IntersectsLay(Vec3* _vertices, tRay _ray);
 
     IntersectResult IntersecrRayFog(Vec3 _Vertices0, Vec3 _Vertices1, Vec3 _Vertices2, tRay _Ray);

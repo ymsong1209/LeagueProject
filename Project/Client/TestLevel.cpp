@@ -27,6 +27,7 @@
 #include <Script/CTurretScript.h>
 #include <Script/CJinxScript.h>
 #include <Script/CGrompScript.h>
+#include <Script/CInGameCameraScript.h>
 
 void CreateTestLevel()
 {
@@ -55,11 +56,13 @@ void CreateTestLevel()
 	pMainCam->AddComponent(new CTransform);
 	pMainCam->AddComponent(new CCamera);
 	pMainCam->AddComponent(new CCameraMoveScript);
+	//pMainCam->AddComponent(new CInGameCameraScript);
 	pMainCam->Camera()->SetProjType(PROJ_TYPE::PERSPECTIVE);
 	pMainCam->Camera()->SetCameraIndex(0);		// MainCamera 로 설정
 	pMainCam->Camera()->SetLayerMaskAll(true);	// 모든 레이어 체크
 	pMainCam->Camera()->SetLayerMask(31, false);// UI Layer 는 렌더링하지 않는다.
 	pMainCam->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(60.f),0.f, 0.f));
+
 	SpawnGameObject(pMainCam, Vec3(0.f, 526.f, -9.f), 0);
 
 	// UI cameara
@@ -72,17 +75,17 @@ void CreateTestLevel()
 	pUICam->Camera()->SetLayerMask(31, true);	// 모든 레이어 체크
 	SpawnGameObject(pUICam, Vec3(0.f, 0.f, 0.f), 0);
 
-	//CGameObject* WorldBar = new CGameObject;
-	//WorldBar->SetName(L"WorldBar");
-	//WorldBar->AddComponent(new CTransform);
-	//WorldBar->AddComponent(new CMeshRender);
-	//WorldBar->AddComponent(new CWorldHPUIScript);
-	//WorldBar->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	//WorldBar->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\WorldBar.mtrl"), 0);
-	//WorldBar->MeshRender()->SetRaySightCulling(false);
-	//WorldBar->Transform()->SetRelativeScale(Vec3(136.f, 29.f, 1.f));
+	CGameObject* WorldBar = new CGameObject;
+	WorldBar->SetName(L"WorldBar");
+	WorldBar->AddComponent(new CTransform);
+	WorldBar->AddComponent(new CMeshRender);
+	WorldBar->AddComponent(new CWorldHPUIScript);
+	WorldBar->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	WorldBar->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\WorldBar.mtrl"), 0);
+	WorldBar->MeshRender()->SetRaySightCulling(false);
+	WorldBar->Transform()->SetRelativeScale(Vec3(136.f, 29.f, 1.f));
 
-	//SpawnGameObject(WorldBar, Vec3(100.f, 100.f, 100.f), 2);
+	SpawnGameObject(WorldBar, Vec3(100.f, 100.f, 100.f), 2);
 
 
 	CGameObject* UIObj = new CGameObject; //각종 스크립트에서 처리할 것들
@@ -252,6 +255,8 @@ void CreateTestLevel()
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
 
 		pObj->Transform()->SetUseMouseOutline(true); 
+		pObj->MeshRender()->GetMaterial(0)->SetShader(CResMgr::GetInst()->FindRes<CGraphicsShader>(L"Std3D_DeferredShader")); 
+		//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
 
 		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0), 0);
 
@@ -475,50 +480,50 @@ void CreateTestLevel()
 
 	// SpawnGameObject(RayTestObj1, Vec3(-600.f, 0.f, 600.f), 0);
 
-	// // Ray Cube Test Object 1
-	// CGameObject* RayCubeTestObj1 = new CGameObject;
-	// RayCubeTestObj1->SetName(L"RayCubeTestObj1");
+	 // Ray Cube Test Object 1
+	 CGameObject* RayCubeTestObj1 = new CGameObject;
+	 RayCubeTestObj1->SetName(L"RaySphereTesObj1");
 
-	// RayCubeTestObj1->AddComponent(new CMeshRender);
-	// RayCubeTestObj1->AddComponent(new CTransform);
-	// RayCubeTestObj1->AddComponent(new CCollider3D);
-	// RayCubeTestObj1->Transform()->SetUseMouseOutline(true);
+	 RayCubeTestObj1->AddComponent(new CMeshRender);
+	 RayCubeTestObj1->AddComponent(new CTransform);
+	 RayCubeTestObj1->AddComponent(new CCollider3D);
+	 RayCubeTestObj1->Transform()->SetUseMouseOutline(true);
 
-	// RayCubeTestObj1->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
-	// RayCubeTestObj1->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
-	// RayCubeTestObj1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
-	// RayCubeTestObj1->MeshRender()->GetDynamicMaterial(0);
+	 RayCubeTestObj1->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
+	 RayCubeTestObj1->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+	 RayCubeTestObj1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
+	 RayCubeTestObj1->MeshRender()->GetDynamicMaterial(0);
 
-	// RayCubeTestObj1->Collider3D()->SetAbsolute(false);
-	// RayCubeTestObj1->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
-	// RayCubeTestObj1->Collider3D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
-	// RayCubeTestObj1->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::CUBE);
-
-
-	// SpawnGameObject(RayCubeTestObj1, Vec3(-600.f, -450.f, 700.f), 0);
+	 RayCubeTestObj1->Collider3D()->SetAbsolute(false);
+	 RayCubeTestObj1->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
+	 RayCubeTestObj1->Collider3D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+	 RayCubeTestObj1->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
 
 
-	// // Ray Cube Test Object 2
-	// CGameObject* RayCubeTestObj2 = new CGameObject;
-	// RayCubeTestObj2->SetName(L"RayCubeTestObj2");
-
-	// RayCubeTestObj2->AddComponent(new CMeshRender);
-	// RayCubeTestObj2->AddComponent(new CTransform);
-	// RayCubeTestObj2->AddComponent(new CCollider3D);
-	// RayCubeTestObj2->Transform()->SetUseMouseOutline(true);
-
-	// RayCubeTestObj2->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
-	// RayCubeTestObj2->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
-	// RayCubeTestObj2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
-	// RayCubeTestObj2->MeshRender()->GetDynamicMaterial(0);
-
-	// RayCubeTestObj2->Collider3D()->SetAbsolute(false);
-	// RayCubeTestObj2->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
-	// RayCubeTestObj2->Collider3D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
-	// RayCubeTestObj2->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::CUBE);
+	 SpawnGameObject(RayCubeTestObj1, Vec3(-600.f, -450.f, 700.f), 0);
 
 
-	// SpawnGameObject(RayCubeTestObj2, Vec3(-600.f, -450.f, 960.f), 0);
+	 // Ray Cube Test Object 2
+	 CGameObject* RayCubeTestObj2 = new CGameObject;
+	 RayCubeTestObj2->SetName(L"RaySphereTesObj2");
+
+	 RayCubeTestObj2->AddComponent(new CMeshRender);
+	 RayCubeTestObj2->AddComponent(new CTransform);
+	 RayCubeTestObj2->AddComponent(new CCollider3D);
+	 RayCubeTestObj2->Transform()->SetUseMouseOutline(true);
+
+	 RayCubeTestObj2->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
+	 RayCubeTestObj2->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+	 RayCubeTestObj2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
+	 RayCubeTestObj2->MeshRender()->GetDynamicMaterial(0);
+
+	 RayCubeTestObj2->Collider3D()->SetAbsolute(false);
+	 RayCubeTestObj2->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
+	 RayCubeTestObj2->Collider3D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+	 RayCubeTestObj2->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+
+
+	 SpawnGameObject(RayCubeTestObj2, Vec3(-600.f, -450.f, 960.f), 0);
 
 	CGameObject* TestTurret = new CGameObject;
 	TestTurret->AddComponent(new CTransform);

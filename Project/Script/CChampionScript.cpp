@@ -16,7 +16,7 @@ CChampionScript::CChampionScript(UINT ScriptType)
 	, m_fExp(0)
 	, m_EquippedSpell{}
 	, m_fRespawnTime(5)
-	, m_eCurCC(CC::NONE)
+	, m_eCurCC(CC::NONE_CC)
 	, m_eRestraint(DEFAULT)
 	, m_Skill{}
 	, m_bIsAttackingChampion(false)
@@ -173,13 +173,13 @@ void CChampionScript::GetInput()
 	if (KEY_TAP(KEY::Q))
 	{
 		// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-		if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[0]->GetCost() > m_fMana)
-			return;
+		//if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[0]->GetCost() > m_fMana)
+		//	return;
 
-		if (m_Skill[0]->Use())
-		{
-			// 스킬 이벤트
-		}
+		//if (m_Skill[0]->Use())
+		//{
+		//	// 스킬 이벤트
+		//}
 	}
 	if (KEY_TAP(KEY::W))
 	{
@@ -195,24 +195,24 @@ void CChampionScript::GetInput()
 	if (KEY_TAP(KEY::E))
 	{
 		// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-		if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[2]->GetCost() > m_fMana)
-			return;
+		//if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[2]->GetCost() > m_fMana)
+		//	return;
 
-		if (m_Skill[2]->Use())
-		{
-			// 스킬 이벤트
-		}
+		//if (m_Skill[2]->Use())
+		//{
+		//	// 스킬 이벤트
+		//}
 	}
 	if (KEY_TAP(KEY::R))
 	{
 		// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-		if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[3]->GetCost() > m_fMana)
-			return;
+		//if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[3]->GetCost() > m_fMana)
+		//	return;
 
-		if (m_Skill[3]->Use())
-		{
-			// 스킬 이벤트
-		}
+		//if (m_Skill[3]->Use())
+		//{
+		//	// 스킬 이벤트
+		//}
 	}
 
 	// 소환사 주문

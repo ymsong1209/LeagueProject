@@ -69,6 +69,7 @@ void CMouseCursorUIScript::tick()
 					pObj->AddComponent(new CMoveCursorUIScript);
 					pObj->Transform()->SetRelativeScale(Vec3(0.25f, 0.25f, 0.25f));
 					pObj->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
+					pObj->Transform()->SetRelativeRot(Vec3(-190.f, 0.f, 0.f));
 					SpawnGameObject(pObj, result.vCrossPoint, 0);
 					MoveArrow = pObj;
 				}

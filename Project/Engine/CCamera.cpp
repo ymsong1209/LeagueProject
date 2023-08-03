@@ -154,12 +154,15 @@ void CCamera::CollideRay()
 
 	CGameObject* FinalRectObject = nullptr;
 	CGameObject* FinalCubeObject = nullptr;
+	CGameObject* FinalSphereObject = nullptr;
 
 	float fRectResult = FBXSDK_FLOAT_MAX;
 	float fCubeResult = FBXSDK_FLOAT_MAX;
+	float fSphereResult = FBXSDK_FLOAT_MAX;
 
 	vector<CGameObject*> TempEndOverlapRect;
 	vector<CGameObject*> TempEndOverlapCube;
+	vector<CGameObject*> TempEndOverlapSphere;
 
 
 	for (int i = 0; i < MAX_LAYER; ++i)
@@ -170,6 +173,7 @@ void CCamera::CollideRay()
 		{
 			IntersectResult result = IsCollidingBtwRayRect(m_ray, Objects[j]);
 			IntersectResult CubeResult = IsCollidingBtwRayCube(m_ray, Objects[j]);
+			IntersectResult SphereResult = IsCollidingBtwRaySphere(m_ray, Objects[j]);
 
 			// 만약 충돌중이 였다면 EndOverlap 후보군에 넣어야 함 (Ray - Rect를 말하는 것임)
 			if (Objects[j]->Collider2D())
@@ -203,7 +207,7 @@ void CCamera::CollideRay()
 				}
 			}
 
-			else if (Objects[j]->Collider3D())
+			else if (Objects[j]->Collider3D() && Objects[j]->Collider3D()->GetCollider3DType() == COLLIDER3D_TYPE::CUBE)
 			{
 				if (Objects[j]->Collider3D()->IsCollidedFromRay() == true)
 				{
@@ -230,6 +234,38 @@ void CCamera::CollideRay()
 					{
 						fCubeResult = CubeResult.fResult;
 						FinalCubeObject = Objects[j];
+					}
+				}
+			}
+
+
+			else if (Objects[j]->Collider3D() && Objects[j]->Collider3D()->GetCollider3DType() == COLLIDER3D_TYPE::SPHERE)
+			{
+				if (Objects[j]->Collider3D()->IsCollidedFromRay() == true)
+				{
+					// 충돌중이였는데 이번프레임에서는 충돌해제가 되었음으로 End Ray Overlap을 호출해줌
+					if (SphereResult.bResult == false)
+					{
+						Objects[j]->Collider3D()->SetCollidedFromRay(false);
+						Objects[j]->Collider3D()->EndRayOverlap();
+					}
+
+					// 이경우는 계속 충돌중이지다. 하지만 가장 가까이 있는 물체가 아니라면 End Ray Overlap을 호출해야 하기에
+					// 후보군에 넣어준다.
+					else
+					{
+						TempEndOverlapSphere.push_back(Objects[j]);
+					}
+				}
+
+				//if (result.vCrossPoint != Vec3(0.f, 0.f, 0.f))
+				if (SphereResult.bResult == true)
+				{
+					// 최단 거리에 있는 Object인지 확인해야 한다.
+					if (SphereResult.fResult < fSphereResult)
+					{
+						fSphereResult = CubeResult.fResult;
+						FinalSphereObject = Objects[j];
 					}
 				}
 			}
@@ -291,8 +327,37 @@ void CCamera::CollideRay()
 		}
 	}
 
+	if (FinalSphereObject != nullptr)
+	{
+		// 여기까지 왔으면 현재 충돌중이고 가장 가까운 단하나의 Sphere Collider를 지닌 Object임
+		if (FinalSphereObject->Collider3D()->IsCollidedFromRay())
+		{
+			FinalSphereObject->Collider3D()->OnRayOverlap();
+		}
+
+		// Begin Ray Overlap을 해야한다.
+		else
+		{
+			FinalSphereObject->Collider3D()->SetCollidedFromRay(true);
+			FinalSphereObject->Collider3D()->BeginRayOverlap();
+		}
+
+		// TemObject들중에서 FinalObject가 아닌 Object들은 모두 EndRayOverlap을 호출해야한다.
+		for (int i = 0; i < TempEndOverlapSphere.size(); ++i)
+		{
+			if (TempEndOverlapSphere[i] != FinalSphereObject)
+			{
+				TempEndOverlapSphere[i]->Collider3D()->SetCollidedFromRay(false);
+				TempEndOverlapSphere[i]->Collider3D()->EndRayOverlap();
+			}
+
+		}
+
+	}
+
 	TempEndOverlapRect.clear();
 	TempEndOverlapCube.clear();
+	TempEndOverlapSphere.clear();
 }
 
 bool CCamera::CheckRayCollideBox(CGameObject* _object)
@@ -798,6 +863,69 @@ IntersectResult CCamera::IsCollidingBtwRayCube(tRay& _ray, CGameObject* _Object)
 	}
 
 	return Final;
+}
+
+IntersectResult CCamera::IsCollidingBtwRaySphere(tRay& _ray, CGameObject* _Object)
+{
+	IntersectResult result;
+
+	// 만약에 Collider3D가 없거나 Sphere모양이 아닌 경우 return
+	if (_Object->Collider3D() == nullptr || _Object->Collider3D()->GetCollider3DType() != COLLIDER3D_TYPE::SPHERE)
+		return IntersectResult{ Vec3(0.f, 0.f, 0.f), 0.f, false };
+
+	// 일단 있다가 작성..
+	Vec3 SpherePos =  _Object->Transform()->GetRelativePos();
+	Vec3 SphereRadiusAll = _Object->Transform()->GetRelativeScale();
+	float SphereRadius = SphereRadiusAll.x / 2.f;
+	
+	Vec3 m = _ray.vStart - SpherePos;
+
+	// 레이의 방향과 m 벡터의 내적을 계산합니다.
+	float b = m.x * _ray.vDir.x + m.y * _ray.vDir.y + m.z * _ray.vDir.z;
+
+	// m 벡터의 제곱과 구의 반지름의 제곱의 차를 계산합니다.
+	float c = (m.x * m.x + m.y * m.y + m.z * m.z) - SphereRadius * SphereRadius;
+
+	// 레이의 원점이 구의 외부에 있고 (c > 0), 레이가 구를 향하고 있지 않으면 (b > 0) false를 반환합니다.
+	if (c > 0.0f && b > 0.0f)
+	{
+		result.vCrossPoint = Vec3(0.f, 0.f, 0.f);
+		result.fResult = 0.f;
+		result.bResult = false;
+		return result;
+	}
+
+	// 판별식을 계산합니다. 판별식이 음수이면 레이가 구를 놓치는 것을 의미합니다.
+	float discr = b * b - c;
+
+	// 판별식이 음수이면 레이가 구를 놓친 것이므로 false를 반환합니다.
+	if (discr < 0.0f)
+	{
+		result.vCrossPoint = Vec3(0.f, 0.f, 0.f);
+		result.fResult = 0.f;
+		result.bResult = false;
+		return result;
+	}
+
+	// 이제 레이가 구와 교차하는 것이 확인되었으므로, 교차점의 가장 작은 t 값을 계산합니다.
+	float t = -b - sqrt(discr);
+
+	// 만약 t가 음수이면 레이가 구 내부에서 시작된 것이므로 t를 0으로 설정합니다.
+	if (t < 0.0f) t = 0.0f;
+
+	// 레이와 교차한 깊이값을 계산합니다.
+	float depth = XMVectorGetX(XMVector3Length(_ray.vDir) * t);
+
+	m_LayMinDistance = depth;  // 현재 디스탠스 값으로 업데이트
+	result.vCrossPoint = _ray.vStart + _ray.vDir * t;
+	result.fResult = depth;
+	result.bResult = true;
+
+	 
+	 
+
+
+	return result;
 }
 
 

@@ -118,18 +118,30 @@ void CCollider3D::EndOverlap(CCollider3D* _Other)
 void CCollider3D::BeginRayOverlap()
 {
 	int a = 30;
+
+	
+
 	//GetOwner()->GetRenderComponent()->GetMaterial(0)->SetScalarParam(INT_2, &a);
 }
 
 void CCollider3D::OnRayOverlap()
 {
 	int a = 20;
+
+	if (GetOwner()->GetRenderComponent() != nullptr && GetOwner()->GetRenderComponent()->GetMaterial(0) != nullptr)
+	{
+		GetOwner()->GetRenderComponent()->GetMaterial(0)->SetScalarParam(INT_2, &a);
+	}
 	//GetOwner()->GetRenderComponent()->GetMaterial(0)->SetScalarParam(INT_2, &a);
 }
 
 void CCollider3D::EndRayOverlap()
 {
 	int b = 0;
+	if (GetOwner()->GetRenderComponent() != nullptr && GetOwner()->GetRenderComponent()->GetMaterial(0) != nullptr)
+	{
+		GetOwner()->GetRenderComponent()->GetMaterial(0)->SetScalarParam(INT_2, &b);
+	}
 	//GetOwner()->GetRenderComponent()->GetMaterial(0)->SetScalarParam(INT_2, &b);
 }
 
