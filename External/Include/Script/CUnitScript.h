@@ -67,6 +67,7 @@ public:
 
 public:
     bool IsUnitDead() { return m_bUnitDead; }
+    void SetUnitDead(bool _dead) { m_bUnitDead = _dead; }
 
     // 오브젝트의 PathFinder 컴포넌트에 남은 경로값이 있을 때, 해당 경로로 이동
     bool PathFindMove(float _fSpeed, bool _IsRotation = true);

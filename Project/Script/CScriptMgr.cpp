@@ -9,8 +9,12 @@
 #include "CInhibitorScript.h"
 #include "CJinxScript.h"
 #include "CJungleMonsterScript.h"
+#include "CKrugMiniScript.h"
+#include "CKrugScript.h"
 #include "CMinionScript.h"
 #include "CMobScript.h"
+#include "CMurkWolfMiniScript.h"
+#include "CMurkWolfScript.h"
 #include "CNexusScript.h"
 #include "COtherPlayerScript.h"
 #include "CPlayerScript.h"
@@ -30,8 +34,12 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CInhibitorScript");
 	_vec.push_back(L"CJinxScript");
 	_vec.push_back(L"CJungleMonsterScript");
+	_vec.push_back(L"CKrugMiniScript");
+	_vec.push_back(L"CKrugScript");
 	_vec.push_back(L"CMinionScript");
 	_vec.push_back(L"CMobScript");
+	_vec.push_back(L"CMurkWolfMiniScript");
+	_vec.push_back(L"CMurkWolfScript");
 	_vec.push_back(L"CNexusScript");
 	_vec.push_back(L"COtherPlayerScript");
 	_vec.push_back(L"CPlayerScript");
@@ -60,10 +68,18 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CJinxScript;
 	if (L"CJungleMonsterScript" == _strScriptName)
 		return new CJungleMonsterScript;
+	if (L"CKrugMiniScript" == _strScriptName)
+		return new CKrugMiniScript;
+	if (L"CKrugScript" == _strScriptName)
+		return new CKrugScript;
 	if (L"CMinionScript" == _strScriptName)
 		return new CMinionScript;
 	if (L"CMobScript" == _strScriptName)
 		return new CMobScript;
+	if (L"CMurkWolfMiniScript" == _strScriptName)
+		return new CMurkWolfMiniScript;
+	if (L"CMurkWolfScript" == _strScriptName)
+		return new CMurkWolfScript;
 	if (L"CNexusScript" == _strScriptName)
 		return new CNexusScript;
 	if (L"COtherPlayerScript" == _strScriptName)
@@ -111,11 +127,23 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::JUNGLEMONSTERSCRIPT:
 		return new CJungleMonsterScript;
 		break;
+	case (UINT)SCRIPT_TYPE::KRUGMINISCRIPT:
+		return new CKrugMiniScript;
+		break;
+	case (UINT)SCRIPT_TYPE::KRUGSCRIPT:
+		return new CKrugScript;
+		break;
 	case (UINT)SCRIPT_TYPE::MINIONSCRIPT:
 		return new CMinionScript;
 		break;
 	case (UINT)SCRIPT_TYPE::MOBSCRIPT:
 		return new CMobScript;
+		break;
+	case (UINT)SCRIPT_TYPE::MURKWOLFMINISCRIPT:
+		return new CMurkWolfMiniScript;
+		break;
+	case (UINT)SCRIPT_TYPE::MURKWOLFSCRIPT:
+		return new CMurkWolfScript;
 		break;
 	case (UINT)SCRIPT_TYPE::NEXUSSCRIPT:
 		return new CNexusScript;
@@ -181,12 +209,28 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CJungleMonsterScript";
 		break;
 
+	case SCRIPT_TYPE::KRUGMINISCRIPT:
+		return L"CKrugMiniScript";
+		break;
+
+	case SCRIPT_TYPE::KRUGSCRIPT:
+		return L"CKrugScript";
+		break;
+
 	case SCRIPT_TYPE::MINIONSCRIPT:
 		return L"CMinionScript";
 		break;
 
 	case SCRIPT_TYPE::MOBSCRIPT:
 		return L"CMobScript";
+		break;
+
+	case SCRIPT_TYPE::MURKWOLFMINISCRIPT:
+		return L"CMurkWolfMiniScript";
+		break;
+
+	case SCRIPT_TYPE::MURKWOLFSCRIPT:
+		return L"CMurkWolfScript";
 		break;
 
 	case SCRIPT_TYPE::NEXUSSCRIPT:

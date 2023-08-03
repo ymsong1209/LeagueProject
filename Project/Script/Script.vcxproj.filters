@@ -46,64 +46,185 @@
     <ClCompile Include="Script.cpp" />
     <ClCompile Include="CTurretAttackScript.cpp" />
     <ClCompile Include="CGrompScript.cpp">
-      <Filter>Gromp</Filter>
+      <Filter>Jungle\Gromp</Filter>
     </ClCompile>
     <ClCompile Include="CGrompChaseState.cpp">
-      <Filter>Gromp</Filter>
+      <Filter>Jungle\Gromp</Filter>
     </ClCompile>
     <ClCompile Include="CGrompIdleState.cpp">
-      <Filter>Gromp</Filter>
+      <Filter>Jungle\Gromp</Filter>
     </ClCompile>
     <ClCompile Include="CGrompSpawnState.cpp">
-      <Filter>Gromp</Filter>
+      <Filter>Jungle\Gromp</Filter>
     </ClCompile>
     <ClCompile Include="CJungleAlertState.cpp">
-      <Filter>JungleMonster</Filter>
+      <Filter>Jungle\JungleMonster</Filter>
     </ClCompile>
     <ClCompile Include="CJungleAttackState.cpp">
-      <Filter>JungleMonster</Filter>
+      <Filter>Jungle\JungleMonster</Filter>
     </ClCompile>
     <ClCompile Include="CJungleChaseState.cpp">
-      <Filter>JungleMonster</Filter>
+      <Filter>Jungle\JungleMonster</Filter>
     </ClCompile>
     <ClCompile Include="CJungleDeathState.cpp">
-      <Filter>JungleMonster</Filter>
+      <Filter>Jungle\JungleMonster</Filter>
     </ClCompile>
     <ClCompile Include="CJungleIdleState.cpp">
-      <Filter>JungleMonster</Filter>
+      <Filter>Jungle\JungleMonster</Filter>
     </ClCompile>
     <ClCompile Include="CJungleMonsterScript.cpp">
-      <Filter>JungleMonster</Filter>
+      <Filter>Jungle\JungleMonster</Filter>
     </ClCompile>
     <ClCompile Include="CJungleReturnState.cpp">
-      <Filter>JungleMonster</Filter>
+      <Filter>Jungle\JungleMonster</Filter>
     </ClCompile>
     <ClCompile Include="CJungleSpawnState.cpp">
-      <Filter>JungleMonster</Filter>
+      <Filter>Jungle\JungleMonster</Filter>
     </ClCompile>
     <ClCompile Include="CGrompAttackState.cpp">
-      <Filter>Gromp</Filter>
+      <Filter>Jungle\Gromp</Filter>
     </ClCompile>
     <ClCompile Include="CGrompDeathState.cpp">
-      <Filter>Gromp</Filter>
+      <Filter>Jungle\Gromp</Filter>
     </ClCompile>
     <ClCompile Include="CGrompReturnState.cpp">
-      <Filter>Gromp</Filter>
+      <Filter>Jungle\Gromp</Filter>
     </ClCompile>
     <ClCompile Include="CGrompAlertState.cpp">
-      <Filter>Gromp</Filter>
+      <Filter>Jungle\Gromp</Filter>
     </ClCompile>
     <ClCompile Include="CJungleA2NState.cpp">
-      <Filter>JungleMonster</Filter>
+      <Filter>Jungle\JungleMonster</Filter>
     </ClCompile>
     <ClCompile Include="CGrompA2NState.cpp">
-      <Filter>Gromp</Filter>
+      <Filter>Jungle\Gromp</Filter>
     </ClCompile>
     <ClCompile Include="CJungleN2AState.cpp">
-      <Filter>JungleMonster</Filter>
+      <Filter>Jungle\JungleMonster</Filter>
     </ClCompile>
     <ClCompile Include="CGrompN2AState.cpp">
-      <Filter>Gromp</Filter>
+      <Filter>Jungle\Gromp</Filter>
+    </ClCompile>
+    <ClCompile Include="CSoundTestScript.cpp" />
+    <ClCompile Include="CMurkWolfAlertState.cpp">
+      <Filter>Jungle\MurkWolf</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfChaseState.cpp">
+      <Filter>Jungle\MurkWolf</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfIdleState.cpp">
+      <Filter>Jungle\MurkWolf</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfN2AState.cpp">
+      <Filter>Jungle\MurkWolf</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfReturnState.cpp">
+      <Filter>Jungle\MurkWolf</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfScript.cpp">
+      <Filter>Jungle\MurkWolf</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfSpawnState.cpp">
+      <Filter>Jungle\MurkWolf</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfA2NState.cpp">
+      <Filter>Jungle\MurkWolf</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfDeathState.cpp">
+      <Filter>Jungle\MurkWolf</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfAttackState.cpp">
+      <Filter>Jungle\MurkWolf</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugA2NState.cpp">
+      <Filter>Jungle\Krug</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugAlertState.cpp">
+      <Filter>Jungle\Krug</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugAttackState.cpp">
+      <Filter>Jungle\Krug</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugChaseState.cpp">
+      <Filter>Jungle\Krug</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugDeathState.cpp">
+      <Filter>Jungle\Krug</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugIdleState.cpp">
+      <Filter>Jungle\Krug</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugN2AState.cpp">
+      <Filter>Jungle\Krug</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugReturnState.cpp">
+      <Filter>Jungle\Krug</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugScript.cpp">
+      <Filter>Jungle\Krug</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugSpawnState.cpp">
+      <Filter>Jungle\Krug</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugMiniA2NState.cpp">
+      <Filter>Jungle\Krug_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugMiniAlertState.cpp">
+      <Filter>Jungle\Krug_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugMiniAttackState.cpp">
+      <Filter>Jungle\Krug_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugMiniChaseState.cpp">
+      <Filter>Jungle\Krug_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugMiniDeathState.cpp">
+      <Filter>Jungle\Krug_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugMiniIdleState.cpp">
+      <Filter>Jungle\Krug_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugMiniN2AState.cpp">
+      <Filter>Jungle\Krug_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugMiniReturnState.cpp">
+      <Filter>Jungle\Krug_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugMiniScript.cpp">
+      <Filter>Jungle\Krug_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugMiniSpawnState.cpp">
+      <Filter>Jungle\Krug_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfMiniA2NState.cpp">
+      <Filter>Jungle\MurkWolf_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfMiniAlertState.cpp">
+      <Filter>Jungle\MurkWolf_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfMiniAttackState.cpp">
+      <Filter>Jungle\MurkWolf_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfMiniChaseState.cpp">
+      <Filter>Jungle\MurkWolf_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfMiniDeathState.cpp">
+      <Filter>Jungle\MurkWolf_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfMiniIdleState.cpp">
+      <Filter>Jungle\MurkWolf_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfMiniN2AState.cpp">
+      <Filter>Jungle\MurkWolf_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfMiniReturnState.cpp">
+      <Filter>Jungle\MurkWolf_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfMiniScript.cpp">
+      <Filter>Jungle\MurkWolf_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfMiniSpawnState.cpp">
+      <Filter>Jungle\MurkWolf_Mini</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -154,72 +275,220 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="CTurretAttackScript.h" />
     <ClInclude Include="CGrompScript.h">
-      <Filter>Gromp</Filter>
+      <Filter>Jungle\Gromp</Filter>
     </ClInclude>
     <ClInclude Include="CGrompChaseState.h">
-      <Filter>Gromp</Filter>
+      <Filter>Jungle\Gromp</Filter>
     </ClInclude>
     <ClInclude Include="CGrompIdleState.h">
-      <Filter>Gromp</Filter>
+      <Filter>Jungle\Gromp</Filter>
     </ClInclude>
     <ClInclude Include="CGrompSpawnState.h">
-      <Filter>Gromp</Filter>
+      <Filter>Jungle\Gromp</Filter>
     </ClInclude>
     <ClInclude Include="CJungleAlertState.h">
-      <Filter>JungleMonster</Filter>
+      <Filter>Jungle\JungleMonster</Filter>
     </ClInclude>
     <ClInclude Include="CJungleAttackState.h">
-      <Filter>JungleMonster</Filter>
+      <Filter>Jungle\JungleMonster</Filter>
     </ClInclude>
     <ClInclude Include="CJungleChaseState.h">
-      <Filter>JungleMonster</Filter>
+      <Filter>Jungle\JungleMonster</Filter>
     </ClInclude>
     <ClInclude Include="CJungleDeathState.h">
-      <Filter>JungleMonster</Filter>
+      <Filter>Jungle\JungleMonster</Filter>
     </ClInclude>
     <ClInclude Include="CJungleIdleState.h">
-      <Filter>JungleMonster</Filter>
+      <Filter>Jungle\JungleMonster</Filter>
     </ClInclude>
     <ClInclude Include="CJungleMonsterScript.h">
-      <Filter>JungleMonster</Filter>
+      <Filter>Jungle\JungleMonster</Filter>
     </ClInclude>
     <ClInclude Include="CJungleReturnState.h">
-      <Filter>JungleMonster</Filter>
+      <Filter>Jungle\JungleMonster</Filter>
     </ClInclude>
     <ClInclude Include="CJungleSpawnState.h">
-      <Filter>JungleMonster</Filter>
+      <Filter>Jungle\JungleMonster</Filter>
     </ClInclude>
     <ClInclude Include="CGrompAttackState.h">
-      <Filter>Gromp</Filter>
+      <Filter>Jungle\Gromp</Filter>
     </ClInclude>
     <ClInclude Include="CGrompDeathState.h">
-      <Filter>Gromp</Filter>
+      <Filter>Jungle\Gromp</Filter>
     </ClInclude>
     <ClInclude Include="CGrompReturnState.h">
-      <Filter>Gromp</Filter>
+      <Filter>Jungle\Gromp</Filter>
     </ClInclude>
     <ClInclude Include="CGrompAlertState.h">
-      <Filter>Gromp</Filter>
+      <Filter>Jungle\Gromp</Filter>
     </ClInclude>
     <ClInclude Include="CJungleA2NState.h">
-      <Filter>JungleMonster</Filter>
+      <Filter>Jungle\JungleMonster</Filter>
     </ClInclude>
     <ClInclude Include="CGrompA2NState.h">
-      <Filter>Gromp</Filter>
+      <Filter>Jungle\Gromp</Filter>
     </ClInclude>
     <ClInclude Include="CJungleN2AState.h">
-      <Filter>JungleMonster</Filter>
+      <Filter>Jungle\JungleMonster</Filter>
     </ClInclude>
     <ClInclude Include="CGrompN2AState.h">
-      <Filter>Gromp</Filter>
+      <Filter>Jungle\Gromp</Filter>
+    </ClInclude>
+    <ClInclude Include="CSoundTestScript.h" />
+    <ClInclude Include="CMurkWolfAlertState.h">
+      <Filter>Jungle\MurkWolf</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfChaseState.h">
+      <Filter>Jungle\MurkWolf</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfIdleState.h">
+      <Filter>Jungle\MurkWolf</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfN2AState.h">
+      <Filter>Jungle\MurkWolf</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfReturnState.h">
+      <Filter>Jungle\MurkWolf</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfScript.h">
+      <Filter>Jungle\MurkWolf</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfSpawnState.h">
+      <Filter>Jungle\MurkWolf</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfA2NState.h">
+      <Filter>Jungle\MurkWolf</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfDeathState.h">
+      <Filter>Jungle\MurkWolf</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfAttackState.h">
+      <Filter>Jungle\MurkWolf</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugA2NState.h">
+      <Filter>Jungle\Krug</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugAlertState.h">
+      <Filter>Jungle\Krug</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugAttackState.h">
+      <Filter>Jungle\Krug</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugChaseState.h">
+      <Filter>Jungle\Krug</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugDeathState.h">
+      <Filter>Jungle\Krug</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugIdleState.h">
+      <Filter>Jungle\Krug</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugN2AState.h">
+      <Filter>Jungle\Krug</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugReturnState.h">
+      <Filter>Jungle\Krug</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugScript.h">
+      <Filter>Jungle\Krug</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugSpawnState.h">
+      <Filter>Jungle\Krug</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugMiniA2NState.h">
+      <Filter>Jungle\Krug_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugMiniAlertState.h">
+      <Filter>Jungle\Krug_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugMiniAttackState.h">
+      <Filter>Jungle\Krug_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugMiniChaseState.h">
+      <Filter>Jungle\Krug_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugMiniDeathState.h">
+      <Filter>Jungle\Krug_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugMiniIdleState.h">
+      <Filter>Jungle\Krug_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugMiniN2AState.h">
+      <Filter>Jungle\Krug_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugMiniReturnState.h">
+      <Filter>Jungle\Krug_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugMiniScript.h">
+      <Filter>Jungle\Krug_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugMiniSpawnState.h">
+      <Filter>Jungle\Krug_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfMiniA2NState.h">
+      <Filter>Jungle\MurkWolf_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfMiniAlertState.h">
+      <Filter>Jungle\MurkWolf_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfMiniAttackState.h">
+      <Filter>Jungle\MurkWolf_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfMiniChaseState.h">
+      <Filter>Jungle\MurkWolf_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfMiniDeathState.h">
+      <Filter>Jungle\MurkWolf_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfMiniIdleState.h">
+      <Filter>Jungle\MurkWolf_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfMiniN2AState.h">
+      <Filter>Jungle\MurkWolf_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfMiniReturnState.h">
+      <Filter>Jungle\MurkWolf_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfMiniScript.h">
+      <Filter>Jungle\MurkWolf_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfMiniSpawnState.h">
+      <Filter>Jungle\MurkWolf_Mini</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Gromp">
+    <Filter Include="Jungle">
+      <UniqueIdentifier>{743620c3-8cef-44b1-9b07-488930c8e839}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jungle\JungleMonster">
+      <UniqueIdentifier>{df08843b-93b3-4e43-abd8-1a0eaf60c941}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jungle\Gromp">
       <UniqueIdentifier>{17c15e8a-0b55-4215-8413-ca47dae3ade0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="JungleMonster">
-      <UniqueIdentifier>{df08843b-93b3-4e43-abd8-1a0eaf60c941}</UniqueIdentifier>
+    <Filter Include="Jungle\MurkWolf">
+      <UniqueIdentifier>{50c6c632-0cab-4d19-87b3-fb8a0f17b48d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jungle\MurkWolf_Mini">
+      <UniqueIdentifier>{23996f2c-2fba-4ab5-8bb6-da928ac87efa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jungle\RazorBeak">
+      <UniqueIdentifier>{2acd90c4-083a-41b7-a257-c1bea2f714ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jungle\RazorBeak_Mini">
+      <UniqueIdentifier>{473a643e-a8d0-488d-8237-3fc5dad5c5b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jungle\Krug">
+      <UniqueIdentifier>{941b3ba9-b244-44a9-87a3-f5c7832adacc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jungle\Krug_Mini">
+      <UniqueIdentifier>{b09435c2-fa2a-4450-b263-75bb6bc3270b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jungle\Red">
+      <UniqueIdentifier>{f01e1ec3-7a28-42bf-887f-cff4dacef1b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jungle\Blue">
+      <UniqueIdentifier>{c2b382c1-593f-4d44-905d-422a3aab3dfa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

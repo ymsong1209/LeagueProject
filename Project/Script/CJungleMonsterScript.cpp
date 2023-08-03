@@ -101,12 +101,6 @@ bool CJungleMonsterScript::CheckDeath()
 	// Á×À½
 	if (m_fHP <= 0)
 	{
-		// Á×À½ ÀÌº¥Æ® ¼­¹ö¿¡ ½÷¾ßÇÔ?
-		//DeathEvent* evn = dynamic_cast<DeathEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_KILL_MOB));
-		//if (evn != nullptr)
-		//{
-		//	CGameEventMgr::GetInst()->NotifyEvent(*evn);
-		//}
 		GetOwner()->Fsm()->ChangeState(L"Death");
 		return true;
 	}

@@ -21,6 +21,7 @@
 #include <Script/CTurretScript.h>
 #include <Script/CJinxScript.h>
 #include <Script/CGrompScript.h>
+#include <Script/CMurkWolfScript.h>
 
 void CreateTestLevel()
 {
@@ -58,7 +59,7 @@ void CreateTestLevel()
 	pMainCam->Camera()->SetLayerMaskAll(true);	// 모든 레이어 체크
 	pMainCam->Camera()->SetLayerMask(31, false);// UI Layer 는 렌더링하지 않는다.
 	pMainCam->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(60.f),0.f, 0.f));
-	SpawnGameObject(pMainCam, Vec3(225.f, 1039.f, -465.f), 0);
+	SpawnGameObject(pMainCam, Vec3(225.f, 373.f, -465.f), 0);
 
 
 	// 광원 추가
@@ -334,6 +335,7 @@ void CreateTestLevel()
 
 
 	PlaceLand();
+	SpawnJungleMob();
 
 
 	// TestFastForward
@@ -466,27 +468,7 @@ void CreateTestLevel()
 	TestTurret->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
 	SpawnGameObject(TestTurret, Vec3(200.f, 0.f, 200.f), 0);
 
-	{
-		Ptr<CMeshData> pMeshData = nullptr;
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\gromp.fbx");
-		CGameObject* Gromp = nullptr;
-		Gromp = pMeshData->Instantiate();
-		Gromp->AddComponent(new CGrompScript);
-		Gromp->SetName(L"Gromp");
-		Gromp->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
-		Gromp->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(270.f), 0.f));
-		SpawnGameObject(Gromp, Vec3(323.f, 0.f, 1242.f), 0);
 	
-		CGameObject* GrompAggro = new CGameObject;
-		GrompAggro->SetName(L"GrompAggroRadius");
-		GrompAggro->AddComponent(new CTransform);
-		GrompAggro->AddComponent(new CCollider2D);
-		GrompAggro->Transform()->SetRelativeScale(Vec3(150.f, 150.f, 150.f));
-		GrompAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-		GrompAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
-		GrompAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-		SpawnGameObject(GrompAggro, Vec3(323.f, 0.f, 1242.f), 0);
-	}
 	
 
 
@@ -594,5 +576,54 @@ void PlaceLand()
 
 			SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 6);
 		}
+	}
+}
+
+void SpawnJungleMob()
+{
+	//블루팀 두꺼비
+	{
+		Ptr<CMeshData> pMeshData = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\gromp.fbx");
+		CGameObject* Gromp = nullptr;
+		Gromp = pMeshData->Instantiate();
+		Gromp->AddComponent(new CGrompScript);
+		Gromp->SetName(L"Gromp");
+		Gromp->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
+		Gromp->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(270.f), 0.f));
+		SpawnGameObject(Gromp, Vec3(323.f, 0.f, 1242.f), 0);
+
+		CGameObject* GrompAggro = new CGameObject;
+		GrompAggro->SetName(L"GrompAggroRadius");
+		GrompAggro->AddComponent(new CTransform);
+		GrompAggro->AddComponent(new CCollider2D);
+		GrompAggro->Transform()->SetRelativeScale(Vec3(150.f, 150.f, 150.f));
+		GrompAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+		GrompAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+		GrompAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+		SpawnGameObject(GrompAggro, Vec3(323.f, 0.f, 1242.f), 0);
+	}
+
+	//블루팀 늑대
+	{
+		Ptr<CMeshData> pMeshData = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\MurkWolf.fbx");
+		CGameObject* MurkWolf = nullptr;
+		MurkWolf = pMeshData->Instantiate();
+		MurkWolf->AddComponent(new CMurkWolfScript);
+		MurkWolf->SetName(L"MurkWolf");
+		MurkWolf->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
+		MurkWolf->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(24.f), 0.f));
+		SpawnGameObject(MurkWolf, Vec3(564.f, 15.f, 959.f), 0);
+
+		CGameObject* MurkWolfAggro = new CGameObject;
+		MurkWolfAggro->SetName(L"MurkWolfAggroRadius");
+		MurkWolfAggro->AddComponent(new CTransform);
+		MurkWolfAggro->AddComponent(new CCollider2D);
+		MurkWolfAggro->Transform()->SetRelativeScale(Vec3(150.f, 150.f, 150.f));
+		MurkWolfAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+		MurkWolfAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+		MurkWolfAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+		SpawnGameObject(MurkWolfAggro, Vec3(564.f, 0.f, 959.f), 0);
 	}
 }

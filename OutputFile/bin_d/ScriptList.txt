@@ -6,8 +6,12 @@ CInGameCameraScript
 CInhibitorScript
 CJinxScript
 CJungleMonsterScript
+CKrugMiniScript
+CKrugScript
 CMinionScript
 CMobScript
+CMurkWolfMiniScript
+CMurkWolfScript
 CNexusScript
 COtherPlayerScript
 CPlayerScript

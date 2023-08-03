@@ -7,7 +7,7 @@ enum class JungleType
     RAZORBEAK,
     RAZORBEAK_MINI,
     MURK_WOLF,
-    WOLVES,
+    MURK_WOLF_MINI,
     KRUG,
     KRUG_MINI,
     GROMP,
