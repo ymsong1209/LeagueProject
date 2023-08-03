@@ -28,16 +28,37 @@ void CreateTestLevel()
 	pCurLevel->ChangeState(LEVEL_STATE::PLAY);
 
 	// Layer 이름설정
+	//pCurLevel->GetLayer(0)->SetName(L"Default");
+	//pCurLevel->GetLayer(1)->SetName(L"Tile");
+	//pCurLevel->GetLayer(2)->SetName(L"Player");
+	//pCurLevel->GetLayer(3)->SetName(L"Monster");
+	//pCurLevel->GetLayer(4)->SetName(L"PlayerProjectile");
+	//pCurLevel->GetLayer(5)->SetName(L"MonsterProjectile");
+	//pCurLevel->GetLayer(6)->SetName(L"LoLMap");
+	////롤맵 레이어에는 롤맵만 넣을것!
+	//pCurLevel->GetLayer(31)->SetName(L"ViewPort UI");
 	pCurLevel->GetLayer(0)->SetName(L"Default");
-	pCurLevel->GetLayer(1)->SetName(L"Tile");
-	pCurLevel->GetLayer(2)->SetName(L"Player");
-	pCurLevel->GetLayer(3)->SetName(L"Monster");
-	pCurLevel->GetLayer(4)->SetName(L"PlayerProjectile");
-	pCurLevel->GetLayer(5)->SetName(L"MonsterProjectile");
-	pCurLevel->GetLayer(6)->SetName(L"LoLMap");
-	//롤맵 레이어에는 롤맵만 넣을것!
-	pCurLevel->GetLayer(31)->SetName(L"ViewPort UI");
+	pCurLevel->GetLayer(1)->SetName(L"Lolmap");   // land
+	pCurLevel->GetLayer(2)->SetName(L"Map_Wall");   // map_wall (맵 벽)
+	pCurLevel->GetLayer(3)->SetName(L"Structure");   //Nexus, Turret, Inhibitor
+	pCurLevel->GetLayer(4)->SetName(L"Mob");   // Minion, JungleMob
+	pCurLevel->GetLayer(5)->SetName(L"Player");   // Champion
+	pCurLevel->GetLayer(6)->SetName(L"AttackRange");   //  공격범위
+	pCurLevel->GetLayer(7)->SetName(L"SkillProjectile");   // Skill 
+	pCurLevel->GetLayer(8)->SetName(L"Effect");   // Effect
+	pCurLevel->GetLayer(31)->SetName(L"ViewPort UI");   // UI
 
+	CCollisionMgr::GetInst()->LayerCheck(L"Mob", L"Mob");
+	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Player");
+	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"SkillProjectile");
+	CCollisionMgr::GetInst()->LayerCheck(L"Mob", L"SkillProjectile ");
+	CCollisionMgr::GetInst()->LayerCheck(L"Structure", L"SkillProjectile");
+	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Structure");
+	CCollisionMgr::GetInst()->LayerCheck(L"AttackRange", L"Player");
+	CCollisionMgr::GetInst()->LayerCheck(L"AttackRange", L"Mob");
+	CCollisionMgr::GetInst()->LayerCheck(L"AttackRange", L"Structure");
+	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Map_Wall");
+	CCollisionMgr::GetInst()->LayerCheck(L"Mob", L"Map_Wall");
 
 	// Main Camera Object 생성
 	CGameObject* pMainCam = new CGameObject;
@@ -158,7 +179,7 @@ void CreateTestLevel()
 	LoLMapCollider->Collider2D()->SetOffsetScale(Vec2(2700.f, 2700.f));
 	LoLMapCollider->Collider2D()->SetOffsetPos(Vec3(1125.f, 16.f, 1200.f));
 	LoLMapCollider->Transform()->SetGizmoObjExcept(true);
-	SpawnGameObject(LoLMapCollider, Vec3(0.f, 0.f, 0.f), 6);
+	SpawnGameObject(LoLMapCollider, Vec3(0.f, 0.f, 0.f), L"Lolmap");
 
 
 
@@ -214,7 +235,7 @@ void CreateTestLevel()
 		pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\sruap_ordernexus_tx_cm_clear.png"));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		SpawnGameObject(pObj, Vec3(229.7f, 15.9f, 241.5f), 0);
+		SpawnGameObject(pObj, Vec3(229.7f, 15.9f, 241.5f), L"Structure");
 
 		//------------------------------------------------------------------------------
 
@@ -233,7 +254,7 @@ void CreateTestLevel()
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(-45.48f), 0.f));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		SpawnGameObject(pObj, Vec3(537.71f, 14.2f, 546.9f), 0);
+		SpawnGameObject(pObj, Vec3(537.71f, 14.2f, 546.9f), L"Structure");
 
 		pMeshData = nullptr;
 		pObj = nullptr;
@@ -246,7 +267,7 @@ void CreateTestLevel()
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(-89.48f), 0.f));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		SpawnGameObject(pObj, Vec3(169.86f, 14.2f, 527.02f), 0);
+		SpawnGameObject(pObj, Vec3(169.86f, 14.2f, 527.02f), L"Structure");
 
 		pMeshData = nullptr;
 		pObj = nullptr;
@@ -259,7 +280,7 @@ void CreateTestLevel()
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(2.f), 0.f));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		SpawnGameObject(pObj, Vec3(634.97f, 14.2f, 183.08f), 0);
+		SpawnGameObject(pObj, Vec3(634.97f, 14.2f, 183.08f), L"Structure");
 
 		//----------RED-------------------------------
 
@@ -274,7 +295,7 @@ void CreateTestLevel()
 		pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\nexus_Mat_Red.mtrl"), 1);
 		pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		SpawnGameObject(pObj, Vec3(1952.174f, 15.26f, 1956.22f), 0);
+		SpawnGameObject(pObj, Vec3(1952.174f, 15.26f, 1956.22f), L"Structure");
 
 		pMeshData = nullptr;
 		pObj = nullptr;
@@ -288,7 +309,7 @@ void CreateTestLevel()
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(0.f), XMConvertToRadians(-180.f)));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		SpawnGameObject(pObj, Vec3(1661.7f, 14.8f, 2013.9f), 0);
+		SpawnGameObject(pObj, Vec3(1661.7f, 14.8f, 2013.9f), L"Structure");
 
 		pMeshData = nullptr;
 		pObj = nullptr;
@@ -302,7 +323,7 @@ void CreateTestLevel()
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(45.f), XMConvertToRadians(-180.f)));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		SpawnGameObject(pObj, Vec3(1711.f, 14.8f, 1721.f), 0);
+		SpawnGameObject(pObj, Vec3(1711.f, 14.8f, 1721.f), L"Structure");
 
 		pMeshData = nullptr;
 		pObj = nullptr;
@@ -316,7 +337,7 @@ void CreateTestLevel()
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(90.f), XMConvertToRadians(-180.f)));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		SpawnGameObject(pObj, Vec3(2006.9f, 14.8f, 1670.1f), 0);
+		SpawnGameObject(pObj, Vec3(2006.9f, 14.8f, 1670.1f), L"Structure");
 
 	}
 
@@ -345,7 +366,7 @@ void CreateTestLevel()
 
 			pObj->GetRenderComponent()->SetShowDebugBound(false);
 			pObj->Transform()->SetGizmoObjExcept(false);
-			SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 6);
+			SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), L"Lolmap");
 		}
 	}
 
@@ -511,6 +532,6 @@ void CreateTestLevel()
 
 
 	// 충돌 시킬 레이어 짝 지정
-	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");
-	CCollisionMgr::GetInst()->LayerCheck(L"Default", L"Default");
+	//CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");
+	//CCollisionMgr::GetInst()->LayerCheck(L"Default", L"Default");
 }
