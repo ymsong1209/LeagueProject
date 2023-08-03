@@ -254,7 +254,7 @@ void CreateTestLevel()
 		//=======================================
 
 
-		pMeshData = nullptr;
+		/*pMeshData = nullptr;
 		pObj = nullptr;
 		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
 		pObj = pMeshData->Instantiate();
@@ -321,7 +321,7 @@ void CreateTestLevel()
 
 		pObj->Transform()->SetUseMouseOutline(true);
 
-		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0), 0);
+		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0), 0);*/
 
 
 		//-------------------------------넥서스-----------------------------------------

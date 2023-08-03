@@ -7,14 +7,6 @@
 
 void CMouseCursorUIScript::begin()
 {
-	//CGameObject* MouseObj = new CGameObject;
-	//MouseObj->AddComponent(new CTransform);
-	//MouseObj->AddComponent(new CMeshRender);
-	//MouseObj->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	//MouseObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L""), 0);
-	//MouseObj->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 1.f));
-	//SpawnGameObject(MouseObj, Vec3(100.f, 100.f, 100.f),31);
-
 	Mouse = new CGameObject;
 	Mouse->SetName(L"Mouse");
 	Mouse->AddComponent(new CTransform);
@@ -61,23 +53,25 @@ void CMouseCursorUIScript::tick()
 	if (KEY_TAP(KEY::RBTN))
 	{
 		CGameObject* Map = CLevelMgr::GetInst()->GetCurLevel()->FindParentObjectByName(L"LoLMapCollider");
-		IntersectResult result = MainCam->IsCollidingBtwRayRect(ray, Map);
-
-		if (result.bResult)
+		if (Map)
 		{
-			if (!MoveArrow)
+			IntersectResult result = MainCam->IsCollidingBtwRayRect(ray, Map);
+			if (result.bResult)
 			{
-				Ptr<CMeshData> pMeshData = nullptr;
-				CGameObject* pObj = nullptr;
-				pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\arrow.fbx");
-				pObj = pMeshData->Instantiate();
-				pObj->SetName(L"arrow");
-				pObj->GetRenderComponent()->SetFrustumCheck(false);
-				pObj->AddComponent(new CMoveCursorUIScript);
-				pObj->Transform()->SetRelativeScale(Vec3(0.25f, 0.25f, 0.25f));
-				pObj->Transform()->SetRelativeRot(Vec3(0.f, 0.f,0.f));
-				SpawnGameObject(pObj, result.vCrossPoint, 0);
-				MoveArrow = pObj;
+				if (!MoveArrow)
+				{
+					Ptr<CMeshData> pMeshData = nullptr;
+					CGameObject* pObj = nullptr;
+					pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\arrow.fbx");
+					pObj = pMeshData->Instantiate();
+					pObj->SetName(L"arrow");
+					pObj->GetRenderComponent()->SetFrustumCheck(false);
+					pObj->AddComponent(new CMoveCursorUIScript);
+					pObj->Transform()->SetRelativeScale(Vec3(0.25f, 0.25f, 0.25f));
+					pObj->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
+					SpawnGameObject(pObj, result.vCrossPoint, 0);
+					MoveArrow = pObj;
+				}
 			}
 		}
 	}
