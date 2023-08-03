@@ -316,9 +316,6 @@
     <ClInclude Include="CScriptMgr.h">
       <Filter>Manager\1. ScriptMgr</Filter>
     </ClInclude>
-    <ClInclude Include="CServerTypes.h">
-      <Filter>Manager\2. SendServerEventMgr</Filter>
-    </ClInclude>
     <ClInclude Include="CSendServerEventMgr.h">
       <Filter>Manager\2. SendServerEventMgr</Filter>
     </ClInclude>
@@ -333,6 +330,9 @@
     </ClInclude>
     <ClInclude Include="CProjectileScript.h">
       <Filter>Scripts\SkilProjectile</Filter>
+    </ClInclude>
+    <ClInclude Include="CServerTypes.h">
+      <Filter>Default</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

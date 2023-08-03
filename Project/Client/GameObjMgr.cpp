@@ -126,6 +126,7 @@ CGameObject* GameObjMgr::DeleteObjectInMap(uint64 _id)
 // ===============================================
 void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 {
+	// 추후 프리팹으로 변경되길 희망
 	std::mutex m;
 	{
 		std::lock_guard<std::mutex> lock(m);
@@ -222,99 +223,87 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 
 void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 {
-
+	// 추후 프리팹으로 변경되길 희망
 	std::mutex m;
 	{
 		std::lock_guard<std::mutex> lock(m);
 
 		Ptr<CMeshData> pMeshData = nullptr;
-		CGameObject* pObj = nullptr;
+		CGameObject* pObj = new CGameObject;
 
-		// 방장만 진짜를 생성한다. 나머지는 가짜를 생성한다.
-		if (MyPlayer.host)
+		switch (_objectInfo.unitType)
 		{
-			// 미니언 스크립트
-			// 디버깅용으로 구체 띄워야지
-
-			CGameObject* pObj = new CGameObject;
-
+		case UnitType::MELEE_MINION:
+		{
 			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\minion_melee.fbx");
 			pObj = pMeshData->Instantiate();
 
-			pObj->AddComponent(new CMinionScript);
+			pObj->SetName(L"minion_melee");
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\minion_melee");
+			pObj->Animator3D()->PlayRepeat(L"minion_melee\\Idle1", true, true, 0.1f);
+
 			//pObj->AddComponent(new CCollider3D);
 			//pObj->AddComponent(new CCollider2D);
 
 			//pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
 			//pObj->Collider2D()->SetOffsetScale(Vec2(50.f, 50.f));
 			//pObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
-			pObj->SetName(L"Minion");
-
-			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\minion_melee");
-			pObj->Animator3D()->PlayRepeat(L"minion_melee\\Attack1", true, true, 0.1f);
-
-			CUnitScript* Script = pObj->GetScript<CUnitScript>();
-			Script->SetServerID(_objectId);
-			Script->SetFaction(_objectInfo.faction);
-			
 
 			//pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
 			//pObj->Collider3D()->SetAbsolute(true);
 			//pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
 			//pObj->Collider3D()->SetDrawCollision(false);
 
-			pObj->Transform()->SetRelativeScale(Vec3(0.1f, 0.1f, 0.1f));
+			// 방장은 진짜 계산 오브젝트 생성,  방장이 아닐 경우 허상을 생성
+			if (MyPlayer.host)
+			{
+				pObj->AddComponent(new CMinionScript);
 
+				if (_objectInfo.lane == Lane::TOP)
+				{
+					// 미니언 라인 Top 설정
+				}
+				else if (_objectInfo.lane == Lane::MID)
+				{
+					// 미니언 라인 Mid 설정
+				}
+				else if (_objectInfo.lane == Lane::BOTTOM)
+				{
+					// 미니언 라인 Bottom 설정
+				}
+			}
+			else
+			{
+				pObj->AddComponent(new CUnitScript);
+			}
 
-			Vec3 spawnPos = Vec3(100.f + (50 * _objects.size()), 30.f, 100.f);
-			SpawnGameObject(pObj, spawnPos, 0);
-
-			_objects.insert(std::make_pair(_objectId, pObj));
-
-		}
-		else
-		{
-			// 기본 OtherObjectScript
-			// 미니언 스크립트
-			// 디버깅용으로 구체 띄워야지
-			CGameObject* pObj = new CGameObject;
-
-			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\minion_melee.fbx");
-			pObj = pMeshData->Instantiate();
-			
-			pObj->AddComponent(new CUnitScript);
-			pObj->AddComponent(new CCollider3D);
-			//pObj->AddComponent(new CCollider2D);
-
-			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\minion_melee");
-			pObj->Animator3D()->PlayRepeat(L"minion_melee\\Attack1", true, true, 0.1f);
-
-
-			//pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-			//pObj->Collider2D()->SetOffsetScale(Vec2(50.f, 50.f));
-			//pObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
+			// 공통
 			CUnitScript* Script = pObj->GetScript<CUnitScript>();
 			Script->SetServerID(_objectId);
 			Script->SetFaction(_objectInfo.faction);
 
-			pObj->SetName(L"OtherMinion");
 
-			pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
-			pObj->Collider3D()->SetAbsolute(true);
-			pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
-			pObj->Collider3D()->SetDrawCollision(false);
-
-			pObj->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 100.f));
-
-
+			// 추후 추가 unitscript에 변수 채우기 + spawnPos도 서버가 줄 예정
+			//Script->SetCurHP
+			//script->SetCurMP
+			pObj->Transform()->SetRelativeScale(Vec3(0.1f, 0.1f, 0.1f));
 			Vec3 spawnPos = Vec3(100.f + (50 * _objects.size()), 30.f, 100.f);
 			SpawnGameObject(pObj, spawnPos, 0);
 
 			_objects.insert(std::make_pair(_objectId, pObj));
+
+		}
+		break;
+
+		case UnitType::RANGED_MINION:
+		{
+		}
+		break;
+
+
 		}
 
 
-		
 	}
 }
 

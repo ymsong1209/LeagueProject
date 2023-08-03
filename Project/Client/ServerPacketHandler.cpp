@@ -72,6 +72,18 @@ void ServerPacketHandler::HandlePacket(PacketSessionRef& session, BYTE* buffer, 
     case S_DESPAWN_OBJECT:
 		Handle_S_DESPAWN_OBJECT(session, buffer, len);
 		break;
+
+	case S_KDA_CS:
+		Handle_S_KDA_CS(session, buffer, len);
+		break;
+
+	case S_SOUND:
+		Handle_S_SOUND(session, buffer, len);
+		break;
+
+	case S_TIME:
+		Handle_S_TIME(session, buffer, len);
+		break;
 	}
 }
 
@@ -513,6 +525,7 @@ void ServerPacketHandler::Handle_S_SKILL_PROJECTILE(PacketSessionRef& session, B
 
 	if (pkt->Validate() == false)
 	{
+		cout << "S_SKILL_PROJECTILE Packet Validate False" << endl;
 		m.unlock();
 		return;
 	}
@@ -540,6 +553,7 @@ void ServerPacketHandler::Handle_S_SKILL_HIT(PacketSessionRef& session, BYTE* bu
 
 	if (pkt->Validate() == false)
 	{
+		cout << "S_SKILL_HIT Packet Validate False" << endl;
 		m.unlock();
 		return;
 	}
@@ -573,6 +587,7 @@ void ServerPacketHandler::Handle_S_DESPAWN_OBJECT(PacketSessionRef& session, BYT
 
 	if (pkt->Validate() == false)
 	{
+		cout << "S_DESPAWN_OBJECT Validate False" << endl;
 		m.unlock();
 		return;
 	}
@@ -590,6 +605,115 @@ void ServerPacketHandler::Handle_S_DESPAWN_OBJECT(PacketSessionRef& session, BYT
 	std::cout << "===============================" << endl;
 	m.unlock();
 }
+
+void ServerPacketHandler::Handle_S_KDA_CS(PacketSessionRef& session, BYTE* buffer, int32 len)
+{
+	std::mutex m;
+	m.lock();
+
+	cout << "S_KDA_CS Packet" << endl;
+	BufferReader br(buffer, len);
+
+	PKT_S_KDA_CS* pkt = reinterpret_cast<PKT_S_KDA_CS*>(buffer);
+
+	if (pkt->Validate() == false)
+	{
+		cout << "S_KDA_CS Validate False" << endl;
+		m.unlock();
+		return;
+	}
+
+	uint64	  _killerId = pkt->killerId;
+	UnitType  _deadObjUnitType = pkt->deadObjUnitType;
+
+	tServerEvent evn = {};
+	evn.Type = SERVER_EVENT_TYPE::KDA_CS_PACKET;
+	evn.wParam = _killerId;
+	evn.lParam = (DWORD_PTR)_deadObjUnitType;
+
+	ServerEventMgr::GetInst()->AddEvent(evn);
+
+	std::cout << "===============================" << endl;
+	m.unlock();
+}
+
+void ServerPacketHandler::Handle_S_SOUND(PacketSessionRef& session, BYTE* buffer, int32 len)
+{
+	std::mutex m;
+	m.lock();
+
+	cout << "S_SOUND Packet" << endl;
+	BufferReader br(buffer, len);
+
+	PKT_S_SOUND* pkt = reinterpret_cast<PKT_S_SOUND*>(buffer);
+
+	if (pkt->Validate() == false)
+	{
+		cout << "S_SOUND Validate False" << endl;
+		m.unlock();
+		return;
+	}
+
+	SoundInfoPacket	 _soundInfoPacket = pkt->soundInfo;
+	PKT_S_SOUND::SoundNameList soundNameBuffs = pkt->GetSoundNameList();
+	
+	// sound 이름
+	wstring _soundName = L"";
+	for (auto& soundNameBuff : soundNameBuffs)
+	{
+		_soundName.push_back(soundNameBuff.soundName);
+	}
+
+	SoundInfo* soundInfo = new SoundInfo();
+	soundInfo->soundName	 = _soundName;
+	soundInfo->dimensionType = _soundInfoPacket.dimensionType;
+	soundInfo->faction		 = _soundInfoPacket.faction;
+	soundInfo->iRoopCount	 = _soundInfoPacket.iRoopCount;
+	soundInfo->fVolume		 = _soundInfoPacket.fVolume;
+	soundInfo->bOverlap		 = _soundInfoPacket.bOverlap;
+	soundInfo->fRange		 = _soundInfoPacket.fRange;
+	soundInfo->soundPos.x    = _soundInfoPacket.soundPos.x;
+	soundInfo->soundPos.y    = _soundInfoPacket.soundPos.y;
+	soundInfo->soundPos.z    = _soundInfoPacket.soundPos.z;
+
+
+	tServerEvent evn = {};
+	evn.Type = SERVER_EVENT_TYPE::SOUND_PACKET;
+	evn.wParam = (DWORD_PTR)soundInfo;
+
+	ServerEventMgr::GetInst()->AddEvent(evn);
+
+	std::cout << "===============================" << endl;
+	m.unlock();
+}
+
+void ServerPacketHandler::Handle_S_TIME(PacketSessionRef& session, BYTE* buffer, int32 len)
+{
+	std::mutex m;
+	m.lock();
+
+	cout << "S_TIME Packet" << endl;
+	BufferReader br(buffer, len);
+
+	PKT_S_TIME* pkt = reinterpret_cast<PKT_S_TIME*>(buffer);
+
+	if (pkt->Validate() == false)
+	{
+		cout << "S_TIME Validate False" << endl;
+		m.unlock();
+		return;
+	}
+
+	float	  _killerId = pkt->second;
+
+	// 모두가 본인의 시간을 업데이트 하는 코드 추가 필요
+
+	std::cout << "===============================" << endl;
+	m.unlock();
+}
+
+
+
 
 // 안씀
 void ServerPacketHandler::Handle_S_SKILL_DAMAGE(PacketSessionRef& session, BYTE* buffer, int32 len)

@@ -87,9 +87,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     
     ClientServiceRef service = MakeShared<ClientService>(
         // NetAddress(L"221.148.206.199", 40000),  // 다혜집 데탑 IP
-        //NetAddress(L"14.35.246.224", 40000),    // snow
+        NetAddress(L"14.35.246.224", 40000),    // snow
         //NetAddress(L"192.168.0.19", 40000), //  내부ip
-        NetAddress(L"127.0.0.1", 40000), // 로컬 호스트
+        //NetAddress(L"127.0.0.1", 40000), // 로컬 호스트
         MakeShared<IocpCore>(),
         MakeShared<ServerSession>, // TODO : SessionManager 등
         1);
@@ -144,22 +144,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             }
             else if (KEY_TAP(KEY::NUM_4))
             {
-                std::cout << "C_OBJECT_ANIM Pakcet" << endl;
-            
-                AnimInfoPacket animInfoPacket = {};
-                animInfoPacket.blend = GameObjMgr::GetInst()->GetMyPlayerScript()->Animator3D()->IsBlend();
-                animInfoPacket.blendTime = GameObjMgr::GetInst()->GetMyPlayerScript()->Animator3D()->GetBlendTime();
-            
-                wstring _animName = GameObjMgr::GetInst()->GetMyPlayerScript()->Animator3D()->GetCurAnim()->GetName();
-            
-                PKT_C_OBJECT_ANIM_WRITE  pktWriter(MyPlayer.id, animInfoPacket);
-                PKT_C_OBJECT_ANIM_WRITE::AnimNameList animNamePacket = pktWriter.ReserveAnimNameList(_animName.size());
-                for (int i = 0; i < _animName.size(); i++)
-                    animNamePacket[i] = { _animName[i] };
-            
+                std::cout << "Test Pakcet" << endl;
+                PKT_C_KDA_CS_WRITE  pktWriter(6, UnitType::MELEE_MINION);
                 SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
                 service->Broadcast(sendBuffer);
-            
                 std::cout << "===============================" << endl;
             }
 

@@ -57,22 +57,26 @@ class ServerPacketHandler
 {
 public:
 	static void HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len);
-
 	static void Handle_S_TEST(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_LOGIN(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_PICK_FACTION(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_PICK_CHAMPION(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_GAME_START(PacketSessionRef& session, BYTE* buffer, int32 len);
-	static void Handle_S_PLAYER_MOVE(PacketSessionRef& session, BYTE* buffer, int32 len);
 
+	static void Handle_S_PLAYER_MOVE(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_OBJECT_ANIM(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_SPAWN_OBJECT(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_OBJECT_MOVE(PacketSessionRef& session, BYTE* buffer, int32 len);
+
 	static void Handle_S_SKILL_PROJECTILE(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_SKILL_HIT(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_SKILL_DAMAGE(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_SKILL_CC(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_DESPAWN_OBJECT(PacketSessionRef& session, BYTE* buffer, int32 len);
+
+	static void Handle_S_KDA_CS(PacketSessionRef& session, BYTE* buffer, int32 len);
+	static void Handle_S_SOUND(PacketSessionRef& session, BYTE* buffer, int32 len);
+	static void Handle_S_TIME(PacketSessionRef& session, BYTE* buffer, int32 len);
 
 private:
 	USE_LOCK;
@@ -1373,6 +1377,37 @@ public:
 
 private:
 	PKT_C_DESPAWN_OBJECT* _pkt = nullptr;
+	SendBufferRef _sendBuffer;
+	BufferWriter _bw;
+};
+#pragma pack()
+
+#pragma pack(1)
+class PKT_C_KDA_CS_WRITE {
+public:
+	PKT_C_KDA_CS_WRITE(uint64 _killerId, UnitType _deadObjUnitType) {
+		_sendBuffer = GSendBufferManager->Open(4096);
+		// 초기화
+		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
+
+		_pkt = _bw.Reserve<PKT_C_KDA_CS>();
+		_pkt->packetSize = 0; // To Fill
+		_pkt->packetId = C_KDA_CS;
+		_pkt->killerId = _killerId;
+		_pkt->deadObjUnitType = _deadObjUnitType;
+	}
+
+	SendBufferRef CloseAndReturn()
+	{
+		// 패킷 사이즈 계산
+		_pkt->packetSize = _bw.WriteSize();
+
+		_sendBuffer->Close(_bw.WriteSize());
+		return _sendBuffer;
+	}
+
+private:
+	PKT_C_KDA_CS* _pkt = nullptr;
 	SendBufferRef _sendBuffer;
 	BufferWriter _bw;
 };
