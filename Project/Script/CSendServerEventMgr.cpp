@@ -44,6 +44,7 @@ void CSendServerEventMgr::SendAnimPacket(UINT64 _targetId, wstring _animName, bo
 
 void CSendServerEventMgr::SendUseSkillPacket(UINT64 _ownerId, UINT64 _targetObjId
 							, int _skillLevel, SkillType _skillType, Vec3 _offsetPos
+							, int _projectileCount
 							, bool _useMousePos, Vec3 _mousePos
 							, bool _useMouseDir, Vec3 _mouseDir)
 {
@@ -56,6 +57,7 @@ void CSendServerEventMgr::SendUseSkillPacket(UINT64 _ownerId, UINT64 _targetObjI
 	skillInfo->offsetPos.x = _offsetPos.x;
 	skillInfo->offsetPos.y = _offsetPos.y;
 	skillInfo->offsetPos.z = _offsetPos.z;
+	skillInfo->projectileCount = _projectileCount;
 
 	skillInfo->UseMousePos = _useMousePos;
 	skillInfo->MousePos.x = _mousePos.x;

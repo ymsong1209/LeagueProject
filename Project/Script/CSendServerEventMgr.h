@@ -34,7 +34,7 @@ public:
     void SendHitPacket(UINT64 _skillObjId, UINT64 _hitObjId, UINT64 _useObjId, int _skillLevel, SkillType _skillType);
     void SendAnimPacket(UINT64 _targetId, wstring _animName, bool _repeat, bool _blend, float _blentTime);
     void SendUseSkillPacket(UINT64 _ownerId, UINT64 _targetObjId, int _skillLevel
-                            , SkillType _skillType, Vec3 _offsetPos
+                            , SkillType _skillType, Vec3 _offsetPos, int _projectileCount
                             , bool _useMousePos, Vec3 _mousePos, bool _useMouseDir, Vec3 _mouseDir);
     void SendDespawnPacket(UINT64 _objId, float _lifeSpan);
     void SendKDACSPacket(UINT64 _killerId, UnitType _deadObjUnitType);
