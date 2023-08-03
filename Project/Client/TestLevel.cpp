@@ -29,7 +29,7 @@ void CreateTestLevel()
 	//return;	
 
 	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
-	pCurLevel->ChangeState(LEVEL_STATE::PLAY);
+	pCurLevel->ChangeState(LEVEL_STATE::STOP);
 
 
 	//롤맵 레이어에는 롤맵만 넣을것!
