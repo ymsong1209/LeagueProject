@@ -224,6 +224,7 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 			AttackRange->AddComponent(new CAttackRangeScript);
 			AttackRange->SetName(L"AttackRange");
 			pObj->AddChild(AttackRange);
+			CUR_LEVEL->AddGameObject(AttackRange, L"AttackRange", false);
 		}
 
 		else
@@ -256,7 +257,7 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 		pObj->Transform()->SetUseMouseOutline(true);
 
 		Vec3 spawnPos = Vec3(_info.posInfo.pos.x, _info.posInfo.pos.y, _info.posInfo.pos.z);
-		SpawnGameObject(pObj, spawnPos, 0);
+		SpawnGameObject(pObj, spawnPos, L"Player");
 
 
 		_players.insert(std::make_pair(_info.id, pObj));
@@ -330,7 +331,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			//script->SetCurMP
 			pObj->Transform()->SetRelativeScale(Vec3(0.1f, 0.1f, 0.1f));
 			Vec3 spawnPos = Vec3(100.f + (50 * _objects.size()), 30.f, 100.f);
-			SpawnGameObject(pObj, spawnPos, 0);
+			SpawnGameObject(pObj, spawnPos, L"Mob");
 
 			_objects.insert(std::make_pair(_objectId, pObj));
 
@@ -398,13 +399,13 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 				vecProj[i]->GetScript<CProjectileScript>()->SetDir(Vec3(_skillInfo.MouseDir.x, _skillInfo.MouseDir.y, _skillInfo.MouseDir.z));
 
 				if (_skillInfo.UseMousePos)
-					SpawnGameObject(vecProj[i], Vec3(_skillInfo.MousePos.x, _skillInfo.MousePos.y, _skillInfo.MousePos.z), 0);
+					SpawnGameObject(vecProj[i], Vec3(_skillInfo.MousePos.x, _skillInfo.MousePos.y, _skillInfo.MousePos.z), L"SkillProjectile");
 				else
 				{
 					Vec3 OwnerPos = UserObj->Transform()->GetRelativePos();
 					SpawnGameObject(vecProj[i]
 						, OwnerPos + Vec3(_skillInfo.offsetPos.x, _skillInfo.offsetPos.y, _skillInfo.offsetPos.z)
-						, 0);
+						, L"SkillProjectile");
 				}
 				_objects.insert(std::make_pair(_projectileId, vecProj[i]));
 			}
@@ -509,13 +510,13 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 				vecProj[i]->GetScript<CUnitScript>()->SetServerID(_projectileId + i);
 
 				if (_skillInfo.UseMousePos)
-					SpawnGameObject(vecProj[i], Vec3(_skillInfo.MousePos.x, _skillInfo.MousePos.y, _skillInfo.MousePos.z), 0);
+					SpawnGameObject(vecProj[i], Vec3(_skillInfo.MousePos.x, _skillInfo.MousePos.y, _skillInfo.MousePos.z), L"SkillProjectile");
 				else
 				{
 					Vec3 OwnerPos = UserObj->Transform()->GetRelativePos();
 					SpawnGameObject(vecProj[i]
 						, OwnerPos + Vec3(_skillInfo.offsetPos.x, _skillInfo.offsetPos.y, _skillInfo.offsetPos.z)
-						, 0);
+						, L"SkillProjectile");
 				}
 				_objects.insert(std::make_pair(_projectileId, vecProj[i]));
 			}
