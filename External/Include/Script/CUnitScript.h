@@ -85,7 +85,7 @@ public:
     float   GetFaceRot() { return m_fFaceRot; }
 
     // ºñµ¿±â
-    void GetHit(SkillType _type, CGameObject* _SkillTarget, CGameObject* _SkillUser);
+    void GetHit(SkillType _type, CGameObject* _SkillTarget, CGameObject* _SkillUser, int _SkillLevel);
 
 
 
