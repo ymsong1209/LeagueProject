@@ -2,6 +2,7 @@ CAttackRangeScript
 CBasicAttackScript
 CCameraMoveScript
 CChampionScript
+CGrompScript
 CInGameCameraScript
 CInhibitorScript
 CJinxScript
@@ -13,6 +14,8 @@ CNexusScript
 COtherPlayerScript
 CPlayerScript
 CProjectileScript
+CSoundTestScript
 CStructureScript
+CTurretAttackScript
 CTurretScript
 CUnitScript

@@ -480,25 +480,25 @@ void CreateTestLevel()
 	SpawnGameObject(TestTurret, Vec3(200.f, 0.f, 200.f), 0);
 
 	{
-		Ptr<CMeshData> pMeshData = nullptr;
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\gromp.fbx");
-		CGameObject* Gromp = nullptr;
-		Gromp = pMeshData->Instantiate();
-		Gromp->AddComponent(new CGrompScript);
-		Gromp->SetName(L"Gromp");
-		Gromp->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
-		Gromp->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(270.f), 0.f));
-		SpawnGameObject(Gromp, Vec3(323.f, 0.f, 1242.f), 0);
-	
-		CGameObject* GrompAggro = new CGameObject;
-		GrompAggro->SetName(L"GrompAggroRadius");
-		GrompAggro->AddComponent(new CTransform);
-		GrompAggro->AddComponent(new CCollider2D);
-		GrompAggro->Transform()->SetRelativeScale(Vec3(150.f, 150.f, 150.f));
-		GrompAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-		GrompAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
-		GrompAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-		SpawnGameObject(GrompAggro, Vec3(323.f, 0.f, 1242.f), 0);
+		//Ptr<CMeshData> pMeshData = nullptr;
+		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\gromp.fbx");
+		//CGameObject* Gromp = nullptr;
+		//Gromp = pMeshData->Instantiate();
+		//Gromp->AddComponent(new CGrompScript);
+		//Gromp->SetName(L"Gromp");
+		//Gromp->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
+		//Gromp->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(270.f), 0.f));
+		//SpawnGameObject(Gromp, Vec3(323.f, 0.f, 1242.f), 0);
+		//
+		//CGameObject* GrompAggro = new CGameObject;
+		//GrompAggro->SetName(L"GrompAggroRadius");
+		//GrompAggro->AddComponent(new CTransform);
+		//GrompAggro->AddComponent(new CCollider2D);
+		//GrompAggro->Transform()->SetRelativeScale(Vec3(150.f, 150.f, 150.f));
+		//GrompAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+		//GrompAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+		//GrompAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+		//SpawnGameObject(GrompAggro, Vec3(323.f, 0.f, 1242.f), 0);
 	}
 	
 

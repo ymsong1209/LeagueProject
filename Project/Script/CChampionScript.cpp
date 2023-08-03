@@ -170,7 +170,7 @@ void CChampionScript::GetInput()
 					evn->Clear();
 					evn->SetUserObj(GetOwner());
 					evn->SetTargetObj(UnitScript->GetOwner());
-				
+
 					CGameEventMgr::GetInst()->NotifyEvent(*evn);
 				}
 
@@ -191,16 +191,16 @@ void CChampionScript::GetInput()
 			if ((m_eRestraint & CAN_MOVE) == 0)
 				return;
 
-		// 움직일 수 없는 상황인 경우 return
-		if ((m_eRestraint & CAN_MOVE) == 0)
-			return;
+			// 움직일 수 없는 상황인 경우 return
+			if ((m_eRestraint & CAN_MOVE) == 0)
+				return;
 
-		CGameObject* Map = CLevelMgr::GetInst()->GetCurLevel()->FindParentObjectByName(L"LoLMapCollider");
-		IntersectResult result = MainCam->IsCollidingBtwRayRect(ray, Map);
-		Vec3 TargetPos = result.vCrossPoint;	// 클릭 좌표
-		PathFinder()->FindPath(TargetPos);
+			CGameObject* Map = CLevelMgr::GetInst()->GetCurLevel()->FindParentObjectByName(L"LoLMapCollider");
+			IntersectResult result = MainCam->IsCollidingBtwRayRect(ray, Map);
+			Vec3 TargetPos = result.vCrossPoint;	// 클릭 좌표
+			PathFinder()->FindPath(TargetPos);
+		}
 	}
-
 		if (KEY_TAP(KEY::Q))
 		{
 			// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
@@ -261,9 +261,9 @@ void CChampionScript::GetInput()
 		}
 
 		// 소환사 주문
-	}
 
 
+}
 void CChampionScript::CheckSkills()
 {
 	

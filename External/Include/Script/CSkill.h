@@ -2,7 +2,6 @@
 
 #include <Engine\ptr.h>
 #include "CChampionScript.h"
-
 class CUnitScript;
 class CPrefab;
 class CProjectileScript;

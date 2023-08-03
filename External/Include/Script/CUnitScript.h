@@ -2,6 +2,7 @@
 #define _CUNITSRIPT_H
 #include <Engine\CScript.h>
 
+
 class CUnitScript :
     public CScript
 {
@@ -77,7 +78,6 @@ public:
     void             SetFaction(Faction faction) { m_eFaction = faction; }
 
     // 기타 필요한 Getter/Setter 함수 추가
-
     float  GetAttackPower() { return m_fAttackPower; }
     float  GetDefencePower() { return m_fDefencePower; }
     float   GetAttackRange() { return m_fAttackRange; }
@@ -90,7 +90,6 @@ public:
 
     // 비동기
     void GetHit(SkillType _type, CGameObject* _SkillTarget, CGameObject* _SkillUser, int _SkillLevel);
-
 
 };
 #endif // _CUNITSRIPT_H
