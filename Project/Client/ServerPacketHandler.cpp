@@ -642,6 +642,9 @@ void ServerPacketHandler::Handle_S_KDA_CS(PacketSessionRef& session, BYTE* buffe
 	KDACSInfo _kdacsInfo = pkt->kdacsInfo;
 
 	KDACSInfo* info = new KDACSInfo();
+	info->killerId = _kdacsInfo.killerId;
+	info->victimId = _kdacsInfo.victimId;
+	info->deadObjUnitType = _kdacsInfo.deadObjUnitType;
 
 	tServerEvent evn = {};
 	evn.Type = SERVER_EVENT_TYPE::KDA_CS_PACKET;
