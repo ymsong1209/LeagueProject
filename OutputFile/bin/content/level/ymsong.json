@@ -1425,13 +1425,13 @@
                     "children": []
                 },
                 {
-                    "ObjName": "Gromp",
+                    "ObjName": "BLU_Gromp",
                     "components": [
                         {
                             "TRANSFORM": 0,
                             "vRelativePos": {
                                 "x": 323.0,
-                                "y": 0.0,
+                                "y": 10.0,
                                 "z": 1242.0
                             },
                             "vRelativeScale": {
@@ -1562,13 +1562,18 @@
                     ],
                     "scripts": [
                         {
-                            "scriptName": "CGrompScript"
+                            "scriptName": "CGrompScript",
+                            "AggroPos": {
+                                "x": 323.0,
+                                "y": 0.0,
+                                "z": 1242.0
+                            }
                         }
                     ],
                     "children": []
                 },
                 {
-                    "ObjName": "GrompAggroRadius",
+                    "ObjName": "BLU_GrompAggroRadius",
                     "components": [
                         {
                             "TRANSFORM": 0,
@@ -1621,14 +1626,14 @@
                     "children": []
                 },
                 {
-                    "ObjName": "MurkWolf",
+                    "ObjName": "BLU_MurkWolf",
                     "components": [
                         {
                             "TRANSFORM": 0,
                             "vRelativePos": {
-                                "x": 564.0,
+                                "x": 550.0,
                                 "y": 15.0,
-                                "z": 959.0
+                                "z": 944.0
                             },
                             "vRelativeScale": {
                                 "x": 0.18000000715255737,
@@ -1740,13 +1745,18 @@
                     ],
                     "scripts": [
                         {
-                            "scriptName": "CMurkWolfScript"
+                            "scriptName": "CMurkWolfScript",
+                            "AggroPos": {
+                                "x": 564.0,
+                                "y": 0.0,
+                                "z": 959.0
+                            }
                         }
                     ],
                     "children": []
                 },
                 {
-                    "ObjName": "MurkWolfAggroRadius",
+                    "ObjName": "BLU_MurkWolfAggroRadius",
                     "components": [
                         {
                             "TRANSFORM": 0,
@@ -1756,9 +1766,9 @@
                                 "z": 959.0
                             },
                             "vRelativeScale": {
-                                "x": 150.0,
-                                "y": 150.0,
-                                "z": 150.0
+                                "x": 190.0,
+                                "y": 190.0,
+                                "z": 190.0
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
@@ -1796,6 +1806,892 @@
                         16
                     ],
                     "scripts": [],
+                    "children": []
+                },
+                {
+                    "ObjName": "BLU_MurkWolf_Mini_L",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 552.0,
+                                "y": 15.0,
+                                "z": 964.0
+                            },
+                            "vRelativeScale": {
+                                "x": 0.15000000596046448,
+                                "y": 0.15000000596046448,
+                                "z": 0.15000000596046448
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": 0.6283185482025146,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
+                        },
+                        {
+                            "ANIMATOR3D": 4,
+                            "IsEmpty": false,
+                            "MeshDataRelativePath": "meshdata\\MurkWolf_Mini.mdat",
+                            "bRepeat": true,
+                            "fAnimSpeed": 1.0,
+                            "mapAnim": [
+                                {
+                                    "Anim3DRelativePath": "animation\\MurkWolf_Mini\\model-MurkWolf_Mini_AllAction.anim3d"
+                                }
+                            ],
+                            "strCurAnimName": ""
+                        },
+                        {
+                            "MESHRENDER": 10,
+                            "Mesh": {
+                                "IsNull": false,
+                                "Key": "mesh\\MurkWolf_Mini.mesh",
+                                "RelativePath": "mesh\\MurkWolf_Mini.mesh"
+                            },
+                            "fBounding": 150.0,
+                            "bFrustumCheck": true,
+                            "bDynamicShadow": false,
+                            "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": false,
+                            "vBoundingBoxOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "iMtrlCount": 1,
+                            "vecMtrls[0]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "material\\MurkWolf_Mini.mtrl",
+                                "RelativePath": "material\\MurkWolf_Mini.mtrl"
+                            },
+                            "DynamicMtrls": [
+                                {
+                                    "vecMtrls[0]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                }
+                            ],
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
+                        },
+                        16
+                    ],
+                    "scripts": [
+                        {
+                            "scriptName": "CMurkWolfMiniScript",
+                            "AggroPos": {
+                                "x": 564.0,
+                                "y": 0.0,
+                                "z": 964.0
+                            }
+                        }
+                    ],
+                    "children": []
+                },
+                {
+                    "ObjName": "BLU_MurkWolf_Mini_R",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 580.0,
+                                "y": 15.0,
+                                "z": 944.0
+                            },
+                            "vRelativeScale": {
+                                "x": 0.15000000596046448,
+                                "y": 0.15000000596046448,
+                                "z": 0.15000000596046448
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": 0.6283185482025146,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
+                        },
+                        {
+                            "ANIMATOR3D": 4,
+                            "IsEmpty": false,
+                            "MeshDataRelativePath": "meshdata\\MurkWolf_Mini.mdat",
+                            "bRepeat": true,
+                            "fAnimSpeed": 1.0,
+                            "mapAnim": [
+                                {
+                                    "Anim3DRelativePath": "animation\\MurkWolf_Mini\\model-MurkWolf_Mini_AllAction.anim3d"
+                                }
+                            ],
+                            "strCurAnimName": ""
+                        },
+                        {
+                            "MESHRENDER": 10,
+                            "Mesh": {
+                                "IsNull": false,
+                                "Key": "mesh\\MurkWolf_Mini.mesh",
+                                "RelativePath": "mesh\\MurkWolf_Mini.mesh"
+                            },
+                            "fBounding": 150.0,
+                            "bFrustumCheck": true,
+                            "bDynamicShadow": false,
+                            "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": false,
+                            "vBoundingBoxOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "iMtrlCount": 1,
+                            "vecMtrls[0]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "material\\MurkWolf_Mini.mtrl",
+                                "RelativePath": "material\\MurkWolf_Mini.mtrl"
+                            },
+                            "DynamicMtrls": [
+                                {
+                                    "vecMtrls[0]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                }
+                            ],
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
+                        },
+                        16
+                    ],
+                    "scripts": [
+                        {
+                            "scriptName": "CMurkWolfMiniScript",
+                            "AggroPos": {
+                                "x": 564.0,
+                                "y": 0.0,
+                                "z": 964.0
+                            }
+                        }
+                    ],
+                    "children": []
+                },
+                {
+                    "ObjName": "BLU_Krug",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 1221.0,
+                                "y": 15.0,
+                                "z": 379.0
+                            },
+                            "vRelativeScale": {
+                                "x": 0.18000000715255737,
+                                "y": 0.18000000715255737,
+                                "z": 0.18000000715255737
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": 0.06981316953897476,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
+                        },
+                        {
+                            "ANIMATOR3D": 4,
+                            "IsEmpty": false,
+                            "MeshDataRelativePath": "meshdata\\Krug.mdat",
+                            "bRepeat": true,
+                            "fAnimSpeed": 1.0,
+                            "mapAnim": [
+                                {
+                                    "Anim3DRelativePath": "animation\\Krug\\skinned_mesh-Krug_AllAction.anim3d"
+                                }
+                            ],
+                            "strCurAnimName": ""
+                        },
+                        {
+                            "MESHRENDER": 10,
+                            "Mesh": {
+                                "IsNull": false,
+                                "Key": "mesh\\Krug.mesh",
+                                "RelativePath": "mesh\\Krug.mesh"
+                            },
+                            "fBounding": 150.0,
+                            "bFrustumCheck": true,
+                            "bDynamicShadow": false,
+                            "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": false,
+                            "vBoundingBoxOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "iMtrlCount": 1,
+                            "vecMtrls[0]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "material\\Krug.mtrl",
+                                "RelativePath": "material\\Krug.mtrl"
+                            },
+                            "DynamicMtrls": [
+                                {
+                                    "vecMtrls[0]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                }
+                            ],
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
+                        },
+                        16
+                    ],
+                    "scripts": [
+                        {
+                            "scriptName": "CKrugScript",
+                            "AggroPos": {
+                                "x": 1238.0,
+                                "y": 0.0,
+                                "z": 389.0
+                            }
+                        }
+                    ],
+                    "children": []
+                },
+                {
+                    "ObjName": "BLU_KrugAggroRadius",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 1238.0,
+                                "y": 0.0,
+                                "z": 389.0
+                            },
+                            "vRelativeScale": {
+                                "x": 170.0,
+                                "y": 170.0,
+                                "z": 170.0
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
+                        },
+                        {
+                            "COLLIDER2D": 1,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "vOffsetRot": {
+                                "x": 1.5707963705062866,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "Shape": 1
+                        },
+                        16
+                    ],
+                    "scripts": [],
+                    "children": []
+                },
+                {
+                    "ObjName": "BLU_Krug_Mini",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 1252.0,
+                                "y": 15.0,
+                                "z": 379.0
+                            },
+                            "vRelativeScale": {
+                                "x": 0.11999999731779099,
+                                "y": 0.11999999731779099,
+                                "z": 0.11999999731779099
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": 0.06981316953897476,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
+                        },
+                        {
+                            "ANIMATOR3D": 4,
+                            "IsEmpty": false,
+                            "MeshDataRelativePath": "meshdata\\Krug_Mini.mdat",
+                            "bRepeat": true,
+                            "fAnimSpeed": 1.0,
+                            "mapAnim": [
+                                {
+                                    "Anim3DRelativePath": "animation\\Krug_Mini\\skinned_mesh-Krug_Mini_AllAction.anim3d"
+                                }
+                            ],
+                            "strCurAnimName": ""
+                        },
+                        {
+                            "MESHRENDER": 10,
+                            "Mesh": {
+                                "IsNull": false,
+                                "Key": "mesh\\Krug_Mini.mesh",
+                                "RelativePath": "mesh\\Krug_Mini.mesh"
+                            },
+                            "fBounding": 150.0,
+                            "bFrustumCheck": true,
+                            "bDynamicShadow": false,
+                            "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": false,
+                            "vBoundingBoxOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "iMtrlCount": 1,
+                            "vecMtrls[0]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "material\\Krug_Mini.mtrl",
+                                "RelativePath": "material\\Krug_Mini.mtrl"
+                            },
+                            "DynamicMtrls": [
+                                {
+                                    "vecMtrls[0]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                }
+                            ],
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
+                        },
+                        16
+                    ],
+                    "scripts": [
+                        {
+                            "scriptName": "CKrugMiniScript",
+                            "AggroPos": {
+                                "x": 1238.0,
+                                "y": 0.0,
+                                "z": 389.0
+                            }
+                        }
+                    ],
+                    "children": []
+                },
+                {
+                    "ObjName": "BLU_RazorBeak",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 1008.0,
+                                "y": 15.0,
+                                "z": 800.0
+                            },
+                            "vRelativeScale": {
+                                "x": 0.18000000715255737,
+                                "y": 0.18000000715255737,
+                                "z": 0.18000000715255737
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": -1.5707963705062866,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
+                        },
+                        {
+                            "ANIMATOR3D": 4,
+                            "IsEmpty": false,
+                            "MeshDataRelativePath": "meshdata\\RazorBeak.mdat",
+                            "bRepeat": true,
+                            "fAnimSpeed": 1.0,
+                            "mapAnim": [
+                                {
+                                    "Anim3DRelativePath": "animation\\RazorBeak\\model-RazorBeak_AllAction.anim3d"
+                                }
+                            ],
+                            "strCurAnimName": ""
+                        },
+                        {
+                            "MESHRENDER": 10,
+                            "Mesh": {
+                                "IsNull": false,
+                                "Key": "mesh\\RazorBeak.mesh",
+                                "RelativePath": "mesh\\RazorBeak.mesh"
+                            },
+                            "fBounding": 150.0,
+                            "bFrustumCheck": true,
+                            "bDynamicShadow": false,
+                            "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": false,
+                            "vBoundingBoxOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "iMtrlCount": 1,
+                            "vecMtrls[0]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "material\\RazorBeak.mtrl",
+                                "RelativePath": "material\\RazorBeak.mtrl"
+                            },
+                            "DynamicMtrls": [
+                                {
+                                    "vecMtrls[0]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                }
+                            ],
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
+                        },
+                        16
+                    ],
+                    "scripts": [
+                        {
+                            "scriptName": "CRazorBeakScript",
+                            "AggroPos": {
+                                "x": 1033.0,
+                                "y": 0.0,
+                                "z": 782.0
+                            }
+                        }
+                    ],
+                    "children": []
+                },
+                {
+                    "ObjName": "BLU_RazorBeakAggroRadius",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 1033.0,
+                                "y": 0.0,
+                                "z": 782.0
+                            },
+                            "vRelativeScale": {
+                                "x": 170.0,
+                                "y": 170.0,
+                                "z": 170.0
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
+                        },
+                        {
+                            "COLLIDER2D": 1,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "vOffsetRot": {
+                                "x": 1.5707963705062866,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "Shape": 1
+                        },
+                        16
+                    ],
+                    "scripts": [],
+                    "children": []
+                },
+                {
+                    "ObjName": "BLU_RazorBeak_Mini",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 1026.0,
+                                "y": 15.0,
+                                "z": 810.0
+                            },
+                            "vRelativeScale": {
+                                "x": 0.18000000715255737,
+                                "y": 0.18000000715255737,
+                                "z": 0.18000000715255737
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": 0.06981316953897476,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
+                        },
+                        {
+                            "ANIMATOR3D": 4,
+                            "IsEmpty": false,
+                            "MeshDataRelativePath": "meshdata\\RazorBeak_Mini.mdat",
+                            "bRepeat": true,
+                            "fAnimSpeed": 1.0,
+                            "mapAnim": [
+                                {
+                                    "Anim3DRelativePath": "animation\\RazorBeak_Mini\\model-RazorBeak_Mini_AllAction.anim3d"
+                                }
+                            ],
+                            "strCurAnimName": ""
+                        },
+                        {
+                            "MESHRENDER": 10,
+                            "Mesh": {
+                                "IsNull": false,
+                                "Key": "mesh\\RazorBeak_Mini.mesh",
+                                "RelativePath": "mesh\\RazorBeak_Mini.mesh"
+                            },
+                            "fBounding": 150.0,
+                            "bFrustumCheck": true,
+                            "bDynamicShadow": false,
+                            "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": false,
+                            "vBoundingBoxOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "iMtrlCount": 1,
+                            "vecMtrls[0]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "material\\RazorBeak_Mini.mtrl",
+                                "RelativePath": "material\\RazorBeak_Mini.mtrl"
+                            },
+                            "DynamicMtrls": [
+                                {
+                                    "vecMtrls[0]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                }
+                            ],
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
+                        },
+                        16
+                    ],
+                    "scripts": [
+                        {
+                            "scriptName": "CRazorBeakMiniScript",
+                            "AggroPos": {
+                                "x": 1033.0,
+                                "y": 0.0,
+                                "z": 782.0
+                            }
+                        }
+                    ],
                     "children": []
                 },
                 {
@@ -2789,10 +3685,10 @@
                                         ],
                                         "arrTex[(UINT)TEX_PARAM::TEX_END]s": [
                                             {
-                                                "arrTex[0]": 1
+                                                "arrTex[0]": 0
                                             },
                                             {
-                                                "arrTex[1]": 1
+                                                "arrTex[1]": 0
                                             },
                                             {
                                                 "arrTex[2]": 0
@@ -3648,7 +4544,7 @@
                                         ],
                                         "arrFloat[12]s": [
                                             {
-                                                "arrFloat[0]": 1.0
+                                                "arrFloat[0]": 0.0
                                             },
                                             {
                                                 "arrFloat[1]": 0.0
@@ -4219,7 +5115,7 @@
                                         ],
                                         "arrFloat[12]s": [
                                             {
-                                                "arrFloat[0]": 1.0
+                                                "arrFloat[0]": 0.0
                                             },
                                             {
                                                 "arrFloat[1]": 0.0
@@ -4667,7 +5563,7 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": -0.0,
+                                "y": 0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,

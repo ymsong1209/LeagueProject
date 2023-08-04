@@ -14,6 +14,10 @@ CKrugAlertState::~CKrugAlertState()
 void CKrugAlertState::Enter()
 {
 	m_iAggroAnimNum = 1;
+
+	wstring basename = L"Krug\\krug_idle_aggro";
+	GetOwner()->Animator3D()->PlayOnce(basename);
+
 	CJungleAlertState::Enter();
 }
 

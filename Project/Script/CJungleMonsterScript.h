@@ -23,6 +23,7 @@ class CJungleMonsterScript :
 {
 protected:
     JungleType      m_eJungleType;
+    Vec3            m_vAggroPos;
     Vec3            m_vSpawnPos;   
     Vec3            m_vSpawnRot;
 
@@ -46,7 +47,9 @@ public:
     Vec3    GetSpawnPos() { return m_vSpawnPos; }
     void    SetSpawnRot(Vec3 _rot) { m_vSpawnRot = _rot; }
     Vec3    GetSpawnRot() { return m_vSpawnRot; }
-   
+    void    SetAggroPos(Vec3 _pos) { m_vAggroPos = _pos; }
+    Vec3    GetAggroPos() { return m_vAggroPos; }
+
     CGameObject* GetTarget() { return m_pTarget; }
 
 public:
@@ -61,6 +64,13 @@ public:
     CJungleMonsterScript(UINT ScriptType);
     CJungleMonsterScript();
     ~CJungleMonsterScript();
+
+public:
+    virtual void SaveToLevelFile(FILE* _File) override;
+    virtual void LoadFromLevelFile(FILE* _FILE) override;
+
+    virtual void SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator) override;
+    virtual void LoadFromLevelJsonFile(const Value& _componentValue) override;
 
     CLONE(CJungleMonsterScript);
 };

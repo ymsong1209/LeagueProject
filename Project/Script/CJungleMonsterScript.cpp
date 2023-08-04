@@ -24,14 +24,13 @@ CJungleMonsterScript::CJungleMonsterScript(UINT ScriptType)
 }
 
 CJungleMonsterScript::CJungleMonsterScript()
-	:CMobScript((UINT)SCRIPT_TYPE::JUNGLEMONSTERSCRIPT)\
+	:CMobScript((UINT)SCRIPT_TYPE::JUNGLEMONSTERSCRIPT)
 {
 }
 
 CJungleMonsterScript::~CJungleMonsterScript()
 {
 }
-
 
 void CJungleMonsterScript::begin()
 {
@@ -128,7 +127,7 @@ void CJungleMonsterScript::CheckReturnActive()
 	if (!m_pTarget) return;
 
 	Vec3 Targetpos = m_pTarget->Transform()->GetRelativePos();
-	float distance = sqrt(pow(m_vSpawnPos.x - Targetpos.x, 2.f) + pow(m_vSpawnPos.z - Targetpos.z, 2.f));
+	float distance = sqrt(pow(m_vAggroPos.x - Targetpos.x, 2.f) + pow(m_vAggroPos.z - Targetpos.z, 2.f));
 	if (distance > m_fAggroRange && m_bReturnActive == false)
 		m_bReturnActive = true;
 	else if(distance < m_fAggroRange && m_bReturnActive == true){
@@ -136,4 +135,24 @@ void CJungleMonsterScript::CheckReturnActive()
 		m_fCurReturnTime = 0.f;
 	}
 		
+}
+
+void CJungleMonsterScript::SaveToLevelFile(FILE* _File)
+{
+	fwrite(&m_vAggroPos, sizeof(Vec3), 1, _File);
+}
+
+void CJungleMonsterScript::LoadFromLevelFile(FILE* _FILE)
+{
+	fread(&m_vAggroPos, sizeof(Vec3), 1, _FILE);
+}
+
+void CJungleMonsterScript::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
+{
+	_objValue.AddMember("AggroPos", SaveVec3Json(m_vAggroPos, allocator), allocator);
+}
+
+void CJungleMonsterScript::LoadFromLevelJsonFile(const Value& _componentValue)
+{
+	m_vAggroPos = LoadVec3Json(_componentValue["AggroPos"]);
 }

@@ -13,7 +13,7 @@ CKrugMiniA2NState::~CKrugMiniA2NState()
 
 void CKrugMiniA2NState::Enter()
 {
-	GetOwner()->Animator3D()->PlayOnce(L"Krug\\krug_idle_ag2n", true, 0.5f);
+	GetOwner()->Animator3D()->PlayOnce(L"Krug_Mini\\krug_idle_ag2n", true, 0.5f);
 }
 
 void CKrugMiniA2NState::tick()

@@ -14,6 +14,11 @@ CMurkWolfAlertState::~CMurkWolfAlertState()
 void CMurkWolfAlertState::Enter()
 {
 	m_iAggroAnimNum = 1;
+	wstring basename = L"MurkWolf\\sru_murkwolf_idle_aggro";
+	basename += std::to_wstring(m_iAggroAnimNum);
+
+	GetOwner()->Animator3D()->GetCurAnim()->Reset();
+	GetOwner()->Animator3D()->PlayOnce(basename);
 	CJungleAlertState::Enter();
 }
 

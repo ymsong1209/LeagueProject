@@ -226,6 +226,96 @@
     <ClCompile Include="CMurkWolfMiniSpawnState.cpp">
       <Filter>Jungle\MurkWolf_Mini</Filter>
     </ClCompile>
+    <ClCompile Include="CRazorBeakA2NState.cpp">
+      <Filter>Jungle\RazorBeak</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakAlertState.cpp">
+      <Filter>Jungle\RazorBeak</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakAttackState.cpp">
+      <Filter>Jungle\RazorBeak</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakChaseState.cpp">
+      <Filter>Jungle\RazorBeak</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakDeathState.cpp">
+      <Filter>Jungle\RazorBeak</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakIdleState.cpp">
+      <Filter>Jungle\RazorBeak</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakN2AState.cpp">
+      <Filter>Jungle\RazorBeak</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakReturnState.cpp">
+      <Filter>Jungle\RazorBeak</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakScript.cpp">
+      <Filter>Jungle\RazorBeak</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakSpawnState.cpp">
+      <Filter>Jungle\RazorBeak</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakMiniA2NState.cpp">
+      <Filter>Jungle\RazorBeak_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakMiniAlertState.cpp">
+      <Filter>Jungle\RazorBeak_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakMiniAttackState.cpp">
+      <Filter>Jungle\RazorBeak_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakMiniChaseState.cpp">
+      <Filter>Jungle\RazorBeak_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakMiniDeathState.cpp">
+      <Filter>Jungle\RazorBeak_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakMiniIdleState.cpp">
+      <Filter>Jungle\RazorBeak_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakMiniN2AState.cpp">
+      <Filter>Jungle\RazorBeak_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakMiniReturnState.cpp">
+      <Filter>Jungle\RazorBeak_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakMiniScript.cpp">
+      <Filter>Jungle\RazorBeak_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakMiniSpawnState.cpp">
+      <Filter>Jungle\RazorBeak_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CBlueA2NState.cpp">
+      <Filter>Jungle\Blue</Filter>
+    </ClCompile>
+    <ClCompile Include="CBlueAlertState.cpp">
+      <Filter>Jungle\Blue</Filter>
+    </ClCompile>
+    <ClCompile Include="CBlueAttackState.cpp">
+      <Filter>Jungle\Blue</Filter>
+    </ClCompile>
+    <ClCompile Include="CBlueChaseState.cpp">
+      <Filter>Jungle\Blue</Filter>
+    </ClCompile>
+    <ClCompile Include="CBlueDeathState.cpp">
+      <Filter>Jungle\Blue</Filter>
+    </ClCompile>
+    <ClCompile Include="CBlueIdleState.cpp">
+      <Filter>Jungle\Blue</Filter>
+    </ClCompile>
+    <ClCompile Include="CBlueN2AState.cpp">
+      <Filter>Jungle\Blue</Filter>
+    </ClCompile>
+    <ClCompile Include="CBlueReturnState.cpp">
+      <Filter>Jungle\Blue</Filter>
+    </ClCompile>
+    <ClCompile Include="CBlueScript.cpp">
+      <Filter>Jungle\Blue</Filter>
+    </ClCompile>
+    <ClCompile Include="CBlueSpawnState.cpp">
+      <Filter>Jungle\Blue</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CBaseAttack.h" />
@@ -454,6 +544,96 @@
     </ClInclude>
     <ClInclude Include="CMurkWolfMiniSpawnState.h">
       <Filter>Jungle\MurkWolf_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakA2NState.h">
+      <Filter>Jungle\RazorBeak</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakAlertState.h">
+      <Filter>Jungle\RazorBeak</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakAttackState.h">
+      <Filter>Jungle\RazorBeak</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakChaseState.h">
+      <Filter>Jungle\RazorBeak</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakDeathState.h">
+      <Filter>Jungle\RazorBeak</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakIdleState.h">
+      <Filter>Jungle\RazorBeak</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakN2AState.h">
+      <Filter>Jungle\RazorBeak</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakReturnState.h">
+      <Filter>Jungle\RazorBeak</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakScript.h">
+      <Filter>Jungle\RazorBeak</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakSpawnState.h">
+      <Filter>Jungle\RazorBeak</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakMiniA2NState.h">
+      <Filter>Jungle\RazorBeak_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakMiniAlertState.h">
+      <Filter>Jungle\RazorBeak_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakMiniAttackState.h">
+      <Filter>Jungle\RazorBeak_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakMiniChaseState.h">
+      <Filter>Jungle\RazorBeak_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakMiniDeathState.h">
+      <Filter>Jungle\RazorBeak_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakMiniIdleState.h">
+      <Filter>Jungle\RazorBeak_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakMiniN2AState.h">
+      <Filter>Jungle\RazorBeak_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakMiniReturnState.h">
+      <Filter>Jungle\RazorBeak_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakMiniScript.h">
+      <Filter>Jungle\RazorBeak_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakMiniSpawnState.h">
+      <Filter>Jungle\RazorBeak_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CBlueA2NState.h">
+      <Filter>Jungle\Blue</Filter>
+    </ClInclude>
+    <ClInclude Include="CBlueAlertState.h">
+      <Filter>Jungle\Blue</Filter>
+    </ClInclude>
+    <ClInclude Include="CBlueAttackState.h">
+      <Filter>Jungle\Blue</Filter>
+    </ClInclude>
+    <ClInclude Include="CBlueChaseState.h">
+      <Filter>Jungle\Blue</Filter>
+    </ClInclude>
+    <ClInclude Include="CBlueDeathState.h">
+      <Filter>Jungle\Blue</Filter>
+    </ClInclude>
+    <ClInclude Include="CBlueIdleState.h">
+      <Filter>Jungle\Blue</Filter>
+    </ClInclude>
+    <ClInclude Include="CBlueN2AState.h">
+      <Filter>Jungle\Blue</Filter>
+    </ClInclude>
+    <ClInclude Include="CBlueReturnState.h">
+      <Filter>Jungle\Blue</Filter>
+    </ClInclude>
+    <ClInclude Include="CBlueScript.h">
+      <Filter>Jungle\Blue</Filter>
+    </ClInclude>
+    <ClInclude Include="CBlueSpawnState.h">
+      <Filter>Jungle\Blue</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -14,6 +14,9 @@ CKrugMiniAlertState::~CKrugMiniAlertState()
 void CKrugMiniAlertState::Enter()
 {
 	m_iAggroAnimNum = 1;
+	wstring basename = L"Krug_Mini\\krug_idle_aggro";
+	GetOwner()->Animator3D()->GetCurAnim()->Reset();
+	GetOwner()->Animator3D()->PlayOnce(basename);
 	CJungleAlertState::Enter();
 }
 

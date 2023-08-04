@@ -26,7 +26,7 @@ void CMurkWolfSpawnState::tick()
 void CMurkWolfSpawnState::Exit()
 {
 	CMurkWolfScript* script = GetOwner()->GetScript<CMurkWolfScript>();
-	script->SetAggroRange(75.f);
+	script->SetAggroRange(95.f);
 
 	GetOwner()->AddComponent(new CCollider3D);
 	GetOwner()->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));

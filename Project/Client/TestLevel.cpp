@@ -22,6 +22,12 @@
 #include <Script/CJinxScript.h>
 #include <Script/CGrompScript.h>
 #include <Script/CMurkWolfScript.h>
+#include <Script/CMurkWolfMiniScript.h>
+#include <Script/CRazorBeakScript.h>
+#include <Script/CRazorBeakMiniScript.h>
+#include <Script/CKrugScript.h>
+#include <Script/CKrugMiniScript.h>
+#include <Script/CBlueScript.h>
 
 void CreateTestLevel()
 {
@@ -581,49 +587,177 @@ void PlaceLand()
 
 void SpawnJungleMob()
 {
-	//블루팀 두꺼비
+	//블루팀
 	{
-		Ptr<CMeshData> pMeshData = nullptr;
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\gromp.fbx");
-		CGameObject* Gromp = nullptr;
-		Gromp = pMeshData->Instantiate();
-		Gromp->AddComponent(new CGrompScript);
-		Gromp->SetName(L"Gromp");
-		Gromp->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
-		Gromp->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(270.f), 0.f));
-		SpawnGameObject(Gromp, Vec3(323.f, 0.f, 1242.f), 0);
+		//블루팀 두꺼비
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\gromp.fbx");
+			CGameObject* Gromp = nullptr;
+			Gromp = pMeshData->Instantiate();
+			Gromp->AddComponent(new CGrompScript);
+			Gromp->SetName(L"BLU_Gromp");
+			Gromp->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
+			Gromp->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(270.f), 0.f));
+			CGrompScript* Script = Gromp->GetScript<CGrompScript>();
+			Script->SetAggroPos(Vec3(323.f, 0.f, 1242.f));
+			SpawnGameObject(Gromp, Vec3(323.f, 10.f, 1242.f), 0);
 
-		CGameObject* GrompAggro = new CGameObject;
-		GrompAggro->SetName(L"GrompAggroRadius");
-		GrompAggro->AddComponent(new CTransform);
-		GrompAggro->AddComponent(new CCollider2D);
-		GrompAggro->Transform()->SetRelativeScale(Vec3(150.f, 150.f, 150.f));
-		GrompAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-		GrompAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
-		GrompAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-		SpawnGameObject(GrompAggro, Vec3(323.f, 0.f, 1242.f), 0);
+			CGameObject* GrompAggro = new CGameObject;
+			GrompAggro->SetName(L"BLU_GrompAggroRadius");
+			GrompAggro->AddComponent(new CTransform);
+			GrompAggro->AddComponent(new CCollider2D);
+			GrompAggro->Transform()->SetRelativeScale(Vec3(150.f, 150.f, 150.f));
+			GrompAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			GrompAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+			GrompAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			SpawnGameObject(GrompAggro, Vec3(323.f, 0.f, 1242.f), 0);
+		}
+
+		//블루팀 늑대
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\MurkWolf.fbx");
+			CGameObject* MurkWolf = nullptr;
+			MurkWolf = pMeshData->Instantiate();
+			MurkWolf->AddComponent(new CMurkWolfScript);
+			MurkWolf->SetName(L"BLU_MurkWolf");
+			MurkWolf->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
+			MurkWolf->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(24.f), 0.f));
+			CMurkWolfScript* script = MurkWolf->GetScript <CMurkWolfScript>();
+			script->SetAggroPos(Vec3(564.f, 0.f, 959.f));
+			SpawnGameObject(MurkWolf, Vec3(550.f, 15.f, 944.f), 0);
+
+			CGameObject* MurkWolfAggro = new CGameObject;
+			MurkWolfAggro->SetName(L"BLU_MurkWolfAggroRadius");
+			MurkWolfAggro->AddComponent(new CTransform);
+			MurkWolfAggro->AddComponent(new CCollider2D);
+			MurkWolfAggro->Transform()->SetRelativeScale(Vec3(190, 190.f, 190.f));
+			MurkWolfAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			MurkWolfAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+			MurkWolfAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			SpawnGameObject(MurkWolfAggro, Vec3(564.f, 0.f, 959.f), 0);
+		}
+		//블루팀 늑대 째깐이(좌)
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\MurkWolf_Mini.fbx");
+			CGameObject* MurkWolf_Mini = nullptr;
+			MurkWolf_Mini = pMeshData->Instantiate();
+			MurkWolf_Mini->AddComponent(new CMurkWolfMiniScript);
+			MurkWolf_Mini->SetName(L"BLU_MurkWolf_Mini_L");
+			MurkWolf_Mini->Transform()->SetRelativeScale(0.15f, 0.15f, 0.15);
+			MurkWolf_Mini->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(36.f), 0.f));
+			CMurkWolfMiniScript* Script = MurkWolf_Mini->GetScript<CMurkWolfMiniScript>();
+			Script->SetAggroPos(Vec3(564.f, 0.f, 964.f));
+			SpawnGameObject(MurkWolf_Mini, Vec3(552.f, 15.f, 964.f), 0);
+		}
+		//블루팀 늑대 째깐이(우)
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\MurkWolf_Mini.fbx");
+			CGameObject* MurkWolf_Mini = nullptr;
+			MurkWolf_Mini = pMeshData->Instantiate();
+			MurkWolf_Mini->AddComponent(new CMurkWolfMiniScript);
+			MurkWolf_Mini->SetName(L"BLU_MurkWolf_Mini_R");
+			MurkWolf_Mini->Transform()->SetRelativeScale(0.15f, 0.15f, 0.15f);
+			MurkWolf_Mini->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(36.f), 0.f));
+			CMurkWolfMiniScript* Script = MurkWolf_Mini->GetScript<CMurkWolfMiniScript>();
+			Script->SetAggroPos(Vec3(564.f, 0.f, 964.f));
+			SpawnGameObject(MurkWolf_Mini, Vec3(580.f, 15.f, 944.f), 0);
+		}
+		//블루팀 돌거북
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Krug.fbx");
+			CGameObject* Krug = nullptr;
+			Krug = pMeshData->Instantiate();
+			Krug->AddComponent(new CKrugScript);
+			Krug->SetName(L"BLU_Krug");
+			Krug->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
+			Krug->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
+			CKrugScript* Script = Krug->GetScript<CKrugScript>();
+			Script->SetAggroPos(Vec3(1238.f, 0.f, 389.f));
+			SpawnGameObject(Krug, Vec3(1221.f, 15.f, 379.f), 0);
+
+			CGameObject* KrugAggro = new CGameObject;
+			KrugAggro->SetName(L"BLU_KrugAggroRadius");
+			KrugAggro->AddComponent(new CTransform);
+			KrugAggro->AddComponent(new CCollider2D);
+			KrugAggro->Transform()->SetRelativeScale(Vec3(170, 170.f, 170.f));
+			KrugAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			KrugAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+			KrugAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			SpawnGameObject(KrugAggro, Vec3(1238.f, 0.f, 389.f), 0);
+		}
+		//블루팀 돌거북 째깐이
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Krug_Mini.fbx");
+			CGameObject* Krug_Mini = nullptr;
+			Krug_Mini = pMeshData->Instantiate();
+			Krug_Mini->AddComponent(new CKrugMiniScript);
+			Krug_Mini->SetName(L"BLU_Krug_Mini");
+			Krug_Mini->Transform()->SetRelativeScale(0.12f, 0.12f, 0.12f);
+			Krug_Mini->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
+			CKrugMiniScript* Script = Krug_Mini->GetScript<CKrugMiniScript>();
+			Script->SetAggroPos(Vec3(1238.f, 0.f, 389.f));
+			SpawnGameObject(Krug_Mini, Vec3(1252.f, 15.f, 379.f), 0);
+		}
+		//블루팀 칼날부리
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\RazorBeak.fbx");
+			CGameObject* RazorBeak = nullptr;
+			RazorBeak = pMeshData->Instantiate();
+			RazorBeak->AddComponent(new CRazorBeakScript);
+			RazorBeak->SetName(L"BLU_RazorBeak");
+			RazorBeak->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
+			RazorBeak->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(-90.f), 0.f));
+			CRazorBeakScript* Script = RazorBeak->GetScript<CRazorBeakScript>();
+			Script->SetAggroPos(Vec3(1033.f, 0.f, 782.f));
+			SpawnGameObject(RazorBeak, Vec3(1008.f, 15.f, 800.f), 0);
+
+			CGameObject* RazorBeakAggro = new CGameObject;
+			RazorBeakAggro->SetName(L"BLU_RazorBeakAggroRadius");
+			RazorBeakAggro->AddComponent(new CTransform);
+			RazorBeakAggro->AddComponent(new CCollider2D);
+			RazorBeakAggro->Transform()->SetRelativeScale(Vec3(170, 170.f, 170.f));
+			RazorBeakAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			RazorBeakAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+			RazorBeakAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			SpawnGameObject(RazorBeakAggro, Vec3(1033.f, 0.f, 782.f), 0);
+		}
+
+		//블루팀 칼날부리 째깐이
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\RazorBeak_Mini.fbx");
+			CGameObject* RazorBeak = nullptr;
+			RazorBeak = pMeshData->Instantiate();
+			RazorBeak->AddComponent(new CRazorBeakMiniScript);
+			RazorBeak->SetName(L"BLU_RazorBeak_Mini");
+			RazorBeak->Transform()->SetRelativeScale(0.1f, 0.1f, 0.1f);
+			RazorBeak->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
+			CRazorBeakMiniScript* Script = RazorBeak->GetScript<CRazorBeakMiniScript>();
+			Script->SetAggroPos(Vec3(1033.f, 0.f, 782.f));
+			SpawnGameObject(RazorBeak, Vec3(1026.f, 15.f, 810.f), 0);
+		}
+		////블루팀 블루
+		//{
+		//	Ptr<CMeshData> pMeshData = nullptr;
+		//	pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\jungle_blue.fbx");
+		//	CGameObject* Blue = nullptr;
+		//	Blue = pMeshData->Instantiate();
+		//	Blue->AddComponent(new CBlueScript);
+		//	Blue->SetName(L"South_Blue");
+		//	Blue->Transform()->SetRelativeScale(0.2f, 0.2f, 0.2f);
+		//	Blue->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
+		//	CBlueScript* Script = Blue->GetScript<CBlueScript>();
+		//	Script->SetAggroPos(Vec3(1033.f, 0.f, 782.f));
+		//	SpawnGameObject(Blue, Vec3(563.f, 15.f, 1164.f), 0);
+		//}
 	}
+	
 
-	//블루팀 늑대
-	{
-		Ptr<CMeshData> pMeshData = nullptr;
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\MurkWolf.fbx");
-		CGameObject* MurkWolf = nullptr;
-		MurkWolf = pMeshData->Instantiate();
-		MurkWolf->AddComponent(new CMurkWolfScript);
-		MurkWolf->SetName(L"MurkWolf");
-		MurkWolf->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
-		MurkWolf->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(24.f), 0.f));
-		SpawnGameObject(MurkWolf, Vec3(564.f, 15.f, 959.f), 0);
-
-		CGameObject* MurkWolfAggro = new CGameObject;
-		MurkWolfAggro->SetName(L"MurkWolfAggroRadius");
-		MurkWolfAggro->AddComponent(new CTransform);
-		MurkWolfAggro->AddComponent(new CCollider2D);
-		MurkWolfAggro->Transform()->SetRelativeScale(Vec3(150.f, 150.f, 150.f));
-		MurkWolfAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-		MurkWolfAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
-		MurkWolfAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-		SpawnGameObject(MurkWolfAggro, Vec3(564.f, 0.f, 959.f), 0);
-	}
 }

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CKrugMiniSpawnState.h"
 #include <Engine/CAnim3D.h>
-#include "CKrugScript.h"
+#include "CKrugMiniScript.h"
 
 CKrugMiniSpawnState::CKrugMiniSpawnState()
 {
@@ -25,8 +25,8 @@ void CKrugMiniSpawnState::tick()
 
 void CKrugMiniSpawnState::Exit()
 {
-	CKrugScript* script = GetOwner()->GetScript<CKrugScript>();
-	script->SetAggroRange(75.f);
+	CKrugMiniScript* script = GetOwner()->GetScript<CKrugMiniScript>();
+	script->SetAggroRange(85.f);
 
 	GetOwner()->AddComponent(new CCollider3D);
 	GetOwner()->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));

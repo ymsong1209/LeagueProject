@@ -7,6 +7,7 @@ CUnitState::CUnitState()
 	CGameEventMgr::GetInst()->AddListener(m_Listener);
 }
 
+
 CUnitState::~CUnitState()
 {
 }

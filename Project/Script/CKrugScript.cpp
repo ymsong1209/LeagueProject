@@ -11,7 +11,7 @@
 #include "CKrugDeathState.h"
 
 CKrugScript::CKrugScript()
-	:CJungleMonsterScript((UINT)GROMPSCRIPT)
+	:CJungleMonsterScript((UINT)KRUGSCRIPT)
 {
 	m_eJungleType = JungleType::KRUG;
 }

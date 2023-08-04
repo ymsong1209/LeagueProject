@@ -2,6 +2,7 @@
 #include "CScriptMgr.h"
 
 #include "CBasicAttackScript.h"
+#include "CBlueScript.h"
 #include "CCameraMoveScript.h"
 #include "CChampionScript.h"
 #include "CGrompScript.h"
@@ -18,6 +19,8 @@
 #include "CNexusScript.h"
 #include "COtherPlayerScript.h"
 #include "CPlayerScript.h"
+#include "CRazorBeakMiniScript.h"
+#include "CRazorBeakScript.h"
 #include "CSoundTestScript.h"
 #include "CStructureScript.h"
 #include "CTurretAttackScript.h"
@@ -27,6 +30,7 @@
 void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 {
 	_vec.push_back(L"CBasicAttackScript");
+	_vec.push_back(L"CBlueScript");
 	_vec.push_back(L"CCameraMoveScript");
 	_vec.push_back(L"CChampionScript");
 	_vec.push_back(L"CGrompScript");
@@ -43,6 +47,8 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CNexusScript");
 	_vec.push_back(L"COtherPlayerScript");
 	_vec.push_back(L"CPlayerScript");
+	_vec.push_back(L"CRazorBeakMiniScript");
+	_vec.push_back(L"CRazorBeakScript");
 	_vec.push_back(L"CSoundTestScript");
 	_vec.push_back(L"CStructureScript");
 	_vec.push_back(L"CTurretAttackScript");
@@ -54,6 +60,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 {
 	if (L"CBasicAttackScript" == _strScriptName)
 		return new CBasicAttackScript;
+	if (L"CBlueScript" == _strScriptName)
+		return new CBlueScript;
 	if (L"CCameraMoveScript" == _strScriptName)
 		return new CCameraMoveScript;
 	if (L"CChampionScript" == _strScriptName)
@@ -86,6 +94,10 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new COtherPlayerScript;
 	if (L"CPlayerScript" == _strScriptName)
 		return new CPlayerScript;
+	if (L"CRazorBeakMiniScript" == _strScriptName)
+		return new CRazorBeakMiniScript;
+	if (L"CRazorBeakScript" == _strScriptName)
+		return new CRazorBeakScript;
 	if (L"CSoundTestScript" == _strScriptName)
 		return new CSoundTestScript;
 	if (L"CStructureScript" == _strScriptName)
@@ -105,6 +117,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	{
 	case (UINT)SCRIPT_TYPE::BASICATTACKSCRIPT:
 		return new CBasicAttackScript;
+		break;
+	case (UINT)SCRIPT_TYPE::BLUESCRIPT:
+		return new CBlueScript;
 		break;
 	case (UINT)SCRIPT_TYPE::CAMERAMOVESCRIPT:
 		return new CCameraMoveScript;
@@ -154,6 +169,12 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::PLAYERSCRIPT:
 		return new CPlayerScript;
 		break;
+	case (UINT)SCRIPT_TYPE::RAZORBEAKMINISCRIPT:
+		return new CRazorBeakMiniScript;
+		break;
+	case (UINT)SCRIPT_TYPE::RAZORBEAKSCRIPT:
+		return new CRazorBeakScript;
+		break;
 	case (UINT)SCRIPT_TYPE::SOUNDTESTSCRIPT:
 		return new CSoundTestScript;
 		break;
@@ -179,6 +200,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 	{
 	case SCRIPT_TYPE::BASICATTACKSCRIPT:
 		return L"CBasicAttackScript";
+		break;
+
+	case SCRIPT_TYPE::BLUESCRIPT:
+		return L"CBlueScript";
 		break;
 
 	case SCRIPT_TYPE::CAMERAMOVESCRIPT:
@@ -243,6 +268,14 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::PLAYERSCRIPT:
 		return L"CPlayerScript";
+		break;
+
+	case SCRIPT_TYPE::RAZORBEAKMINISCRIPT:
+		return L"CRazorBeakMiniScript";
+		break;
+
+	case SCRIPT_TYPE::RAZORBEAKSCRIPT:
+		return L"CRazorBeakScript";
 		break;
 
 	case SCRIPT_TYPE::SOUNDTESTSCRIPT:

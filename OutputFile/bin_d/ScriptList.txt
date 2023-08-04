@@ -1,4 +1,5 @@
 CBasicAttackScript
+CBlueScript
 CCameraMoveScript
 CChampionScript
 CGrompScript
@@ -15,6 +16,8 @@ CMurkWolfScript
 CNexusScript
 COtherPlayerScript
 CPlayerScript
+CRazorBeakMiniScript
+CRazorBeakScript
 CSoundTestScript
 CStructureScript
 CTurretAttackScript

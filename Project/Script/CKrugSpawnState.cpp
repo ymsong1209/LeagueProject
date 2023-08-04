@@ -26,7 +26,7 @@ void CKrugSpawnState::tick()
 void CKrugSpawnState::Exit()
 {
 	CKrugScript* script = GetOwner()->GetScript<CKrugScript>();
-	script->SetAggroRange(75.f);
+	script->SetAggroRange(85.f);
 
 	GetOwner()->AddComponent(new CCollider3D);
 	GetOwner()->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
