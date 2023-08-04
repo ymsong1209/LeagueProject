@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "ServerPacketHandler.h"
 #include "BufferReader.h"
 #include "ServerSession.h"
@@ -7,6 +7,15 @@
 #include "GameObjMgr.h"
 #include "TestLevel.h"
 #include "ServerEventMgr.h"
+
+// json level load  
+#include <Engine/CEventMgr.h>
+#include <Engine/CTimeMgr.h>
+#include <Engine/CLevelMgr.h>
+#include <Engine/CLevel.h>
+#include "CLevelSaveLoad.h"
+#include "ImGuiMgr.h"
+#include "InspectorUI.h"
 
 void ServerPacketHandler::HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
@@ -133,29 +142,29 @@ void ServerPacketHandler::Handle_S_LOGIN(PacketSessionRef& session, BYTE* buffer
 	if(MyPlayer.id == 0)
 		MyPlayer.id = _PlayerId;
 
-	// Áø¿µ ¼±ÅÃ ·¹º§ 
+	// ì§„ì˜ ì„ íƒ ë ˆë²¨ 
 	//CreateFactionLevel();
 
 	PKT_S_LOGIN::PlayerList playerIdBuffs = pkt->GetPlayerList();
 	for (auto& playerIdBuff : playerIdBuffs)
 	{
-		// ´Ù¸¥ ÇÃ·¹ÀÌ¾îµéÀÇ ´ëÇÑ Á¤º¸°¡ UI¿¡ È°¿ëµÇ¾î¾ß ÇÑ´Ù. 
-		// ÀüÃ¼ ÇÃ·¹ÀÌ¾î id
+		// ë‹¤ë¥¸ í”Œë ˆì´ì–´ë“¤ì˜ ëŒ€í•œ ì •ë³´ê°€ UIì— í™œìš©ë˜ì–´ì•¼ í•œë‹¤. 
+		// ì „ì²´ í”Œë ˆì´ì–´ id
 		playerIdBuff.playerId;
 
 		PKT_S_LOGIN::NickNameList playerNickNamebuffs = pkt->GetNickNameList(&playerIdBuff);
 		
-		// ÀüÃ¼ ÇÃ·¹ÀÌ¾î Áø¿µ
+		// ì „ì²´ í”Œë ˆì´ì–´ ì§„ì˜
 		playerIdBuff.playerFaction;
 
-		// ÀüÃ¼ ÇÃ·¹ÀÌ¾î ÀÌ¸§
+		// ì „ì²´ í”Œë ˆì´ì–´ ì´ë¦„
 		wstring playerNickName = L"";
 		for (auto& playerNameBuff : playerNickNamebuffs)
 		{
 			playerNickName.push_back(playerNameBuff.nickname);
 		}
 
-		// ³» ÇÃ·¹ÀÌ¾îÀÏ½Ã, continue;
+		// ë‚´ í”Œë ˆì´ì–´ì¼ì‹œ, continue;
 		if (playerIdBuff.playerId == MyPlayer.id)
 		{
 			MyPlayer.faction = playerIdBuff.playerFaction;
@@ -197,7 +206,7 @@ void ServerPacketHandler::Handle_S_PICK_FACTION(PacketSessionRef& session, BYTE*
 		cout << "S_PICK_FACTION Success" << endl;
 	else
 		cout << "S_PICK_FACTION Fail" << endl;
-	// Ã¨ÇÇ¾ğ ÇÈ ·¹º§·Î ÀÌµ¿
+	// ì±”í”¼ì–¸ í”½ ë ˆë²¨ë¡œ ì´ë™
 	//CreateChampionPickLevel();
 
 	std::cout << "===============================" << endl;
@@ -221,7 +230,7 @@ void ServerPacketHandler::Handle_S_PICK_CHAMPION(PacketSessionRef& session, BYTE
 	else
 		cout << "S_PICK_CHAMPION Fail" << endl;
 
-	// ³»°¡ Ã¨ÇÇ¾ğÀ» º¯°æÇßÀ» ½Ã ¾÷µ¥ÀÌÆ®
+	// ë‚´ê°€ ì±”í”¼ì–¸ì„ ë³€ê²½í–ˆì„ ì‹œ ì—…ë°ì´íŠ¸
 	if (MyPlayer.id == pkt->PlayerID)
 	{
 		MyPlayer.champion = pkt->champion;
@@ -253,10 +262,28 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 	if (_Success)
 	{
 		cout << "S_GAME_START Success" << endl;
-		// ÀÎ°ÔÀÓ ÁøÀÔ
+		// ì¸ê²Œì„ ì§„ì…
 
-		// ¸Ê ºÒ·¯¿È
-		CreateTestLevel();
+		// ë§µ ë¶ˆëŸ¬ì˜´
+		//CreateTestLevel();
+
+		//=========json level load===========================================
+		CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevelFromJson(L"level\\createTest.json");
+		tEvent evn = {};
+		evn.Type = EVENT_TYPE::LEVEL_CHANGE;
+		evn.wParam = (DWORD_PTR)pLoadedLevel;
+		CEventMgr::GetInst()->AddEvent(evn);
+		//inspector  UI update
+		InspectorUI* inspector = (InspectorUI*)ImGuiMgr::GetInst()->FindUI("##Inspector");
+		inspector->SetTargetObject(nullptr);
+
+		// if curState is stop,  next level state is also stop
+		CLevel* level = CUR_LEVEL;
+		if (level->GetState() == LEVEL_STATE::STOP) {
+			CTimeMgr::GetInst()->SetTimeScale(0.f);
+		}
+		//===================================================================
+
 
 		PKT_S_GAME_START::PlayerInfoList playerInfoBuffs = pkt->GetPlayerInfoList();
 		for (auto& playerInfoBuff : playerInfoBuffs)
@@ -264,7 +291,7 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 
 			PKT_S_GAME_START::NickNameList playerNickNamebuffs = pkt->GetNickNameList(&playerInfoBuff);
 
-			// ÀüÃ¼ ÇÃ·¹ÀÌ¾î ÀÌ¸§
+			// ì „ì²´ í”Œë ˆì´ì–´ ì´ë¦„
 			wstring playerNickName = L"";
 			for (auto& playerNameBuff : playerNickNamebuffs)
 			{
@@ -272,13 +299,13 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 			}
 
 
-			// ³» idÀÏ½Ã
+			// ë‚´ idì¼ì‹œ
 			if (MyPlayer.id == playerInfoBuff.id)
 			{
 				MyPlayer.champion = playerInfoBuff.champion;
 				MyPlayer.posInfo = playerInfoBuff.posInfo;
 
-				// ÇÃ·¹ÀÌ¾î »ı¼º
+				// í”Œë ˆì´ì–´ ìƒì„±
 				GameObjMgr::GetInst()->AddPlayer(MyPlayer, true);
 				
 				cout << "My Champion : " << (int)MyPlayer.champion
@@ -290,7 +317,7 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 				continue;
 			}
 
-			// ´Ù¸¥ ÇÃ·¹ÀÌ¾î »ı¼º
+			// ë‹¤ë¥¸ í”Œë ˆì´ì–´ ìƒì„±
 			PlayerInfo otherPlayer = {};
 			otherPlayer.champion = playerInfoBuff.champion;
 			otherPlayer.faction = playerInfoBuff.faction;
@@ -313,7 +340,7 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 		cout << "S_GAME_START Fail" << endl;
 		
 		IsInGame = false;
-		// ´Ù½Ã Áø¿µ ¼±ÅÃ ·¹º§·Î °£´Ù.
+		// ë‹¤ì‹œ ì§„ì˜ ì„ íƒ ë ˆë²¨ë¡œ ê°„ë‹¤.
 		//CreateFactionLevel();
 	}
 
@@ -336,7 +363,7 @@ void ServerPacketHandler::Handle_S_PLAYER_MOVE(PacketSessionRef& session, BYTE* 
 		if (pkt->Validate() == false)
 			return;
 
-		// ³» ÇÃ·¹ÀÌ¾î°¡ º¸³½ ¿òÁ÷ÀÓÀº ¹İ¿µÇÏÁö ¾Ê¾Æµµ µÈ´Ù. 
+		// ë‚´ í”Œë ˆì´ì–´ê°€ ë³´ë‚¸ ì›€ì§ì„ì€ ë°˜ì˜í•˜ì§€ ì•Šì•„ë„ ëœë‹¤. 
 		uint64 _PlayerId = pkt->playerId;
 		if (_PlayerId == MyPlayer.id)
 			return;
@@ -382,13 +409,13 @@ void ServerPacketHandler::Handle_S_OBJECT_ANIM(PacketSessionRef& session, BYTE* 
 		return;
 	}
 
-	// º¸³½ÀÌ°¡ º»ÀÎÀÏ °æ¿ì Ã³¸® x
+	// ë³´ë‚¸ì´ê°€ ë³¸ì¸ì¼ ê²½ìš° ì²˜ë¦¬ x
 	uint64 _sendId = pkt->sendId;
 	if (_sendId != MyPlayer.id)
 	{
 		AnimInfoPacket _AnimInfoPacket = pkt->animInfo;
 
-		// ¾Ö´Ï¸ŞÀÌ¼Ç ÀÌ¸§
+		// ì• ë‹ˆë©”ì´ì…˜ ì´ë¦„
 		PKT_S_OBJECT_ANIM::AnimNameList AnimNameBuffs = pkt->GetAnimNameList();
 		wstring _animName = L"";
 		for (auto& AnimNameBuff : AnimNameBuffs)
@@ -410,7 +437,7 @@ void ServerPacketHandler::Handle_S_OBJECT_ANIM(PacketSessionRef& session, BYTE* 
 		evn.Type = SERVER_EVENT_TYPE::ANIM_PACKET;
 		evn.wParam = (DWORD_PTR)obj;
 
-		// AnimInfo ±¸Á¶Ã¼ÀÇ Æ÷ÀÎÅÍ¸¦ DWORD_PTR·Î Ä³½ºÆÃÇÏ¿© lParam¿¡ ÀúÀå
+		// AnimInfo êµ¬ì¡°ì²´ì˜ í¬ì¸í„°ë¥¼ DWORD_PTRë¡œ ìºìŠ¤íŒ…í•˜ì—¬ lParamì— ì €ì¥
 		AnimInfo* animInfo = new AnimInfo(_AnimInfo);
 		evn.lParam = (DWORD_PTR)animInfo;
 
@@ -468,10 +495,10 @@ void ServerPacketHandler::Handle_S_OBJECT_MOVE(PacketSessionRef& session, BYTE* 
 		return;
 	}
 
-	// ÇØ´ç Id ¿ÀºêÁ§Æ®°¡ ¿òÁ÷ÀÓ.
+	// í•´ë‹¹ Id ì˜¤ë¸Œì íŠ¸ê°€ ì›€ì§ì„.
 	uint64 _objectId = pkt->objectId;
 
-	// ¹æÀåÀ» Á¦¿ÜÇÑ Å¬¶óÀÌ¾ğÆ®¸¸ ÇØ´ç ¿òÁ÷ÀÓÀ» ¹Ş´Â´Ù.
+	// ë°©ì¥ì„ ì œì™¸í•œ í´ë¼ì´ì–¸íŠ¸ë§Œ í•´ë‹¹ ì›€ì§ì„ì„ ë°›ëŠ”ë‹¤.
 	if (!MyPlayer.host)
 	{
 		ObjectMove _objectMove = pkt->objectMove;
@@ -482,7 +509,7 @@ void ServerPacketHandler::Handle_S_OBJECT_MOVE(PacketSessionRef& session, BYTE* 
 		evn.Type = SERVER_EVENT_TYPE::MOVE_PACKET;
 		evn.wParam = (DWORD_PTR)obj;
 
-		// ObjectMove ±¸Á¶Ã¼ÀÇ Æ÷ÀÎÅÍ¸¦ DWORD_PTR·Î Ä³½ºÆÃÇÏ¿© lParam¿¡ ÀúÀå
+		// ObjectMove êµ¬ì¡°ì²´ì˜ í¬ì¸í„°ë¥¼ DWORD_PTRë¡œ ìºìŠ¤íŒ…í•˜ì—¬ lParamì— ì €ì¥
 		ObjectMove* objMove = new ObjectMove();
 		objMove->LV = _objectMove.LV;
 		objMove->HP = _objectMove.HP;
@@ -519,7 +546,7 @@ void ServerPacketHandler::Handle_S_SKILL_PROJECTILE(PacketSessionRef& session, B
 		return;
 	}
 
-	// Åõ»çÃ¼ objectId Id
+	// íˆ¬ì‚¬ì²´ objectId Id
 	uint64 _objectId = pkt->projectileId;
 	SkillInfo _skillInfo = pkt->skillInfo;
 
@@ -547,8 +574,8 @@ void ServerPacketHandler::Handle_S_SKILL_HIT(PacketSessionRef& session, BYTE* bu
 		return;
 	}
 
-	uint64	hitObjId = pkt->objecId;       // ½ºÅ³À» ¸ÂÀº ¿ÀºêÁ§Æ® id
-	SkillInfo skillInfo = pkt->skillInfo;  // ¸ÂÀº ½ºÅ³ Á¤º¸
+	uint64	hitObjId = pkt->objecId;       // ìŠ¤í‚¬ì„ ë§ì€ ì˜¤ë¸Œì íŠ¸ id
+	SkillInfo skillInfo = pkt->skillInfo;  // ë§ì€ ìŠ¤í‚¬ ì •ë³´
 
 
 	tServerEvent evn = {};
@@ -646,7 +673,7 @@ void ServerPacketHandler::Handle_S_SOUND(PacketSessionRef& session, BYTE* buffer
 	SoundInfoPacket	 _soundInfoPacket = pkt->soundInfo;
 	PKT_S_SOUND::SoundNameList soundNameBuffs = pkt->GetSoundNameList();
 	
-	// sound ÀÌ¸§
+	// sound ì´ë¦„
 	wstring _soundName = L"";
 	for (auto& soundNameBuff : soundNameBuffs)
 	{
@@ -695,7 +722,7 @@ void ServerPacketHandler::Handle_S_TIME(PacketSessionRef& session, BYTE* buffer,
 
 	float	  _killerId = pkt->second;
 
-	// ¸ğµÎ°¡ º»ÀÎÀÇ ½Ã°£À» ¾÷µ¥ÀÌÆ® ÇÏ´Â ÄÚµå Ãß°¡ ÇÊ¿ä
+	// ëª¨ë‘ê°€ ë³¸ì¸ì˜ ì‹œê°„ì„ ì—…ë°ì´íŠ¸ í•˜ëŠ” ì½”ë“œ ì¶”ê°€ í•„ìš”
 
 	std::cout << "===============================" << endl;
 	m.unlock();
