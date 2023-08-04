@@ -132,6 +132,8 @@
     <ClCompile Include="CGrompN2AState.cpp">
       <Filter>Gromp</Filter>
     </ClCompile>
+    <ClCompile Include="CSoundTestScript.cpp" />
+    <ClCompile Include="CFontUIScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -168,6 +170,8 @@
     <ClInclude Include="CMinimapUIScript.h" />
     <ClInclude Include="CMouseCursorUIScript.h" />
     <ClInclude Include="CMoveCursorUIScript.h" />
+    <ClInclude Include="CSoundTestScript.h" />
+    <ClInclude Include="CFontUIScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">

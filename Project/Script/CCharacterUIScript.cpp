@@ -5,9 +5,13 @@
 #include "CCoolDownUIScript.h"
 #include "CExpRatioUIScript.h"
 #include "CHpMpRatioUIScript.h"
+#include <Engine\CRenderMgr.h>
+#include <Engine\CCamera.h>
 
 CCharacterUIScript::CCharacterUIScript()
 	:CUIScript(CHARACTERUISCRIPT)
+	, m_iGold(14300)
+	, m_iPlayerLevel(18)
 {
 }
 
@@ -28,73 +32,32 @@ void CCharacterUIScript::begin()
 
 void CCharacterUIScript::tick()
 {
-	//============================디버깅용 (필요x)============================
-	//if (KEY_TAP(KEY::F5))
-	//{
-	//	if(GetCharacterType() == CHARACTER_TYPE::MALPHIGHT)
-	//		SetCharacterType(CHARACTER_TYPE::JINX);
-	//	else if(GetCharacterType() == CHARACTER_TYPE::JINX)
-	//		SetCharacterType(CHARACTER_TYPE::MALPHIGHT);
-	//}
+	if (UICamera)
+	{
+		//======골드 폰트======
+		wstring Gold = to_wstring((int)m_iGold);
 
-	////----혹시라도 디버깅을 위해 챔피언을 변경한다면 스킬 머터리얼들도 변경-----
-	//CHARACTER_TYPE Champ = GetCharacterType();
-	//if (PrevCharacter != Champ)
-	//{
-	//	wstring mtrl = L".mtrl";
-	//	wstring under = L"_";
-	//	wstring CharacterType = CHARACTER_TYPE_WSTR[(UINT)GetCharacterType()];
-	//	wstring ChampMtrlPath = L"material\\" + CharacterType + under + L"CIRCLE" + mtrl;
+		tFont Font3 = {};
+		Font3.wInputText = Gold; //골드 폰트
+		Font3.fontType = FONT_TYPE::RIX_KOR_L;
+		Font3.fFontSize = 16.5;
+		Font3.vDisplayPos = Vec2(1030, 974);
+		Font3.iFontColor = FONT_RGBA(252, 252, 250, 255);
+		UICamera->AddText(FONT_DOMAIN::TRANS, Font3);
+		//=======================
 
-	//	CharacterImage->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(ChampMtrlPath), 0);
+		//======레벨 폰트======
+		wstring Level = to_wstring((int)m_iPlayerLevel);
 
-	//	for (UINT i = 0; i < (UINT)SkillNum::END; ++i)  //스킬 이미지 Q,W,E,R,Passive 배치 
-	//	{
-	//		SkillNumber = (SkillNum)i;
-	//		wstring UIpath = L"material\\";
-	//		wstring SkillName = CharacterType + under + SKILL_TYPE_WSTR[i];
-	//		wstring fullpath = UIpath + SkillName + mtrl;
-
-	//		switch (i) //스킬별 위치 지정
-	//		{
-	//		case 0:
-	//		{
-	//			Skill_Q_Image->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(fullpath), 0);
-	//			Skill_Q_Image->SetName(SkillName);
-	//		}
-	//			break;
-	//		case 1:
-	//		{
-	//			Skill_W_Image->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(fullpath), 0);
-	//			Skill_W_Image->SetName(SkillName);
-	//		}
-	//			break;
-	//		case 2:
-	//		{
-	//			Skill_E_Image->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(fullpath), 0);
-	//			Skill_E_Image->SetName(SkillName);
-	//		}
-	//			break;
-	//		case 3:
-	//		{
-	//			Skill_R_Image->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(fullpath), 0);
-	//			Skill_R_Image->SetName(SkillName);
-	//		}
-	//			break;
-	//		case 4:
-	//		{
-	//			Skill_PASSIVE_Image->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(fullpath), 0);
-	//			Skill_PASSIVE_Image->SetName(SkillName);
-	//		}
-	//			break;
-	//		}
-	//	}
-
-	//	ScriptInspectorReload();
-	//}
-
-
-	//PrevCharacter = Champ;
+		tFont Font = {};
+		Font.wInputText = Level; //골드 폰트
+		Font.fontType = FONT_TYPE::RIX_KOR_L;
+		Font.fFontSize = 13.5;
+		Font.vDisplayPos = Vec2(573.4f, 973.f);
+		Font.iFontColor = FONT_RGBA(252, 252, 250, 255);
+		UICamera->AddText(FONT_DOMAIN::TRANS, Font);
+		//=======================
+	}
 }
 
 void CCharacterUIScript::BeginOverlap(CCollider2D* _Other)
@@ -136,31 +99,45 @@ void CCharacterUIScript::SkillUILoad()
 		Obj->SetName(SkillName);
 		Obj->AddComponent(new CTransform);
 		Obj->AddComponent(new CMeshRender);
-		Obj->AddComponent(new CCoolDownUIScript);
 		Obj->Transform()->SetRelativeScale(Vec3(45.f, 45.f, 10.f));
 		Obj->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
 		Obj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(fullpath), 0);
 		Obj->Transform()->SetAbsolute(true);
-		GetUIBackPanel()->AddChild(Obj);
-
 		switch (i) //스킬 오브젝트 저장. 
 		{
 		case 0:
+		{
+			Obj->AddComponent(new CCoolDownUIScript(COOL_DOWN_TYPE::Q));
 			Skill_Q_Image = Obj;
-			break;
-		case 1:
-			Skill_W_Image = Obj;
-			break;
-		case 2:
-			Skill_E_Image = Obj;
-			break;
-		case 3:
-			Skill_R_Image = Obj;
-			break;
-		case 4:
-			Skill_PASSIVE_Image = Obj;
-			break;
 		}
+		break;
+		case 1:
+		{
+			Obj->AddComponent(new CCoolDownUIScript(COOL_DOWN_TYPE::W));
+			Skill_W_Image = Obj;
+		}
+		break;
+		case 2:
+		{
+			Obj->AddComponent(new CCoolDownUIScript(COOL_DOWN_TYPE::E));
+			Skill_E_Image = Obj;
+		}
+		break;
+		case 3:
+		{
+			Obj->AddComponent(new CCoolDownUIScript(COOL_DOWN_TYPE::R));
+			Skill_R_Image = Obj;
+		}
+		break;
+		case 4:
+		{
+			Obj->AddComponent(new CCoolDownUIScript(COOL_DOWN_TYPE::PASSIVE));
+			Skill_PASSIVE_Image = Obj;
+		}
+		break;
+		}
+
+		GetUIBackPanel()->AddChild(Obj);
 	}
 }
 
@@ -177,20 +154,20 @@ void CCharacterUIScript::SpellUILoad()
 		CGameObject* Spell = new CGameObject; //캐릭터 패널 배치
 		Spell->AddComponent(new CTransform);
 		Spell->AddComponent(new CMeshRender);
-		Spell->AddComponent(new CCoolDownUIScript);
 		Spell->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
 		Spell->Transform()->SetAbsolute(true);
-
 		if (i == 0)
 		{
 			Spell_D = Spell;
 			Spell_D->SetName(L"Spell_D");
+			Spell_D->AddComponent(new CCoolDownUIScript(COOL_DOWN_TYPE::SPELL_D));
 			Spell_D->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(UIpath + DSpell + mtrl), 0);
 		}
 		else
 		{
 			Spell_F = Spell;
 			Spell_F->SetName(L"Spell_F");
+			Spell_F->AddComponent(new CCoolDownUIScript(COOL_DOWN_TYPE::SPELL_F));
 			Spell_F->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(UIpath + FSpell + mtrl), 0);
 		}
 		GetUIBackPanel()->AddChild(Spell);

@@ -35,10 +35,7 @@ void CMinimapUIScript::begin()
 	Minimap->MeshRender()->GetDynamicMaterial(0);
 	Minimap->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\MiniMap.dds"));
 	Minimap->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"FogFilterMap"));
-	Minimap->MeshRender()->GetMaterial(0)->SetTexParam(TEX_2, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\UI\\hud\\jinx_circle.png"));
-	Minimap->MeshRender()->GetMaterial(0)->SetTexParam(TEX_3, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\UI\\hud\\malphite_circle.png"));
-	Minimap->MeshRender()->GetMaterial(0)->SetTexParam(TEX_4, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\UI\\hud\\soraka_circle_15.png"));
-	Minimap->MeshRender()->GetMaterial(0)->SetTexParam(TEX_5, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\UI\\hud\\vayne_circle_11.png"));
+
 	Map->AddChild(Minimap);
 
 	CLevel* CurLevel = CUR_LEVEL;
@@ -52,24 +49,37 @@ void CMinimapUIScript::begin()
 
 void CMinimapUIScript::tick()
 {
-	if (Player1 && Player2 && Player3 && Player4) //나중에는 플레이어별로 있는지 없는지 검사해야할듯
+	Vec2 MapSize = Vec2(0.232727f, 0.232727f);
+	if (Player1)
 	{
-		Vec2 Pos1 = Vec2(Player1->Transform()->GetRelativePos().x -100.f, Player1->Transform()->GetRelativePos().z + 150.f);
-		Vec2 Pos2 = Vec2(Player2->Transform()->GetRelativePos().x - 100.f, Player2->Transform()->GetRelativePos().z + 150.f);
-		Vec2 Pos3 = Vec2(Player3->Transform()->GetRelativePos().x - 100.f, Player3->Transform()->GetRelativePos().z + 150.f);
-		Vec2 Pos4 = Vec2(Player4->Transform()->GetRelativePos().x - 100.f, Player4->Transform()->GetRelativePos().z + 150.f);
-
-		Vec2 MapSize = Vec2(0.232727f, 0.232727f);
-
+		Vec2 Pos1 = Vec2(Player1->Transform()->GetRelativePos().x - 100.f, Player1->Transform()->GetRelativePos().z + 150.f);
 		Pos1 *= MapSize;
-		Pos2 *= MapSize;
-		Pos3 *= MapSize;
-		Pos4 *= MapSize;
-
 		Minimap->MeshRender()->GetMaterial(0)->SetScalarParam(VEC2_0, &Pos1);
+		Minimap->MeshRender()->GetMaterial(0)->SetTexParam(TEX_2, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\UI\\hud\\jinx_circle.png"));
+	}
+
+	if (Player2)
+	{
+		Vec2 Pos2 = Vec2(Player2->Transform()->GetRelativePos().x - 100.f, Player2->Transform()->GetRelativePos().z + 150.f);
+		Pos2 *= MapSize;
 		Minimap->MeshRender()->GetMaterial(0)->SetScalarParam(VEC2_1, &Pos2);
+		Minimap->MeshRender()->GetMaterial(0)->SetTexParam(TEX_3, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\UI\\hud\\malphite_circle.png"));
+	}
+
+	if (Player3)
+	{
+		Vec2 Pos3 = Vec2(Player3->Transform()->GetRelativePos().x - 100.f, Player3->Transform()->GetRelativePos().z + 150.f);
+		Pos3 *= MapSize;
 		Minimap->MeshRender()->GetMaterial(0)->SetScalarParam(VEC2_2, &Pos3);
+		Minimap->MeshRender()->GetMaterial(0)->SetTexParam(TEX_4, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\UI\\hud\\soraka_circle_15.png"));
+	}
+
+	if (Player4)
+	{
+		Vec2 Pos4 = Vec2(Player4->Transform()->GetRelativePos().x - 100.f, Player4->Transform()->GetRelativePos().z + 150.f);
+		Pos4 *= MapSize;
 		Minimap->MeshRender()->GetMaterial(0)->SetScalarParam(VEC2_3, &Pos4);
+		Minimap->MeshRender()->GetMaterial(0)->SetTexParam(TEX_5, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\UI\\hud\\vayne_circle_11.png"));
 	}
 
 }

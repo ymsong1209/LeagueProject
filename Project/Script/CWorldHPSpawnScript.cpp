@@ -19,6 +19,8 @@ void CWorldHPSpawnScript::begin()
 	info.tTotalHP = 100.f;
 	info.tTotalMP = 100.f;
 	info.team = 0;
+	info.Level = 18;
+	info.NickName = L"다용도 도구";
 	m_vOtherplayerInfo.push_back(info);
 
 	for (size_t i = 0; i < m_vOtherplayerInfo.size(); ++i)
@@ -59,13 +61,11 @@ void CWorldHPSpawnScript::tick()
 {
 	for (size_t i = 0; i < m_vOtherplayerInfo.size(); ++i)
 	{
-		if (CUR_LEVEL->GetState() == LEVEL_STATE::PLAY)
+		CCamera* UICam = CRenderMgr::GetInst()->GetCamerafromIdx(1);
+		if (CUR_LEVEL->GetState() == LEVEL_STATE::PLAY && UICam)
 		{
 			CGameObject* Jinx = CLevelMgr::GetInst()->GetCurLevel()->FindObjectByName(L"Jinx");
 			Vec3 Pos = Jinx->Transform()->GetRelativePos();
-			//m_vWorldBar[i]->Transform()->SetRelativePos(Vec3(Pos.x + 5.f, Pos.y + 46.f, Pos.z + 15.782f));
-			// 
-			// 
 			CCamera* MainCam = CRenderMgr::GetInst()->GetMainCam();
 
 			Matrix viewmat = MainCam->GetViewMat();
@@ -89,7 +89,6 @@ void CWorldHPSpawnScript::tick()
 
 			// Create a vector in normalized device coordinates
 			Vec4 ndcVec = Vec4((2.0f * ObjscreenPos.x) / Resolution.x - 1.0f, 1.0f - (2.0f * ObjscreenPos.y) / Resolution.y, 1.f, 1.f);
-			CCamera* UICam = CRenderMgr::GetInst()->GetCamerafromIdx(1);
 
 			// Get the inverse of the view-projection matrix
 			Matrix viewInvMatrix = UICam->GetViewMatInv();
@@ -98,7 +97,30 @@ void CWorldHPSpawnScript::tick()
 
 			// Transform to world coordinates
 			Vec3 worldVec = XMVector3TransformCoord(ndcVec, invViewProjMatrix);
-			m_vWorldBar[i]->Transform()->SetRelativePos(Vec3(worldVec.x - 3.f, -worldVec.y + 117.f, 700.f));
+
+			Vec3 OffsetPos = Vec3(-3.f, 117.f, 0.f);
+			Vec3 FinalPos = Vec3(worldVec.x + OffsetPos.x, -worldVec.y + OffsetPos.y, 700.f);
+			m_vWorldBar[i]->Transform()->SetRelativePos(FinalPos);
+
+
+			//==========닉네임, 레벨 폰트 출력==============
+			Vec2 FontDefaultPos = Vec2(worldVec.x + (Resolution.x / 2), worldVec.y + (Resolution.y / 2));
+
+			tFont Font2 = {};
+			Font2.wInputText = m_vOtherplayerInfo[i].NickName; // 원래 여기에 닉네임 가져와야함
+			Font2.fontType = FONT_TYPE::RIX_KOR_L;
+			Font2.fFontSize = 13.5;
+			Font2.vDisplayPos = Vec2(FontDefaultPos.x, FontDefaultPos.y - 150.f);
+			Font2.iFontColor = FONT_RGBA(252, 252, 250, 255);
+			UICam->AddText(FONT_DOMAIN::OPAQE, Font2);
+
+			tFont Font3 = {};
+			Font3.wInputText = to_wstring(m_vOtherplayerInfo[i].Level); //레벨 폰트
+			Font3.fontType = FONT_TYPE::RIX_KOR_L;
+			Font3.fFontSize = 13.2;
+			Font3.vDisplayPos = Vec2(FontDefaultPos.x - 56.f, FontDefaultPos.y - 127.5f);
+			Font3.iFontColor = FONT_RGBA(252, 252, 250, 255);
+			UICam->AddText(FONT_DOMAIN::OPAQE, Font3);
 		}
 	}
 }

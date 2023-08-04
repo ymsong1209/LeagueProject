@@ -16,11 +16,13 @@
 #define EditorDT CTimeMgr::GetInst()->GetEditorDeltaTime()
 
 #define CUR_LEVEL CLevelMgr::GetInst()->GetCurLevel()
+#define UICamera CRenderMgr::GetInst()->GetCamerafromIdx(1)
 
 #define MAX_LAYER 32
 #define NaN std::numeric_limits<float>::quiet_NaN()
 
 #define SINGLE(type) private: type(); ~type(); friend class CSingleton<type>;
+#define FONT_RGBA(r, g, b, a) (((((BYTE)a << 24 ) | (BYTE)b << 16) | (BYTE)g << 8) | (BYTE)r)
 
 enum class MRT_TYPE
 {
@@ -411,3 +413,33 @@ enum class BARTYPE
 	END,
 };
 
+
+
+enum class FONT_TYPE
+{
+	RIX_KOR_M,
+	RIX_KOR_L,
+	RIX_KOR_B,
+	RIX_KOR_EB,
+};
+
+
+enum class FONT_DOMAIN
+{
+	MAINCAM,
+	OPAQE,
+	MASK,
+	TRANS,
+};
+
+
+enum class COOL_DOWN_TYPE
+{
+	Q,
+	W,
+	E,
+	R,
+	SPELL_D,
+	SPELL_F,
+	PASSIVE,
+};

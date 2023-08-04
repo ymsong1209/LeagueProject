@@ -29,6 +29,15 @@ struct tEvent
 	DWORD_PTR	lParam;
 };
 
+struct tFont
+{
+	wstring wInputText = L"null Text";
+	FONT_TYPE fontType = FONT_TYPE::RIX_KOR_B; //어떤 폰트로 출력할지 선택
+	Vec2 vDisplayPos = Vec2(800,0); //위치 (화면상 기준 월드x)
+	float fFontSize = 16; //폰트 사이즈
+	UINT  iFontColor = FONT_RGBA(255, 0, 0, 255); //폰트 컬러
+};
+
 
 struct tDebugShapeInfo
 {
@@ -386,6 +395,8 @@ struct tWorldHPInfo //패킷이 어떻들어오는지 잘 몰라서 일단 이렇게 정보를 가져온�
 	float tTotalMP;
 	Vec3  Pos;
 	int  team; // 0: blue , 1: red , 2: player
+	wstring NickName; //띄울 닉네임
+	int		Level; //UI에 띄울 레벨
 };
 
 

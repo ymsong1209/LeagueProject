@@ -25,8 +25,8 @@ enum RESTRAINT
     DEFAULT = CAN_MOVE | CAN_ATTACK | CAN_USE_SKILL,
     BLOCK = 0,
 };
-
-// 소환사 주문(임시)
+//
+//// 소환사 주문(임시)
 //enum class SUMMONERS_SPELL
 //{
 //    FLASH,      // 점멸

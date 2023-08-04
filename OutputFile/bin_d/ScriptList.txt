@@ -4,6 +4,7 @@ CChampionScript
 CCharacterUIScript
 CCoolDownUIScript
 CExpRatioUIScript
+CFontUIScript
 CGrompScript
 CHpMpRatioUIScript
 CInGameCameraScript

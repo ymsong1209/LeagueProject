@@ -50,7 +50,6 @@ private:
     vector<CGameObject*>    m_vecUIMask;
     vector<CGameObject*>    m_vecUITransparent;
 
-
     float                   m_LayMinDistance;   // 오브젝트가 여러개 겹쳐있을때 마우스 클릭하는 것을 대비해서 오브젝트들중에 깊이가(길이) 가장 작은
                                                 //오브젝트의 길이값을 기억해두고 그 오브젝트를 최종 선택오브젝트로 세팅 
 
@@ -60,8 +59,10 @@ private:
 
     float       m_fFov; //fov값
 
-   
-    
+    vector<tFont>           m_vecFontMainCamState; //ui카메라 말고 메인카메라에 렌더링 하는경우
+    vector<tFont>           m_vecFontOpaqeState; //폰트도 각자 어떤 UI에는 가려져야 하고 가려지면 안되고가 존재하므로 언제 렌더링 할지 지정해준다.
+    vector<tFont>           m_vecFontMaskState;
+    vector<tFont>           m_vecFontTransState;
 
 public:
     void SetProjType(PROJ_TYPE _Type) { m_ProjType = _Type; }
@@ -107,6 +108,11 @@ public:
 
     float GetCameraFov() { return m_fFov; }
     void SetCameraFov(float _Fov) { m_fFov = _Fov; }
+
+    void DrawCallText(wstring _InputText,UINT _TextType, Vec2 _TextPos, float _TextSize, UINT _Color);
+
+
+    void AddText(FONT_DOMAIN _Domain, tFont _tFont); //텍스트 호출할때는 해당 카메라 가져와서 호출
 
 public:
     void SortObject();
@@ -164,6 +170,10 @@ private:
     void render_uitransparent();
     void render_uicamera();
 
+    void render_font_MainCamState(); //폰트도 누군가에게 가려지거나 해야하므로 렌더 순서를 다르게함
+    void render_font_OpaqueState(); //폰트도 누군가에게 가려지거나 해야하므로 렌더 순서를 다르게함
+    void render_font_MaskState(); //폰트도 누군가에게 가려지거나 해야하므로 렌더 순서를 다르게함
+    void render_font_TransState(); //폰트도 누군가에게 가려지거나 해야하므로 렌더 순서를 다르게함
 
 
     virtual void SaveToLevelFile(FILE* _File) override;

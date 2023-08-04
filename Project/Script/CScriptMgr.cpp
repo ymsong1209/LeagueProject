@@ -7,6 +7,7 @@
 #include "CCharacterUIScript.h"
 #include "CCoolDownUIScript.h"
 #include "CExpRatioUIScript.h"
+#include "CFontUIScript.h"
 #include "CGrompScript.h"
 #include "CHpMpRatioUIScript.h"
 #include "CInGameCameraScript.h"
@@ -39,6 +40,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CCharacterUIScript");
 	_vec.push_back(L"CCoolDownUIScript");
 	_vec.push_back(L"CExpRatioUIScript");
+	_vec.push_back(L"CFontUIScript");
 	_vec.push_back(L"CGrompScript");
 	_vec.push_back(L"CHpMpRatioUIScript");
 	_vec.push_back(L"CInGameCameraScript");
@@ -78,6 +80,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CCoolDownUIScript;
 	if (L"CExpRatioUIScript" == _strScriptName)
 		return new CExpRatioUIScript;
+	if (L"CFontUIScript" == _strScriptName)
+		return new CFontUIScript;
 	if (L"CGrompScript" == _strScriptName)
 		return new CGrompScript;
 	if (L"CHpMpRatioUIScript" == _strScriptName)
@@ -148,6 +152,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::EXPRATIOUISCRIPT:
 		return new CExpRatioUIScript;
+		break;
+	case (UINT)SCRIPT_TYPE::FONTUISCRIPT:
+		return new CFontUIScript;
 		break;
 	case (UINT)SCRIPT_TYPE::GROMPSCRIPT:
 		return new CGrompScript;
@@ -248,6 +255,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::EXPRATIOUISCRIPT:
 		return L"CExpRatioUIScript";
+		break;
+
+	case SCRIPT_TYPE::FONTUISCRIPT:
+		return L"CFontUIScript";
 		break;
 
 	case SCRIPT_TYPE::GROMPSCRIPT:

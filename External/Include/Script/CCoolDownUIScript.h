@@ -11,12 +11,14 @@ private:
 
     float   m_fcooldownTime; //추후에는 챔피언 스크립트에서 정보를 받아올 예정. //해당 스킬 쿨타임 시간값
     float   m_felapsedTime; //스킬 진행 시간 (스킬을 쓰고 지난시간)
+    COOL_DOWN_TYPE    m_SkillType;
 public:
     virtual void begin() override;
     virtual void tick() override;
 
     CLONE(CCoolDownUIScript);
 public:
+    CCoolDownUIScript(COOL_DOWN_TYPE _SkillType);
     CCoolDownUIScript();
     ~CCoolDownUIScript();
 };

@@ -27,7 +27,7 @@
 #include <Script/CTurretScript.h>
 #include <Script/CJinxScript.h>
 #include <Script/CGrompScript.h>
-#include <Script/CInGameCameraScript.h>
+#include <Script\CFontUIScript.h>
 
 void CreateTestLevel()
 {
@@ -96,6 +96,7 @@ void CreateTestLevel()
 	UIObj->AddComponent(new CInventoryUIScript);
 	UIObj->AddComponent(new CMinimapUIScript);
 	UIObj->AddComponent(new CMouseCursorUIScript);
+	UIObj->AddComponent(new CFontUIScript);
 	SpawnGameObject(UIObj, Vec3(0.f, 0.f, 0.f), 31);
 
 

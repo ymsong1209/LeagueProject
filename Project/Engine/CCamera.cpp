@@ -28,6 +28,7 @@
 
 #include "CStructuredBuffer.h"
 #include "CInstancingBuffer.h"
+#include "CFontMgr.h"
 
 
 
@@ -498,8 +499,6 @@ void CCamera::SetCameraIndex(int _idx)
 	CRenderMgr::GetInst()->RegisterCamera(this, m_iCamIdx);
 }
 
-
-
 void CCamera::SortObject()
 {
 	// 이전 프레임 분류정보 제거
@@ -762,18 +761,20 @@ void CCamera::render()
 		render_transparent();
 
 		// Outline :포스트 프로세스 단계에 넣어도 상관은없지만 정리를 위해 따로. 테두리는 깊이 모두 기록된후에 마지막에 진행
-		if(m_vecContour.size() > 0) //아웃라인을 출력해야하는 오브젝트가 있을경우에만 시행
+		if (m_vecContour.size() > 0) //아웃라인을 출력해야하는 오브젝트가 있을경우에만 시행
 			render_Outline();
 
 		// PostProcess
 		render_postprocess();
 		// UI
 		render_ui();
+		render_font_MainCamState();
 	}
 	else//지금 왜 이런 처리가 생겼는지 갸우뚱? 하시는 분들이 있을텐데 그건 나중에 회의때 말씀드리도록 하겠습니다..
 	{							   //간단하게 말씀드리면 지금 카메라가 하나 더생성되면 디퍼드 렌더링 관련해서 뭔가 버그가 있는거같아요 (디렉셔널 라이트도 카메라가 추가되면 더 밝게 보이거나 함)
 		// UI
 		render_uicamera();
+
 	}
 }
 
@@ -1629,8 +1630,133 @@ void CCamera::render_uitransparent()
 void CCamera::render_uicamera()
 {
 	render_uiopaque();
+	render_font_OpaqueState();
 	render_uimask();
+	render_font_MaskState();
 	render_uitransparent();
+	render_font_TransState();
+}
+
+
+void CCamera::DrawCallText(wstring _InputText, UINT _TextType, Vec2 _TextPos, float _TextSize, UINT _Color)
+{
+	wchar_t szBuff3[256];
+	swprintf_s(szBuff3, 256, L"%s", _InputText.c_str());
+
+	switch (_TextType)
+	{
+	case ((UINT)FONT_TYPE::RIX_KOR_M):
+	{
+		CFontMgr::GetInst()->DrawRixKorM(szBuff3, _TextPos.x, _TextPos.y, _TextSize, _Color);
+		break;
+	}
+	case ((UINT)FONT_TYPE::RIX_KOR_L):
+	{
+		CFontMgr::GetInst()->DrawRixKorL(szBuff3, _TextPos.x, _TextPos.y, _TextSize, _Color);
+		break;
+	}
+	case ((UINT)FONT_TYPE::RIX_KOR_B):
+	{
+		CFontMgr::GetInst()->DrawRixKorB(szBuff3, _TextPos.x, _TextPos.y, _TextSize, _Color);
+		break;
+	}
+	case ((UINT)FONT_TYPE::RIX_KOR_EB):
+	{
+		CFontMgr::GetInst()->DrawRixKorEB(szBuff3, _TextPos.x, _TextPos.y, _TextSize, _Color);
+		break;
+	}
+	}
+}
+
+void CCamera::AddText(FONT_DOMAIN _Domain, tFont _tFont)
+{
+	switch ((UINT)_Domain)
+	{
+	case (UINT)FONT_DOMAIN::MAINCAM:
+	{
+		m_vecFontMainCamState.push_back(_tFont);
+		break;
+	}
+	case (UINT)FONT_DOMAIN::OPAQE:
+	{
+		m_vecFontOpaqeState.push_back(_tFont);
+		break;
+	}
+	case (UINT)FONT_DOMAIN::MASK:
+	{
+		m_vecFontMaskState.push_back(_tFont);
+		break;
+	}
+	case (UINT)FONT_DOMAIN::TRANS:
+	{
+		m_vecFontTransState.push_back(_tFont);
+		break;
+	}
+	}
+}
+
+void CCamera::render_font_MainCamState()
+{
+	for (size_t i = 0; i < m_vecFontMainCamState.size(); ++i)
+	{
+		DrawCallText
+		(
+			m_vecFontMainCamState[i].wInputText,
+			(UINT)m_vecFontMainCamState[i].fontType,
+			m_vecFontMainCamState[i].vDisplayPos,
+			m_vecFontMainCamState[i].fFontSize,
+			m_vecFontMainCamState[i].iFontColor
+		);
+	}
+	m_vecFontMainCamState.clear();
+}
+
+void CCamera::render_font_OpaqueState()
+{
+	for (size_t i = 0; i < m_vecFontOpaqeState.size(); ++i)
+	{
+		DrawCallText
+		(
+			m_vecFontOpaqeState[i].wInputText,
+			(UINT)m_vecFontOpaqeState[i].fontType,
+			m_vecFontOpaqeState[i].vDisplayPos,
+			m_vecFontOpaqeState[i].fFontSize,
+			m_vecFontOpaqeState[i].iFontColor
+		);
+	}
+	m_vecFontOpaqeState.clear();
+}
+
+void CCamera::render_font_MaskState()
+{
+	for (size_t i = 0; i < m_vecFontMaskState.size(); ++i)
+	{
+		DrawCallText
+		(
+			m_vecFontMaskState[i].wInputText,
+			(UINT)m_vecFontMaskState[i].fontType,
+			m_vecFontMaskState[i].vDisplayPos,
+			m_vecFontMaskState[i].fFontSize,
+			m_vecFontMaskState[i].iFontColor
+		);
+	}
+	m_vecFontMaskState.clear();
+}
+
+void CCamera::render_font_TransState()
+{
+	for (size_t i = 0; i < m_vecFontTransState.size(); ++i)
+	{
+		DrawCallText
+		(
+			m_vecFontTransState[i].wInputText,
+			(UINT)m_vecFontTransState[i].fontType,
+			m_vecFontTransState[i].vDisplayPos,
+			m_vecFontTransState[i].fFontSize,
+			m_vecFontTransState[i].iFontColor
+		);
+	}
+	m_vecFontTransState.clear();
 }
 
 void CCamera::SaveToLevelFile(FILE* _File)
@@ -1871,6 +1997,6 @@ void CCamera::render_Outline()
 	RTCount = DefferedMrt->GetRTCount();
 	for (UINT i = 0; i < RTCount; ++i)
 		DefferedMrt->GetRTAtIndex(i)->Clear();  //셰이더 리소스 해제
-	 
+
 	DefferedMrt->Clear(); //다른 카메라가 있을 경우를 대비한 디퍼드 mrt클리어(다른 카메라에 영향을 주지 않게 함)
 }

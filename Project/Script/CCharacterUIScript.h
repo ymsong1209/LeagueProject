@@ -29,6 +29,9 @@ private:
     CGameObject* EXPBar;
     CGameObject* WadingTotem;
 
+    int         m_iGold; // 가지고 있는 돈.(골드 폰트UI)
+    int         m_iPlayerLevel;
+
 public:
     virtual void begin() override;
     virtual void tick() override;
