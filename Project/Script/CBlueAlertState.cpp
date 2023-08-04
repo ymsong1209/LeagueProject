@@ -14,6 +14,9 @@ CBlueAlertState::~CBlueAlertState()
 void CBlueAlertState::Enter()
 {
 	m_iAggroAnimNum = 1;
+	wstring basename = L"jungle_blue\\sru_blue_idle_aggro";
+	GetOwner()->Animator3D()->GetCurAnim()->Reset();
+	GetOwner()->Animator3D()->PlayOnce(basename);
 	CJungleAlertState::Enter();
 }
 

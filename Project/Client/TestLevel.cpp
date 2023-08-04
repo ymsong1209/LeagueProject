@@ -28,6 +28,7 @@
 #include <Script/CKrugScript.h>
 #include <Script/CKrugMiniScript.h>
 #include <Script/CBlueScript.h>
+//#include <Script/CRedScript.h>
 
 void CreateTestLevel()
 {
@@ -596,7 +597,7 @@ void SpawnJungleMob()
 			CGameObject* Gromp = nullptr;
 			Gromp = pMeshData->Instantiate();
 			Gromp->AddComponent(new CGrompScript);
-			Gromp->SetName(L"BLU_Gromp");
+			Gromp->SetName(L"SOUTH_Gromp");
 			Gromp->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
 			Gromp->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(270.f), 0.f));
 			CGrompScript* Script = Gromp->GetScript<CGrompScript>();
@@ -604,7 +605,7 @@ void SpawnJungleMob()
 			SpawnGameObject(Gromp, Vec3(323.f, 10.f, 1242.f), 0);
 
 			CGameObject* GrompAggro = new CGameObject;
-			GrompAggro->SetName(L"BLU_GrompAggroRadius");
+			GrompAggro->SetName(L"SOUTH_GrompAggroRadius");
 			GrompAggro->AddComponent(new CTransform);
 			GrompAggro->AddComponent(new CCollider2D);
 			GrompAggro->Transform()->SetRelativeScale(Vec3(150.f, 150.f, 150.f));
@@ -621,7 +622,7 @@ void SpawnJungleMob()
 			CGameObject* MurkWolf = nullptr;
 			MurkWolf = pMeshData->Instantiate();
 			MurkWolf->AddComponent(new CMurkWolfScript);
-			MurkWolf->SetName(L"BLU_MurkWolf");
+			MurkWolf->SetName(L"SOUTH_MurkWolf");
 			MurkWolf->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
 			MurkWolf->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(24.f), 0.f));
 			CMurkWolfScript* script = MurkWolf->GetScript <CMurkWolfScript>();
@@ -629,7 +630,7 @@ void SpawnJungleMob()
 			SpawnGameObject(MurkWolf, Vec3(550.f, 15.f, 944.f), 0);
 
 			CGameObject* MurkWolfAggro = new CGameObject;
-			MurkWolfAggro->SetName(L"BLU_MurkWolfAggroRadius");
+			MurkWolfAggro->SetName(L"SOUTH_MurkWolfAggroRadius");
 			MurkWolfAggro->AddComponent(new CTransform);
 			MurkWolfAggro->AddComponent(new CCollider2D);
 			MurkWolfAggro->Transform()->SetRelativeScale(Vec3(190, 190.f, 190.f));
@@ -645,7 +646,7 @@ void SpawnJungleMob()
 			CGameObject* MurkWolf_Mini = nullptr;
 			MurkWolf_Mini = pMeshData->Instantiate();
 			MurkWolf_Mini->AddComponent(new CMurkWolfMiniScript);
-			MurkWolf_Mini->SetName(L"BLU_MurkWolf_Mini_L");
+			MurkWolf_Mini->SetName(L"SOUTH_MurkWolf_Mini_L");
 			MurkWolf_Mini->Transform()->SetRelativeScale(0.15f, 0.15f, 0.15);
 			MurkWolf_Mini->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(36.f), 0.f));
 			CMurkWolfMiniScript* Script = MurkWolf_Mini->GetScript<CMurkWolfMiniScript>();
@@ -659,7 +660,7 @@ void SpawnJungleMob()
 			CGameObject* MurkWolf_Mini = nullptr;
 			MurkWolf_Mini = pMeshData->Instantiate();
 			MurkWolf_Mini->AddComponent(new CMurkWolfMiniScript);
-			MurkWolf_Mini->SetName(L"BLU_MurkWolf_Mini_R");
+			MurkWolf_Mini->SetName(L"SOUTH_MurkWolf_Mini_R");
 			MurkWolf_Mini->Transform()->SetRelativeScale(0.15f, 0.15f, 0.15f);
 			MurkWolf_Mini->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(36.f), 0.f));
 			CMurkWolfMiniScript* Script = MurkWolf_Mini->GetScript<CMurkWolfMiniScript>();
@@ -673,7 +674,7 @@ void SpawnJungleMob()
 			CGameObject* Krug = nullptr;
 			Krug = pMeshData->Instantiate();
 			Krug->AddComponent(new CKrugScript);
-			Krug->SetName(L"BLU_Krug");
+			Krug->SetName(L"SOUTH_Krug");
 			Krug->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
 			Krug->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
 			CKrugScript* Script = Krug->GetScript<CKrugScript>();
@@ -681,7 +682,7 @@ void SpawnJungleMob()
 			SpawnGameObject(Krug, Vec3(1221.f, 15.f, 379.f), 0);
 
 			CGameObject* KrugAggro = new CGameObject;
-			KrugAggro->SetName(L"BLU_KrugAggroRadius");
+			KrugAggro->SetName(L"SOUTH_KrugAggroRadius");
 			KrugAggro->AddComponent(new CTransform);
 			KrugAggro->AddComponent(new CCollider2D);
 			KrugAggro->Transform()->SetRelativeScale(Vec3(170, 170.f, 170.f));
@@ -697,7 +698,7 @@ void SpawnJungleMob()
 			CGameObject* Krug_Mini = nullptr;
 			Krug_Mini = pMeshData->Instantiate();
 			Krug_Mini->AddComponent(new CKrugMiniScript);
-			Krug_Mini->SetName(L"BLU_Krug_Mini");
+			Krug_Mini->SetName(L"SOUTH_Krug_Mini");
 			Krug_Mini->Transform()->SetRelativeScale(0.12f, 0.12f, 0.12f);
 			Krug_Mini->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
 			CKrugMiniScript* Script = Krug_Mini->GetScript<CKrugMiniScript>();
@@ -711,7 +712,7 @@ void SpawnJungleMob()
 			CGameObject* RazorBeak = nullptr;
 			RazorBeak = pMeshData->Instantiate();
 			RazorBeak->AddComponent(new CRazorBeakScript);
-			RazorBeak->SetName(L"BLU_RazorBeak");
+			RazorBeak->SetName(L"SOUTH_RazorBeak");
 			RazorBeak->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
 			RazorBeak->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(-90.f), 0.f));
 			CRazorBeakScript* Script = RazorBeak->GetScript<CRazorBeakScript>();
@@ -719,7 +720,7 @@ void SpawnJungleMob()
 			SpawnGameObject(RazorBeak, Vec3(1008.f, 15.f, 800.f), 0);
 
 			CGameObject* RazorBeakAggro = new CGameObject;
-			RazorBeakAggro->SetName(L"BLU_RazorBeakAggroRadius");
+			RazorBeakAggro->SetName(L"SOUTH_RazorBeakAggroRadius");
 			RazorBeakAggro->AddComponent(new CTransform);
 			RazorBeakAggro->AddComponent(new CCollider2D);
 			RazorBeakAggro->Transform()->SetRelativeScale(Vec3(170, 170.f, 170.f));
@@ -736,27 +737,37 @@ void SpawnJungleMob()
 			CGameObject* RazorBeak = nullptr;
 			RazorBeak = pMeshData->Instantiate();
 			RazorBeak->AddComponent(new CRazorBeakMiniScript);
-			RazorBeak->SetName(L"BLU_RazorBeak_Mini");
+			RazorBeak->SetName(L"SOUTH_RazorBeak_Mini");
 			RazorBeak->Transform()->SetRelativeScale(0.1f, 0.1f, 0.1f);
 			RazorBeak->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
 			CRazorBeakMiniScript* Script = RazorBeak->GetScript<CRazorBeakMiniScript>();
 			Script->SetAggroPos(Vec3(1033.f, 0.f, 782.f));
 			SpawnGameObject(RazorBeak, Vec3(1026.f, 15.f, 810.f), 0);
 		}
-		////블루팀 블루
-		//{
-		//	Ptr<CMeshData> pMeshData = nullptr;
-		//	pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\jungle_blue.fbx");
-		//	CGameObject* Blue = nullptr;
-		//	Blue = pMeshData->Instantiate();
-		//	Blue->AddComponent(new CBlueScript);
-		//	Blue->SetName(L"South_Blue");
-		//	Blue->Transform()->SetRelativeScale(0.2f, 0.2f, 0.2f);
-		//	Blue->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
-		//	CBlueScript* Script = Blue->GetScript<CBlueScript>();
-		//	Script->SetAggroPos(Vec3(1033.f, 0.f, 782.f));
-		//	SpawnGameObject(Blue, Vec3(563.f, 15.f, 1164.f), 0);
-		//}
+		//블루팀 블루
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\jungle_blue.fbx");
+			CGameObject* Blue = nullptr;
+			Blue = pMeshData->Instantiate();
+			Blue->AddComponent(new CBlueScript);
+			Blue->SetName(L"South_Blue");
+			Blue->Transform()->SetRelativeScale(0.2f, 0.2f, 0.2f);
+			Blue->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(90.f), 0.f));
+			CBlueScript* Script = Blue->GetScript<CBlueScript>();
+			Script->SetAggroPos(Vec3(563.f, 0.f, 1164.f));
+			SpawnGameObject(Blue, Vec3(563.f, 15.f, 1164.f), 0);
+
+			CGameObject* BlueAggro = new CGameObject;
+			BlueAggro->SetName(L"SOUTH_BlueAggroRadius");
+			BlueAggro->AddComponent(new CTransform);
+			BlueAggro->AddComponent(new CCollider2D);
+			BlueAggro->Transform()->SetRelativeScale(Vec3(170, 170.f, 170.f));
+			BlueAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			BlueAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+			BlueAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			SpawnGameObject(BlueAggro, Vec3(563.f, 0.f, 1164.f), 0);
+		}
 	}
 	
 

@@ -1425,7 +1425,7 @@
                     "children": []
                 },
                 {
-                    "ObjName": "BLU_Gromp",
+                    "ObjName": "SOUTH_Gromp",
                     "components": [
                         {
                             "TRANSFORM": 0,
@@ -1573,7 +1573,7 @@
                     "children": []
                 },
                 {
-                    "ObjName": "BLU_GrompAggroRadius",
+                    "ObjName": "SOUTH_GrompAggroRadius",
                     "components": [
                         {
                             "TRANSFORM": 0,
@@ -1626,7 +1626,7 @@
                     "children": []
                 },
                 {
-                    "ObjName": "BLU_MurkWolf",
+                    "ObjName": "SOUTH_MurkWolf",
                     "components": [
                         {
                             "TRANSFORM": 0,
@@ -1756,7 +1756,7 @@
                     "children": []
                 },
                 {
-                    "ObjName": "BLU_MurkWolfAggroRadius",
+                    "ObjName": "SOUTH_MurkWolfAggroRadius",
                     "components": [
                         {
                             "TRANSFORM": 0,
@@ -1809,7 +1809,7 @@
                     "children": []
                 },
                 {
-                    "ObjName": "BLU_MurkWolf_Mini_L",
+                    "ObjName": "SOUTH_MurkWolf_Mini_L",
                     "components": [
                         {
                             "TRANSFORM": 0,
@@ -1939,7 +1939,7 @@
                     "children": []
                 },
                 {
-                    "ObjName": "BLU_MurkWolf_Mini_R",
+                    "ObjName": "SOUTH_MurkWolf_Mini_R",
                     "components": [
                         {
                             "TRANSFORM": 0,
@@ -2069,7 +2069,7 @@
                     "children": []
                 },
                 {
-                    "ObjName": "BLU_Krug",
+                    "ObjName": "SOUTH_Krug",
                     "components": [
                         {
                             "TRANSFORM": 0,
@@ -2199,7 +2199,7 @@
                     "children": []
                 },
                 {
-                    "ObjName": "BLU_KrugAggroRadius",
+                    "ObjName": "SOUTH_KrugAggroRadius",
                     "components": [
                         {
                             "TRANSFORM": 0,
@@ -2252,7 +2252,7 @@
                     "children": []
                 },
                 {
-                    "ObjName": "BLU_Krug_Mini",
+                    "ObjName": "SOUTH_Krug_Mini",
                     "components": [
                         {
                             "TRANSFORM": 0,
@@ -2382,7 +2382,7 @@
                     "children": []
                 },
                 {
-                    "ObjName": "BLU_RazorBeak",
+                    "ObjName": "SOUTH_RazorBeak",
                     "components": [
                         {
                             "TRANSFORM": 0,
@@ -2512,7 +2512,7 @@
                     "children": []
                 },
                 {
-                    "ObjName": "BLU_RazorBeakAggroRadius",
+                    "ObjName": "SOUTH_RazorBeakAggroRadius",
                     "components": [
                         {
                             "TRANSFORM": 0,
@@ -2565,7 +2565,7 @@
                     "children": []
                 },
                 {
-                    "ObjName": "BLU_RazorBeak_Mini",
+                    "ObjName": "SOUTH_RazorBeak_Mini",
                     "components": [
                         {
                             "TRANSFORM": 0,
@@ -2575,9 +2575,9 @@
                                 "z": 810.0
                             },
                             "vRelativeScale": {
-                                "x": 0.18000000715255737,
-                                "y": 0.18000000715255737,
-                                "z": 0.18000000715255737
+                                "x": 0.10000000149011612,
+                                "y": 0.10000000149011612,
+                                "z": 0.10000000149011612
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
@@ -2692,6 +2692,189 @@
                             }
                         }
                     ],
+                    "children": []
+                },
+                {
+                    "ObjName": "South_Blue",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 563.0,
+                                "y": 15.0,
+                                "z": 1164.0
+                            },
+                            "vRelativeScale": {
+                                "x": 0.20000000298023224,
+                                "y": 0.20000000298023224,
+                                "z": 0.20000000298023224
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": 1.5707963705062866,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
+                        },
+                        {
+                            "ANIMATOR3D": 4,
+                            "IsEmpty": false,
+                            "MeshDataRelativePath": "meshdata\\jungle_blue.mdat",
+                            "bRepeat": true,
+                            "fAnimSpeed": 1.0,
+                            "mapAnim": [
+                                {
+                                    "Anim3DRelativePath": "animation\\jungle_blue\\jungle_blue-jungle_blue_AllAnim.anim3d"
+                                }
+                            ],
+                            "strCurAnimName": ""
+                        },
+                        {
+                            "MESHRENDER": 10,
+                            "Mesh": {
+                                "IsNull": false,
+                                "Key": "mesh\\jungle_blue.mesh",
+                                "RelativePath": "mesh\\jungle_blue.mesh"
+                            },
+                            "fBounding": 150.0,
+                            "bFrustumCheck": true,
+                            "bDynamicShadow": false,
+                            "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": false,
+                            "vBoundingBoxOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "iMtrlCount": 1,
+                            "vecMtrls[0]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "material\\jungle_blue_Blue_Golem_CM.mtrl",
+                                "RelativePath": "material\\jungle_blue_Blue_Golem_CM.mtrl"
+                            },
+                            "DynamicMtrls": [
+                                {
+                                    "vecMtrls[0]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                }
+                            ],
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
+                        },
+                        16
+                    ],
+                    "scripts": [
+                        {
+                            "scriptName": "CBlueScript",
+                            "AggroPos": {
+                                "x": 563.0,
+                                "y": 0.0,
+                                "z": 1164.0
+                            }
+                        }
+                    ],
+                    "children": []
+                },
+                {
+                    "ObjName": "SOUTH_BlueAggroRadius",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 563.0,
+                                "y": 0.0,
+                                "z": 1164.0
+                            },
+                            "vRelativeScale": {
+                                "x": 170.0,
+                                "y": 170.0,
+                                "z": 170.0
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
+                        },
+                        {
+                            "COLLIDER2D": 1,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "vOffsetRot": {
+                                "x": 1.5707963705062866,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "Shape": 1
+                        },
+                        16
+                    ],
+                    "scripts": [],
                     "children": []
                 },
                 {

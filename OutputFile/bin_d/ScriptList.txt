@@ -18,6 +18,7 @@ COtherPlayerScript
 CPlayerScript
 CRazorBeakMiniScript
 CRazorBeakScript
+CRedScript
 CSoundTestScript
 CStructureScript
 CTurretAttackScript

@@ -21,6 +21,7 @@
 #include "CPlayerScript.h"
 #include "CRazorBeakMiniScript.h"
 #include "CRazorBeakScript.h"
+#include "CRedScript.h"
 #include "CSoundTestScript.h"
 #include "CStructureScript.h"
 #include "CTurretAttackScript.h"
@@ -49,6 +50,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CPlayerScript");
 	_vec.push_back(L"CRazorBeakMiniScript");
 	_vec.push_back(L"CRazorBeakScript");
+	_vec.push_back(L"CRedScript");
 	_vec.push_back(L"CSoundTestScript");
 	_vec.push_back(L"CStructureScript");
 	_vec.push_back(L"CTurretAttackScript");
@@ -98,6 +100,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CRazorBeakMiniScript;
 	if (L"CRazorBeakScript" == _strScriptName)
 		return new CRazorBeakScript;
+	if (L"CRedScript" == _strScriptName)
+		return new CRedScript;
 	if (L"CSoundTestScript" == _strScriptName)
 		return new CSoundTestScript;
 	if (L"CStructureScript" == _strScriptName)
@@ -174,6 +178,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::RAZORBEAKSCRIPT:
 		return new CRazorBeakScript;
+		break;
+	case (UINT)SCRIPT_TYPE::REDSCRIPT:
+		return new CRedScript;
 		break;
 	case (UINT)SCRIPT_TYPE::SOUNDTESTSCRIPT:
 		return new CSoundTestScript;
@@ -276,6 +283,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::RAZORBEAKSCRIPT:
 		return L"CRazorBeakScript";
+		break;
+
+	case SCRIPT_TYPE::REDSCRIPT:
+		return L"CRedScript";
 		break;
 
 	case SCRIPT_TYPE::SOUNDTESTSCRIPT:

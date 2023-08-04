@@ -316,6 +316,36 @@
     <ClCompile Include="CBlueSpawnState.cpp">
       <Filter>Jungle\Blue</Filter>
     </ClCompile>
+    <ClCompile Include="CRedA2NState.cpp">
+      <Filter>Jungle\Red</Filter>
+    </ClCompile>
+    <ClCompile Include="CRedAlertState.cpp">
+      <Filter>Jungle\Red</Filter>
+    </ClCompile>
+    <ClCompile Include="CRedAttackState.cpp">
+      <Filter>Jungle\Red</Filter>
+    </ClCompile>
+    <ClCompile Include="CRedChaseState.cpp">
+      <Filter>Jungle\Red</Filter>
+    </ClCompile>
+    <ClCompile Include="CRedDeathState.cpp">
+      <Filter>Jungle\Red</Filter>
+    </ClCompile>
+    <ClCompile Include="CRedIdleState.cpp">
+      <Filter>Jungle\Red</Filter>
+    </ClCompile>
+    <ClCompile Include="CRedN2AState.cpp">
+      <Filter>Jungle\Red</Filter>
+    </ClCompile>
+    <ClCompile Include="CRedReturnState.cpp">
+      <Filter>Jungle\Red</Filter>
+    </ClCompile>
+    <ClCompile Include="CRedScript.cpp">
+      <Filter>Jungle\Red</Filter>
+    </ClCompile>
+    <ClCompile Include="CRedSpawnState.cpp">
+      <Filter>Jungle\Red</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CBaseAttack.h" />
@@ -634,6 +664,36 @@
     </ClInclude>
     <ClInclude Include="CBlueSpawnState.h">
       <Filter>Jungle\Blue</Filter>
+    </ClInclude>
+    <ClInclude Include="CRedA2NState.h">
+      <Filter>Jungle\Red</Filter>
+    </ClInclude>
+    <ClInclude Include="CRedAlertState.h">
+      <Filter>Jungle\Red</Filter>
+    </ClInclude>
+    <ClInclude Include="CRedAttackState.h">
+      <Filter>Jungle\Red</Filter>
+    </ClInclude>
+    <ClInclude Include="CRedChaseState.h">
+      <Filter>Jungle\Red</Filter>
+    </ClInclude>
+    <ClInclude Include="CRedDeathState.h">
+      <Filter>Jungle\Red</Filter>
+    </ClInclude>
+    <ClInclude Include="CRedIdleState.h">
+      <Filter>Jungle\Red</Filter>
+    </ClInclude>
+    <ClInclude Include="CRedN2AState.h">
+      <Filter>Jungle\Red</Filter>
+    </ClInclude>
+    <ClInclude Include="CRedReturnState.h">
+      <Filter>Jungle\Red</Filter>
+    </ClInclude>
+    <ClInclude Include="CRedScript.h">
+      <Filter>Jungle\Red</Filter>
+    </ClInclude>
+    <ClInclude Include="CRedSpawnState.h">
+      <Filter>Jungle\Red</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

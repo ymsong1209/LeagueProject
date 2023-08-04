@@ -2,7 +2,8 @@
 #include <Engine/CSingleton.h>
 
 class IGameEventListener;
-class CGameEvent;
+#include "CGameEvent.h"
+//class CGameEvent;
 
 class CGameEventMgr :
 	public CSingleton<CGameEventMgr>
