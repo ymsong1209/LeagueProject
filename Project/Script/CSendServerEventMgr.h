@@ -1,15 +1,7 @@
 #pragma once
 #include <Engine/CSingleton.h>
 
-class CGameEvent;
-
-//// Event
-//struct tServerEvent
-//{
-//    SERVER_EVENT_TYPE Type;
-//    DWORD_PTR   wParam;
-//    DWORD_PTR   lParam;
-//};
+class CGameObject;
 
 class CSendServerEventMgr :
     public CSingleton<CSendServerEventMgr>
@@ -18,12 +10,15 @@ class CSendServerEventMgr :
 
 public:
     vector<tServerEvent> m_vecServerSendEvent;
+    CGameObject*         m_myPlayerObj;
 
 public:
+    void SetMyPlayer(CGameObject* _myPlayerObj) { m_myPlayerObj = _myPlayerObj; }
     void AddServerSendEvent(tServerEvent _evn) { m_vecServerSendEvent.push_back(_evn); }
 
     vector<tServerEvent>& GetVecEvent() { return m_vecServerSendEvent; }
     void ClearServerSendEvent() { m_vecServerSendEvent.clear(); }
+
 
     // Hit  : 맞았다.
     // Anim : 애니메이션이 변경되었다.
