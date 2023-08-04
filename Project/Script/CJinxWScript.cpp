@@ -5,7 +5,7 @@
 CJinxWScript::CJinxWScript()
 	:CProjectileScript((UINT)SCRIPT_TYPE::JINXWSCRIPT)
 {
-	m_fProjectileSpeed = 200.f;
+	m_fProjectileSpeed = 300.f;
 	m_fSkillRange = 150.f;
 }
 
@@ -37,8 +37,8 @@ void CJinxWScript::tick()
 	float distance = sqrt((pow(m_vSpawnPos.x - NewPos.x, 2) + pow(m_vSpawnPos.z - NewPos.z, 2)));
 	if (distance >= m_fSkillRange)
 	{
-		//if(!m_bUnitDead) // ÀÌÈÄ »ç¶óÁü
-		CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 2.f);
+		if(!m_bUnitDead) // ÀÌÈÄ »ç¶óÁü
+			CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 2.f);
 		//this->GetOwner()->Transform()->SetRelativePos(-666.f, -666.f, -666.f);
 		m_fProjectileSpeed = 0.f;
 		m_bUnitDead = true;
@@ -64,9 +64,12 @@ void CJinxWScript::OnOverlap(CCollider2D* _Other)
 		{
 			CSendServerEventMgr::GetInst()->SendHitPacket(GetServerID(), TargetServerID, m_iServerUserID, 1, SkillType::JINX_W);
 			CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 0.5f);
+		
 			//this->GetOwner()->Transform()->SetRelativePos(-666.f, -666.f, -666.f);
 			m_fProjectileSpeed = 0.f;
 			m_bUnitDead = true;
 		}
+			
+
 	}
 }

@@ -276,6 +276,8 @@ enum class EVENT_TYPE
 	DELETE_RESOURCE,	// wParam : RES_TYPE, lParam : Resource Adress
 
 	LEVEL_CHANGE,
+
+	LAYER_CHANGE,		// wParam : 바꿀 오브젝트 lParam : 바꿀 레이어 번호
 };
 
 

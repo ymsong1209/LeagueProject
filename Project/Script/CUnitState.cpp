@@ -12,6 +12,13 @@ CUnitState::CUnitState()
 	CGameEventMgr::GetInst()->AddListener(m_Listener);
 }
 
+CUnitState::CUnitState(const CUnitState& other)
+		: CState(other)
+		, m_Listener(new CUnitScriptEventListener(*other.m_Listener))
+{
+		m_Listener->m_state = this;
+}
+
 CUnitState::~CUnitState()
 {
 }

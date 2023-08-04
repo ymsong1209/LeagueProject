@@ -11,17 +11,28 @@ class CUnitState :
 {
 public:
     CUnitState();
+    CUnitState(const CUnitState& other);
     virtual ~CUnitState();
+
+    CLONE(CUnitState);
 
     class CUnitScriptEventListener
         : public IGameEventListener
     {
+        friend class CUnitState;
+
     private:
         CUnitState* m_state;
 
     public:
         CUnitScriptEventListener(CUnitState* _state)
             : m_state(_state)
+        {
+        }
+
+        CUnitScriptEventListener(const CUnitScriptEventListener& other)
+            : IGameEventListener(other)
+            , m_state(other.m_state)
         {
         }
 

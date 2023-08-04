@@ -224,7 +224,7 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 			AttackRange->AddComponent(new CAttackRangeScript);
 			AttackRange->SetName(L"AttackRange");
 			pObj->AddChild(AttackRange);
-			CUR_LEVEL->AddGameObject(AttackRange, L"AttackRange", false);
+			AttackRange->ChangeLayer(6);
 		}
 
 		else
@@ -589,7 +589,8 @@ void GameObjMgr::SendSkillSpawn(SkillInfo* _skillInfo, ClientServiceRef _service
 		std::lock_guard<std::mutex> lock(m);
 
 		SkillInfo skillInfoPacket = {};
-		// 아직 본인 id X : skillInfoPacket.SkillId = _skillInfo->SkillId;
+		// this time, we don't know skill projectile Id
+		//skillInfoPacket.SkillId = _skillInfo->SkillId;
 		skillInfoPacket.OwnerId = _skillInfo->OwnerId;
 		skillInfoPacket.TargetId = _skillInfo->TargetId;
 		skillInfoPacket.SkillLevel = _skillInfo->SkillLevel;
@@ -604,7 +605,7 @@ void GameObjMgr::SendSkillSpawn(SkillInfo* _skillInfo, ClientServiceRef _service
 		PKT_C_SKILL_PROJECTILE_WRITE  pktWriter(skillInfoPacket);
 
 		// 서버에게 패킷 전송
-		std::cout << "Send C_SKILL_PROJECTILE Pakcet." << endl;
+		std::cout << "Send C_SKILL_PROJECTILE Pakcet " << endl;
 		SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
 		_service->Broadcast(sendBuffer);
 
