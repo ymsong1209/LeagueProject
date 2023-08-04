@@ -61,14 +61,6 @@ void ServerPacketHandler::HandlePacket(PacketSessionRef& session, BYTE* buffer, 
 		Handle_S_SKILL_HIT(session, buffer, len);
 		break;
 
-	case S_SKILL_DAMAGE:
-		Handle_S_SKILL_DAMAGE(session, buffer, len);
-		break;
-
-	case S_SKILL_CC:
-		Handle_S_SKILL_CC(session, buffer, len);
-		break;
-
     case S_DESPAWN_OBJECT:
 		Handle_S_DESPAWN_OBJECT(session, buffer, len);
 		break;
@@ -515,11 +507,11 @@ void ServerPacketHandler::Handle_S_SKILL_PROJECTILE(PacketSessionRef& session, B
 	std::mutex m;
 	m.lock();
 
-	cout << "S_SKILL_PROJECTILE Packet" << endl;
 	BufferReader br(buffer, len);
 
 	PKT_S_SKILL_PROJECTILE* pkt = reinterpret_cast<PKT_S_SKILL_PROJECTILE*>(buffer);
 
+	cout << "S_SKILL_PROJECTILE Packet. projectileId : " << pkt->projectileId << endl;
 	if (pkt->Validate() == false)
 	{
 		cout << "S_SKILL_PROJECTILE Packet Validate False" << endl;
@@ -708,16 +700,3 @@ void ServerPacketHandler::Handle_S_TIME(PacketSessionRef& session, BYTE* buffer,
 	std::cout << "===============================" << endl;
 	m.unlock();
 }
-
-
-
-
-// ¾È¾¸
-void ServerPacketHandler::Handle_S_SKILL_DAMAGE(PacketSessionRef& session, BYTE* buffer, int32 len)
-{
-}
-
-void ServerPacketHandler::Handle_S_SKILL_CC(PacketSessionRef& session, BYTE* buffer, int32 len)
-{
-}
-

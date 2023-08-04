@@ -34,23 +34,17 @@ enum
 	C_SKILL_HIT = 17,
 	S_SKILL_HIT = 18,
 
-	C_SKILL_DAMAGE = 19,
-	S_SKILL_DAMAGE = 20,
+	C_DESPAWN_OBJECT = 19,
+	S_DESPAWN_OBJECT = 20,
 
-	C_SKILL_CC = 21,
-	S_SKILL_CC = 22,
+	C_KDA_CS = 21,
+	S_KDA_CS = 22,
 
-	C_DESPAWN_OBJECT = 23,
-	S_DESPAWN_OBJECT = 24,
+	C_SOUND = 23,
+	S_SOUND = 24,
 
-	C_KDA_CS = 25,
-	S_KDA_CS = 26,
-
-	C_SOUND = 27,
-	S_SOUND = 28,
-
-	C_TIME = 29,
-	S_TIME = 30,
+	C_TIME = 25,
+	S_TIME = 26,
 };
 
 class ServerPacketHandler
@@ -70,8 +64,6 @@ public:
 
 	static void Handle_S_SKILL_PROJECTILE(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_SKILL_HIT(PacketSessionRef& session, BYTE* buffer, int32 len);
-	static void Handle_S_SKILL_DAMAGE(PacketSessionRef& session, BYTE* buffer, int32 len);
-	static void Handle_S_SKILL_CC(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_DESPAWN_OBJECT(PacketSessionRef& session, BYTE* buffer, int32 len);
 
 	static void Handle_S_KDA_CS(PacketSessionRef& session, BYTE* buffer, int32 len);
@@ -733,96 +725,6 @@ struct PKT_S_SKILL_HIT {
 #pragma pack()
 
 #pragma pack(1)
-struct PKT_C_SKILL_DAMAGE {
-	uint16   packetSize;
-	uint16   packetId;
-	uint64   objecId;
-	float      damage;
-
-	bool Validate()
-	{
-		uint32 size = 0;
-		size += sizeof(PKT_C_SKILL_DAMAGE);
-		if (packetSize < size)
-			return false;
-
-		if (size != packetSize)
-			return false;
-
-		return true;
-	}
-};
-#pragma pack()
-
-#pragma pack(1)
-struct PKT_S_SKILL_DAMAGE {
-	uint16   packetSize;
-	uint16   packetId;
-	uint64   objecId;
-	float      damage;
-
-	bool Validate()
-	{
-		uint32 size = 0;
-		size += sizeof(PKT_S_SKILL_DAMAGE);
-		if (packetSize < size)
-			return false;
-
-		if (size != packetSize)
-			return false;
-
-		return true;
-	}
-};
-#pragma pack()
-
-#pragma pack(1)
-struct PKT_C_SKILL_CC {
-	uint16   packetSize;
-	uint16   packetId;
-	uint64   objecId;
-	CC		 CC;
-	float    time;
-
-	bool Validate()
-	{
-		uint32 size = 0;
-		size += sizeof(PKT_C_SKILL_CC);
-		if (packetSize < size)
-			return false;
-
-		if (size != packetSize)
-			return false;
-
-		return true;
-	}
-};
-#pragma pack()
-
-#pragma pack(1)
-struct PKT_S_SKILL_CC {
-	uint16   packetSize;
-	uint16   packetId;
-	uint64   objecId;
-	CC       CC;
-	float    time;
-
-	bool Validate()
-	{
-		uint32 size = 0;
-		size += sizeof(PKT_S_SKILL_CC);
-		if (packetSize < size)
-			return false;
-
-		if (size != packetSize)
-			return false;
-
-		return true;
-	}
-};
-#pragma pack()
-
-#pragma pack(1)
 struct PKT_C_DESPAWN_OBJECT {
 	uint16		packetSize;
 	uint16		packetId;
@@ -1282,69 +1184,6 @@ public:
 
 private:
 	PKT_C_SKILL_HIT* _pkt = nullptr;
-	SendBufferRef _sendBuffer;
-	BufferWriter _bw;
-};
-#pragma pack()
-
-#pragma pack(1)
-class PKT_C_SKILL_DAMAGE_WRITE {
-public:
-	PKT_C_SKILL_DAMAGE_WRITE(uint64 _objectId, float _damage) {
-		_sendBuffer = GSendBufferManager->Open(4096);
-		// 초기화
-		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
-
-		_pkt = _bw.Reserve<PKT_C_SKILL_DAMAGE>();
-		_pkt->packetSize = 0; // To Fill
-		_pkt->packetId = C_SKILL_DAMAGE;
-		_pkt->objecId = _objectId;
-		_pkt->damage = _damage;
-	}
-
-	SendBufferRef CloseAndReturn()
-	{
-		// 패킷 사이즈 계산
-		_pkt->packetSize = _bw.WriteSize();
-
-		_sendBuffer->Close(_bw.WriteSize());
-		return _sendBuffer;
-	}
-
-private:
-	PKT_C_SKILL_DAMAGE* _pkt = nullptr;
-	SendBufferRef _sendBuffer;
-	BufferWriter _bw;
-};
-#pragma pack()
-
-#pragma pack(1)
-class PKT_C_SKILL_CC_WRITE {
-public:
-	PKT_C_SKILL_CC_WRITE(uint64 _objectId, CC _CC, float _time) {
-		_sendBuffer = GSendBufferManager->Open(4096);
-		// 초기화
-		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
-
-		_pkt = _bw.Reserve<PKT_C_SKILL_CC>();
-		_pkt->packetSize = 0; // To Fill
-		_pkt->packetId = C_SKILL_CC;
-		_pkt->objecId = _objectId;
-		_pkt->CC = _CC;
-		_pkt->time = _time;
-	}
-
-	SendBufferRef CloseAndReturn()
-	{
-		// 패킷 사이즈 계산
-		_pkt->packetSize = _bw.WriteSize();
-
-		_sendBuffer->Close(_bw.WriteSize());
-		return _sendBuffer;
-	}
-
-private:
-	PKT_C_SKILL_CC* _pkt = nullptr;
 	SendBufferRef _sendBuffer;
 	BufferWriter _bw;
 };

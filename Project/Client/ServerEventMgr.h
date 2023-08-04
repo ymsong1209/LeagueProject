@@ -9,7 +9,12 @@ private:
 
     std::chrono::steady_clock::time_point last_tick_time;
 public:
-   void AddEvent(const tServerEvent& _evn) { m_vecEvent.push_back(_evn); }
+    void AddEvent(const tServerEvent& _evn) {
+        std::mutex m;
+        m.lock();
+        m_vecEvent.push_back(_evn);
+        m.unlock();
+    }
 
 public:
     void sendtick(ClientServiceRef _service);

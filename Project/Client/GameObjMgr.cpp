@@ -589,7 +589,8 @@ void GameObjMgr::SendSkillSpawn(SkillInfo* _skillInfo, ClientServiceRef _service
 		std::lock_guard<std::mutex> lock(m);
 
 		SkillInfo skillInfoPacket = {};
-		skillInfoPacket.SkillId = _skillInfo->SkillId;
+		// this time, we don't know skill projectile Id
+		//skillInfoPacket.SkillId = _skillInfo->SkillId;
 		skillInfoPacket.OwnerId = _skillInfo->OwnerId;
 		skillInfoPacket.TargetId = _skillInfo->TargetId;
 		skillInfoPacket.SkillLevel = _skillInfo->SkillLevel;
