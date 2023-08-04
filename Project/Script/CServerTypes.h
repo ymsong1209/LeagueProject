@@ -61,6 +61,17 @@ enum class CC
 	AIRBORNE = 1 << 4,
 };
 
+// 행동 제약
+enum class RESTRAINT
+{
+	CAN_MOVE = 1 << 0,
+	CAN_ATTACK = 1 << 1,
+	CAN_USE_SKILL = 1 << 2,
+
+	DEFAULT = CAN_MOVE | CAN_ATTACK | CAN_USE_SKILL,
+	BLOCK = 0,
+};
+
 enum class MinionType
 {
 	MELEE,      // 근거리
