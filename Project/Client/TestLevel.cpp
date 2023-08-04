@@ -29,8 +29,8 @@ void CreateTestLevel()
 	//return;	
 
 	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
-	pCurLevel->ChangeState(LEVEL_STATE::STOP);
-
+	pCurLevel->ChangeState(LEVEL_STATE::PLAY);
+	CTimeMgr::GetInst()->SetTimeScale(1.f);
 
 	//롤맵 레이어에는 롤맵만 넣을것!
 	pCurLevel->GetLayer(0)->SetName(L"Default");

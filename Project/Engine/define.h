@@ -276,9 +276,6 @@ enum class EVENT_TYPE
 	DELETE_RESOURCE,	// wParam : RES_TYPE, lParam : Resource Adress
 
 	LEVEL_CHANGE,
-
-	// Server Packet //
-	MOVE_PACKET,    // wParam : GameObject,  lParam : Update Move Packet
 };
 
 

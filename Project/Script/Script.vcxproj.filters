@@ -211,7 +211,6 @@
     <ClCompile Include="CTurretAttackScript.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="COtherPlayerScript.h" />
     <ClInclude Include="CPlayerScript.h" />
     <ClInclude Include="pch.h">
       <Filter>Default</Filter>
@@ -428,6 +427,7 @@
     </ClInclude>
     <ClInclude Include="CSoundTestScript.h" />
     <ClInclude Include="CTurretAttackScript.h" />
+    <ClInclude Include="COtherPlayerScript.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Scripts">
