@@ -191,9 +191,6 @@ void CChampionScript::GetInput()
 			if ((m_eRestraint & CAN_MOVE) == 0)
 				return;
 
-			// 움직일 수 없는 상황인 경우 return
-			if ((m_eRestraint & CAN_MOVE) == 0)
-				return;
 
 			CGameObject* Map = CLevelMgr::GetInst()->GetCurLevel()->FindParentObjectByName(L"LoLMapCollider");
 			IntersectResult result = MainCam->IsCollidingBtwRayRect(ray, Map);
