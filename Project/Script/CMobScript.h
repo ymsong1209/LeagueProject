@@ -13,18 +13,18 @@ public:
     CLONE(CMobScript);
 
 protected:
-    int         m_iDropGold;
+    int                 m_iDropGold;
 
-    float       m_fAggroRange;      // 
+    float               m_fAggroRange;      // 
 
-    int         m_iAttackTargetID;
+    CGameObject*        m_iAttackTargetObj;
 
 public:
     virtual void begin() override;
     virtual void tick() override;
 
 public:
-    int GetTargetID() { return m_iAttackTargetID; }
+    CGameObject* GetTargetObj() { return m_iAttackTargetObj; }
     void SetAggroRange(float _range) { m_fAggroRange = _range; }
     float GetAggroRange() { return m_fAggroRange; }
 };

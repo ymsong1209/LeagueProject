@@ -56,16 +56,20 @@ void CChampionWalkState::HandleEvent(CGameEvent& event)
 	}
 	break;
 
-	case GAME_EVENT_TYPE::PLAYER_GET_HIT:
+	case GAME_EVENT_TYPE::GET_HIT:
 	{
 		GetHitEvent* HitEvent = dynamic_cast<GetHitEvent*>(&event);
 
-		CGameObject* SkillUser = HitEvent->GetUserObj();
-		CGameObject* SkillTarget = HitEvent->GetTargetObj();
-		SkillType skilltype = HitEvent->GetSkillType();
-		int	SkillLevel = HitEvent->GetSkillLevel();
+		// 맞은 타겟이 본인인 경우에만 이벤트에 반응
+		if (HitEvent->GetTargetObj() == GetOwner())
+		{
+			CGameObject* SkillUser = HitEvent->GetUserObj();
+			CGameObject* SkillTarget = HitEvent->GetTargetObj();
+			SkillType skilltype = HitEvent->GetSkillType();
+			int	skillLevel = HitEvent->GetSkillLevel();
 
-		GetOwnerFSM()->GetOwner()->GetScript<CUnitScript>()->GetHit(skilltype, SkillTarget, SkillUser, SkillLevel);
+			GetOwnerFSM()->GetOwner()->GetScript<CUnitScript>()->GetHit(skilltype, SkillTarget, SkillUser, skillLevel);
+		}
 	}
 	break;
 

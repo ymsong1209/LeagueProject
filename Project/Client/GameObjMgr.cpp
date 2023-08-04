@@ -28,7 +28,6 @@
 #include <Script\CCameraMoveScript.h>
 
 #include <Script\CSkill.h>
-#include <Script\CBaseAttack.h>
 #include <Script/CBasicAttackScript.h>
 #include <Script/CProjectileScript.h>
 #include <Script/CAttackRangeScript.h>

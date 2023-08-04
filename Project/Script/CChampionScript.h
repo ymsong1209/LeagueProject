@@ -1,19 +1,8 @@
 #pragma once
 #include "CUnitScript.h"
 
-#ifndef CHAMPION_ENUM_DEFINED
-#define CHAMPION_ENUM_DEFINED
 
-// 행동 제약
-enum RESTRAINT
-{
-    CAN_MOVE = 1 << 0,
-    CAN_ATTACK = 1 << 1,
-    CAN_USE_SKILL = 1 << 2,
 
-    DEFAULT = CAN_MOVE | CAN_ATTACK | CAN_USE_SKILL,
-    BLOCK = 0,
-};
 
 // 소환사 주문(임시)
 enum class SUMMONERS_SPELL
@@ -26,10 +15,7 @@ enum class SUMMONERS_SPELL
     EXHAUST,    // 탈진
     CLEANSE,    // 정화
 };
-#endif
 
-#ifndef CHAMPION_CLASS_DEFINED
-#define CHAMPION_CLASS_DEFINED
 
 
 class CSkill;
@@ -49,14 +35,7 @@ protected:
     int                     m_iLevel;           // 레벨
     float                   m_fExp;             // 경험치
 
-
     float                   m_fRespawnTime;     // 부활 대기시간
-
-    CC                      m_eCurCC;
-    RESTRAINT               m_eRestraint;
-
-    CSkill*                 m_Skill[5];
-    int                     m_SkillLevel[5];
    
     SUMMONERS_SPELL*        m_EquippedSpell;    // 장착 소환사 주문(2칸 배열)
 
@@ -92,8 +71,4 @@ public:
 
 public:
     int     GetLevel() { return m_iLevel; }
-    float   GetDefencePower() { return m_fDefencePower; }
-    CSkill* GetSkill(int _i) { if (_i < 0 || _i >= 5) return nullptr; return m_Skill[_i]; }
-    int     GetSkillLevel(int _i) { return m_SkillLevel[_i]; }
 };
-#endif

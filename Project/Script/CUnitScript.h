@@ -1,7 +1,4 @@
-#ifndef _CUNITSRIPT_H
-#define _CUNITSRIPT_H
 #include <Engine\CScript.h>
-
 
 class CUnitScript :
     public CScript
@@ -16,30 +13,36 @@ public:
     CLONE(CUnitScript);
 
 protected:
-    UINT64              m_iServerID;        // 서버에게 부여받은 ID
-    wstring             m_strNickname;      // 닉네임
-    bool                m_bHost;            // 방장인지 여부
+    UINT64                  m_iServerID;        // 서버에게 부여받은 ID
+    wstring                 m_strNickname;      // 닉네임
+    bool                    m_bHost;            // 방장인지 여부
    
-    UnitType            m_eUnitType;        // 유닛 종류
-    Faction             m_eFaction;         // 진영(레드, 블루, 중립)
+    UnitType                m_eUnitType;        // 유닛 종류
+    Faction                 m_eFaction;         // 진영(레드, 블루, 중립)
 
-    float               m_fHP;              // 체력
-    float               m_fMaxHP;           // 전체 체력
-    float               m_fMP;
-    float               m_fMaxMP;
+    CC                      m_eCurCC;
+    RESTRAINT               m_eRestraint;
+        
+    CSkill*                 m_Skill[5];         // 타워/몹은 오직 0번 스킬(평타)만 있음!
+    int                     m_SkillLevel[5];    // 타워/몹은 오직 0번 스킬 1렙 고정
 
-    float               m_fAttackPower;     // 공격력
-    float               m_fDefencePower;    // 방어력
+    float                   m_fHP;              // 체력
+    float                   m_fMaxHP;           // 전체 체력
+    float                   m_fMP;
+    float                   m_fMaxMP;
+
+    float                   m_fAttackPower;     // 공격력
+    float                   m_fDefencePower;    // 방어력
 
 
-    float               m_fAttackSpeed;     // 공격(평타)속도
-    float               m_fAttackRange;     // 공격(평타)사거리
-    float               m_fMoveSpeed;       // 이동속도
+    float                   m_fAttackSpeed;     // 공격(평타)속도
+    float                   m_fAttackRange;     // 공격(평타)사거리
+    float                   m_fMoveSpeed;       // 이동속도
 
-    Vec3                m_vNextPos;
-    float               m_fFaceRot;
+    Vec3                    m_vNextPos;
+    float                   m_fFaceRot;
 
-    bool                m_bUnitDead;      // 유닛이 죽었는지(HP 0 이하)
+    bool                    m_bUnitDead;      // 유닛이 죽었는지(HP 0 이하)
 
 public:
     virtual void begin() override;
@@ -91,5 +94,7 @@ public:
     // 비동기
     void GetHit(SkillType _type, CGameObject* _SkillTarget, CGameObject* _SkillUser, int _SkillLevel);
 
+
+    CSkill* GetSkill(int _i) { if (_i < 0 || _i >= 5) return nullptr; return m_Skill[_i]; }
+    int     GetSkillLevel(int _i) { return m_SkillLevel[_i]; }
 };
-#endif // _CUNITSRIPT_H

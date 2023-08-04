@@ -4,6 +4,7 @@
 #include <Engine\CAnimator3D.h>
 #include "CChampionScript.h"
 #include "CTurretAttackScript.h"
+#include "CBasicAttack.h"
 
 CTurretScript::CTurretScript()
 	:CStructureScript((UINT)SCRIPT_TYPE::TURRETSCRIPT)
@@ -22,6 +23,12 @@ CTurretScript::~CTurretScript()
 
 void CTurretScript::begin()
 {
+	m_Skill[0] = new CBasicAttack;
+	m_Skill[0]->SetOwnerScript(this);
+	//m_Skill[0]->SetProjectileObj(); // 투사체 프리팹 설정
+	//m_Skill[0]->
+	m_SkillLevel[0] = 1;
+
 	CStructureScript::begin();
 }
 
