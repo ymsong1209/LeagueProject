@@ -28,6 +28,7 @@
 #include <Script/CJinxScript.h>
 #include <Script/CGrompScript.h>
 #include <Script\CFontUIScript.h>
+#include <Script\CScorePanelScript.h>
 
 void CreateTestLevel()
 {
@@ -97,6 +98,7 @@ void CreateTestLevel()
 	UIObj->AddComponent(new CMinimapUIScript);
 	UIObj->AddComponent(new CMouseCursorUIScript);
 	UIObj->AddComponent(new CFontUIScript);
+	UIObj->AddComponent(new CScorePanelScript);
 	SpawnGameObject(UIObj, Vec3(0.f, 0.f, 0.f), 31);
 
 

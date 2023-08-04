@@ -3,7 +3,7 @@
 
 void CMoveCursorUIScript::begin()
 {
-	Vec4 funcValue = Vec4(-2, 0, 0, 0);
+	Vec4 funcValue = Vec4(-3, 0, 0, 0);
 	MeshRender()->SetTexMovingStyle(MovTexType::OUTPUT, MovTexMoveType::VERTICAL);
 	MeshRender()->SetFuncValue(MovTexType::OUTPUT, funcValue);
 }

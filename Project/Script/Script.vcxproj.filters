@@ -134,6 +134,7 @@
     </ClCompile>
     <ClCompile Include="CSoundTestScript.cpp" />
     <ClCompile Include="CFontUIScript.cpp" />
+    <ClCompile Include="CScorePanelScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -172,6 +173,7 @@
     <ClInclude Include="CMoveCursorUIScript.h" />
     <ClInclude Include="CSoundTestScript.h" />
     <ClInclude Include="CFontUIScript.h" />
+    <ClInclude Include="CScorePanelScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">

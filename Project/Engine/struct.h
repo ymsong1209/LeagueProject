@@ -389,7 +389,7 @@ extern tGlobal GlobalData;
 
 struct tWorldHPInfo //패킷이 어떻들어오는지 잘 몰라서 일단 이렇게 정보를 가져온다고 가정하고 구조체를 만들어둠!
 {
-	float tHP;
+	float tHP; //어떤팀인지 알고 위치값만 알면 플레이어의 id는 딱히 알필요 없을듯..?!
 	float tMP;
 	float tTotalHP;
 	float tTotalMP;
@@ -397,6 +397,20 @@ struct tWorldHPInfo //패킷이 어떻들어오는지 잘 몰라서 일단 이렇게 정보를 가져온�
 	int  team; // 0: blue , 1: red , 2: player
 	wstring NickName; //띄울 닉네임
 	int		Level; //UI에 띄울 레벨
+};
+
+struct tWorldScoreInfo //패킷이 어떻들어오는지 잘 몰라서 일단 이렇게 정보를 가져온다고 가정하고 구조체를 만들어둠!
+{
+	int runningTime; // 게임진행시간(초)
+	int redScore;
+	int blueScore;
+};
+
+struct tMyPlayerInfo
+{
+	int mykill; //킬한 횟수
+	int mydeath; //죽은 횟수
+	int myCS; //미니언을 먹은개수
 };
 
 
