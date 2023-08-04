@@ -11,7 +11,7 @@ CGameEventMgr::CGameEventMgr()
 	m_vecEvent[(UINT)GAME_EVENT_TYPE::PLAYER_MOVE] = new MoveEvent;
 	//m_vecEvent[(UINT)GAME_EVENT_TYPE::PLAYER_KILL_CHAMPION] = new CGameEvent;
 	//m_vecEvent[(UINT)GAME_EVENT_TYPE::PLAYER_KILL_MOB] = new CGameEvent;
-	m_vecEvent[(UINT)GAME_EVENT_TYPE::PLAYER_GET_HIT] = new GetHitEvent;
+	m_vecEvent[(UINT)GAME_EVENT_TYPE::GET_HIT] = new GetHitEvent;
 	
 	m_vecEvent[(UINT)GAME_EVENT_TYPE::PLAYER_BASIC_ATTACK] = new BasicAttackEvent;
 	m_vecEvent[(UINT)GAME_EVENT_TYPE::PLAYER_SKILL_Q] = new PlayerQEvent;

@@ -1,4 +1,7 @@
+#pragma once
 #include <Engine\CScript.h>
+
+class CSkill;
 
 class CUnitScript :
     public CScript

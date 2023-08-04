@@ -51,7 +51,7 @@ enum class Lane
 };
 
 // 군중 제어기
-enum class CC
+enum CC
 {
 	CLEAR = 0,
 	SLOW = 1 << 0,
@@ -62,7 +62,7 @@ enum class CC
 };
 
 // 행동 제약
-enum class RESTRAINT
+enum RESTRAINT
 {
 	CAN_MOVE = 1 << 0,
 	CAN_ATTACK = 1 << 1,

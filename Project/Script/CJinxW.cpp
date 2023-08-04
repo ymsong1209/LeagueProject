@@ -48,8 +48,8 @@ bool CJinxW::Use()
 	// 서버에게 기본 공격 사용 신호를 전달
 	CSendServerEventMgr::GetInst()->SendUseSkillPacket(
 		m_UserObj->GetScript<CUnitScript>()->GetServerID(),
-		UINT64_MAX,
-		m_UserObj->GetScript<CChampionScript>()->GetSkillLevel(2),
+		UINT64_MAX,		// 논타겟팅일 경우 UINT64_MAX를 써주세요
+		m_UserObj->GetScript<CUnitScript>()->GetSkillLevel(2),
 		SkillType::JINX_W,
 		Vec3(0, 0, 0),
 		m_iProjectileCount,

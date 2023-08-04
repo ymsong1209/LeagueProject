@@ -11,7 +11,7 @@ enum class GAME_EVENT_TYPE
 	PLAYER_BASIC_ATTACK,
 	PLAYER_RECALL,
 	PLAYER_ABILITY_MODIFY,
-	PLAYER_GET_HIT,
+	GET_HIT,
 	PLAYER_SKILL_Q,
 	PLAYER_SKILL_W,
 	PLAYER_SKILL_E,
@@ -73,28 +73,13 @@ class MoveEvent :
 {
 public:
 	MoveEvent()
-		:m_iPlayerID(-1)
-		, m_vTargetPos(Vec3(0, 0, 0))
-		, m_fFaceRot(0)
 	{
 		m_eEventType = GAME_EVENT_TYPE::PLAYER_MOVE;
 	}
 
-private:
-	int             m_iPlayerID;
-	Vec3            m_vTargetPos;
-	float			m_fFaceRot;
-
 public:
-	void	SetPlayerID(int _i) { m_iPlayerID = _i; }
-	void	SetTargetPos(Vec3 _v) { m_vTargetPos = _v; }
-	void	SetFaceRot(float _f) { m_fFaceRot = _f; }
 
-	int		GetPlayerID() { return m_iPlayerID; }
-	Vec3	GetTargetPos() { return m_vTargetPos; }
-	float	GetFaceRot() { return m_fFaceRot; }
-
-	void Clear() override { m_iPlayerID = -1; m_vTargetPos = {}; m_fFaceRot = 0; }
+	void Clear() override {}
 };
 
 class BasicAttackEvent :
@@ -135,7 +120,7 @@ public:
 		: m_iUserObj(nullptr)
 		, m_eSkillType{ SkillType::NONE }
 	{
-		m_eEventType = GAME_EVENT_TYPE::PLAYER_GET_HIT;
+		m_eEventType = GAME_EVENT_TYPE::GET_HIT;
 	}
 
 private:

@@ -88,7 +88,7 @@ bool CChampionScript::CheckDeath()
 		m_bUnitDead = true;
 
 		// 아무것도 못하는 상태
-		m_eRestraint = BLOCK;
+		m_eRestraint = RESTRAINT::BLOCK;
 
 		m_fRespawnTime -= EditorDT;
 		// 부활 대기시간 끝나면
@@ -96,7 +96,7 @@ bool CChampionScript::CheckDeath()
 		{
 			m_fHP = m_fMaxHP;
 			m_fRespawnTime = 5;
-			m_eRestraint = DEFAULT;
+			m_eRestraint = RESTRAINT::DEFAULT;
 
 			// 길찾기 컴포넌트에 남은 경로값이 있다면 Clear
 			PathFinder()->ClearPath();
@@ -187,11 +187,11 @@ void CChampionScript::GetInput()
 			// 그 외(땅을 클릭한 경우)
 
 			// 움직일 수 없는 상황인 경우 return
-			if ((m_eRestraint & CAN_MOVE) == 0)
+			if ((m_eRestraint & RESTRAINT::CAN_MOVE) == 0)
 				return;
 
 			// 움직일 수 없는 상황인 경우 return
-			if ((m_eRestraint & CAN_MOVE) == 0)
+			if ((m_eRestraint & RESTRAINT::CAN_MOVE) == 0)
 				return;
 
 			CGameObject* Map = CLevelMgr::GetInst()->GetCurLevel()->FindParentObjectByName(L"LoLMapCollider");
@@ -203,7 +203,7 @@ void CChampionScript::GetInput()
 		if (KEY_TAP(KEY::Q))
 		{
 			// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-			if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[0]->GetCost() > m_fMP)
+			if ((m_eRestraint & RESTRAINT::CAN_USE_SKILL) == 0 || m_Skill[0]->GetCost() > m_fMP)
 				return;
 
 			if (m_Skill[1]->CSkill::Use())
@@ -214,7 +214,7 @@ void CChampionScript::GetInput()
 		if (KEY_TAP(KEY::W))
 		{
 			// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-			if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[1]->GetCost() > m_fMP)
+			if ((m_eRestraint & RESTRAINT::CAN_USE_SKILL) == 0 || m_Skill[1]->GetCost() > m_fMP)
 				return;
 
 			if (m_Skill[2]->CSkill::Use())
@@ -233,7 +233,7 @@ void CChampionScript::GetInput()
 		if (KEY_TAP(KEY::E))
 		{
 			// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-			if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[2]->GetCost() > m_fMP)
+			if ((m_eRestraint & RESTRAINT::CAN_USE_SKILL) == 0 || m_Skill[2]->GetCost() > m_fMP)
 				return;
 
 			if (m_Skill[3]->CSkill::Use())
@@ -250,7 +250,7 @@ void CChampionScript::GetInput()
 		if (KEY_TAP(KEY::R))
 		{
 			// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-			if ((m_eRestraint & CAN_USE_SKILL) == 0 || m_Skill[3]->GetCost() > m_fMP)
+			if ((m_eRestraint & RESTRAINT::CAN_USE_SKILL) == 0 || m_Skill[3]->GetCost() > m_fMP)
 				return;
 
 			if (m_Skill[4]->CSkill::Use())
@@ -278,7 +278,7 @@ void CChampionScript::CheckSkills()
 void CChampionScript::Move()
 {
 	// 움직일 수 없는 상황인 경우 return
-	if ((m_eRestraint & CAN_MOVE) == 0)
+	if ((m_eRestraint & RESTRAINT::CAN_MOVE) == 0)
 		return;
 
 	// 이동
@@ -288,11 +288,6 @@ void CChampionScript::Move()
 		MoveEvent* evn = dynamic_cast<MoveEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_MOVE));
 		if (evn != nullptr)
 		{
-			evn->Clear();
-			evn->SetPlayerID(GetOwner()->GetID());
-			evn->SetTargetPos(m_vNextPos);
-			evn->SetFaceRot(m_fFaceRot);
-
 			CGameEventMgr::GetInst()->NotifyEvent(*evn);
 		}
 	}
