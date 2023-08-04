@@ -224,7 +224,7 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 			AttackRange->AddComponent(new CAttackRangeScript);
 			AttackRange->SetName(L"AttackRange");
 			pObj->AddChild(AttackRange);
-			CUR_LEVEL->AddGameObject(AttackRange, L"AttackRange", false);
+			AttackRange->ChangeLayer(6);
 		}
 
 		else
