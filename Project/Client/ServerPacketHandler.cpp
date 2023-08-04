@@ -638,14 +638,14 @@ void ServerPacketHandler::Handle_S_KDA_CS(PacketSessionRef& session, BYTE* buffe
 		m.unlock();
 		return;
 	}
+	
+	KDACSInfo _kdacsInfo = pkt->kdacsInfo;
 
-	uint64	  _killerId = pkt->killerId;
-	UnitType  _deadObjUnitType = pkt->deadObjUnitType;
+	KDACSInfo* info = new KDACSInfo();
 
 	tServerEvent evn = {};
 	evn.Type = SERVER_EVENT_TYPE::KDA_CS_PACKET;
-	evn.wParam = _killerId;
-	evn.lParam = (DWORD_PTR)_deadObjUnitType;
+	evn.wParam = (DWORD_PTR)info;
 
 	ServerEventMgr::GetInst()->AddEvent(evn);
 

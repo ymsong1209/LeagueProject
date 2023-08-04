@@ -772,8 +772,7 @@ struct PKT_S_DESPAWN_OBJECT {
 struct PKT_C_KDA_CS {
 	uint16      packetSize;
 	uint16      packetId;
-	uint64      killerId;
-	UnitType   deadObjUnitType;
+	KDACSInfo kdacsInfo;
 
 	bool Validate()
 	{
@@ -790,13 +789,11 @@ struct PKT_C_KDA_CS {
 };
 #pragma pack()
 
-
 #pragma pack(1)
 struct PKT_S_KDA_CS {
 	uint16      packetSize;
 	uint16      packetId;
-	uint64      killerId;
-	UnitType   deadObjUnitType;
+	KDACSInfo kdacsInfo;
 
 	bool Validate()
 	{
@@ -1223,7 +1220,7 @@ private:
 #pragma pack(1)
 class PKT_C_KDA_CS_WRITE {
 public:
-	PKT_C_KDA_CS_WRITE(uint64 _killerId, UnitType _deadObjUnitType) {
+	PKT_C_KDA_CS_WRITE(KDACSInfo _kdacsInfo) {
 		_sendBuffer = GSendBufferManager->Open(4096);
 		// ÃÊ±âÈ­
 		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
@@ -1231,8 +1228,7 @@ public:
 		_pkt = _bw.Reserve<PKT_C_KDA_CS>();
 		_pkt->packetSize = 0; // To Fill
 		_pkt->packetId = C_KDA_CS;
-		_pkt->killerId = _killerId;
-		_pkt->deadObjUnitType = _deadObjUnitType;
+		_pkt->kdacsInfo = _kdacsInfo;
 	}
 
 	SendBufferRef CloseAndReturn()

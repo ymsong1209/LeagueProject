@@ -139,16 +139,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                 Send_CPickFaction(service);
             }
             else if (KEY_TAP(KEY::M))
-            {
+            { 
                 Send_CPickChampion(service,ChampionType::JINX);
             }
-            else if (KEY_TAP(KEY::NUM_4))
+            else if (KEY_TAP(KEY::NUM_4))      
             {
-                std::cout << "Test Pakcet" << endl;
-                PKT_C_KDA_CS_WRITE  pktWriter(6, UnitType::MELEE_MINION);
-                SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
-                service->Broadcast(sendBuffer);
-                std::cout << "===============================" << endl;
+               //std::cout << "Test Pakcet" << endl;
+               //PKT_C_KDA_CS_WRITE  pktWriter(6, UnitType::MELEE_MINION);
+               //SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+               //service->Broadcast(sendBuffer);
+               //std::cout << "===============================" << endl;
             }
 
 

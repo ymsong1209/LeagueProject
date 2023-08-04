@@ -119,10 +119,10 @@ void ServerEventMgr::sendtick(ClientServiceRef _service)
 
 		case SERVER_EVENT_TYPE::SEND_KDA_CS_PACKET:
 		{
-			UINT64 _killerId = (UINT64)(_vecScriptEvent[i].wParam);
-			UnitType _deadObjUnitType = (UnitType)(_vecScriptEvent[i].lParam);
-			// 작성중
-			//GameObjMgr::GetInst()->SendKDACS(_killerId, _deadObjUnitType, _service);
+			KDACSInfo* _kdacsInfo = (KDACSInfo*)(_vecScriptEvent[i].wParam);
+			GameObjMgr::GetInst()->SendKDACS(_kdacsInfo, _service);
+			delete _kdacsInfo; // 메모리 사용 해제
+			_kdacsInfo = nullptr;
 			break;
 		}
 
@@ -253,8 +253,29 @@ void ServerEventMgr::clienttick()
 
 			case SERVER_EVENT_TYPE::KDA_CS_PACKET:
 			{
-				uint64	 killerId = (uint64)m_vecEvent[i].wParam;
-				UnitType deadObjUnitType = (UnitType)m_vecEvent[i].lParam;
+				KDACSInfo* kdacsInfo = (KDACSInfo*)m_vecEvent[i].wParam;
+				
+				// 죽인게 나 && 죽은게 챔피언 -> K++
+				if (kdacsInfo->killerId == MyPlayer.id)
+				{
+					if (kdacsInfo->deadObjUnitType == UnitType::CHAMPION)
+					{
+						// 본인의 kill이 오르고, 킬로그 ui 띄움
+						// killerId가 victimId를 처치했습니다
+						int a = 0;
+					}
+					else if(kdacsInfo->deadObjUnitType == UnitType::MELEE_MINION
+						|| kdacsInfo->deadObjUnitType == UnitType::RANGED_MINION
+						|| kdacsInfo->deadObjUnitType == UnitType::SIEGE_MINION
+						|| kdacsInfo->deadObjUnitType == UnitType::SUPER_MINION)
+					{
+						// 본인의 cs가 오른다.
+					}
+					//else if(정글몹) //효과 UI
+				}
+				// 사용이 끝난 후에는 메모리를 해제
+				delete kdacsInfo;
+				kdacsInfo = nullptr;
 			}
 			break;
 

@@ -32,7 +32,7 @@ public:
                             , SkillType _skillType, Vec3 _offsetPos, int _projectileCount
                             , bool _useMousePos, Vec3 _mousePos, bool _useMouseDir, Vec3 _mouseDir);
     void SendDespawnPacket(UINT64 _objId, float _lifeSpan);
-    void SendKDACSPacket(UINT64 _killerId, UnitType _deadObjUnitType);
+    void SendKDACSPacket(UINT64 _killerId, UINT64 _victimId, UnitType _deadObjUnitType);
     void SendSoundPacket();
 };
 
