@@ -48,8 +48,8 @@ void CreateTestLevel()
 	//return;	
 
 	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
-	//pCurLevel->ChangeState(LEVEL_STATE::PLAY);
-	//CTimeMgr::GetInst()->SetTimeScale(1.f);    // TestLevel에서 강제로 PLAY모드로 전환해서 DT를 흐르게 하기 위함. 추후 삭제
+	pCurLevel->ChangeState(LEVEL_STATE::PLAY);
+	CTimeMgr::GetInst()->SetTimeScale(1.f);    // TestLevel에서 강제로 PLAY모드로 전환해서 DT를 흐르게 하기 위함. 추후 삭제
 
 	//롤맵 레이어에는 롤맵만 넣을것!
 	pCurLevel->GetLayer(0)->SetName(L"Default");
@@ -627,7 +627,7 @@ void PlaceLand()
 			pObj->GetRenderComponent()->SetBoundingBoxOffsetUse(true);
 			pObj->GetRenderComponent()->SetBoundingBoxOffset(offset);
 
-			SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 6);
+			SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), L"Lolmap");
 		}
 	}
 }
