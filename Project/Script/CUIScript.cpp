@@ -5,7 +5,7 @@
 void CUIScript::begin()
 {
 	CUnitScript* UnitInfo = CSendServerEventMgr::GetInst()->GetMyPlayer()->GetScript<CUnitScript>();
-	SetChampInFo(UnitInfo->GetChampType(), SUMMONERS_SPELL::HEAL, SUMMONERS_SPELL::EXHAUST);
+	SetChampInFo(UnitInfo->GetChampType(), SUMMONERS_SPELL::HEAL, SUMMONERS_SPELL::FLASH);
 
 	m_UIBackPanel = new CGameObject;
 	m_UIBackPanel->SetName(L"UIBackPanel");

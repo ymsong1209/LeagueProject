@@ -66,6 +66,7 @@ void CCharacterUIScript::BeginOverlap(CCollider2D* _Other)
 
 void CCharacterUIScript::SkillUILoad()
 {
+	//JINX_E
 	/* 주 의 !!*/
 	//머터리얼 이름은 CHARACTER_TYPE + "_" + SkillNum 형태로 되어있어야함 (ex: MALPHGITE_Q)
 	//그래야 알아서 캐릭터별로 머터리얼을 찾아옴

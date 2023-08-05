@@ -79,14 +79,14 @@ void CCollider2D::finaltick()
 	if (0 < m_iCollisionCount)
 		vColor = Vec4(1.f, 0.f, 0.f, 1.f);
 
-	//if (m_bDrawCollision)
-	//{
+	if (m_bDrawCollision)
+	{
 		// 마지막에 0.f로 설정해 GameObject가 사라지면 Collider도 사라진다.
 		if (COLLIDER2D_TYPE::CIRCLE == m_Shape)
 			DrawDebugCircle(m_matCollider2D, vColor, 0.f);
 		else
 			DrawDebugRect(m_matCollider2D, vColor, 0.f);
-	//}
+	}
 }
 
 
