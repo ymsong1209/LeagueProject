@@ -11,7 +11,7 @@ enum class SERVER_EVENT_TYPE
 	ANIM_PACKET,		// wParam : GameObject,		   lParam : AnimInfo
 	SKILL_HIT_PACKET,	// WParam : uin64 hitId,	   lParam : SkillInfo
 	DESPAWN_PACKET,		// wParam : uint64 despawnId,  lParam : float lifespan
-	KDA_CS_PACKET,		// wParam : uint64 killerId,   lParam : UnitType deadObjType
+	KDA_CS_PACKET,		// wParam : KDACSInfo
 	SOUND_PACKET,
 	TIME_PACKET,
 
@@ -20,7 +20,7 @@ enum class SERVER_EVENT_TYPE
 	SKILL_PROJECTILE_PACKET,  // wParam : SkillInfo
 	SEND_HIT_PACKET, 	      // wParam : HitInfo, 
 	SEND_DESPAWN_PACKET,      // wParam : objId,  lParam : lifeSpanTime
-	SEND_KDA_CS_PACKET,		  // wParam : killerId, lParam : UnitType _deadObjUnitType
+	SEND_KDA_CS_PACKET,		  // wParam : KDACSInfo
 	SEND_SOUND_PACKET,
 };
 
@@ -217,4 +217,11 @@ struct SoundInfo
 	bool            bOverlap;
 	float           fRange;
 	vec3Server      soundPos;
+};
+
+struct KDACSInfo
+{
+	UINT64      killerId;
+	UINT64      victimId;
+	UnitType   deadObjUnitType;
 };

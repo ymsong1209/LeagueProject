@@ -86,8 +86,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     //this_thread::sleep_for(1s);
     //
     //ClientServiceRef service = MakeShared<ClientService>(
-    //    // NetAddress(L"221.148.206.199", 40000),  // 다혜집 데탑 IP
-    //    NetAddress(L"14.35.246.224", 40000),    // snow
+    //    NetAddress(L"221.148.206.199", 40000),  // 다혜집 데탑 IP
+    //    //NetAddress(L"14.35.246.224", 40000),    // snow
     //    //NetAddress(L"192.168.0.19", 40000), //  내부ip
     //    //NetAddress(L"127.0.0.1", 40000), // 로컬 호스트
     //    MakeShared<IocpCore>(),
@@ -139,23 +139,23 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             //    Send_CPickFaction(service);
             //}
             //else if (KEY_TAP(KEY::M))
-            //{
+            //{ 
             //    Send_CPickChampion(service,ChampionType::JINX);
             //}
-            //else if (KEY_TAP(KEY::NUM_4))
+            //else if (KEY_TAP(KEY::NUM_4))      
             //{
-            //    std::cout << "Test Pakcet" << endl;
-            //    PKT_C_KDA_CS_WRITE  pktWriter(6, UnitType::MELEE_MINION);
-            //    SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
-            //    service->Broadcast(sendBuffer);
-            //    std::cout << "===============================" << endl;
+            //   //std::cout << "Test Pakcet" << endl;
+            //   //PKT_C_KDA_CS_WRITE  pktWriter(6, UnitType::MELEE_MINION);
+            //   //SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+            //   //service->Broadcast(sendBuffer);
+            //   //std::cout << "===============================" << endl;
             //}
 
 
            CEngine::GetInst()->progress();
            
-          // if (IsInGame) // C->S 패킷 전송
-          //     ServerEventMgr::GetInst()->sendtick(service);
+          //if (IsInGame) // C->S 패킷 전송
+          //    ServerEventMgr::GetInst()->sendtick(service);
 
            // 랜덤으로 온 서버패킷을 핸들러에서 서버 이벤트 매니저에 등록해둠.
           
@@ -181,11 +181,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     }
 
-   // GThreadManager->Join();
+     //GThreadManager->Join();
     
     //// 콘솔 창 닫기
     ////fclose(stdout);
-    //FreeConsole();
+   // FreeConsole();
 
 
     return (int) msg.wParam;

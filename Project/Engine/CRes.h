@@ -47,6 +47,7 @@ public:
 
     friend class CResMgr;
     friend class CFBXLoader;
+    friend class CreateMaterialUI;
 
     template<typename T>
     friend class Ptr;

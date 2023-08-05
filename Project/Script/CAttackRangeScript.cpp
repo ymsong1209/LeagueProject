@@ -15,7 +15,6 @@ CAttackRangeScript::~CAttackRangeScript()
 
 void CAttackRangeScript::BeginOverlap(CCollider2D* _Other)
 {
-
 	// º»ÀÎ
 	CUnitScript* User = GetOwner()->GetParent()->GetScript<CUnitScript>();
 

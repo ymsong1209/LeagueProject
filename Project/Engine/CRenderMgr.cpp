@@ -383,6 +383,11 @@ void CRenderMgr::MRT_Clear()
     } 
 }
 
+void CRenderMgr::MRT_Clear(MRT_TYPE _Type)
+{
+    GetMRT(_Type)->Clear();
+}
+
 void CRenderMgr::UpdateData()
 {
     // GlobalData에 광원 개수정보 세팅

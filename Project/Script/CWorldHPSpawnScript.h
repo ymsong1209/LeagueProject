@@ -1,0 +1,24 @@
+#pragma once
+#include <Engine\CScript.h>
+
+class CWorldHPSpawnScript :
+    public CScript
+{
+private:
+    vector<tWorldHPInfo> m_vOtherplayerInfo; //다른 플레이어들의 정보. 자신을 제외한 플레이어의 개수만큼 들어와야함.
+    vector<CGameObject*> m_vWorldBar;
+    //map으로 처리 하려했으나, m_vOtherplayerInfo값은 매번 바뀌므로 그냥 각자 벡터로 만들고 같은 인덱스 번호를 가져오는것으로 채택함.
+
+public:
+    virtual void begin() override;
+    virtual void tick() override;
+    virtual void BeginOverlap(CCollider2D* _Other) override;
+
+public:
+    CLONE(CWorldHPSpawnScript);
+
+public:
+    CWorldHPSpawnScript();
+    ~CWorldHPSpawnScript();
+};
+
