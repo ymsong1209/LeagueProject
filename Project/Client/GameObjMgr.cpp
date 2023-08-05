@@ -176,8 +176,8 @@ void GameObjMgr::SendMyPlayerMove(ClientServiceRef _service)
 
 	Vec3  CurPos = obj->Transform()->GetRelativePos();
 
-	if (PrevPos == CurPos) // 이전 좌표와 변화가 없다면 move packet을 보내지 않는다. return
-		return;
+	//if (PrevPos == CurPos) // 이전 좌표와 변화가 없다면 move packet을 보내지 않는다. return
+	//	return;
 
 	PrevPos = CurPos;
 

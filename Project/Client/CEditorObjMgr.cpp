@@ -9,8 +9,11 @@
 #include <Engine\CTimeMgr.h>
 #include <Engine\CKeyMgr.h>
 
+#include <Engine/CCamera.h>
+
 #include <Script\CCameraMoveScript.h>
 #include <Script\CInGameCameraScript.h>
+
 
 CEditorObjMgr::CEditorObjMgr()
 	: m_DebugShape{}
@@ -128,6 +131,8 @@ void CEditorObjMgr::render()
 {
 	for (size_t i = 0; i < m_vecEditorObj.size(); ++i)
 	{
+		//CCamera* mainCam =CRenderMgr::GetInst()->GetMainCam();
+		//mainCam->render();
 		m_vecEditorObj[i]->render();
 	}
 
