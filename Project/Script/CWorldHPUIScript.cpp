@@ -56,6 +56,8 @@ CWorldHPUIScript::CWorldHPUIScript(CGameObject* _Obj)
 	:CScript((UINT)SCRIPT_TYPE::WORLDHPUISCRIPT)
 	, TotalMP(100.f)
 	, TotalHP(100.f)
+	, CurrentMP(0.f)
+	, CurrentHP(0.f)
 	, m_OwnerObj(_Obj)
 {
 }

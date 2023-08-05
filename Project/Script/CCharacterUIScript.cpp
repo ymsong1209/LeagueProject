@@ -70,7 +70,6 @@ void CCharacterUIScript::SkillUILoad()
 	//머터리얼 이름은 CHARACTER_TYPE + "_" + SkillNum 형태로 되어있어야함 (ex: MALPHGITE_Q)
 	//그래야 알아서 캐릭터별로 머터리얼을 찾아옴
 	CUIScript::begin();
-
 	PrevCharacter = GetCharacterType();
 	wstring UIpath = L"material\\";
 	wstring mtrl = L".mtrl";

@@ -50,6 +50,16 @@ enum class Lane
 	END,
 };
 
+
+enum ChampionType
+{
+	NONE,
+	BLITZCRANK,
+	JINX,
+	AMUMU,
+	MALPHITE,
+};
+
 // 군중 제어기
 enum CC
 {

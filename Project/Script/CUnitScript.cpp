@@ -17,6 +17,7 @@ CUnitScript::CUnitScript(UINT ScriptType)
 	, m_vNextPos{}
 	, m_fFaceRot(0)
 	, m_bUnitDead(false)
+	, m_ChampType(ChampionType::NONE)
 {
 }
 

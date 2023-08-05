@@ -3,16 +3,6 @@
 //#include <Script/CServerTypes.h>
 
 
-enum ChampionType
-{
-    NONE,
-    BLITZCRANK,
-    JINX,
-    AMUMU,
-    MALPHITE,
-};
-
-
 struct AnimInfoPacket {
     uint16  targetId;
     bool    bRepeat;
