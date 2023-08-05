@@ -70,6 +70,7 @@ void CCharacterUIScript::SkillUILoad()
 	/* 주 의 !!*/
 	//머터리얼 이름은 CHARACTER_TYPE + "_" + SkillNum 형태로 되어있어야함 (ex: MALPHGITE_Q)
 	//그래야 알아서 캐릭터별로 머터리얼을 찾아옴
+	//챔피언 아이콘은  CharacterType _ CIRCLE 임  (JINX_CIRCLE)
 	CUIScript::begin();
 	wstring UIpath = L"material\\";
 	wstring mtrl = L".mtrl";

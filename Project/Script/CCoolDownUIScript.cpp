@@ -2,13 +2,14 @@
 #include "CCoolDownUIScript.h"
 #include <Engine\CRenderMgr.h>
 #include <Engine\CCamera.h>
+#include "CUnitScript.h"
+#include "CSkill.h"
 
 CCoolDownUIScript::CCoolDownUIScript(COOL_DOWN_TYPE _SkillType)
 	:CScript((UINT)SCRIPT_TYPE::COOLDOWNUISCRIPT)
-	, m_fcooldownTime(3.f)
-	, m_felapsedTime(0.f)
+	, m_fCooldownTime(3.f)
 	, m_bSkillUse(false)
-	, m_dCoolDown(0.f)
+	, m_fCoolRatio(0.f)
 	, m_SkillType(_SkillType)
 {
 }
@@ -30,38 +31,61 @@ void CCoolDownUIScript::begin()
 
 void CCoolDownUIScript::tick()
 {
-	if (KEY_TAP(KEY::F7) && m_SkillType == COOL_DOWN_TYPE::Q)
+	if (m_SkillType == COOL_DOWN_TYPE::Q)
 	{
-		if (!m_bSkillUse)
-		{
-			m_bSkillUse = true; // 스킬 사용 시작
-			m_felapsedTime = 0.0f; // 스킬 사용 시간 초기화
-		}
+		CUnitScript* UnitInfo = CSendServerEventMgr::GetInst()->GetMyPlayer()->GetScript<CUnitScript>();
+		m_fCooldownTime = UnitInfo->GetSkill(1)->GetCoolDown();
+		m_fCurCoolTime = UnitInfo->GetSkill(1)->GetCurCoolDown();
+
+		//여기까지~
+	}
+
+	if (m_SkillType == COOL_DOWN_TYPE::W)
+	{
+
+	}
+
+	if (m_SkillType == COOL_DOWN_TYPE::E)
+	{
+
+	}
+
+	if (m_SkillType == COOL_DOWN_TYPE::R)
+	{
+
+	}
+	//===========디버깅용================
+	if (KEY_TAP(KEY::F7) && !m_bSkillUse)
+	{
+		m_bSkillUse = true;
 	}
 
 	if (!m_bSkillUse)
-		m_dCoolDown = 0.0f; // 쿨타임 없음, 0 설정
+	{
+		m_fCoolRatio = 0.0f; // 쿨타임 없음, 0 설정
+		m_fCurCoolTime = m_fCooldownTime;
+	}
 
 	if (m_bSkillUse)
 	{
-		m_felapsedTime += DT; // 스킬 사용 시간 누적
-		if (m_felapsedTime >= m_fcooldownTime)
+		m_fCurCoolTime -= DT;
+		if (m_fCurCoolTime <= 0)
 		{
-			m_dCoolDown = 0.0f;  // 쿨타임 종료, 0 설정
+			m_fCoolRatio = 0.0f;  // 쿨타임 종료, 0 설정
 			m_bSkillUse = false; // 다음 사용을 위해 초기화
 		}
 		else
-			m_dCoolDown = 1.0f - (m_felapsedTime / m_fcooldownTime);// 쿨타임 중, 쿨타임의 진행 비율을 계산하여 설정
+			m_fCoolRatio = m_fCurCoolTime / m_fCooldownTime;// 쿨타임 중, 쿨타임의 진행 비율을 계산하여 설정
 	}
 
-	MeshRender()->GetMaterial(0)->SetScalarParam(FLOAT_0, &m_dCoolDown);
+	MeshRender()->GetMaterial(0)->SetScalarParam(FLOAT_0, &m_fCoolRatio);
 
 	if (m_bSkillUse)
 	{
 		//=============폰트출력===============
 		if (UICamera && m_SkillType != COOL_DOWN_TYPE::PASSIVE)
 		{
-			float Timer = m_fcooldownTime - m_felapsedTime;
+			float Timer = m_fCurCoolTime;
 			int floor = static_cast<int>(std::floor(fabsf(Timer + 1)));
 
 			tFont Font3 = {};
