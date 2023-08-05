@@ -396,6 +396,29 @@ void GameObjMgr::SendDespawn(UINT64 _despawnId, float lifespan, ClientServiceRef
 	}
 }
 
+void GameObjMgr::SendKDACS(KDACSInfo* _kdacsInfo, ClientServiceRef _service)
+{
+	// 누군가 죽였고, 누군가 죽었다고 알린다. (죽은 id는 UnitType에 따라 확인유무 갈림)
+	std::mutex m;
+	{
+		std::lock_guard<std::mutex> lock(m);
+
+		KDACSInfo kdacsInfo = {};
+		kdacsInfo.killerId = _kdacsInfo->killerId;
+		kdacsInfo.victimId = _kdacsInfo->victimId;
+		kdacsInfo.deadObjUnitType = _kdacsInfo->deadObjUnitType;
+
+		PKT_C_KDA_CS_WRITE  pktWriter(kdacsInfo);
+
+		// 서버에게 패킷 전송
+		std::cout << "Send C_KDA_CS Pakcet " << endl;
+		SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+		_service->Broadcast(sendBuffer);
+
+		std::cout << "===============================" << endl;
+	}
+}
+
 void GameObjMgr::SendObjectAnim(AnimInfo* _animInfo, ClientServiceRef _service)
 {
 	// _id 오브젝트의 애니메이션을 보낸다.

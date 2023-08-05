@@ -265,23 +265,23 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 		// 인게임 진입
 
 		// 맵 불러옴
-		//CreateTestLevel();
+		CreateTestLevel();
 
-		//=========json level load===========================================
-		CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevelFromJson(L"level\\createTest.json");
-		tEvent evn = {};
-		evn.Type = EVENT_TYPE::LEVEL_CHANGE;
-		evn.wParam = (DWORD_PTR)pLoadedLevel;
-		CEventMgr::GetInst()->AddEvent(evn);
-		//inspector  UI update
-		InspectorUI* inspector = (InspectorUI*)ImGuiMgr::GetInst()->FindUI("##Inspector");
-		inspector->SetTargetObject(nullptr);
-
-		// if curState is stop,  next level state is also stop
-		CLevel* level = CUR_LEVEL;
-		if (level->GetState() == LEVEL_STATE::STOP) {
-			CTimeMgr::GetInst()->SetTimeScale(0.f);
-		}
+		////=========json level load===========================================
+		//CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevelFromJson(L"level\\createTest.json");
+		//tEvent evn = {};
+		//evn.Type = EVENT_TYPE::LEVEL_CHANGE;
+		//evn.wParam = (DWORD_PTR)pLoadedLevel;
+		//CEventMgr::GetInst()->AddEvent(evn);
+		////inspector  UI update
+		//InspectorUI* inspector = (InspectorUI*)ImGuiMgr::GetInst()->FindUI("##Inspector");
+		//inspector->SetTargetObject(nullptr);
+		//
+		//// if curState is stop,  next level state is also stop
+		//CLevel* level = CUR_LEVEL;
+		//if (level->GetState() == LEVEL_STATE::STOP) {
+		//	CTimeMgr::GetInst()->SetTimeScale(0.f);
+		//}
 		//===================================================================
 
 
@@ -638,14 +638,17 @@ void ServerPacketHandler::Handle_S_KDA_CS(PacketSessionRef& session, BYTE* buffe
 		m.unlock();
 		return;
 	}
+	
+	KDACSInfo _kdacsInfo = pkt->kdacsInfo;
 
-	uint64	  _killerId = pkt->killerId;
-	UnitType  _deadObjUnitType = pkt->deadObjUnitType;
+	KDACSInfo* info = new KDACSInfo();
+	info->killerId = _kdacsInfo.killerId;
+	info->victimId = _kdacsInfo.victimId;
+	info->deadObjUnitType = _kdacsInfo.deadObjUnitType;
 
 	tServerEvent evn = {};
 	evn.Type = SERVER_EVENT_TYPE::KDA_CS_PACKET;
-	evn.wParam = _killerId;
-	evn.lParam = (DWORD_PTR)_deadObjUnitType;
+	evn.wParam = (DWORD_PTR)info;
 
 	ServerEventMgr::GetInst()->AddEvent(evn);
 

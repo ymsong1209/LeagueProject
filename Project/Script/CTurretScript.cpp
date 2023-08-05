@@ -82,7 +82,8 @@ void CTurretScript::tick()
 
 
 		//타겟 확정나면 공격
-		if (m_pTarget) {
+		if (m_pTarget) 
+		{
 			//나중에는 prefab로 소환해야함
 			//CGameObject* TurretAttack = CResMgr::GetInst()->FindRes<CPrefab>(L"TurretAttack")->Instantiate();
 			CGameObject* TurretAttack = new CGameObject;
