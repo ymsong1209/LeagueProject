@@ -13,7 +13,7 @@ private:
 	map<uint64, CGameObject*> _placedObjects; // 포탑, 억제기, 넥서스 (배치형 오브젝터, 맵 처음)
 
 	// My Player Prev
-	CChampionScript* MyPlayerScript;
+	CUnitScript* MyPlayerScript;
 	Vec3 PrevPos = Vec3(0, 0, 0);  // playerScript의 prevPos는 매 틱마다 이전좌표고, 이건 1/10초전 좌표.
 
 	// Objects, PlacedObjects Prev

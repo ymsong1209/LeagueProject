@@ -80,12 +80,12 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 		{
 			pObj->AddComponent(new CPathFinder);
 			pObj->AddComponent(new CFsm);
-			MyPlayerScript = pObj->GetScript<CChampionScript>();
+			MyPlayerScript = pObj->GetScript<CUnitScript>();
 			MyPlayerScript->SetServerID(_info.id);
 			MyPlayerScript->SetNickname(_info.nickname);
 			MyPlayerScript->SetHost(_info.host);
 			MyPlayerScript->SetFaction(_info.faction);
-
+			MyPlayerScript->SetChampType(_info.champion);
 			// Script 프로젝트에 본인 플레이어 게임 오브젝트 보관 (UI용)
 			CSendServerEventMgr::GetInst()->SetMyPlayer(pObj);
 
