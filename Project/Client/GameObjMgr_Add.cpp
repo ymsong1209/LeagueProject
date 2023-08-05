@@ -133,10 +133,9 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
 		pObj->Transform()->SetUseMouseOutline(true);
-
+		pObj->Transform()->SetRelativeRot(Vec3(_info.posInfo.moveDir.x, _info.posInfo.moveDir.y, _info.posInfo.moveDir.z));
 		Vec3 spawnPos = Vec3(_info.posInfo.pos.x, _info.posInfo.pos.y, _info.posInfo.pos.z);
 		SpawnGameObject(pObj, spawnPos, L"Player");
-
 
 		_players.insert(std::make_pair(_info.id, pObj));
 	}
