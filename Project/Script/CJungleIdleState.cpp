@@ -18,7 +18,7 @@ void CJungleIdleState::Enter()
 void CJungleIdleState::tick()
 {
 	CJungleMonsterScript* script = GetOwner()->GetScript<CJungleMonsterScript>();
-	const vector<CGameObject*>& Champions = CLevelMgr::GetInst()->GetCurLevel()->FindLayerByName(L"Champion")->GetObjects();
+	const vector<CGameObject*>& Champions = CLevelMgr::GetInst()->GetCurLevel()->FindLayerByName(L"Player")->GetObjects();
 	Vec3 MonAggroPos = script->GetAggroPos();
 	float AggroRadius = script->GetAggroRange();
 	for (const CGameObject* Champ : Champions) {

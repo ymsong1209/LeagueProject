@@ -37,8 +37,8 @@ void CreateTestLevel()
 	//return;	
 
 	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
-	pCurLevel->ChangeState(LEVEL_STATE::PLAY);
-	CTimeMgr::GetInst()->SetTimeScale(1.f);    // TestLevel에서 강제로 PLAY모드로 전환해서 DT를 흐르게 하기 위함. 추후 삭제
+	//pCurLevel->ChangeState(LEVEL_STATE::PLAY);
+	//CTimeMgr::GetInst()->SetTimeScale(1.f);    // TestLevel에서 강제로 PLAY모드로 전환해서 DT를 흐르게 하기 위함. 추후 삭제
 
 	//롤맵 레이어에는 롤맵만 넣을것!
 	pCurLevel->GetLayer(0)->SetName(L"Default");
@@ -545,13 +545,8 @@ void CreateTestLevel()
 	pSoundTestObj->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
 	pSoundTestObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
 
-		
-	
-
-
-
 	SpawnGameObject(pSoundTestObj, Vec3(0.f, 0.f, 0.f), 0.f);
-	 
+	// 
 	// 충돌 시킬 레이어 짝 지정
 	//CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");
 	//CCollisionMgr::GetInst()->LayerCheck(L"Default", L"Default");
@@ -617,7 +612,7 @@ void SpawnJungleMob()
 			Gromp->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(270.f), 0.f));
 			CGrompScript* Script = Gromp->GetScript<CGrompScript>();
 			Script->SetAggroPos(Vec3(323.f, 0.f, 1242.f));
-			SpawnGameObject(Gromp, Vec3(323.f, 10.f, 1242.f), 0);
+			SpawnGameObject(Gromp, Vec3(323.f, 10.f, 1242.f), L"Mob");
 
 			CGameObject* GrompAggro = new CGameObject;
 			GrompAggro->SetName(L"SOUTH_GrompAggroRadius");
@@ -642,7 +637,7 @@ void SpawnJungleMob()
 			MurkWolf->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(24.f), 0.f));
 			CMurkWolfScript* script = MurkWolf->GetScript <CMurkWolfScript>();
 			script->SetAggroPos(Vec3(564.f, 0.f, 959.f));
-			SpawnGameObject(MurkWolf, Vec3(550.f, 15.f, 944.f), 0);
+			SpawnGameObject(MurkWolf, Vec3(550.f, 15.f, 944.f), L"Mob");
 
 			CGameObject* MurkWolfAggro = new CGameObject;
 			MurkWolfAggro->SetName(L"SOUTH_MurkWolfAggroRadius");
@@ -666,7 +661,7 @@ void SpawnJungleMob()
 			MurkWolf_Mini->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(36.f), 0.f));
 			CMurkWolfMiniScript* Script = MurkWolf_Mini->GetScript<CMurkWolfMiniScript>();
 			Script->SetAggroPos(Vec3(564.f, 0.f, 964.f));
-			SpawnGameObject(MurkWolf_Mini, Vec3(552.f, 15.f, 964.f), 0);
+			SpawnGameObject(MurkWolf_Mini, Vec3(552.f, 15.f, 964.f), L"Mob");
 		}
 		//블루팀 늑대 째깐이(우)
 		{
@@ -680,7 +675,7 @@ void SpawnJungleMob()
 			MurkWolf_Mini->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(36.f), 0.f));
 			CMurkWolfMiniScript* Script = MurkWolf_Mini->GetScript<CMurkWolfMiniScript>();
 			Script->SetAggroPos(Vec3(564.f, 0.f, 964.f));
-			SpawnGameObject(MurkWolf_Mini, Vec3(580.f, 15.f, 944.f), 0);
+			SpawnGameObject(MurkWolf_Mini, Vec3(580.f, 15.f, 944.f), L"Mob");
 		}
 		//블루팀 돌거북
 		{
@@ -694,7 +689,7 @@ void SpawnJungleMob()
 			Krug->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
 			CKrugScript* Script = Krug->GetScript<CKrugScript>();
 			Script->SetAggroPos(Vec3(1238.f, 0.f, 389.f));
-			SpawnGameObject(Krug, Vec3(1221.f, 15.f, 379.f), 0);
+			SpawnGameObject(Krug, Vec3(1221.f, 15.f, 379.f), L"Mob");
 
 			CGameObject* KrugAggro = new CGameObject;
 			KrugAggro->SetName(L"SOUTH_KrugAggroRadius");
@@ -718,7 +713,7 @@ void SpawnJungleMob()
 			Krug_Mini->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
 			CKrugMiniScript* Script = Krug_Mini->GetScript<CKrugMiniScript>();
 			Script->SetAggroPos(Vec3(1238.f, 0.f, 389.f));
-			SpawnGameObject(Krug_Mini, Vec3(1252.f, 15.f, 379.f), 0);
+			SpawnGameObject(Krug_Mini, Vec3(1252.f, 15.f, 379.f), L"Mob");
 		}
 		//블루팀 칼날부리
 		{
@@ -732,7 +727,7 @@ void SpawnJungleMob()
 			RazorBeak->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(-90.f), 0.f));
 			CRazorBeakScript* Script = RazorBeak->GetScript<CRazorBeakScript>();
 			Script->SetAggroPos(Vec3(1033.f, 0.f, 782.f));
-			SpawnGameObject(RazorBeak, Vec3(1008.f, 15.f, 800.f), 0);
+			SpawnGameObject(RazorBeak, Vec3(1008.f, 15.f, 800.f), L"Mob");
 
 			CGameObject* RazorBeakAggro = new CGameObject;
 			RazorBeakAggro->SetName(L"SOUTH_RazorBeakAggroRadius");
@@ -757,7 +752,7 @@ void SpawnJungleMob()
 			RazorBeak->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
 			CRazorBeakMiniScript* Script = RazorBeak->GetScript<CRazorBeakMiniScript>();
 			Script->SetAggroPos(Vec3(1033.f, 0.f, 782.f));
-			SpawnGameObject(RazorBeak, Vec3(1026.f, 15.f, 810.f), 0);
+			SpawnGameObject(RazorBeak, Vec3(1026.f, 15.f, 810.f), L"Mob");
 		}
 		//블루팀 블루
 		{
@@ -771,7 +766,7 @@ void SpawnJungleMob()
 			Blue->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(90.f), 0.f));
 			CBlueScript* Script = Blue->GetScript<CBlueScript>();
 			Script->SetAggroPos(Vec3(563.f, 0.f, 1164.f));
-			SpawnGameObject(Blue, Vec3(563.f, 15.f, 1164.f), 0);
+			SpawnGameObject(Blue, Vec3(563.f, 15.f, 1164.f), L"Mob");
 
 			CGameObject* BlueAggro = new CGameObject;
 			BlueAggro->SetName(L"SOUTH_BlueAggroRadius");
