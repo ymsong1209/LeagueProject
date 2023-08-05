@@ -36,8 +36,6 @@ void CCoolDownUIScript::tick()
 		CUnitScript* UnitInfo = CSendServerEventMgr::GetInst()->GetMyPlayer()->GetScript<CUnitScript>();
 		m_fCooldownTime = UnitInfo->GetSkill(1)->GetCoolDown();
 		m_fCurCoolTime = UnitInfo->GetSkill(1)->GetCurCoolDown();
-
-		//여기까지~
 	}
 
 	if (m_SkillType == COOL_DOWN_TYPE::W)
