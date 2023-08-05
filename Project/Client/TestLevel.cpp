@@ -48,8 +48,8 @@ void CreateTestLevel()
 	//return;	
 
 	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
-	pCurLevel->ChangeState(LEVEL_STATE::PLAY);
-	CTimeMgr::GetInst()->SetTimeScale(1.f);    // TestLevel에서 강제로 PLAY모드로 전환해서 DT를 흐르게 하기 위함. 추후 삭제
+	pCurLevel->ChangeState(LEVEL_STATE::STOP);
+	//CTimeMgr::GetInst()->SetTimeScale(1.f);    // TestLevel에서 강제로 PLAY모드로 전환해서 DT를 흐르게 하기 위함. 추후 삭제
 
 	//롤맵 레이어에는 롤맵만 넣을것!
 	pCurLevel->GetLayer(0)->SetName(L"Default");
@@ -100,17 +100,6 @@ void CreateTestLevel()
 	pUICam->Camera()->SetLayerMask(31, true);	// 모든 레이어 체크
 	SpawnGameObject(pUICam, Vec3(0.f, 0.f, 0.f), 0);
 
-	CGameObject* WorldBar = new CGameObject;
-	WorldBar->SetName(L"WorldBar");
-	WorldBar->AddComponent(new CTransform);
-	WorldBar->AddComponent(new CMeshRender);
-	WorldBar->AddComponent(new CWorldHPUIScript);
-	WorldBar->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	WorldBar->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\WorldBar.mtrl"), 0);
-	WorldBar->MeshRender()->SetRaySightCulling(false);
-	WorldBar->Transform()->SetRelativeScale(Vec3(136.f, 29.f, 1.f));
-
-	SpawnGameObject(WorldBar, Vec3(100.f, 100.f, 100.f), 2);
 
 
 	//CGameObject* UIObj = new CGameObject; //각종 스크립트에서 처리할 것들

@@ -4,6 +4,7 @@
 #include <Engine\CLevelMgr.h>
 #include <Engine\CRenderMgr.h>
 #include <Engine\CEngine.h>
+#include "CSendServerEventMgr.h"
 
 void CWorldHPSpawnScript::begin()
 {
@@ -50,10 +51,11 @@ void CWorldHPSpawnScript::begin()
 		//WorldBar->Transform()->SetRelativeScale(Vec3(34.83f, 7.594f, 17.02f));
 		//WorldBar->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(60.f), 0.f, 0.f));
 		Vec3 Pos = m_vOtherplayerInfo[i].Pos;
-
-		CGameObject* Jinx = CLevelMgr::GetInst()->GetCurLevel()->FindObjectByName(L"Jinx");
-		SpawnGameObject(WorldBar, Jinx->Transform()->GetRelativePos(), 31);
+		SpawnGameObject(WorldBar, Pos, 31);
 		m_vWorldBar.push_back(WorldBar);
+
+		// Vector타입: 모든 플레이어를 서버에서 가져옴->CSendServerEventMgr::GetInst()->GetVecAllPlayer();
+		// 내 플레이어를 서버에서 가져옴 둘의주소값비교해서 같으면 그것이 나임 CSendServerEventMgr::GetInst()->GetMyPlayer();
 	}
 }
 
