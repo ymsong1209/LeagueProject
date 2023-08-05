@@ -187,6 +187,7 @@ void GameObjMgr::SendMyPlayerMove(ClientServiceRef _service)
 	float CurMP = obj->GetScript<CUnitScript>()->GetCurMP();
 	float CurAttackPower = obj->GetScript<CUnitScript>()->GetAttackPower();
 	float CurDefencePower = obj->GetScript<CUnitScript>()->GetDefencePower();
+	CC CurCC = obj->GetScript<CUnitScript>()->GetCC();
 
 	ObjectMove move = {};
 	//move.LV = CurLV;
@@ -200,6 +201,7 @@ void GameObjMgr::SendMyPlayerMove(ClientServiceRef _service)
 	move.moveDir.x = CurRot.x;
 	move.moveDir.y = CurRot.y;
 	move.moveDir.z = CurRot.z;
+	move.CC = CurCC;
 
 	// 서버에게 패킷 전송
 	std::cout << "C_PLAYER_MOVE Pakcet. id : "<< MyPlayer.id << endl;

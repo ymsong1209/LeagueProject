@@ -4,12 +4,12 @@
 #include "pch.h"
 #include "Client.h"
 
-//#include "ThreadManager.h"
-//#include "Service.h"
-//#include "Session.h"
-//#include "BufferReader.h"
-//#include "ServerPacketHandler.h"
-//#include "ServerSession.h"
+#include "ThreadManager.h"
+#include "Service.h"
+#include "Session.h"
+#include "BufferReader.h"
+#include "ServerPacketHandler.h"
+#include "ServerSession.h"
 
 #include "CEditorObjMgr.h"
 #include <Engine\CDevice.h>
@@ -67,7 +67,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     ImGuiMgr::GetInst()->init(g_hWnd);
 
     // 테스트 용 레벨 생성
-    CreateTestLevel();
+    //CreateTestLevel();
     //CreateLoginLevel();
 
     // 메세지 루프
@@ -130,6 +130,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
         else
         {
+
             //if (KEY_TAP(KEY::SPACE) && service->GetCurrentSessionCount() > 0)
             //{
             //    Send_CLogin(service, L"KIYO");
@@ -153,17 +154,19 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 
            CEngine::GetInst()->progress();
-           
+
+
           //if (IsInGame) // C->S 패킷 전송
           //    ServerEventMgr::GetInst()->sendtick(service);
+
 
            // 랜덤으로 온 서버패킷을 핸들러에서 서버 이벤트 매니저에 등록해둠.
           
            // Event 처리
            CEventMgr::GetInst()->tick();
 
-           //// Server에서 온 패킷 정보를 클라이언트에 반영.
-           //ServerEventMgr::GetInst()->clienttick();
+           // Server에서 온 패킷 정보를 클라이언트에 반영.
+           ServerEventMgr::GetInst()->clienttick();
 
 
            CEditorObjMgr::GetInst()->progress();
@@ -186,6 +189,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     //// 콘솔 창 닫기
     ////fclose(stdout);
    // FreeConsole();
+
 
 
     return (int) msg.wParam;
@@ -285,8 +289,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
     case WM_DESTROY:
-        //GThreadManager->SetFlags(0);
-        //this_thread::sleep_for(1s);
+        GThreadManager->SetFlags(0);
+        this_thread::sleep_for(1s);
         PostQuitMessage(0);
         break;
 

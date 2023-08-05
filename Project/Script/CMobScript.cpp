@@ -32,4 +32,5 @@ void CMobScript::begin()
 
 void CMobScript::tick()
 {
+	CUnitScript::tick();
 }

@@ -364,6 +364,7 @@
     <ClInclude Include="CSkillMgr.h" />
     <ClInclude Include="CSoundTestScript.h" />
     <ClInclude Include="CStructureScript.h" />
+    <ClInclude Include="CTimedEffect.h" />
     <ClInclude Include="CTurretAttackScript.h" />
     <ClInclude Include="CTurretScript.h" />
     <ClInclude Include="CUIScript.h" />
@@ -563,6 +564,7 @@
     <ClCompile Include="CSkillMgr.cpp" />
     <ClCompile Include="CSoundTestScript.cpp" />
     <ClCompile Include="CStructureScript.cpp" />
+    <ClCompile Include="CTimedEffect.cpp" />
     <ClCompile Include="CTurretAttackScript.cpp" />
     <ClCompile Include="CTurretScript.cpp" />
     <ClCompile Include="CUIScript.cpp" />

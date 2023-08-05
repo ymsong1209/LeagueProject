@@ -5,7 +5,7 @@ class CUnitScript;
 class CTimedEffect
 {
 public:
-	CTimedEffect(CUnitScript* targetScript, float duration, float damagePerTick, int numTicks, CC ccType);
+	CTimedEffect(CUnitScript* targetScript, float duration, float damagePerTick, int numTicks, CC ccType = CC::CLEAR);
 	~CTimedEffect();
 
 private:
@@ -21,7 +21,7 @@ public:
 
 	bool isFinished() const { return m_fDuration <= 0.f; }
 
-	void applyCC();
+	void applyCC(CC _ccType);
 	void applyDamage();
 };
 
