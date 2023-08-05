@@ -20,8 +20,12 @@ public:
     int                  m_RedScore;
     int                  m_BlueScore;
 
+    vector<CGameObject*>     m_vecAllPlayer;
+
+
 public:
     void SetMyPlayer(CGameObject* _myPlayerObj) { m_myPlayerObj = _myPlayerObj; }
+    void SetVecAllPlyer(vector<CGameObject*> _allPlayer) { m_vecAllPlayer = _allPlayer; }
     
     void AddMyKillCnt(int _cnt) { m_myKillCnt += _cnt; }
     void AddMyDeathCnt(int _cnt) { m_myDeathCnt += _cnt; }
@@ -29,6 +33,8 @@ public:
     void AddRedScore(int _cnt) { m_RedScore += _cnt; }
     void AddBlueScore(int _cnt) { m_BlueScore += _cnt; }
 
+    vector<CGameObject*> GetVecAllPlayer() { return m_vecAllPlayer; }
+    
     int GetMyKillCnt() { return m_myKillCnt; }
     int GetMyDeathCnt() { return m_myDeathCnt; }
     int GetMyCSCnt() { return m_myCSCnt; }

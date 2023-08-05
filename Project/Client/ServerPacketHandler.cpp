@@ -17,6 +17,8 @@
 #include "ImGuiMgr.h"
 #include "InspectorUI.h"
 
+#include <Script/CSendServerEventMgr.h>
+
 void ServerPacketHandler::HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
 	BufferReader br(buffer, len);
@@ -344,6 +346,18 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 		//CreateFactionLevel();
 	}
 
+
+	// 모든 플레이어를 만든 뒤, 이 GameObjMgr의 players 를 꺼내서 
+	// 줘야한다. (UI용)
+	map<uint64, CGameObject*> mapPlayers = GameObjMgr::GetInst()->GetPlayers();
+	vector<CGameObject*> vecAllPlayer;
+
+	for (const auto& pair : mapPlayers) {
+		vecAllPlayer.push_back(pair.second);
+	}
+	CSendServerEventMgr::GetInst()->SetVecAllPlyer(vecAllPlayer);
+	
+	
 	std::cout << "===============================" << endl;
 
 	m.unlock();

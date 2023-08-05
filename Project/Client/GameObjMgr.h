@@ -21,6 +21,7 @@ private:
 	map<uint64, float> _placedObjectsPrevHP;
 
 public:
+	map<uint64, CGameObject*> GetPlayers() { return _players; }
 	map<uint64, CGameObject*> GetObjects() { return _objects; }
 	map<uint64, CGameObject*> GetPlacedObjects() { return _placedObjects; }
 
