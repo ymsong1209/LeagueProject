@@ -305,6 +305,7 @@
     <ClInclude Include="PathFinderUI.h">
       <Filter>UI\InspectorUI\ComponentUI\15. PathFinderUI</Filter>
     </ClInclude>
+    <ClInclude Include="CreateMaterialUI.h" />
     <ClInclude Include="GameObjMgr.h">
       <Filter>ServerMgr</Filter>
     </ClInclude>
@@ -487,6 +488,7 @@
     <ClCompile Include="PathFinderUI.cpp">
       <Filter>UI\InspectorUI\ComponentUI\15. PathFinderUI</Filter>
     </ClCompile>
+    <ClCompile Include="CreateMaterialUI.cpp" />
     <ClCompile Include="GameObjMgr.cpp">
       <Filter>ServerMgr</Filter>
     </ClCompile>

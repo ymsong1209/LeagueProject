@@ -36,6 +36,7 @@
 
 #include <Script\COtherPlayerScript.h>
 #include "ServerEventMgr.h"
+#include <Script/CSendServerEventMgr.h>
 
 // ===============================================
 //   Add
@@ -74,6 +75,7 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 		}break;
 		}
 
+		// 챔피언 타입과 관계없이 공통
 		if (myPlayer)
 		{
 			pObj->AddComponent(new CPathFinder);
@@ -83,6 +85,9 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 			MyPlayerScript->SetNickname(_info.nickname);
 			MyPlayerScript->SetHost(_info.host);
 			MyPlayerScript->SetFaction(_info.faction);
+
+			// Script 프로젝트에 본인 플레이어 게임 오브젝트 보관 (UI용)
+			CSendServerEventMgr::GetInst()->SetMyPlayer(pObj);
 
 			pObj->SetName(L"MyPlayer");
 

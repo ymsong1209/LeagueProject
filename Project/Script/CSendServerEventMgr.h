@@ -1,15 +1,7 @@
 #pragma once
 #include <Engine/CSingleton.h>
 
-class CGameEvent;
-
-//// Event
-//struct tServerEvent
-//{
-//    SERVER_EVENT_TYPE Type;
-//    DWORD_PTR   wParam;
-//    DWORD_PTR   lParam;
-//};
+class CGameObject;
 
 class CSendServerEventMgr :
     public CSingleton<CSendServerEventMgr>
@@ -19,11 +11,37 @@ class CSendServerEventMgr :
 public:
     vector<tServerEvent> m_vecServerSendEvent;
 
+    // UI용
+    CGameObject*         m_myPlayerObj;
+    int                  m_myKillCnt;
+    int                  m_myDeathCnt;
+    int                  m_myCSCnt;
+
+    int                  m_RedScore;
+    int                  m_BlueScore;
+
 public:
+    void SetMyPlayer(CGameObject* _myPlayerObj) { m_myPlayerObj = _myPlayerObj; }
+    
+    void AddMyKillCnt(int _cnt) { m_myKillCnt += _cnt; }
+    void AddMyDeathCnt(int _cnt) { m_myDeathCnt += _cnt; }
+    void AddMyCSCnt(int _cnt) { m_myCSCnt += _cnt; }
+    void AddRedScore(int _cnt) { m_RedScore += _cnt; }
+    void AddBlueScore(int _cnt) { m_BlueScore += _cnt; }
+
+    int GetMyKillCnt() { return m_myKillCnt; }
+    int GetMyDeathCnt() { return m_myDeathCnt; }
+    int GetMyCSCnt() { return m_myCSCnt; }
+    int GetRedScore() { return m_RedScore; }
+    int GetBlueScore() { return m_BlueScore; }
+
+    
+    
     void AddServerSendEvent(tServerEvent _evn) { m_vecServerSendEvent.push_back(_evn); }
 
     vector<tServerEvent>& GetVecEvent() { return m_vecServerSendEvent; }
     void ClearServerSendEvent() { m_vecServerSendEvent.clear(); }
+
 
     // Hit  : 맞았다.
     // Anim : 애니메이션이 변경되었다.
@@ -37,7 +55,7 @@ public:
                             , SkillType _skillType, Vec3 _offsetPos, int _projectileCount
                             , bool _useMousePos, Vec3 _mousePos, bool _useMouseDir, Vec3 _mouseDir);
     void SendDespawnPacket(UINT64 _objId, float _lifeSpan);
-    void SendKDACSPacket(UINT64 _killerId, UnitType _deadObjUnitType);
+    void SendKDACSPacket(UINT64 _killerId, UINT64 _victimId, UnitType _deadObjUnitType);
     void SendSoundPacket();
 };
 

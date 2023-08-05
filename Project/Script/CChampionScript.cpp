@@ -36,7 +36,7 @@ CChampionScript::CChampionScript()
 
 CChampionScript::~CChampionScript()
 {
-	Safe_Del_Array(m_Skill);
+	
 }
 
 void CChampionScript::begin()

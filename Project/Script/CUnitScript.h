@@ -60,6 +60,7 @@ public:
 
 public:
     bool IsUnitDead() { return m_bUnitDead; }
+    void SetUnitDead(bool _dead) { m_bUnitDead = _dead; }
 
     void CheckTimedEffect();
     void CheckCC();

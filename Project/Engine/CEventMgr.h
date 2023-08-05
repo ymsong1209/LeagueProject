@@ -16,6 +16,7 @@ private:
 public:
     void AddEvent(const tEvent& _evn) { m_vecEvent.push_back(_evn); }
     bool IsLevelChanged() { return m_LevelChanged; }
+    void SetIsLevelChanged(bool _IsResetOuliner) { m_LevelChanged = _IsResetOuliner; } //아웃라이너 새로고침
 
     //InspectorUI가 GC를 알아야지 object가 삭제예정인지 확인 가능
     vector<CGameObject*>    GetGC() {return m_vecGC;}

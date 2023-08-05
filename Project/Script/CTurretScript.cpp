@@ -19,6 +19,7 @@ CTurretScript::CTurretScript()
 
 CTurretScript::~CTurretScript()
 {
+	
 }
 
 void CTurretScript::begin()
@@ -27,7 +28,7 @@ void CTurretScript::begin()
 	m_Skill[0]->SetOwnerScript(this);
 	//m_Skill[0]->SetProjectileObj(); // 투사체 프리팹 설정
 	//m_Skill[0]->
-	m_SkillLevel[0] = 1;
+	//m_SkillLevel[0] = 1;
 
 	CStructureScript::begin();
 }
@@ -81,7 +82,8 @@ void CTurretScript::tick()
 
 
 		//타겟 확정나면 공격
-		if (m_pTarget) {
+		if (m_pTarget) 
+		{
 			//나중에는 prefab로 소환해야함
 			//CGameObject* TurretAttack = CResMgr::GetInst()->FindRes<CPrefab>(L"TurretAttack")->Instantiate();
 			CGameObject* TurretAttack = new CGameObject;

@@ -29,6 +29,7 @@ CUnitScript::CUnitScript()
 
 CUnitScript::~CUnitScript()
 {
+	Safe_Del_Array(m_Skill);
 }
 
 void CUnitScript::begin()

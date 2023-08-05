@@ -282,7 +282,8 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 		//if (level->GetState() == LEVEL_STATE::STOP) {
 		//	CTimeMgr::GetInst()->SetTimeScale(0.f);
 		//}
-		////===================================================================
+		//===================================================================
+
 
 
 		PKT_S_GAME_START::PlayerInfoList playerInfoBuffs = pkt->GetPlayerInfoList();
@@ -638,14 +639,17 @@ void ServerPacketHandler::Handle_S_KDA_CS(PacketSessionRef& session, BYTE* buffe
 		m.unlock();
 		return;
 	}
+	
+	KDACSInfo _kdacsInfo = pkt->kdacsInfo;
 
-	uint64	  _killerId = pkt->killerId;
-	UnitType  _deadObjUnitType = pkt->deadObjUnitType;
+	KDACSInfo* info = new KDACSInfo();
+	info->killerId = _kdacsInfo.killerId;
+	info->victimId = _kdacsInfo.victimId;
+	info->deadObjUnitType = _kdacsInfo.deadObjUnitType;
 
 	tServerEvent evn = {};
 	evn.Type = SERVER_EVENT_TYPE::KDA_CS_PACKET;
-	evn.wParam = _killerId;
-	evn.lParam = (DWORD_PTR)_deadObjUnitType;
+	evn.wParam = (DWORD_PTR)info;
 
 	ServerEventMgr::GetInst()->AddEvent(evn);
 

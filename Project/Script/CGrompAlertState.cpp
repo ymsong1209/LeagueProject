@@ -14,6 +14,9 @@ CGrompAlertState::~CGrompAlertState()
 void CGrompAlertState::Enter()
 {
 	m_iAggroAnimNum = 1;
+	wstring basename = L"gromp\\_idle1_aggro";
+	GetOwner()->Animator3D()->GetCurAnim()->Reset();
+	GetOwner()->Animator3D()->PlayOnce(basename);
 	CJungleAlertState::Enter();
 }
 
