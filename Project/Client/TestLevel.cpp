@@ -48,8 +48,8 @@ void CreateTestLevel()
 	//return;	
 
 	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
-	pCurLevel->ChangeState(LEVEL_STATE::STOP);
-	//CTimeMgr::GetInst()->SetTimeScale(1.f);    // TestLevel에서 강제로 PLAY모드로 전환해서 DT를 흐르게 하기 위함. 추후 삭제
+	pCurLevel->ChangeState(LEVEL_STATE::PLAY);
+	CTimeMgr::GetInst()->SetTimeScale(1.f);    // TestLevel에서 강제로 PLAY모드로 전환해서 DT를 흐르게 하기 위함. 추후 삭제
 
 	//롤맵 레이어에는 롤맵만 넣을것!
 	pCurLevel->GetLayer(0)->SetName(L"Default");
@@ -244,7 +244,7 @@ void CreateTestLevel()
 		//pObj->Transform()->SetRelativeScale(Vec3(0.3, 0.3, 0.3));
 		//SpawnGameObject(pObj, Vec3(190.f, 0.f, 607.f), 0);
 
-		pMeshData = nullptr;
+		/*pMeshData = nullptr;
 		pObj = nullptr;
 		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
 		pObj = pMeshData->Instantiate();
@@ -272,7 +272,7 @@ void CreateTestLevel()
 		
 		pObj->Transform()->SetUseMouseOutline(true);
 		
-		SpawnGameObject(pObj, Vec3(0, 0, 0), L"Player");
+		SpawnGameObject(pObj, Vec3(0, 0, 0), L"Player");*/
 
 
 
