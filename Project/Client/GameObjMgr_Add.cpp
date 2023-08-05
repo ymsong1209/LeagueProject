@@ -85,7 +85,7 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 			MyPlayerScript->SetNickname(_info.nickname);
 			MyPlayerScript->SetHost(_info.host);
 			MyPlayerScript->SetFaction(_info.faction);
-			MyPlayerScript->SetChampType(_info.champion);
+
 			// Script 프로젝트에 본인 플레이어 게임 오브젝트 보관 (UI용)
 			CSendServerEventMgr::GetInst()->SetMyPlayer(pObj);
 
@@ -117,7 +117,8 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 		}
 
 		//pObj->SetName(_info.nickname);
-
+		CUnitScript* pUnit = pObj->GetScript<CUnitScript>();
+		pUnit->SetChampType(_info.champion);
 
 		pObj->AddComponent(new CCollider3D);
 		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
