@@ -145,6 +145,7 @@ void CCollider2D::SaveToLevelFile(FILE* _File)
 	fwrite(&m_vOffsetRot, sizeof(Vec3), 1, _File);
 	fwrite(&m_bAbsolute, sizeof(bool), 1, _File);
 	fwrite(&m_Shape, sizeof(UINT), 1, _File);
+
 }
 
 void CCollider2D::LoadFromLevelFile(FILE* _File)

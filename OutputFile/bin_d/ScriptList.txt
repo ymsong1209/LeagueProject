@@ -1,5 +1,6 @@
 CAttackRangeScript
 CBasicAttackScript
+CBlueScript
 CCameraMoveScript
 CChampionScript
 CGrompScript
@@ -8,12 +9,19 @@ CInhibitorScript
 CJinxScript
 CJinxWScript
 CJungleMonsterScript
+CKrugMiniScript
+CKrugScript
 CMinionScript
 CMobScript
+CMurkWolfMiniScript
+CMurkWolfScript
 CNexusScript
 COtherPlayerScript
 CPlayerScript
 CProjectileScript
+CRazorBeakMiniScript
+CRazorBeakScript
+CRedScript
 CSoundTestScript
 CStructureScript
 CTurretAttackScript

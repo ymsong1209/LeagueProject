@@ -2,7 +2,7 @@
 #include <Engine/CSingleton.h>
 
 class CSkill;
-
+class CProjectileScript;
 
 class CSkillMgr :
     public CSingleton<CSkillMgr>

@@ -13,15 +13,18 @@ CGrompDeathState::~CGrompDeathState()
 void CGrompDeathState::Enter()
 {
 	GetOwner()->Animator3D()->PlayOnce(L"gromp\\_death");
-}
-
-void CGrompDeathState::Exit()
-{
+	CJungleDeathState::Enter();
 }
 
 void CGrompDeathState::tick()
 {
 	CJungleDeathState::tick();
 }
+
+void CGrompDeathState::Exit()
+{
+}
+
+
 
 

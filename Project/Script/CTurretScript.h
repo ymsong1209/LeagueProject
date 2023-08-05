@@ -5,7 +5,7 @@ class CTurretScript :
 {
 public:
     CTurretScript();
-    ~CTurretScript();
+    virtual ~CTurretScript();
 
     CLONE(CTurretScript);
 

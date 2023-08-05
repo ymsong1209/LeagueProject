@@ -37,7 +37,7 @@ void CJungleReturnState::tick()
 	}
 	else {
 		//GetOwner()->PathFinder()->FindPath(targetpos);
-		script->PathFindMove(100.f, true);
+		script->PathFindMove(75.f, true);
 	}
 }
 
