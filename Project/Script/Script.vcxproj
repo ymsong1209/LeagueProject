@@ -561,6 +561,7 @@
     <ClCompile Include="CScorePanelScript.cpp" />
     <ClCompile Include="CScriptMgr.cpp" />
     <ClCompile Include="CSendServerEventMgr.cpp" />
+    <ClCompile Include="CServerTypes.cpp" />
     <ClCompile Include="CSkill.cpp" />
     <ClCompile Include="CSkillMgr.cpp" />
     <ClCompile Include="CSoundTestScript.cpp" />

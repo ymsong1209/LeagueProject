@@ -51,7 +51,7 @@ enum class Lane
 };
 
 
-enum ChampionType
+enum class ChampionType
 {
 	NONE,
 	BLITZCRANK,
@@ -62,15 +62,6 @@ enum ChampionType
 };
 
 extern const wchar_t* ChampionType_WSTR[(UINT)ChampionType::END];
-extern const wchar_t* ChampionType_WSTR[(UINT)ChampionType::END] =
-{
-	L"NONE",
-	L"BLITZCRANK",
-	L"JINX",
-	L"AMUMU",
-	L"MALPHITE",
-};
-
 
 // 군중 제어기
 enum CC
@@ -239,13 +230,3 @@ enum class SUMMONERS_SPELL
 
 extern const wchar_t* SUMMONERS_SPELL_WSTR[(UINT)SUMMONERS_SPELL::END];
 
-extern const wchar_t* SUMMONERS_SPELL_WSTR[(UINT)SUMMONERS_SPELL::END] =
-{
-	L"FLASH",
-	L"HEAL",
-	L"GHOST",
-	L"IGNITE",
-	L"SMITE",
-	L"EXHAUST",
-	L"CLEANSE",
-};

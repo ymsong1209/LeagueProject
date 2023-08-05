@@ -3,7 +3,7 @@
 #include <vector>
 #include <string>
 
-enum class SCRIPT_TYPE
+enum SCRIPT_TYPE
 {
 	ATTACKRANGESCRIPT,
 	BASICATTACKSCRIPT,
