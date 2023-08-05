@@ -58,7 +58,19 @@ enum ChampionType
 	JINX,
 	AMUMU,
 	MALPHITE,
+	END,
 };
+
+extern const wchar_t* ChampionType_WSTR[(UINT)ChampionType::END];
+extern const wchar_t* ChampionType_WSTR[(UINT)ChampionType::END] =
+{
+	L"NONE",
+	L"BLITZCRANK",
+	L"JINX",
+	L"AMUMU",
+	L"MALPHITE",
+};
+
 
 // 군중 제어기
 enum CC
@@ -210,4 +222,30 @@ struct KDACSInfo
 	UINT64      killerId;
 	UINT64      victimId;
 	UnitType   deadObjUnitType;
+};
+
+// 소환사 주문(임시)
+enum class SUMMONERS_SPELL
+{
+	FLASH,      // 점멸
+	HEAL,       // 회복
+	GHOST,      // 유체화
+	IGNITE,     // 점화
+	SMITE,      // 강타
+	EXHAUST,    // 탈진
+	CLEANSE,    // 정화
+	END,
+};
+
+extern const wchar_t* SUMMONERS_SPELL_WSTR[(UINT)SUMMONERS_SPELL::END];
+
+extern const wchar_t* SUMMONERS_SPELL_WSTR[(UINT)SUMMONERS_SPELL::END] =
+{
+	L"FLASH",
+	L"HEAL",
+	L"GHOST",
+	L"IGNITE",
+	L"SMITE",
+	L"EXHAUST",
+	L"CLEANSE",
 };

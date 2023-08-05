@@ -3,6 +3,7 @@
 class CPlayerScript;
 class CGameObject;
 class CChampionScript;
+class CUnitScript;
 
 class GameObjMgr
 {
@@ -48,7 +49,7 @@ public:
 	// void AddTower();
 	void AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo);
 
-	CChampionScript* GetMyPlayerScript() { return MyPlayerScript; }
+	CUnitScript* GetMyPlayerScript() { return MyPlayerScript; }
 
 static GameObjMgr* GetInst()
 {

@@ -389,20 +389,6 @@ enum class SkillNum
 
 extern const wchar_t* SKILL_TYPE_WSTR[(UINT)SkillNum::END];
 
-// 소환사 주문(임시)
-enum class SUMMONERS_SPELL
-{
-	FLASH,      // 점멸
-	HEAL,       // 회복
-	GHOST,      // 유체화
-	IGNITE,     // 점화
-	SMITE,      // 강타
-	EXHAUST,    // 탈진
-	CLEANSE,    // 정화
-	END,
-};
-extern const wchar_t* SUMMONERS_SPELL_WSTR[(UINT)SUMMONERS_SPELL::END];
-
 enum class BARTYPE
 {
 	HP,

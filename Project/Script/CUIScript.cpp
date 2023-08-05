@@ -1,9 +1,11 @@
 #include "pch.h"
 #include "CUIScript.h"
+#include "CUnitScript.h"
 
 void CUIScript::begin()
 {
-	SetChampInFo(CHARACTER_TYPE::VEIN, SUMMONERS_SPELL::CLEANSE, SUMMONERS_SPELL::EXHAUST);
+	CUnitScript* UnitInfo = CSendServerEventMgr::GetInst()->GetMyPlayer()->GetScript<CUnitScript>();
+	SetChampInFo(UnitInfo->GetChampType(), SUMMONERS_SPELL::HEAL, SUMMONERS_SPELL::EXHAUST);
 
 	m_UIBackPanel = new CGameObject;
 	m_UIBackPanel->SetName(L"UIBackPanel");

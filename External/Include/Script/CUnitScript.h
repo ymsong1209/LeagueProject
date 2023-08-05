@@ -45,6 +45,8 @@ protected:
     Vec3                    m_vNextPos;
     float                   m_fFaceRot;
 
+    ChampionType            m_ChampType;         
+    
     bool                    m_bUnitDead;      // 유닛이 죽었는지(HP 0 이하)
 
 public:
@@ -62,6 +64,9 @@ public:
     bool PathFindMove(float _fSpeed, bool _IsRotation = true);
 
 public:
+    void SetChampType(ChampionType _Type) { m_ChampType = _Type; }
+    ChampionType GetChampType() { return m_ChampType; }
+
     float GetCurHP() { return m_fHP; }
     float GetMaxHP() { return m_fMaxHP; }
     void  SetCurHP(float _f) { m_fHP = _f; }         // 현재 체력 = 인자값
