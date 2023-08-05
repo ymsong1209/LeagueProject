@@ -14,6 +14,10 @@ CRazorBeakAlertState::~CRazorBeakAlertState()
 void CRazorBeakAlertState::Enter()
 {
 	m_iAggroAnimNum = 1;
+	wstring basename = L"RazorBeak\\Idle_Aggro";
+	basename += L"1_model.002";
+	GetOwner()->Animator3D()->GetCurAnim()->Reset();
+	GetOwner()->Animator3D()->PlayOnce(basename);
 	CJungleAlertState::Enter();
 }
 
