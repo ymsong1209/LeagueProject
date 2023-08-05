@@ -21,13 +21,13 @@ CCharacterUIScript::~CCharacterUIScript()
 
 void CCharacterUIScript::begin()
 {
-	SkillUILoad();
+	//SkillUILoad();
 
-	SpellUILoad();
+	//SpellUILoad();
 
-	BarUILoad();
+	//BarUILoad();
 
-	UISetting();
+	//UISetting();
 }
 
 void CCharacterUIScript::tick()
