@@ -53,6 +53,8 @@ void CChampionScript::begin()
 
 void CChampionScript::tick()
 {
+	CUnitScript::tick();
+
 	if (KEY_TAP(KEY::P))
 	{
 		m_fHP = 0;
@@ -96,6 +98,7 @@ bool CChampionScript::CheckDeath()
 		{
 			m_fHP = m_fMaxHP;
 			m_fRespawnTime = 5;
+			m_eCurCC = CC::CLEAR;
 			m_eRestraint = RESTRAINT::DEFAULT;
 
 			// 길찾기 컴포넌트에 남은 경로값이 있다면 Clear
@@ -190,10 +193,6 @@ void CChampionScript::GetInput()
 			if ((m_eRestraint & RESTRAINT::CAN_MOVE) == 0)
 				return;
 
-			// 움직일 수 없는 상황인 경우 return
-			if ((m_eRestraint & RESTRAINT::CAN_MOVE) == 0)
-				return;
-
 			CGameObject* Map = CLevelMgr::GetInst()->GetCurLevel()->FindParentObjectByName(L"LoLMapCollider");
 			IntersectResult result = MainCam->IsCollidingBtwRayRect(ray, Map);
 			Vec3 TargetPos = result.vCrossPoint;	// 클릭 좌표
@@ -282,7 +281,7 @@ void CChampionScript::Move()
 		return;
 
 	// 이동
-	if (PathFindMove(80, true))
+	if (PathFindMove(m_fMoveSpeed, true))
 	{
 		// 이동 이벤트
 		MoveEvent* evn = dynamic_cast<MoveEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_MOVE));
@@ -294,7 +293,7 @@ void CChampionScript::Move()
 	else
 	{
 		// 이동 벡터값이 NaN -> 이동 불가, 멈춤
-		StopEvent* evn = new StopEvent;
+		StopEvent* evn = dynamic_cast<StopEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_STOP));;
 		if (evn != nullptr)
 		{
 			CGameEventMgr::GetInst()->NotifyEvent(*evn);

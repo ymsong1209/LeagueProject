@@ -49,7 +49,7 @@ protected:
 
 public:
     virtual void begin() override;
-    virtual void tick() override {};
+    virtual void tick() override;
 
     virtual UnitType GetType() { return m_eUnitType; }
     virtual Faction GetFaction() { return m_eFaction; }

@@ -2,6 +2,7 @@
 #include <Engine\CScript.h>
 
 class CSkill;
+class CTimedEffect;
 
 class CUnitScript :
     public CScript
@@ -45,17 +46,22 @@ protected:
     Vec3                    m_vNextPos;
     float                   m_fFaceRot;
 
-    bool                    m_bUnitDead;      // 유닛이 죽었는지(HP 0 이하)
+    bool                    m_bUnitDead;        // 유닛이 죽었는지(HP 0 이하)
+
+    vector<CTimedEffect*>   m_TimedEffectList;  // 지속딜 / CC기 관련 리스트
 
 public:
     virtual void begin() override;
-    virtual void tick() override {};
+    virtual void tick() override;
 
     virtual UnitType GetType() { return m_eUnitType; }
     virtual Faction GetFaction() { return m_eFaction; }
 
 public:
     bool IsUnitDead() { return m_bUnitDead; }
+
+    void CheckTimedEffect();
+    void CheckCC();
 
     // 오브젝트의 PathFinder 컴포넌트에 남은 경로값이 있을 때, 해당 경로로 이동
     bool PathFindMove(float _fSpeed, bool _IsRotation = true);
@@ -96,7 +102,11 @@ public:
 
     // 비동기
     void GetHit(SkillType _type, CGameObject* _SkillTarget, CGameObject* _SkillUser, int _SkillLevel);
+    void RestrictAction(RESTRAINT restriction);
+    void ApplyCC(CC _ccType);
+    void RemoveCC(CC _ccType);
 
+    void AddTimedEffect(CTimedEffect* _effect) { m_TimedEffectList.push_back(_effect); }
 
     CSkill* GetSkill(int _i) { if (_i < 0 || _i >= 5) return nullptr; return m_Skill[_i]; }
     int     GetSkillLevel(int _i) { return m_SkillLevel[_i]; }
