@@ -68,16 +68,18 @@ public:
     bool PathFindMove(float _fSpeed, bool _IsRotation = true);
 
 public:
-    float GetCurHP() { return m_fHP; }
-    float GetMaxHP() { return m_fMaxHP; }
     void  SetCurHP(float _f) { m_fHP = _f; }         // 현재 체력 = 인자값
     void  SetCurHPVar(float _f) { m_fHP += _f; }     // 현재 체력 += 인자값
-    float GetMaxHP() const { return m_fMaxHP; }
-
-    float GetCurMP() { return m_fMP; }
     void  SetCurMP(float _f) { m_fMP = _f; }
     void  SetCurMPVar(float _f) { m_fMP += _f; }
+    void  SetCC(CC _cc) { m_eCurCC = _cc; }
+
+    float GetCurHP() { return m_fHP; }
+    float GetMaxHP() { return m_fMaxHP; }
+    float GetMaxHP() const { return m_fMaxHP; }
+    float GetCurMP() { return m_fMP; }
     float GetMaxMP() const { return m_fMaxMP; }
+    CC    GetCC() { return m_eCurCC; }
 
     UINT64           GetServerID() { return m_iServerID; }
     wstring          GetNickname() const { return m_strNickname; }

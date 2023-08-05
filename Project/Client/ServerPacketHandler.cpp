@@ -265,24 +265,24 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 		// 인게임 진입
 
 		// 맵 불러옴
-		//CreateTestLevel();
+		CreateTestLevel();
 
-		//=========json level load===========================================
-		CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevelFromJson(L"level\\createTest.json");
-		tEvent evn = {};
-		evn.Type = EVENT_TYPE::LEVEL_CHANGE;
-		evn.wParam = (DWORD_PTR)pLoadedLevel;
-		CEventMgr::GetInst()->AddEvent(evn);
-		//inspector  UI update
-		InspectorUI* inspector = (InspectorUI*)ImGuiMgr::GetInst()->FindUI("##Inspector");
-		inspector->SetTargetObject(nullptr);
-
-		// if curState is stop,  next level state is also stop
-		CLevel* level = CUR_LEVEL;
-		if (level->GetState() == LEVEL_STATE::STOP) {
-			CTimeMgr::GetInst()->SetTimeScale(0.f);
-		}
-		//===================================================================
+		////=========json level load===========================================
+		//CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevelFromJson(L"level\\createTest.json");
+		//tEvent evn = {};
+		//evn.Type = EVENT_TYPE::LEVEL_CHANGE;
+		//evn.wParam = (DWORD_PTR)pLoadedLevel;
+		//CEventMgr::GetInst()->AddEvent(evn);
+		////inspector  UI update
+		//InspectorUI* inspector = (InspectorUI*)ImGuiMgr::GetInst()->FindUI("##Inspector");
+		//inspector->SetTargetObject(nullptr);
+		//
+		//// if curState is stop,  next level state is also stop
+		//CLevel* level = CUR_LEVEL;
+		//if (level->GetState() == LEVEL_STATE::STOP) {
+		//	CTimeMgr::GetInst()->SetTimeScale(0.f);
+		//}
+		////===================================================================
 
 
 		PKT_S_GAME_START::PlayerInfoList playerInfoBuffs = pkt->GetPlayerInfoList();

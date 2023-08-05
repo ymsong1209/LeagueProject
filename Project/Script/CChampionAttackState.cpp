@@ -69,7 +69,7 @@ void CChampionAttackState::Enter()
 void CChampionAttackState::Exit()
 {
 	// 변수 초기화
-	m_UserObj = nullptr;
+	//m_UserObj = nullptr;
 	m_TargetObj = nullptr;
 
 	CUnitState::Exit();

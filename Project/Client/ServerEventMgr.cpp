@@ -158,6 +158,7 @@ void ServerEventMgr::clienttick()
 					NewObject->GetScript<CUnitScript>()->SetCurMP(objectMove->MP);
 					NewObject->GetScript<CUnitScript>()->SetAttackPower(objectMove->AttackPower);
 					NewObject->GetScript<CUnitScript>()->SetDefencePower(objectMove->DefencePower);
+					NewObject->GetScript<CUnitScript>()->SetCC(objectMove->CC);
 				}
 				NewObject->Transform()->SetRelativePos(Vec3(objectMove->pos.x, objectMove->pos.y, objectMove->pos.z));
 				NewObject->Transform()->SetRelativeRot(Vec3(objectMove->moveDir.x, objectMove->moveDir.y, objectMove->moveDir.z));
@@ -199,7 +200,7 @@ void ServerEventMgr::clienttick()
 					CGameObject* skillTargetObj = GameObjMgr::GetInst()->FindAllObject(skillInfo->TargetId);
 
 					// 피격 이벤트 발생
-					GetHitEvent* evn = dynamic_cast<GetHitEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_GET_HIT));
+					GetHitEvent* evn = dynamic_cast<GetHitEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::GET_HIT));
 					if (evn != nullptr)
 					{
 						evn->Clear();
@@ -225,7 +226,7 @@ void ServerEventMgr::clienttick()
 						CGameObject* skillTargetObj = GameObjMgr::GetInst()->FindAllObject(skillInfo->TargetId);
 
 						// 공격 이벤트 발생
-						GetHitEvent* evn = dynamic_cast<GetHitEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_GET_HIT));
+						GetHitEvent* evn = dynamic_cast<GetHitEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::GET_HIT));
 						if (evn != nullptr)
 						{
 							evn->Clear();
