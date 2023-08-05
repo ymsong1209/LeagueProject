@@ -113,17 +113,17 @@ void CreateTestLevel()
 	SpawnGameObject(WorldBar, Vec3(100.f, 100.f, 100.f), 2);
 
 
-	CGameObject* UIObj = new CGameObject; //각종 스크립트에서 처리할 것들
-	UIObj->SetName(L"UIObj");
-	UIObj->AddComponent(new CTransform);
-	UIObj->AddComponent(new CCharacterUIScript);
-	UIObj->AddComponent(new CWorldHPSpawnScript);
-	UIObj->AddComponent(new CInventoryUIScript);
-	UIObj->AddComponent(new CMinimapUIScript);
-	UIObj->AddComponent(new CMouseCursorUIScript);
-	UIObj->AddComponent(new CFontUIScript);
-	UIObj->AddComponent(new CScorePanelScript);
-	SpawnGameObject(UIObj, Vec3(0.f, 0.f, 0.f), 31);
+	//CGameObject* UIObj = new CGameObject; //각종 스크립트에서 처리할 것들
+	//UIObj->SetName(L"UIObj");
+	//UIObj->AddComponent(new CTransform);
+	//UIObj->AddComponent(new CCharacterUIScript);
+	//UIObj->AddComponent(new CWorldHPSpawnScript);
+	//UIObj->AddComponent(new CInventoryUIScript);
+	//UIObj->AddComponent(new CMinimapUIScript);
+	//UIObj->AddComponent(new CMouseCursorUIScript);
+	//UIObj->AddComponent(new CFontUIScript);
+	//UIObj->AddComponent(new CScorePanelScript);
+	//SpawnGameObject(UIObj, Vec3(0.f, 0.f, 0.f), 31);
 
 
 

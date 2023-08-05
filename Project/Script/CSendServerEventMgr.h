@@ -35,6 +35,7 @@ public:
 
     vector<CGameObject*> GetVecAllPlayer() { return m_vecAllPlayer; }
     
+    CGameObject* GetMyPlayer() { return m_myPlayerObj; }
     int GetMyKillCnt() { return m_myKillCnt; }
     int GetMyDeathCnt() { return m_myDeathCnt; }
     int GetMyCSCnt() { return m_myCSCnt; }
