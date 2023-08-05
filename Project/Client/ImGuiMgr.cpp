@@ -9,6 +9,7 @@
 #include <Engine\CGameObject.h>
 #include <Engine\CRenderMgr.h>
 
+
 #include "UI.h"
 #include "ParamUI.h"
 
@@ -161,6 +162,7 @@ void ImGuiMgr::render()
 #include "MenuUI.h"
 #include "LevelUI.h"
 #include "Anim3DEditorUI.h"
+#include "CreateMaterialUI.h"
 
 void ImGuiMgr::CreateUI()
 {
@@ -199,6 +201,12 @@ void ImGuiMgr::CreateUI()
     // ListUI
     pUI = new ListUI;
     pUI->SetModal(true);
+    pUI->SetActive(false);
+    m_mapUI.insert(make_pair(pUI->GetID(), pUI));
+
+    //CreateMaterialUI
+    pUI = new CreateMaterialUI;
+    pUI->SetModal(false);
     pUI->SetActive(false);
     m_mapUI.insert(make_pair(pUI->GetID(), pUI));
 

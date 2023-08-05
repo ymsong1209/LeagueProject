@@ -836,6 +836,280 @@ void CResMgr::CreateDefaultGraphicsShader()
 	AddRes(pShader->GetKey(), pShader);
 
 
+	// ============================
+	// StdMoveMouseShader
+	// RasterizerState      : None
+	// BlendState           : Mask
+	// DepthStencilState    : Less
+	//
+	// Parameter
+	// g_tex_0              : Output Texture
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"StdMoveMouseShader");
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_Std2D");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_Std2D");
+
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::NO_WRITE);
+	pShader->SetBSType(BS_TYPE::ALPHA_BLEND);
+
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_TRANSPARENT);
+
+	// Param
+	pShader->AddTexParam(TEX_0, "Output Texture");
+
+	AddRes(pShader->GetKey(), pShader);
+
+	// ============================
+	// Std2DUIShader
+	// RasterizerState      : CULL_NONE
+	// BlendState           : ALPHA_BLEND
+	// DepthStencilState    : Less
+	//
+	// Parameter
+	// g_tex_0              : Output Texture
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"Std2DUIShader");
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_Std2D");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_Std2D");
+
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::MASK);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI_OPAQUE);
+	// Param
+	pShader->AddTexParam(TEX_0, "Output Texture");
+
+	AddRes(pShader->GetKey(), pShader);
+
+	// ============================
+	// Std2DUITransShader
+	// RasterizerState      : CULL_NONE
+	// BlendState           : ALPHA_BLEND
+	// DepthStencilState    : Less
+	//
+	// Parameter
+	// g_tex_0              : Output Texture
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"Std2DUITransShader");
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_Std2D");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_Std2D");
+
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::ALPHA_BLEND);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI_TRANSPARENT);
+	// Param
+	pShader->AddTexParam(TEX_0, "Output Texture");
+
+	AddRes(pShader->GetKey(), pShader);
+
+	// ============================
+	// MouseCursorShader
+	// RasterizerState      : CULL_NONE
+	// BlendState           : ALPHA_BLEND
+	// DepthStencilState    : Less
+	//
+	// Parameter
+	// g_tex_0              : Output Texture
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"MouseCursorShader");
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_Std2D");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_Std2D");
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	pShader->SetBSType(BS_TYPE::MASK);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI_TRANSPARENT);
+	// Param
+	pShader->AddTexParam(TEX_0, "Output Texture");
+
+	AddRes(pShader->GetKey(), pShader);
+
+	// ============================
+	// CharacterPanelShader
+	// RasterizerState      : CULL_NONE
+	// BlendState           : ALPHA_BLEND
+	// DepthStencilState    : Less
+	//
+	// Parameter
+	// g_tex_0              : Output Texture
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"CharacterPanelShader");
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_Std2D");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_Std2D");
+
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::MASK);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI_MASK);
+	// Param
+	pShader->AddTexParam(TEX_0, "Output Texture");
+	AddRes(pShader->GetKey(), pShader);
+
+	// ============================
+	// TransMaskUIShader
+	// RasterizerState      : CULL_NONE
+	// BlendState           : MASK
+	// DepthStencilState    : Less
+	//
+	// Parameter
+	// g_tex_0              : Output Texture
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"TransMaskUIShader");
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_Std2D");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_Std2D");
+
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::MASK);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI_MASK);
+	// Param
+	pShader->AddTexParam(TEX_0, "Output Texture");
+	AddRes(pShader->GetKey(), pShader);
+
+	// ============================
+	// BlendMaskShader
+	// RasterizerState      : CULL_NONE
+	// BlendState           : MASK
+	// DepthStencilState    : Less
+	//
+	// Parameter
+	// g_tex_0              : Output Texture
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"BlendMaskShader");
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_Std2D");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_Std2D");
+
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::ALPHA_BLEND);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI_MASK);
+	// Param
+	pShader->AddTexParam(TEX_0, "Output Texture");
+	AddRes(pShader->GetKey(), pShader);
+
+	// ============================
+	// CoolDownShader
+	// RasterizerState      : CULL_NONE
+	// BlendState           : ALPHA_BLEND
+	// DepthStencilState    : Less
+	//
+	// Parameter
+	// g_tex_0              : Output Texture
+	// ============================
+		pShader = new CGraphicsShader;
+	pShader->SetKey(L"CoolDownShader");
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_CoolDown");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_CoolDown");
+
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::MASK);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI_MASK);
+	// Param
+	pShader->AddTexParam(TEX_0, "Output Texture");
+	AddRes(pShader->GetKey(), pShader);
+
+	// ============================
+	// EXPRatioShader
+	// RasterizerState      : CULL_NONE
+	// BlendState           : ALPHA_BLEND
+	// DepthStencilState    : Less
+	//
+	// Parameter
+	// g_tex_0              : Output Texture
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"EXPRatioShader");
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_EXPRatio");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_EXPRatio");
+
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::MASK);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI_MASK);
+	// Param
+	pShader->AddTexParam(TEX_0, "Output Texture");
+	AddRes(pShader->GetKey(), pShader);
+
+	// ============================
+	// HPMPRatioShader
+	// RasterizerState      : CULL_NONE
+	// BlendState           : ALPHA_BLEND
+	// DepthStencilState    : Less
+	//
+	// Parameter
+	// g_tex_0              : Output Texture
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"HPMPRatioShader");
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_HPMPRatio");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_HPMPRatio");
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::MASK);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI_MASK);
+	// Param
+	pShader->AddTexParam(TEX_0, "Output Texture");
+	AddRes(pShader->GetKey(), pShader);
+
+	// ============================
+	// BarShader  //한가지만 처리
+	// RasterizerState      : CULL_NONE
+	// BlendState           : ALPHA_BLEND
+	// DepthStencilState    : Less
+	//
+	// Parameter
+	// g_tex_0              : Output Texture
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"BarRatioShader");
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_BarRatioShader");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_BarRatioShader");
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::MASK);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI_MASK);
+	// Param
+	pShader->AddTexParam(TEX_0, "Output Texture");
+	pShader->AddScalarParam(FLOAT_0, "Ratio      ");
+	pShader->AddScalarParam(FLOAT_1, "LeftX      ");
+	pShader->AddScalarParam(FLOAT_2, "RightX     ");
+	pShader->AddScalarParam(FLOAT_3, "UpY        ");
+	pShader->AddScalarParam(FLOAT_4, "DownY      ");
+	pShader->AddScalarParam(FLOAT_5, "TotalWidth ");
+	pShader->AddScalarParam(FLOAT_6, "TotalHeight");
+	AddRes(pShader->GetKey(), pShader);
+
+
+	// ============================
+	// WorldBarShader
+	// RasterizerState      : CULL_NONE
+	// BlendState           : ALPHA_BLEND
+	// DepthStencilState    : Less
+	//
+	// Parameter
+	// g_tex_0              : Output Texture
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"WorldBarShader");
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_WorldBar");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_WorldBar");
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::ALPHA_BLEND);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI_OPAQUE);
+	// Param
+	pShader->AddTexParam(TEX_0, "Output Texture");
+	AddRes(pShader->GetKey(), pShader);
+
 	// =============================
 	// MiniMap Shader
 	// RasterRizerState   : CULL_BACK
@@ -850,9 +1124,9 @@ void CResMgr::CreateDefaultGraphicsShader()
 
 	pShader->SetRSType(RS_TYPE::CULL_BACK);
 	pShader->SetDSType(DS_TYPE::LESS_EQUAL);
-	pShader->SetBSType(BS_TYPE::MASK);
+	pShader->SetBSType(BS_TYPE::ALPHA_BLEND);
 
-	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI_MASK);
 
 	AddRes(pShader->GetKey(), pShader);
 
@@ -1459,6 +1733,15 @@ void CResMgr::CreateDefaultMaterial()
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std2DShader"));
 	AddRes(L"Std2DMtrl", pMtrl);
 
+	// Std2DUI Material
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std2DUIShader"));
+	AddRes(L"Std2DUIMtrl", pMtrl);
+
+	// Std2DUITransShader Material
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std2DUITransShader"));
+	AddRes(L"Std2DUITransMtrl", pMtrl);
 	// MiniMap Material
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"MiniMapShader"));

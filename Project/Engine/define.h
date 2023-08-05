@@ -16,11 +16,13 @@
 #define EditorDT CTimeMgr::GetInst()->GetEditorDeltaTime()
 
 #define CUR_LEVEL CLevelMgr::GetInst()->GetCurLevel()
+#define UICamera CRenderMgr::GetInst()->GetCamerafromIdx(1)
 
 #define MAX_LAYER 32
 #define NaN std::numeric_limits<float>::quiet_NaN()
 
 #define SINGLE(type) private: type(); ~type(); friend class CSingleton<type>;
+#define FONT_RGBA(r, g, b, a) (((((BYTE)a << 24 ) | (BYTE)b << 16) | (BYTE)g << 8) | (BYTE)r)
 
 enum class MRT_TYPE
 {
@@ -262,6 +264,10 @@ enum class SHADER_DOMAIN
 	DOMAIN_POSTPROCESS, // 후 처리
 	DOMAIN_UI,
 	DOMAIN_CONTOURPAINT, // 아웃라인 페인팅
+
+	DOMAIN_UI_OPAQUE,
+	DOMAIN_UI_MASK,
+	DOMAIN_UI_TRANSPARENT,
 	DOMAIN_UNDEFINED,	// 미정
 };
 
@@ -276,7 +282,9 @@ enum class EVENT_TYPE
 	DELETE_RESOURCE,	// wParam : RES_TYPE, lParam : Resource Adress
 
 	LEVEL_CHANGE,
-
+	//스크립트 시점에서 오브젝트의 특정 정보를 변경해줄경우 인스펙터에 반영이 안됨 (스크립트에서 오브젝트 이름변경 등..)
+	//그래서 이벤트매니저에 ui 리로드 이벤트 추가
+	INSPECTOR_RELOAD,
 	LAYER_CHANGE,		// wParam : 바꿀 오브젝트 lParam : 바꿀 레이어 번호
 };
 
@@ -352,4 +360,83 @@ enum class PLAYER_STATE // 징크스 이동 테스트용 Run, Idle 상태 추가 (나중에 fsm 
 {
 	RUN,
 	IDLE,
+};
+
+
+enum class CHARACTER_TYPE
+{
+	JINX,
+	MALPHIGHT,
+	AMUMU,
+	VEIN,
+	AHRI,
+	END,
+}; //이 이름을 조합하여 자동으로 머터리얼 찾아오므로 함부로 변경 x!!
+
+extern const char* CHARACTER_TYPE_STR[(UINT)CHARACTER_TYPE::END];
+extern const wchar_t* CHARACTER_TYPE_WSTR[(UINT)CHARACTER_TYPE::END];
+
+//UI이미지용
+enum class SkillNum
+{
+	Q,
+	W,
+	E,
+	R,
+	PASSIVE,
+	END,
+}; //이 이름을 조합하여 자동으로 머터리얼 찾아오므로 함부로 변경 x!!
+
+extern const wchar_t* SKILL_TYPE_WSTR[(UINT)SkillNum::END];
+
+// 소환사 주문(임시)
+enum class SUMMONERS_SPELL
+{
+	FLASH,      // 점멸
+	HEAL,       // 회복
+	GHOST,      // 유체화
+	IGNITE,     // 점화
+	SMITE,      // 강타
+	EXHAUST,    // 탈진
+	CLEANSE,    // 정화
+	END,
+};
+extern const wchar_t* SUMMONERS_SPELL_WSTR[(UINT)SUMMONERS_SPELL::END];
+
+enum class BARTYPE
+{
+	HP,
+	MP,
+	END,
+};
+
+
+
+enum class FONT_TYPE
+{
+	RIX_KOR_M,
+	RIX_KOR_L,
+	RIX_KOR_B,
+	RIX_KOR_EB,
+};
+
+
+enum class FONT_DOMAIN
+{
+	MAINCAM,
+	OPAQE,
+	MASK,
+	TRANS,
+};
+
+
+enum class COOL_DOWN_TYPE
+{
+	Q,
+	W,
+	E,
+	R,
+	SPELL_D,
+	SPELL_F,
+	PASSIVE,
 };

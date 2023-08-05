@@ -101,3 +101,26 @@ void UI::finaltick()
 		ImGui::EndChild(); // ScrollableChild End
 	}
 }
+
+void UI::GetResKey(Ptr<CRes> _Res, char* _Buff, size_t _BufferSize) //리소스의 key는 wstring이고 ImGui에서는 string 값을 사용하므로 버퍼를 생성하여 string타입으로 변환함
+{
+	memset(_Buff, 0, sizeof(char) * _BufferSize);
+
+	if (nullptr == _Res)
+		return;
+
+	wstring wstrKey = _Res->GetKey();
+	string	strKey = string(wstrKey.begin(), wstrKey.end());
+	memcpy(_Buff, strKey.data(), sizeof(char) * strKey.length());
+}
+
+
+void UI::wstringTostring(wstring _wstring, char* _Buff, size_t _BufferSize)
+{
+	memset(_Buff, 0, sizeof(char) * _BufferSize);
+
+	wstring wstrKey = _wstring;
+	string	strKey = string(wstrKey.begin(), wstrKey.end());
+
+	memcpy(_Buff, strKey.data(), sizeof(char) * strKey.length());
+}

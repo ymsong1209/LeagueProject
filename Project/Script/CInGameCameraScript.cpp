@@ -34,7 +34,8 @@ CInGameCameraScript::~CInGameCameraScript()
 
 void CInGameCameraScript::tick()
 {
-	/*
+	
+
 	// 지금 tick이 돌아버리면 작업하기 불편하기 때문에 tick()을 돌리지 않는다
 
 	Vec2 MousePos = CKeyMgr::GetInst()->GetMousePos();
@@ -105,8 +106,19 @@ void CInGameCameraScript::tick()
 	CCamera* TargetCamera = CRenderMgr::GetInst()->GetMainCam();
 	Vec3 PreviousPos =  TargetCamera->Transform()->GetRelativePos();
 	TargetCamera->Transform()->SetRelativePos(PreviousPos.x + RightMoveAmount.x + UpMoveAmount.x,
-											  PreviousPos.y + RightMoveAmount.y + UpMoveAmount.y,
+											 526.f,
 											  PreviousPos.z + RightMoveAmount.z + UpMoveAmount.z);
-*/
+
+	CGameObject* DirLight = nullptr;
+
+	DirLight = CLevelMgr::GetInst()->FindObjectByName(L"Directional Light");
+
+	if (DirLight != nullptr)
+	{
+		DirLight->Transform()->SetRelativePos(PreviousPos.x + RightMoveAmount.x + UpMoveAmount.x,
+			526.f,
+			PreviousPos.z + RightMoveAmount.z + UpMoveAmount.z);
+	}
+
 }
 

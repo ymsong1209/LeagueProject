@@ -29,19 +29,9 @@ struct VS_OUT
 #define Offset                      g_vec2_2
 #define BackSize                    g_vec2_3
 
-// MeshRender관련
-#define TexMove                     g_int_1
-#define OutputTexMoveOffset         g_vec2_4
-#define PunctureTexMoveOffset       g_vec2_5
+// MeshRender 관련 Material에서 받는 값
 #define IsOutputTextureExist        g_btex_0
-#define IsAdditiveTextureExist      g_btex_2
-#define IsPunctureTextureExist      g_btex_3
 #define Output_Texture              g_tex_0
-#define Additive_Texture            g_tex_2
-#define Puncture_Texture            g_tex_3
-#define Additive_Color              g_vec4_0
-
-
 
 // Ray Tex용 숫자
 #define RayTest          g_int_2
@@ -61,21 +51,7 @@ float4 PS_Std2D(VS_OUT _in) : SV_Target
 {
     float4 vOutColor = float4(0.f, 0.f, 0.f, 1.f);
 
-
-    // Ray Test용 Code
-    if (RayTest == 30)
-    {
-        vOutColor = float4(0.f, 1.f, 0.f, 1.f);
-        return vOutColor;
-    }
-
-    else if (RayTest == 20)
-    {
-        vOutColor = float4(0.f, 0.f, 1.f, 1.f);
-        return vOutColor;
-    }
-
-       
+      
     // Sample Texture가 없는 경우
     // g_btex_0 값이 왜 0, 1 로 바뀔 수 있는 지 알기 위해선 
     // CMaterial::UpdateData() 참고
@@ -109,12 +85,9 @@ float4 PS_Std2D(VS_OUT _in) : SV_Target
             float2 Offset = float2(0.f, 0.f);
 
             // Output Texture가 움직여야 하는지 확인
-            int assist_bit = 1;
-            assist_bit = g_int_1 & (assist_bit);
-
-            if (!assist_bit)
+            if (OutputTexMovingStyle != 0)
             {
-                Offset = g_vec2_4;
+                Offset = OutputTexPreviousPos;
             }
 
             vOutColor = Output_Texture.Sample(g_sam_0, _in.vUV + Offset);
@@ -124,48 +97,39 @@ float4 PS_Std2D(VS_OUT _in) : SV_Target
         }
     }
 
-
-    // 구멍뚫기 (알파값 처리)
-    if (IsPunctureTextureExist)
+    // 구멍뚫기 (알파값 처리) 
+    if (isPunctureTextureUsed)
     {
         // 참조해야하는 UV값의 Offset
         float2 Offset = float2(0.f, 0.f);
 
         // Puncture Texture 가 움직여야 되는지 확인 
-        int assist_bit = 2;
-        assist_bit = g_int_1 & (assist_bit);
-
-        if (!assist_bit)
+        if (PunctureTexMovingStyle != 0)
         {
-            Offset = g_vec2_5;
+            Offset = PunctureTexPreviousPos;
         }
 
-        float4 vPunctureSample = Puncture_Texture.Sample(g_sam_0, _in.vUV + Offset);
+        float4 vPunctureSample = g_puncture_tex.Sample(g_sam_0, _in.vUV + Offset);
 
         vOutColor = float4(vOutColor.xyz, vPunctureSample.x);
     }
 
 
     // 색상 첨가 (Color Additive)
-    if (IsAdditiveTextureExist)
+    if (isAdditiveTextureUsed)
     {
-        float4 vAdditiveSample = Additive_Texture.Sample(g_sam_0, _in.vUV);
+        float4 vAdditiveSample = g_additive_tex.Sample(g_sam_0, _in.vUV);
 
         if (vAdditiveSample.w != 0)
         {
-            vOutColor = float4( vOutColor.x + saturate(Additive_Color.x) * vAdditiveSample.x * vOutColor.w * vAdditiveSample.w,
-                                vOutColor.y + saturate(Additive_Color.y) * vAdditiveSample.y * vOutColor.w * vAdditiveSample.w,
-                                vOutColor.z + saturate(Additive_Color.z) * vAdditiveSample.z * vOutColor.w * vAdditiveSample.w,
-                                vOutColor.w);
-        }  
+            vOutColor = float4(vOutColor.x + saturate(AdditiveColor.x) * vAdditiveSample.x * vOutColor.w * vAdditiveSample.w,
+                vOutColor.y + saturate(AdditiveColor.y) * vAdditiveSample.y * vOutColor.w * vAdditiveSample.w,
+                vOutColor.z + saturate(AdditiveColor.z) * vAdditiveSample.z * vOutColor.w * vAdditiveSample.w,
+                vOutColor.w);
+        }
     }
     return vOutColor;
 }
-
-
-
-
-
 
 
 
@@ -380,5 +344,279 @@ float4 PS_Anim2D(VS_Anim_OUT _in) : SV_Target
     return vOutColor;
 }
 
+
+
+// ============================
+// CoolDownShader
+// RasterizerState      : None
+// BlendState           : Mask
+// DepthStencilState    : Less
+//
+// Parameter
+// g_int_0              : AnimUse
+// g_vec2_0             : AnimAtlas LeftTop
+// g_vec2_1             : AnimAtlas Slice
+//
+// g_tex_0              : Output Texture
+// ============================
+
+struct VS_CoolDownIN
+{
+    float3 vLocalPos : POSITION;
+    float2 vUV : TEXCOORD;
+};
+
+struct VS_CoolDownOUT
+{
+    float4 vPosition : SV_Position;
+    float2 vUV : TEXCOORD;
+};
+
+VS_CoolDownOUT VS_CoolDown(VS_CoolDownIN _in)
+{
+    VS_CoolDownOUT output = (VS_CoolDownOUT) 0.f;
+    
+    output.vPosition = mul(float4(_in.vLocalPos, 1.f), g_matWVP);
+    output.vUV = _in.vUV;
+        
+    return output;
+}
+
+float4 PS_CoolDown(VS_CoolDownOUT _in) : SV_Target
+{
+    float4 vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
+
+    float2 vYPos = float2(0.5f, 0.f);
+    float2 vCenterUV = float2(0.5, 0.5);
+    float2 vCurUV = _in.vUV;
+    float2 vDir = normalize(vCurUV - vCenterUV);
+    float2 vYDir = normalize(vYPos - vCenterUV);
+
+    float angleY = degrees(acos(dot(vDir, vYDir)));
+
+    // 쿨타임의 각도를 반대로 계산합니다. (360.f - (360.f * g_float_0))는 쿨타임이 가득 찼을 때 0도부터 시작해서 시계방향으로 감소하는 형태를 만듭니다.
+    float angle = 360.f - (360.f * g_float_0);
+
+    if (_in.vUV.x < 0.5)
+    {
+        angleY = 360.f - angleY;
+    }
+
+    if (g_float_0 != 0.f) // g_float_0이 0이면 쿨타임이 없는 상태, 즉 일반 텍스쳐 출력
+    {
+        if (angleY > angle)
+        {
+            // Modify the output color to blue for the cooling down part.
+            vOutColor = float4(0.06f, 0.23f, 0.34f, 0.6f);
+        }
+        else
+        {
+            // Modify the output color to darker for the rest of the texture.
+            vOutColor = float4(vOutColor.r * 0.2, vOutColor.g * 0.2, vOutColor.b * 0.2, vOutColor.a);
+        }
+    }
+    else
+    {
+        // g_float_0이 0이면 쿨타임이 없으므로 원래 텍스쳐 그대로 출력
+        vOutColor = vOutColor;
+    }
+
+    return vOutColor;
+}
+
+// ============================
+// EXPRatioShader
+// RasterizerState      : None
+// BlendState           : Mask
+// DepthStencilState    : Less
+
+// g_tex_0              : Output Texture
+// g_float_0            : XP Ratio (경험치 비율)
+// ============================
+
+VS_OUT VS_EXPRatio(VS_IN _in)
+{
+    VS_OUT output = (VS_OUT) 0.f;
+
+    output.vPosition = mul(float4(_in.vLocalPos, 1.f), g_matWVP);
+    output.vUV = _in.vUV; // UV 조정은 삭제
+
+    return output;
+}
+
+float4 PS_EXPRatio(VS_OUT _in) : SV_Target
+{
+    // 경험치 비율보다 낮은 부분은 렌더링하지 않습니다.
+    if (_in.vUV.y < (1.0f - g_float_0))
+    {
+        discard;
+    }
+    // 그 외 부분은 텍스쳐 샘플링을 통해 색상을 결정합니다.
+    float4 vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
+    return vOutColor;
+}
+
+
+// ============================
+// HPMPRatioShader
+// RasterizerState      : None
+// BlendState           : Mask
+// DepthStencilState    : Less
+
+// g_tex_0              : Output Texture
+// g_float_0            :  Ratio (마나or체력 비율)
+// ============================
+
+VS_OUT VS_HPMPRatio(VS_IN _in)
+{
+    VS_OUT output = (VS_OUT) 0.f;
+
+    output.vPosition = mul(float4(_in.vLocalPos, 1.f), g_matWVP);
+    output.vUV = _in.vUV; // UV 조정은 삭제
+
+    return output;
+}
+
+float4 PS_HPMPRatio(VS_OUT _in) : SV_Target
+{
+    // 경험치 비율보다 낮은 부분은 렌더링하지 않습니다.
+    if (_in.vUV.x > g_float_0)
+    {
+        discard;
+    }
+    // 그 외 부분은 텍스쳐 샘플링을 통해 색상을 결정합니다.
+    float4 vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
+    return vOutColor;
+}
+
+// ============================
+// WorldBarShader
+// RasterizerState      : None
+// BlendState           : Mask
+// DepthStencilState    : Less
+
+// g_tex_0              : Output Texture
+// g_float_0            :  HPRatio (마나or체력 비율)
+// g_float_1            :  MPRatio (마나or체력 비율)
+// ============================
+
+VS_OUT VS_WorldBar(VS_IN _in)
+{
+    VS_OUT output = (VS_OUT) 0.f;
+
+    output.vPosition = mul(float4(_in.vLocalPos, 1.f), g_matWVP);
+    output.vUV = _in.vUV; // UV 조정은 삭제
+
+    return output;
+}
+
+float4 PS_WorldBar(VS_OUT _in) : SV_Target
+{
+    // Define UV boundaries
+    // Sample the color from the texture
+    float4 vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
+    
+    float BarLeftX = 26.f;
+    float BarRightX = 129.7f;
+    float HPUpY = 5.f;
+    float HPDownY = 18.f;
+    float MPUpY = 19.f;
+    float MPDownY = 24.f;
+    float BarTotalX = 133.f;
+    float BarTotalY = 29.f;
+    
+    float2 HPuv_1 = float2(BarLeftX / BarTotalX, HPUpY / BarTotalY);
+    float2 HPuv_2 = float2(BarRightX / BarTotalX, HPUpY / BarTotalY);
+    float2 HPuv_3 = float2(BarLeftX / BarTotalX, HPDownY / BarTotalY);
+    float2 HPuv_4 = float2(BarRightX / BarTotalX, HPDownY / BarTotalY);
+
+    float2 MPuv_1 = float2(BarLeftX / BarTotalX, MPUpY / BarTotalY);
+    float2 MPuv_2 = float2(BarRightX / BarTotalX, MPUpY / BarTotalY);
+    float2 MPuv_3 = float2(BarLeftX / BarTotalX, MPDownY / BarTotalY);
+    float2 MPuv_4 = float2(BarRightX / BarTotalX, MPDownY / BarTotalY);
+
+    // Define HP and MP ratios
+    float HP_ratio = g_float_0;
+    float MP_ratio = g_float_1;
+
+    // Normalize the UV.x with respect to the HP and MP bar widths
+    float normalized_HP_UV_x = (_in.vUV.x - HPuv_1.x) / (HPuv_2.x - HPuv_1.x);
+    float normalized_MP_UV_x = (_in.vUV.x - MPuv_1.x) / (MPuv_2.x - MPuv_1.x);
+
+    // Check if the UV is within HP or MP bar and beyond the remaining HP or MP
+    if ((_in.vUV.y >= HPuv_1.y && _in.vUV.y <= HPuv_3.y) && _in.vUV.x <= HPuv_2.x && normalized_HP_UV_x > HP_ratio)
+    {
+        vOutColor = float4(0.f, 0.f, 0.f, 0.75f);
+    }
+    else if ((_in.vUV.y >= MPuv_1.y && _in.vUV.y <= MPuv_3.y) && _in.vUV.x <= MPuv_2.x && normalized_MP_UV_x > MP_ratio)
+    {
+        vOutColor = float4(0.f, 0.f, 0.f, 0.75f);
+    }
+    
+
+    return vOutColor;
+}
+
+
+// ============================
+// BarRatioShader
+// RasterizerState      : None
+// BlendState           : Mask
+// DepthStencilState    : Less
+
+// g_tex_0              : Output Texture
+// g_float_0            : 현재 bar대비 비율 (마나or체력 비율)
+// g_float_1            : 체력바의 왼쪽 x지점
+// g_float_2            : 체력바의 오른쪽 x지점
+// g_float_3            : 체력바의 위 y지점
+// g_float_4            : 체력바의 아래 y지점
+// g_float_5            : 전체 텍스쳐 가로
+// g_float_6            : 전체 텍스쳐 세로
+
+// Animation 관련
+#define Ratio                   g_float_0  
+#define LeftX                   g_float_1  
+#define RightX                  g_float_2  
+#define UpY                     g_float_3  
+#define DownY                   g_float_4
+#define TotalWidth              g_float_5
+#define TotalHeight             g_float_6
+// ============================
+
+VS_OUT VS_BarRatioShader(VS_IN _in)
+{
+    VS_OUT output = (VS_OUT) 0.f;
+
+    output.vPosition = mul(float4(_in.vLocalPos, 1.f), g_matWVP);
+    output.vUV = _in.vUV; // UV 조정은 삭제
+
+    return output;
+}
+
+float4 PS_BarRatioShader(VS_OUT _in) : SV_Target
+{
+    // Define UV boundaries
+    // Sample the color from the texture
+    float4 vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
+    
+    float2 HPuv_1 = float2(LeftX / TotalWidth, UpY / TotalHeight);
+    float2 HPuv_2 = float2(RightX / TotalWidth, UpY / TotalHeight);
+    float2 HPuv_3 = float2(LeftX / TotalWidth, DownY / TotalHeight);
+    float2 HPuv_4 = float2(RightX / TotalWidth, DownY / TotalHeight);
+
+    // Define HP and MP ratios
+    float HP_ratio = g_float_0;
+
+    // Normalize the UV.x with respect to the HP and MP bar widths
+    float normalized_HP_UV_x = (_in.vUV.x - HPuv_1.x) / (HPuv_2.x - HPuv_1.x);
+
+    // Check if the UV is within HP or MP bar and beyond the remaining HP or MP
+    if ((_in.vUV.y >= HPuv_1.y && _in.vUV.y <= HPuv_3.y) && _in.vUV.x <= HPuv_2.x && normalized_HP_UV_x > HP_ratio)
+    {
+        vOutColor = float4(0.f, 0.f, 0.f, 0.75f);
+    }
+
+    return vOutColor;
+}
 
 #endif

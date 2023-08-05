@@ -21,7 +21,7 @@ private:
 
 
     bool            m_bIsCollidedFromRay;
-
+    bool            m_bDrawCollision; //콜리전을 보이게 할지 여부
 public:
     virtual void finaltick() override;
 
@@ -50,8 +50,8 @@ public:
     bool  IsCollidedFromRay() { return m_bIsCollidedFromRay; }
     void  SetCollidedFromRay(bool _state) { m_bIsCollidedFromRay = _state; }
 
-
-
+    bool GetDrawCollision() { return m_bDrawCollision; }
+    void SetDrawCollision(bool _IsDraw) { m_bDrawCollision = _IsDraw; }
 
 public:
     void BeginOverlap(CCollider2D* _Other);

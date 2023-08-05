@@ -17,6 +17,11 @@ static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::TRANSLATE);
 TransformUI::TransformUI()
 	: ComponentUI("##Transform", COMPONENT_TYPE::TRANSFORM)
 	, b_IsWindowMode(false)
+	, m_fDragSpeed(1.f)
+	, m_bTestText(false)
+	, m_TestTextPos(Vec3(100.f,100.f,0.f))
+	, m_fFontSize(16.f)
+	, m_wTextInput()
 {
 	SetName("Transform");
 }
@@ -49,17 +54,23 @@ int TransformUI::render_update()
 		Vec3 vRotation = GetTarget()->Transform()->GetRelativeRot();
 		vRotation = (vRotation / XM_PI) * 180.f;
 
+
+		ImGui::Text("Move Speed : ");
+		ImGui::SameLine();
+		ImGui::DragFloat("##MoveSpeed", &m_fDragSpeed, 0.04f); 
+
+
 		ImGui::Text("Position");
 		ImGui::SameLine();
-		ImGui::DragFloat3("##Relative Position", vPos);
+		ImGui::DragFloat3("##Relative Position", vPos, m_fDragSpeed);
 
 		ImGui::Text("Scale   ");
 		ImGui::SameLine();
-		ImGui::DragFloat3("##Relative Scale", vScale);
+		ImGui::DragFloat3("##Relative Scale", vScale, m_fDragSpeed);
 
 		ImGui::Text("Rotation");
 		ImGui::SameLine();
-		ImGui::DragFloat3("##Relative Rotation", vRotation);
+		ImGui::DragFloat3("##Relative Rotation", vRotation, m_fDragSpeed);
 
 		GetTarget()->Transform()->SetRelativePos(vPos);
 		GetTarget()->Transform()->SetRelativeScale(vScale);
@@ -114,6 +125,41 @@ int TransformUI::render_update()
 		}
 	}
 
+
+	//================폰트 간단히 배치해보려고 급하게 만들었음================
+	ImGui::Checkbox("Test Text", &m_bTestText);
+	if (m_bTestText)
+	{
+		CCamera* UICam = CRenderMgr::GetInst()->GetCamerafromIdx(1);
+		if (UICam)
+		{
+			Vec3 Pos = m_TestTextPos;
+			float Size = m_fFontSize;
+			ImGui::DragFloat3("Text Position", Pos, m_fDragSpeed);
+			ImGui::DragFloat("##Text Size", &Size, m_fDragSpeed);
+			m_TestTextPos = Pos;
+			m_fFontSize = Size;
+
+			char szBuff[50] = {};
+			ImGui::Text("Font Text :");
+			ImGui::SameLine();
+
+			ImGui::InputText("##Level Name", m_wTextInput, 50);
+
+			// UTF-8 to UTF-16 conversion
+			int size_needed = MultiByteToWideChar(CP_UTF8, 0, &m_wTextInput[0], (int)strlen(m_wTextInput), NULL, 0);
+			std::wstring BurffChar(size_needed, 0);
+			MultiByteToWideChar(CP_UTF8, 0, &m_wTextInput[0], (int)strlen(m_wTextInput), &BurffChar[0], size_needed);
+
+			tFont Font3 = {};
+			Font3.wInputText = BurffChar;
+			Font3.fontType = FONT_TYPE::RIX_KOR_L;
+			Font3.fFontSize = m_fFontSize;
+			Font3.vDisplayPos = Vec2(Pos.x, Pos.y);
+			Font3.iFontColor = FONT_RGBA(252, 252, 250, 255);
+			UICam->AddText(FONT_DOMAIN::TRANS, Font3);
+		}
+	}
 	return TRUE;
 }
 
