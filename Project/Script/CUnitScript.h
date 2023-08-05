@@ -42,6 +42,7 @@ protected:
     float                   m_fAttackSpeed;     // 공격(평타)속도
     float                   m_fAttackRange;     // 공격(평타)사거리
     float                   m_fMoveSpeed;       // 이동속도
+    float                   m_fMoveSpeedFactor; // 이동속도 변화율
 
     Vec3                    m_vNextPos;
     float                   m_fFaceRot;

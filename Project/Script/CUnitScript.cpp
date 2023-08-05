@@ -121,7 +121,9 @@ bool CUnitScript::PathFindMove(float _fSpeed, bool _IsRotation)
 			// 가야할 방향 구하기
 			Vec3 Dir = (NextPos - CurPos).Normalize();
 
-			Vec3 NewPos = CurPos + (Dir * _fSpeed * EditorDT);
+			float Speed = _fSpeed * m_fMoveSpeedFactor;
+
+			Vec3 NewPos = CurPos + (Dir * Speed * EditorDT);
 
 			m_vNextPos = NewPos;
 

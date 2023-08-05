@@ -20,6 +20,5 @@ public:
 
 public:
     vector<CGameObject*>& GetUnitsInRange() { return m_vecUnitsInRange; };
-
 };
 
