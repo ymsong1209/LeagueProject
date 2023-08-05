@@ -175,7 +175,7 @@ void ServerEventMgr::clienttick()
 				AnimInfo* animInfo = (AnimInfo*)(m_vecEvent[i].lParam);
 
 				if (animInfo->bRepeat)
-					NewObject->Animator3D()->PlayRepeat(animInfo->animName, true, animInfo->blend, animInfo->blendTime);
+					NewObject->Animator3D()->PlayRepeat(animInfo->animName, animInfo->bRepeatBlend, animInfo->blend, animInfo->blendTime);
 				else
 					NewObject->Animator3D()->PlayOnce(animInfo->animName, animInfo->blend, animInfo->blendTime);
 

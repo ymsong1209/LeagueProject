@@ -33,7 +33,7 @@ void CJinxWState::Enter()
 	GetOwner()->Animator3D()->PlayOnce(animName, true);
 
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
-	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, true, 0.1f);
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, true, true, 0.1f);
 
 	
 }
