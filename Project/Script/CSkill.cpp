@@ -71,6 +71,20 @@ vector<CGameObject*> CSkill::GetProjectile()
 	return vecProj;
 }
 
+void CSkill::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _skillLevel)
+{
+	// 스킬을 쏜 사람도 챔피언, 맞는 사람도 챔피언일 경우
+	if (_UserScript->GetUnitType() == UnitType::CHAMPION && _TargetScript->GetUnitType() == UnitType::CHAMPION())
+	{
+		// 스킬 쏜 사람이 현재 상대 포탑 내부에 있다면
+		if (_UserScript->IsInsideEnemyTurretRange())
+		{
+			// 챔피언 공격중 옵션 true
+			_UserScript->SetAttackingChampion(true);
+		}
+	}
+}
+
 Vec3 CSkill::GetMousePos()
 {
 	CCamera* MainCam = CRenderMgr::GetInst()->GetMainCam();

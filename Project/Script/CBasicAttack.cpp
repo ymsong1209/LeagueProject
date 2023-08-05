@@ -91,4 +91,6 @@ void CBasicAttack::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, 
 	}
 
 	_TargetScript->SetCurHPVar(-Damage);
+
+	CSkill::GetHit(_UserScript,  _TargetScript, _Skilllevel);
 }

@@ -101,4 +101,6 @@ void CJinxW::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _S
 	// 2ÃÊ µ¿¾È µÐÈ­½ÃÅµ´Ï´Ù.
 	CTimedEffect* JinxWSlow = new CTimedEffect(TargetChampScript, 2.f, 0, 0, CC::SLOW);
 	TargetChampScript->AddTimedEffect(JinxWSlow);
+
+	CSkill::GetHit(_UserScript, _TargetScript, _SkillLevel);
 }

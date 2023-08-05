@@ -39,6 +39,7 @@ protected:
    
     SUMMONERS_SPELL*        m_EquippedSpell;    // 장착 소환사 주문(2칸 배열)
 
+    bool                    m_bIsInsideEnemyTurretRange;
     bool                    m_bIsAttackingChampion;
 
 
@@ -48,6 +49,7 @@ public:
     virtual void tick() override;
 
     virtual void BeginOverlap(CCollider2D* _Other) override;
+    virtual void EndOverlap(CCollider2D* _Other) override;
 
     // ============ Champion =============
 public:
@@ -57,7 +59,7 @@ public:
     void    CheckSkills();  // 스킬 체크
     void    Move();
     bool    IsAttackingChampion() { return m_bIsAttackingChampion; }
-    
+    bool    IsInsideEnemyTurretRange() { return m_bIsInsideEnemyTurretRange; }
 
 
     
@@ -71,4 +73,7 @@ public:
 
 public:
     int     GetLevel() { return m_iLevel; }
+
+    void SetInsideEnemyTurretRange(bool _b) { m_bIsInsideEnemyTurretRange = _b; }
+    void SetAttackingChampion(bool _b) { m_bIsAttackingChampion = _b; }
 };
