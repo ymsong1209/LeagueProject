@@ -36,7 +36,7 @@ void CUnitScript::begin()
 	if (GetOwner()->Fsm() == nullptr)
 		return;
 	GetOwner()->Fsm()->ChangeState(L"Idle");
-
+	
 	// Ã¼·Â
 	m_fHP = m_fMaxHP;
 

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CGrompAlertState.h"
 #include <Engine/CAnim3D.h>
-
+#include "CGrompScript.h"
 CGrompAlertState::CGrompAlertState()
 	: m_iAggroAnimNum(1)
 {
@@ -17,6 +17,8 @@ void CGrompAlertState::Enter()
 	wstring basename = L"gromp\\_idle1_aggro";
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
 	GetOwner()->Animator3D()->PlayOnce(basename);
+	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, basename, false, true, 0.0f);
 	CJungleAlertState::Enter();
 }
 
@@ -33,6 +35,8 @@ void CGrompAlertState::tick()
 
 		GetOwner()->Animator3D()->GetCurAnim()->Reset();
 		GetOwner()->Animator3D()->PlayOnce(basename);
+		UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+		CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, basename, false, true, 0.0f);
 	}
 	CJungleAlertState::tick();
 }

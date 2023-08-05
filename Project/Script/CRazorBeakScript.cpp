@@ -14,7 +14,6 @@
 CRazorBeakScript::CRazorBeakScript()
 	:CJungleMonsterScript((UINT)RAZORBEAKSCRIPT)
 {
-	m_eJungleType = JungleType::RAZORBEAK;
 }
 
 CRazorBeakScript::~CRazorBeakScript()

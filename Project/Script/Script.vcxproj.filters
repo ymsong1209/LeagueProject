@@ -30,15 +30,6 @@
     <ClCompile Include="CJungleIdleState.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
     </ClCompile>
-    <ClCompile Include="CJungleMonsterScript.cpp">
-      <Filter>Jungle\JungleMonster</Filter>
-    </ClCompile>
-    <ClCompile Include="CJungleReturnState.cpp">
-      <Filter>Jungle\JungleMonster</Filter>
-    </ClCompile>
-    <ClCompile Include="CJungleSpawnState.cpp">
-      <Filter>Jungle\JungleMonster</Filter>
-    </ClCompile>
     <ClCompile Include="CGrompAttackState.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
     </ClCompile>
@@ -51,14 +42,8 @@
     <ClCompile Include="CGrompAlertState.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
     </ClCompile>
-    <ClCompile Include="CJungleA2NState.cpp">
-      <Filter>Jungle\JungleMonster</Filter>
-    </ClCompile>
     <ClCompile Include="CGrompA2NState.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
-    </ClCompile>
-    <ClCompile Include="CJungleN2AState.cpp">
-      <Filter>Jungle\JungleMonster</Filter>
     </ClCompile>
     <ClCompile Include="CGrompN2AState.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
@@ -453,6 +438,21 @@
     </ClCompile>
     <ClCompile Include="CUnitState.cpp">
       <Filter>State\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleA2NState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleMonsterScript.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleN2AState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleReturnState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleSpawnState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

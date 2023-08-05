@@ -1,28 +1,10 @@
 #pragma once
 #include "CMobScript.h"
 
-enum class JungleType
-{
-    DEFAULT,//Default¸é ¾ÈµÊ
-    RAZORBEAK,
-    RAZORBEAK_MINI,
-    MURK_WOLF,
-    MURK_WOLF_MINI,
-    KRUG,
-    KRUG_MINI,
-    GROMP,
-    BLUE,
-    RED,
-    DRAGON,
-    BARON,
-    END
-};
-
 class CJungleMonsterScript :
     public CMobScript
 {
 protected:
-    JungleType      m_eJungleType;
     Vec3            m_vAggroPos;
     Vec3            m_vSpawnPos;   
     Vec3            m_vSpawnRot;
@@ -51,6 +33,9 @@ public:
     Vec3    GetAggroPos() { return m_vAggroPos; }
 
     CGameObject* GetTarget() { return m_pTarget; }
+
+    void GetHit(CGameObject* _target);
+    void ReleaseTarget() { m_pTarget = nullptr; }
 
 public:
     virtual void begin() override;

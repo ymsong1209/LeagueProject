@@ -60,7 +60,7 @@ void CChampionScript::tick()
 
 	if (CheckDeath())
 		return;
-
+	
 	GetInput();
 	CheckStatus();
 	Move();
@@ -146,6 +146,7 @@ void CChampionScript::GetInput()
 		if (MouseOverlapObj.size() >= 1)
 		{
 			CGameObject* Unit = MouseOverlapObj[0];
+			if (Unit == this->GetOwner()) return;
 			CUnitScript* UnitScript = Unit->GetScript<CUnitScript>();
 
 			// 오브젝트가 현재 챔피언의 사거리 내에 있는지 확인
@@ -294,11 +295,11 @@ void CChampionScript::Move()
 	else
 	{
 		// 이동 벡터값이 NaN -> 이동 불가, 멈춤
-		StopEvent* evn = new StopEvent;
-		if (evn != nullptr)
-		{
-			CGameEventMgr::GetInst()->NotifyEvent(*evn);
-		}
+		//StopEvent* evn = new StopEvent;
+		//if (evn != nullptr)
+		//{
+		//	CGameEventMgr::GetInst()->NotifyEvent(*evn);
+		//}
 	}
 }
 

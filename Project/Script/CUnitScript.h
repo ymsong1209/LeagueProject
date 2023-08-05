@@ -76,6 +76,7 @@ public:
     UINT64           GetServerID() { return m_iServerID; }
     wstring          GetNickname() const { return m_strNickname; }
     bool             IsHost() const { return m_bHost; }
+    void             SetUnitType(UnitType _type) { m_eUnitType = _type; }
     UnitType         GetUnitType() const { return m_eUnitType; }
     Faction          GetFaction() const { return m_eFaction; }
 

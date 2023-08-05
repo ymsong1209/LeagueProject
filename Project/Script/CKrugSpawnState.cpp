@@ -29,7 +29,8 @@ void CKrugSpawnState::Exit()
 	script->SetAggroRange(85.f);
 
 	GetOwner()->AddComponent(new CCollider3D);
-	GetOwner()->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
+	GetOwner()->Collider3D()->SetAbsolute(true);
+	GetOwner()->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
 
 	GetOwner()->AddComponent(new CCollider2D);
 	GetOwner()->Collider2D()->SetAbsolute(true);

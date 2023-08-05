@@ -30,7 +30,7 @@
 #include <Script/CKrugScript.h>
 #include <Script/CKrugMiniScript.h>
 #include <Script/CBlueScript.h>
-//#include <Script/CRedScript.h>
+#include <Script/CRedScript.h>
 
 void CreateTestLevel()
 {
@@ -195,35 +195,35 @@ void CreateTestLevel()
 		Ptr<CMeshData> pMeshData = nullptr;
 		CGameObject* pObj = nullptr;
 
-		//pMeshData = nullptr;
-		//pObj = nullptr;
-		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
-		//pObj = pMeshData->Instantiate();
-		//pObj->SetName(L"Jinx");
-		//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
-		//pObj->GetRenderComponent()->SetFrustumCheck(false);
-		//pObj->AddComponent(new CPlayerScript);
-		//pObj->AddComponent(new CJinxScript);
-		//pObj->AddComponent(new CPathFinder);
-		//pObj->AddComponent(new CCollider3D);
-		//pObj->AddComponent(new CCollider2D);
-		//pObj->AddComponent(new CFsm);
-		//
-		//pObj->Collider2D()->SetAbsolute(false);
-		//pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-		//pObj->Collider2D()->SetOffsetScale(Vec2(20.f, 20.f));
-		//pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-		//
-		//pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
-		//pObj->Collider3D()->SetAbsolute(true);
-		//pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
-		//pObj->Collider3D()->SetDrawCollision(false);
-		//pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true,true,0.1f);
-		//pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		//
-		//pObj->Transform()->SetUseMouseOutline(true);
-		//
-		//SpawnGameObject(pObj, Vec3(0, 0, 0), L"Champion");
+		pMeshData = nullptr;
+		pObj = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"Jinx");
+		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
+		pObj->GetRenderComponent()->SetFrustumCheck(false);
+		pObj->AddComponent(new CPlayerScript);
+		pObj->AddComponent(new CJinxScript);
+		pObj->AddComponent(new CPathFinder);
+		pObj->AddComponent(new CCollider3D);
+		pObj->AddComponent(new CCollider2D);
+		pObj->AddComponent(new CFsm);
+		
+		pObj->Collider2D()->SetAbsolute(false);
+		pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+		pObj->Collider2D()->SetOffsetScale(Vec2(20.f, 20.f));
+		pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+		
+		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+		pObj->Collider3D()->SetAbsolute(true);
+		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
+		pObj->Collider3D()->SetDrawCollision(false);
+		pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true,true,0.1f);
+		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+		
+		pObj->Transform()->SetUseMouseOutline(true);
+		
+		SpawnGameObject(pObj, Vec3(0, 0, 0), L"Player");
 
 
 
@@ -612,6 +612,7 @@ void SpawnJungleMob()
 			Gromp->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(270.f), 0.f));
 			CGrompScript* Script = Gromp->GetScript<CGrompScript>();
 			Script->SetAggroPos(Vec3(323.f, 0.f, 1242.f));
+			Script->SetUnitType(UnitType::SOUTH_GROMP);
 			SpawnGameObject(Gromp, Vec3(323.f, 10.f, 1242.f), L"Mob");
 
 			CGameObject* GrompAggro = new CGameObject;
@@ -637,6 +638,7 @@ void SpawnJungleMob()
 			MurkWolf->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(24.f), 0.f));
 			CMurkWolfScript* script = MurkWolf->GetScript <CMurkWolfScript>();
 			script->SetAggroPos(Vec3(564.f, 0.f, 959.f));
+			script->SetUnitType(UnitType::SOUTH_MURKWOLF);
 			SpawnGameObject(MurkWolf, Vec3(550.f, 15.f, 944.f), L"Mob");
 
 			CGameObject* MurkWolfAggro = new CGameObject;
@@ -661,6 +663,7 @@ void SpawnJungleMob()
 			MurkWolf_Mini->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(36.f), 0.f));
 			CMurkWolfMiniScript* Script = MurkWolf_Mini->GetScript<CMurkWolfMiniScript>();
 			Script->SetAggroPos(Vec3(564.f, 0.f, 964.f));
+			Script->SetUnitType(UnitType::SOUTH_MURKWOLF_MINI_L);
 			SpawnGameObject(MurkWolf_Mini, Vec3(552.f, 15.f, 964.f), L"Mob");
 		}
 		//블루팀 늑대 째깐이(우)
@@ -675,6 +678,7 @@ void SpawnJungleMob()
 			MurkWolf_Mini->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(36.f), 0.f));
 			CMurkWolfMiniScript* Script = MurkWolf_Mini->GetScript<CMurkWolfMiniScript>();
 			Script->SetAggroPos(Vec3(564.f, 0.f, 964.f));
+			Script->SetUnitType(UnitType::SOUTH_MURKWOLF_MINI_R);
 			SpawnGameObject(MurkWolf_Mini, Vec3(580.f, 15.f, 944.f), L"Mob");
 		}
 		//블루팀 돌거북
@@ -689,6 +693,7 @@ void SpawnJungleMob()
 			Krug->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
 			CKrugScript* Script = Krug->GetScript<CKrugScript>();
 			Script->SetAggroPos(Vec3(1238.f, 0.f, 389.f));
+			Script->SetUnitType(UnitType::SOUTH_KRUG);
 			SpawnGameObject(Krug, Vec3(1221.f, 15.f, 379.f), L"Mob");
 
 			CGameObject* KrugAggro = new CGameObject;
@@ -713,6 +718,7 @@ void SpawnJungleMob()
 			Krug_Mini->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
 			CKrugMiniScript* Script = Krug_Mini->GetScript<CKrugMiniScript>();
 			Script->SetAggroPos(Vec3(1238.f, 0.f, 389.f));
+			Script->SetUnitType(UnitType::SOUTH_KRUG_MINI);
 			SpawnGameObject(Krug_Mini, Vec3(1252.f, 15.f, 379.f), L"Mob");
 		}
 		//블루팀 칼날부리
@@ -727,6 +733,7 @@ void SpawnJungleMob()
 			RazorBeak->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(-90.f), 0.f));
 			CRazorBeakScript* Script = RazorBeak->GetScript<CRazorBeakScript>();
 			Script->SetAggroPos(Vec3(1033.f, 0.f, 782.f));
+			Script->SetUnitType(UnitType::SOUTH_RAZORBEAK);
 			SpawnGameObject(RazorBeak, Vec3(1008.f, 15.f, 800.f), L"Mob");
 
 			CGameObject* RazorBeakAggro = new CGameObject;
@@ -752,6 +759,7 @@ void SpawnJungleMob()
 			RazorBeak->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
 			CRazorBeakMiniScript* Script = RazorBeak->GetScript<CRazorBeakMiniScript>();
 			Script->SetAggroPos(Vec3(1033.f, 0.f, 782.f));
+			Script->SetUnitType(UnitType::SOUTH_RAZORBEAK_MINI_1);
 			SpawnGameObject(RazorBeak, Vec3(1026.f, 15.f, 810.f), L"Mob");
 		}
 		//블루팀 블루
@@ -766,6 +774,7 @@ void SpawnJungleMob()
 			Blue->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(90.f), 0.f));
 			CBlueScript* Script = Blue->GetScript<CBlueScript>();
 			Script->SetAggroPos(Vec3(563.f, 0.f, 1164.f));
+			Script->SetUnitType(UnitType::SOUTH_BLUE);
 			SpawnGameObject(Blue, Vec3(563.f, 15.f, 1164.f), L"Mob");
 
 			CGameObject* BlueAggro = new CGameObject;
@@ -777,6 +786,31 @@ void SpawnJungleMob()
 			BlueAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
 			BlueAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
 			SpawnGameObject(BlueAggro, Vec3(563.f, 0.f, 1164.f), 0);
+		}
+		//블루팀 레드
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\jungle_red.fbx");
+			CGameObject* Red = nullptr;
+			Red = pMeshData->Instantiate();
+			Red->AddComponent(new CRedScript);
+			Red->SetName(L"South_Red");
+			Red->Transform()->SetRelativeScale(0.35f, 0.35f, 0.35f);
+			Red->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(46.f), 0.f));
+			CRedScript* Script = Red->GetScript<CRedScript>();
+			Script->SetAggroPos(Vec3(1123, 15.f, 559.f));
+			Script->SetUnitType(UnitType::SOUTH_RED);
+			SpawnGameObject(Red, Vec3(1136, 15.f, 580.f), L"Mob");
+
+			CGameObject* RedAggro = new CGameObject;
+			RedAggro->SetName(L"SOUTH_RedAggroRadius");
+			RedAggro->AddComponent(new CTransform);
+			RedAggro->AddComponent(new CCollider2D);
+			RedAggro->Transform()->SetRelativeScale(Vec3(190, 190.f, 190.f));
+			RedAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			RedAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+			RedAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			SpawnGameObject(RedAggro, Vec3(1123, 15.f, 559.f), 0);
 		}
 	}
 	

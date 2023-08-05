@@ -12,7 +12,7 @@ class CJinxScript :
 {
 public:
     CJinxScript();
-    ~CJinxScript();
+    virtual ~CJinxScript();
 
 private:
     JinxWeaponMode  m_eWeaponMode;  // 무기 모드

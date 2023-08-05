@@ -40,6 +40,7 @@ void CSendServerEventMgr::SendAnimPacket(UINT64 _targetId, wstring _animName, bo
 	//evn.wParam
 	evn.lParam = (DWORD_PTR)animInfo;
 	CSendServerEventMgr::GetInst()->AddServerSendEvent(evn);
+
 }
 
 void CSendServerEventMgr::SendUseSkillPacket(UINT64 _ownerId, UINT64 _targetObjId

@@ -34,8 +34,7 @@ CBasicAttack::CBasicAttack()
 
 CBasicAttack::~CBasicAttack()
 {
-	//if (m_ProjectileScript != nullptr)
-	//	delete m_ProjectileScript;
+	
 }
 
 void CBasicAttack::tick()
