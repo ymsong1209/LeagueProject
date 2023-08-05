@@ -9,8 +9,8 @@ public:
     ~CChampionAttackState();
 
 private:
-    int     m_iUserID;
-    int     m_iTargetID;
+    CGameObject*     m_UserObj;
+    CGameObject*     m_TargetObj;
 
 public:
     virtual void tick() override;
@@ -21,7 +21,7 @@ protected:
     void HandleEvent(CGameEvent& event) override;
 
 public:
-    void SetUserID(int _id) { m_iUserID = _id; }
-    void SetTargetID(int _id) { m_iTargetID = _id; }
+    void SetUserObj(CGameObject* _obj)  { m_UserObj = _obj; }
+    void SetTargetObj(CGameObject* _obj) { m_TargetObj = _obj; }
 };
 

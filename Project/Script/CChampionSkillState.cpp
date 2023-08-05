@@ -1,8 +1,9 @@
 #include "pch.h"
 #include "CChampionSkillState.h"
-#include <Engine/CTimeMgr.h>
 #include <Engine/CFsm.h>
-
+#include <Engine/CAnimator3D.h>
+#include <Engine/CAnim3D.h>
+#include "CUnitScript.h"
 CChampionSkillState::CChampionSkillState()
 {
 }
@@ -13,13 +14,10 @@ CChampionSkillState::~CChampionSkillState()
 
 void CChampionSkillState::tick()
 {
-	// 캐스팅 시간
-	if (m_fCurCastingTime > 0.f)
-		m_fCurCastingTime -= DT;
-	else
-		m_fCurCastingTime = 0.f;
+	// 애니메이션이 끝날 경우, Idle로 전환
+	if (GetOwnerFSM()->GetOwner()->Animator3D()->GetCurAnim()->IsFinish())
+		GetOwnerFSM()->ChangeState(L"Idle");
 
-	// 애니메이션 끝났고, 캐스팅타임 끝났으면 Idle로 전환
 }
 
 void CChampionSkillState::Enter()
@@ -30,7 +28,6 @@ void CChampionSkillState::Enter()
 void CChampionSkillState::Exit()
 {
 	CUnitState::Exit();
-	m_fCurCastingTime = m_fCastingTime;
 }
 
 void CChampionSkillState::HandleEvent(CGameEvent& event)
@@ -43,5 +40,21 @@ void CChampionSkillState::HandleEvent(CGameEvent& event)
 	case GAME_EVENT_TYPE::PLAYER_DEATH:
 		GetOwnerFSM()->ChangeState(L"Death");
 		break;
+	case GAME_EVENT_TYPE::GET_HIT:
+	{
+		GetHitEvent* HitEvent = dynamic_cast<GetHitEvent*>(&event);
+
+		// 맞은 타겟이 본인인 경우에만 이벤트에 반응
+		if (HitEvent->GetTargetObj() == GetOwner())
+		{
+			CGameObject* SkillUser = HitEvent->GetUserObj();
+			CGameObject* SkillTarget = HitEvent->GetTargetObj();
+			SkillType skilltype = HitEvent->GetSkillType();
+			int	skillLevel = HitEvent->GetSkillLevel();
+
+			GetOwnerFSM()->GetOwner()->GetScript<CUnitScript>()->GetHit(skilltype, SkillTarget, SkillUser, skillLevel);
+		}
+	}
+	break;
 	}
 }

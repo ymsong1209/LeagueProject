@@ -277,8 +277,7 @@ enum class EVENT_TYPE
 
 	LEVEL_CHANGE,
 
-	// Server Packet //
-	MOVE_PACKET,    // wParam : GameObject,  lParam : Update Move Packet
+	LAYER_CHANGE,		// wParam : 바꿀 오브젝트 lParam : 바꿀 레이어 번호
 };
 
 

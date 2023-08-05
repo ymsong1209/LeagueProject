@@ -173,7 +173,8 @@ call CodeGen.exe</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CBaseAttack.h" />
+    <ClInclude Include="CAttackRangeScript.h" />
+    <ClInclude Include="CBasicAttack.h" />
     <ClInclude Include="CBasicAttackScript.h" />
     <ClInclude Include="CBlueA2NState.h" />
     <ClInclude Include="CBlueAlertState.h" />
@@ -207,6 +208,9 @@ call CodeGen.exe</Command>
     <ClInclude Include="CGrompReturnState.h" />
     <ClInclude Include="CGrompScript.h" />
     <ClInclude Include="CGrompSpawnState.h" />
+    <ClInclude Include="CJinxAttackState.h" />
+    <ClInclude Include="CJinxWScript.h" />
+    <ClInclude Include="CJinxWState.h" />
     <ClInclude Include="CHeal.h" />
     <ClInclude Include="CInhibitorBrokenState.h" />
     <ClInclude Include="CInhibitorIdleState.h" />
@@ -278,6 +282,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CNexusScript.h" />
     <ClInclude Include="COtherPlayerScript.h" />
     <ClInclude Include="CPlayerScript.h" />
+    <ClInclude Include="CProjectileScript.h" />
     <ClInclude Include="CRazorBeakA2NState.h" />
     <ClInclude Include="CRazorBeakAlertState.h" />
     <ClInclude Include="CRazorBeakAttackState.h" />
@@ -339,8 +344,11 @@ call CodeGen.exe</Command>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="CScriptMgr.h" />
-    <ClInclude Include="CSoundTestScript.h" />
+    <ClInclude Include="CSendServerEventMgr.h" />
+    <ClInclude Include="CServerTypes.h" />
     <ClInclude Include="CSkill.h" />
+    <ClInclude Include="CSkillMgr.h" />
+    <ClInclude Include="CSoundTestScript.h" />
     <ClInclude Include="CStructureScript.h" />
     <ClInclude Include="CTurretAttackScript.h" />
     <ClInclude Include="CTurretScript.h" />
@@ -352,7 +360,8 @@ call CodeGen.exe</Command>
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CBaseAttack.cpp" />
+    <ClCompile Include="CAttackRangeScript.cpp" />
+    <ClCompile Include="CBasicAttack.cpp" />
     <ClCompile Include="CBasicAttackScript.cpp" />
     <ClCompile Include="CBlueA2NState.cpp" />
     <ClCompile Include="CBlueAlertState.cpp" />
@@ -390,6 +399,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CInhibitorIdleState.cpp" />
     <ClCompile Include="CInhibitorScript.cpp" />
     <ClCompile Include="CInhibitorSpawnState.cpp" />
+    <ClCompile Include="CJinxAttackState.cpp" />
     <ClCompile Include="CJinxDeathState.cpp" />
     <ClCompile Include="CJinxIdleState.cpp" />
     <ClCompile Include="CJinxQ.cpp" />
@@ -398,6 +408,8 @@ call CodeGen.exe</Command>
     <ClCompile Include="CJinxScript.cpp" />
     <ClCompile Include="CJinxW.cpp" />
     <ClCompile Include="CJinxWalkState.cpp" />
+    <ClCompile Include="CJinxWScript.cpp" />
+    <ClCompile Include="CJinxWState.cpp" />
     <ClCompile Include="CJungleA2NState.cpp" />
     <ClCompile Include="CJungleAlertState.cpp" />
     <ClCompile Include="CJungleAttackState.cpp" />
@@ -456,6 +468,8 @@ call CodeGen.exe</Command>
     <ClCompile Include="CNexusScript.cpp" />
     <ClCompile Include="COtherPlayerScript.cpp" />
     <ClCompile Include="CPlayerScript.cpp" />
+    <ClCompile Include="CInGameCameraScript.cpp" />
+    <ClCompile Include="CProjectileScript.cpp" />
     <ClCompile Include="CRazorBeakA2NState.cpp" />
     <ClCompile Include="CRazorBeakAlertState.cpp" />
     <ClCompile Include="CRazorBeakAttackState.cpp" />
@@ -517,9 +531,10 @@ call CodeGen.exe</Command>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="CScriptMgr.cpp" />
-    <ClCompile Include="CSoundTestScript.cpp" />
-    <ClCompile Include="CInGameCameraScript.cpp" />
+    <ClCompile Include="CSendServerEventMgr.cpp" />
     <ClCompile Include="CSkill.cpp" />
+    <ClCompile Include="CSkillMgr.cpp" />
+    <ClCompile Include="CSoundTestScript.cpp" />
     <ClCompile Include="CStructureScript.cpp" />
     <ClCompile Include="CTurretAttackScript.cpp" />
     <ClCompile Include="CTurretScript.cpp" />

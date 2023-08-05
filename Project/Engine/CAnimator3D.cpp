@@ -19,7 +19,7 @@ CAnimator3D::CAnimator3D()
 	: m_mapAnim()
 	, m_pVecBones(nullptr)
 	, m_pCurAnim(nullptr)
-	, m_bRepeat(true)
+	, m_bRepeat(false)
 	, m_pBoneFinalMatBuffer(nullptr)
 	, m_bBlend(false)
 	, m_bRepeatBlend(false)
@@ -192,6 +192,7 @@ void CAnimator3D::ClearData()
 
 void CAnimator3D::PlayRepeat(const wstring& _strName, bool _RepeatBlend, bool _blend, float _blendtime)
 {
+
 	CAnim3D* pAnim = FindAnim(_strName);
 	assert(pAnim);
 
@@ -201,7 +202,6 @@ void CAnimator3D::PlayRepeat(const wstring& _strName, bool _RepeatBlend, bool _b
 		if (GetCurAnim()) {
 			m_pCurAnim->Reset();
 			m_bBlend = true;
-			m_bRepeat = true;
 			m_fCurBlendTime = 0.f;
 			m_fMaxBlendTime = _blendtime;
 			m_iBlendStartFrm = GetCurAnim()->GetCurFrameIdx();
@@ -213,18 +213,18 @@ void CAnimator3D::PlayRepeat(const wstring& _strName, bool _RepeatBlend, bool _b
 		else {
 			m_pCurAnim = pAnim;
 			m_pCurAnim->Reset();
-			m_bRepeat = true;
 			m_pCurAnim->Play();
 		}
 	}
 	else {
 		m_pCurAnim = pAnim;
 		m_pCurAnim->Reset();
-		m_bRepeat = true;
 		m_pCurAnim->Play();
 	}
 
-	m_bRepeatBlend = _RepeatBlend; 
+	m_bRepeat = true;
+	m_bRepeatBlend = _RepeatBlend;
+
 }
 void CAnimator3D::PlayOnce(const wstring& _strName, bool _blend, float _blendtime)
 {
@@ -234,8 +234,7 @@ void CAnimator3D::PlayOnce(const wstring& _strName, bool _blend, float _blendtim
 	//현재 애니메이션에서 다른 애니메이션으로 blend하면서 들어가기
 	if (_blend) {
 		//현재 애니메이션이 있음
-		if (GetCurAnim()) 
-		{
+		if (GetCurAnim()) {
 			m_pCurAnim->Reset();
 			m_bBlend = true;
 			m_fCurBlendTime = 0.f;
@@ -266,6 +265,7 @@ void CAnimator3D::PlayOnce(const wstring& _strName, bool _blend, float _blendtim
 	m_bRepeat = false;
 	m_bRepeatBlend = false;
 }
+
 
 
 void CAnimator3D::Pause()
@@ -412,11 +412,11 @@ void CAnimator3D::CreateAnimFromText(const wstring& _strRelativePath)
 	// _strRelativePath에서 파일명만 가져옴
 	filesystem::path path(_strRelativePath);
 	wstring FileName = path.stem();
-	
+
 	wstring FullName = L"fbx\\";
 	FullName += FileName;
 	FullName += L".fbx";
-	Ptr<CMeshData> pMeshData  = CResMgr::GetInst()->LoadFBX(FullName);
+	Ptr<CMeshData> pMeshData = CResMgr::GetInst()->LoadFBX(FullName);
 
 	m_MeshDataRelativePath = pMeshData->GetRelativePath();
 
@@ -428,12 +428,12 @@ void CAnimator3D::CreateAnimFromText(const wstring& _strRelativePath)
 	filesystem::path meshpath = m_MeshDataRelativePath;
 	wstring meshdataname = meshpath.stem();
 	RelativePath += meshdataname;
-	
+
 	// 자동으로 폴더 생성
 	filesystem::path directory = filesystem::path(strFilePath + RelativePath);
 	if (!filesystem::exists(directory))
 		filesystem::create_directories(directory);
-	
+
 	std::wifstream file(FilePath); // 파일을 읽기 모드로 연다
 	if (!file) {
 		wchar_t szStr[256] = {};
@@ -470,7 +470,7 @@ void CAnimator3D::CreateAnimFromText(const wstring& _strRelativePath)
 		clip.strAnimName = AnimFinalName;
 		clip.iStartFrame = startFrame;
 		clip.iEndFrame = endFrame;
-		
+
 
 		const vector<tMTAnimClip>* animClipPtr = pMeshData->GetMesh()->GetAnimClip();  // GetAnimClip()로부터 포인터를 가져옴
 		tMTAnimClip originclip = (*animClipPtr)[0];
@@ -651,7 +651,7 @@ void CAnimator3D::LoadFromLevelJsonFile(const Value& _componentValue)
 	for (size_t i = 0; i < mapAnimArray.Size(); ++i)
 	{
 		CAnim3D* pNewAnim = new CAnim3D;
-		
+
 		wstring AnimPath;
 		AnimPath = StrToWStr(mapAnimArray[i]["Anim3DRelativePath"].GetString());
 		pNewAnim->m_pOwner = this;

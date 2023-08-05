@@ -8,9 +8,10 @@ enum class GAME_EVENT_TYPE
 	PLAYER_MOVE,
 	PLAYER_KILL_CHAMPION,
 	PLAYER_KILL_MOB,
-	PLAYER_BASE_ATTACK,
+	PLAYER_BASIC_ATTACK,
 	PLAYER_RECALL,
 	PLAYER_ABILITY_MODIFY,
+	GET_HIT,
 	PLAYER_SKILL_Q,
 	PLAYER_SKILL_W,
 	PLAYER_SKILL_E,
@@ -72,55 +73,165 @@ class MoveEvent :
 {
 public:
 	MoveEvent()
-		:m_iPlayerID(-1)
-		, m_vTargetPos(Vec3(0, 0, 0))
-		, m_fFaceRot(0)
 	{
 		m_eEventType = GAME_EVENT_TYPE::PLAYER_MOVE;
 	}
 
-private:
-	int             m_iPlayerID;
-	Vec3            m_vTargetPos;
-	float			m_fFaceRot;
-
 public:
-	void	SetPlayerID(int _i) { m_iPlayerID = _i; }
-	void	SetTargetPos(Vec3 _v) { m_vTargetPos = _v; }
-	void	SetFaceRot(float _f) { m_fFaceRot = _f; }
 
-	int		GetPlayerID() { return m_iPlayerID; }
-	Vec3	GetTargetPos() { return m_vTargetPos; }
-	float	GetFaceRot() { return m_fFaceRot; }
-
-	void Clear() override { m_iPlayerID = -1; m_vTargetPos = {}; m_fFaceRot = 0; }
+	void Clear() override {}
 };
 
-class BaseAttackEvent :
+class BasicAttackEvent :
 	public CGameEvent
 {
 public:
-	BaseAttackEvent()
-		: m_iUserID(-1)
-		, m_iTargetID(-1)
+	BasicAttackEvent()
+		: m_UserObj(nullptr)
+		, m_TargetObj(nullptr)
 	{
-		m_eEventType = GAME_EVENT_TYPE::PLAYER_BASE_ATTACK;
+		m_eEventType = GAME_EVENT_TYPE::PLAYER_BASIC_ATTACK;
 	}
 
 private:
-	int             m_iUserID;
-	int             m_iTargetID;
-	
+	CGameObject*             m_UserObj;
+	CGameObject*             m_TargetObj;
+
 
 public:
-	void	SetUserID(int _i) { m_iUserID = _i; }
-	void	SetTargetID(int _i) { m_iTargetID = _i; }
+	void	SetUserObj(CGameObject* _obj) { m_UserObj = _obj; }
+	void	SetTargetObj(CGameObject* _obj) { m_TargetObj = _obj; }
 
-	int		GetUserID() { return m_iUserID; }
-	int		GetTargetID() { return m_iTargetID; }
+	CGameObject*		GetUserObj() { return m_UserObj; }
+	CGameObject*		GetTargetObj() { return m_TargetObj; }
+
+	void Clear() override { m_UserObj = nullptr; m_TargetObj = nullptr; }
+};
 
 
-	void Clear() override { m_iUserID = -1; m_iTargetID = -1; }
+class CGameObject;
+enum class SkillType;
+
+class GetHitEvent :
+	public CGameEvent
+{
+public:
+	GetHitEvent()
+		: m_iUserObj(nullptr)
+		, m_eSkillType{ SkillType::NONE }
+	{
+		m_eEventType = GAME_EVENT_TYPE::GET_HIT;
+	}
+
+private:
+	CGameObject*	m_iUserObj;
+	CGameObject*	m_iTargetObj;
+	SkillType		m_eSkillType;
+	int				m_iSkillLevel;
+
+
+public:
+	
+	void	SetUserObj(CGameObject* _Obj)	{ m_iUserObj = _Obj; }
+	void	SetTargetObj(CGameObject* _Obj) { m_iTargetObj = _Obj; }
+	void	SetSkillType(SkillType _type)	{ m_eSkillType = _type; }
+	void	SetSkillLevel(int _i) { m_iSkillLevel = _i; }
+
+	CGameObject* GetUserObj() { return m_iUserObj; }
+	CGameObject* GetTargetObj() { return m_iTargetObj; }
+	SkillType	 GetSkillType() { return m_eSkillType; }
+	int			 GetSkillLevel() { return m_iSkillLevel; }
+
+	void Clear() override { m_iUserObj = nullptr; m_iTargetObj = nullptr;  m_eSkillType = SkillType::NONE; m_iSkillLevel = 0; }
+};
+
+
+class PlayerQEvent :
+	public CGameEvent
+{
+public:
+	PlayerQEvent()
+	{
+		m_eEventType = GAME_EVENT_TYPE::PLAYER_SKILL_Q;
+	}
+private:
+	CGameObject* m_UserObj;
+	CGameObject* m_TargetObj;
+
+public:
+	void	SetUserObj(CGameObject* _obj) { m_UserObj = _obj; }
+	void	SetTargetObj(CGameObject* _obj) { m_TargetObj = _obj; }
+
+	CGameObject* GetUserObj() { return m_UserObj; }
+	CGameObject* GetTargetObj() { return m_TargetObj; }
+
+	void Clear() override { m_UserObj = nullptr; m_TargetObj = nullptr; }
+};
+
+class PlayerWEvent :
+	public CGameEvent
+{
+public:
+	PlayerWEvent()
+	{
+		m_eEventType = GAME_EVENT_TYPE::PLAYER_SKILL_W;
+	}
+private:
+	CGameObject* m_UserObj;
+	CGameObject* m_TargetObj;
+
+public:
+	void	SetUserObj(CGameObject* _obj) { m_UserObj = _obj; }
+	void	SetTargetObj(CGameObject* _obj) { m_TargetObj = _obj; }
+
+	CGameObject* GetUserObj() { return m_UserObj; }
+	CGameObject* GetTargetObj() { return m_TargetObj; }
+
+	void Clear() override { m_UserObj = nullptr; m_TargetObj = nullptr; }
+};
+
+class PlayerEEvent :
+	public CGameEvent
+{
+public:
+	PlayerEEvent()
+	{
+		m_eEventType = GAME_EVENT_TYPE::PLAYER_SKILL_E;
+	}
+private:
+	CGameObject* m_UserObj;
+	CGameObject* m_TargetObj;
+
+public:
+	void	SetUserObj(CGameObject* _obj) { m_UserObj = _obj; }
+	void	SetTargetObj(CGameObject* _obj) { m_TargetObj = _obj; }
+
+	CGameObject* GetUserObj() { return m_UserObj; }
+	CGameObject* GetTargetObj() { return m_TargetObj; }
+
+	void Clear() override { m_UserObj = nullptr; m_TargetObj = nullptr; }
+};
+
+class PlayerREvent :
+	public CGameEvent
+{
+public:
+	PlayerREvent()
+	{
+		m_eEventType = GAME_EVENT_TYPE::PLAYER_SKILL_R;
+	}
+private:
+	CGameObject* m_UserObj;
+	CGameObject* m_TargetObj;
+
+public:
+	void	SetUserObj(CGameObject* _obj) { m_UserObj = _obj; }
+	void	SetTargetObj(CGameObject* _obj) { m_TargetObj = _obj; }
+
+	CGameObject* GetUserObj() { return m_UserObj; }
+	CGameObject* GetTargetObj() { return m_TargetObj; }
+
+	void Clear() override { m_UserObj = nullptr; m_TargetObj = nullptr; }
 };
 
 

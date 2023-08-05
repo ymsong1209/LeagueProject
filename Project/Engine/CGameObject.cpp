@@ -9,6 +9,7 @@
 #include "CLevelMgr.h"
 #include "CLevel.h"
 #include "CLayer.h"
+#include "CEventMgr.h"
 
 
 CGameObject::CGameObject()
@@ -227,6 +228,31 @@ void CGameObject::AddChild(CGameObject* _Object)
 	// 부모 자식 연결
 	_Object->m_Parent = this;
 	m_vecChild.push_back(_Object);
+}
+
+void CGameObject::ChangeLayer(int _NewLayerIdx)
+{
+	tEvent evn = {};
+
+	evn.Type = EVENT_TYPE::LAYER_CHANGE;
+	evn.wParam = (DWORD_PTR) this;			// 레이어 바꿀 오브젝트
+	evn.lParam = (DWORD_PTR)_NewLayerIdx;	// 바꿀 레이어 번호
+
+	CEventMgr::GetInst()->AddEvent(evn);
+}
+
+CGameObject* CGameObject::FindChildObjByName(wstring _name)
+{
+	// 해당 오브젝트의 자식 벡터를 가져와서 이름으로 검색한다.
+	const vector<CGameObject*>& vecChild = m_vecChild;
+	for (size_t i = 0; i < m_vecChild.size(); ++i)
+	{
+		// 가장 먼저 찾아진 오브젝트 한 개를 반환한다.
+		if (_name == m_vecChild[i]->GetName())
+			return m_vecChild[i];
+	}
+
+	return nullptr;
 }
 
 
