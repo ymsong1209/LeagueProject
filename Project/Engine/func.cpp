@@ -51,6 +51,13 @@ void DestroyObject(CGameObject* _DeletObject)
 	CEventMgr::GetInst()->AddEvent(evn);
 }
 
+void ScriptInspectorReload()
+{
+	tEvent evn = {};
+	evn.Type = EVENT_TYPE::INSPECTOR_RELOAD;
+	CEventMgr::GetInst()->AddEvent(evn);
+}
+
 
 
 void DrawDebugRect(Vec3 _vWorldPos, Vec2 _vWorldScale, Vec4 _vColor, Vec3 _vRotation, float _fTime)

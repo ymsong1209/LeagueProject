@@ -2,6 +2,7 @@
 
 #include <Engine\ptr.h>
 #include <Engine\CTexture.h>
+#include "ImGuiMgr.h"
 
 class ParamUI
 {
@@ -14,7 +15,7 @@ public:
 	static int Param_Vec2(const string& _strDesc, Vec2* _pData, bool _bDrag = false);
 	static int Param_Vec4(const string& _strDesc, Vec4* _pData, bool _bDrag = false);
 
-	static int Param_Tex(const string& _strDesc, Ptr<CTexture>& _CurTex, UI* _UI, UI_DELEGATE_1 _Func);
+	static int Param_Tex(const string& _strDesc, Ptr<CTexture> _CurTex, UI* _UI, UI_DELEGATE_1 _Func);
 
 
 private:

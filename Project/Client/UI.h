@@ -2,6 +2,8 @@
 
 
 #include "ImGuiMgr.h"
+#include <Engine\ptr.h>
+#include <Engine\CRes.h>
 
 class UI
 {
@@ -23,7 +25,10 @@ public:
 	virtual void tick() {}
 	virtual void finaltick();
 	virtual int render_update() = 0;
-
+	wstring charTowstring(const char* src)
+	{
+		return std::wstring(src, src + strlen(src));
+	}
 
 public:	
 	void SetActive(bool _Active) { m_Active = _Active; }
@@ -48,6 +53,8 @@ public:
 		m_vecChildUI.push_back(_UI);
 	}
 
+	void GetResKey(Ptr<CRes> _Res, char* _Buff, size_t _BufferSize);
+	void wstringTostring(wstring _wstring, char* _Buff, size_t _BufferSize);
 
 public:
 	UI(const string& _Name);
