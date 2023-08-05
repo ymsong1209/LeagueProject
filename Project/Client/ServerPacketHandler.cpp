@@ -365,17 +365,17 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 	}
 	CSendServerEventMgr::GetInst()->SetVecAllPlyer(vecAllPlayer);
 	
-	//CGameObject* UIObj = new CGameObject; //각종 스크립트에서 처리할 것들
-	//UIObj->SetName(L"UIObj");
-	//UIObj->AddComponent(new CTransform);
-	//UIObj->AddComponent(new CCharacterUIScript);
-	//UIObj->AddComponent(new CWorldHPSpawnScript);
-	//UIObj->AddComponent(new CInventoryUIScript);
-	//UIObj->AddComponent(new CMinimapUIScript);
-	//UIObj->AddComponent(new CMouseCursorUIScript);
-	//UIObj->AddComponent(new CFontUIScript);
-	//UIObj->AddComponent(new CScorePanelScript);
-	//SpawnGameObject(UIObj, Vec3(0.f, 0.f, 0.f), L"ViewPort UI");
+	CGameObject* UIObj = new CGameObject; //각종 스크립트에서 처리할 것들
+	UIObj->SetName(L"UIObj");
+	UIObj->AddComponent(new CTransform);
+	UIObj->AddComponent(new CCharacterUIScript);
+	UIObj->AddComponent(new CWorldHPSpawnScript);
+	UIObj->AddComponent(new CInventoryUIScript);
+	UIObj->AddComponent(new CMinimapUIScript);
+	UIObj->AddComponent(new CMouseCursorUIScript);
+	UIObj->AddComponent(new CFontUIScript);
+	UIObj->AddComponent(new CScorePanelScript);
+	SpawnGameObject(UIObj, Vec3(0.f, 0.f, 0.f), L"ViewPort UI");
 
 	std::cout << "===============================" << endl;
 
