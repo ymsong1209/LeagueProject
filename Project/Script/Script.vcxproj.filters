@@ -1,38 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="CBaseAttack.cpp" />
-    <ClCompile Include="CBasicAttackScript.cpp" />
-    <ClCompile Include="CCameraMoveScript.cpp" />
-    <ClCompile Include="CChampionAttackState.cpp" />
-    <ClCompile Include="CChampionDeathState.cpp" />
-    <ClCompile Include="CChampionIdleState.cpp" />
-    <ClCompile Include="CChampionRecallState.cpp" />
-    <ClCompile Include="CChampionRespawnState.cpp" />
-    <ClCompile Include="CChampionScript.cpp" />
-    <ClCompile Include="CChampionSkillState.cpp" />
-    <ClCompile Include="CChampionWalkState.cpp" />
-    <ClCompile Include="CFlash.cpp" />
-    <ClCompile Include="CGameEventMgr.cpp" />
-    <ClCompile Include="CHeal.cpp" />
-    <ClCompile Include="CInhibitorBrokenState.cpp" />
-    <ClCompile Include="CInhibitorIdleState.cpp" />
-    <ClCompile Include="CInhibitorScript.cpp" />
-    <ClCompile Include="CInhibitorSpawnState.cpp" />
-    <ClCompile Include="CJinxDeathState.cpp" />
-    <ClCompile Include="CJinxIdleState.cpp" />
-    <ClCompile Include="CJinxQ.cpp" />
-    <ClCompile Include="CJinxQState.cpp" />
-    <ClCompile Include="CJinxRespawnState.cpp" />
-    <ClCompile Include="CJinxScript.cpp" />
-    <ClCompile Include="CJinxW.cpp" />
-    <ClCompile Include="CJinxWalkState.cpp" />
-    <ClCompile Include="CMinionAttackState.cpp" />
-    <ClCompile Include="CMinionDeathState.cpp" />
-    <ClCompile Include="CMinionScript.cpp" />
-    <ClCompile Include="CMinionWalkState.cpp" />
-    <ClCompile Include="CMobScript.cpp" />
-    <ClCompile Include="CNexusScript.cpp" />
     <ClCompile Include="COtherPlayerScript.cpp" />
     <ClCompile Include="CPlayerScript.cpp" />
     <ClCompile Include="CScriptMgr.cpp" />
@@ -73,64 +41,455 @@
     <ClCompile Include="CMoveCursorUIScript.cpp" />
     <ClCompile Include="CTurretAttackScript.cpp" />
     <ClCompile Include="CGrompScript.cpp">
-      <Filter>Gromp</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
     </ClCompile>
     <ClCompile Include="CGrompChaseState.cpp">
-      <Filter>Gromp</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
     </ClCompile>
     <ClCompile Include="CGrompIdleState.cpp">
-      <Filter>Gromp</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
     </ClCompile>
     <ClCompile Include="CGrompSpawnState.cpp">
-      <Filter>Gromp</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
     </ClCompile>
     <ClCompile Include="CJungleAlertState.cpp">
-      <Filter>JungleMonster</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
     </ClCompile>
     <ClCompile Include="CJungleAttackState.cpp">
-      <Filter>JungleMonster</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
     </ClCompile>
     <ClCompile Include="CJungleChaseState.cpp">
-      <Filter>JungleMonster</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
     </ClCompile>
     <ClCompile Include="CJungleDeathState.cpp">
-      <Filter>JungleMonster</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
     </ClCompile>
     <ClCompile Include="CJungleIdleState.cpp">
-      <Filter>JungleMonster</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
     </ClCompile>
     <ClCompile Include="CJungleMonsterScript.cpp">
-      <Filter>JungleMonster</Filter>
+      <Filter>Jungle\JungleMonster</Filter>
     </ClCompile>
     <ClCompile Include="CJungleReturnState.cpp">
-      <Filter>JungleMonster</Filter>
+      <Filter>Jungle\JungleMonster</Filter>
     </ClCompile>
     <ClCompile Include="CJungleSpawnState.cpp">
-      <Filter>JungleMonster</Filter>
+      <Filter>Jungle\JungleMonster</Filter>
     </ClCompile>
     <ClCompile Include="CGrompAttackState.cpp">
-      <Filter>Gromp</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
     </ClCompile>
     <ClCompile Include="CGrompDeathState.cpp">
-      <Filter>Gromp</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
     </ClCompile>
     <ClCompile Include="CGrompReturnState.cpp">
-      <Filter>Gromp</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
     </ClCompile>
     <ClCompile Include="CGrompAlertState.cpp">
-      <Filter>Gromp</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
     </ClCompile>
     <ClCompile Include="CJungleA2NState.cpp">
-      <Filter>JungleMonster</Filter>
+      <Filter>Jungle\JungleMonster</Filter>
     </ClCompile>
     <ClCompile Include="CGrompA2NState.cpp">
-      <Filter>Gromp</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
     </ClCompile>
     <ClCompile Include="CJungleN2AState.cpp">
-      <Filter>JungleMonster</Filter>
+      <Filter>Jungle\JungleMonster</Filter>
     </ClCompile>
     <ClCompile Include="CGrompN2AState.cpp">
-      <Filter>Gromp</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
+    </ClCompile>
+    <ClCompile Include="CSoundTestScript.cpp" />
+    <ClCompile Include="CMurkWolfAlertState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfChaseState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfIdleState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfN2AState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfReturnState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfScript.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfSpawnState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfA2NState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfDeathState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfAttackState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugA2NState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugAlertState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugAttackState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugChaseState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugDeathState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugIdleState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugN2AState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugReturnState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugScript.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugSpawnState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugMiniA2NState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugMiniAlertState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugMiniAttackState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugMiniChaseState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugMiniDeathState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugMiniIdleState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugMiniN2AState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugMiniReturnState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugMiniScript.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CKrugMiniSpawnState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfMiniA2NState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfMiniAlertState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfMiniAttackState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfMiniChaseState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfMiniDeathState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfMiniIdleState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfMiniN2AState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfMiniReturnState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfMiniScript.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CMurkWolfMiniSpawnState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakA2NState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakAlertState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakAttackState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakChaseState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakDeathState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakIdleState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakN2AState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakReturnState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakScript.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakSpawnState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakMiniA2NState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakMiniAlertState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakMiniAttackState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakMiniChaseState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakMiniDeathState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakMiniIdleState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakMiniN2AState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakMiniReturnState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakMiniScript.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CRazorBeakMiniSpawnState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak_Mini</Filter>
+    </ClCompile>
+    <ClCompile Include="CBlueA2NState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Blue</Filter>
+    </ClCompile>
+    <ClCompile Include="CBlueAlertState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Blue</Filter>
+    </ClCompile>
+    <ClCompile Include="CBlueAttackState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Blue</Filter>
+    </ClCompile>
+    <ClCompile Include="CBlueChaseState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Blue</Filter>
+    </ClCompile>
+    <ClCompile Include="CBlueDeathState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Blue</Filter>
+    </ClCompile>
+    <ClCompile Include="CBlueIdleState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Blue</Filter>
+    </ClCompile>
+    <ClCompile Include="CBlueN2AState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Blue</Filter>
+    </ClCompile>
+    <ClCompile Include="CBlueReturnState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Blue</Filter>
+    </ClCompile>
+    <ClCompile Include="CBlueScript.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Blue</Filter>
+    </ClCompile>
+    <ClCompile Include="CBlueSpawnState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Blue</Filter>
+    </ClCompile>
+    <ClCompile Include="CRedA2NState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Red</Filter>
+    </ClCompile>
+    <ClCompile Include="CRedAlertState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Red</Filter>
+    </ClCompile>
+    <ClCompile Include="CRedAttackState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Red</Filter>
+    </ClCompile>
+    <ClCompile Include="CRedChaseState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Red</Filter>
+    </ClCompile>
+    <ClCompile Include="CRedDeathState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Red</Filter>
+    </ClCompile>
+    <ClCompile Include="CRedIdleState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Red</Filter>
+    </ClCompile>
+    <ClCompile Include="CRedN2AState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Red</Filter>
+    </ClCompile>
+    <ClCompile Include="CRedReturnState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Red</Filter>
+    </ClCompile>
+    <ClCompile Include="CRedScript.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Red</Filter>
+    </ClCompile>
+    <ClCompile Include="CRedSpawnState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Red</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleA2NState.cpp" />
+    <ClCompile Include="CJungleMonsterScript.cpp" />
+    <ClCompile Include="CJungleN2AState.cpp" />
+    <ClCompile Include="CJungleReturnState.cpp" />
+    <ClCompile Include="CJungleSpawnState.cpp" />
+    <ClCompile Include="CTurretAttackScript.cpp" />
+    <ClCompile Include="pch.cpp">
+      <Filter>Default</Filter>
+    </ClCompile>
+    <ClCompile Include="Script.cpp">
+      <Filter>Default</Filter>
+    </ClCompile>
+    <ClCompile Include="CGameEventMgr.cpp">
+      <Filter>GameEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="CSkillMgr.cpp">
+      <Filter>Manager\3. SkillMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CScriptMgr.cpp">
+      <Filter>Manager\1. ScriptMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CSendServerEventMgr.cpp">
+      <Filter>Manager\2. SendServerEventMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CInGameCameraScript.cpp">
+      <Filter>Scripts\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CCameraMoveScript.cpp">
+      <Filter>Scripts\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CBasicAttackScript.cpp">
+      <Filter>Scripts\SkillProjectile</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxWScript.cpp">
+      <Filter>Scripts\SkillProjectile</Filter>
+    </ClCompile>
+    <ClCompile Include="CProjectileScript.cpp">
+      <Filter>Scripts\SkillProjectile</Filter>
+    </ClCompile>
+    <ClCompile Include="CAttackRangeScript.cpp">
+      <Filter>Scripts\Unit\Champion\AttackRange</Filter>
+    </ClCompile>
+    <ClCompile Include="CChampionScript.cpp">
+      <Filter>Scripts\Unit\Champion</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxScript.cpp">
+      <Filter>Scripts\Unit\Champion</Filter>
+    </ClCompile>
+    <ClCompile Include="CMinionScript.cpp">
+      <Filter>Scripts\Unit\Mob\Minion</Filter>
+    </ClCompile>
+    <ClCompile Include="CMobScript.cpp">
+      <Filter>Scripts\Unit\Mob</Filter>
+    </ClCompile>
+    <ClCompile Include="CInhibitorScript.cpp">
+      <Filter>Scripts\Unit\Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="CNexusScript.cpp">
+      <Filter>Scripts\Unit\Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="CStructureScript.cpp">
+      <Filter>Scripts\Unit\Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="CTurretScript.cpp">
+      <Filter>Scripts\Unit\Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="CUnitScript.cpp">
+      <Filter>Scripts\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxQ.cpp">
+      <Filter>Scripts\Skill\Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxW.cpp">
+      <Filter>Scripts\Skill\Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CFlash.cpp">
+      <Filter>Scripts\Skill\Spell</Filter>
+    </ClCompile>
+    <ClCompile Include="CHeal.cpp">
+      <Filter>Scripts\Skill\Spell</Filter>
+    </ClCompile>
+    <ClCompile Include="CBasicAttack.cpp">
+      <Filter>Scripts\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="CSkill.cpp">
+      <Filter>Scripts\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="CChampionAttackState.cpp">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClCompile>
+    <ClCompile Include="CChampionDeathState.cpp">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClCompile>
+    <ClCompile Include="CChampionIdleState.cpp">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClCompile>
+    <ClCompile Include="CChampionRecallState.cpp">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClCompile>
+    <ClCompile Include="CChampionRespawnState.cpp">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClCompile>
+    <ClCompile Include="CChampionSkillState.cpp">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClCompile>
+    <ClCompile Include="CChampionWalkState.cpp">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxQState.cpp">
+      <Filter>State\Unit\Champion\Jinx\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxWState.cpp">
+      <Filter>State\Unit\Champion\Jinx\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxAttackState.cpp">
+      <Filter>State\Unit\Champion\Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxDeathState.cpp">
+      <Filter>State\Unit\Champion\Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxIdleState.cpp">
+      <Filter>State\Unit\Champion\Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxRespawnState.cpp">
+      <Filter>State\Unit\Champion\Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxWalkState.cpp">
+      <Filter>State\Unit\Champion\Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CMinionAttackState.cpp">
+      <Filter>State\Unit\Minion</Filter>
+    </ClCompile>
+    <ClCompile Include="CMinionDeathState.cpp">
+      <Filter>State\Unit\Minion</Filter>
+    </ClCompile>
+    <ClCompile Include="CMinionWalkState.cpp">
+      <Filter>State\Unit\Minion</Filter>
+    </ClCompile>
+    <ClCompile Include="CInhibitorBrokenState.cpp">
+      <Filter>State\Unit\Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="CInhibitorIdleState.cpp">
+      <Filter>State\Unit\Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="CInhibitorSpawnState.cpp">
+      <Filter>State\Unit\Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="CUnitState.cpp">
+      <Filter>State\Unit</Filter>
     </ClCompile>
     <ClCompile Include="CSoundTestScript.cpp" />
     <ClCompile Include="CFontUIScript.cpp" />
@@ -232,84 +591,576 @@
     <ClInclude Include="CNexusScript.h" />
     <ClInclude Include="COtherPlayerScript.h" />
     <ClInclude Include="CPlayerScript.h" />
-    <ClInclude Include="CScriptMgr.h" />
-    <ClInclude Include="CSkill.h" />
-    <ClInclude Include="CStructureScript.h" />
-    <ClInclude Include="CTurretScript.h" />
-    <ClInclude Include="CUnitScript.h" />
-    <ClInclude Include="CUnitState.h" />
-    <ClInclude Include="framework.h" />
-    <ClInclude Include="CInGameCameraScript.h" />
-    <ClInclude Include="IGameEventListener.h" />
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="CTurretAttackScript.h" />
     <ClInclude Include="CGrompScript.h">
-      <Filter>Gromp</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
     </ClInclude>
     <ClInclude Include="CGrompChaseState.h">
-      <Filter>Gromp</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
     </ClInclude>
     <ClInclude Include="CGrompIdleState.h">
-      <Filter>Gromp</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
     </ClInclude>
     <ClInclude Include="CGrompSpawnState.h">
-      <Filter>Gromp</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
     </ClInclude>
     <ClInclude Include="CJungleAlertState.h">
-      <Filter>JungleMonster</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
     </ClInclude>
     <ClInclude Include="CJungleAttackState.h">
-      <Filter>JungleMonster</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
     </ClInclude>
     <ClInclude Include="CJungleChaseState.h">
-      <Filter>JungleMonster</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
     </ClInclude>
     <ClInclude Include="CJungleDeathState.h">
-      <Filter>JungleMonster</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
     </ClInclude>
     <ClInclude Include="CJungleIdleState.h">
-      <Filter>JungleMonster</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
     </ClInclude>
     <ClInclude Include="CJungleMonsterScript.h">
-      <Filter>JungleMonster</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
     </ClInclude>
     <ClInclude Include="CJungleReturnState.h">
-      <Filter>JungleMonster</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
     </ClInclude>
     <ClInclude Include="CJungleSpawnState.h">
-      <Filter>JungleMonster</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
     </ClInclude>
     <ClInclude Include="CGrompAttackState.h">
-      <Filter>Gromp</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
     </ClInclude>
     <ClInclude Include="CGrompDeathState.h">
-      <Filter>Gromp</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
     </ClInclude>
     <ClInclude Include="CGrompReturnState.h">
-      <Filter>Gromp</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
     </ClInclude>
     <ClInclude Include="CGrompAlertState.h">
-      <Filter>Gromp</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
     </ClInclude>
     <ClInclude Include="CJungleA2NState.h">
-      <Filter>JungleMonster</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
     </ClInclude>
     <ClInclude Include="CGrompA2NState.h">
-      <Filter>Gromp</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
     </ClInclude>
     <ClInclude Include="CJungleN2AState.h">
-      <Filter>JungleMonster</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
     </ClInclude>
     <ClInclude Include="CGrompN2AState.h">
-      <Filter>Gromp</Filter>
+      <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
+    </ClInclude>
+    <ClInclude Include="CSoundTestScript.h" />
+    <ClInclude Include="CMurkWolfAlertState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfChaseState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfIdleState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfN2AState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfReturnState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfScript.h">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfSpawnState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfA2NState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfDeathState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfAttackState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugA2NState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugAlertState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugAttackState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugChaseState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugDeathState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugIdleState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugN2AState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugReturnState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugScript.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugSpawnState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugMiniA2NState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugMiniAlertState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugMiniAttackState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugMiniChaseState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugMiniDeathState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugMiniIdleState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugMiniN2AState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugMiniReturnState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugMiniScript.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CKrugMiniSpawnState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Krug_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfMiniA2NState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfMiniAlertState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfMiniAttackState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfMiniChaseState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfMiniDeathState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfMiniIdleState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfMiniN2AState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfMiniReturnState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfMiniScript.h">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CMurkWolfMiniSpawnState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\MurkWolf_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakA2NState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakAlertState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakAttackState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakChaseState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakDeathState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakIdleState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakN2AState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakReturnState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakScript.h">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakSpawnState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakMiniA2NState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakMiniAlertState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakMiniAttackState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakMiniChaseState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakMiniDeathState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakMiniIdleState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakMiniN2AState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakMiniReturnState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakMiniScript.h">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CRazorBeakMiniSpawnState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\RazorBeak_Mini</Filter>
+    </ClInclude>
+    <ClInclude Include="CBlueA2NState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Blue</Filter>
+    </ClInclude>
+    <ClInclude Include="CBlueAlertState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Blue</Filter>
+    </ClInclude>
+    <ClInclude Include="CBlueAttackState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Blue</Filter>
+    </ClInclude>
+    <ClInclude Include="CBlueChaseState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Blue</Filter>
+    </ClInclude>
+    <ClInclude Include="CBlueDeathState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Blue</Filter>
+    </ClInclude>
+    <ClInclude Include="CBlueIdleState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Blue</Filter>
+    </ClInclude>
+    <ClInclude Include="CBlueN2AState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Blue</Filter>
+    </ClInclude>
+    <ClInclude Include="CBlueReturnState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Blue</Filter>
+    </ClInclude>
+    <ClInclude Include="CBlueScript.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Blue</Filter>
+    </ClInclude>
+    <ClInclude Include="CBlueSpawnState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Blue</Filter>
+    </ClInclude>
+    <ClInclude Include="CRedA2NState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Red</Filter>
+    </ClInclude>
+    <ClInclude Include="CRedAlertState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Red</Filter>
+    </ClInclude>
+    <ClInclude Include="CRedAttackState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Red</Filter>
+    </ClInclude>
+    <ClInclude Include="CRedChaseState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Red</Filter>
+    </ClInclude>
+    <ClInclude Include="CRedDeathState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Red</Filter>
+    </ClInclude>
+    <ClInclude Include="CRedIdleState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Red</Filter>
+    </ClInclude>
+    <ClInclude Include="CRedN2AState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Red</Filter>
+    </ClInclude>
+    <ClInclude Include="CRedReturnState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Red</Filter>
+    </ClInclude>
+    <ClInclude Include="CRedScript.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Red</Filter>
+    </ClInclude>
+    <ClInclude Include="CRedSpawnState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Red</Filter>
+    </ClInclude>
+    <ClInclude Include="CTurretAttackScript.h" />
+    <ClInclude Include="CServerTypes.h">
+      <Filter>Default</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>Default</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Default</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameEventMgr.h">
+      <Filter>GameEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameEvent.h">
+      <Filter>GameEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="IGameEventListener.h">
+      <Filter>GameEvent</Filter>
+    </ClInclude>
+    <ClInclude Include="CSkillMgr.h">
+      <Filter>Manager\3. SkillMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CScriptMgr.h">
+      <Filter>Manager\1. ScriptMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CSendServerEventMgr.h">
+      <Filter>Manager\2. SendServerEventMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CInGameCameraScript.h">
+      <Filter>Scripts\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CCameraMoveScript.h">
+      <Filter>Scripts\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CBasicAttackScript.h">
+      <Filter>Scripts\SkillProjectile</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxWScript.h">
+      <Filter>Scripts\SkillProjectile</Filter>
+    </ClInclude>
+    <ClInclude Include="CProjectileScript.h">
+      <Filter>Scripts\SkillProjectile</Filter>
+    </ClInclude>
+    <ClInclude Include="CAttackRangeScript.h">
+      <Filter>Scripts\Unit\Champion\AttackRange</Filter>
+    </ClInclude>
+    <ClInclude Include="CChampionScript.h">
+      <Filter>Scripts\Unit\Champion</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxScript.h">
+      <Filter>Scripts\Unit\Champion</Filter>
+    </ClInclude>
+    <ClInclude Include="CMinionScript.h">
+      <Filter>Scripts\Unit\Mob\Minion</Filter>
+    </ClInclude>
+    <ClInclude Include="CMobScript.h">
+      <Filter>Scripts\Unit\Mob</Filter>
+    </ClInclude>
+    <ClInclude Include="CInhibitorScript.h">
+      <Filter>Scripts\Unit\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="CNexusScript.h">
+      <Filter>Scripts\Unit\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="CStructureScript.h">
+      <Filter>Scripts\Unit\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="CTurretScript.h">
+      <Filter>Scripts\Unit\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="CUnitScript.h">
+      <Filter>Scripts\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxQ.h">
+      <Filter>Scripts\Skill\Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxW.h">
+      <Filter>Scripts\Skill\Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CFlash.h">
+      <Filter>Scripts\Skill\Spell</Filter>
+    </ClInclude>
+    <ClInclude Include="CHeal.h">
+      <Filter>Scripts\Skill\Spell</Filter>
+    </ClInclude>
+    <ClInclude Include="CBasicAttack.h">
+      <Filter>Scripts\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="CSkill.h">
+      <Filter>Scripts\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="CChampionAttackState.h">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClInclude>
+    <ClInclude Include="CChampionDeathState.h">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClInclude>
+    <ClInclude Include="CChampionIdleState.h">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClInclude>
+    <ClInclude Include="CChampionRecallState.h">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClInclude>
+    <ClInclude Include="CChampionRespawnState.h">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClInclude>
+    <ClInclude Include="CChampionSkillState.h">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClInclude>
+    <ClInclude Include="CChampionWalkState.h">
+      <Filter>State\Unit\Champion\ChampionBase</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxQState.h">
+      <Filter>State\Unit\Champion\Jinx\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxWState.h">
+      <Filter>State\Unit\Champion\Jinx\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxAttackState.h">
+      <Filter>State\Unit\Champion\Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxDeathState.h">
+      <Filter>State\Unit\Champion\Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxIdleState.h">
+      <Filter>State\Unit\Champion\Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxRespawnState.h">
+      <Filter>State\Unit\Champion\Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxWalkState.h">
+      <Filter>State\Unit\Champion\Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CMinionAttackState.h">
+      <Filter>State\Unit\Minion</Filter>
+    </ClInclude>
+    <ClInclude Include="CMinionDeathState.h">
+      <Filter>State\Unit\Minion</Filter>
+    </ClInclude>
+    <ClInclude Include="CMinionWalkState.h">
+      <Filter>State\Unit\Minion</Filter>
+    </ClInclude>
+    <ClInclude Include="CInhibitorBrokenState.h">
+      <Filter>State\Unit\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="CInhibitorIdleState.h">
+      <Filter>State\Unit\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="CInhibitorSpawnState.h">
+      <Filter>State\Unit\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="CUnitState.h">
+      <Filter>State\Unit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Gromp">
+    <Filter Include="Default">
+      <UniqueIdentifier>{61e45672-9d04-4660-b6d9-bc0eb96e4a7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEvent">
+      <UniqueIdentifier>{a553214f-c1b6-4cbf-a380-fbbb50f4c92e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{90298e73-cc17-4720-88bc-aecb6e1a8e3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\1. ScriptMgr">
+      <UniqueIdentifier>{2d546882-236e-428d-8655-c23f30bfc692}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\2. SendServerEventMgr">
+      <UniqueIdentifier>{d6688b3a-d469-475d-a164-5899db2689f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\3. SkillMgr">
+      <UniqueIdentifier>{b7a2a72c-1a8f-4e13-9649-eb00f245a97e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts">
+      <UniqueIdentifier>{f6bc56c7-0f2e-4ff8-a083-a96c3f806f45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Camera">
+      <UniqueIdentifier>{d6d7877b-77c0-4ca8-98d7-1e0349e6958e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\UI">
+      <UniqueIdentifier>{bafe3a71-002c-4109-a487-1ec6504fa394}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Unit">
+      <UniqueIdentifier>{a44322c4-50db-4b59-8653-c70f26a7deea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Unit\Champion">
+      <UniqueIdentifier>{4f515094-5477-4a0c-bf07-4872355bb7bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Unit\Structure">
+      <UniqueIdentifier>{708d6205-11df-49d9-a424-c163e9106032}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Unit\Mob">
+      <UniqueIdentifier>{5a8d9da1-a499-4a17-8dbb-a073622ef9d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Unit\Mob\Minion">
+      <UniqueIdentifier>{43e0fcfa-5fb9-4643-a7e7-4d52d14fae3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Unit\Champion\AttackRange">
+      <UniqueIdentifier>{517c6589-a6ac-4cee-920b-1b6c0df3f1ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Unit\Mob\Jungle">
+      <UniqueIdentifier>{743620c3-8cef-44b1-9b07-488930c8e839}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Unit\Mob\Jungle\JungleMonster">
+      <UniqueIdentifier>{df08843b-93b3-4e43-abd8-1a0eaf60c941}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Unit\Mob\Jungle\Gromp">
       <UniqueIdentifier>{17c15e8a-0b55-4215-8413-ca47dae3ade0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="JungleMonster">
-      <UniqueIdentifier>{df08843b-93b3-4e43-abd8-1a0eaf60c941}</UniqueIdentifier>
+    <Filter Include="Scripts\Unit\Mob\Jungle\MurkWolf">
+      <UniqueIdentifier>{50c6c632-0cab-4d19-87b3-fb8a0f17b48d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Unit\Mob\Jungle\MurkWolf_Mini">
+      <UniqueIdentifier>{23996f2c-2fba-4ab5-8bb6-da928ac87efa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Unit\Mob\Jungle\RazorBeak">
+      <UniqueIdentifier>{2acd90c4-083a-41b7-a257-c1bea2f714ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Unit\Mob\Jungle\RazorBeak_Mini">
+      <UniqueIdentifier>{473a643e-a8d0-488d-8237-3fc5dad5c5b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Unit\Mob\Jungle\Krug">
+      <UniqueIdentifier>{941b3ba9-b244-44a9-87a3-f5c7832adacc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Unit\Mob\Jungle\Krug_Mini">
+      <UniqueIdentifier>{b09435c2-fa2a-4450-b263-75bb6bc3270b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Unit\Mob\Jungle\Red">
+      <UniqueIdentifier>{f01e1ec3-7a28-42bf-887f-cff4dacef1b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Unit\Mob\Jungle\Blue">
+      <UniqueIdentifier>{c2b382c1-593f-4d44-905d-422a3aab3dfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Skill">
+      <UniqueIdentifier>{31db7dae-bb4d-47f2-87a4-04117a326ba3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Skill\Jinx">
+      <UniqueIdentifier>{b0fcf10c-52c4-4198-bf30-5408d5ed9a15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Skill\Spell">
+      <UniqueIdentifier>{102eea86-97e5-4019-a5a2-a671cb0376c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\SkillProjectile">
+      <UniqueIdentifier>{feb46e5a-68ff-4f0f-bd2c-01d2cce8e806}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State">
+      <UniqueIdentifier>{bd48a32d-bd10-4deb-add4-8d1dbca079bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\Unit">
+      <UniqueIdentifier>{a871243a-5b4b-4203-b971-3a791e9d15e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\Unit\Champion">
+      <UniqueIdentifier>{548a16d1-c3d2-4608-b4e5-de8a55b771eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\Unit\Minion">
+      <UniqueIdentifier>{18dbe18a-0860-498f-b1e9-68df19def19a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\Unit\Champion\ChampionBase">
+      <UniqueIdentifier>{ec8d89a0-5b21-47b7-81e9-e603655054ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\Unit\Champion\Jinx">
+      <UniqueIdentifier>{659c1d38-c9dd-42b6-88f7-5e5d9595068c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\Unit\Champion\Jinx\Skill">
+      <UniqueIdentifier>{8318e756-14e2-4d06-8328-a78b4d39e8c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\Unit\Structure">
+      <UniqueIdentifier>{fb41b8d0-38af-4bf3-ab36-3c9e55a63c22}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

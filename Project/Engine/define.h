@@ -282,13 +282,10 @@ enum class EVENT_TYPE
 	DELETE_RESOURCE,	// wParam : RES_TYPE, lParam : Resource Adress
 
 	LEVEL_CHANGE,
-
-	// Server Packet //
-	MOVE_PACKET,    // wParam : GameObject,  lParam : Update Move Packet
-
 	//스크립트 시점에서 오브젝트의 특정 정보를 변경해줄경우 인스펙터에 반영이 안됨 (스크립트에서 오브젝트 이름변경 등..)
 	//그래서 이벤트매니저에 ui 리로드 이벤트 추가
 	INSPECTOR_RELOAD,
+	LAYER_CHANGE,		// wParam : 바꿀 오브젝트 lParam : 바꿀 레이어 번호
 };
 
 

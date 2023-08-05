@@ -3,6 +3,7 @@
 #include "CJungleMonsterScript.h"
 
 CJungleChaseState::CJungleChaseState()
+	:m_fTime(0.f)
 {
 }
 
@@ -33,8 +34,12 @@ void CJungleChaseState::tick()
 		GetOwner()->Fsm()->ChangeState(L"Attack");
 	}
 	else{
-		GetOwner()->PathFinder()->FindPath(targetpos);
-		script->PathFindMove(100.f, true);
+		m_fTime += DT;
+		if (m_fTime > 0.01f) {
+			GetOwner()->PathFinder()->FindPath(targetpos);
+			m_fTime = 0.f;
+		}
+		script->PathFindMove(70.f, true);
 	}
 
 }

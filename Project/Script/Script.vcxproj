@@ -173,8 +173,19 @@ call CodeGen.exe</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CBaseAttack.h" />
+    <ClInclude Include="CAttackRangeScript.h" />
+    <ClInclude Include="CBasicAttack.h" />
     <ClInclude Include="CBasicAttackScript.h" />
+    <ClInclude Include="CBlueA2NState.h" />
+    <ClInclude Include="CBlueAlertState.h" />
+    <ClInclude Include="CBlueAttackState.h" />
+    <ClInclude Include="CBlueChaseState.h" />
+    <ClInclude Include="CBlueDeathState.h" />
+    <ClInclude Include="CBlueIdleState.h" />
+    <ClInclude Include="CBlueN2AState.h" />
+    <ClInclude Include="CBlueReturnState.h" />
+    <ClInclude Include="CBlueScript.h" />
+    <ClInclude Include="CBlueSpawnState.h" />
     <ClInclude Include="CCameraMoveScript.h" />
     <ClInclude Include="CChampionAttackState.h" />
     <ClInclude Include="CChampionDeathState.h" />
@@ -201,6 +212,9 @@ call CodeGen.exe</Command>
     <ClInclude Include="CGrompReturnState.h" />
     <ClInclude Include="CGrompScript.h" />
     <ClInclude Include="CGrompSpawnState.h" />
+    <ClInclude Include="CJinxAttackState.h" />
+    <ClInclude Include="CJinxWScript.h" />
+    <ClInclude Include="CJinxWState.h" />
     <ClInclude Include="CHeal.h" />
     <ClInclude Include="CHpMpRatioUIScript.h" />
     <ClInclude Include="CInhibitorBrokenState.h" />
@@ -227,6 +241,26 @@ call CodeGen.exe</Command>
     <ClInclude Include="CJungleN2AState.h" />
     <ClInclude Include="CJungleReturnState.h" />
     <ClInclude Include="CJungleSpawnState.h" />
+    <ClInclude Include="CKrugA2NState.h" />
+    <ClInclude Include="CKrugAlertState.h" />
+    <ClInclude Include="CKrugAttackState.h" />
+    <ClInclude Include="CKrugChaseState.h" />
+    <ClInclude Include="CKrugDeathState.h" />
+    <ClInclude Include="CKrugIdleState.h" />
+    <ClInclude Include="CKrugMiniA2NState.h" />
+    <ClInclude Include="CKrugMiniAlertState.h" />
+    <ClInclude Include="CKrugMiniAttackState.h" />
+    <ClInclude Include="CKrugMiniChaseState.h" />
+    <ClInclude Include="CKrugMiniDeathState.h" />
+    <ClInclude Include="CKrugMiniIdleState.h" />
+    <ClInclude Include="CKrugMiniN2AState.h" />
+    <ClInclude Include="CKrugMiniReturnState.h" />
+    <ClInclude Include="CKrugMiniScript.h" />
+    <ClInclude Include="CKrugMiniSpawnState.h" />
+    <ClInclude Include="CKrugN2AState.h" />
+    <ClInclude Include="CKrugReturnState.h" />
+    <ClInclude Include="CKrugScript.h" />
+    <ClInclude Include="CKrugSpawnState.h" />
     <ClInclude Include="CMinionAttackState.h" />
     <ClInclude Include="CMinionDeathState.h" />
     <ClInclude Include="CMinionScript.h" />
@@ -238,9 +272,96 @@ call CodeGen.exe</Command>
     <ClInclude Include="COtherPlayerScript.h" />
     <ClInclude Include="CPlayerScript.h" />
     <ClInclude Include="CScorePanelScript.h" />
+    <ClInclude Include="CMurkWolfA2NState.h" />
+    <ClInclude Include="CMurkWolfAlertState.h" />
+    <ClInclude Include="CMurkWolfAttackState.h" />
+    <ClInclude Include="CMurkWolfChaseState.h" />
+    <ClInclude Include="CMurkWolfDeathState.h" />
+    <ClInclude Include="CMurkWolfIdleState.h" />
+    <ClInclude Include="CMurkWolfMiniA2NState.h" />
+    <ClInclude Include="CMurkWolfMiniAlertState.h" />
+    <ClInclude Include="CMurkWolfMiniAttackState.h" />
+    <ClInclude Include="CMurkWolfMiniChaseState.h" />
+    <ClInclude Include="CMurkWolfMiniDeathState.h" />
+    <ClInclude Include="CMurkWolfMiniIdleState.h" />
+    <ClInclude Include="CMurkWolfMiniN2AState.h" />
+    <ClInclude Include="CMurkWolfMiniReturnState.h" />
+    <ClInclude Include="CMurkWolfMiniScript.h" />
+    <ClInclude Include="CMurkWolfMiniSpawnState.h" />
+    <ClInclude Include="CMurkWolfN2AState.h" />
+    <ClInclude Include="CMurkWolfReturnState.h" />
+    <ClInclude Include="CMurkWolfScript.h" />
+    <ClInclude Include="CMurkWolfSpawnState.h" />
+    <ClInclude Include="CNexusScript.h" />
+    <ClInclude Include="COtherPlayerScript.h" />
+    <ClInclude Include="CPlayerScript.h" />
+    <ClInclude Include="CProjectileScript.h" />
+    <ClInclude Include="CRazorBeakA2NState.h" />
+    <ClInclude Include="CRazorBeakAlertState.h" />
+    <ClInclude Include="CRazorBeakAttackState.h" />
+    <ClInclude Include="CRazorBeakChaseState.h" />
+    <ClInclude Include="CRazorBeakDeathState.h" />
+    <ClInclude Include="CRazorBeakIdleState.h" />
+    <ClInclude Include="CRazorBeakMiniA2NState.h" />
+    <ClInclude Include="CRazorBeakMiniAlertState.h" />
+    <ClInclude Include="CRazorBeakMiniAttackState.h" />
+    <ClInclude Include="CRazorBeakMiniChaseState.h" />
+    <ClInclude Include="CRazorBeakMiniDeathState.h" />
+    <ClInclude Include="CRazorBeakMiniIdleState.h" />
+    <ClInclude Include="CRazorBeakMiniN2AState.h" />
+    <ClInclude Include="CRazorBeakMiniReturnState.h" />
+    <ClInclude Include="CRazorBeakMiniScript.h" />
+    <ClInclude Include="CRazorBeakMiniSpawnState.h" />
+    <ClInclude Include="CRazorBeakN2AState.h" />
+    <ClInclude Include="CRazorBeakReturnState.h" />
+    <ClInclude Include="CRazorBeakScript.h" />
+    <ClInclude Include="CRazorBeakSpawnState.h" />
+    <ClInclude Include="CRedA2NState.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="CRedAlertState.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="CRedAttackState.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="CRedChaseState.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="CRedDeathState.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="CRedIdleState.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="CRedN2AState.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="CRedReturnState.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="CRedScript.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="CRedSpawnState.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="CScriptMgr.h" />
-    <ClInclude Include="CSoundTestScript.h" />
+    <ClInclude Include="CSendServerEventMgr.h" />
+    <ClInclude Include="CServerTypes.h" />
     <ClInclude Include="CSkill.h" />
+    <ClInclude Include="CSkillMgr.h" />
+    <ClInclude Include="CSoundTestScript.h" />
     <ClInclude Include="CStructureScript.h" />
     <ClInclude Include="CTurretAttackScript.h" />
     <ClInclude Include="CTurretScript.h" />
@@ -255,8 +376,19 @@ call CodeGen.exe</Command>
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CBaseAttack.cpp" />
+    <ClCompile Include="CAttackRangeScript.cpp" />
+    <ClCompile Include="CBasicAttack.cpp" />
     <ClCompile Include="CBasicAttackScript.cpp" />
+    <ClCompile Include="CBlueA2NState.cpp" />
+    <ClCompile Include="CBlueAlertState.cpp" />
+    <ClCompile Include="CBlueAttackState.cpp" />
+    <ClCompile Include="CBlueChaseState.cpp" />
+    <ClCompile Include="CBlueDeathState.cpp" />
+    <ClCompile Include="CBlueIdleState.cpp" />
+    <ClCompile Include="CBlueN2AState.cpp" />
+    <ClCompile Include="CBlueReturnState.cpp" />
+    <ClCompile Include="CBlueScript.cpp" />
+    <ClCompile Include="CBlueSpawnState.cpp" />
     <ClCompile Include="CCameraMoveScript.cpp" />
     <ClCompile Include="CChampionAttackState.cpp" />
     <ClCompile Include="CChampionDeathState.cpp" />
@@ -289,6 +421,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CInhibitorScript.cpp" />
     <ClCompile Include="CInhibitorSpawnState.cpp" />
     <ClCompile Include="CInventoryUIScript.cpp" />
+    <ClCompile Include="CJinxAttackState.cpp" />
     <ClCompile Include="CJinxDeathState.cpp" />
     <ClCompile Include="CJinxIdleState.cpp" />
     <ClCompile Include="CJinxQ.cpp" />
@@ -297,6 +430,8 @@ call CodeGen.exe</Command>
     <ClCompile Include="CJinxScript.cpp" />
     <ClCompile Include="CJinxW.cpp" />
     <ClCompile Include="CJinxWalkState.cpp" />
+    <ClCompile Include="CJinxWScript.cpp" />
+    <ClCompile Include="CJinxWState.cpp" />
     <ClCompile Include="CJungleA2NState.cpp" />
     <ClCompile Include="CJungleAlertState.cpp" />
     <ClCompile Include="CJungleAttackState.cpp" />
@@ -308,6 +443,26 @@ call CodeGen.exe</Command>
     <ClCompile Include="CJungleN2AState.cpp" />
     <ClCompile Include="CJungleReturnState.cpp" />
     <ClCompile Include="CJungleSpawnState.cpp" />
+    <ClCompile Include="CKrugA2NState.cpp" />
+    <ClCompile Include="CKrugAlertState.cpp" />
+    <ClCompile Include="CKrugAttackState.cpp" />
+    <ClCompile Include="CKrugChaseState.cpp" />
+    <ClCompile Include="CKrugDeathState.cpp" />
+    <ClCompile Include="CKrugIdleState.cpp" />
+    <ClCompile Include="CKrugMiniA2NState.cpp" />
+    <ClCompile Include="CKrugMiniAlertState.cpp" />
+    <ClCompile Include="CKrugMiniAttackState.cpp" />
+    <ClCompile Include="CKrugMiniChaseState.cpp" />
+    <ClCompile Include="CKrugMiniDeathState.cpp" />
+    <ClCompile Include="CKrugMiniIdleState.cpp" />
+    <ClCompile Include="CKrugMiniN2AState.cpp" />
+    <ClCompile Include="CKrugMiniReturnState.cpp" />
+    <ClCompile Include="CKrugMiniScript.cpp" />
+    <ClCompile Include="CKrugMiniSpawnState.cpp" />
+    <ClCompile Include="CKrugN2AState.cpp" />
+    <ClCompile Include="CKrugReturnState.cpp" />
+    <ClCompile Include="CKrugScript.cpp" />
+    <ClCompile Include="CKrugSpawnState.cpp" />
     <ClCompile Include="CMinionAttackState.cpp" />
     <ClCompile Include="CMinionDeathState.cpp" />
     <ClCompile Include="CMinionScript.cpp" />
@@ -321,8 +476,96 @@ call CodeGen.exe</Command>
     <ClCompile Include="CScorePanelScript.cpp" />
     <ClCompile Include="CScriptMgr.cpp" />
     <ClCompile Include="CSoundTestScript.cpp" />
+    <ClCompile Include="CMurkWolfA2NState.cpp" />
+    <ClCompile Include="CMurkWolfAlertState.cpp" />
+    <ClCompile Include="CMurkWolfAttackState.cpp" />
+    <ClCompile Include="CMurkWolfChaseState.cpp" />
+    <ClCompile Include="CMurkWolfDeathState.cpp" />
+    <ClCompile Include="CMurkWolfIdleState.cpp" />
+    <ClCompile Include="CMurkWolfMiniA2NState.cpp" />
+    <ClCompile Include="CMurkWolfMiniAlertState.cpp" />
+    <ClCompile Include="CMurkWolfMiniAttackState.cpp" />
+    <ClCompile Include="CMurkWolfMiniChaseState.cpp" />
+    <ClCompile Include="CMurkWolfMiniDeathState.cpp" />
+    <ClCompile Include="CMurkWolfMiniIdleState.cpp" />
+    <ClCompile Include="CMurkWolfMiniN2AState.cpp" />
+    <ClCompile Include="CMurkWolfMiniReturnState.cpp" />
+    <ClCompile Include="CMurkWolfMiniScript.cpp" />
+    <ClCompile Include="CMurkWolfMiniSpawnState.cpp" />
+    <ClCompile Include="CMurkWolfN2AState.cpp" />
+    <ClCompile Include="CMurkWolfReturnState.cpp" />
+    <ClCompile Include="CMurkWolfScript.cpp" />
+    <ClCompile Include="CMurkWolfSpawnState.cpp" />
+    <ClCompile Include="CNexusScript.cpp" />
+    <ClCompile Include="COtherPlayerScript.cpp" />
+    <ClCompile Include="CPlayerScript.cpp" />
     <ClCompile Include="CInGameCameraScript.cpp" />
+    <ClCompile Include="CProjectileScript.cpp" />
+    <ClCompile Include="CRazorBeakA2NState.cpp" />
+    <ClCompile Include="CRazorBeakAlertState.cpp" />
+    <ClCompile Include="CRazorBeakAttackState.cpp" />
+    <ClCompile Include="CRazorBeakChaseState.cpp" />
+    <ClCompile Include="CRazorBeakDeathState.cpp" />
+    <ClCompile Include="CRazorBeakIdleState.cpp" />
+    <ClCompile Include="CRazorBeakMiniA2NState.cpp" />
+    <ClCompile Include="CRazorBeakMiniAlertState.cpp" />
+    <ClCompile Include="CRazorBeakMiniAttackState.cpp" />
+    <ClCompile Include="CRazorBeakMiniChaseState.cpp" />
+    <ClCompile Include="CRazorBeakMiniDeathState.cpp" />
+    <ClCompile Include="CRazorBeakMiniIdleState.cpp" />
+    <ClCompile Include="CRazorBeakMiniN2AState.cpp" />
+    <ClCompile Include="CRazorBeakMiniReturnState.cpp" />
+    <ClCompile Include="CRazorBeakMiniScript.cpp" />
+    <ClCompile Include="CRazorBeakMiniSpawnState.cpp" />
+    <ClCompile Include="CRazorBeakN2AState.cpp" />
+    <ClCompile Include="CRazorBeakReturnState.cpp" />
+    <ClCompile Include="CRazorBeakScript.cpp" />
+    <ClCompile Include="CRazorBeakSpawnState.cpp" />
+    <ClCompile Include="CRedA2NState.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="CRedAlertState.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="CRedAttackState.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="CRedChaseState.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="CRedDeathState.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="CRedIdleState.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="CRedN2AState.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="CRedReturnState.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="CRedScript.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="CRedSpawnState.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="CScriptMgr.cpp" />
+    <ClCompile Include="CSendServerEventMgr.cpp" />
     <ClCompile Include="CSkill.cpp" />
+    <ClCompile Include="CSkillMgr.cpp" />
+    <ClCompile Include="CSoundTestScript.cpp" />
     <ClCompile Include="CStructureScript.cpp" />
     <ClCompile Include="CTurretAttackScript.cpp" />
     <ClCompile Include="CTurretScript.cpp" />

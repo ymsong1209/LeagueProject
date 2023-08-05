@@ -1,5 +1,9 @@
 #include "pch.h"
 #include "CUnitScript.h"
+#include "CSkillMgr.h"
+#include "CSkill.h"
+
+#include "CChampionScript.h"
 
 CUnitScript::CUnitScript(UINT ScriptType)
 	: CScript(ScriptType)
@@ -23,6 +27,7 @@ CUnitScript::CUnitScript()
 
 CUnitScript::~CUnitScript()
 {
+	Safe_Del_Array(m_Skill);
 }
 
 void CUnitScript::begin()
@@ -98,5 +103,17 @@ bool CUnitScript::PathFindMove(float _fSpeed, bool _IsRotation)
 			}
 			return true;
 		}
+	}
+}
+
+void CUnitScript::GetHit(SkillType _type, CGameObject* _SkillTarget, CGameObject* _SkillUser, int _SkillLevel)
+{
+	// 스킬 매니저에서 해당 타입으로 스킬을 검색해 CSkill 클래스를 받아옴.
+	CSkill* Skill = CSkillMgr::GetInst()->FindSkill(_type);
+	if (Skill != nullptr)
+	{
+		CUnitScript* TargetScript = _SkillTarget->GetScript<CUnitScript>();
+
+		Skill->GetHit(_SkillUser->GetScript<CUnitScript>(), TargetScript, _SkillLevel);
 	}
 }

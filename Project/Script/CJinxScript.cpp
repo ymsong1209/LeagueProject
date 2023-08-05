@@ -5,7 +5,10 @@
 #include "CJinxWalkState.h"
 #include "CJinxDeathState.h"
 #include "CJinxRespawnState.h"
+#include "CJinxAttackState.h"
+#include "CJinxWState.h"
 
+#include "CBasicAttack.h"
 #include "CJinxQ.h"
 #include "CJinxw.h"
 
@@ -13,7 +16,7 @@ CJinxScript::CJinxScript()
 	:CChampionScript((UINT)JINXSCRIPT)
 {
 	m_fMaxHP = 5;
-	m_fHP = 5;
+	m_fAttackPower = 5.f;
 }
 
 CJinxScript::~CJinxScript()
@@ -27,8 +30,12 @@ void CJinxScript::begin()
 	GetOwner()->Fsm()->AddState(L"Walk", new CJinxWalkState);
 	GetOwner()->Fsm()->AddState(L"Death", new CJinxDeathState);
 	GetOwner()->Fsm()->AddState(L"Respawn", new CJinxRespawnState);
+	GetOwner()->Fsm()->AddState(L"Attack", new CJinxAttackState);
+	GetOwner()->Fsm()->AddState(L"W", new CJinxWState);
 
 	// Skill에 Jinx Skill 추가
+	m_Skill[0] = new CBasicAttack;
+	m_Skill[0]->SetOwnerScript(this);
 	m_Skill[1] = new CJinxQ;
 	m_Skill[1]->SetOwnerScript(this);
 	m_Skill[2] = new CJinxW;
@@ -37,6 +44,8 @@ void CJinxScript::begin()
 	// Spell에 소환사 주문 추가
 
 
+	// 진영
+	// SetFaction(Faction::BLUE);
 
 	CChampionScript::begin();
 }

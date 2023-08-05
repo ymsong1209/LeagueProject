@@ -1,7 +1,9 @@
 #include "pch.h"
 #include "CScriptMgr.h"
 
+#include "CAttackRangeScript.h"
 #include "CBasicAttackScript.h"
+#include "CBlueScript.h"
 #include "CCameraMoveScript.h"
 #include "CChampionScript.h"
 #include "CCharacterUIScript.h"
@@ -14,6 +16,7 @@
 #include "CInhibitorScript.h"
 #include "CInventoryUIScript.h"
 #include "CJinxScript.h"
+#include "CJinxWScript.h"
 #include "CJungleMonsterScript.h"
 #include "CMinimapUIScript.h"
 #include "CMinionScript.h"
@@ -24,6 +27,19 @@
 #include "COtherPlayerScript.h"
 #include "CPlayerScript.h"
 #include "CScorePanelScript.h"
+#include "CKrugMiniScript.h"
+#include "CKrugScript.h"
+#include "CMinionScript.h"
+#include "CMobScript.h"
+#include "CMurkWolfMiniScript.h"
+#include "CMurkWolfScript.h"
+#include "CNexusScript.h"
+#include "COtherPlayerScript.h"
+#include "CPlayerScript.h"
+#include "CProjectileScript.h"
+#include "CRazorBeakMiniScript.h"
+#include "CRazorBeakScript.h"
+#include "CRedScript.h"
 #include "CSoundTestScript.h"
 #include "CStructureScript.h"
 #include "CTurretAttackScript.h"
@@ -35,7 +51,9 @@
 
 void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 {
+	_vec.push_back(L"CAttackRangeScript");
 	_vec.push_back(L"CBasicAttackScript");
+	_vec.push_back(L"CBlueScript");
 	_vec.push_back(L"CCameraMoveScript");
 	_vec.push_back(L"CChampionScript");
 	_vec.push_back(L"CCharacterUIScript");
@@ -48,6 +66,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CInhibitorScript");
 	_vec.push_back(L"CInventoryUIScript");
 	_vec.push_back(L"CJinxScript");
+	_vec.push_back(L"CJinxWScript");
 	_vec.push_back(L"CJungleMonsterScript");
 	_vec.push_back(L"CMinimapUIScript");
 	_vec.push_back(L"CMinionScript");
@@ -58,6 +77,19 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"COtherPlayerScript");
 	_vec.push_back(L"CPlayerScript");
 	_vec.push_back(L"CScorePanelScript");
+	_vec.push_back(L"CKrugMiniScript");
+	_vec.push_back(L"CKrugScript");
+	_vec.push_back(L"CMinionScript");
+	_vec.push_back(L"CMobScript");
+	_vec.push_back(L"CMurkWolfMiniScript");
+	_vec.push_back(L"CMurkWolfScript");
+	_vec.push_back(L"CNexusScript");
+	_vec.push_back(L"COtherPlayerScript");
+	_vec.push_back(L"CPlayerScript");
+	_vec.push_back(L"CProjectileScript");
+	_vec.push_back(L"CRazorBeakMiniScript");
+	_vec.push_back(L"CRazorBeakScript");
+	_vec.push_back(L"CRedScript");
 	_vec.push_back(L"CSoundTestScript");
 	_vec.push_back(L"CStructureScript");
 	_vec.push_back(L"CTurretAttackScript");
@@ -70,8 +102,12 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 
 CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 {
+	if (L"CAttackRangeScript" == _strScriptName)
+		return new CAttackRangeScript;
 	if (L"CBasicAttackScript" == _strScriptName)
 		return new CBasicAttackScript;
+	if (L"CBlueScript" == _strScriptName)
+		return new CBlueScript;
 	if (L"CCameraMoveScript" == _strScriptName)
 		return new CCameraMoveScript;
 	if (L"CChampionScript" == _strScriptName)
@@ -96,10 +132,16 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CInventoryUIScript;
 	if (L"CJinxScript" == _strScriptName)
 		return new CJinxScript;
+	if (L"CJinxWScript" == _strScriptName)
+		return new CJinxWScript;
 	if (L"CJungleMonsterScript" == _strScriptName)
 		return new CJungleMonsterScript;
 	if (L"CMinimapUIScript" == _strScriptName)
 		return new CMinimapUIScript;
+	if (L"CKrugMiniScript" == _strScriptName)
+		return new CKrugMiniScript;
+	if (L"CKrugScript" == _strScriptName)
+		return new CKrugScript;
 	if (L"CMinionScript" == _strScriptName)
 		return new CMinionScript;
 	if (L"CMobScript" == _strScriptName)
@@ -108,6 +150,10 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CMouseCursorUIScript;
 	if (L"CMoveCursorUIScript" == _strScriptName)
 		return new CMoveCursorUIScript;
+	if (L"CMurkWolfMiniScript" == _strScriptName)
+		return new CMurkWolfMiniScript;
+	if (L"CMurkWolfScript" == _strScriptName)
+		return new CMurkWolfScript;
 	if (L"CNexusScript" == _strScriptName)
 		return new CNexusScript;
 	if (L"COtherPlayerScript" == _strScriptName)
@@ -116,6 +162,14 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CPlayerScript;
 	if (L"CScorePanelScript" == _strScriptName)
 		return new CScorePanelScript;
+	if (L"CProjectileScript" == _strScriptName)
+		return new CProjectileScript;
+	if (L"CRazorBeakMiniScript" == _strScriptName)
+		return new CRazorBeakMiniScript;
+	if (L"CRazorBeakScript" == _strScriptName)
+		return new CRazorBeakScript;
+	if (L"CRedScript" == _strScriptName)
+		return new CRedScript;
 	if (L"CSoundTestScript" == _strScriptName)
 		return new CSoundTestScript;
 	if (L"CStructureScript" == _strScriptName)
@@ -139,8 +193,14 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 {
 	switch (_iScriptType)
 	{
+	case (UINT)SCRIPT_TYPE::ATTACKRANGESCRIPT:
+		return new CAttackRangeScript;
+		break;
 	case (UINT)SCRIPT_TYPE::BASICATTACKSCRIPT:
 		return new CBasicAttackScript;
+		break;
+	case (UINT)SCRIPT_TYPE::BLUESCRIPT:
+		return new CBlueScript;
 		break;
 	case (UINT)SCRIPT_TYPE::CAMERAMOVESCRIPT:
 		return new CCameraMoveScript;
@@ -178,11 +238,20 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::JINXSCRIPT:
 		return new CJinxScript;
 		break;
+	case (UINT)SCRIPT_TYPE::JINXWSCRIPT:
+		return new CJinxWScript;
+		break;
 	case (UINT)SCRIPT_TYPE::JUNGLEMONSTERSCRIPT:
 		return new CJungleMonsterScript;
 		break;
 	case (UINT)SCRIPT_TYPE::MINIMAPUISCRIPT:
 		return new CMinimapUIScript;
+		break;
+	case (UINT)SCRIPT_TYPE::KRUGMINISCRIPT:
+		return new CKrugMiniScript;
+		break;
+	case (UINT)SCRIPT_TYPE::KRUGSCRIPT:
+		return new CKrugScript;
 		break;
 	case (UINT)SCRIPT_TYPE::MINIONSCRIPT:
 		return new CMinionScript;
@@ -196,6 +265,12 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::MOVECURSORUISCRIPT:
 		return new CMoveCursorUIScript;
 		break;
+	case (UINT)SCRIPT_TYPE::MURKWOLFMINISCRIPT:
+		return new CMurkWolfMiniScript;
+		break;
+	case (UINT)SCRIPT_TYPE::MURKWOLFSCRIPT:
+		return new CMurkWolfScript;
+		break;
 	case (UINT)SCRIPT_TYPE::NEXUSSCRIPT:
 		return new CNexusScript;
 		break;
@@ -207,6 +282,18 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::SCOREPANELSCRIPT:
 		return new CScorePanelScript;
+		break;
+	case (UINT)SCRIPT_TYPE::PROJECTILESCRIPT:
+		return new CProjectileScript;
+		break;
+	case (UINT)SCRIPT_TYPE::RAZORBEAKMINISCRIPT:
+		return new CRazorBeakMiniScript;
+		break;
+	case (UINT)SCRIPT_TYPE::RAZORBEAKSCRIPT:
+		return new CRazorBeakScript;
+		break;
+	case (UINT)SCRIPT_TYPE::REDSCRIPT:
+		return new CRedScript;
 		break;
 	case (UINT)SCRIPT_TYPE::SOUNDTESTSCRIPT:
 		return new CSoundTestScript;
@@ -240,8 +327,16 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 {
 	switch ((SCRIPT_TYPE)_pScript->GetScriptType())
 	{
+	case SCRIPT_TYPE::ATTACKRANGESCRIPT:
+		return L"CAttackRangeScript";
+		break;
+
 	case SCRIPT_TYPE::BASICATTACKSCRIPT:
 		return L"CBasicAttackScript";
+		break;
+
+	case SCRIPT_TYPE::BLUESCRIPT:
+		return L"CBlueScript";
 		break;
 
 	case SCRIPT_TYPE::CAMERAMOVESCRIPT:
@@ -292,12 +387,24 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CJinxScript";
 		break;
 
+	case SCRIPT_TYPE::JINXWSCRIPT:
+		return L"CJinxWScript";
+		break;
+
 	case SCRIPT_TYPE::JUNGLEMONSTERSCRIPT:
 		return L"CJungleMonsterScript";
 		break;
 
 	case SCRIPT_TYPE::MINIMAPUISCRIPT:
 		return L"CMinimapUIScript";
+		break;
+		
+	case SCRIPT_TYPE::KRUGMINISCRIPT:
+		return L"CKrugMiniScript";
+		break;
+
+	case SCRIPT_TYPE::KRUGSCRIPT:
+		return L"CKrugScript";
 		break;
 
 	case SCRIPT_TYPE::MINIONSCRIPT:
@@ -315,6 +422,14 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 	case SCRIPT_TYPE::MOVECURSORUISCRIPT:
 		return L"CMoveCursorUIScript";
 		break;
+		
+	case SCRIPT_TYPE::MURKWOLFMINISCRIPT:
+		return L"CMurkWolfMiniScript";
+		break;
+
+	case SCRIPT_TYPE::MURKWOLFSCRIPT:
+		return L"CMurkWolfScript";
+		break;
 
 	case SCRIPT_TYPE::NEXUSSCRIPT:
 		return L"CNexusScript";
@@ -330,6 +445,22 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::SCOREPANELSCRIPT:
 		return L"CScorePanelScript";
+		break;
+
+	case SCRIPT_TYPE::PROJECTILESCRIPT:
+		return L"CProjectileScript";
+		break;
+
+	case SCRIPT_TYPE::RAZORBEAKMINISCRIPT:
+		return L"CRazorBeakMiniScript";
+		break;
+
+	case SCRIPT_TYPE::RAZORBEAKSCRIPT:
+		return L"CRazorBeakScript";
+		break;
+
+	case SCRIPT_TYPE::REDSCRIPT:
+		return L"CRedScript";
 		break;
 
 	case SCRIPT_TYPE::SOUNDTESTSCRIPT:

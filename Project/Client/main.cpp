@@ -4,12 +4,12 @@
 #include "pch.h"
 #include "Client.h"
 
-#include "ThreadManager.h"
-#include "Service.h"
-#include "Session.h"
-#include "BufferReader.h"
-#include "ServerPacketHandler.h"
-#include "ServerSession.h"
+//#include "ThreadManager.h"
+//#include "Service.h"
+//#include "Session.h"
+//#include "BufferReader.h"
+//#include "ServerPacketHandler.h"
+//#include "ServerSession.h"
 
 #include "CEditorObjMgr.h"
 #include <Engine\CDevice.h>
@@ -27,7 +27,7 @@
 
 #include <Script/CPlayerScript.h>
 #include <Engine/CAnim3D.h>
-
+#include <Script/CChampionScript.h>
 
 // 전역 변수:
 HINSTANCE   hInst;    // 현재 인스턴스입니다.
@@ -45,7 +45,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_ int       nCmdShow)
 {
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-    //_CrtSetBreakAlloc(3211);
+    //_CrtSetBreakAlloc(860605);
     MyRegisterClass(hInstance);
 
     // 애플리케이션 초기화를 수행합니다:
@@ -74,46 +74,46 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CLIENT));
     MSG msg;
 
-    // 해상도 수정
-   // SetProcessDPIAware();
-   // 
-   // AllocConsole();
-   // // 표준 출력을 콘솔 창으로 리디렉션
-   // freopen("CONOUT$", "w", stdout);
-   //
-   //
-   //
-   //this_thread::sleep_for(1s);
-   //
-   //ClientServiceRef service = MakeShared<ClientService>(
-   //    // NetAddress(L"221.148.206.199", 40000),  // 다혜집 데탑 IP
-   //    NetAddress(L"14.35.246.224", 40000),    // snow
-   //    //NetAddress(L"192.168.0.19", 40000), //  내부ip
-   //    //NetAddress(L"127.0.0.1", 40000), // 로컬 호스트
-   //    MakeShared<IocpCore>(),
-   //    MakeShared<ServerSession>, // TODO : SessionManager 등
-   //    1);
-   //
-   //ASSERT_CRASH(service->Start());
-   //
-   //GThreadManager->SetFlags(1);
-   //for (int32 i = 0; i < 2; i++)
-   //{
-   //    GThreadManager->Launch([=]()
-   //    {
-   //        while (true)
-   //        {
-   //            service->GetIocpCore()->Dispatch(10);
-   //            if (GThreadManager->GetFlags() == 0)
-   //            {
-   //                this_thread::sleep_for(500ms);
-   //                return;
-   //                //break;
-   //            }
-   //            
-   //        }
-   //    });
-   //}    
+    //// 해상도 수정
+    //SetProcessDPIAware();
+    //
+    //AllocConsole();
+    //// 표준 출력을 콘솔 창으로 리디렉션
+    //freopen("CONOUT$", "w", stdout);
+    //
+    //
+    //
+    //this_thread::sleep_for(1s);
+    //
+    //ClientServiceRef service = MakeShared<ClientService>(
+    //    // NetAddress(L"221.148.206.199", 40000),  // 다혜집 데탑 IP
+    //    NetAddress(L"14.35.246.224", 40000),    // snow
+    //    //NetAddress(L"192.168.0.19", 40000), //  내부ip
+    //    //NetAddress(L"127.0.0.1", 40000), // 로컬 호스트
+    //    MakeShared<IocpCore>(),
+    //    MakeShared<ServerSession>, // TODO : SessionManager 등
+    //    1);
+    //
+    //ASSERT_CRASH(service->Start());
+    //
+    //GThreadManager->SetFlags(1);
+    //for (int32 i = 0; i < 2; i++)
+    //{
+    //    GThreadManager->Launch([=]()
+    //    {
+    //        while (true)
+    //        {
+    //            service->GetIocpCore()->Dispatch(10);
+    //            if (GThreadManager->GetFlags() == 0)
+    //            {
+    //                this_thread::sleep_for(500ms);
+    //                return;
+    //                //break;
+    //            }
+    //            
+    //        }
+    //    });
+    //}    
 
     while (true) 
     {
@@ -134,41 +134,28 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             //{
             //    Send_CLogin(service, L"KIYO");
             //}
-            //else if (KEY_TAP(KEY::NUM_1))
+            //else if (KEY_TAP(KEY::N))
             //{
             //    Send_CPickFaction(service);
             //}
-            //else if (KEY_TAP(KEY::NUM_2))
+            //else if (KEY_TAP(KEY::M))
             //{
             //    Send_CPickChampion(service,ChampionType::JINX);
             //}
-            //
             //else if (KEY_TAP(KEY::NUM_4))
             //{
-            //    std::cout << "C_OBJECT_ANIM Pakcet" << endl;
-            //
-            //    AnimInfoPacket animInfoPacket = {};
-            //    animInfoPacket.blend = GameObjMgr::GetInst()->GetMyPlayerScript()->Animator3D()->IsBlend();
-            //    animInfoPacket.blendTime = GameObjMgr::GetInst()->GetMyPlayerScript()->Animator3D()->GetBlendTime();
-            //
-            //    wstring _animName = GameObjMgr::GetInst()->GetMyPlayerScript()->Animator3D()->GetCurAnim()->GetName();
-            //
-            //    PKT_C_OBJECT_ANIM_WRITE  pktWriter(MyPlayer.id, animInfoPacket);
-            //    PKT_C_OBJECT_ANIM_WRITE::AnimNameList animNamePacket = pktWriter.ReserveAnimNameList(_animName.size());
-            //    for (int i = 0; i < _animName.size(); i++)
-            //        animNamePacket[i] = { _animName[i] };
-            //
+            //    std::cout << "Test Pakcet" << endl;
+            //    PKT_C_KDA_CS_WRITE  pktWriter(6, UnitType::MELEE_MINION);
             //    SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
             //    service->Broadcast(sendBuffer);
-            //
             //    std::cout << "===============================" << endl;
             //}
 
 
            CEngine::GetInst()->progress();
            
-           //if (IsInGame) // C->S 패킷 전송
-           //    ServerEventMgr::GetInst()->sendtick(service);
+          // if (IsInGame) // C->S 패킷 전송
+          //     ServerEventMgr::GetInst()->sendtick(service);
 
            // 랜덤으로 온 서버패킷을 핸들러에서 서버 이벤트 매니저에 등록해둠.
           
@@ -194,7 +181,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     }
 
-    //GThreadManager->Join();
+   // GThreadManager->Join();
     
     //// 콘솔 창 닫기
     ////fclose(stdout);

@@ -8,7 +8,7 @@ class COtherPlayerScript :
 private:
     UINT64      m_id;
     wstring     m_nickname;
-    FactionType m_faction;
+    Faction     m_faction;
 
     float           m_fSpeed;
     Vec3            m_vTargetPosTest;
@@ -22,11 +22,11 @@ public:
 
     UINT64 GetPlayerID() { return m_id; }
     wstring GetNickName() { return m_nickname; }
-    FactionType GetFaction() { return m_faction; }
+    Faction GetFaction() { return m_faction; }
 
     void SetPlayerID(UINT64 _id) { m_id = _id; }
     void SetNickName(wstring _nickname) { m_nickname = _nickname; }
-    void SetFaction(FactionType _fection) { m_faction = _fection; }
+    void SetFaction(Faction _fection) { m_faction = _fection; }
 
 private:
     void Shoot();

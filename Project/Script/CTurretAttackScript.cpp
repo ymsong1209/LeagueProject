@@ -4,7 +4,7 @@
 
 CTurretAttackScript::CTurretAttackScript()
 	: CScript((UINT)SCRIPT_TYPE::TURRETATTACKSCRIPT)
-	, m_fSpeed(15.f)
+	, m_fSpeed(30.f)
 	, m_pTarget(nullptr)
 	, m_vTargetPos()
 	, m_bPosChase(true)

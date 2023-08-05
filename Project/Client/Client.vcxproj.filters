@@ -504,5 +504,8 @@
     <ClCompile Include="ServerEventMgr.cpp">
       <Filter>ServerMgr</Filter>
     </ClCompile>
+    <ClCompile Include="GameObjMgr_Add.cpp">
+      <Filter>ServerMgr</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

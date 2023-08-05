@@ -29,29 +29,53 @@
 #include <Script/CGrompScript.h>
 #include <Script\CFontUIScript.h>
 #include <Script\CScorePanelScript.h>
+#include <Script/CJinxScript.h>
+
+#include <Script/CTurretScript.h>
+#include <Script/CJinxScript.h>
+#include <Script/CGrompScript.h>
+#include <Script/CMurkWolfScript.h>
+#include <Script/CMurkWolfMiniScript.h>
+#include <Script/CRazorBeakScript.h>
+#include <Script/CRazorBeakMiniScript.h>
+#include <Script/CKrugScript.h>
+#include <Script/CKrugMiniScript.h>
+#include <Script/CBlueScript.h>
+//#include <Script/CRedScript.h>
 
 void CreateTestLevel()
 {
 	//return;	
 
 	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
-	pCurLevel->ChangeState(LEVEL_STATE::STOP);
+	//pCurLevel->ChangeState(LEVEL_STATE::PLAY);
+	//CTimeMgr::GetInst()->SetTimeScale(1.f);    // TestLevel에서 강제로 PLAY모드로 전환해서 DT를 흐르게 하기 위함. 추후 삭제
 
-	// Layer 이름설정
-	pCurLevel->GetLayer(0)->SetName(L"Default");
-	pCurLevel->GetLayer(1)->SetName(L"Tile");
-	pCurLevel->GetLayer(2)->SetName(L"Player");
-	pCurLevel->GetLayer(3)->SetName(L"Monster");
-	pCurLevel->GetLayer(4)->SetName(L"PlayerProjectile");
-	pCurLevel->GetLayer(5)->SetName(L"MonsterProjectile");
-	pCurLevel->GetLayer(6)->SetName(L"LoLMap");
-	pCurLevel->GetLayer(7)->SetName(L"Minion");
-	pCurLevel->GetLayer(8)->SetName(L"Champion");
-	pCurLevel->GetLayer(9)->SetName(L"Projectile");
 	//롤맵 레이어에는 롤맵만 넣을것!
-	pCurLevel->GetLayer(31)->SetName(L"ViewPort UI");
+	pCurLevel->GetLayer(0)->SetName(L"Default");
+	pCurLevel->GetLayer(1)->SetName(L"Lolmap");   // land
+	pCurLevel->GetLayer(2)->SetName(L"Map_Wall");   // map_wall (맵 벽)
+	pCurLevel->GetLayer(3)->SetName(L"Structure");   //Nexus, Turret, Inhibitor
+	pCurLevel->GetLayer(4)->SetName(L"Mob");   // Minion, JungleMob
+	pCurLevel->GetLayer(5)->SetName(L"Player");   // Champion
+	pCurLevel->GetLayer(6)->SetName(L"AttackRange");   //  공격범위
+	pCurLevel->GetLayer(7)->SetName(L"SkillProjectile");   // Skill 
+	pCurLevel->GetLayer(8)->SetName(L"Effect");   // Effect
+	pCurLevel->GetLayer(31)->SetName(L"ViewPort UI");   // UI
 
-	// Main Camera Object 생성
+	CCollisionMgr::GetInst()->LayerCheck(L"Mob", L"Mob");
+	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Player");
+	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"SkillProjectile");
+	CCollisionMgr::GetInst()->LayerCheck(L"Mob", L"SkillProjectile");
+	CCollisionMgr::GetInst()->LayerCheck(L"Structure", L"SkillProjectile");
+	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Structure");
+	CCollisionMgr::GetInst()->LayerCheck(L"AttackRange", L"Player");
+	CCollisionMgr::GetInst()->LayerCheck(L"AttackRange", L"Mob");
+	CCollisionMgr::GetInst()->LayerCheck(L"AttackRange", L"Structure");
+	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Map_Wall");
+	CCollisionMgr::GetInst()->LayerCheck(L"Mob", L"Map_Wall");
+
+	 //Main Camera Object 생성
 	CGameObject* pMainCam = new CGameObject;
 	pMainCam->SetName(L"MainCamera");
 	pMainCam->AddComponent(new CTransform);
@@ -202,7 +226,7 @@ void CreateTestLevel()
 	LoLMapCollider->Collider2D()->SetOffsetPos(Vec3(1125.f, 16.f, 1200.f));
 	LoLMapCollider->Collider2D()->SetDrawCollision(false);
 	LoLMapCollider->Transform()->SetGizmoObjExcept(true);
-	SpawnGameObject(LoLMapCollider, Vec3(0.f, 0.f, 0.f), 6);
+	SpawnGameObject(LoLMapCollider, Vec3(0.f, 0.f, 0.f), L"Lolmap");
 
 
 
@@ -231,73 +255,36 @@ void CreateTestLevel()
 		//pObj->Transform()->SetRelativeScale(Vec3(0.3, 0.3, 0.3));
 		//SpawnGameObject(pObj, Vec3(190.f, 0.f, 607.f), 0);
 
-		pMeshData = nullptr;
-		pObj = nullptr;
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
-		pObj = pMeshData->Instantiate();
-		pObj->SetName(L"Jinx");
-		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
-		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->AddComponent(new CPlayerScript);
-		pObj->AddComponent(new CJinxScript);
-		pObj->AddComponent(new CPathFinder);
-		pObj->AddComponent(new CCollider3D);
-		pObj->AddComponent(new CCollider2D);
-		pObj->AddComponent(new CFsm);
+		//pMeshData = nullptr;
+		//pObj = nullptr;
+		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
+		//pObj = pMeshData->Instantiate();
+		//pObj->SetName(L"Jinx");
+		//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
+		//pObj->GetRenderComponent()->SetFrustumCheck(false);
+		//pObj->AddComponent(new CPlayerScript);
+		//pObj->AddComponent(new CJinxScript);
+		//pObj->AddComponent(new CPathFinder);
+		//pObj->AddComponent(new CCollider3D);
+		//pObj->AddComponent(new CCollider2D);
+		//pObj->AddComponent(new CFsm);
+		//
+		//pObj->Collider2D()->SetAbsolute(false);
+		//pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+		//pObj->Collider2D()->SetOffsetScale(Vec2(20.f, 20.f));
+		//pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+		//
+		//pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+		//pObj->Collider3D()->SetAbsolute(true);
+		//pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
+		//pObj->Collider3D()->SetDrawCollision(false);
+		//pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true,true,0.1f);
+		//pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+		//
+		//pObj->Transform()->SetUseMouseOutline(true);
+		//
+		//SpawnGameObject(pObj, Vec3(0, 0, 0), L"Champion");
 
-		pObj->Collider2D()->SetAbsolute(false);
-		pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-		pObj->Collider2D()->SetOffsetScale(Vec2(20.f, 20.f));
-		pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-
-		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
-		pObj->Collider3D()->SetAbsolute(true);
-		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
-		pObj->Collider3D()->SetDrawCollision(false);
-		pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true,true,0.1f);
-		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-
-		pObj->Transform()->SetUseMouseOutline(true); 
-		pObj->MeshRender()->GetMaterial(0)->SetShader(CResMgr::GetInst()->FindRes<CGraphicsShader>(L"Std3D_DeferredShader")); 
-		//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
-
-		SpawnGameObject(pObj, Vec3(0.f, 0.f, 0), 0);
-
-		//=======================================
-		pMeshData = nullptr;
-		pObj = nullptr;
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\arrow.fbx");
-		pObj = pMeshData->Instantiate();
-		pObj->SetName(L"arrow");
-		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->Transform()->SetRelativeScale(Vec3(1.f, 1.f, 1.f));
-		pObj->Transform()->SetUseMouseOutline(true);
-		SpawnGameObject(pObj, Vec3(-300, 100, 0), 0);
-		//=======================================
-
-
-		/*pMeshData = nullptr;
-		pObj = nullptr;
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
-		pObj = pMeshData->Instantiate();
-		pObj->SetName(L"Jinx2");
-		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
-		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->AddComponent(new CPathFinder);
-		pObj->AddComponent(new CCollider3D);
-		pObj->AddComponent(new CFsm);
-		pObj->AddComponent(new CJinxScript);
-
-		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
-		pObj->Collider3D()->SetAbsolute(true);
-		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
-		pObj->Collider3D()->SetDrawCollision(false);
-		pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true, true, 0.1f);
-		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-
-		pObj->Transform()->SetUseMouseOutline(true);
-
-		SpawnGameObject(pObj, Vec3(0, 0, 0), L"Champion");
 
 
 		//-------------------------------넥서스-----------------------------------------
@@ -320,12 +307,7 @@ void CreateTestLevel()
 		pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\sruap_ordernexus_tx_cm_clear.png"));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		pObj->AddComponent(new CCollider3D);
-		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
-		pObj->Collider3D()->SetAbsolute(true);
-		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
-		pObj->Transform()->SetUseMouseOutline(true);
-		SpawnGameObject(pObj, Vec3(229.7f, 15.9f, 241.5f), 0);
+		SpawnGameObject(pObj, Vec3(229.7f, 15.9f, 241.5f), L"Structure");
 
 		//------------------------------------------------------------------------------
 
@@ -344,7 +326,7 @@ void CreateTestLevel()
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(-45.48f), 0.f));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		SpawnGameObject(pObj, Vec3(537.71f, 14.2f, 546.9f), 0);
+		SpawnGameObject(pObj, Vec3(537.71f, 14.2f, 546.9f), L"Structure");
 
 		pMeshData = nullptr;
 		pObj = nullptr;
@@ -357,7 +339,7 @@ void CreateTestLevel()
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(-89.48f), 0.f));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		SpawnGameObject(pObj, Vec3(169.86f, 14.2f, 527.02f), 0);
+		SpawnGameObject(pObj, Vec3(169.86f, 14.2f, 527.02f), L"Structure");
 
 		pMeshData = nullptr;
 		pObj = nullptr;
@@ -370,7 +352,7 @@ void CreateTestLevel()
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(2.f), 0.f));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		SpawnGameObject(pObj, Vec3(634.97f, 14.2f, 183.08f), 0);
+		SpawnGameObject(pObj, Vec3(634.97f, 14.2f, 183.08f), L"Structure");
 
 		//----------RED-------------------------------
 
@@ -385,7 +367,7 @@ void CreateTestLevel()
 		pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\nexus_Mat_Red.mtrl"), 1);
 		pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		SpawnGameObject(pObj, Vec3(1952.174f, 15.26f, 1956.22f), 0);
+		SpawnGameObject(pObj, Vec3(1952.174f, 15.26f, 1956.22f), L"Structure");
 
 		pMeshData = nullptr;
 		pObj = nullptr;
@@ -399,8 +381,8 @@ void CreateTestLevel()
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(0.f), XMConvertToRadians(-180.f)));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		SpawnGameObject(pObj, Vec3(1661.7f, 14.8f, 2013.9f), 0);
-		
+		SpawnGameObject(pObj, Vec3(1661.7f, 14.8f, 2013.9f), L"Structure");
+
 		pMeshData = nullptr;
 		pObj = nullptr;
 		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Inhibitor.fbx");
@@ -413,8 +395,9 @@ void CreateTestLevel()
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(45.f), XMConvertToRadians(-180.f)));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		SpawnGameObject(pObj, Vec3(1711.f, 14.8f, 1721.f), 0);
-		
+		SpawnGameObject(pObj, Vec3(1711.f, 14.8f, 1721.f), L"Structure");
+
+
 		pMeshData = nullptr;
 		pObj = nullptr;
 		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Inhibitor.fbx");
@@ -427,12 +410,13 @@ void CreateTestLevel()
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(90.f), XMConvertToRadians(-180.f)));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		SpawnGameObject(pObj, Vec3(2006.9f, 14.8f, 1670.1f), 0);
+		SpawnGameObject(pObj, Vec3(2006.9f, 14.8f, 1670.1f), L"Structure");
 
 	}
 
 
 	PlaceLand();
+	SpawnJungleMob();
 
 
 	 // TestFastForward
@@ -543,27 +527,7 @@ void CreateTestLevel()
 	TestTurret->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
 	SpawnGameObject(TestTurret, Vec3(200.f, 0.f, 200.f), 0);
 
-	{
-		Ptr<CMeshData> pMeshData = nullptr;
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\gromp.fbx");
-		CGameObject* Gromp = nullptr;
-		Gromp = pMeshData->Instantiate();
-		Gromp->AddComponent(new CGrompScript);
-		Gromp->SetName(L"Gromp");
-		Gromp->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
-		Gromp->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(270.f), 0.f));
-		SpawnGameObject(Gromp, Vec3(323.f, 0.f, 1242.f), 0);
 	
-		CGameObject* GrompAggro = new CGameObject;
-		GrompAggro->SetName(L"GrompAggroRadius");
-		GrompAggro->AddComponent(new CTransform);
-		GrompAggro->AddComponent(new CCollider2D);
-		GrompAggro->Transform()->SetRelativeScale(Vec3(150.f, 150.f, 150.f));
-		GrompAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-		GrompAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
-		GrompAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-		SpawnGameObject(GrompAggro, Vec3(323.f, 0.f, 1242.f), 0);
-	}
 	
 
 
@@ -618,9 +582,10 @@ void CreateTestLevel()
 	pSoundTestObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
 
 	SpawnGameObject(pSoundTestObj, Vec3(0.f, 0.f, 0.f), 0.f);
-	 
+	// 
 	// 충돌 시킬 레이어 짝 지정
-	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");
+	//CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");
+	//CCollisionMgr::GetInst()->LayerCheck(L"Default", L"Default");
 }
 
 void PlaceLand()
@@ -665,4 +630,191 @@ void PlaceLand()
 			SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 6);
 		}
 	}
+}
+
+void SpawnJungleMob()
+{
+	//블루팀
+	{
+		//블루팀 두꺼비
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\gromp.fbx");
+			CGameObject* Gromp = nullptr;
+			Gromp = pMeshData->Instantiate();
+			Gromp->AddComponent(new CGrompScript);
+			Gromp->SetName(L"SOUTH_Gromp");
+			Gromp->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
+			Gromp->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(270.f), 0.f));
+			CGrompScript* Script = Gromp->GetScript<CGrompScript>();
+			Script->SetAggroPos(Vec3(323.f, 0.f, 1242.f));
+			SpawnGameObject(Gromp, Vec3(323.f, 10.f, 1242.f), L"Mob");
+
+			CGameObject* GrompAggro = new CGameObject;
+			GrompAggro->SetName(L"SOUTH_GrompAggroRadius");
+			GrompAggro->AddComponent(new CTransform);
+			GrompAggro->AddComponent(new CCollider2D);
+			GrompAggro->Transform()->SetRelativeScale(Vec3(150.f, 150.f, 150.f));
+			GrompAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			GrompAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+			GrompAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			SpawnGameObject(GrompAggro, Vec3(323.f, 0.f, 1242.f), 0);
+		}
+
+		//블루팀 늑대
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\MurkWolf.fbx");
+			CGameObject* MurkWolf = nullptr;
+			MurkWolf = pMeshData->Instantiate();
+			MurkWolf->AddComponent(new CMurkWolfScript);
+			MurkWolf->SetName(L"SOUTH_MurkWolf");
+			MurkWolf->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
+			MurkWolf->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(24.f), 0.f));
+			CMurkWolfScript* script = MurkWolf->GetScript <CMurkWolfScript>();
+			script->SetAggroPos(Vec3(564.f, 0.f, 959.f));
+			SpawnGameObject(MurkWolf, Vec3(550.f, 15.f, 944.f), L"Mob");
+
+			CGameObject* MurkWolfAggro = new CGameObject;
+			MurkWolfAggro->SetName(L"SOUTH_MurkWolfAggroRadius");
+			MurkWolfAggro->AddComponent(new CTransform);
+			MurkWolfAggro->AddComponent(new CCollider2D);
+			MurkWolfAggro->Transform()->SetRelativeScale(Vec3(190, 190.f, 190.f));
+			MurkWolfAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			MurkWolfAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+			MurkWolfAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			SpawnGameObject(MurkWolfAggro, Vec3(564.f, 0.f, 959.f), 0);
+		}
+		//블루팀 늑대 째깐이(좌)
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\MurkWolf_Mini.fbx");
+			CGameObject* MurkWolf_Mini = nullptr;
+			MurkWolf_Mini = pMeshData->Instantiate();
+			MurkWolf_Mini->AddComponent(new CMurkWolfMiniScript);
+			MurkWolf_Mini->SetName(L"SOUTH_MurkWolf_Mini_L");
+			MurkWolf_Mini->Transform()->SetRelativeScale(0.15f, 0.15f, 0.15);
+			MurkWolf_Mini->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(36.f), 0.f));
+			CMurkWolfMiniScript* Script = MurkWolf_Mini->GetScript<CMurkWolfMiniScript>();
+			Script->SetAggroPos(Vec3(564.f, 0.f, 964.f));
+			SpawnGameObject(MurkWolf_Mini, Vec3(552.f, 15.f, 964.f), L"Mob");
+		}
+		//블루팀 늑대 째깐이(우)
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\MurkWolf_Mini.fbx");
+			CGameObject* MurkWolf_Mini = nullptr;
+			MurkWolf_Mini = pMeshData->Instantiate();
+			MurkWolf_Mini->AddComponent(new CMurkWolfMiniScript);
+			MurkWolf_Mini->SetName(L"SOUTH_MurkWolf_Mini_R");
+			MurkWolf_Mini->Transform()->SetRelativeScale(0.15f, 0.15f, 0.15f);
+			MurkWolf_Mini->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(36.f), 0.f));
+			CMurkWolfMiniScript* Script = MurkWolf_Mini->GetScript<CMurkWolfMiniScript>();
+			Script->SetAggroPos(Vec3(564.f, 0.f, 964.f));
+			SpawnGameObject(MurkWolf_Mini, Vec3(580.f, 15.f, 944.f), L"Mob");
+		}
+		//블루팀 돌거북
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Krug.fbx");
+			CGameObject* Krug = nullptr;
+			Krug = pMeshData->Instantiate();
+			Krug->AddComponent(new CKrugScript);
+			Krug->SetName(L"SOUTH_Krug");
+			Krug->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
+			Krug->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
+			CKrugScript* Script = Krug->GetScript<CKrugScript>();
+			Script->SetAggroPos(Vec3(1238.f, 0.f, 389.f));
+			SpawnGameObject(Krug, Vec3(1221.f, 15.f, 379.f), L"Mob");
+
+			CGameObject* KrugAggro = new CGameObject;
+			KrugAggro->SetName(L"SOUTH_KrugAggroRadius");
+			KrugAggro->AddComponent(new CTransform);
+			KrugAggro->AddComponent(new CCollider2D);
+			KrugAggro->Transform()->SetRelativeScale(Vec3(170, 170.f, 170.f));
+			KrugAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			KrugAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+			KrugAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			SpawnGameObject(KrugAggro, Vec3(1238.f, 0.f, 389.f), 0);
+		}
+		//블루팀 돌거북 째깐이
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Krug_Mini.fbx");
+			CGameObject* Krug_Mini = nullptr;
+			Krug_Mini = pMeshData->Instantiate();
+			Krug_Mini->AddComponent(new CKrugMiniScript);
+			Krug_Mini->SetName(L"SOUTH_Krug_Mini");
+			Krug_Mini->Transform()->SetRelativeScale(0.12f, 0.12f, 0.12f);
+			Krug_Mini->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
+			CKrugMiniScript* Script = Krug_Mini->GetScript<CKrugMiniScript>();
+			Script->SetAggroPos(Vec3(1238.f, 0.f, 389.f));
+			SpawnGameObject(Krug_Mini, Vec3(1252.f, 15.f, 379.f), L"Mob");
+		}
+		//블루팀 칼날부리
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\RazorBeak.fbx");
+			CGameObject* RazorBeak = nullptr;
+			RazorBeak = pMeshData->Instantiate();
+			RazorBeak->AddComponent(new CRazorBeakScript);
+			RazorBeak->SetName(L"SOUTH_RazorBeak");
+			RazorBeak->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
+			RazorBeak->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(-90.f), 0.f));
+			CRazorBeakScript* Script = RazorBeak->GetScript<CRazorBeakScript>();
+			Script->SetAggroPos(Vec3(1033.f, 0.f, 782.f));
+			SpawnGameObject(RazorBeak, Vec3(1008.f, 15.f, 800.f), L"Mob");
+
+			CGameObject* RazorBeakAggro = new CGameObject;
+			RazorBeakAggro->SetName(L"SOUTH_RazorBeakAggroRadius");
+			RazorBeakAggro->AddComponent(new CTransform);
+			RazorBeakAggro->AddComponent(new CCollider2D);
+			RazorBeakAggro->Transform()->SetRelativeScale(Vec3(170, 170.f, 170.f));
+			RazorBeakAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			RazorBeakAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+			RazorBeakAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			SpawnGameObject(RazorBeakAggro, Vec3(1033.f, 0.f, 782.f), 0);
+		}
+
+		//블루팀 칼날부리 째깐이
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\RazorBeak_Mini.fbx");
+			CGameObject* RazorBeak = nullptr;
+			RazorBeak = pMeshData->Instantiate();
+			RazorBeak->AddComponent(new CRazorBeakMiniScript);
+			RazorBeak->SetName(L"SOUTH_RazorBeak_Mini");
+			RazorBeak->Transform()->SetRelativeScale(0.1f, 0.1f, 0.1f);
+			RazorBeak->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
+			CRazorBeakMiniScript* Script = RazorBeak->GetScript<CRazorBeakMiniScript>();
+			Script->SetAggroPos(Vec3(1033.f, 0.f, 782.f));
+			SpawnGameObject(RazorBeak, Vec3(1026.f, 15.f, 810.f), L"Mob");
+		}
+		//블루팀 블루
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\jungle_blue.fbx");
+			CGameObject* Blue = nullptr;
+			Blue = pMeshData->Instantiate();
+			Blue->AddComponent(new CBlueScript);
+			Blue->SetName(L"South_Blue");
+			Blue->Transform()->SetRelativeScale(0.2f, 0.2f, 0.2f);
+			Blue->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(90.f), 0.f));
+			CBlueScript* Script = Blue->GetScript<CBlueScript>();
+			Script->SetAggroPos(Vec3(563.f, 0.f, 1164.f));
+			SpawnGameObject(Blue, Vec3(563.f, 15.f, 1164.f), L"Mob");
+
+			CGameObject* BlueAggro = new CGameObject;
+			BlueAggro->SetName(L"SOUTH_BlueAggroRadius");
+			BlueAggro->AddComponent(new CTransform);
+			BlueAggro->AddComponent(new CCollider2D);
+			BlueAggro->Transform()->SetRelativeScale(Vec3(170, 170.f, 170.f));
+			BlueAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			BlueAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+			BlueAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			SpawnGameObject(BlueAggro, Vec3(563.f, 0.f, 1164.f), 0);
+		}
+	}
+	
+
 }

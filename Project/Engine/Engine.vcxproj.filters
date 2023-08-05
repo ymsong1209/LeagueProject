@@ -79,9 +79,7 @@
     <FxCompile Include="minimap.fx">
       <Filter>Source\08. ShaderCode\02. Render\2D</Filter>
     </FxCompile>
-    <FxCompile Include="copybone.fx">
-      <Filter>Source\08. ShaderCode\03. Compute\CopyBone</Filter>
-    </FxCompile>
+    <FxCompile Include="copybone.fx" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CRes.cpp">
@@ -312,12 +310,8 @@
     <ClCompile Include="CFogFilterShader.cpp">
       <Filter>Source\08. ShaderCode\03. Compute\FogOfWar\FogFilter</Filter>
     </ClCompile>
-    <ClCompile Include="CInstancingBuffer.cpp">
-      <Filter>Source\03. Manager\12.InstancingBuffer</Filter>
-    </ClCompile>
-    <ClCompile Include="CCopyBoneShader.cpp">
-      <Filter>Source\08. ShaderCode\03. Compute\CopyBone</Filter>
-    </ClCompile>
+    <ClCompile Include="CCopyBoneShader.cpp" />
+    <ClCompile Include="CInstancingBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="components.h">
@@ -674,15 +668,8 @@
     <ClInclude Include="CFogFilterShader.h">
       <Filter>Source\08. ShaderCode\03. Compute\FogOfWar\FogFilter</Filter>
     </ClInclude>
-    <ClInclude Include="serverpacket.h">
-      <Filter>Source\00. header</Filter>
-    </ClInclude>
-    <ClInclude Include="CInstancingBuffer.h">
-      <Filter>Source\03. Manager\12.InstancingBuffer</Filter>
-    </ClInclude>
-    <ClInclude Include="CCopyBoneShader.h">
-      <Filter>Source\08. ShaderCode\03. Compute\CopyBone</Filter>
-    </ClInclude>
+    <ClInclude Include="CCopyBoneShader.h" />
+    <ClInclude Include="CInstancingBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -826,9 +813,6 @@
     <Filter Include="Source\03. Manager\05.CResMgr">
       <UniqueIdentifier>{faa9f531-091f-4b5c-b561-b74b4e842887}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\03. Manager\06.RenderMgr">
-      <UniqueIdentifier>{2cc2025a-b25d-46fc-a48d-54bad3cf267d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\03. Manager\07.CollisionMgr">
       <UniqueIdentifier>{57b07889-4ec8-47f6-beac-5ec495f93ef6}</UniqueIdentifier>
     </Filter>
@@ -898,11 +882,8 @@
     <Filter Include="Source\08. ShaderCode\03. Compute\FogOfWar\FogFilter">
       <UniqueIdentifier>{66f39572-13f8-45c6-b373-50772d132f4a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\03. Manager\12.InstancingBuffer">
-      <UniqueIdentifier>{18f0ca9f-a285-46d9-b71e-9ea5d004f54c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source\08. ShaderCode\03. Compute\CopyBone">
-      <UniqueIdentifier>{66ee0490-5f2f-42c2-8e98-4138949f6c4a}</UniqueIdentifier>
+    <Filter Include="Source\03. Manager\06.RenderMgr">
+      <UniqueIdentifier>{2cc2025a-b25d-46fc-a48d-54bad3cf267d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

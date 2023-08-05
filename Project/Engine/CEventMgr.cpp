@@ -79,7 +79,6 @@ void CEventMgr::tick()
 
 			m_LevelChanged = true;
 		}
-		
 			break;
 		case EVENT_TYPE::DELETE_RESOURCE:
 			// wParam : RES_TYPE, lParam : Resource Adress
@@ -123,15 +122,37 @@ void CEventMgr::tick()
 			}
 		}
 			break;		
+		case EVENT_TYPE::LAYER_CHANGE:
+		{
+			CGameObject* Obj = (CGameObject*)m_vecEvent[i].wParam;
+			int NewLayerIdx = (int)m_vecEvent[i].lParam;
 
+			// 인자로 들어온 오브젝트가 최상위 부모 오브젝트라면
+			if (Obj->GetParent() == nullptr)
+			{
+				// 레이어의 부모 벡터에서 해당 오브젝트 삭제
+				Obj->ChangeToChildType();
+				if (NewLayerIdx != -1)
+				{
+					CUR_LEVEL->AddGameObject(Obj, NewLayerIdx, false);
+				}
+			}
+			else
+			{
+				Obj->m_iLayerIdx = NewLayerIdx;
+			}
+
+			m_LevelChanged = true;
+		}
+		break;
 		//스크립트 시점에서 오브젝트의 특정 정보를 변경해줄경우 인스펙터에 반영이 안됨 (스크립트에서 오브젝트 이름변경 등..) - 이미 이벤트 매니저 호출 끝나고 스크립트 변경사항이 추가되니까 소용이 없는거같음
 		//그래서 이벤트매니저에 ui 리로드 이벤트 추가
 		case EVENT_TYPE::INSPECTOR_RELOAD:
 		{
 			m_LevelChanged = true;
 		}
-
 		break;
+
 		}
 	}
 
@@ -150,6 +171,7 @@ void CEventMgr::GC_Clear()
 				m_vecGC[i]->DisconnectFromParent();
 			
 			delete m_vecGC[i];
+			m_vecGC[i] = nullptr;
 
 			m_LevelChanged = true;
 		}		

@@ -55,9 +55,9 @@ private:
 
     bool                    m_bViewGizmoBounding; //기즈모 클릭범위(바운딩콜리전) 를 보여줘야하는경우 true, 안보여줘도 되는경우 false
 
-    int        m_isGizmoEditMode; // 0: 디폴트 모드 (기즈모x) 1: 에디트 모드 (기즈모o)  : 모드가 추가될수도 있으므로, bool대신 int로함
+    int                     m_isGizmoEditMode; // 0: 디폴트 모드 (기즈모x) 1: 에디트 모드 (기즈모o)  : 모드가 추가될수도 있으므로, bool대신 int로함
 
-    float       m_fFov; //fov값
+    float                   m_fFov; //fov값
 
     vector<tFont>           m_vecFontMainCamState; //ui카메라 말고 메인카메라에 렌더링 하는경우
     vector<tFont>           m_vecFontOpaqeState; //폰트도 각자 어떤 UI에는 가려져야 하고 가려지면 안되고가 존재하므로 언제 렌더링 할지 지정해준다.
@@ -141,6 +141,8 @@ public:
 
     IntersectResult IntersecrRayFog(Vec3 _Vertices0, Vec3 _Vertices1, Vec3 _Vertices2, tRay _Ray);
 
+
+    vector<CGameObject*>& GetMouseOverlapObj() { return m_vecContour; }
 
     bool IsCollidingBtwRayWall(Vec2& RayObjPos, Vec2& _CollideObjPos, float& _Raidus, float& _RayObjRadius, ColliderStruct& _ColliderData);
 

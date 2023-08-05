@@ -290,7 +290,6 @@ call EngineCopy.bat</Command>
     <ClInclude Include="rapidjson\stringbuffer.h" />
     <ClInclude Include="rapidjson\uri.h" />
     <ClInclude Include="rapidjson\writer.h" />
-    <ClInclude Include="serverpacket.h" />
     <ClInclude Include="SimpleMath.h" />
     <ClInclude Include="struct.h" />
   </ItemGroup>
