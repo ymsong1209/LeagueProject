@@ -260,9 +260,13 @@ void ServerEventMgr::clienttick()
 				{
 					if (kdacsInfo->deadObjUnitType == UnitType::CHAMPION)
 					{
-						// 본인의 kill이 오르고, 킬로그 ui 띄움
-						// killerId가 victimId를 처치했습니다
-						int a = 0;
+						// 본인의 kill이 오르고, 진영 스코어도 오른다.
+						CSendServerEventMgr::GetInst()->AddMyKillCnt(1);
+						if (MyPlayer.faction == Faction::RED)
+							CSendServerEventMgr::GetInst()->AddRedScore(1);
+						else if (MyPlayer.faction == Faction::BLUE)
+							CSendServerEventMgr::GetInst()->AddBlueScore(1);
+						// 킬로그 UI 띄움 : killerId가 victimId를 처치했습니다
 					}
 					else if(kdacsInfo->deadObjUnitType == UnitType::MELEE_MINION
 						|| kdacsInfo->deadObjUnitType == UnitType::RANGED_MINION
@@ -270,6 +274,7 @@ void ServerEventMgr::clienttick()
 						|| kdacsInfo->deadObjUnitType == UnitType::SUPER_MINION)
 					{
 						// 본인의 cs가 오른다.
+						CSendServerEventMgr::GetInst()->AddMyCSCnt(1);
 					}
 					//else if(정글몹) //효과 UI
 				}
