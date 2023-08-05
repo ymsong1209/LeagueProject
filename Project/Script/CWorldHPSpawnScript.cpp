@@ -28,7 +28,7 @@ void CWorldHPSpawnScript::begin()
 		WorldBar->SetName(L"OtherPlayer_WorldBar");
 		WorldBar->AddComponent(new CTransform);
 		WorldBar->AddComponent(new CMeshRender);
-		WorldBar->AddComponent(new CWorldHPUIScript);
+		WorldBar->AddComponent(new CWorldHPUIScript(m_OtherPlayer[i]));
 		WorldBar->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
 
 		switch ((UINT)m_OtherPlayer[i]->GetScript<CUnitScript>()->GetFaction())
@@ -54,7 +54,7 @@ void CWorldHPSpawnScript::begin()
 	WorldBar->SetName(L"MyPlayer_WorldBar");
 	WorldBar->AddComponent(new CTransform);
 	WorldBar->AddComponent(new CMeshRender);
-	WorldBar->AddComponent(new CWorldHPUIScript);
+	WorldBar->AddComponent(new CWorldHPUIScript(m_MyPlayer));
 	WorldBar->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
 	WorldBar->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\WorldBar133.mtrl"), 0);
 	WorldBar->Transform()->SetRelativeScale(Vec3(133.f, 29.f, 17.02f));

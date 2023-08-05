@@ -72,13 +72,13 @@ void CCollider3D::finaltick()
 		vColor = Vec4(1.f, 0.f, 0.f, 1.f);
 
 	// 마지막에 0.f로 설정해 GameObject가 사라지면 Collider도 사라진다.
-	if (m_bDrawCollision)
-	{
+	//if (m_bDrawCollision)
+	//{
 		if (COLLIDER3D_TYPE::SPHERE == m_Shape)
 			DrawDebugSphere(m_matCollider3D, vColor, 0.f);
 		else
 			DrawDebugCube(m_matCollider3D, vColor, 0.f);
-	}
+	//}
 }
 
 void CCollider3D::BeginOverlap(CCollider3D* _Other)

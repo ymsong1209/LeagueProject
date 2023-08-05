@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CWorldHPUIScript.h"
+#include "CUnitScript.h"
 
 void CWorldHPUIScript::begin()
 {
@@ -8,51 +9,35 @@ void CWorldHPUIScript::begin()
 
 void CWorldHPUIScript::tick()
 {
-	//------µð¹ö±ë¿ë-------------
+	if (m_OwnerObj)
+	{
+		CurrentHP = (int)m_OwnerObj->GetScript<CUnitScript>()->GetCurHP();
+		TotalHP = (int)m_OwnerObj->GetScript<CUnitScript>()->GetMaxHP();
+		CurrentMP = (int)m_OwnerObj->GetScript<CUnitScript>()->GetCurMP();
+		TotalMP = (int)m_OwnerObj->GetScript<CUnitScript>()->GetMaxMP();
 
-	if (KEY_PRESSED(KEY::B))
-		CurrentHP += DT * 50.f;
+		//----------HP------------
+		CurrentHPRatio = CurrentHP / TotalHP;
+		if (CurrentHP >= TotalHP)
+			CurrentHP = TotalHP;
 
-	if (KEY_PRESSED(KEY::V))
-		CurrentHP -= DT * 50.f;
+		if (CurrentHP <= 0.f)
+			CurrentHP = 0.f;
+		//-------------------------
 
-	if (KEY_PRESSED(KEY::G))
-		CurrentMP += DT * 50.f;
+		//----------MP------------
+		CurrentMPRatio = CurrentMP / TotalMP;
+		if (CurrentMP >= TotalMP)
+			CurrentMP = TotalMP;
 
-	if (KEY_PRESSED(KEY::F))
-		CurrentMP -= DT * 50.f;
-	//--------------------------------
+		if (CurrentMP <= 0.f)
+			CurrentMP = 0.f;
+		//-------------------------
 
-	//CurrentExpRatio = CurrentExp / LevelTotalExp;
-	//if (CurrentExp >= LevelTotalExp)
-	//	CurrentExp = LevelTotalExp;
-	//if (CurrentExp <= 0.f)
-	//	CurrentExp = 0.f;
-
-	//----------HP------------
-	CurrentHPRatio = CurrentHP / TotalHP;
-	if (CurrentHP >= TotalHP)
-		CurrentHP = TotalHP;
-
-	if (CurrentHP <= 0.f)
-		CurrentHP = 0.f;
-	//-------------------------
-
-	//----------MP------------
-	CurrentMPRatio = CurrentMP / TotalMP;
-	if (CurrentMP >= TotalMP)
-		CurrentMP = TotalMP;
-
-	if (CurrentMP <= 0.f)
-		CurrentMP = 0.f;
-	//-------------------------
-
-	//µð¹ö±ë¿ë
-	CurrentHPRatio = 0.6f;
-	CurrentMPRatio = 0.3f;
-	MeshRender()->GetMaterial(0)->SetScalarParam(FLOAT_0, &CurrentHPRatio);
-	MeshRender()->GetMaterial(0)->SetScalarParam(FLOAT_1, &CurrentMPRatio);
-
+		MeshRender()->GetMaterial(0)->SetScalarParam(FLOAT_0, &CurrentHPRatio);
+		MeshRender()->GetMaterial(0)->SetScalarParam(FLOAT_1, &CurrentMPRatio);
+	}
+	
 }
 
 void CWorldHPUIScript::BeginOverlap(CCollider2D* _Other)
@@ -63,6 +48,15 @@ CWorldHPUIScript::CWorldHPUIScript()
 	:CScript((UINT)SCRIPT_TYPE::WORLDHPUISCRIPT)
 	, TotalMP(100.f)
 	, TotalHP(100.f)
+	, m_OwnerObj(nullptr)
+{
+}
+
+CWorldHPUIScript::CWorldHPUIScript(CGameObject* _Obj)
+	:CScript((UINT)SCRIPT_TYPE::WORLDHPUISCRIPT)
+	, TotalMP(100.f)
+	, TotalHP(100.f)
+	, m_OwnerObj(_Obj)
 {
 }
 

@@ -6,6 +6,8 @@ class CWorldHPUIScript :
     public CScript
 {
 private:
+    CGameObject* m_OwnerObj;
+
     float CurrentHP;
     float CurrentMP;
 
@@ -37,6 +39,7 @@ public:
     CLONE(CWorldHPUIScript);
 
 public:
+    CWorldHPUIScript(CGameObject* _Obj);
     CWorldHPUIScript();
     ~CWorldHPUIScript();
 };
