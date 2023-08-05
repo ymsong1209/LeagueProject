@@ -1,5 +1,7 @@
 #pragma once
 #include "CStructureScript.h"
+#include "CAttackRangeScript.h"
+
 class CTurretScript :
     public CStructureScript
 {
@@ -20,9 +22,8 @@ private:
     bool        m_bShowAttackRange;     // 포탑 사거리 보일지 여부
     float       m_fAttackCoolTime;
 
-    vector<CGameObject*>    m_vecCollidingMinion;
-    vector<CGameObject*>    m_vecCollidingChampion;
-    CGameObject*            m_pTarget;
+    CAttackRangeScript*     m_AttackRangeScript;
+    CGameObject*            m_pAttackTarget;
 
 public:
     virtual void begin() override;
@@ -33,10 +34,13 @@ public:
     virtual void EndOverlap(CCollider2D* _Other) override;
 
 
-public:
+private:
     void CheckStatus();
     void ChangeAnim();
-    bool IsEnemyInRange(UINT _unitID);
+    void Attack();
+
+    void SelectTarget();
+    bool IsValidTarget(CGameObject* _obj);
 
 
 
