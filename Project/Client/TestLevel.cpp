@@ -255,35 +255,35 @@ void CreateTestLevel()
 		//pObj->Transform()->SetRelativeScale(Vec3(0.3, 0.3, 0.3));
 		//SpawnGameObject(pObj, Vec3(190.f, 0.f, 607.f), 0);
 
-		//pMeshData = nullptr;
-		//pObj = nullptr;
-		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
-		//pObj = pMeshData->Instantiate();
-		//pObj->SetName(L"Jinx");
-		//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
-		//pObj->GetRenderComponent()->SetFrustumCheck(false);
-		//pObj->AddComponent(new CPlayerScript);
-		//pObj->AddComponent(new CJinxScript);
-		//pObj->AddComponent(new CPathFinder);
-		//pObj->AddComponent(new CCollider3D);
-		//pObj->AddComponent(new CCollider2D);
-		//pObj->AddComponent(new CFsm);
-		//
-		//pObj->Collider2D()->SetAbsolute(false);
-		//pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-		//pObj->Collider2D()->SetOffsetScale(Vec2(20.f, 20.f));
-		//pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-		//
-		//pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
-		//pObj->Collider3D()->SetAbsolute(true);
-		//pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
-		//pObj->Collider3D()->SetDrawCollision(false);
-		//pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true,true,0.1f);
-		//pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		//
-		//pObj->Transform()->SetUseMouseOutline(true);
-		//
-		//SpawnGameObject(pObj, Vec3(0, 0, 0), L"Champion");
+		pMeshData = nullptr;
+		pObj = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"Jinx");
+		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
+		pObj->GetRenderComponent()->SetFrustumCheck(false);
+		pObj->AddComponent(new CPlayerScript);
+		pObj->AddComponent(new CJinxScript);
+		pObj->AddComponent(new CPathFinder);
+		pObj->AddComponent(new CCollider3D);
+		pObj->AddComponent(new CCollider2D);
+		pObj->AddComponent(new CFsm);
+		
+		pObj->Collider2D()->SetAbsolute(false);
+		pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+		pObj->Collider2D()->SetOffsetScale(Vec2(20.f, 20.f));
+		pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+		
+		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+		pObj->Collider3D()->SetAbsolute(true);
+		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
+		pObj->Collider3D()->SetDrawCollision(false);
+		pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true,true,0.1f);
+		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+		
+		pObj->Transform()->SetUseMouseOutline(true);
+		
+		SpawnGameObject(pObj, Vec3(0, 0, 0), L"Player");
 
 
 

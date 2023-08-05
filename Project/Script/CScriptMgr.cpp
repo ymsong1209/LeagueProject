@@ -18,19 +18,13 @@
 #include "CJinxScript.h"
 #include "CJinxWScript.h"
 #include "CJungleMonsterScript.h"
+#include "CKrugMiniScript.h"
+#include "CKrugScript.h"
 #include "CMinimapUIScript.h"
 #include "CMinionScript.h"
 #include "CMobScript.h"
 #include "CMouseCursorUIScript.h"
 #include "CMoveCursorUIScript.h"
-#include "CNexusScript.h"
-#include "COtherPlayerScript.h"
-#include "CPlayerScript.h"
-#include "CScorePanelScript.h"
-#include "CKrugMiniScript.h"
-#include "CKrugScript.h"
-#include "CMinionScript.h"
-#include "CMobScript.h"
 #include "CMurkWolfMiniScript.h"
 #include "CMurkWolfScript.h"
 #include "CNexusScript.h"
@@ -40,6 +34,7 @@
 #include "CRazorBeakMiniScript.h"
 #include "CRazorBeakScript.h"
 #include "CRedScript.h"
+#include "CScorePanelScript.h"
 #include "CSoundTestScript.h"
 #include "CStructureScript.h"
 #include "CTurretAttackScript.h"
@@ -68,19 +63,13 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CJinxScript");
 	_vec.push_back(L"CJinxWScript");
 	_vec.push_back(L"CJungleMonsterScript");
+	_vec.push_back(L"CKrugMiniScript");
+	_vec.push_back(L"CKrugScript");
 	_vec.push_back(L"CMinimapUIScript");
 	_vec.push_back(L"CMinionScript");
 	_vec.push_back(L"CMobScript");
 	_vec.push_back(L"CMouseCursorUIScript");
 	_vec.push_back(L"CMoveCursorUIScript");
-	_vec.push_back(L"CNexusScript");
-	_vec.push_back(L"COtherPlayerScript");
-	_vec.push_back(L"CPlayerScript");
-	_vec.push_back(L"CScorePanelScript");
-	_vec.push_back(L"CKrugMiniScript");
-	_vec.push_back(L"CKrugScript");
-	_vec.push_back(L"CMinionScript");
-	_vec.push_back(L"CMobScript");
 	_vec.push_back(L"CMurkWolfMiniScript");
 	_vec.push_back(L"CMurkWolfScript");
 	_vec.push_back(L"CNexusScript");
@@ -90,6 +79,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CRazorBeakMiniScript");
 	_vec.push_back(L"CRazorBeakScript");
 	_vec.push_back(L"CRedScript");
+	_vec.push_back(L"CScorePanelScript");
 	_vec.push_back(L"CSoundTestScript");
 	_vec.push_back(L"CStructureScript");
 	_vec.push_back(L"CTurretAttackScript");
@@ -136,12 +126,12 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CJinxWScript;
 	if (L"CJungleMonsterScript" == _strScriptName)
 		return new CJungleMonsterScript;
-	if (L"CMinimapUIScript" == _strScriptName)
-		return new CMinimapUIScript;
 	if (L"CKrugMiniScript" == _strScriptName)
 		return new CKrugMiniScript;
 	if (L"CKrugScript" == _strScriptName)
 		return new CKrugScript;
+	if (L"CMinimapUIScript" == _strScriptName)
+		return new CMinimapUIScript;
 	if (L"CMinionScript" == _strScriptName)
 		return new CMinionScript;
 	if (L"CMobScript" == _strScriptName)
@@ -160,8 +150,6 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new COtherPlayerScript;
 	if (L"CPlayerScript" == _strScriptName)
 		return new CPlayerScript;
-	if (L"CScorePanelScript" == _strScriptName)
-		return new CScorePanelScript;
 	if (L"CProjectileScript" == _strScriptName)
 		return new CProjectileScript;
 	if (L"CRazorBeakMiniScript" == _strScriptName)
@@ -170,6 +158,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CRazorBeakScript;
 	if (L"CRedScript" == _strScriptName)
 		return new CRedScript;
+	if (L"CScorePanelScript" == _strScriptName)
+		return new CScorePanelScript;
 	if (L"CSoundTestScript" == _strScriptName)
 		return new CSoundTestScript;
 	if (L"CStructureScript" == _strScriptName)
@@ -244,14 +234,14 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::JUNGLEMONSTERSCRIPT:
 		return new CJungleMonsterScript;
 		break;
-	case (UINT)SCRIPT_TYPE::MINIMAPUISCRIPT:
-		return new CMinimapUIScript;
-		break;
 	case (UINT)SCRIPT_TYPE::KRUGMINISCRIPT:
 		return new CKrugMiniScript;
 		break;
 	case (UINT)SCRIPT_TYPE::KRUGSCRIPT:
 		return new CKrugScript;
+		break;
+	case (UINT)SCRIPT_TYPE::MINIMAPUISCRIPT:
+		return new CMinimapUIScript;
 		break;
 	case (UINT)SCRIPT_TYPE::MINIONSCRIPT:
 		return new CMinionScript;
@@ -280,9 +270,6 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::PLAYERSCRIPT:
 		return new CPlayerScript;
 		break;
-	case (UINT)SCRIPT_TYPE::SCOREPANELSCRIPT:
-		return new CScorePanelScript;
-		break;
 	case (UINT)SCRIPT_TYPE::PROJECTILESCRIPT:
 		return new CProjectileScript;
 		break;
@@ -294,6 +281,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::REDSCRIPT:
 		return new CRedScript;
+		break;
+	case (UINT)SCRIPT_TYPE::SCOREPANELSCRIPT:
+		return new CScorePanelScript;
 		break;
 	case (UINT)SCRIPT_TYPE::SOUNDTESTSCRIPT:
 		return new CSoundTestScript;
@@ -395,16 +385,16 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CJungleMonsterScript";
 		break;
 
-	case SCRIPT_TYPE::MINIMAPUISCRIPT:
-		return L"CMinimapUIScript";
-		break;
-		
 	case SCRIPT_TYPE::KRUGMINISCRIPT:
 		return L"CKrugMiniScript";
 		break;
 
 	case SCRIPT_TYPE::KRUGSCRIPT:
 		return L"CKrugScript";
+		break;
+
+	case SCRIPT_TYPE::MINIMAPUISCRIPT:
+		return L"CMinimapUIScript";
 		break;
 
 	case SCRIPT_TYPE::MINIONSCRIPT:
@@ -422,7 +412,7 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 	case SCRIPT_TYPE::MOVECURSORUISCRIPT:
 		return L"CMoveCursorUIScript";
 		break;
-		
+
 	case SCRIPT_TYPE::MURKWOLFMINISCRIPT:
 		return L"CMurkWolfMiniScript";
 		break;
@@ -443,10 +433,6 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CPlayerScript";
 		break;
 
-	case SCRIPT_TYPE::SCOREPANELSCRIPT:
-		return L"CScorePanelScript";
-		break;
-
 	case SCRIPT_TYPE::PROJECTILESCRIPT:
 		return L"CProjectileScript";
 		break;
@@ -461,6 +447,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::REDSCRIPT:
 		return L"CRedScript";
+		break;
+
+	case SCRIPT_TYPE::SCOREPANELSCRIPT:
+		return L"CScorePanelScript";
 		break;
 
 	case SCRIPT_TYPE::SOUNDTESTSCRIPT:

@@ -138,10 +138,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>cd $(SolutionDir)
-call ScriptCopy.bat
-cd $(SolutionDir)OutputFile\bin_d\
-call CodeGen.exe</Command>
+      <Command>
+				cd $(SolutionDir)
+				call ScriptCopy.bat
+				cd $(SolutionDir)OutputFile\bin_d\
+				call CodeGen.exe
+			</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -166,10 +168,12 @@ call CodeGen.exe</Command>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>cd $(SolutionDir)
-call ScriptCopy.bat
-cd $(SolutionDir)OutputFile\bin_d\
-call CodeGen.exe</Command>
+      <Command>
+				cd $(SolutionDir)
+				call ScriptCopy.bat
+				cd $(SolutionDir)OutputFile\bin_d\
+				call CodeGen.exe
+			</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -212,16 +216,16 @@ call CodeGen.exe</Command>
     <ClInclude Include="CGrompReturnState.h" />
     <ClInclude Include="CGrompScript.h" />
     <ClInclude Include="CGrompSpawnState.h" />
+    <ClInclude Include="CHpMpRatioUIScript.h" />
+    <ClInclude Include="CInventoryUIScript.h" />
     <ClInclude Include="CJinxAttackState.h" />
     <ClInclude Include="CJinxWScript.h" />
     <ClInclude Include="CJinxWState.h" />
     <ClInclude Include="CHeal.h" />
-    <ClInclude Include="CHpMpRatioUIScript.h" />
     <ClInclude Include="CInhibitorBrokenState.h" />
     <ClInclude Include="CInhibitorIdleState.h" />
     <ClInclude Include="CInhibitorScript.h" />
     <ClInclude Include="CInhibitorSpawnState.h" />
-    <ClInclude Include="CInventoryUIScript.h" />
     <ClInclude Include="CJinxDeathState.h" />
     <ClInclude Include="CJinxIdleState.h" />
     <ClInclude Include="CJinxQ.h" />
@@ -237,7 +241,6 @@ call CodeGen.exe</Command>
     <ClInclude Include="CJungleDeathState.h" />
     <ClInclude Include="CJungleIdleState.h" />
     <ClInclude Include="CJungleMonsterScript.h" />
-    <ClInclude Include="CMinimapUIScript.h" />
     <ClInclude Include="CJungleN2AState.h" />
     <ClInclude Include="CJungleReturnState.h" />
     <ClInclude Include="CJungleSpawnState.h" />
@@ -261,6 +264,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CKrugReturnState.h" />
     <ClInclude Include="CKrugScript.h" />
     <ClInclude Include="CKrugSpawnState.h" />
+    <ClInclude Include="CMinimapUIScript.h" />
     <ClInclude Include="CMinionAttackState.h" />
     <ClInclude Include="CMinionDeathState.h" />
     <ClInclude Include="CMinionScript.h" />
@@ -268,10 +272,6 @@ call CodeGen.exe</Command>
     <ClInclude Include="CMobScript.h" />
     <ClInclude Include="CMouseCursorUIScript.h" />
     <ClInclude Include="CMoveCursorUIScript.h" />
-    <ClInclude Include="CNexusScript.h" />
-    <ClInclude Include="COtherPlayerScript.h" />
-    <ClInclude Include="CPlayerScript.h" />
-    <ClInclude Include="CScorePanelScript.h" />
     <ClInclude Include="CMurkWolfA2NState.h" />
     <ClInclude Include="CMurkWolfAlertState.h" />
     <ClInclude Include="CMurkWolfAttackState.h" />
@@ -356,6 +356,7 @@ call CodeGen.exe</Command>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="CScorePanelScript.h" />
     <ClInclude Include="CScriptMgr.h" />
     <ClInclude Include="CSendServerEventMgr.h" />
     <ClInclude Include="CServerTypes.h" />
@@ -439,7 +440,6 @@ call CodeGen.exe</Command>
     <ClCompile Include="CJungleDeathState.cpp" />
     <ClCompile Include="CJungleIdleState.cpp" />
     <ClCompile Include="CJungleMonsterScript.cpp" />
-    <ClCompile Include="CMinimapUIScript.cpp" />
     <ClCompile Include="CJungleN2AState.cpp" />
     <ClCompile Include="CJungleReturnState.cpp" />
     <ClCompile Include="CJungleSpawnState.cpp" />
@@ -463,6 +463,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CKrugReturnState.cpp" />
     <ClCompile Include="CKrugScript.cpp" />
     <ClCompile Include="CKrugSpawnState.cpp" />
+    <ClCompile Include="CMinimapUIScript.cpp" />
     <ClCompile Include="CMinionAttackState.cpp" />
     <ClCompile Include="CMinionDeathState.cpp" />
     <ClCompile Include="CMinionScript.cpp" />
@@ -470,12 +471,6 @@ call CodeGen.exe</Command>
     <ClCompile Include="CMobScript.cpp" />
     <ClCompile Include="CMouseCursorUIScript.cpp" />
     <ClCompile Include="CMoveCursorUIScript.cpp" />
-    <ClCompile Include="CNexusScript.cpp" />
-    <ClCompile Include="COtherPlayerScript.cpp" />
-    <ClCompile Include="CPlayerScript.cpp" />
-    <ClCompile Include="CScorePanelScript.cpp" />
-    <ClCompile Include="CScriptMgr.cpp" />
-    <ClCompile Include="CSoundTestScript.cpp" />
     <ClCompile Include="CMurkWolfA2NState.cpp" />
     <ClCompile Include="CMurkWolfAlertState.cpp" />
     <ClCompile Include="CMurkWolfAttackState.cpp" />
@@ -561,6 +556,7 @@ call CodeGen.exe</Command>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="CScorePanelScript.cpp" />
     <ClCompile Include="CScriptMgr.cpp" />
     <ClCompile Include="CSendServerEventMgr.cpp" />
     <ClCompile Include="CSkill.cpp" />

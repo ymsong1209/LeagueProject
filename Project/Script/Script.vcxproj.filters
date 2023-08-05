@@ -12,33 +12,6 @@
     <ClCompile Include="CUnitState.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Script.cpp" />
-    <ClCompile Include="CCharacterUIScript.cpp">
-      <Filter>UIScript</Filter>
-    </ClCompile>
-    <ClCompile Include="CCoolDownUIScript.cpp">
-      <Filter>UIScript</Filter>
-    </ClCompile>
-    <ClCompile Include="CExpRatioUIScript.cpp">
-      <Filter>UIScript</Filter>
-    </ClCompile>
-    <ClCompile Include="CHpMpRatioUIScript.cpp">
-      <Filter>UIScript</Filter>
-    </ClCompile>
-    <ClCompile Include="CInventoryUIScript.cpp">
-      <Filter>UIScript</Filter>
-    </ClCompile>
-    <ClCompile Include="CUIScript.cpp">
-      <Filter>UIScript</Filter>
-    </ClCompile>
-    <ClCompile Include="CWorldHPSpawnScript.cpp">
-      <Filter>UIScript</Filter>
-    </ClCompile>
-    <ClCompile Include="CWorldHPUIScript.cpp">
-      <Filter>UIScript</Filter>
-    </ClCompile>
-    <ClCompile Include="CMinimapUIScript.cpp" />
-    <ClCompile Include="CMouseCursorUIScript.cpp" />
-    <ClCompile Include="CMoveCursorUIScript.cpp" />
     <ClCompile Include="CTurretAttackScript.cpp" />
     <ClCompile Include="CGrompScript.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
@@ -67,15 +40,6 @@
     <ClCompile Include="CJungleIdleState.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
     </ClCompile>
-    <ClCompile Include="CJungleMonsterScript.cpp">
-      <Filter>Jungle\JungleMonster</Filter>
-    </ClCompile>
-    <ClCompile Include="CJungleReturnState.cpp">
-      <Filter>Jungle\JungleMonster</Filter>
-    </ClCompile>
-    <ClCompile Include="CJungleSpawnState.cpp">
-      <Filter>Jungle\JungleMonster</Filter>
-    </ClCompile>
     <ClCompile Include="CGrompAttackState.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
     </ClCompile>
@@ -88,14 +52,8 @@
     <ClCompile Include="CGrompAlertState.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
     </ClCompile>
-    <ClCompile Include="CJungleA2NState.cpp">
-      <Filter>Jungle\JungleMonster</Filter>
-    </ClCompile>
     <ClCompile Include="CGrompA2NState.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
-    </ClCompile>
-    <ClCompile Include="CJungleN2AState.cpp">
-      <Filter>Jungle\JungleMonster</Filter>
     </ClCompile>
     <ClCompile Include="CGrompN2AState.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
@@ -492,8 +450,50 @@
       <Filter>State\Unit</Filter>
     </ClCompile>
     <ClCompile Include="CSoundTestScript.cpp" />
-    <ClCompile Include="CFontUIScript.cpp" />
-    <ClCompile Include="CScorePanelScript.cpp" />
+    <ClCompile Include="CJungleA2NState.cpp" />
+    <ClCompile Include="CJungleMonsterScript.cpp" />
+    <ClCompile Include="CJungleN2AState.cpp" />
+    <ClCompile Include="CJungleReturnState.cpp" />
+    <ClCompile Include="CJungleSpawnState.cpp" />
+    <ClCompile Include="CCharacterUIScript.cpp">
+      <Filter>UIScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CCoolDownUIScript.cpp">
+      <Filter>UIScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CExpRatioUIScript.cpp">
+      <Filter>UIScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CFontUIScript.cpp">
+      <Filter>UIScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CHpMpRatioUIScript.cpp">
+      <Filter>UIScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CInventoryUIScript.cpp">
+      <Filter>UIScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CMinimapUIScript.cpp">
+      <Filter>UIScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CMouseCursorUIScript.cpp">
+      <Filter>UIScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CMoveCursorUIScript.cpp">
+      <Filter>UIScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CScorePanelScript.cpp">
+      <Filter>UIScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CUIScript.cpp">
+      <Filter>UIScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CWorldHPSpawnScript.cpp">
+      <Filter>UIScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CWorldHPUIScript.cpp">
+      <Filter>UIScript</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -503,6 +503,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="CInGameCameraScript.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="CSoundTestScript.h" />
     <ClInclude Include="CCharacterUIScript.h">
       <Filter>UIScript</Filter>
     </ClInclude>
@@ -512,10 +513,25 @@
     <ClInclude Include="CExpRatioUIScript.h">
       <Filter>UIScript</Filter>
     </ClInclude>
+    <ClInclude Include="CFontUIScript.h">
+      <Filter>UIScript</Filter>
+    </ClInclude>
     <ClInclude Include="CHpMpRatioUIScript.h">
       <Filter>UIScript</Filter>
     </ClInclude>
     <ClInclude Include="CInventoryUIScript.h">
+      <Filter>UIScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CMinimapUIScript.h">
+      <Filter>UIScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CMouseCursorUIScript.h">
+      <Filter>UIScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CMoveCursorUIScript.h">
+      <Filter>UIScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CScorePanelScript.h">
       <Filter>UIScript</Filter>
     </ClInclude>
     <ClInclude Include="CUIScript.h">
@@ -527,12 +543,6 @@
     <ClInclude Include="CWorldHPUIScript.h">
       <Filter>UIScript</Filter>
     </ClInclude>
-    <ClInclude Include="CMinimapUIScript.h" />
-    <ClInclude Include="CMouseCursorUIScript.h" />
-    <ClInclude Include="CMoveCursorUIScript.h" />
-    <ClInclude Include="CSoundTestScript.h" />
-    <ClInclude Include="CFontUIScript.h" />
-    <ClInclude Include="CScorePanelScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">
@@ -556,7 +566,6 @@
     <ClCompile Include="COtherPlayerScript.cpp">
       <Filter>Script</Filter>
     </ClCompile>
-    <ClInclude Include="CBaseAttack.h" />
     <ClInclude Include="CBasicAttackScript.h" />
     <ClInclude Include="CCameraMoveScript.h" />
     <ClInclude Include="CChampionAttackState.h" />
