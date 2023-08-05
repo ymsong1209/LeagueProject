@@ -75,7 +75,7 @@ void CCoolDownUIScript::tick()
 		else
 			m_fCoolRatio = m_fCurCoolTime / m_fCooldownTime;// 쿨타임 중, 쿨타임의 진행 비율을 계산하여 설정
 	}
-
+	MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Jinx_E.mtrl"), 0);
 	MeshRender()->GetMaterial(0)->SetScalarParam(FLOAT_0, &m_fCoolRatio);
 
 	if (m_bSkillUse)
