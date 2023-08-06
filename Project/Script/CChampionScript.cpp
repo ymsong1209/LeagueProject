@@ -72,6 +72,29 @@ void CChampionScript::tick()
 
 void CChampionScript::BeginOverlap(CCollider2D* _Other)
 {
+	// 사거리와 부딪친게 아니라면 return
+	if (_Other->GetOwner()->GetScript<CAttackRangeScript>() == nullptr) return;
+
+	// 부모가 포탑이며, 진영이 다른 포탑일 경우
+	if (_Other->GetOwner()->GetParent()->GetScript<CUnitScript>()->GetUnitType() == UnitType::TURRET
+		&& _Other->GetOwner()->GetParent()->GetScript<CUnitScript>()->GetFaction() != GetFaction())
+	{
+		m_bIsInsideEnemyTurretRange = true;
+	}
+}
+
+void CChampionScript::EndOverlap(CCollider2D* _Other)
+{
+	// 사거리와 부딪친게 아니라면 return
+	if (_Other->GetOwner()->GetScript<CAttackRangeScript>() == nullptr) return;
+
+	// 부모가 포탑이며, 진영이 다른 포탑일 경우
+	if (_Other->GetOwner()->GetParent()->GetScript<CUnitScript>()->GetUnitType() == UnitType::TURRET
+		&& _Other->GetOwner()->GetParent()->GetScript<CUnitScript>()->GetFaction() != GetFaction())
+	{
+		m_bIsInsideEnemyTurretRange = false;
+		m_bIsAttackingChampion = false;
+	}
 }
 
 bool CChampionScript::CheckDeath()

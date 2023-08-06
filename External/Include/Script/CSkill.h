@@ -49,7 +49,7 @@ public:
 	virtual bool Use() = 0;			// 각 스킬마다 다른 사용 효과 작성. 필수!
 	virtual vector<CGameObject*> GetProjectile();
 
-	virtual	void GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _skillLevel) {};	// 투사체 등이 맞았을 때 호출되는 함수
+	virtual	void GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _skillLevel);	// 투사체 등이 맞았을 때 호출되는 함수
 
 	Vec3 GetMousePos();
 	Vec3 GetMouseDir();
