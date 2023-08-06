@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CMurkWolfMiniAlertState.h"
 #include <Engine/CAnim3D.h>
+#include "CMurkWolfMiniScript.h"
 
 CMurkWolfMiniAlertState::CMurkWolfMiniAlertState()
 	: m_iAggroAnimNum(1)
@@ -19,6 +20,8 @@ void CMurkWolfMiniAlertState::Enter()
 
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
 	GetOwner()->Animator3D()->PlayOnce(basename);
+	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, basename, false, false, false, 0.f);
 	CJungleAlertState::Enter();
 }
 
@@ -33,6 +36,8 @@ void CMurkWolfMiniAlertState::tick()
 
 		GetOwner()->Animator3D()->GetCurAnim()->Reset();
 		GetOwner()->Animator3D()->PlayOnce(basename);
+		UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+		CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, basename, false, false, false, 0.f);
 	}
 	CJungleAlertState::tick();
 }

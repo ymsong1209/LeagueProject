@@ -14,6 +14,8 @@ CRedSpawnState::~CRedSpawnState()
 void CRedSpawnState::Enter()
 {
 	GetOwner()->Animator3D()->PlayOnce(L"jungle_red\\sru_red_spawn");
+	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"jungle_red\\sru_red_spawn", false, false, false, 0.f);
 }
 
 void CRedSpawnState::tick()
@@ -29,7 +31,9 @@ void CRedSpawnState::Exit()
 	script->SetAggroRange(75.f);
 
 	GetOwner()->AddComponent(new CCollider3D);
-	GetOwner()->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
+	GetOwner()->Collider3D()->SetAbsolute(true);
+	GetOwner()->Collider3D()->SetDrawCollision(false);
+	GetOwner()->Collider3D()->SetOffsetScale(Vec3(65.f, 65.f, 65.f));
 
 	GetOwner()->AddComponent(new CCollider2D);
 	GetOwner()->Collider2D()->SetAbsolute(true);

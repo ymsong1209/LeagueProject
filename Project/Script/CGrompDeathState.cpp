@@ -14,7 +14,7 @@ void CGrompDeathState::Enter()
 {
 	GetOwner()->Animator3D()->PlayOnce(L"gromp\\_death");
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
-	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"gromp\\_death", false, false, 0.0f);
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"gromp\\_death", false,false, false, 0.0f);
 	CJungleDeathState::Enter();
 }
 

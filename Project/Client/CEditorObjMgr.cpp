@@ -175,6 +175,8 @@ void CEditorObjMgr::render()
 		}
 		
 		pShapeObj->GetRenderComponent()->GetMaterial(0)->SetScalarParam(VEC4_0, &iter->vColor);
+		Matrix VP = CRenderMgr::GetInst()->GetMainCam()->GetViewMat() * CRenderMgr::GetInst()->GetMainCam()->GetProjMat();
+		pShapeObj->GetRenderComponent()->GetMaterial(0)->SetScalarParam(MAT_0, &VP);
 		pShapeObj->render();
 
 		iter->fCurTime += EditorDT;

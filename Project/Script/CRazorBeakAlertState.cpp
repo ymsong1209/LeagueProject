@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CRazorBeakAlertState.h"
 #include <Engine/CAnim3D.h>
+#include "CRazorBeakScript.h"
 
 CRazorBeakAlertState::CRazorBeakAlertState()
 	: m_iAggroAnimNum(1)
@@ -18,6 +19,8 @@ void CRazorBeakAlertState::Enter()
 	basename += L"1_model.002";
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
 	GetOwner()->Animator3D()->PlayOnce(basename);
+	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, basename, false, false, false, 0.f);
 	CJungleAlertState::Enter();
 }
 
@@ -36,6 +39,8 @@ void CRazorBeakAlertState::tick()
 		}
 		GetOwner()->Animator3D()->GetCurAnim()->Reset();
 		GetOwner()->Animator3D()->PlayOnce(basename);
+		UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+		CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, basename, false, false, false, 0.f);
 	}
 	CJungleAlertState::tick();
 }

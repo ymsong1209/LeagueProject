@@ -18,7 +18,7 @@ void CGrompAlertState::Enter()
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
 	GetOwner()->Animator3D()->PlayOnce(basename);
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
-	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, basename, false, true, 0.0f);
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, basename, false, false, false, 0.0f);
 	CJungleAlertState::Enter();
 }
 
@@ -36,7 +36,7 @@ void CGrompAlertState::tick()
 		GetOwner()->Animator3D()->GetCurAnim()->Reset();
 		GetOwner()->Animator3D()->PlayOnce(basename);
 		UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
-		CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, basename, false, true, 0.0f);
+		CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, basename, false,false, false, 0.0f);
 	}
 	CJungleAlertState::tick();
 }

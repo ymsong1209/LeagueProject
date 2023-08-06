@@ -14,6 +14,8 @@ CKrugSpawnState::~CKrugSpawnState()
 void CKrugSpawnState::Enter()
 {
 	GetOwner()->Animator3D()->PlayOnce(L"Krug\\krug_spawn");
+	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"Krug\\krug_spawn", false, false, false, 0.f);
 }
 
 void CKrugSpawnState::tick()
@@ -30,7 +32,8 @@ void CKrugSpawnState::Exit()
 
 	GetOwner()->AddComponent(new CCollider3D);
 	GetOwner()->Collider3D()->SetAbsolute(true);
-	GetOwner()->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
+	GetOwner()->Collider3D()->SetDrawCollision(false);
+	GetOwner()->Collider3D()->SetOffsetScale(Vec3(40.f, 40.f, 40.f));
 
 	GetOwner()->AddComponent(new CCollider2D);
 	GetOwner()->Collider2D()->SetAbsolute(true);

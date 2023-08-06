@@ -15,7 +15,7 @@ void CGrompSpawnState::Enter()
 {
 	GetOwner()->Animator3D()->PlayOnce(L"gromp\\_spawn");
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
-	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"gromp\\_spawn", false, false, 0.0f);
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"gromp\\_spawn", false, false, false, 0.0f);
 }
 
 void CGrompSpawnState::tick()
@@ -32,7 +32,8 @@ void CGrompSpawnState::Exit()
 	
 	GetOwner()->AddComponent(new CCollider3D);
 	GetOwner()->Collider3D()->SetAbsolute(true);
-	GetOwner()->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
+	GetOwner()->Collider3D()->SetDrawCollision(false);
+	GetOwner()->Collider3D()->SetOffsetScale(Vec3(50.f, 50.f, 50.f));
 
 	GetOwner()->AddComponent(new CCollider2D);
 	GetOwner()->Collider2D()->SetAbsolute(true);

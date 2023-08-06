@@ -15,7 +15,7 @@ void CGrompChaseState::Enter()
 {
 	GetOwner()->Animator3D()->PlayRepeat(L"gromp\\_run", false);
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
-	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"gromp\\_run", true, false, 0.0f);
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"gromp\\_run", true, false, false, 0.0f);
 }
 
 void CGrompChaseState::tick()

@@ -14,6 +14,8 @@ CBlueSpawnState::~CBlueSpawnState()
 void CBlueSpawnState::Enter()
 {
 	GetOwner()->Animator3D()->PlayOnce(L"jungle_blue\\sru_blue_spawn");
+	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"jungle_blue\\sru_blue_spawn", false, false, false, 0.f);
 }
 
 void CBlueSpawnState::tick()
@@ -29,7 +31,9 @@ void CBlueSpawnState::Exit()
 	script->SetAggroRange(85.f);
 
 	GetOwner()->AddComponent(new CCollider3D);
-	GetOwner()->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
+	GetOwner()->Collider3D()->SetAbsolute(true);
+	GetOwner()->Collider3D()->SetDrawCollision(false);
+	GetOwner()->Collider3D()->SetOffsetScale(Vec3(55.f, 55.f, 55.f));
 
 	GetOwner()->AddComponent(new CCollider2D);
 	GetOwner()->Collider2D()->SetAbsolute(true);

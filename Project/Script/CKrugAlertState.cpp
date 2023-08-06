@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CKrugAlertState.h"
 #include <Engine/CAnim3D.h>
-
+#include "CKrugScript.h"
 CKrugAlertState::CKrugAlertState()
 	: m_iAggroAnimNum(1)
 {
@@ -17,7 +17,8 @@ void CKrugAlertState::Enter()
 
 	wstring basename = L"Krug\\krug_idle_aggro";
 	GetOwner()->Animator3D()->PlayOnce(basename);
-
+	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"Krug\\krug_idle_aggro", false, false, false, 0.f);
 	CJungleAlertState::Enter();
 }
 
@@ -34,6 +35,8 @@ void CKrugAlertState::tick()
 
 		GetOwner()->Animator3D()->GetCurAnim()->Reset();
 		GetOwner()->Animator3D()->PlayOnce(basename);
+		UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+		CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, basename, false, false, false, 0.f);
 	}
 	CJungleAlertState::tick();
 }
