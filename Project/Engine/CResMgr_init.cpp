@@ -970,6 +970,33 @@ void CResMgr::CreateDefaultGraphicsShader()
 	AddRes(pShader->GetKey(), pShader);
 
 
+	// ============================
+	// AnimVertex Shader
+	// RasterizerState      : CULL_BACK
+	// BlendState           : Mask
+	// DepthStencilState    : Less
+	//
+	// Parameter
+	// g_tex_0              : Output Texture
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"Anim_VertexShader");
+	pShader->CreateVertexShader(L"shader\\animvertex.fx", "VS_ANIM_VERTEX");
+	pShader->CreatePixelShader(L"shader\\animvertex.fx", "PS_ANIM_VERTEX");
+
+	pShader->SetRSType(RS_TYPE::CULL_BACK);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::MASK);
+
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_DEFERRED);
+
+	// Param	
+	pShader->AddTexParam(TEX_0, "Output Texture");
+	pShader->AddTexParam(TEX_1, "Normal Texture");
+
+	AddRes(pShader->GetKey(), pShader);
+
+
 	// =================
 	// DebugShape Shader
 	// Topology : LineStrip
@@ -1493,6 +1520,11 @@ void CResMgr::CreateDefaultMaterial()
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std3D_DeferredShader"));
 	AddRes(L"Std3D_DeferredMtrl", pMtrl);
+
+	// AnimVertexMtrl
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Anim_VertexShader"));
+	AddRes(L"Anim_VertexMtrl", pMtrl);
 
 	// LandScapeMtrl
 	pMtrl = new CMaterial(true);

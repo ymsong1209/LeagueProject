@@ -82,6 +82,9 @@
     <FxCompile Include="copybone.fx">
       <Filter>Source\08. ShaderCode\03. Compute\CopyBone</Filter>
     </FxCompile>
+    <FxCompile Include="animvertex.fx">
+      <Filter>Source\08. ShaderCode\02. Render\3D</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CRes.cpp">

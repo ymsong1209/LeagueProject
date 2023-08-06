@@ -203,6 +203,7 @@ void CreateTestLevel()
 		pObj->Collider3D()->SetDrawCollision(false);
 		pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true,true,0.1f);
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+	 
 
 		pObj->Transform()->SetUseMouseOutline(true);
 
@@ -219,10 +220,11 @@ void CreateTestLevel()
 		TestBoneChild->AddComponent(new CUpdateBoneScript);
 		TestBoneChild->GetScript<CUpdateBoneScript>()->SetTrackObject(pObj);
 		TestBoneChild->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
-		TestBoneChild->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
-
+		TestBoneChild->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Anim_VertexMtrl"), 0);
+		//TestBoneChild->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
 		TestBoneChild->Transform()->SetRelativeScale(10.f, 10.f, 10.f);
-		//TestBoneChild->Transform()->SetAbsolute(true);
+		//TestBoneChild->Transform()->SetAnimationFollowingVertexObj(true);
+		TestBoneChild->Transform()->SetAbsolute(true);
 
 		SpawnGameObject(TestBoneChild, Vec3(0.f, 0.f, 0.f), 0);
 
@@ -349,6 +351,7 @@ void CreateTestLevel()
 		pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 		pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(90.f), XMConvertToRadians(-180.f)));
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+		
 		SpawnGameObject(pObj, Vec3(2006.9f, 14.8f, 1670.1f), 0);
 
 	}
@@ -392,6 +395,7 @@ void CreateTestLevel()
 
 	pRectFast->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
 	pRectFast->Transform()->SetUseMouseOutline(true);
+ 
 
 	pRectFast->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
 	pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
@@ -414,6 +418,7 @@ void CreateTestLevel()
 
 	MiniMap->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
 	MiniMap->Transform()->SetUseMouseOutline(false);
+ 
 	
 	MiniMap->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
 	MiniMap->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MiniMapMtrl"), 0);
@@ -437,6 +442,7 @@ void CreateTestLevel()
 
 	RayTestObj1->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
 	RayTestObj1->Transform()->SetUseMouseOutline(true);
+ 
 	//RayTestObj1->MeshRender()->SetUsingMovingVec(true);
 
 	RayTestObj1->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
@@ -460,6 +466,7 @@ void CreateTestLevel()
 	RayCubeTestObj1->AddComponent(new CTransform);
 	RayCubeTestObj1->AddComponent(new CCollider3D);
 	RayCubeTestObj1->Transform()->SetUseMouseOutline(true);
+
 
 	RayCubeTestObj1->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
 	RayCubeTestObj1->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));

@@ -205,7 +205,7 @@ void ImGuiMgr::CreateUI()
 
 
 
-    for (const auto& pair : m_mapUI)
+    for (const auto& pair : m_mapUI )
     {
         pair.second->init();
     }

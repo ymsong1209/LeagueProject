@@ -18,6 +18,8 @@ CTransform::CTransform()
 	, m_fRayRange(20)
 	, m_bUseMouseOutLine(false)
 	, m_fOutlinethickness(0.072f)
+	, m_bAnimationVertexFollowing(false)
+	, m_pFollowingObj(nullptr)
 {
 	SetName(L"Transform");
 }
@@ -32,6 +34,8 @@ CTransform::CTransform(const CTransform& _other)
 	, m_bGizmoObjExcept(_other.m_bGizmoObjExcept)
 	, m_bIsShootingRay(_other.m_bIsShootingRay)
 	, m_fRayRange(_other.m_fRayRange)
+	, m_bAnimationVertexFollowing(_other.m_bAnimationVertexFollowing)
+	, m_pFollowingObj(_other.m_pFollowingObj)
 {
 	SetName(L"Transform");
 }
@@ -40,6 +44,20 @@ CTransform::~CTransform()
 {
 }
 
+
+void CTransform::SetAnimationFollowingVertexObj(bool _state, CGameObject* _Obj)
+{
+	if (_state == true)
+	{
+		m_bAnimationVertexFollowing = true;
+		m_pFollowingObj = _Obj;
+	}
+	else
+	{
+		m_bAnimationVertexFollowing = false;
+		m_pFollowingObj = nullptr;
+	}
+}
 
 void CTransform::finaltick()
 {

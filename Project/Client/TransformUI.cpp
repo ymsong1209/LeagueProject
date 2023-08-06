@@ -181,7 +181,19 @@ void TransformUI::RenderGizmo()
 			}
 		}
 
-		//
+		ImGui::Text("Anim Vertex Following Obj");
+		ImGui::SameLine();
+
+		if (GetTarget()->Transform()->IsAnimationFollowingVertexObj())
+		{
+			ImGui::Text(" Yes");
+		}
+		else
+		{
+			ImGui::Text(" No");
+		}
+
+
 		if (ImGuizmo::IsUsing())
 		{
 			ImGui::Text("Using gizmo");

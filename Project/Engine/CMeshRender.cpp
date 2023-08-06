@@ -230,6 +230,9 @@ void CMeshRender::finaltick()
 
 void CMeshRender::render()
 {	
+	 
+
+
 	if (nullptr == GetMesh() || nullptr == GetMaterial(0))
 		return;
 
@@ -312,10 +315,22 @@ void CMeshRender::render()
 
 	if (Animator3D())
 		Animator3D()->ClearData();
+
+	if (GetOwner()->Transform() != nullptr)
+	{
+		if (GetOwner()->Transform()->IsAnimationFollowingVertexObj())
+		{
+			GetOwner()->Transform()->GetFollowingObj()->Animator3D()->GetFinalBoneMat()->Clear();
+		}
+	}
+
+ 
 }
 
 void CMeshRender::render(UINT _iSubset)
 {
+	 
+
 	if (nullptr == GetMesh() || nullptr == GetMaterial(_iSubset))
 		return;
 
@@ -380,6 +395,15 @@ void CMeshRender::render(UINT _iSubset)
 
 	if (Animator3D())
 		Animator3D()->ClearData();
+
+	if (GetOwner()->Transform() != nullptr)
+	{
+		if (GetOwner()->Transform()->IsAnimationFollowingVertexObj())
+		{
+			GetOwner()->Transform()->GetFollowingObj()->Animator3D()->GetFinalBoneMat()->Clear();
+		}
+	}
+
 }
 
 

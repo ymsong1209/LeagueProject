@@ -1,6 +1,8 @@
 #pragma once
 #include "CComponent.h"
 
+class CStructuredBuffer;
+
 class CTransform :
     public CComponent
 {
@@ -29,6 +31,12 @@ private:
     bool    m_bIsShootingRay;  // 와드,Player는 Ray를 쏜다.
     float   m_fRayRange;
     float   m_fOutlinethickness;
+
+
+    // Animation 의 정점을 따라다녀야 하는지 에 대한 변수들
+    bool    m_bAnimationVertexFollowing;
+    CGameObject* m_pFollowingObj;
+
 
 public:
     void SetRelativePos(Vec3 _vPos) { m_vRelativePos = _vPos; }
@@ -81,6 +89,11 @@ public:
 
     void SetOutlineThickness(float _Thickenss) { m_fOutlinethickness = _Thickenss; }
     float GetOutlineThickness() { return m_fOutlinethickness; }
+
+    bool IsAnimationFollowingVertexObj() { return m_bAnimationVertexFollowing; }
+    void SetAnimationFollowingVertexObj(bool _state, CGameObject* _Obj);
+
+    CGameObject* GetFollowingObj() { return m_pFollowingObj; }
 
 public:
     virtual void finaltick() override;

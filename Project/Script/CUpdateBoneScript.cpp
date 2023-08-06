@@ -25,6 +25,13 @@ void CUpdateBoneScript::SetTrackObject(CGameObject* _Obj)
 	}
 
 	m_pTrackVertexMem = _Obj->MeshRender()->GetMesh()->GetVtxSysMem();
+
+	if (GetOwner()->Transform() != nullptr)
+	{
+		GetOwner()->Transform()->SetAnimationFollowingVertexObj(true, m_pTrackObj);
+	}
+
+	 
 }
 
 void CUpdateBoneScript::tick()
