@@ -18,7 +18,7 @@ CTurretScript::CTurretScript()
 
 CTurretScript::~CTurretScript()
 {
-	
+
 }
 
 void CTurretScript::begin()
@@ -28,7 +28,7 @@ void CTurretScript::begin()
 	//m_Skill[0]->SetProjectileObj(); // 투사체 프리팹 설정
 	//m_Skill[0]->
 	m_SkillLevel[0] = 1;
-	
+
 	// 오브젝트가 현재 챔피언의 사거리 내에 있는지 확인
 	CGameObject* AttackRange = GetOwner()->FindChildObjByName(L"AttackRange");
 	CAttackRangeScript* AttackRangeScript = AttackRange->GetScript<CAttackRangeScript>();
@@ -51,31 +51,29 @@ void CTurretScript::tick()
 	m_fAttackCoolTime += DT;
 	if (m_fAttackCoolTime >= m_fAttackSpeed)
 		Attack();
-	
-	
 
-		//타겟 확정나면 공격
-		//f (m_pTarget) 
-		//
-		//	//나중에는 prefab로 소환해야함
-		//	//CGameObject* TurretAttack = CResMgr::GetInst()->FindRes<CPrefab>(L"TurretAttack")->Instantiate();
-		//	CGameObject* TurretAttack = new CGameObject;
-		//	TurretAttack->SetName(L"TurretAttack");
-		//	TurretAttack->AddComponent(new CTransform);
-		//	TurretAttack->AddComponent(new CTurretAttackScript);
-		//	TurretAttack->AddComponent(new CMeshRender);
-		//	TurretAttack->Transform()->SetRelativeScale(Vec3(20.f, 20.f, 20.f));
-		//	TurretAttack->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
-		//	TurretAttack->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
-		//	Vec3 TowerPos = GetOwner()->Transform()->GetRelativePos();
-		//	CTurretAttackScript* script = TurretAttack->GetScript<CTurretAttackScript>();
-		//	//포탑 공격의 target설정
-		//	script->SetTarget(m_pTarget);
-		//	SpawnGameObject(TurretAttack, Vec3(TowerPos.x, TowerPos.y + 50.f, TowerPos.z), L"Projectile");
-		//	//공격 구체 소환하고 나서 포탑 쿨타임 초기화
-		//	m_fAttackCoolTime = 3.f;
-		//
-	}
+	//타겟 확정나면 공격
+	//f (m_pTarget) 
+	//
+	//	//나중에는 prefab로 소환해야함
+	//	//CGameObject* TurretAttack = CResMgr::GetInst()->FindRes<CPrefab>(L"TurretAttack")->Instantiate();
+	//	CGameObject* TurretAttack = new CGameObject;
+	//	TurretAttack->SetName(L"TurretAttack");
+	//	TurretAttack->AddComponent(new CTransform);
+	//	TurretAttack->AddComponent(new CTurretAttackScript);
+	//	TurretAttack->AddComponent(new CMeshRender);
+	//	TurretAttack->Transform()->SetRelativeScale(Vec3(20.f, 20.f, 20.f));
+	//	TurretAttack->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+	//	TurretAttack->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
+	//	Vec3 TowerPos = GetOwner()->Transform()->GetRelativePos();
+	//	CTurretAttackScript* script = TurretAttack->GetScript<CTurretAttackScript>();
+	//	//포탑 공격의 target설정
+	//	script->SetTarget(m_pTarget);
+	//	SpawnGameObject(TurretAttack, Vec3(TowerPos.x, TowerPos.y + 50.f, TowerPos.z), L"Projectile");
+	//	//공격 구체 소환하고 나서 포탑 쿨타임 초기화
+	//	m_fAttackCoolTime = 3.f;
+	//
+}
 
 
 
@@ -87,6 +85,7 @@ void CTurretScript::ChangeAnim()
 	float HealthRatio = m_fHP / m_fMaxHP;
 	if (HealthRatio >= 0.66f)
 	{
+		//CGameObject* TurretBase = GetOwner()->FindChildObjByName(L"AttackRange");
 		//if(Animator3D()->GetCurAnim()->GetName() !=L"포탑Idle애니메이션이름" )
 			// 해당 애니메이션 반복재생. (Idle)
 	}
@@ -115,8 +114,8 @@ void CTurretScript::Attack()
 	// 공격 쿨타임 초기화
 	m_fAttackCoolTime = 0;
 
-	// 공격 타겟이 없거나, 유효하지 않다면(죽었거나, 사거리에 더이상 존재하지 않는다면)
-	if (!m_pAttackTarget || !IsValidTarget(m_pAttackTarget))
+	// 공격 타겟이 없거나, 유효하지 않거나(죽었거나, 사거리에 더이상 존재하지 않는다면), 아군 챔피언을 공격한 적군이 있다면
+	if (!m_pAttackTarget || !IsValidTarget(m_pAttackTarget) || IsChampionAttackedAllyInTurretRange())
 	{
 		// 새로운 타겟 탐색
 		SelectTarget();
@@ -208,6 +207,22 @@ bool CTurretScript::IsValidTarget(CGameObject* _obj)
 		return false;
 
 	return true;
+}
+
+bool CTurretScript::IsChampionAttackedAllyInTurretRange()
+{
+	// 사거리 내의 유닛들을 가져옴
+	vector<CGameObject*> UnitinRange = m_AttackRangeScript->GetUnitsInRange();
+
+	for (auto& target : UnitinRange)
+	{
+		CChampionScript* Champion = dynamic_cast<CChampionScript*>(target);
+		if (Champion != nullptr && Champion->IsAttackingChampion())
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 

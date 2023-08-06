@@ -77,10 +77,10 @@ void CSkill::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _s
 	if (_UserScript->GetUnitType() == UnitType::CHAMPION && _TargetScript->GetUnitType() == UnitType::CHAMPION())
 	{
 		// 스킬 쏜 사람이 현재 상대 포탑 내부에 있다면
-		if (_UserScript->IsInsideEnemyTurretRange())
+		if (static_cast<CChampionScript*>(_UserScript)->IsInsideEnemyTurretRange())
 		{
 			// 챔피언 공격중 옵션 true
-			_UserScript->SetAttackingChampion(true);
+			static_cast<CChampionScript*>(_UserScript)->SetAttackingChampion(true);
 		}
 	}
 }
