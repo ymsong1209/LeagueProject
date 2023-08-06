@@ -198,10 +198,7 @@ void TransformUI::RenderGizmo()
 		XMStoreFloat4x4(reinterpret_cast<DirectX::XMFLOAT4X4*>(WorldMatArray), WorldMat);
 		XMStoreFloat4x4(reinterpret_cast<DirectX::XMFLOAT4X4*>(ViewMatArray), ViewMat);
 		XMStoreFloat4x4(reinterpret_cast<DirectX::XMFLOAT4X4*>(ProjMatArray), ProjMat);
-
 		//-----------------------------------------------------
-
-
 		// create a window and insert the inspector
 		ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_Appearing);
 		ImGui::SetNextWindowSize(ImVec2(370, 360), ImGuiCond_Appearing);
@@ -226,12 +223,8 @@ void TransformUI::RenderGizmo()
 				GetTarget()->Transform()->SetRayRange(RayRange);
 			}
 		}
-
-		//
 		if (ImGuizmo::IsUsing())
-		{
 			ImGui::Text("Using gizmo");
-		}
 		else
 		{
 			ImGui::Text(ImGuizmo::IsOver() ? "Over gizmo" : "");

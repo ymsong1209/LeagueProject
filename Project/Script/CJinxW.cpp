@@ -8,21 +8,22 @@
 CJinxW::CJinxW()
 {
 	m_strSkillName = L"Zap!";
-	m_fCoolDown = 0.f;
+	m_fCoolDown = 5.f;
 	m_iMaxLevel = 5;
 	m_fCost = 50.f;
 
-	//CGameObject* Projectile = new CGameObject;
-	//Projectile->AddComponent(new CTransform);
-	//Projectile->AddComponent(new CCollider2D);
-	//Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
-	//Projectile->Collider2D()->SetOffsetScale(Vec2(5.f, 20.f));
-	//Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
-	//Projectile->SetName(L"JinxW");
-	//
-	//Ptr<CPrefab> NewPrefab = new CPrefab;
-	//CGameObject* PrefabObject = Projectile->Clone();
-	//NewPrefab->RegisterProtoObject(Projectile);
+	CGameObject* Projectile = new CGameObject;
+	Projectile->AddComponent(new CTransform);
+	Projectile->AddComponent(new CCollider2D);
+	Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
+	Projectile->Collider2D()->SetOffsetScale(Vec2(5.f, 20.f));
+	Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
+	Projectile->Collider2D()->SetDrawCollision(true);
+	Projectile->SetName(L"JinxW");
+	
+	Ptr<CPrefab> NewPrefab = new CPrefab;
+	CGameObject* PrefabObject = Projectile->Clone();
+	NewPrefab->RegisterProtoObject(Projectile);
 
 	//m_vecSkillObj.push_back(NewPrefab);
 
@@ -58,6 +59,9 @@ bool CJinxW::Use()
 		Vec3(0, 0, 0),
 		true,
 		GetMouseDir());
+
+	// 쿨타임 초기화
+	m_fCurCoolDown = m_fCoolDown;
 
 	return true;
 }
@@ -99,6 +103,10 @@ void CJinxW::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _S
 	TargetUnitScript->SetCurHPVar(-Damage);
 
 	// 2초 동안 둔화시킵니다.
-	//CTimedEffect* JinxWSlow = new CTimedEffect(TargetChampScript, 2.f, 0, 0, CC::SLOW);
-	//TargetChampScript->AddTimedEffect(JinxWSlow);
+	CTimedEffect* JinxWSlow = new CTimedEffect(TargetChampScript, 2.f, 0, 0, CC::SLOW);
+	TargetChampScript->AddTimedEffect(JinxWSlow);
+
+	// 테스트용 도트딜
+	CTimedEffect* TestDot = new CTimedEffect(TargetChampScript, 3.f, 5.f, 6, CC::CLEAR);
+	TargetChampScript->AddTimedEffect(TestDot);
 }

@@ -57,7 +57,7 @@ public:
     void    CheckSkills();  // 스킬 체크
     void    Move();
     bool    IsAttackingChampion() { return m_bIsAttackingChampion; }
-    
+    float    GetExp() { return m_fExp; }
 
 
     

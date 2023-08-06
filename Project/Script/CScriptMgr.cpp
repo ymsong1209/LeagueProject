@@ -23,6 +23,7 @@
 #include "CMinimapUIScript.h"
 #include "CMinionScript.h"
 #include "CMobScript.h"
+#include "CMonsterHPBarUIScript.h"
 #include "CMouseCursorUIScript.h"
 #include "CMoveCursorUIScript.h"
 #include "CMurkWolfMiniScript.h"
@@ -68,6 +69,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CMinimapUIScript");
 	_vec.push_back(L"CMinionScript");
 	_vec.push_back(L"CMobScript");
+	_vec.push_back(L"CMonsterHPBarUIScript");
 	_vec.push_back(L"CMouseCursorUIScript");
 	_vec.push_back(L"CMoveCursorUIScript");
 	_vec.push_back(L"CMurkWolfMiniScript");
@@ -136,6 +138,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CMinionScript;
 	if (L"CMobScript" == _strScriptName)
 		return new CMobScript;
+	if (L"CMonsterHPBarUIScript" == _strScriptName)
+		return new CMonsterHPBarUIScript;
 	if (L"CMouseCursorUIScript" == _strScriptName)
 		return new CMouseCursorUIScript;
 	if (L"CMoveCursorUIScript" == _strScriptName)
@@ -248,6 +252,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::MOBSCRIPT:
 		return new CMobScript;
+		break;
+	case (UINT)SCRIPT_TYPE::MONSTERHPBARUISCRIPT:
+		return new CMonsterHPBarUIScript;
 		break;
 	case (UINT)SCRIPT_TYPE::MOUSECURSORUISCRIPT:
 		return new CMouseCursorUIScript;
@@ -403,6 +410,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::MOBSCRIPT:
 		return L"CMobScript";
+		break;
+
+	case SCRIPT_TYPE::MONSTERHPBARUISCRIPT:
+		return L"CMonsterHPBarUIScript";
 		break;
 
 	case SCRIPT_TYPE::MOUSECURSORUISCRIPT:

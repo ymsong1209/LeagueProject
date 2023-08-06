@@ -25,12 +25,10 @@ CSkill::~CSkill()
 void CSkill::tick()
 {
 	if (m_fCurCoolDown > 0.0f)
-	{
-		if (m_fCurCoolDown <= 0.0f)
-			m_fCurCoolDown = 0.0f;
-		else
 			m_fCurCoolDown -= DT;
-	}
+	else
+		m_fCurCoolDown = 0.0f;
+	
 	// 부모인 CSkill의 tick은 기본적으로 매 프레임 쿨타임을 계산해주기 때문에 
 	// 자식 클래스에서 꼭 먼저 호출해줘야합니다.
 	// 그 외에, 기본 지속효과(사용 시간 동안 공격력 상승 등)가 있는 스킬의 경우
@@ -46,9 +44,6 @@ bool CSkill::Use()
 	}
 	else
 	{
-		// 쿨타임 초기화
-		m_fCurCoolDown = m_fCoolDown;
-
 		return true;
 	}
 

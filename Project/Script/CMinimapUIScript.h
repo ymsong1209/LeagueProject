@@ -11,6 +11,8 @@ private:
     CGameObject* Player3;
     CGameObject* Player4;
 
+    vector<CGameObject*> m_vAllPlayer;
+
 public:
     virtual void begin() override;
     virtual void tick() override;

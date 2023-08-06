@@ -80,7 +80,7 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 		{
 			pObj->AddComponent(new CPathFinder);
 			pObj->AddComponent(new CFsm);
-			MyPlayerScript = pObj->GetScript<CChampionScript>();
+			MyPlayerScript = pObj->GetScript<CUnitScript>();
 			MyPlayerScript->SetServerID(_info.id);
 			MyPlayerScript->SetNickname(_info.nickname);
 			MyPlayerScript->SetHost(_info.host);
@@ -117,7 +117,8 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 		}
 
 		//pObj->SetName(_info.nickname);
-
+		CUnitScript* pUnit = pObj->GetScript<CUnitScript>();
+		pUnit->SetChampType(_info.champion);
 
 		pObj->AddComponent(new CCollider3D);
 		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
@@ -133,10 +134,9 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
 		pObj->Transform()->SetUseMouseOutline(true);
-
+		pObj->Transform()->SetRelativeRot(Vec3(_info.posInfo.moveDir.x, _info.posInfo.moveDir.y, _info.posInfo.moveDir.z));
 		Vec3 spawnPos = Vec3(_info.posInfo.pos.x, _info.posInfo.pos.y, _info.posInfo.pos.z);
 		SpawnGameObject(pObj, spawnPos, L"Player");
-
 
 		_players.insert(std::make_pair(_info.id, pObj));
 	}
