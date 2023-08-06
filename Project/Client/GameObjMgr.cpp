@@ -308,11 +308,17 @@ void GameObjMgr::SendPlacedObjectUpdate(uint64 _id, CGameObject* _obj, ClientSer
 		float CurMP = obj->GetScript<CUnitScript>()->GetCurMP();
 		float CurAttackPower = obj->GetScript<CUnitScript>()->GetAttackPower();
 		float CurDefencePower = obj->GetScript<CUnitScript>()->GetDefencePower();
-
+		float MaxHP = obj->GetScript<CUnitScript>()->GetMaxHP();
+		float MaxMP = obj->GetScript<CUnitScript>()->GetMaxMP();
+		bool bUnitDead = obj->GetScript<CUnitScript>()->IsUnitDead();
 		updatePlacedObject.HP = CurHP;
 		updatePlacedObject.MP = CurMP;
+		updatePlacedObject.MaxHP = MaxHP;
+		updatePlacedObject.MaxMP = MaxMP;
 		updatePlacedObject.AttackPower = CurAttackPower;
 		updatePlacedObject.DefencePower = CurDefencePower;
+
+		updatePlacedObject.bUnitDead = bUnitDead;
 
 		Vec3 CurPos = obj->Transform()->GetRelativePos();
 		Vec3 CurRot = obj->Transform()->GetRelativeRot();

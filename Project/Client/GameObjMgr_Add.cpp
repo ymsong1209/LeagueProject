@@ -38,6 +38,7 @@
 #include "ServerEventMgr.h"
 #include <Script/CSendServerEventMgr.h>
 #include <Script/CGrompScript.h>
+#include <Script/CTurretScript.h>
 
 
 // ===============================================
@@ -156,6 +157,48 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 		switch (_objectInfo.unitType)
 		{
+		case UnitType::TURRET:
+		{
+			if (_objectInfo.faction == Faction::RED)
+			{
+				// 프리팹 다르게?? 
+			}
+			else if (_objectInfo.faction == Faction::BLUE)
+			{
+				
+			}
+
+			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\TurretRubble.prefab");
+			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
+			pObj = pPrefab->Instantiate();
+			Vec3 Scale = pObj->Transform()->GetRelativeScale();
+			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
+
+			if (MyPlayer.host)
+			{
+				//pObj->AddComponent(new CTurretScript);
+				// script->setLane, _objectInfo.lane
+				pObj->AddComponent(new CUnitScript);  // 추후 주석처리
+				// 공격범위 시야 자식오브젝트도 추가해야할듯.
+				
+			}
+			else
+			{
+				pObj->AddComponent(new CUnitScript);
+			}
+			
+			// 공통
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);
+			Script->SetFaction(_objectInfo.faction);
+			SpawnGameObject(pObj
+				, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z)
+				, L"Structure");
+
+			_placedObjects.insert(std::make_pair(_objectId, pObj));
+		}
+		break;
+
 		case UnitType::MELEE_MINION:
 		{
 			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\minion_melee.fbx");
@@ -205,13 +248,10 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetServerID(_objectId);
 			Script->SetFaction(_objectInfo.faction);
 
+			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
+			pObj->Transform()->SetRelativeRot(Vec3(_objectInfo.objectMove.moveDir.x, _objectInfo.objectMove.moveDir.y, _objectInfo.objectMove.moveDir.z));
 
-			// 추후 추가 unitscript에 변수 채우기 + spawnPos도 서버가 줄 예정
-			//Script->SetCurHP
-			//script->SetCurMP
-			pObj->Transform()->SetRelativeScale(Vec3(0.1f, 0.1f, 0.1f));
-			Vec3 spawnPos = Vec3(100.f + (50 * _objects.size()), 30.f, 100.f);
-			SpawnGameObject(pObj, spawnPos, L"Mob");
+			SpawnGameObject(pObj,Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z), L"Mob");
 
 			_objects.insert(std::make_pair(_objectId, pObj));
 
@@ -264,6 +304,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
+
 
 		}
 
