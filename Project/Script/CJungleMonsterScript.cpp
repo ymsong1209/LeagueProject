@@ -16,17 +16,29 @@ CJungleMonsterScript::CJungleMonsterScript(UINT ScriptType)
 	, m_bReturnActive(false)
 	, m_fMaxReturnTime(3.f)
 	, m_fCurReturnTime(0.f)
-	, m_bTest(false)
 {
 	//몬스터가 스폰된 이후에 aggro범위, hitbox생성해야함
 	m_fAggroRange = 0.f;
 	m_fAttackRange = 100.f;
-	
+	m_fHP = 10;
+	m_fMaxHP = 10;
+	m_fAttackPower = 10;
 }
 
 CJungleMonsterScript::CJungleMonsterScript()
 	:CMobScript((UINT)SCRIPT_TYPE::JUNGLEMONSTERSCRIPT)
+	, m_vSpawnPos()
+	, m_pTarget(nullptr)
+	, m_bReturnActive(false)
+	, m_fMaxReturnTime(3.f)
+	, m_fCurReturnTime(0.f)
 {
+	//몬스터가 스폰된 이후에 aggro범위, hitbox생성해야함
+	m_fAggroRange = 0.f;
+	m_fAttackRange = 100.f;
+	m_fHP = 10;
+	m_fMaxHP = 10;
+	m_fAttackPower = 10;
 }
 
 CJungleMonsterScript::~CJungleMonsterScript()

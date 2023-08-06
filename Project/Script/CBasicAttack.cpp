@@ -67,11 +67,11 @@ void CBasicAttack::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, 
 	float Damage = 0;
 
 	// 시전자의 레벨, 기본 공격력 등에 따라 데미지 계산
-	CChampionScript* ChampScript = dynamic_cast<CChampionScript*>(_UserScript);
-	if (ChampScript != nullptr)
+	CUnitScript* UnitScript = dynamic_cast<CUnitScript*>(_UserScript);
+	if (UnitScript != nullptr)
 	{
 		float BaseDamage = 0.f;
-		float AttackPow = ChampScript->GetAttackPower();
+		float AttackPow = UnitScript->GetAttackPower();
 
 		// 예시입니다
 		Damage = AttackPow;
