@@ -26,7 +26,7 @@ CChampionScript::CChampionScript(UINT ScriptType)
 	m_eRestraint = RESTRAINT::DEFAULT;
 
 	// test	
-	m_fMaxHP = 5;
+	//m_fMaxHP = 5;
 }
 
 CChampionScript::CChampionScript()
@@ -60,13 +60,13 @@ void CChampionScript::tick()
 		m_fHP = 0;
 	}
 
+	CheckSkills();
 	if (CheckDeath())
 		return;
 
 	GetInput();
 	CheckStatus();
 	Move();
-	CheckSkills();
 
 }
 
@@ -125,7 +125,7 @@ bool CChampionScript::CheckDeath()
 void CChampionScript::CheckStatus()
 {
 	// 체력 / 마나 리젠 예시
-	m_fHP += 2.0f * DT;
+	m_fHP += 0.5f * DT;
 	m_fMP += 5.0f * DT;
 
 	if (m_fHP > m_fMaxHP)

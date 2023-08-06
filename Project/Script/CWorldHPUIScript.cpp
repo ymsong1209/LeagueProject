@@ -24,7 +24,7 @@ void CWorldHPUIScript::tick()
 		if (CurrentHP <= 0.f)
 			CurrentHP = 0.f;
 		//-------------------------
-		
+
 		//----------MP------------
 		CurrentMPRatio = CurrentMP / TotalMP;
 		if (CurrentMP >= TotalMP)

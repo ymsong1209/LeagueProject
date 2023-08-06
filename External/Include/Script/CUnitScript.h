@@ -80,7 +80,7 @@ public:
 
     float GetCurHP() { return m_fHP; }
     float GetMaxHP() { return m_fMaxHP; }
-    float GetMaxHP() const { return m_fMaxHP; }
+    //float GetMaxHP() const { return m_fMaxHP; }
     float GetCurMP() { return m_fMP; }
     float GetMaxMP() const { return m_fMaxMP; }
     CC    GetCC() { return m_eCurCC; }
