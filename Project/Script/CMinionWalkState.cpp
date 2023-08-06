@@ -14,6 +14,12 @@ CMinionWalkState::~CMinionWalkState()
 
 void CMinionWalkState::tick()
 {
+	// Waypoint를 향해 Move
+	GetOwner()->GetScript<CMinionScript>()->Move();
+
+	// 공격 타겟이 있다면
+	if (GetOwner()->GetScript<CMinionScript>()->GetTarget())
+		GetOwnerFSM()->ChangeState(L"Attack");
 }
 
 void CMinionWalkState::Enter()
@@ -44,8 +50,14 @@ void CMinionWalkState::Enter()
 	}
 		break;
 	}
+
+	// 다음 WayPoint를 향해 길찾기
+	Vec3 WayPoint = GetOwner()->GetScript<CMinionScript>()->GetWayPoint();
+	GetOwner()->PathFinder()->FindPath(WayPoint);
 }
 
 void CMinionWalkState::Exit()
 {
+	// 길찾기 컴포넌트에 남은 경로값이 있다면 Clear
+	GetOwner()->PathFinder()->ClearPath();
 }

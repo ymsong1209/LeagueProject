@@ -507,6 +507,11 @@
     <ClCompile Include="CJungleSpawnState.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
     </ClCompile>
+    <ClCompile Include="CMonsterHPBarUIScript.cpp" />
+    <ClCompile Include="CServerTypes.cpp" />
+    <ClCompile Include="CMinionChaseState.cpp">
+      <Filter>State\Unit\Minion</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -557,6 +562,10 @@
       <Filter>UIScript</Filter>
     </ClInclude>
     <ClInclude Include="CTimedEffect.h" />
+    <ClInclude Include="CMonsterHPBarUIScript.h" />
+    <ClInclude Include="CMinionChaseState.h">
+      <Filter>State\Unit\Minion</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">
