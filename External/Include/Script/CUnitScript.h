@@ -71,6 +71,7 @@ public:
 public:
     void SetChampType(ChampionType _Type) { m_ChampType = _Type; }
     ChampionType GetChampType() { return m_ChampType; }
+
     void  SetCurHP(float _f) { m_fHP = _f; }         // 현재 체력 = 인자값
     void  SetCurHPVar(float _f) { m_fHP += _f; }     // 현재 체력 += 인자값
     void  SetCurMP(float _f) { m_fMP = _f; }
