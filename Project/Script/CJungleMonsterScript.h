@@ -15,8 +15,6 @@ protected:
     float           m_fMaxReturnTime;       //어그로 범위 밖에서 target이 몇초동안 있을수 있을지
     float           m_fCurReturnTime;       //어그로 범위 밖에서 target이 몇초동안 있었는지
 
-    bool            m_bTest;                //공격 받았는지 활성화해주는 testcode,
-
 
 public:
     bool    CheckDeath();
