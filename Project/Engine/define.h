@@ -363,19 +363,6 @@ enum class PLAYER_STATE // 징크스 이동 테스트용 Run, Idle 상태 추가 (나중에 fsm 
 };
 
 
-enum class CHARACTER_TYPE
-{
-	JINX,
-	MALPHIGHT,
-	AMUMU,
-	VEIN,
-	AHRI,
-	END,
-}; //이 이름을 조합하여 자동으로 머터리얼 찾아오므로 함부로 변경 x!!
-
-extern const char* CHARACTER_TYPE_STR[(UINT)CHARACTER_TYPE::END];
-extern const wchar_t* CHARACTER_TYPE_WSTR[(UINT)CHARACTER_TYPE::END];
-
 //UI이미지용
 enum class SkillNum
 {
@@ -388,20 +375,6 @@ enum class SkillNum
 }; //이 이름을 조합하여 자동으로 머터리얼 찾아오므로 함부로 변경 x!!
 
 extern const wchar_t* SKILL_TYPE_WSTR[(UINT)SkillNum::END];
-
-// 소환사 주문(임시)
-enum class SUMMONERS_SPELL
-{
-	FLASH,      // 점멸
-	HEAL,       // 회복
-	GHOST,      // 유체화
-	IGNITE,     // 점화
-	SMITE,      // 강타
-	EXHAUST,    // 탈진
-	CLEANSE,    // 정화
-	END,
-};
-extern const wchar_t* SUMMONERS_SPELL_WSTR[(UINT)SUMMONERS_SPELL::END];
 
 enum class BARTYPE
 {

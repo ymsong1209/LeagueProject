@@ -10,7 +10,7 @@ CJinxQ::CJinxQ()
 	, m_fSkillAttackRange(0)
 {
 	m_strSkillName = L"Switchheroo!";
-	m_fCoolDown = 0.9f;
+	m_fCoolDown = 2.f;
 	m_iMaxLevel = 5;
 	m_fCost = 0.f;
 }
@@ -61,6 +61,9 @@ bool CJinxQ::Use()
 	{
 		Jinx->SetWeaponMode((JinxWeaponMode)m_iWeaponMode);
 	}
+
+	// 쿨타임 초기화
+	m_fCurCoolDown = m_fCoolDown;
 
 	return true;
 }

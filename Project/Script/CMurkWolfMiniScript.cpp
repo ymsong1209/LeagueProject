@@ -14,7 +14,6 @@
 CMurkWolfMiniScript::CMurkWolfMiniScript()
 	:CJungleMonsterScript((UINT)MURKWOLFMINISCRIPT)
 {
-	m_eJungleType = JungleType::MURK_WOLF_MINI;
 }
 
 CMurkWolfMiniScript::~CMurkWolfMiniScript()

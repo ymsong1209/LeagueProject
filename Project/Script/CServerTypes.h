@@ -50,6 +50,19 @@ enum class Lane
 	END,
 };
 
+
+enum class ChampionType
+{
+	NONE,
+	BLITZCRANK,
+	JINX,
+	AMUMU,
+	MALPHITE,
+	END,
+};
+
+extern const wchar_t* ChampionType_WSTR[(UINT)ChampionType::END];
+
 // 군중 제어기
 enum CC
 {
@@ -90,14 +103,38 @@ enum class UnitType
 	SIEGE_MINION,
 	SUPER_MINION,
 
-	RAPTORS, // 엄마, 자식들
-	WOLF,    // 대장, 부하
-	KRUG,    // 돌거북 큰애, 작은 애
+	SOUTH_GROMP,
+	SOUTH_MURKWOLF,
+	SOUTH_MURKWOLF_MINI_L,
+	SOUTH_MURKWOLF_MINI_R,
+	SOUTH_RAZORBEAK,
+	SOUTH_RAZORBEAK_MINI_1,
+	SOUTH_RAZORBEAK_MINI_2,
+	SOUTH_RAZORBEAK_MINI_3,
+	SOUTH_RAZORBEAK_MINI_4,
+	SOUTH_RAZORBEAK_MINI_5,
+	SOUTH_KRUG,
+	SOUTH_KRUG_MINI,
+	SOUTH_RED,
+	SOUTH_BLUE,
+
+	NORTH_GROMP,
+	NORTH_MURKWOLF,
+	NORTH_MURKWOLF_MINI_L,
+	NORTH_MURKWOLF_MINI_R,
+	NORTH_RAZORBEAK,
+	NORTH_RAZORBEAK_MINI_1,
+	NORTH_RAZORBEAK_MINI_2,
+	NORTH_RAZORBEAK_MINI_3,
+	NORTH_RAZORBEAK_MINI_4,
+	NORTH_RAZORBEAK_MINI_5,
+	NORTH_KRUG,
+	NORTH_KRUG_MINI,
+	NORTH_RED,
+	NORTH_BLUE,
+
 	DRAGON,
 	BARON,   // 렌더링만
-
-	JUNGLE_RED,  // 붉은 덩굴정령
-	JUNGLE_BLUE, // 푸른 파수꾼
 
 	TURRET,
 	INHIBITOR,
@@ -113,7 +150,8 @@ struct AnimInfo
 {
 	wstring animName;		// 변경할 애니메이션 이름
 	UINT16  targetId;		// 애니메이션이 변경될 오브젝트의 id
-	bool    bRepeat;		// 반복 여부
+	bool    bRepeat;		// 애니메이션 반복 여부
+	bool    bRepeatBlend;   // 블렌드 반복 여부 (PlayRepeat에서만 사용하는 함수)
 	bool    blend;			// 블렌드 사용여부
 	float   blendTime;
 };
@@ -201,3 +239,19 @@ struct KDACSInfo
 	UINT64      victimId;
 	UnitType   deadObjUnitType;
 };
+
+// 소환사 주문(임시)
+enum class SUMMONERS_SPELL
+{
+	FLASH,      // 점멸
+	HEAL,       // 회복
+	GHOST,      // 유체화
+	IGNITE,     // 점화
+	SMITE,      // 강타
+	EXHAUST,    // 탈진
+	CLEANSE,    // 정화
+	END,
+};
+
+extern const wchar_t* SUMMONERS_SPELL_WSTR[(UINT)SUMMONERS_SPELL::END];
+

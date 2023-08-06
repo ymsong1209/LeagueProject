@@ -12,7 +12,6 @@
 CKrugMiniScript::CKrugMiniScript()
 	:CJungleMonsterScript((UINT)KRUGMINISCRIPT)
 {
-	m_eJungleType = JungleType::KRUG_MINI;
 }
 
 CKrugMiniScript::~CKrugMiniScript()

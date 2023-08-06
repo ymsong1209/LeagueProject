@@ -13,7 +13,6 @@
 CGrompScript::CGrompScript()
 	:CJungleMonsterScript((UINT)GROMPSCRIPT)
 {
-	m_eJungleType = JungleType::GROMP;
 }
 
 CGrompScript::~CGrompScript()

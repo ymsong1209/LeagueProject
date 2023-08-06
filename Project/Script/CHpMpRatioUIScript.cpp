@@ -2,6 +2,7 @@
 #include "CHpMpRatioUIScript.h"
 #include <Engine\CRenderMgr.h>
 #include <Engine\CCamera.h>
+#include "CUnitScript.h"
 
 
 CHpMpRatioUIScript::CHpMpRatioUIScript(BARTYPE _Type)
@@ -30,36 +31,21 @@ void CHpMpRatioUIScript::begin()
 
 void CHpMpRatioUIScript::tick()
 {
-	//매틱마다 현재 체력, 전체체력 가져와야함(전체체력도 변할 수 있음)
-	// 바 타입이 mp라면 mp를 가져오고 hp라면 hp를 가져오면 됨.
-	//--------------------------------
-
-	//------디버깅용-------------
-	if (BarType == BARTYPE::HP)
+	if (CSendServerEventMgr::GetInst()->GetMyPlayer())
 	{
-		if (KEY_PRESSED(KEY::B))
-			m_fCurrent += DT * 50.f;
+		CGameObject* MyPlayer = CSendServerEventMgr::GetInst()->GetMyPlayer();
+		if (BarType == BARTYPE::HP)
+		{
+			m_fCurrent = (int)MyPlayer->GetScript<CUnitScript>()->GetCurHP();
+			m_fTotal = (int)MyPlayer->GetScript<CUnitScript>()->GetMaxHP();
+		}
 
-		if (KEY_PRESSED(KEY::V))
-			m_fCurrent -= DT * 50.f;
+		else if (BarType == BARTYPE::MP)
+		{
+			m_fCurrent = (int)MyPlayer->GetScript<CUnitScript>()->GetCurMP();
+			m_fTotal = (int)MyPlayer->GetScript<CUnitScript>()->GetMaxMP();
+		}
 	}
-
-	if (BarType == BARTYPE::MP)
-	{
-		if (KEY_PRESSED(KEY::G))
-			m_fCurrent += DT * 50.f;
-
-		if (KEY_PRESSED(KEY::F))
-			m_fCurrent -= DT * 50.f;
-	}
-	//--------------------------------
-
-	//CurrentExpRatio = CurrentExp / LevelTotalExp;
-
-	//if (CurrentExp >= LevelTotalExp)
-	//	CurrentExp = LevelTotalExp;
-	//if (CurrentExp <= 0.f)
-	//	CurrentExp = 0.f;
 
 	m_fCurrentRatio = m_fCurrent / m_fTotal;
 	if (m_fCurrent >= m_fTotal)

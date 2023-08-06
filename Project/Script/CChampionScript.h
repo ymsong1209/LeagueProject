@@ -4,16 +4,16 @@
 
 
     
-//// ¼ÒÈ¯»ç ÁÖ¹®(ÀÓ½Ã)
+//// ì†Œí™˜ì‚¬ ì£¼ë¬¸(ì„ì‹œ)
 //enum class SUMMONERS_SPELL
 //{
-//    FLASH,      // Á¡¸ê
-//    HEAL,       // È¸º¹
-//    GHOST,      // À¯Ã¼È­
-//    IGNITE,     // Á¡È­
-//    SMITE,      // °­Å¸
-//    EXHAUST,    // Å»Áø
-//    CLEANSE,    // Á¤È­
+//    FLASH,      // ì ë©¸
+//    HEAL,       // íšŒë³µ
+//    GHOST,      // ìœ ì²´í™”
+//    IGNITE,     // ì í™”
+//    SMITE,      // ê°•íƒ€
+//    EXHAUST,    // íƒˆì§„
+//    CLEANSE,    // ì •í™”
 //};
 
 
@@ -32,12 +32,12 @@ public:
     CLONE(CChampionScript);
 
 protected:
-    int                     m_iLevel;           // ·¹º§
-    float                   m_fExp;             // °æÇèÄ¡
+    int                     m_iLevel;           // ë ˆë²¨
+    float                   m_fExp;             // ê²½í—˜ì¹˜
 
-    float                   m_fRespawnTime;     // ºÎÈ° ´ë±â½Ã°£
+    float                   m_fRespawnTime;     // ë¶€í™œ ëŒ€ê¸°ì‹œê°„
    
-    SUMMONERS_SPELL*        m_EquippedSpell;    // ÀåÂø ¼ÒÈ¯»ç ÁÖ¹®(2Ä­ ¹è¿­)
+    SUMMONERS_SPELL*        m_EquippedSpell;    // ì¥ì°© ì†Œí™˜ì‚¬ ì£¼ë¬¸(2ì¹¸ ë°°ì—´)
 
     bool                    m_bIsInsideEnemyTurretRange;
     bool                    m_bIsAttackingChampion;
@@ -54,12 +54,13 @@ public:
     // ============ Champion =============
 public:
     bool    CheckDeath();
-    void    CheckStatus();  // ÇöÀç »óÅÂ È®ÀÎ
-    void    GetInput();     // ÀÔ·Â ¹Ş±â
-    void    CheckSkills();  // ½ºÅ³ Ã¼Å©
+    void    CheckStatus();  // í˜„ì¬ ìƒíƒœ í™•ì¸
+    void    GetInput();     // ì…ë ¥ ë°›ê¸°
+    void    CheckSkills();  // ìŠ¤í‚¬ ì²´í¬
     void    Move();
     bool    IsAttackingChampion() { return m_bIsAttackingChampion; }
     bool    IsInsideEnemyTurretRange() { return m_bIsInsideEnemyTurretRange; }
+    float    GetExp() { return m_fExp; }
 
 
     

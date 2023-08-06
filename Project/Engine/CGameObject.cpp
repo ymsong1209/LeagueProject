@@ -241,6 +241,19 @@ void CGameObject::ChangeLayer(int _NewLayerIdx)
 	CEventMgr::GetInst()->AddEvent(evn);
 }
 
+void CGameObject::ChangeLayer(const wstring& _LayerName)
+{
+	tEvent evn = {};
+
+	int layeridx = CLevelMgr::GetInst()->GetCurLevel()->FindLayerByName(_LayerName)->GetLayerIndex();
+
+	evn.Type = EVENT_TYPE::LAYER_CHANGE;
+	evn.wParam = (DWORD_PTR)this;			// 레이어 바꿀 오브젝트
+	evn.lParam = (DWORD_PTR)layeridx;	// 바꿀 레이어 번호
+
+	CEventMgr::GetInst()->AddEvent(evn);
+}
+
 CGameObject* CGameObject::FindChildObjByName(wstring _name)
 {
 	// 해당 오브젝트의 자식 벡터를 가져와서 이름으로 검색한다.

@@ -175,7 +175,7 @@ void ServerEventMgr::clienttick()
 				AnimInfo* animInfo = (AnimInfo*)(m_vecEvent[i].lParam);
 
 				if (animInfo->bRepeat)
-					NewObject->Animator3D()->PlayRepeat(animInfo->animName, true, animInfo->blend, animInfo->blendTime);
+					NewObject->Animator3D()->PlayRepeat(animInfo->animName, animInfo->bRepeatBlend, animInfo->blend, animInfo->blendTime);
 				else
 					NewObject->Animator3D()->PlayOnce(animInfo->animName, animInfo->blend, animInfo->blendTime);
 
@@ -256,29 +256,33 @@ void ServerEventMgr::clienttick()
 			{
 				KDACSInfo* kdacsInfo = (KDACSInfo*)m_vecEvent[i].wParam;
 				
-				// 죽인게 나 && 죽은게 챔피언 -> K++
-				if (kdacsInfo->killerId == MyPlayer.id)
+				
+				if (kdacsInfo->deadObjUnitType == UnitType::CHAMPION)
 				{
-					if (kdacsInfo->deadObjUnitType == UnitType::CHAMPION)
-					{
-						// 본인의 kill이 오르고, 진영 스코어도 오른다.
+					// 1. 죽인게 나 && 죽은게 챔피언 -> 본인 K++
+					if (kdacsInfo->killerId == MyPlayer.id)
 						CSendServerEventMgr::GetInst()->AddMyKillCnt(1);
-						if (MyPlayer.faction == Faction::RED)
-							CSendServerEventMgr::GetInst()->AddRedScore(1);
-						else if (MyPlayer.faction == Faction::BLUE)
-							CSendServerEventMgr::GetInst()->AddBlueScore(1);
-						// 킬로그 UI 띄움 : killerId가 victimId를 처치했습니다
-					}
-					else if(kdacsInfo->deadObjUnitType == UnitType::MELEE_MINION
-						|| kdacsInfo->deadObjUnitType == UnitType::RANGED_MINION
-						|| kdacsInfo->deadObjUnitType == UnitType::SIEGE_MINION
-						|| kdacsInfo->deadObjUnitType == UnitType::SUPER_MINION)
-					{
-						// 본인의 cs가 오른다.
-						CSendServerEventMgr::GetInst()->AddMyCSCnt(1);
-					}
-					//else if(정글몹) //효과 UI
+
+					// 2. 블루, 레드 스코어 업데이트  // 죽인게 플레이어가 아니면(Mob일경우) X
+					CGameObject* killerObj = GameObjMgr::GetInst()->FindPlayer(kdacsInfo->killerId);
+					if (killerObj != nullptr && Faction::RED == killerObj->GetScript<CUnitScript>()->GetFaction())
+						CSendServerEventMgr::GetInst()->AddRedScore(1);
+					else if (killerObj != nullptr && Faction::BLUE == killerObj->GetScript<CUnitScript>()->GetFaction())
+						CSendServerEventMgr::GetInst()->AddBlueScore(1);
+
+					// 이때 킬로그 UI 띄움 : killerId가 victimId를 처치했습니다
 				}
+				else if (kdacsInfo->deadObjUnitType == UnitType::MELEE_MINION
+					|| kdacsInfo->deadObjUnitType == UnitType::RANGED_MINION
+					|| kdacsInfo->deadObjUnitType == UnitType::SIEGE_MINION
+					|| kdacsInfo->deadObjUnitType == UnitType::SUPER_MINION)
+				{
+					// 1. 죽인게 나 && 죽은게 미니언 -> 본인 CS++
+					if (kdacsInfo->killerId == MyPlayer.id)
+						CSendServerEventMgr::GetInst()->AddMyCSCnt(1);
+				}
+				//else if(정글몹) //효과 UI // 죽인게 나 && 죽은게 정글몹 -> 본인CS AddMyCSCnt(4);
+				
 				// 사용이 끝난 후에는 메모리를 해제
 				delete kdacsInfo;
 				kdacsInfo = nullptr;

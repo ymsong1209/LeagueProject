@@ -7,33 +7,57 @@
 #include "CGameEventMgr.h"
 
 #include "CChampionScript.h"
+#include "CBasicAttack.h"
 
 CJungleMonsterScript::CJungleMonsterScript(UINT ScriptType)
 	: CMobScript(ScriptType)
-	, m_eJungleType(JungleType::DEFAULT)
 	, m_vSpawnPos()
 	, m_pTarget(nullptr)
 	, m_bReturnActive(false)
 	, m_fMaxReturnTime(3.f)
 	, m_fCurReturnTime(0.f)
-	, m_bTest(false)
 {
 	//몬스터가 스폰된 이후에 aggro범위, hitbox생성해야함
 	m_fAggroRange = 0.f;
 	m_fAttackRange = 100.f;
+	m_fHP = 10;
+	m_fMaxHP = 10;
+	m_fAttackPower = 10;
 }
 
 CJungleMonsterScript::CJungleMonsterScript()
 	:CMobScript((UINT)SCRIPT_TYPE::JUNGLEMONSTERSCRIPT)
+	, m_vSpawnPos()
+	, m_pTarget(nullptr)
+	, m_bReturnActive(false)
+	, m_fMaxReturnTime(3.f)
+	, m_fCurReturnTime(0.f)
 {
+	//몬스터가 스폰된 이후에 aggro범위, hitbox생성해야함
+	m_fAggroRange = 0.f;
+	m_fAttackRange = 100.f;
+	m_fHP = 10;
+	m_fMaxHP = 10;
+	m_fAttackPower = 10;
 }
 
 CJungleMonsterScript::~CJungleMonsterScript()
 {
 }
 
+void CJungleMonsterScript::GetHit(CGameObject* _target)
+{
+	if (m_pTarget == nullptr) {
+		m_pTarget = _target;
+	}
+}
+
 void CJungleMonsterScript::begin()
 {
+	
+	GetOwner()->Transform()->SetUseMouseOutline(true);
+	m_Skill[0] = new CBasicAttack;
+	m_Skill[0]->SetOwnerScript(this);
 	GetOwner()->Fsm()->ChangeState(L"Spawn");
 }
 
@@ -42,21 +66,9 @@ void CJungleMonsterScript::tick()
 	if (CLevelMgr::GetInst()->GetCurLevel()->GetState() == LEVEL_STATE::STOP) return;
 	if (CheckDeath()) return;
 	
-	//test code, 징크스가 junglemob을 공격했다고 가정
-	if (KEY_TAP(KEY::O)) {
-		m_bTest = !m_bTest;
-		if (m_pTarget) {
-			m_pTarget = nullptr;
-		}
-		else {
-			m_pTarget = CLevelMgr::GetInst()->GetCurLevel()->FindObjectByName(L"Jinx");
-		}
-		
-	}
-
-
+	
 	if (//공격을 받았음 && 현재 state가 attack state가 아님, && 어그로가 풀려서 돌아가는중이 아님
-		m_bTest && 
+		m_pTarget && 
 		GetOwner()->Fsm()->GetCurState() != GetOwner()->Fsm()->FindState(L"Attack") &&
 		GetOwner()->Fsm()->GetCurState() != GetOwner()->Fsm()->FindState(L"Return") &&
 		GetOwner()->Fsm()->GetCurState() != GetOwner()->Fsm()->FindState(L"Chase")) {
@@ -116,7 +128,6 @@ void CJungleMonsterScript::CheckReturnTime()
 	if (m_fMaxReturnTime < m_fCurReturnTime || ChampScript->IsUnitDead()) {
 		GetOwner()->Fsm()->ChangeState(L"Return");
 		m_pTarget = nullptr;
-		m_bTest = false;
 		m_bReturnActive = false;
 		m_fCurReturnTime = 0.f;
 	}
@@ -139,20 +150,24 @@ void CJungleMonsterScript::CheckReturnActive()
 
 void CJungleMonsterScript::SaveToLevelFile(FILE* _File)
 {
+	CMobScript::SaveToLevelFile(_File);
 	fwrite(&m_vAggroPos, sizeof(Vec3), 1, _File);
 }
 
 void CJungleMonsterScript::LoadFromLevelFile(FILE* _FILE)
 {
+	CMobScript::LoadFromLevelFile(_FILE);
 	fread(&m_vAggroPos, sizeof(Vec3), 1, _FILE);
 }
 
 void CJungleMonsterScript::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
 {
+	CMobScript::SaveToLevelJsonFile(_objValue, allocator);
 	_objValue.AddMember("AggroPos", SaveVec3Json(m_vAggroPos, allocator), allocator);
 }
 
 void CJungleMonsterScript::LoadFromLevelJsonFile(const Value& _componentValue)
 {
+	CMobScript::LoadFromLevelJsonFile(_componentValue);
 	m_vAggroPos = LoadVec3Json(_componentValue["AggroPos"]);
 }

@@ -3,20 +3,11 @@
 //#include <Script/CServerTypes.h>
 
 
-enum ChampionType
-{
-    NONE,
-    BLITZCRANK,
-    JINX,
-    AMUMU,
-    MALPHITE,
-};
-
-
 struct AnimInfoPacket {
-    uint16  targetId;
-    bool    bRepeat;
-    bool    blend;
+    uint16  targetId;       // 애니메이션이 변경될 오브젝트의 id
+    bool    bRepeat;        // 애니메이션 반복 여부
+    bool    bRepeatBlend;   // 블렌드 반복 여부
+    bool    blend;          // 블렌드 사용여부
     float   blendTime;
 
     uint16  animNameOffset;

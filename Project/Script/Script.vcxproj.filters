@@ -299,11 +299,6 @@
     <ClCompile Include="CRedSpawnState.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\Red</Filter>
     </ClCompile>
-    <ClCompile Include="CJungleA2NState.cpp" />
-    <ClCompile Include="CJungleMonsterScript.cpp" />
-    <ClCompile Include="CJungleN2AState.cpp" />
-    <ClCompile Include="CJungleReturnState.cpp" />
-    <ClCompile Include="CJungleSpawnState.cpp" />
     <ClCompile Include="CTurretAttackScript.cpp" />
     <ClCompile Include="pch.cpp">
       <Filter>Default</Filter>
@@ -496,8 +491,21 @@
     </ClCompile>
     <ClCompile Include="CSoundTestScript.cpp" />
     <ClCompile Include="CTurretAttackScript.cpp" />
-    <ClCompile Include="CTimedEffect.cpp">
-      <Filter>Skill</Filter>
+    <ClCompile Include="CTimedEffect.cpp" />
+    <ClCompile Include="CJungleA2NState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleMonsterScript.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleN2AState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleReturnState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleSpawnState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -548,6 +556,7 @@
     <ClInclude Include="CWorldHPUIScript.h">
       <Filter>UIScript</Filter>
     </ClInclude>
+    <ClInclude Include="CTimedEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">
@@ -1062,10 +1071,6 @@
     </ClInclude>
     <ClInclude Include="CSoundTestScript.h" />
     <ClInclude Include="CTurretAttackScript.h" />
-    <ClInclude Include="CTimedEffect.h">
-      <Filter>Skill</Filter>
-    </ClInclude>
-
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
