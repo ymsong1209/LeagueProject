@@ -40,6 +40,7 @@
 #include <Script/CKrugMiniScript.h>
 #include <Script/CBlueScript.h>
 #include <Script/CRedScript.h>
+#include <Script/CDragonScript.h>
 
 void CreateTestLevel()
 {
@@ -98,30 +99,30 @@ void CreateTestLevel()
 	pUICam->Camera()->SetLayerMask(31, true);	// 모든 레이어 체크
 	SpawnGameObject(pUICam, Vec3(0.f, 0.f, 0.f), 0);
 
-	CGameObject* WorldBar = new CGameObject;
-	WorldBar->SetName(L"WorldBar");
-	WorldBar->AddComponent(new CTransform);
-	WorldBar->AddComponent(new CMeshRender);
-	WorldBar->AddComponent(new CWorldHPUIScript);
-	WorldBar->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	WorldBar->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\WorldBar.mtrl"), 0);
-	WorldBar->MeshRender()->SetRaySightCulling(false);
-	WorldBar->Transform()->SetRelativeScale(Vec3(136.f, 29.f, 1.f));
+	//CGameObject* WorldBar = new CGameObject;
+	//WorldBar->SetName(L"WorldBar");
+	//WorldBar->AddComponent(new CTransform);
+	//WorldBar->AddComponent(new CMeshRender);
+	//WorldBar->AddComponent(new CWorldHPUIScript);
+	//WorldBar->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	//WorldBar->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\WorldBar.mtrl"), 0);
+	//WorldBar->MeshRender()->SetRaySightCulling(false);
+	//WorldBar->Transform()->SetRelativeScale(Vec3(136.f, 29.f, 1.f));
 
-	SpawnGameObject(WorldBar, Vec3(100.f, 100.f, 100.f), 2);
+	//SpawnGameObject(WorldBar, Vec3(100.f, 100.f, 100.f), 2);
 
 
-	CGameObject* UIObj = new CGameObject; //각종 스크립트에서 처리할 것들
-	UIObj->SetName(L"UIObj");
-	UIObj->AddComponent(new CTransform);
-	UIObj->AddComponent(new CCharacterUIScript);
-	UIObj->AddComponent(new CWorldHPSpawnScript);
-	UIObj->AddComponent(new CInventoryUIScript);
-	UIObj->AddComponent(new CMinimapUIScript);
-	UIObj->AddComponent(new CMouseCursorUIScript);
-	UIObj->AddComponent(new CFontUIScript);
-	UIObj->AddComponent(new CScorePanelScript);
-	SpawnGameObject(UIObj, Vec3(0.f, 0.f, 0.f), 31);
+	//CGameObject* UIObj = new CGameObject; //각종 스크립트에서 처리할 것들
+	//UIObj->SetName(L"UIObj");
+	//UIObj->AddComponent(new CTransform);
+	//UIObj->AddComponent(new CCharacterUIScript);
+	//UIObj->AddComponent(new CWorldHPSpawnScript);
+	//UIObj->AddComponent(new CInventoryUIScript);
+	//UIObj->AddComponent(new CMinimapUIScript);
+	//UIObj->AddComponent(new CMouseCursorUIScript);
+	//UIObj->AddComponent(new CFontUIScript);
+	//UIObj->AddComponent(new CScorePanelScript);
+	//SpawnGameObject(UIObj, Vec3(0.f, 0.f, 0.f), 31);
 
 
 
@@ -933,7 +934,7 @@ void SpawnJungleMob()
 			GrompAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
 			GrompAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
 			GrompAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-			SpawnGameObject(GrompAggro, Vec3(1823.f, 0.f, 436.f), 0);
+			SpawnGameObject(GrompAggro, Vec3(1823.f, 0.f, 943.f), 0);
 		}
 
 		//레드팀 늑대
@@ -1166,6 +1167,43 @@ void SpawnJungleMob()
 			RedAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
 			SpawnGameObject(RedAggro, Vec3(1055, 15.f, 1637.f), 0);
 		}
+	}
+	//드래곤
+	{
+		Ptr<CMeshData> pMeshData = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Elder_Dragon.fbx");
+		CGameObject* Dragon = nullptr;
+		Dragon = pMeshData->Instantiate();
+		Dragon->AddComponent(new CDragonScript);
+		Dragon->SetName(L"Dragon");
+		Dragon->Transform()->SetRelativeScale(0.35f, 0.35f, 0.35f);
+		Dragon->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(-44.f), XMConvertToRadians(-180.f)));
+		CDragonScript* Script = Dragon->GetScript<CDragonScript>();
+		Script->SetAggroPos(Vec3(1451, 15.f, 649.f));
+		Script->SetAlertPos(Vec3(1483, 15.f, 689.f));
+		Script->SetUnitType(UnitType::DRAGON);
+		SpawnGameObject(Dragon, Vec3(1451, 0.f, 656.f), L"Mob");
+
+		CGameObject* DragonAlertRadius = new CGameObject;
+		DragonAlertRadius->SetName(L"DragonAlertRadius");
+		DragonAlertRadius->AddComponent(new CTransform);
+		DragonAlertRadius->AddComponent(new CCollider2D);
+		DragonAlertRadius->Transform()->SetRelativeScale(Vec3(300, 300.f, 300.f));
+		DragonAlertRadius->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+		DragonAlertRadius->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+		DragonAlertRadius->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+		SpawnGameObject(DragonAlertRadius, Vec3(1483, 15.f, 689.f), 0);
+
+		CGameObject* DragonAggroRadius = new CGameObject;
+		DragonAggroRadius->SetName(L"DragonAggroRadius");
+		DragonAggroRadius->AddComponent(new CTransform);
+		DragonAggroRadius->AddComponent(new CCollider2D);
+		DragonAggroRadius->Transform()->SetRelativeScale(Vec3(200, 200.f, 200.f));
+		DragonAggroRadius->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+		DragonAggroRadius->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+		DragonAggroRadius->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+		SpawnGameObject(DragonAggroRadius, Vec3(1451, 15.f, 649.f), 0);
+
 	}
 
 }

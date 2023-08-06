@@ -905,6 +905,114 @@
                     "children": []
                 },
                 {
+                    "ObjName": "DragonAlertRadius",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 1483.0,
+                                "y": 15.0,
+                                "z": 689.0
+                            },
+                            "vRelativeScale": {
+                                "x": 300.0,
+                                "y": 300.0,
+                                "z": 300.0
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
+                        },
+                        {
+                            "COLLIDER2D": 1,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "vOffsetRot": {
+                                "x": 1.5707963705062866,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "Shape": 1,
+                            "DrawCollision": true
+                        },
+                        16
+                    ],
+                    "scripts": [],
+                    "children": []
+                },
+                {
+                    "ObjName": "DragonAggroRadius",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 1451.0,
+                                "y": 15.0,
+                                "z": 649.0
+                            },
+                            "vRelativeScale": {
+                                "x": 200.0,
+                                "y": 200.0,
+                                "z": 200.0
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
+                        },
+                        {
+                            "COLLIDER2D": 1,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "vOffsetRot": {
+                                "x": 1.5707963705062866,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "Shape": 1,
+                            "DrawCollision": true
+                        },
+                        16
+                    ],
+                    "scripts": [],
+                    "children": []
+                },
+                {
                     "ObjName": "ReftFast",
                     "components": [
                         {
@@ -2498,120 +2606,7 @@
         },
         {
             "layerName": "Map_Wall",
-            "gameObjects": [
-                {
-                    "ObjName": "WorldBar",
-                    "components": [
-                        {
-                            "TRANSFORM": 0,
-                            "vRelativePos": {
-                                "x": 100.0,
-                                "y": 100.0,
-                                "z": 100.0
-                            },
-                            "vRelativeScale": {
-                                "x": 136.0,
-                                "y": 29.0,
-                                "z": 1.0
-                            },
-                            "vRelativeRot": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "bAbsolute": false,
-                            "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 50.0,
-                            "IsShootingRay": false,
-                            "RayRange": 20.0,
-                            "UseMouseOutLine": false,
-                            "Outlinethickness": 0.07199999690055847
-                        },
-                        {
-                            "MESHRENDER": 10,
-                            "Mesh": {
-                                "IsNull": false,
-                                "Key": "RectMesh",
-                                "RelativePath": ""
-                            },
-                            "fBounding": 150.0,
-                            "bFrustumCheck": true,
-                            "bDynamicShadow": false,
-                            "bShowDebugBoundShape": false,
-                            "bRaySightCulling": false,
-                            "bUseBoundingOffset": false,
-                            "vBoundingBoxOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "iMtrlCount": 1,
-                            "vecMtrls[0]SharedMtrl": {
-                                "IsNull": false,
-                                "Key": "material\\WorldBar.mtrl",
-                                "RelativePath": "material\\WorldBar.mtrl"
-                            },
-                            "DynamicMtrls": [
-                                {
-                                    "vecMtrls[0]DynamicMtrl": null,
-                                    "IsDynamicMtrlExist": false
-                                }
-                            ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
-                        },
-                        16
-                    ],
-                    "scripts": [
-                        {
-                            "scriptName": "CWorldHPUIScript"
-                        }
-                    ],
-                    "children": []
-                }
-            ]
+            "gameObjects": []
         },
         {
             "layerName": "Structure",
@@ -3979,11 +3974,11 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 0.0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
                             "MP": 0.0,
                             "MaxMP": 0.0,
-                            "AttackPower": 0.0,
+                            "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
                             "AttackRange": 100.0,
@@ -4124,11 +4119,11 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 0.0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
                             "MP": 0.0,
                             "MaxMP": 0.0,
-                            "AttackPower": 0.0,
+                            "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
                             "AttackRange": 100.0,
@@ -4269,11 +4264,11 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 0.0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
                             "MP": 0.0,
                             "MaxMP": 0.0,
-                            "AttackPower": 0.0,
+                            "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
                             "AttackRange": 100.0,
@@ -4414,11 +4409,11 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 0.0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
                             "MP": 0.0,
                             "MaxMP": 0.0,
-                            "AttackPower": 0.0,
+                            "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
                             "AttackRange": 100.0,
@@ -4559,11 +4554,11 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 0.0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
                             "MP": 0.0,
                             "MaxMP": 0.0,
-                            "AttackPower": 0.0,
+                            "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
                             "AttackRange": 100.0,
@@ -4704,11 +4699,11 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 0.0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
                             "MP": 0.0,
                             "MaxMP": 0.0,
-                            "AttackPower": 0.0,
+                            "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
                             "AttackRange": 100.0,
@@ -4849,11 +4844,11 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 0.0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
                             "MP": 0.0,
                             "MaxMP": 0.0,
-                            "AttackPower": 0.0,
+                            "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
                             "AttackRange": 100.0,
@@ -4994,11 +4989,11 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 0.0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
                             "MP": 0.0,
                             "MaxMP": 0.0,
-                            "AttackPower": 0.0,
+                            "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
                             "AttackRange": 100.0,
@@ -5139,11 +5134,11 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 0.0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
                             "MP": 0.0,
                             "MaxMP": 0.0,
-                            "AttackPower": 0.0,
+                            "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
                             "AttackRange": 100.0,
@@ -5284,11 +5279,11 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 0.0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
                             "MP": 0.0,
                             "MaxMP": 0.0,
-                            "AttackPower": 0.0,
+                            "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
                             "AttackRange": 100.0,
@@ -5429,11 +5424,11 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 0.0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
                             "MP": 0.0,
                             "MaxMP": 0.0,
-                            "AttackPower": 0.0,
+                            "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
                             "AttackRange": 100.0,
@@ -5574,11 +5569,11 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 0.0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
                             "MP": 0.0,
                             "MaxMP": 0.0,
-                            "AttackPower": 0.0,
+                            "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
                             "AttackRange": 100.0,
@@ -5719,11 +5714,11 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 0.0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
                             "MP": 0.0,
                             "MaxMP": 0.0,
-                            "AttackPower": 0.0,
+                            "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
                             "AttackRange": 100.0,
@@ -5864,11 +5859,11 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 0.0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
                             "MP": 0.0,
                             "MaxMP": 0.0,
-                            "AttackPower": 0.0,
+                            "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
                             "AttackRange": 100.0,
@@ -6027,11 +6022,11 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 0.0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
                             "MP": 0.0,
                             "MaxMP": 0.0,
-                            "AttackPower": 0.0,
+                            "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
                             "AttackRange": 100.0,
@@ -6172,11 +6167,11 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 0.0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
                             "MP": 0.0,
                             "MaxMP": 0.0,
-                            "AttackPower": 0.0,
+                            "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
                             "AttackRange": 100.0,
@@ -6317,11 +6312,11 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 0.0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
                             "MP": 0.0,
                             "MaxMP": 0.0,
-                            "AttackPower": 0.0,
+                            "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
                             "AttackRange": 100.0,
@@ -6462,11 +6457,11 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 0.0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
                             "MP": 0.0,
                             "MaxMP": 0.0,
-                            "AttackPower": 0.0,
+                            "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
                             "AttackRange": 100.0,
@@ -6607,11 +6602,11 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 0.0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
                             "MP": 0.0,
                             "MaxMP": 0.0,
-                            "AttackPower": 0.0,
+                            "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
                             "AttackRange": 100.0,
@@ -6752,11 +6747,11 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 0.0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
                             "MP": 0.0,
                             "MaxMP": 0.0,
-                            "AttackPower": 0.0,
+                            "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
                             "AttackRange": 100.0,
@@ -6897,11 +6892,11 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 0.0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
                             "MP": 0.0,
                             "MaxMP": 0.0,
-                            "AttackPower": 0.0,
+                            "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
                             "AttackRange": 100.0,
@@ -7042,11 +7037,11 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 0.0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
                             "MP": 0.0,
                             "MaxMP": 0.0,
-                            "AttackPower": 0.0,
+                            "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
                             "AttackRange": 100.0,
@@ -7187,11 +7182,11 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 0.0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
                             "MP": 0.0,
                             "MaxMP": 0.0,
-                            "AttackPower": 0.0,
+                            "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
                             "AttackRange": 100.0,
@@ -7332,11 +7327,11 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 0.0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
                             "MP": 0.0,
                             "MaxMP": 0.0,
-                            "AttackPower": 0.0,
+                            "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
                             "AttackRange": 100.0,
@@ -7477,11 +7472,11 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 0.0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
                             "MP": 0.0,
                             "MaxMP": 0.0,
-                            "AttackPower": 0.0,
+                            "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
                             "AttackRange": 100.0,
@@ -7622,11 +7617,11 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 0.0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
                             "MP": 0.0,
                             "MaxMP": 0.0,
-                            "AttackPower": 0.0,
+                            "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
                             "AttackRange": 100.0,
@@ -7767,11 +7762,11 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 0.0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
                             "MP": 0.0,
                             "MaxMP": 0.0,
-                            "AttackPower": 0.0,
+                            "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
                             "AttackRange": 100.0,
@@ -7912,6 +7907,160 @@
                             "Faction": 0,
                             "CurCC": 0,
                             "Restraint": 0,
+                            "HP": 10.0,
+                            "MaxHP": 10.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 10.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
+                            "AggroPos": {
+                                "x": 1055.0,
+                                "y": 15.0,
+                                "z": 1637.0
+                            }
+                        }
+                    ],
+                    "children": []
+                },
+                {
+                    "ObjName": "Dragon",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 1451.0,
+                                "y": 0.0,
+                                "z": 656.0
+                            },
+                            "vRelativeScale": {
+                                "x": 0.3499999940395355,
+                                "y": 0.3499999940395355,
+                                "z": 0.3499999940395355
+                            },
+                            "vRelativeRot": {
+                                "x": 3.1415927410125732,
+                                "y": -0.767944872379303,
+                                "z": -3.1415927410125732
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
+                        },
+                        {
+                            "ANIMATOR3D": 4,
+                            "IsEmpty": false,
+                            "MeshDataRelativePath": "meshdata\\Elder_Dragon.mdat",
+                            "bRepeat": false,
+                            "fAnimSpeed": 1.0,
+                            "mapAnim": [
+                                {
+                                    "Anim3DRelativePath": "animation\\Elder_Dragon\\model-Elder_Dragon_AllAction.anim3d"
+                                }
+                            ],
+                            "strCurAnimName": ""
+                        },
+                        {
+                            "MESHRENDER": 10,
+                            "Mesh": {
+                                "IsNull": false,
+                                "Key": "mesh\\Elder_Dragon.mesh",
+                                "RelativePath": "mesh\\Elder_Dragon.mesh"
+                            },
+                            "fBounding": 150.0,
+                            "bFrustumCheck": true,
+                            "bDynamicShadow": false,
+                            "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": false,
+                            "vBoundingBoxOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "iMtrlCount": 2,
+                            "vecMtrls[0]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "material\\Elder_Dragon_MAT.mtrl",
+                                "RelativePath": "material\\Elder_Dragon_MAT.mtrl"
+                            },
+                            "vecMtrls[1]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "material\\Elder_Dragon_MAT2.mtrl",
+                                "RelativePath": "material\\Elder_Dragon_MAT2.mtrl"
+                            },
+                            "DynamicMtrls": [
+                                {
+                                    "vecMtrls[0]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                },
+                                {
+                                    "vecMtrls[1]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                }
+                            ],
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
+                        },
+                        16
+                    ],
+                    "scripts": [
+                        {
+                            "scriptName": "CDragonScript",
+                            "NickName": "",
+                            "UnitType": 33,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
                             "HP": 0.0,
                             "MaxHP": 0.0,
                             "MP": 0.0,
@@ -7923,9 +8072,14 @@
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
-                                "x": 1055.0,
+                                "x": 1451.0,
                                 "y": 15.0,
-                                "z": 1637.0
+                                "z": 649.0
+                            },
+                            "AlertPos": {
+                                "x": 1483.0,
+                                "y": 15.0,
+                                "z": 689.0
                             }
                         }
                     ],
@@ -12674,63 +12828,7 @@
         },
         {
             "layerName": "ViewPort UI",
-            "gameObjects": [
-                {
-                    "ObjName": "UIObj",
-                    "components": [
-                        {
-                            "TRANSFORM": 0,
-                            "vRelativePos": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "vRelativeScale": {
-                                "x": 1.0,
-                                "y": 1.0,
-                                "z": 1.0
-                            },
-                            "vRelativeRot": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "bAbsolute": false,
-                            "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 50.0,
-                            "IsShootingRay": false,
-                            "RayRange": 20.0,
-                            "UseMouseOutLine": false,
-                            "Outlinethickness": 0.07199999690055847
-                        },
-                        16
-                    ],
-                    "scripts": [
-                        {
-                            "scriptName": "CCharacterUIScript"
-                        },
-                        {
-                            "scriptName": "CWorldHPSpawnScript"
-                        },
-                        {
-                            "scriptName": "CInventoryUIScript"
-                        },
-                        {
-                            "scriptName": "CMinimapUIScript"
-                        },
-                        {
-                            "scriptName": "CMouseCursorUIScript"
-                        },
-                        {
-                            "scriptName": "CFontUIScript"
-                        },
-                        {
-                            "scriptName": "CScorePanelScript"
-                        }
-                    ],
-                    "children": []
-                }
-            ]
+            "gameObjects": []
         }
     ],
     "CollisionMatrix": [

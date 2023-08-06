@@ -19,14 +19,8 @@ void CJungleDeathState::Enter()
 void CJungleDeathState::tick()
 {
 	if (GetOwner()->Animator3D()->GetCurAnim()->IsFinish()) {
-		// 죽음 이벤트 서버에 쏴야함?
-		//DestroyObject(GetOwner())
-		// 
-		//DeathEvent* evn = dynamic_cast<DeathEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_KILL_MOB));
-		//if (evn != nullptr)
-		//{
-		//	CGameEventMgr::GetInst()->NotifyEvent(*evn);
-		//}
+		CJungleMonsterScript* script = GetOwner()->GetScript<CJungleMonsterScript>();
+		CSendServerEventMgr::GetInst()->SendDespawnPacket(script->GetServerID(), 0.f);
 	}
 }
 
