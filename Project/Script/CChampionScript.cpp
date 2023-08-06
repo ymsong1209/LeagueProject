@@ -43,16 +43,18 @@ void CChampionScript::begin()
 {
 	CUnitScript::begin();
 
-	// ½ºÅ³ ·¹º§ ÃÊ±âÈ­
+	// ìŠ¤í‚¬ ë ˆë²¨ ì´ˆê¸°í™”
 	m_SkillLevel[0] = 1;
 	m_SkillLevel[2] = 1;
 
 	
-	// ¼ÒÈ¯»ç ÁÖ¹® ¹è¿­¿¡ ³Ö¾îÁÖ±â
+	// ì†Œí™˜ì‚¬ ì£¼ë¬¸ ë°°ì—´ì— ë„£ì–´ì£¼ê¸°
 }
 
 void CChampionScript::tick()
 {
+	CUnitScript::tick();
+
 	if (KEY_TAP(KEY::P))
 	{
 		m_fHP = 0;
@@ -74,37 +76,38 @@ void CChampionScript::BeginOverlap(CCollider2D* _Other)
 
 bool CChampionScript::CheckDeath()
 {
-	// Á×À½
+	// ì£½ìŒ
 	if (m_fHP <= 0)
 	{
-		// Á×À½ ÀÌº¥Æ®
+		// ì£½ìŒ ì´ë²¤íŠ¸
 		DeathEvent* evn = dynamic_cast<DeathEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_DEATH));
 		if (evn != nullptr)
 		{
 			CGameEventMgr::GetInst()->NotifyEvent(*evn);
 		}
 		
-		// Á×À½ Ã¼Å©
+		// ì£½ìŒ ì²´í¬
 		m_bUnitDead = true;
 
-		// ¾Æ¹«°Íµµ ¸øÇÏ´Â »óÅÂ
+		// ì•„ë¬´ê²ƒë„ ëª»í•˜ëŠ” ìƒíƒœ
 		m_eRestraint = RESTRAINT::BLOCK;
 
 		m_fRespawnTime -= EditorDT;
-		// ºÎÈ° ´ë±â½Ã°£ ³¡³ª¸é
+		// ë¶€í™œ ëŒ€ê¸°ì‹œê°„ ëë‚˜ë©´
 		if (m_fRespawnTime <= 0)
 		{
 			m_fHP = m_fMaxHP;
 			m_fRespawnTime = 5;
+			m_eCurCC = CC::CLEAR;
 			m_eRestraint = RESTRAINT::DEFAULT;
 
-			// ±æÃ£±â ÄÄÆ÷³ÍÆ®¿¡ ³²Àº °æ·Î°ªÀÌ ÀÖ´Ù¸é Clear
+			// ê¸¸ì°¾ê¸° ì»´í¬ë„ŒíŠ¸ì— ë‚¨ì€ ê²½ë¡œê°’ì´ ìˆë‹¤ë©´ Clear
 			PathFinder()->ClearPath();
 
-			// ¿ì¹°·Î ¸®½ºÆù
+			// ìš°ë¬¼ë¡œ ë¦¬ìŠ¤í°
 			GetOwner()->Transform()->SetRelativePos(100.f, 30.f, 100.f);
 
-			// ºÎÈ° ÀÌº¥Æ®
+			// ë¶€í™œ ì´ë²¤íŠ¸
 			RespawnEvent* evn = dynamic_cast<RespawnEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_RESPAWN));
 			if (evn != nullptr)
 			{
@@ -121,7 +124,7 @@ bool CChampionScript::CheckDeath()
 
 void CChampionScript::CheckStatus()
 {
-	// Ã¼·Â / ¸¶³ª ¸®Á¨ ¿¹½Ã
+	// ì²´ë ¥ / ë§ˆë‚˜ ë¦¬ì   ì˜ˆì‹œ
 	m_fHP += 2.0f * DT;
 	m_fMP += 5.0f * DT;
 
@@ -134,14 +137,14 @@ void CChampionScript::CheckStatus()
 
 void CChampionScript::GetInput()
 {
-	// µé¾î¿Â ÀÔ·ÂÀ» È®ÀÎÇÕ´Ï´Ù.
+	// ë“¤ì–´ì˜¨ ì…ë ¥ì„ í™•ì¸í•©ë‹ˆë‹¤.
 
 	if (KEY_TAP(KEY::RBTN))
 	{
 		CCamera* MainCam = CRenderMgr::GetInst()->GetMainCam();
 		tRay ray = MainCam->GetRay();
 
-		// ÇöÀç ¸¶¿ì½º ray¿Í Ãæµ¹ ÁßÀÎ ¿ÀºêÁ§Æ®°¡ ÀÖ´ÂÁö È®ÀÎ
+		// í˜„ì¬ ë§ˆìš°ìŠ¤ rayì™€ ì¶©ëŒ ì¤‘ì¸ ì˜¤ë¸Œì íŠ¸ê°€ ìˆëŠ”ì§€ í™•ì¸
 		vector<CGameObject*>& MouseOverlapObj = MainCam->GetMouseOverlapObj();
 		if (MouseOverlapObj.size() >= 1)
 		{
@@ -149,21 +152,21 @@ void CChampionScript::GetInput()
 			if (Unit == this->GetOwner()) return;
 			CUnitScript* UnitScript = Unit->GetScript<CUnitScript>();
 
-			// ¿ÀºêÁ§Æ®°¡ ÇöÀç Ã¨ÇÇ¾ğÀÇ »ç°Å¸® ³»¿¡ ÀÖ´ÂÁö È®ÀÎ
+			// ì˜¤ë¸Œì íŠ¸ê°€ í˜„ì¬ ì±”í”¼ì–¸ì˜ ì‚¬ê±°ë¦¬ ë‚´ì— ìˆëŠ”ì§€ í™•ì¸
 			CGameObject* AttackRange = GetOwner()->FindChildObjByName(L"AttackRange");
 			CAttackRangeScript* AttackRangeScript = AttackRange->GetScript<CAttackRangeScript>();
 			vector<CGameObject*> UnitinRange = AttackRangeScript->GetUnitsInRange();
 
 			auto it = find(UnitinRange.begin(), UnitinRange.end(), Unit);
 
-			// »ç°Å¸® ³»¿¡ ÀÖÀ½
+			// ì‚¬ê±°ë¦¬ ë‚´ì— ìˆìŒ
 			if (it != UnitinRange.end())
 			{
-				// ÇØ´ç À¯´ÖÀÌ Á×¾ú´Ù¸é return
+				// í•´ë‹¹ ìœ ë‹›ì´ ì£½ì—ˆë‹¤ë©´ return
 				if (UnitScript->IsUnitDead())
 					return;
 
-				// °ø°İ ÀÌº¥Æ® ¹ß»ı
+				// ê³µê²© ì´ë²¤íŠ¸ ë°œìƒ
 				BasicAttackEvent* evn = dynamic_cast<BasicAttackEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_BASIC_ATTACK));
 				if (evn != nullptr)
 				{
@@ -177,50 +180,46 @@ void CChampionScript::GetInput()
 
 			}
 
-			// »ç°Å¸® ³»¿¡ ¾øÀ½
+			// ì‚¬ê±°ë¦¬ ë‚´ì— ì—†ìŒ
 			else
 			{
-				// »ç°Å¸® ³»¿¡ µé¾î¿Ã ¶§±îÁö ÀÌµ¿
+				// ì‚¬ê±°ë¦¬ ë‚´ì— ë“¤ì–´ì˜¬ ë•Œê¹Œì§€ ì´ë™
 			}
 		}
 		else
 		{
-			// ±× ¿Ü(¶¥À» Å¬¸¯ÇÑ °æ¿ì)
+			// ê·¸ ì™¸(ë•…ì„ í´ë¦­í•œ ê²½ìš°)
 
-			// ¿òÁ÷ÀÏ ¼ö ¾ø´Â »óÈ²ÀÎ °æ¿ì return
-			if ((m_eRestraint & RESTRAINT::CAN_MOVE) == 0)
-				return;
-
-			// ¿òÁ÷ÀÏ ¼ö ¾ø´Â »óÈ²ÀÎ °æ¿ì return
+			// ì›€ì§ì¼ ìˆ˜ ì—†ëŠ” ìƒí™©ì¸ ê²½ìš° return
 			if ((m_eRestraint & RESTRAINT::CAN_MOVE) == 0)
 				return;
 
 			CGameObject* Map = CLevelMgr::GetInst()->GetCurLevel()->FindParentObjectByName(L"LoLMapCollider");
 			IntersectResult result = MainCam->IsCollidingBtwRayRect(ray, Map);
-			Vec3 TargetPos = result.vCrossPoint;	// Å¬¸¯ ÁÂÇ¥
+			Vec3 TargetPos = result.vCrossPoint;	// í´ë¦­ ì¢Œí‘œ
 			PathFinder()->FindPath(TargetPos);
 		}
 	}
 		if (KEY_TAP(KEY::Q))
 		{
-			// ½ºÅ³À» »ç¿ëÇÒ ¼ö ¾ø´Â »óÈ² È¤Àº ¸¶³ª°¡ ºÎÁ·ÇÑ °æ¿ì return
+			// ìŠ¤í‚¬ì„ ì‚¬ìš©í•  ìˆ˜ ì—†ëŠ” ìƒí™© í˜¹ì€ ë§ˆë‚˜ê°€ ë¶€ì¡±í•œ ê²½ìš° return
 			if ((m_eRestraint & RESTRAINT::CAN_USE_SKILL) == 0 || m_Skill[0]->GetCost() > m_fMP)
 				return;
 
 			if (m_Skill[1]->CSkill::Use())
 			{
-				// ½ºÅ³ ÀÌº¥Æ®
+				// ìŠ¤í‚¬ ì´ë²¤íŠ¸
 			}
 		}
 		if (KEY_TAP(KEY::W))
 		{
-			// ½ºÅ³À» »ç¿ëÇÒ ¼ö ¾ø´Â »óÈ² È¤Àº ¸¶³ª°¡ ºÎÁ·ÇÑ °æ¿ì return
+			// ìŠ¤í‚¬ì„ ì‚¬ìš©í•  ìˆ˜ ì—†ëŠ” ìƒí™© í˜¹ì€ ë§ˆë‚˜ê°€ ë¶€ì¡±í•œ ê²½ìš° return
 			if ((m_eRestraint & RESTRAINT::CAN_USE_SKILL) == 0 || m_Skill[1]->GetCost() > m_fMP)
 				return;
 
 			if (m_Skill[2]->CSkill::Use())
 			{
-				// W ÀÌº¥Æ® ¹ß»ı
+				// W ì´ë²¤íŠ¸ ë°œìƒ
 				PlayerWEvent* evn = dynamic_cast<PlayerWEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_SKILL_W));
 				if (evn != nullptr)
 				{
@@ -233,13 +232,13 @@ void CChampionScript::GetInput()
 		}
 		if (KEY_TAP(KEY::E))
 		{
-			// ½ºÅ³À» »ç¿ëÇÒ ¼ö ¾ø´Â »óÈ² È¤Àº ¸¶³ª°¡ ºÎÁ·ÇÑ °æ¿ì return
+			// ìŠ¤í‚¬ì„ ì‚¬ìš©í•  ìˆ˜ ì—†ëŠ” ìƒí™© í˜¹ì€ ë§ˆë‚˜ê°€ ë¶€ì¡±í•œ ê²½ìš° return
 			if ((m_eRestraint & RESTRAINT::CAN_USE_SKILL) == 0 || m_Skill[2]->GetCost() > m_fMP)
 				return;
 
 			if (m_Skill[3]->CSkill::Use())
 			{
-				// E ÀÌº¥Æ® ¹ß»ı
+				// E ì´ë²¤íŠ¸ ë°œìƒ
 				PlayerEEvent* evn = dynamic_cast<PlayerEEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_SKILL_E));
 				if (evn != nullptr)
 				{
@@ -250,17 +249,18 @@ void CChampionScript::GetInput()
 		}
 		if (KEY_TAP(KEY::R))
 		{
-			// ½ºÅ³À» »ç¿ëÇÒ ¼ö ¾ø´Â »óÈ² È¤Àº ¸¶³ª°¡ ºÎÁ·ÇÑ °æ¿ì return
+			// ìŠ¤í‚¬ì„ ì‚¬ìš©í•  ìˆ˜ ì—†ëŠ” ìƒí™© í˜¹ì€ ë§ˆë‚˜ê°€ ë¶€ì¡±í•œ ê²½ìš° return
 			if ((m_eRestraint & RESTRAINT::CAN_USE_SKILL) == 0 || m_Skill[3]->GetCost() > m_fMP)
 				return;
 
 			if (m_Skill[4]->CSkill::Use())
 			{
-				// ½ºÅ³ ÀÌº¥Æ®
+				// ìŠ¤í‚¬ ì´ë²¤íŠ¸
 			}
 		}
 
-		// ¼ÒÈ¯»ç ÁÖ¹®
+		// ì†Œí™˜ì‚¬ ì£¼ë¬¸
+
 
 
 }
@@ -278,14 +278,14 @@ void CChampionScript::CheckSkills()
 
 void CChampionScript::Move()
 {
-	// ¿òÁ÷ÀÏ ¼ö ¾ø´Â »óÈ²ÀÎ °æ¿ì return
+	// ì›€ì§ì¼ ìˆ˜ ì—†ëŠ” ìƒí™©ì¸ ê²½ìš° return
 	if ((m_eRestraint & RESTRAINT::CAN_MOVE) == 0)
 		return;
 
-	// ÀÌµ¿
-	if (PathFindMove(80, true))
+	// ì´ë™
+	if (PathFindMove(m_fMoveSpeed, true))
 	{
-		// ÀÌµ¿ ÀÌº¥Æ®
+		// ì´ë™ ì´ë²¤íŠ¸
 		MoveEvent* evn = dynamic_cast<MoveEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_MOVE));
 		if (evn != nullptr)
 		{
@@ -294,12 +294,12 @@ void CChampionScript::Move()
 	}
 	else
 	{
-		// ÀÌµ¿ º¤ÅÍ°ªÀÌ NaN -> ÀÌµ¿ ºÒ°¡, ¸ØÃã
-		//StopEvent* evn = new StopEvent;
-		//if (evn != nullptr)
-		//{
-		//	CGameEventMgr::GetInst()->NotifyEvent(*evn);
-		//}
+		// ì´ë™ ë²¡í„°ê°’ì´ NaN -> ì´ë™ ë¶ˆê°€, ë©ˆì¶¤
+		StopEvent* evn = dynamic_cast<StopEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_STOP));;
+		if (evn != nullptr)
+		{
+			CGameEventMgr::GetInst()->NotifyEvent(*evn);
+		}
 	}
 }
 

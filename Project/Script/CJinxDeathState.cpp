@@ -24,7 +24,7 @@ void CJinxDeathState::Enter()
 
 
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
-	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, false, 0.0f);
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, false, false, 0.0f);
 
 	CChampionDeathState::Enter();
 }  

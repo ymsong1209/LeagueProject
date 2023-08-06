@@ -3,6 +3,7 @@
 #include "CUnitScript.h"
 #include "CChampionScript.h"
 #include "CJinxWScript.h"
+#include "CTimedEffect.h"
 
 CJinxW::CJinxW()
 {
@@ -59,22 +60,6 @@ bool CJinxW::Use()
 		GetMouseDir());
 
 	return true;
-	// W 투사체 발사
-	/*
-	징크스 w를 예시로 들면
-		1) 범위표시 이펙트가 나타났다 사라짐(2d 애니메이션)*/
-
-	
-		//2) 이펙트가 사라지고, 실제 충돌체를 가진 오브젝트 발사 
-		
-			
-			/*
-			2-1) 오브젝트의 자식으로 그림자 이펙트, 주변 파티클, 꼬리 등이 따라감 (부모-자식 구조)
-
-			3) 오브젝트가 특정 거리까지 발사되거나 (아무도 안맞는 경우)
-			누군가가 맞게 되면 사라짐. (이 경우에는 피격)
-			*/
-	
 }
 
 void CJinxW::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _SkillLevel)
@@ -113,6 +98,7 @@ void CJinxW::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _S
 
 	TargetUnitScript->SetCurHPVar(-Damage);
 
-	// 2초 동안 둔화시키며 위치를 드러냅니다.
-
+	// 2초 동안 둔화시킵니다.
+	CTimedEffect* JinxWSlow = new CTimedEffect(TargetChampScript, 2.f, 0, 0, CC::SLOW);
+	TargetChampScript->AddTimedEffect(JinxWSlow);
 }

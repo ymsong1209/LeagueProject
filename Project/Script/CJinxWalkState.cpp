@@ -28,7 +28,7 @@ void CJinxWalkState::Enter()
 
 
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
-	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, true, true, 0.15f);
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, true, true, true, 0.15f);
 
 	CChampionWalkState::Enter();
 }

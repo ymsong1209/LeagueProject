@@ -285,6 +285,7 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 		//===================================================================
 
 
+
 		PKT_S_GAME_START::PlayerInfoList playerInfoBuffs = pkt->GetPlayerInfoList();
 		for (auto& playerInfoBuff : playerInfoBuffs)
 		{

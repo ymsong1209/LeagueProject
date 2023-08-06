@@ -16,24 +16,36 @@ CTimedEffect::CTimedEffect(CUnitScript* targetScript, float duration, float dama
 
 CTimedEffect::~CTimedEffect()
 {
+	if (m_eCCType != CC::CLEAR)
+	{
+		m_TargetScript->RemoveCC(m_eCCType);
+	}
 }
 
 void CTimedEffect::tick()
 {
 	m_fDuration -= DT;
-	m_fTimeSinceLastTick += DT;
 
-	if (m_fTimeSinceLastTick >= m_fDuration / m_iNumTicks)
+	if (m_fDamagePerTick != 0 || m_iNumTicks != 0)
 	{
-		m_fTimeSinceLastTick -= m_fDuration / m_iNumTicks;
-		applyDamage();
+		m_fTimeSinceLastTick += DT;
+
+		if (m_fTimeSinceLastTick >= m_fDuration / m_iNumTicks)
+		{
+			m_fTimeSinceLastTick -= m_fDuration / m_iNumTicks;
+			applyDamage();
+		}
 	}
-	
+
+	if (m_eCCType != CC::CLEAR)
+	{
+		applyCC(m_eCCType);
+	}
 }
 
-void CTimedEffect::applyCC()
+void CTimedEffect::applyCC(CC _ccType)
 {
-
+	m_TargetScript->ApplyCC(m_eCCType);
 }
 
 void CTimedEffect::applyDamage()

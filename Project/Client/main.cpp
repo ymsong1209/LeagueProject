@@ -130,6 +130,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
         else
         {
+
             //if (KEY_TAP(KEY::SPACE) && service->GetCurrentSessionCount() > 0)
             //{
             //    Send_CLogin(service, L"KIYO");
@@ -153,9 +154,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 
            CEngine::GetInst()->progress();
-           
+
+
           //if (IsInGame) // C->S 패킷 전송
           //    ServerEventMgr::GetInst()->sendtick(service);
+
 
            // 랜덤으로 온 서버패킷을 핸들러에서 서버 이벤트 매니저에 등록해둠.
           
@@ -185,7 +188,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     
     //// 콘솔 창 닫기
     ////fclose(stdout);
-   // FreeConsole();
+    //FreeConsole();
+
 
 
     return (int) msg.wParam;

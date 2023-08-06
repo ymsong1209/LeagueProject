@@ -2,6 +2,7 @@
 #include <Engine\CScript.h>
 
 class CSkill;
+class CTimedEffect;
 
 class CUnitScript :
     public CScript
@@ -41,15 +42,18 @@ protected:
     float                   m_fAttackSpeed;     // 공격(평타)속도
     float                   m_fAttackRange;     // 공격(평타)사거리
     float                   m_fMoveSpeed;       // 이동속도
+    float                   m_fMoveSpeedFactor; // 이동속도 변화율
 
     Vec3                    m_vNextPos;
     float                   m_fFaceRot;
 
-    bool                    m_bUnitDead;      // 유닛이 죽었는지(HP 0 이하)
+    bool                    m_bUnitDead;        // 유닛이 죽었는지(HP 0 이하)
+
+    vector<CTimedEffect*>   m_TimedEffectList;  // 지속딜 / CC기 관련 리스트
 
 public:
     virtual void begin() override;
-    virtual void tick() override {};
+    virtual void tick() override;
 
     virtual UnitType GetType() { return m_eUnitType; }
     virtual Faction GetFaction() { return m_eFaction; }
@@ -58,20 +62,25 @@ public:
     bool IsUnitDead() { return m_bUnitDead; }
     void SetUnitDead(bool _dead) { m_bUnitDead = _dead; }
 
+    void CheckTimedEffect();
+    void CheckCC();
+
     // 오브젝트의 PathFinder 컴포넌트에 남은 경로값이 있을 때, 해당 경로로 이동
     bool PathFindMove(float _fSpeed, bool _IsRotation = true);
 
 public:
-    float GetCurHP() { return m_fHP; }
-    float GetMaxHP() { return m_fMaxHP; }
     void  SetCurHP(float _f) { m_fHP = _f; }         // 현재 체력 = 인자값
     void  SetCurHPVar(float _f) { m_fHP += _f; }     // 현재 체력 += 인자값
-    float GetMaxHP() const { return m_fMaxHP; }
-
-    float GetCurMP() { return m_fMP; }
     void  SetCurMP(float _f) { m_fMP = _f; }
     void  SetCurMPVar(float _f) { m_fMP += _f; }
+    void  SetCC(CC _cc) { m_eCurCC = _cc; }
+
+    float GetCurHP() { return m_fHP; }
+    float GetMaxHP() { return m_fMaxHP; }
+    float GetMaxHP() const { return m_fMaxHP; }
+    float GetCurMP() { return m_fMP; }
     float GetMaxMP() const { return m_fMaxMP; }
+    CC    GetCC() { return m_eCurCC; }
 
     UINT64           GetServerID() { return m_iServerID; }
     wstring          GetNickname() const { return m_strNickname; }
@@ -98,7 +107,11 @@ public:
 
     // 비동기
     void GetHit(SkillType _type, CGameObject* _SkillTarget, CGameObject* _SkillUser, int _SkillLevel);
+    void RestrictAction(RESTRAINT restriction);
+    void ApplyCC(CC _ccType);
+    void RemoveCC(CC _ccType);
 
+    void AddTimedEffect(CTimedEffect* _effect) { m_TimedEffectList.push_back(_effect); }
 
     CSkill* GetSkill(int _i) { if (_i < 0 || _i >= 5) return nullptr; return m_Skill[_i]; }
     int     GetSkillLevel(int _i) { return m_SkillLevel[_i]; }
