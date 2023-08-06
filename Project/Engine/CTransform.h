@@ -30,6 +30,10 @@ private:
     float   m_fRayRange;
     float   m_fOutlinethickness;
 
+    bool    m_bBillBoard;
+    bool    m_bCustomBillBoard;
+    Vec3    m_vCustomBillBoardAngle;
+
 public:
     void SetRelativePos(Vec3 _vPos) { m_vRelativePos = _vPos; }
     void SetRelativeScale(Vec3 _vScale) { m_vRelativeScale = _vScale; }
@@ -81,6 +85,14 @@ public:
 
     void SetOutlineThickness(float _Thickenss) { m_fOutlinethickness = _Thickenss; }
     float GetOutlineThickness() { return m_fOutlinethickness; }
+
+    bool  IsBillBoard() { return m_bBillBoard; }
+    void  SetBillBoard(bool _state) { m_bBillBoard = _state; }
+
+    bool  IsUsingCustomBillBoard() { return m_bCustomBillBoard; }
+    void  SetUsingCustomBillBoard(bool _state) { m_bCustomBillBoard = _state; }
+    void  SetCustomBillBoardAngle(Vec3 _Angle) { m_vCustomBillBoardAngle = _Angle; }
+    Vec3  GetCustomBillBoardAngle() { return m_vCustomBillBoardAngle; }
 
 public:
     virtual void finaltick() override;

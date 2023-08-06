@@ -66,11 +66,8 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CKrugMiniScript");
 	_vec.push_back(L"CKrugScript");
 	_vec.push_back(L"CMinimapUIScript");
-	_vec.push_back(L"CMinionHPRatioScript");
-	_vec.push_back(L"CMinionHPSpawnScript");
 	_vec.push_back(L"CMinionScript");
 	_vec.push_back(L"CMobScript");
-	_vec.push_back(L"CMonsterHPBarUIScript");
 	_vec.push_back(L"CMouseCursorUIScript");
 	_vec.push_back(L"CMoveCursorUIScript");
 	_vec.push_back(L"CMurkWolfMiniScript");
@@ -400,24 +397,12 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CMinimapUIScript";
 		break;
 
-	case SCRIPT_TYPE::MINIONHPRATIOSCRIPT:
-		return L"CMinionHPRatioScript";
-		break;
-
-	case SCRIPT_TYPE::MINIONHPSPAWNSCRIPT:
-		return L"CMinionHPSpawnScript";
-		break;
-
 	case SCRIPT_TYPE::MINIONSCRIPT:
 		return L"CMinionScript";
 		break;
 
 	case SCRIPT_TYPE::MOBSCRIPT:
 		return L"CMobScript";
-		break;
-
-	case SCRIPT_TYPE::MONSTERHPBARUISCRIPT:
-		return L"CMonsterHPBarUIScript";
 		break;
 
 	case SCRIPT_TYPE::MOUSECURSORUISCRIPT:

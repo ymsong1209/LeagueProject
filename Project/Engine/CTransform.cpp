@@ -3,6 +3,8 @@
 
 #include "CDevice.h"
 #include "CConstBuffer.h"
+#include "CRenderMgr.h"
+#include "CCamera.h"
 
 CTransform::CTransform()
 	: CComponent(COMPONENT_TYPE::TRANSFORM)
@@ -18,6 +20,8 @@ CTransform::CTransform()
 	, m_fRayRange(20)
 	, m_bUseMouseOutLine(false)
 	, m_fOutlinethickness(0.072f)
+	, m_bBillBoard(false)
+	, m_bCustomBillBoard(false)
 {
 	SetName(L"Transform");
 }
@@ -32,6 +36,8 @@ CTransform::CTransform(const CTransform& _other)
 	, m_bGizmoObjExcept(_other.m_bGizmoObjExcept)
 	, m_bIsShootingRay(_other.m_bIsShootingRay)
 	, m_fRayRange(_other.m_fRayRange)
+	, m_bBillBoard(_other.m_bBillBoard)
+	, m_bCustomBillBoard(_other.m_bCustomBillBoard)
 {
 	SetName(L"Transform");
 }
@@ -43,6 +49,25 @@ CTransform::~CTransform()
 
 void CTransform::finaltick()
 {
+	if (m_bBillBoard)
+	{
+		Vec3 CamRotated = CRenderMgr::GetInst()->GetMainCam()->Transform()->GetRelativeRot();
+
+		if (m_bCustomBillBoard)
+		{
+			//m_vCustomBillBoardAngle;
+			SetRelativeRot(CamRotated.x + m_vCustomBillBoardAngle.x, CamRotated.y + m_vCustomBillBoardAngle.y, CamRotated.z + m_vCustomBillBoardAngle.z);
+		}
+
+		else
+		{
+			SetRelativeRot(CamRotated.x, CamRotated.y, CamRotated.z);
+		}
+		
+		 
+	}
+
+
 	m_matWorldScale = XMMatrixIdentity(); // 단위행렬 만들기
 	m_matWorldScale = XMMatrixScaling(m_vRelativeScale.x, m_vRelativeScale.y, m_vRelativeScale.z);
 

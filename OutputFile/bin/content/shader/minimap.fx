@@ -67,8 +67,10 @@ float4 PS_MiniMapShader(VS_OUT _in) : SV_Target
     float2 PlayerPosUV3 = float2(PlayerPos3.x / mapSize, 1 - (PlayerPos3.y / mapSize));
     float2 PlayerPosUV4 = float2(PlayerPos4.x / mapSize, 1 - (PlayerPos4.y / mapSize));
 	
-    vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
-	vFilterColor = g_tex_1.Sample(g_sam_0, _in.vUV);
+    vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV); 
+    vFilterColor = g_tex_1.Sample(g_sam_0, _in.vUV);
+    //vFilterColor.x += (76.f / 512.f);
+    //vFilterColor.y += (76.f / 512.f);
 
 	if (vFilterColor.x != 1.f)
     {

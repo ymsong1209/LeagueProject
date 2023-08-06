@@ -431,8 +431,10 @@ void CreateTestLevel()
 
 	 pRectFast->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
 	 pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
+	 pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MiniMapMtrl"), 0);
 	 //pRectFast->MeshRender()->GetDynamicMaterial(0);
-	 pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Fighter.bmp"));
+	 pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\MiniMap.dds"));
+	 pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"FogFilterMap"));
 
 	 pRectFast->Collider2D()->SetAbsolute(false);
 	 pRectFast->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
@@ -477,14 +479,14 @@ void CreateTestLevel()
 	 RayCubeTestObj1->Transform()->SetUseMouseOutline(true);
 
 	 RayCubeTestObj1->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
-	 RayCubeTestObj1->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+	 RayCubeTestObj1->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
 	 RayCubeTestObj1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
 	 RayCubeTestObj1->MeshRender()->GetDynamicMaterial(0);
 
 	 RayCubeTestObj1->Collider3D()->SetAbsolute(false);
 	 RayCubeTestObj1->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
 	 RayCubeTestObj1->Collider3D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
-	 RayCubeTestObj1->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+	 RayCubeTestObj1->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::CUBE);
 
 
 	 SpawnGameObject(RayCubeTestObj1, Vec3(-600.f, -450.f, 700.f), 0);
@@ -500,14 +502,14 @@ void CreateTestLevel()
 	 RayCubeTestObj2->Transform()->SetUseMouseOutline(true);
 
 	 RayCubeTestObj2->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
-	 RayCubeTestObj2->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+	 RayCubeTestObj2->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
 	 RayCubeTestObj2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
 	 RayCubeTestObj2->MeshRender()->GetDynamicMaterial(0);
 
 	 RayCubeTestObj2->Collider3D()->SetAbsolute(false);
 	 RayCubeTestObj2->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
 	 RayCubeTestObj2->Collider3D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
-	 RayCubeTestObj2->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+	 RayCubeTestObj2->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::CUBE);
 
 
 	 SpawnGameObject(RayCubeTestObj2, Vec3(-600.f, -450.f, 960.f), 0);

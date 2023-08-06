@@ -211,6 +211,48 @@ void TransformUI::RenderGizmo()
 
 		ImGui::Text("X: %f Y: %f", io.MousePos.x, io.MousePos.y);
 
+		ImGui::Text("Bill Board"); ImGui::SameLine();
+
+		int IsBillBoard = GetTarget()->Transform()->IsBillBoard();
+		int isUsingCustomBillBoard = GetTarget()->Transform()->IsUsingCustomBillBoard();
+
+		if (ImGui::RadioButton("Use", &IsBillBoard, 1))
+		{
+			GetTarget()->Transform()->SetBillBoard(true); 
+		}
+		ImGui::SameLine();
+		 if (ImGui::RadioButton("Not Use", &IsBillBoard, 0))
+		{
+			GetTarget()->Transform()->SetBillBoard(false);
+		}
+
+		 if (IsBillBoard)
+		 {
+			 
+			 if (ImGui::RadioButton("Use Custom", &isUsingCustomBillBoard, 1))
+			 {
+				 GetTarget()->Transform()->SetUsingCustomBillBoard(true);
+			 }
+
+			 ImGui::SameLine();
+
+			 if (ImGui::RadioButton("Not Use Custom", &isUsingCustomBillBoard, 0))
+			 {
+				 GetTarget()->Transform()->SetUsingCustomBillBoard(false);
+			 }
+
+			 if (isUsingCustomBillBoard == true)
+			 {
+				 Vec3 CustomAngle = GetTarget()->Transform()->GetCustomBillBoardAngle();
+				 float CustomAnglee[3] = { CustomAngle.x, CustomAngle.y, CustomAngle.z };
+				 ImGui::Text("Custom Angle"); ImGui::SameLine();
+				 ImGui::DragFloat3("##CustomAngle", CustomAnglee);
+				 GetTarget()->Transform()->SetCustomBillBoardAngle(Vec3(CustomAnglee[0], CustomAnglee[1], CustomAnglee[2]));
+			 }
+
+		 }
+
+
 		//Ray를 쏘는 Object인지 체크
 		bool IsShootingRay = GetTarget()->Transform()->GetIsShootingRay();
 		ImGui::Text("Ray Object"); ImGui::SameLine();
