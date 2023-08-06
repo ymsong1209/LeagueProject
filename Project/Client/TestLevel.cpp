@@ -416,7 +416,7 @@ void CreateTestLevel()
 
 
 	PlaceLand();
-	SpawnJungleMob();
+	//SpawnJungleMob();
 
 
 	 // TestFastForward

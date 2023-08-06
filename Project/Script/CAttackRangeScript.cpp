@@ -12,7 +12,6 @@ CAttackRangeScript::CAttackRangeScript()
 
 CAttackRangeScript::~CAttackRangeScript()
 {
-	Safe_Del_Vec(m_vecUnitsInRange);
 }
 
 void CAttackRangeScript::begin()
