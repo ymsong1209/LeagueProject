@@ -1,28 +1,10 @@
 #pragma once
 #include "CMobScript.h"
 
-enum class JungleType
-{
-    DEFAULT,//Default면 안됨
-    RAZORBEAK,
-    RAZORBEAK_MINI,
-    MURK_WOLF,
-    MURK_WOLF_MINI,
-    KRUG,
-    KRUG_MINI,
-    GROMP,
-    BLUE,
-    RED,
-    DRAGON,
-    BARON,
-    END
-};
-
 class CJungleMonsterScript :
     public CMobScript
 {
 protected:
-    JungleType      m_eJungleType;
     Vec3            m_vAggroPos;
     Vec3            m_vSpawnPos;   
     Vec3            m_vSpawnRot;
@@ -32,8 +14,6 @@ protected:
     bool            m_bReturnActive;        //다시 spawn지점으로 돌아갈것인지
     float           m_fMaxReturnTime;       //어그로 범위 밖에서 target이 몇초동안 있을수 있을지
     float           m_fCurReturnTime;       //어그로 범위 밖에서 target이 몇초동안 있었는지
-
-    bool            m_bTest;                //공격 받았는지 활성화해주는 testcode,
 
 
 public:
@@ -51,6 +31,9 @@ public:
     Vec3    GetAggroPos() { return m_vAggroPos; }
 
     CGameObject* GetTarget() { return m_pTarget; }
+
+    void GetHit(CGameObject* _target);
+    void ReleaseTarget() { m_pTarget = nullptr; }
 
 public:
     virtual void begin() override;

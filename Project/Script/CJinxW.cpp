@@ -8,7 +8,7 @@
 CJinxW::CJinxW()
 {
 	m_strSkillName = L"Zap!";
-	m_fCoolDown = 0.f;
+	m_fCoolDown = 5.f;
 	m_iMaxLevel = 5;
 	m_fCost = 50.f;
 
@@ -18,15 +18,16 @@ CJinxW::CJinxW()
 	Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
 	Projectile->Collider2D()->SetOffsetScale(Vec2(5.f, 20.f));
 	Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
+	Projectile->Collider2D()->SetDrawCollision(true);
 	Projectile->SetName(L"JinxW");
 	
 	Ptr<CPrefab> NewPrefab = new CPrefab;
 	CGameObject* PrefabObject = Projectile->Clone();
 	NewPrefab->RegisterProtoObject(Projectile);
 
-	m_vecSkillObj.push_back(NewPrefab);
+	//m_vecSkillObj.push_back(NewPrefab);
 
-	// Åõ»çÃ¼ ½ºÅ©¸³Æ®
+	// íˆ¬ì‚¬ì²´ ìŠ¤í¬ë¦½íŠ¸
 	m_iProjectileCount = 1;
 	m_ProjectileScript = new CJinxWScript;
 }
@@ -42,14 +43,14 @@ void CJinxW::tick()
 
 bool CJinxW::Use()
 {
-	// ½ºÅ³ ÄğÅ¸ÀÓ ÃÊ±âÈ­
+	// ìŠ¤í‚¬ ì¿¨íƒ€ì„ ì´ˆê¸°í™”
 	if (!CSkill::Use())
 		return false;
 
-	// ¼­¹ö¿¡°Ô ±âº» °ø°İ »ç¿ë ½ÅÈ£¸¦ Àü´Ş
+	// ì„œë²„ì—ê²Œ ê¸°ë³¸ ê³µê²© ì‚¬ìš© ì‹ í˜¸ë¥¼ ì „ë‹¬
 	CSendServerEventMgr::GetInst()->SendUseSkillPacket(
 		m_UserObj->GetScript<CUnitScript>()->GetServerID(),
-		UINT64_MAX,		// ³íÅ¸°ÙÆÃÀÏ °æ¿ì UINT64_MAX¸¦ ½áÁÖ¼¼¿ä
+		UINT64_MAX,		// ë…¼íƒ€ê²ŸíŒ…ì¼ ê²½ìš° UINT64_MAXë¥¼ ì¨ì£¼ì„¸ìš”
 		m_UserObj->GetScript<CUnitScript>()->GetSkillLevel(2),
 		SkillType::JINX_W,
 		Vec3(0, 0, 0),
@@ -59,31 +60,34 @@ bool CJinxW::Use()
 		true,
 		GetMouseDir());
 
+	// ì¿¨íƒ€ì„ ì´ˆê¸°í™”
+	m_fCurCoolDown = m_fCoolDown;
+
 	return true;
 }
 
 void CJinxW::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _SkillLevel)
 {
-	// Â¡Å©½º w Åõ»çÃ¼°¡ Àû°ú Ãæµ¹½Ã ÀÌ ÇÔ¼ö¿¡ º»ÀÎ ½ºÅ©¸³Æ® ³Ö¾î¼­ È£ÃâÇÒ °ÍÀÓ
+	// ì§•í¬ìŠ¤ w íˆ¬ì‚¬ì²´ê°€ ì ê³¼ ì¶©ëŒì‹œ ì´ í•¨ìˆ˜ì— ë³¸ì¸ ìŠ¤í¬ë¦½íŠ¸ ë„£ì–´ì„œ í˜¸ì¶œí•  ê²ƒì„
 
 	float Damage = 0;
 
-	// ½ÃÀüÀÚÀÇ ·¹º§, ±âº» °ø°İ·Â µî¿¡ µû¶ó µ¥¹ÌÁö °è»ê
-	CChampionScript* ChampScript = dynamic_cast<CChampionScript*>(_UserScript);
-	if (ChampScript != nullptr)
+	// ì‹œì „ìì˜ ë ˆë²¨, ê¸°ë³¸ ê³µê²©ë ¥ ë“±ì— ë”°ë¼ ë°ë¯¸ì§€ ê³„ì‚°
+	CChampionScript* ChamScript = dynamic_cast<CChampionScript*>(_UserScript);
+	if (ChamScript != nullptr)
 	{
 		float BaseDamage = 50.f;
-		int   level		 = ChampScript->GetLevel();
-		float AttackPow  = ChampScript->GetAttackPower();
+		int   level		 = ChamScript->GetLevel();
+		float AttackPow  = ChamScript->GetAttackPower();
 
-		// ¿¹½ÃÀÔ´Ï´Ù
+		// ì˜ˆì‹œì…ë‹ˆë‹¤
 		Damage = BaseDamage + (level * 2) + (AttackPow * 0.3f);
 	}
 	
-	CChampionScript* TargetChampScript = dynamic_cast<CChampionScript*>(_TargetScript);
-	if (TargetChampScript != nullptr)
+	CUnitScript* TargetUnitScript = dynamic_cast<CUnitScript*>(_TargetScript);
+	if (TargetUnitScript != nullptr)
 	{
-		float DefencePow = TargetChampScript->GetDefencePower();
+		float DefencePow = TargetUnitScript->GetDefencePower();
 
 		Damage -= DefencePow;
 
@@ -91,16 +95,21 @@ void CJinxW::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _S
 
 		if (Damage < minDam)
 		{
-			// µ¥¹ÌÁö ÃÖ¼Ò°ª
+			// ë°ë¯¸ì§€ ìµœì†Œê°’
 			Damage = minDam;
 		}
 	}
 
-	TargetChampScript->SetCurHPVar(-Damage);
+	TargetUnitScript->SetCurHPVar(-Damage);
 
-	// 2ÃÊ µ¿¾È µĞÈ­½ÃÅµ´Ï´Ù.
-	CTimedEffect* JinxWSlow = new CTimedEffect(TargetChampScript, 2.f, 0, 0, CC::SLOW);
-	TargetChampScript->AddTimedEffect(JinxWSlow);
+	// 2ì´ˆ ë™ì•ˆ ë‘”í™”ì‹œí‚µë‹ˆë‹¤.
+	CTimedEffect* JinxWSlow = new CTimedEffect(TargetUnitScript, 2.f, 0, 0, CC::SLOW);
+	TargetUnitScript->AddTimedEffect(JinxWSlow);
 
-	CSkill::GetHit(_UserScript, _TargetScript, _SkillLevel);
+	// í…ŒìŠ¤íŠ¸ìš© ë„íŠ¸ë”œ
+	CTimedEffect* TestDot = new CTimedEffect(TargetUnitScript, 3.f, 5.f, 6, CC::CLEAR);
+	TargetUnitScript->AddTimedEffect(TestDot);
+  
+  CSkill::GetHit(_UserScript, _TargetScript, _SkillLevel);
+
 }

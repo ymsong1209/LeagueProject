@@ -62,6 +62,7 @@ public:
     void AddChild(CGameObject* _Object);
 
     void ChangeLayer(int _NewLayerIdx);
+    void ChangeLayer(const wstring& _LayerName);
 
     CComponent* GetComponent(COMPONENT_TYPE _ComType) { return m_arrCom[(UINT)_ComType]; }
     const vector<CGameObject*>& GetChild() { return m_vecChild; }

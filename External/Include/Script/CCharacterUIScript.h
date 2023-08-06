@@ -16,8 +16,6 @@ private:
 
     SkillNum SkillNumber;
 
-    CHARACTER_TYPE PrevCharacter; //캐릭터 변경 디버깅용
-
     CGameObject* Spell_D;
     CGameObject* Spell_F;
 

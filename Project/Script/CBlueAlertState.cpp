@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CBlueAlertState.h"
 #include <Engine/CAnim3D.h>
+#include "CBlueScript.h"
 
 CBlueAlertState::CBlueAlertState()
 	: m_iAggroAnimNum(1)
@@ -17,6 +18,8 @@ void CBlueAlertState::Enter()
 	wstring basename = L"jungle_blue\\sru_blue_idle_aggro";
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
 	GetOwner()->Animator3D()->PlayOnce(basename);
+	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"jungle_blue\\sru_blue_idle_aggro", false, false, false, 0.f);
 	CJungleAlertState::Enter();
 }
 
@@ -33,6 +36,8 @@ void CBlueAlertState::tick()
 
 		GetOwner()->Animator3D()->GetCurAnim()->Reset();
 		GetOwner()->Animator3D()->PlayOnce(basename);
+		UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+		CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, basename, false, false, false, 0.f);
 	}
 	CJungleAlertState::tick();
 }

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CRedAlertState.h"
 #include <Engine/CAnim3D.h>
+#include "CRedScript.h"
 
 CRedAlertState::CRedAlertState()
 	: m_iAggroAnimNum(1)
@@ -17,6 +18,8 @@ void CRedAlertState::Enter()
 	wstring basename = L"jungle_red\\sru_red_idle1_aggro";
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
 	GetOwner()->Animator3D()->PlayOnce(basename);
+	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, basename, false, false, false, 0.f);
 	CJungleAlertState::Enter();
 }
 
@@ -32,6 +35,8 @@ void CRedAlertState::tick()
 		}
 		GetOwner()->Animator3D()->GetCurAnim()->Reset();
 		GetOwner()->Animator3D()->PlayOnce(basename);
+		UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+		CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, basename, false, false, false, 0.f);
 	}
 	CJungleAlertState::tick();
 }

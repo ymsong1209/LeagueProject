@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CMinimapUIScript.h"
 #include <Engine\CLevelMgr.h>
+#include "CUnitScript.h"
 
 void CMinimapUIScript::begin()
 {
@@ -9,6 +10,12 @@ void CMinimapUIScript::begin()
 	Map->AddComponent(new CTransform);
 	Map->Transform()->SetRelativeScale(Vec3(1.f, 1.f, 0.1f));
 	SpawnGameObject(Map, Vec3(163.9f, -90.5f, 20.f), 31);
+
+	vector<CGameObject*> AllPlayer = CSendServerEventMgr::GetInst()->GetVecAllPlayer();
+	for (size_t i = 0; i < AllPlayer.size(); ++i)
+	{
+		m_vAllPlayer.push_back(AllPlayer[i]);
+	}
 
 	CGameObject* MinimapFrame = new CGameObject;
 	MinimapFrame->SetName(L"MiniMapFrame");
@@ -35,53 +42,39 @@ void CMinimapUIScript::begin()
 	Minimap->MeshRender()->GetDynamicMaterial(0);
 	Minimap->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\MiniMap.dds"));
 	Minimap->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"FogFilterMap"));
-
 	Map->AddChild(Minimap);
-
-	CLevel* CurLevel = CUR_LEVEL;
-
-	Player1 = CurLevel->FindObjectByName(L"Jinx");
-	Player2 = CurLevel->FindObjectByName(L"Jinx2");
-	Player3 = CurLevel->FindObjectByName(L"Jinx3");
-	Player4 = CurLevel->FindObjectByName(L"Jinx4");
 
 }
 
 void CMinimapUIScript::tick()
 {
-	Vec2 MapSize = Vec2(0.232727f, 0.232727f);
-	if (Player1)
+	if (m_vAllPlayer.size() != 0)
 	{
-		Vec2 Pos1 = Vec2(Player1->Transform()->GetRelativePos().x - 100.f, Player1->Transform()->GetRelativePos().z + 150.f);
-		Pos1 *= MapSize;
-		Minimap->MeshRender()->GetMaterial(0)->SetScalarParam(VEC2_0, &Pos1);
-		Minimap->MeshRender()->GetMaterial(0)->SetTexParam(TEX_2, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\UI\\hud\\jinx_circle.png"));
-	}
+		Vec2 MapSize = Vec2(0.232727f, 0.232727f);
+		for (size_t i = 0; i < m_vAllPlayer.size(); ++i)
+		{
+			ChampionType CHAMPTYPE = m_vAllPlayer[i]->GetScript<CUnitScript>()->GetChampType();
+			Vec2 Pos = Vec2(m_vAllPlayer[i]->Transform()->GetRelativePos().x - 100.f, m_vAllPlayer[i]->Transform()->GetRelativePos().z + 150.f);
+			Pos *= MapSize;
+			Minimap->MeshRender()->GetMaterial(0)->SetScalarParam((SCALAR_PARAM)(24 + i), &Pos);
 
-	if (Player2)
-	{
-		Vec2 Pos2 = Vec2(Player2->Transform()->GetRelativePos().x - 100.f, Player2->Transform()->GetRelativePos().z + 150.f);
-		Pos2 *= MapSize;
-		Minimap->MeshRender()->GetMaterial(0)->SetScalarParam(VEC2_1, &Pos2);
-		Minimap->MeshRender()->GetMaterial(0)->SetTexParam(TEX_3, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\UI\\hud\\malphite_circle.png"));
+			switch ((UINT)CHAMPTYPE)
+			{
+			case (UINT)ChampionType::JINX:
+				Minimap->MeshRender()->GetMaterial(0)->SetTexParam((TEX_PARAM)(2 + i), CResMgr::GetInst()->FindRes<CTexture>(L"texture\\UI\\hud\\jinx_circle.png"));
+				break;
+			case (UINT)ChampionType::MALPHITE:
+				Minimap->MeshRender()->GetMaterial(0)->SetTexParam((TEX_PARAM)(2 + i), CResMgr::GetInst()->FindRes<CTexture>(L"texture\\UI\\hud\\malphite_circle.png"));
+				break;
+			case (UINT)ChampionType::AMUMU:
+				Minimap->MeshRender()->GetMaterial(0)->SetTexParam((TEX_PARAM)(2 + i), CResMgr::GetInst()->FindRes<CTexture>(L"texture\\UI\\hud\\amumu_circle_0.png"));
+				break;
+			case (UINT)ChampionType::BLITZCRANK:
+				Minimap->MeshRender()->GetMaterial(0)->SetTexParam((TEX_PARAM)(2 + i), CResMgr::GetInst()->FindRes<CTexture>(L"texture\\UI\\hud\\steamgolem_circle.png"));
+				break;
+			}
+		}
 	}
-
-	if (Player3)
-	{
-		Vec2 Pos3 = Vec2(Player3->Transform()->GetRelativePos().x - 100.f, Player3->Transform()->GetRelativePos().z + 150.f);
-		Pos3 *= MapSize;
-		Minimap->MeshRender()->GetMaterial(0)->SetScalarParam(VEC2_2, &Pos3);
-		Minimap->MeshRender()->GetMaterial(0)->SetTexParam(TEX_4, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\UI\\hud\\soraka_circle_15.png"));
-	}
-
-	if (Player4)
-	{
-		Vec2 Pos4 = Vec2(Player4->Transform()->GetRelativePos().x - 100.f, Player4->Transform()->GetRelativePos().z + 150.f);
-		Pos4 *= MapSize;
-		Minimap->MeshRender()->GetMaterial(0)->SetScalarParam(VEC2_3, &Pos4);
-		Minimap->MeshRender()->GetMaterial(0)->SetTexParam(TEX_5, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\UI\\hud\\vayne_circle_11.png"));
-	}
-
 }
 
 void CMinimapUIScript::BeginOverlap(CCollider2D* _Other)

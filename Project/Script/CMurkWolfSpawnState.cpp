@@ -14,6 +14,8 @@ CMurkWolfSpawnState::~CMurkWolfSpawnState()
 void CMurkWolfSpawnState::Enter()
 {
 	GetOwner()->Animator3D()->PlayOnce(L"MurkWolf\\sru_murkwolf_spawn");
+	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"MurkWolf\\sru_murkwolf_spawn", false, false, false, 0.f);
 }
 
 void CMurkWolfSpawnState::tick()
@@ -29,7 +31,9 @@ void CMurkWolfSpawnState::Exit()
 	script->SetAggroRange(95.f);
 
 	GetOwner()->AddComponent(new CCollider3D);
-	GetOwner()->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
+	GetOwner()->Collider3D()->SetAbsolute(true);
+	GetOwner()->Collider3D()->SetDrawCollision(false);
+	GetOwner()->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
 
 	GetOwner()->AddComponent(new CCollider2D);
 	GetOwner()->Collider2D()->SetAbsolute(true);

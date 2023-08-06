@@ -46,5 +46,24 @@ void CJungleReturnState::Exit()
 	CJungleMonsterScript* script = GetOwner()->GetScript<CJungleMonsterScript>();
 	GetOwner()->Transform()->SetRelativePos(script->GetSpawnPos());
 	GetOwner()->Transform()->SetRelativeRot(script->GetSpawnRot());
+	script->ReleaseTarget();
 }
 
+void CJungleReturnState::HandleEvent(CGameEvent& event)
+{
+	if (event.GetType() == GAME_EVENT_TYPE::GET_HIT) {
+		GetHitEvent* HitEvent = dynamic_cast<GetHitEvent*>(&event);
+
+		// 맞은 타겟이 본인인 경우에만 이벤트에 반응
+		if (HitEvent->GetTargetObj() == GetOwner())
+		{
+			CGameObject* SkillUser = HitEvent->GetUserObj();
+			CGameObject* SkillTarget = HitEvent->GetTargetObj();
+			SkillType skilltype = HitEvent->GetSkillType();
+			int	skillLevel = HitEvent->GetSkillLevel();
+
+			GetOwnerFSM()->GetOwner()->GetScript<CUnitScript>()->GetHit(skilltype, SkillTarget, SkillUser, skillLevel);
+		}
+	}
+
+}

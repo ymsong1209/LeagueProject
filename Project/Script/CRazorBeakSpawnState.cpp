@@ -14,6 +14,8 @@ CRazorBeakSpawnState::~CRazorBeakSpawnState()
 void CRazorBeakSpawnState::Enter()
 {
 	GetOwner()->Animator3D()->PlayOnce(L"RazorBeak\\Spawn");
+	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"RazorBeak\\Spawn", false, false, false, 0.f);
 }
 
 void CRazorBeakSpawnState::tick()
@@ -29,7 +31,9 @@ void CRazorBeakSpawnState::Exit()
 	script->SetAggroRange(85.f);
 
 	GetOwner()->AddComponent(new CCollider3D);
-	GetOwner()->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
+	GetOwner()->Collider3D()->SetAbsolute(true);
+	GetOwner()->Collider3D()->SetDrawCollision(false);
+	GetOwner()->Collider3D()->SetOffsetScale(Vec3(25.f, 25.f, 25.f));
 
 	GetOwner()->AddComponent(new CCollider2D);
 	GetOwner()->Collider2D()->SetAbsolute(true);

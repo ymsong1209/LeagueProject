@@ -14,7 +14,6 @@
 CBlueScript::CBlueScript()
 	:CJungleMonsterScript((UINT)BLUESCRIPT)
 {
-	m_eJungleType = JungleType::BLUE;
 }
 
 CBlueScript::~CBlueScript()
