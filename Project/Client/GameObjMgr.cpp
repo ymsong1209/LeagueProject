@@ -182,17 +182,25 @@ void GameObjMgr::SendMyPlayerMove(ClientServiceRef _service)
 	PrevPos = CurPos;
 
 	Vec3  CurRot = obj->Transform()->GetRelativeRot();
-	//float CurLV = obj->GetScript<CUnitScript>()->GetLV();
+	int   CurLV = obj->GetScript<CUnitScript>()->GetLevel();
 	float CurHP = obj->GetScript<CUnitScript>()->GetCurHP();
 	float CurMP = obj->GetScript<CUnitScript>()->GetCurMP();
+	float MaxHP = obj->GetScript<CUnitScript>()->GetMaxHP();
+	float MaxMP = obj->GetScript<CUnitScript>()->GetMaxMP();
+
 	float CurAttackPower = obj->GetScript<CUnitScript>()->GetAttackPower();
 	float CurDefencePower = obj->GetScript<CUnitScript>()->GetDefencePower();
 	CC CurCC = obj->GetScript<CUnitScript>()->GetCC();
+	
+	bool bUnitDead = obj->GetScript<CUnitScript>()->IsUnitDead();
+
 
 	ObjectMove move = {};
-	//move.LV = CurLV;
+	move.LV = CurLV;
 	move.HP = CurHP;
 	move.MP = CurMP;
+	move.MaxHP = MaxHP;
+	move.MaxMP = MaxMP;
 	move.AttackPower = CurAttackPower;
 	move.DefencePower = CurDefencePower;
 	move.pos.x = CurPos.x;
@@ -203,6 +211,7 @@ void GameObjMgr::SendMyPlayerMove(ClientServiceRef _service)
 	move.moveDir.z = CurRot.z;
 	move.CC = CurCC;
 
+	move.bUnitDead = bUnitDead;
 	// 서버에게 패킷 전송
 	std::cout << "C_PLAYER_MOVE Pakcet. id : "<< MyPlayer.id << endl;
 	PKT_C_PLAYER_MOVE_WRITE pktWriter(move);
@@ -232,7 +241,6 @@ void GameObjMgr::SendObjectMove(uint64 _id, CGameObject* _obj, ClientServiceRef 
 		_objectsPrevPos.at(_id) = CurPos; // 현재 좌표를 이전좌표로 저장
 		
 		Vec3  CurRot = obj->Transform()->GetRelativeRot();
-		//float CurLV = obj->GetScript<CUnitScript>()->GetLV();
 	
 		ObjectMove move = {};
 		if (FindObject(_id)->GetScript<CUnitScript>() != nullptr)
@@ -241,14 +249,21 @@ void GameObjMgr::SendObjectMove(uint64 _id, CGameObject* _obj, ClientServiceRef 
 			float CurMP = obj->GetScript<CUnitScript>()->GetCurMP();
 			float CurAttackPower = obj->GetScript<CUnitScript>()->GetAttackPower();
 			float CurDefencePower = obj->GetScript<CUnitScript>()->GetDefencePower();
-	
+			float MaxHP = obj->GetScript<CUnitScript>()->GetMaxHP();
+			float MaxMP = obj->GetScript<CUnitScript>()->GetMaxMP();
+			CC CurCC = obj->GetScript<CUnitScript>()->GetCC();
+			bool bUnitDead = obj->GetScript<CUnitScript>()->IsUnitDead();
 			move.HP = CurHP;
 			move.MP = CurMP;
+			move.MaxHP = MaxHP;
+			move.MaxMP = MaxMP;
+
 			move.AttackPower = CurAttackPower;
 			move.DefencePower = CurDefencePower;
+			move.CC = CurCC;
+			move.bUnitDead = bUnitDead;
 		}
 	
-		//move.LV = CurLV;
 		move.pos.x = CurPos.x;
 		move.pos.y = CurPos.y;
 		move.pos.z = CurPos.z;
