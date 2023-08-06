@@ -128,7 +128,6 @@ void CJungleMonsterScript::CheckReturnTime()
 	if (m_fMaxReturnTime < m_fCurReturnTime || ChampScript->IsUnitDead()) {
 		GetOwner()->Fsm()->ChangeState(L"Return");
 		m_pTarget = nullptr;
-		m_bTest = false;
 		m_bReturnActive = false;
 		m_fCurReturnTime = 0.f;
 	}
