@@ -516,7 +516,7 @@ void CreateTestLevel()
 	TestTurret->AddComponent(new CTransform);
 	TestTurret->AddComponent(new CCollider2D);
 	TestTurret->SetName(L"TestTurret");
-	TestTurret->AddComponent(new CTurretScript);
+	//ddddTestTurret->AddComponent(new CTurretScript);
 	TestTurret->AddComponent(new CMeshRender);
 	TestTurret->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
 	TestTurret->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);

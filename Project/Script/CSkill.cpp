@@ -20,6 +20,8 @@ CSkill::~CSkill()
 {
 	if (m_ProjectileScript)
 		delete m_ProjectileScript;
+
+	Safe_Del_Vec(m_vecSkillObj);
 }
 
 void CSkill::tick()

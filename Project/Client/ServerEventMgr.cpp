@@ -172,6 +172,8 @@ void ServerEventMgr::clienttick()
 			case SERVER_EVENT_TYPE::ANIM_PACKET:
 			{
 				CGameObject* NewObject = (CGameObject*)m_vecEvent[i].wParam;
+
+				if (NewObject == nullptr) break;
 				AnimInfo* animInfo = (AnimInfo*)(m_vecEvent[i].lParam);
 
 				if (animInfo->bRepeat)
