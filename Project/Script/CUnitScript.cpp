@@ -195,3 +195,102 @@ void CUnitScript::RemoveCC(CC _ccType)
 {
 	m_eCurCC = static_cast<CC>(static_cast<int>(m_eCurCC) & ~static_cast<int>(_ccType));
 }
+
+void CUnitScript::SaveToLevelFile(FILE* _File)
+{
+	SaveWString(m_strNickname, _File);
+	fwrite(&m_eUnitType, sizeof(UnitType), 1, _File);
+	fwrite(&m_eFaction, sizeof(Faction), 1, _File);
+
+	fwrite(&m_eCurCC, sizeof(CC), 1, _File);
+	fwrite(&m_eRestraint, sizeof(RESTRAINT), 1, _File);
+
+	fwrite(&m_fHP, sizeof(float), 1, _File);
+	fwrite(&m_fMaxHP, sizeof(float), 1, _File);
+	fwrite(&m_fMP, sizeof(float), 1, _File);
+	fwrite(&m_fMaxMP, sizeof(float), 1, _File);
+
+	fwrite(&m_fAttackPower, sizeof(float), 1, _File);
+	fwrite(&m_fDefencePower, sizeof(float), 1, _File);
+
+	fwrite(&m_fAttackSpeed, sizeof(float), 1, _File);
+	fwrite(&m_fAttackRange, sizeof(float), 1, _File);
+	fwrite(&m_fMoveSpeed, sizeof(float), 1, _File);
+	fwrite(&m_fMoveSpeedFactor, sizeof(float), 1, _File);
+
+}
+
+void CUnitScript::LoadFromLevelFile(FILE* _File)
+{
+	LoadWString(m_strNickname, _File);
+	fread(&m_eUnitType, sizeof(UnitType), 1, _File);
+	fread(&m_eFaction, sizeof(Faction), 1, _File);
+
+	fread(&m_eCurCC, sizeof(CC), 1, _File);
+	fread(&m_eRestraint, sizeof(RESTRAINT), 1, _File);
+
+	fread(&m_fHP, sizeof(float), 1, _File);
+	fread(&m_fMaxHP, sizeof(float), 1, _File);
+	fread(&m_fMP, sizeof(float), 1, _File);
+	fread(&m_fMaxMP, sizeof(float), 1, _File);
+
+	fread(&m_fAttackPower, sizeof(float), 1, _File);
+	fread(&m_fDefencePower, sizeof(float), 1, _File);
+
+	fread(&m_fAttackSpeed, sizeof(float), 1, _File);
+	fread(&m_fAttackRange, sizeof(float), 1, _File);
+	fread(&m_fMoveSpeed, sizeof(float), 1, _File);
+	fread(&m_fMoveSpeedFactor, sizeof(float), 1, _File);
+}
+
+void CUnitScript::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
+{
+	_objValue.AddMember("NickName", SaveWStringJson(m_strNickname, allocator), allocator);
+	_objValue.AddMember("UnitType", (UINT)m_eUnitType, allocator);
+	_objValue.AddMember("Faction", (UINT)m_eFaction, allocator);
+
+	_objValue.AddMember("CurCC", (UINT)m_eCurCC, allocator);
+	_objValue.AddMember("Restraint", (UINT)m_eRestraint, allocator);
+
+	_objValue.AddMember("HP", m_fHP, allocator);
+	_objValue.AddMember("MaxHP", m_fMaxHP, allocator);
+	_objValue.AddMember("MP", m_fMP, allocator);
+	_objValue.AddMember("MaxMP", m_fMaxMP, allocator);
+
+	_objValue.AddMember("AttackPower", m_fAttackPower, allocator);
+	_objValue.AddMember("DefencePower", m_fDefencePower, allocator);
+
+	_objValue.AddMember("AttackSpeed", m_fAttackSpeed, allocator);
+	_objValue.AddMember("AttackRange", m_fAttackRange, allocator);
+	_objValue.AddMember("MoveSpeed", m_fMoveSpeed, allocator);
+	_objValue.AddMember("MoveSpeedFactor", m_fMoveSpeedFactor, allocator);
+
+}
+
+void CUnitScript::LoadFromLevelJsonFile(const Value& _componentValue)
+{
+	const Value& objNameValue = _componentValue["NickName"];
+	if (objNameValue.IsString())
+	{
+		std::wstring objName = StrToWStr(objNameValue.GetString());
+		m_strNickname = objName;
+	}
+	m_eUnitType = (UnitType)_componentValue["UnitType"].GetUint();
+	m_eFaction = (Faction)_componentValue["Faction"].GetUint();
+
+	m_eCurCC = (CC)_componentValue["CurCC"].GetUint();
+	m_eRestraint = (RESTRAINT)_componentValue["Restraint"].GetUint();
+	
+	m_fHP = _componentValue["HP"].GetFloat();
+	m_fMaxHP = _componentValue["MaxHP"].GetFloat();
+	m_fMP = _componentValue["MP"].GetFloat();
+	m_fMaxMP = _componentValue["MaxMP"].GetFloat();
+
+	m_fAttackPower = _componentValue["AttackPower"].GetFloat();
+	m_fDefencePower = _componentValue["DefencePower"].GetFloat();
+
+	m_fAttackSpeed = _componentValue["AttackSpeed"].GetFloat();
+	m_fAttackRange = _componentValue["AttackRange"].GetFloat();
+	m_fMoveSpeed = _componentValue["MoveSpeed"].GetFloat();
+	m_fMoveSpeedFactor = _componentValue["MoveSpeedFactor"].GetFloat();
+}

@@ -42,6 +42,7 @@ void CJungleMonsterScript::GetHit(CGameObject* _target)
 
 void CJungleMonsterScript::begin()
 {
+	
 	GetOwner()->Transform()->SetUseMouseOutline(true);
 	m_Skill[0] = new CBasicAttack;
 	m_Skill[0]->SetOwnerScript(this);
@@ -138,20 +139,24 @@ void CJungleMonsterScript::CheckReturnActive()
 
 void CJungleMonsterScript::SaveToLevelFile(FILE* _File)
 {
+	CMobScript::SaveToLevelFile(_File);
 	fwrite(&m_vAggroPos, sizeof(Vec3), 1, _File);
 }
 
 void CJungleMonsterScript::LoadFromLevelFile(FILE* _FILE)
 {
+	CMobScript::LoadFromLevelFile(_FILE);
 	fread(&m_vAggroPos, sizeof(Vec3), 1, _FILE);
 }
 
 void CJungleMonsterScript::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
 {
+	CMobScript::SaveToLevelJsonFile(_objValue, allocator);
 	_objValue.AddMember("AggroPos", SaveVec3Json(m_vAggroPos, allocator), allocator);
 }
 
 void CJungleMonsterScript::LoadFromLevelJsonFile(const Value& _componentValue)
 {
+	CMobScript::LoadFromLevelJsonFile(_componentValue);
 	m_vAggroPos = LoadVec3Json(_componentValue["AggroPos"]);
 }

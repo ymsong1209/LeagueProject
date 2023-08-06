@@ -25,14 +25,12 @@
 #include <Script\CMinimapUIScript.h>
 #include <Script\CMouseCursorUIScript.h>
 #include <Script/CTurretScript.h>
-#include <Script/CJinxScript.h>
-#include <Script/CGrompScript.h>
 #include <Script\CFontUIScript.h>
 #include <Script\CScorePanelScript.h>
 #include <Script/CJinxScript.h>
+#include <Script/CAttackRangeScript.h>
 
-#include <Script/CTurretScript.h>
-#include <Script/CJinxScript.h>
+
 #include <Script/CGrompScript.h>
 #include <Script/CMurkWolfScript.h>
 #include <Script/CMurkWolfMiniScript.h>
@@ -282,9 +280,22 @@ void CreateTestLevel()
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
 		
 		pObj->Transform()->SetUseMouseOutline(true);
+		CJinxScript* jinxscript = pObj->GetScript<CJinxScript>();
+		jinxscript->SetFaction(Faction::BLUE);
 		
 		SpawnGameObject(pObj, Vec3(0, 0, 0), L"Player");
 
+		CGameObject* JinxAttackRange = new CGameObject;
+		JinxAttackRange->SetName(L"AttackRange");
+		JinxAttackRange->AddComponent(new CTransform);
+		JinxAttackRange->AddComponent(new CCollider2D);
+		JinxAttackRange->AddComponent(new CAttackRangeScript);
+		JinxAttackRange->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+		JinxAttackRange->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+		JinxAttackRange->Collider2D()->SetAbsolute(true);
+		JinxAttackRange->Collider2D()->SetOffsetScale(Vec2(100.f, 100.f));
+		pObj->AddChild(JinxAttackRange);
+		JinxAttackRange->ChangeLayer(L"AttackRange");
 
 
 		//-------------------------------넥서스-----------------------------------------

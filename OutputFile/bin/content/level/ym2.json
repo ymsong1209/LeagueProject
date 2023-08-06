@@ -2303,7 +2303,22 @@
                     ],
                     "scripts": [
                         {
-                            "scriptName": "CTurretScript"
+                            "scriptName": "CTurretScript",
+                            "NickName": "",
+                            "UnitType": 0,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 50.0,
+                            "DefencePower": 100.0,
+                            "AttackSpeed": 5.0,
+                            "AttackRange": 300.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0
                         }
                     ],
                     "children": []
@@ -3959,6 +3974,21 @@
                     "scripts": [
                         {
                             "scriptName": "CGrompScript",
+                            "NickName": "",
+                            "UnitType": 5,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 323.0,
                                 "y": 0.0,
@@ -4089,6 +4119,21 @@
                     "scripts": [
                         {
                             "scriptName": "CMurkWolfScript",
+                            "NickName": "",
+                            "UnitType": 6,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 564.0,
                                 "y": 0.0,
@@ -4219,6 +4264,21 @@
                     "scripts": [
                         {
                             "scriptName": "CMurkWolfMiniScript",
+                            "NickName": "",
+                            "UnitType": 7,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 564.0,
                                 "y": 0.0,
@@ -4349,6 +4409,21 @@
                     "scripts": [
                         {
                             "scriptName": "CMurkWolfMiniScript",
+                            "NickName": "",
+                            "UnitType": 8,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 564.0,
                                 "y": 0.0,
@@ -4479,6 +4554,21 @@
                     "scripts": [
                         {
                             "scriptName": "CKrugScript",
+                            "NickName": "",
+                            "UnitType": 15,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 1238.0,
                                 "y": 0.0,
@@ -4609,6 +4699,21 @@
                     "scripts": [
                         {
                             "scriptName": "CKrugMiniScript",
+                            "NickName": "",
+                            "UnitType": 16,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 1238.0,
                                 "y": 0.0,
@@ -4739,6 +4844,21 @@
                     "scripts": [
                         {
                             "scriptName": "CRazorBeakScript",
+                            "NickName": "",
+                            "UnitType": 9,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 1033.0,
                                 "y": 0.0,
@@ -4869,6 +4989,21 @@
                     "scripts": [
                         {
                             "scriptName": "CRazorBeakMiniScript",
+                            "NickName": "",
+                            "UnitType": 10,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 1033.0,
                                 "y": 0.0,
@@ -4999,6 +5134,21 @@
                     "scripts": [
                         {
                             "scriptName": "CRazorBeakMiniScript",
+                            "NickName": "",
+                            "UnitType": 11,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 1033.0,
                                 "y": 0.0,
@@ -5129,6 +5279,21 @@
                     "scripts": [
                         {
                             "scriptName": "CRazorBeakMiniScript",
+                            "NickName": "",
+                            "UnitType": 12,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 1033.0,
                                 "y": 0.0,
@@ -5259,6 +5424,21 @@
                     "scripts": [
                         {
                             "scriptName": "CRazorBeakMiniScript",
+                            "NickName": "",
+                            "UnitType": 13,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 1033.0,
                                 "y": 0.0,
@@ -5389,6 +5569,21 @@
                     "scripts": [
                         {
                             "scriptName": "CRazorBeakMiniScript",
+                            "NickName": "",
+                            "UnitType": 14,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 1033.0,
                                 "y": 0.0,
@@ -5519,6 +5714,21 @@
                     "scripts": [
                         {
                             "scriptName": "CBlueScript",
+                            "NickName": "",
+                            "UnitType": 18,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 563.0,
                                 "y": 0.0,
@@ -5649,6 +5859,21 @@
                     "scripts": [
                         {
                             "scriptName": "CRedScript",
+                            "NickName": "",
+                            "UnitType": 17,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 1123.0,
                                 "y": 15.0,
@@ -5797,6 +6022,21 @@
                     "scripts": [
                         {
                             "scriptName": "CGrompScript",
+                            "NickName": "",
+                            "UnitType": 19,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 1823.0,
                                 "y": 0.0,
@@ -5927,6 +6167,21 @@
                     "scripts": [
                         {
                             "scriptName": "CMurkWolfScript",
+                            "NickName": "",
+                            "UnitType": 20,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 1633.0,
                                 "y": 0.0,
@@ -6057,6 +6312,21 @@
                     "scripts": [
                         {
                             "scriptName": "CMurkWolfMiniScript",
+                            "NickName": "",
+                            "UnitType": 21,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 1633.0,
                                 "y": 0.0,
@@ -6187,6 +6457,21 @@
                     "scripts": [
                         {
                             "scriptName": "CMurkWolfMiniScript",
+                            "NickName": "",
+                            "UnitType": 22,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 1633.0,
                                 "y": 0.0,
@@ -6317,6 +6602,21 @@
                     "scripts": [
                         {
                             "scriptName": "CKrugScript",
+                            "NickName": "",
+                            "UnitType": 29,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 942.0,
                                 "y": 0.0,
@@ -6447,6 +6747,21 @@
                     "scripts": [
                         {
                             "scriptName": "CKrugMiniScript",
+                            "NickName": "",
+                            "UnitType": 30,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 942.0,
                                 "y": 0.0,
@@ -6577,6 +6892,21 @@
                     "scripts": [
                         {
                             "scriptName": "CRazorBeakScript",
+                            "NickName": "",
+                            "UnitType": 23,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 1145.0,
                                 "y": 0.0,
@@ -6707,6 +7037,21 @@
                     "scripts": [
                         {
                             "scriptName": "CRazorBeakMiniScript",
+                            "NickName": "",
+                            "UnitType": 24,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 1145.0,
                                 "y": 0.0,
@@ -6837,6 +7182,21 @@
                     "scripts": [
                         {
                             "scriptName": "CRazorBeakMiniScript",
+                            "NickName": "",
+                            "UnitType": 25,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 1145.0,
                                 "y": 0.0,
@@ -6967,6 +7327,21 @@
                     "scripts": [
                         {
                             "scriptName": "CRazorBeakMiniScript",
+                            "NickName": "",
+                            "UnitType": 26,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 1145.0,
                                 "y": 0.0,
@@ -7097,6 +7472,21 @@
                     "scripts": [
                         {
                             "scriptName": "CRazorBeakMiniScript",
+                            "NickName": "",
+                            "UnitType": 27,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 1145.0,
                                 "y": 0.0,
@@ -7227,6 +7617,21 @@
                     "scripts": [
                         {
                             "scriptName": "CRazorBeakMiniScript",
+                            "NickName": "",
+                            "UnitType": 28,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 1145.0,
                                 "y": 0.0,
@@ -7357,6 +7762,21 @@
                     "scripts": [
                         {
                             "scriptName": "CBlueScript",
+                            "NickName": "",
+                            "UnitType": 32,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 1653.0,
                                 "y": 0.0,
@@ -7487,6 +7907,21 @@
                     "scripts": [
                         {
                             "scriptName": "CRedScript",
+                            "NickName": "",
+                            "UnitType": 31,
+                            "Faction": 0,
+                            "CurCC": 0,
+                            "Restraint": 0,
+                            "HP": 0.0,
+                            "MaxHP": 0.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 0.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 100.0,
+                            "MoveSpeed": 0.0,
+                            "MoveSpeedFactor": 1.0,
                             "AggroPos": {
                                 "x": 1055.0,
                                 "y": 15.0,
@@ -7861,10 +8296,84 @@
                             "fSpeed": 200.0
                         },
                         {
-                            "scriptName": "CJinxScript"
+                            "scriptName": "CJinxScript",
+                            "NickName": "",
+                            "UnitType": 0,
+                            "Faction": 2,
+                            "CurCC": 0,
+                            "Restraint": 7,
+                            "HP": 0.0,
+                            "MaxHP": 50.0,
+                            "MP": 0.0,
+                            "MaxMP": 0.0,
+                            "AttackPower": 5.0,
+                            "DefencePower": 0.0,
+                            "AttackSpeed": 0.0,
+                            "AttackRange": 0.0,
+                            "MoveSpeed": 100.0,
+                            "MoveSpeedFactor": 1.0
                         }
                     ],
-                    "children": []
+                    "children": [
+                        {
+                            "ObjName": "AttackRange",
+                            "components": [
+                                {
+                                    "TRANSFORM": 0,
+                                    "vRelativePos": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "vRelativeScale": {
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    },
+                                    "vRelativeRot": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "bAbsolute": false,
+                                    "IsNoGizmoObj": false,
+                                    "GizmoBounding_Radius": 50.0,
+                                    "IsShootingRay": false,
+                                    "RayRange": 20.0,
+                                    "UseMouseOutLine": false,
+                                    "Outlinethickness": 0.07199999690055847
+                                },
+                                {
+                                    "COLLIDER2D": 1,
+                                    "vOffsetPos": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "vOffsetScale": {
+                                        "x": 100.0,
+                                        "y": 100.0,
+                                        "z": 1.0
+                                    },
+                                    "vOffsetRot": {
+                                        "x": 1.5707963705062866,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "bAbsolute": true,
+                                    "Shape": 1,
+                                    "DrawCollision": true
+                                },
+                                16
+                            ],
+                            "scripts": [
+                                {
+                                    "scriptName": "CAttackRangeScript"
+                                }
+                            ],
+                            "children": []
+                        }
+                    ]
                 }
             ]
         },
