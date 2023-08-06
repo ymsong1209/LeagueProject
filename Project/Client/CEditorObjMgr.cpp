@@ -9,8 +9,11 @@
 #include <Engine\CTimeMgr.h>
 #include <Engine\CKeyMgr.h>
 
+#include <Engine/CCamera.h>
+
 #include <Script\CCameraMoveScript.h>
 #include <Script\CInGameCameraScript.h>
+
 
 CEditorObjMgr::CEditorObjMgr()
 	: m_DebugShape{}
@@ -175,6 +178,7 @@ void CEditorObjMgr::render()
 		}
 		
 		pShapeObj->GetRenderComponent()->GetMaterial(0)->SetScalarParam(VEC4_0, &iter->vColor);
+		// EditorObj때 메인캠의 WVP가 필요해서 MAT_0에 VP를 넣어둠.
 		Matrix VP = CRenderMgr::GetInst()->GetMainCam()->GetViewMat() * CRenderMgr::GetInst()->GetMainCam()->GetProjMat();
 		pShapeObj->GetRenderComponent()->GetMaterial(0)->SetScalarParam(MAT_0, &VP);
 		pShapeObj->render();

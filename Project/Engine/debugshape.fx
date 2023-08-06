@@ -10,7 +10,7 @@
 // DS_TYPE  : NO_TEST_NO_WRITE
 // BS_TYPE  : Default
 // g_vec4_0 : OutColor
-// g_mat_0  : VP
+// g_mat_0 : mainCamWVP
 // ==================
 struct VS_DEBUG_IN
 {
@@ -27,7 +27,8 @@ VS_DEBUG_OUT VS_DebugShape(VS_DEBUG_IN _in)
     VS_DEBUG_OUT output = (VS_DEBUG_OUT) 0.f;    
     
     output.vPosition = mul(float4(_in.vPos, 1.f), g_matWorld);
-    output.vPosition = mul(output.vPosition, g_mat_0);
+    output.vPosition = mul(output.vPosition, g_mat_0); // mainCam¿« VP
+    
     return output;    
 }
 

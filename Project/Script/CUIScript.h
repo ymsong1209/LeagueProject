@@ -8,7 +8,7 @@ class CUIScript :
 private:
     CGameObject* m_UIFrontPanel;
     CGameObject* m_UIBackPanel;
-    CHARACTER_TYPE CharacterType;
+    ChampionType CharacterType;
     SUMMONERS_SPELL SpellType_D;
     SUMMONERS_SPELL SpellType_F;
 
@@ -28,15 +28,15 @@ public:
     CGameObject* GetUIFrontPanel() { return m_UIFrontPanel; }
     CGameObject* GetUIBackPanel() { return m_UIBackPanel; }
 
-    CHARACTER_TYPE GetCharacterType() { return CharacterType; }
-    void SetCharacterType(CHARACTER_TYPE _CharacterType) { CharacterType = _CharacterType; }
+    ChampionType GetCharacterType() { return CharacterType; }
+    void SetCharacterType(ChampionType _CharacterType) { CharacterType = _CharacterType; }
 
     SUMMONERS_SPELL GetSpellDType() { return SpellType_D; }
     void SetSpellDType(SUMMONERS_SPELL _SpellType) { SpellType_D = _SpellType; }
     SUMMONERS_SPELL GetSpellFType() { return SpellType_F; }
     void SetSpellFType(SUMMONERS_SPELL _SpellType) { SpellType_F = _SpellType; }
 
-    void SetChampInFo(CHARACTER_TYPE _ChampType, SUMMONERS_SPELL _DSpell, SUMMONERS_SPELL _FSpell) 
+    void SetChampInFo(ChampionType _ChampType, SUMMONERS_SPELL _DSpell, SUMMONERS_SPELL _FSpell)
     { CharacterType = _ChampType; SpellType_D = _DSpell; SpellType_F = _FSpell; }
 
     CLONE(CUIScript);

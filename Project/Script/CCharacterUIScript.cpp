@@ -66,16 +66,16 @@ void CCharacterUIScript::BeginOverlap(CCollider2D* _Other)
 
 void CCharacterUIScript::SkillUILoad()
 {
+	//JINX_E
 	/* 주 의 !!*/
 	//머터리얼 이름은 CHARACTER_TYPE + "_" + SkillNum 형태로 되어있어야함 (ex: MALPHGITE_Q)
 	//그래야 알아서 캐릭터별로 머터리얼을 찾아옴
+	//챔피언 아이콘은  CharacterType _ CIRCLE 임  (JINX_CIRCLE)
 	CUIScript::begin();
-
-	PrevCharacter = GetCharacterType();
 	wstring UIpath = L"material\\";
 	wstring mtrl = L".mtrl";
 	wstring under = L"_";
-	wstring CharacterType = CHARACTER_TYPE_WSTR[(UINT)GetCharacterType()];
+	wstring CharacterType = ChampionType_WSTR[(UINT)GetCharacterType()];
 	wstring ChampMtrlPath = UIpath + CharacterType + under + L"CIRCLE" + mtrl;
 
 	CharacterImage = new CGameObject; //캐릭터 패널 배치

@@ -21,6 +21,7 @@ CKrugScript
 CMinimapUIScript
 CMinionScript
 CMobScript
+CMonsterHPBarUIScript
 CMouseCursorUIScript
 CMoveCursorUIScript
 CMurkWolfMiniScript

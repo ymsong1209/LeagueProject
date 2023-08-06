@@ -9,7 +9,7 @@
 CUnitScript::CUnitScript(UINT ScriptType)
 	: CScript(ScriptType)
 	, m_fHP(0)
-	, m_fMaxHP(0)
+	, m_fMaxHP(50)
 	, m_fAttackPower(0)
 	, m_fDefencePower(0)
 	, m_fAttackSpeed(0)
@@ -19,11 +19,24 @@ CUnitScript::CUnitScript(UINT ScriptType)
 	, m_fFaceRot(0)
 	, m_fMoveSpeedFactor(1)
 	, m_bUnitDead(false)
+	, m_ChampType(ChampionType::NONE)
 {
 }
 
 CUnitScript::CUnitScript()
 	:CScript((UINT)SCRIPT_TYPE::UNITSCRIPT)
+	, m_fHP(0)
+	, m_fMaxHP(50)
+	, m_fAttackPower(0)
+	, m_fDefencePower(0)
+	, m_fAttackSpeed(0)
+	, m_fAttackRange(0)
+	, m_fMoveSpeed(0)
+	, m_vNextPos{}
+	, m_fFaceRot(0)
+	, m_fMoveSpeedFactor(1)
+	, m_bUnitDead(false)
+	, m_ChampType(ChampionType::NONE)
 {
 }
 

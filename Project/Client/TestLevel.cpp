@@ -47,8 +47,8 @@ void CreateTestLevel()
 	//return;	
 
 	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
-	//pCurLevel->ChangeState(LEVEL_STATE::PLAY);
-	//CTimeMgr::GetInst()->SetTimeScale(1.f);    // TestLevel에서 강제로 PLAY모드로 전환해서 DT를 흐르게 하기 위함. 추후 삭제
+	pCurLevel->ChangeState(LEVEL_STATE::PLAY);
+	CTimeMgr::GetInst()->SetTimeScale(1.f);    // TestLevel에서 강제로 PLAY모드로 전환해서 DT를 흐르게 하기 위함. 추후 삭제
 
 	//롤맵 레이어에는 롤맵만 넣을것!
 	pCurLevel->GetLayer(0)->SetName(L"Default");
@@ -99,17 +99,6 @@ void CreateTestLevel()
 	pUICam->Camera()->SetLayerMask(31, true);	// 모든 레이어 체크
 	SpawnGameObject(pUICam, Vec3(0.f, 0.f, 0.f), 0);
 
-	//CGameObject* WorldBar = new CGameObject;
-	//WorldBar->SetName(L"WorldBar");
-	//WorldBar->AddComponent(new CTransform);
-	//WorldBar->AddComponent(new CMeshRender);
-	//WorldBar->AddComponent(new CWorldHPUIScript);
-	//WorldBar->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	//WorldBar->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\WorldBar.mtrl"), 0);
-	//WorldBar->MeshRender()->SetRaySightCulling(false);
-	//WorldBar->Transform()->SetRelativeScale(Vec3(136.f, 29.f, 1.f));
-
-	//SpawnGameObject(WorldBar, Vec3(100.f, 100.f, 100.f), 2);
 
 
 	//CGameObject* UIObj = new CGameObject; //각종 스크립트에서 처리할 것들
@@ -254,7 +243,7 @@ void CreateTestLevel()
 		//pObj->Transform()->SetRelativeScale(Vec3(0.3, 0.3, 0.3));
 		//SpawnGameObject(pObj, Vec3(190.f, 0.f, 607.f), 0);
 
-		pMeshData = nullptr;
+		/*pMeshData = nullptr;
 		pObj = nullptr;
 		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
 		pObj = pMeshData->Instantiate();
@@ -284,19 +273,19 @@ void CreateTestLevel()
 		CJinxScript* jinxscript = pObj->GetScript<CJinxScript>();
 		jinxscript->SetFaction(Faction::BLUE);
 		
-		SpawnGameObject(pObj, Vec3(0, 0, 0), L"Player");
+		SpawnGameObject(pObj, Vec3(0, 0, 0), L"Player");*/
 
-		CGameObject* JinxAttackRange = new CGameObject;
-		JinxAttackRange->SetName(L"AttackRange");
-		JinxAttackRange->AddComponent(new CTransform);
-		JinxAttackRange->AddComponent(new CCollider2D);
-		JinxAttackRange->AddComponent(new CAttackRangeScript);
-		JinxAttackRange->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-		JinxAttackRange->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-		JinxAttackRange->Collider2D()->SetAbsolute(true);
-		JinxAttackRange->Collider2D()->SetOffsetScale(Vec2(100.f, 100.f));
-		pObj->AddChild(JinxAttackRange);
-		JinxAttackRange->ChangeLayer(L"AttackRange");
+		//CGameObject* JinxAttackRange = new CGameObject;
+		//JinxAttackRange->SetName(L"AttackRange");
+		//JinxAttackRange->AddComponent(new CTransform);
+		//JinxAttackRange->AddComponent(new CCollider2D);
+		//JinxAttackRange->AddComponent(new CAttackRangeScript);
+		//JinxAttackRange->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+		//JinxAttackRange->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+		//JinxAttackRange->Collider2D()->SetAbsolute(true);
+		//JinxAttackRange->Collider2D()->SetOffsetScale(Vec2(100.f, 100.f));
+		//pObj->AddChild(JinxAttackRange);
+		//JinxAttackRange->ChangeLayer(L"AttackRange");
 
 
 		//-------------------------------넥서스-----------------------------------------
@@ -428,7 +417,7 @@ void CreateTestLevel()
 
 
 	PlaceLand();
-	SpawnJungleMob();
+	//SpawnJungleMob();
 
 
 	 // TestFastForward
@@ -528,7 +517,7 @@ void CreateTestLevel()
 	TestTurret->AddComponent(new CTransform);
 	TestTurret->AddComponent(new CCollider2D);
 	TestTurret->SetName(L"TestTurret");
-	TestTurret->AddComponent(new CTurretScript);
+	//ddddTestTurret->AddComponent(new CTurretScript);
 	TestTurret->AddComponent(new CMeshRender);
 	TestTurret->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
 	TestTurret->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
@@ -639,7 +628,7 @@ void PlaceLand()
 			pObj->GetRenderComponent()->SetBoundingBoxOffsetUse(true);
 			pObj->GetRenderComponent()->SetBoundingBoxOffset(offset);
 
-			SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), 6);
+			SpawnGameObject(pObj, Vec3(0.f, 0.f, 0.f), L"Lolmap");
 		}
 	}
 }

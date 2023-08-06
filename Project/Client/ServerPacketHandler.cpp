@@ -17,6 +17,17 @@
 #include "ImGuiMgr.h"
 #include "InspectorUI.h"
 
+#include <Engine/CComponent.h>
+#include <Script/CSendServerEventMgr.h>
+#include <Script/CCharacterUIScript.h>
+#include <Script/CWorldHPSpawnScript.h>
+#include <Script/CInventoryUIScript.h>
+#include <Script/CMinimapUIScript.h>
+#include <Script/CMouseCursorUIScript.h>
+#include <Script/CFontUIScript.h>
+#include <Script/CScorePanelScript.h>
+
+
 void ServerPacketHandler::HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
 	BufferReader br(buffer, len);
@@ -344,6 +355,28 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 		// 다시 진영 선택 레벨로 간다.
 		//CreateFactionLevel();
 	}
+
+
+	// 모든 플레이어 생성후, UI를위한 오브젝트, 플레이어 vector 생성
+	map<uint64, CGameObject*> mapPlayers = GameObjMgr::GetInst()->GetPlayers();
+
+	vector<CGameObject*> vecAllPlayer;
+	for (const auto& pair : mapPlayers) {
+		vecAllPlayer.push_back(pair.second);
+	}
+	CSendServerEventMgr::GetInst()->SetVecAllPlyer(vecAllPlayer);
+	
+	CGameObject* UIObj = new CGameObject; //각종 스크립트에서 처리할 것들
+	UIObj->SetName(L"UIObj");
+	UIObj->AddComponent(new CTransform);
+	UIObj->AddComponent(new CCharacterUIScript);
+	UIObj->AddComponent(new CWorldHPSpawnScript);
+	UIObj->AddComponent(new CInventoryUIScript);
+	UIObj->AddComponent(new CMinimapUIScript);
+	UIObj->AddComponent(new CMouseCursorUIScript);
+	UIObj->AddComponent(new CFontUIScript);
+	UIObj->AddComponent(new CScorePanelScript);
+	SpawnGameObject(UIObj, Vec3(0.f, 0.f, 0.f), L"ViewPort UI");
 
 	std::cout << "===============================" << endl;
 

@@ -50,6 +50,19 @@ enum class Lane
 	END,
 };
 
+
+enum class ChampionType
+{
+	NONE,
+	BLITZCRANK,
+	JINX,
+	AMUMU,
+	MALPHITE,
+	END,
+};
+
+extern const wchar_t* ChampionType_WSTR[(UINT)ChampionType::END];
+
 // 군중 제어기
 enum CC
 {
@@ -226,3 +239,19 @@ struct KDACSInfo
 	UINT64      victimId;
 	UnitType   deadObjUnitType;
 };
+
+// 소환사 주문(임시)
+enum class SUMMONERS_SPELL
+{
+	FLASH,      // 점멸
+	HEAL,       // 회복
+	GHOST,      // 유체화
+	IGNITE,     // 점화
+	SMITE,      // 강타
+	EXHAUST,    // 탈진
+	CLEANSE,    // 정화
+	END,
+};
+
+extern const wchar_t* SUMMONERS_SPELL_WSTR[(UINT)SUMMONERS_SPELL::END];
+

@@ -73,25 +73,6 @@ extern const wchar_t* COMPONENT_TYPE_WSTR[(UINT)COMPONENT_TYPE::END] =
 };
 
 
-extern const char* CHARACTER_TYPE_STR[(UINT)CHARACTER_TYPE::END] =
-{
-	"JINX",
-	"MALPHIGHT",
-	"AMUMU",
-	"VEIN",
-	"AHRI",
-};
-
-extern const wchar_t* CHARACTER_TYPE_WSTR[(UINT)CHARACTER_TYPE::END] =
-{
-	L"JINX",
-	L"MALPHIGHT",
-	L"AMUMU",
-	L"VEIN",
-	L"AHRI",
-};
-
-
 extern const wchar_t* SKILL_TYPE_WSTR[(UINT)SkillNum::END] =
 {
 	L"Q",
@@ -102,13 +83,4 @@ extern const wchar_t* SKILL_TYPE_WSTR[(UINT)SkillNum::END] =
 };
 
 
-extern const wchar_t* SUMMONERS_SPELL_WSTR[(UINT)SUMMONERS_SPELL::END] =
-{
-	L"FLASH",
-	L"HEAL",
-	L"GHOST",
-	L"IGNITE",
-	L"SMITE",
-	L"EXHAUST",
-	L"CLEANSE",
-};
+

@@ -38,7 +38,7 @@ void CScorePanelScript::tick()
 
 
 	tFont Font2 = {};
-	Font2.wInputText = to_wstring(blueScore); // 원래 여기에 닉네임 가져와야함
+	Font2.wInputText = to_wstring(blueScore);
 	Font2.fontType = FONT_TYPE::RIX_KOR_L;
 	Font2.fFontSize = 16.7;
 	Font2.vDisplayPos = Vec2(1263, 20);
@@ -46,7 +46,7 @@ void CScorePanelScript::tick()
 	UICamera->AddText(FONT_DOMAIN::MASK, Font2);
 
 	tFont Font3 = {};
-	Font3.wInputText = to_wstring(redScore); //레벨 폰트
+	Font3.wInputText = to_wstring(redScore);
 	Font3.fontType = FONT_TYPE::RIX_KOR_L;
 	Font3.fFontSize = 16.7;
 	Font3.vDisplayPos = Vec2(1307, 21);
@@ -63,7 +63,7 @@ void CScorePanelScript::tick()
 	wstring KillDeath = wKill + Slash + wDeath + zero;
 	//================킬/뎃/어시======================
 	tFont Font4 = {};
-	Font4.wInputText = KillDeath; // 원래 여기에 닉네임 가져와야함
+	Font4.wInputText = KillDeath;
 	Font4.fontType = FONT_TYPE::RIX_KOR_L;
 	Font4.fFontSize = 15;
 	Font4.vDisplayPos = Vec2(1412,22);
@@ -73,7 +73,7 @@ void CScorePanelScript::tick()
 
 	//=================미니언=====================
 	tFont Font5 = {};
-	Font5.wInputText = to_wstring(MyCS); //레벨 폰트
+	Font5.wInputText = to_wstring(MyCS);
 	Font5.fontType = FONT_TYPE::RIX_KOR_L;
 	Font5.fFontSize = 15;
 	Font5.vDisplayPos = Vec2(1490,22);
@@ -94,7 +94,7 @@ void CScorePanelScript::tick()
 	wstring time = ss.str();
 
 	tFont Font6 = {};
-	Font6.wInputText = time; // 원래 여기에 닉네임 가져와야함
+	Font6.wInputText = time;
 	Font6.fontType = FONT_TYPE::RIX_KOR_L;
 	Font6.fFontSize = 15;
 	Font6.vDisplayPos = Vec2(1570,22);
