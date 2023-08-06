@@ -9,8 +9,10 @@
 CTurretScript::CTurretScript()
 	:CStructureScript((UINT)SCRIPT_TYPE::TURRETSCRIPT)
 {
-	m_fAttackPower = 50;
-	m_fDefencePower = 100;
+	m_eFaction = Faction::RED;
+
+	m_fAttackPower = 1;
+	m_fDefencePower = 0;
 	m_fAttackSpeed = 2.f;
 	m_fAttackRange = 300;
 	m_fMoveSpeed = 0;
@@ -85,28 +87,59 @@ void CTurretScript::ChangeAnim()
 	float HealthRatio = m_fHP / m_fMaxHP;
 	if (HealthRatio >= 0.66f)
 	{
-		//CGameObject* TurretBase = GetOwner()->FindChildObjByName(L"AttackRange");
-		//if(Animator3D()->GetCurAnim()->GetName() !=L"포탑Idle애니메이션이름" )
-			// 해당 애니메이션 반복재생. (Idle)
+		CGameObject* TurretBase = GetOwner()->FindChildObjByName(L"TurretBase");
+		if (TurretBase->Animator3D()->GetCurAnim()->GetName() != L"turret_idlebreak\\Turret_Idle")
+			TurretBase->Animator3D()->PlayRepeat(L"turret_idlebreak\\Turret_Idle", false);
 	}
 	else if (33.f < HealthRatio && HealthRatio <= 0.66f)
 	{
-		//if (Animator3D()->GetCurAnim()->GetName() != L"포탑break1애니메이션이름" )
-			// 해당 애니메이션 반복재생. (break1)
+		CGameObject* TurretBase = GetOwner()->FindChildObjByName(L"TurretBase");
+		if (TurretBase->Animator3D()->GetCurAnim()->GetName() != L"turret_idlebreak\\Turret_Cloth_Break1")
+			TurretBase->Animator3D()->PlayOnce(L"turret_idlebreak\\Turret_Cloth_Break1", false);
 	}
 	else if (0 < HealthRatio && HealthRatio <= 33.f)
 	{
-		//if (Animator3D()->GetCurAnim()->GetName() != L"포탑break2애니메이션이름" )
-			// 해당 애니메이션 반복재생. (break2)
+		CGameObject* TurretBase = GetOwner()->FindChildObjByName(L"TurretBase");
+		if (TurretBase->Animator3D()->GetCurAnim()->GetName() != L"turret_idlebreak\\Turret_Cloth_Break2")
+			TurretBase->Animator3D()->PlayOnce(L"turret_idlebreak\\Turret_Cloth_Break2", false);
 	}
 	else
 	{
 		// 포탑 Dead 상태
+		m_bUnitDead = true;
 		// 시야 제공 기능 삭제
-		// 더이상 상호작용 가능한 오브젝트가 아님
+		GetOwner()->Transform()->SetIsShootingRay(false);
+		
+		// 자식 지우기
+		CGameObject* TurretBase = GetOwner()->FindChildObjByName(L"TurretBase");
+		if (TurretBase)
+			DestroyObject(TurretBase);
+		
+		// 자식 애니메이션 재생 후 삭제
+		CGameObject* TurretBreak1 = GetOwner()->FindChildObjByName(L"TurretBreak1");
+		if (TurretBreak1)
+		{
+			if(TurretBreak1->Animator3D()->GetCurAnim()->GetName() != L"turret_idlebreak\\Turret_Cloth_Break1")
+				TurretBreak1->Animator3D()->PlayOnce(L"turret_idlebreak\\Turret_Cloth_Break1", false);
+			else
+			{
+				if (TurretBreak1->Animator3D()->GetCurAnim()->IsFinish())
+					DestroyObject(TurretBreak1);
+			}
+		}
+
+		CGameObject* TurretBreak2 = GetOwner()->FindChildObjByName(L"TurretBreak2");
+		if (TurretBreak1)
+		{
+			if (TurretBreak1->Animator3D()->GetCurAnim()->GetName() != L"turret_idlebreak\\Turret_Cloth_Break2")
+				TurretBreak1->Animator3D()->PlayOnce(L"turret_idlebreak\\Turret_Cloth_Break2", false);
+			else
+			{
+				if (TurretBreak2->Animator3D()->GetCurAnim()->IsFinish())
+					DestroyObject(TurretBreak2);
+			}
+		}
 	}
-
-
 }
 
 void CTurretScript::Attack()
