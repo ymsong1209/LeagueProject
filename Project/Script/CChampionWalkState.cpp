@@ -82,7 +82,17 @@ void CChampionWalkState::HandleEvent(CGameEvent& event)
 	case GAME_EVENT_TYPE::PLAYER_SKILL_W:
 	{
 		if (GetOwnerFSM()->FindState(L"W") != nullptr)
+		{
+			PlayerWEvent* WEvent = dynamic_cast<PlayerWEvent*>(&event);
+
+			CChampionSkillState* SkillState = dynamic_cast<CChampionSkillState*>(GetOwnerFSM()->FindState(L"W"));
+			if (SkillState != nullptr)
+			{
+				SkillState->SetUserObj(WEvent->GetUserObj());
+				SkillState->SetTargetObj(WEvent->GetTargetObj());
+			}
 			GetOwnerFSM()->ChangeState(L"W");
+		}
 		break;
 	}
 	case GAME_EVENT_TYPE::PLAYER_SKILL_E:
