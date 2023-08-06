@@ -37,6 +37,8 @@
 #include <Script\COtherPlayerScript.h>
 #include "ServerEventMgr.h"
 #include <Script/CSendServerEventMgr.h>
+#include <Script/CGrompScript.h>
+
 
 // ===============================================
 //   Add
@@ -150,7 +152,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 		std::lock_guard<std::mutex> lock(m);
 
 		Ptr<CMeshData> pMeshData = nullptr;
-		CGameObject* pObj = new CGameObject;
+		CGameObject* pObj;
 
 		switch (_objectInfo.unitType)
 		{
@@ -215,12 +217,53 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 		}
 		break;
-
 		case UnitType::RANGED_MINION:
 		{
 		}
 		break;
 
+		case UnitType::SOUTH_GROMP://블루팀 두꺼비
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\gromp.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\gromp");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"SOUTH_Gromp");
+			pObj->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
+			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(270.f), 0.f));
+
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CGrompScript);
+				
+				CGrompScript* Script = pObj->GetScript<CGrompScript>();
+
+				// 디버깅용 위치
+				Script->SetAggroPos(Vec3(100.f, 10.f, 200.f));
+				SpawnGameObject(pObj, Vec3(100.f, 10.f, 200.f), L"Mob");
+
+				// 찐 위치
+				//Script->SetAggroPos(Vec3(323.f, 0.f, 1242.f));
+				//SpawnGameObject(pObj, Vec3(323.f, 10.f, 1242.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				//SpawnGameObject(pObj, Vec3(323.f, 10.f, 1242.f), L"Mob");
+				SpawnGameObject(pObj, Vec3(100.f, 10.f, 200.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::SOUTH_GROMP);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
 
 		}
 
