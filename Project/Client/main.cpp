@@ -157,6 +157,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
            if (IsInGame) // C->S 패킷 전송
                ServerEventMgr::GetInst()->sendtick(service);
 
+
            // 랜덤으로 온 서버패킷을 핸들러에서 서버 이벤트 매니저에 등록해둠.
           
            // Event 처리

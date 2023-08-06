@@ -126,7 +126,8 @@ struct AnimInfo
 {
 	wstring animName;		// 변경할 애니메이션 이름
 	UINT16  targetId;		// 애니메이션이 변경될 오브젝트의 id
-	bool    bRepeat;		// 반복 여부
+	bool    bRepeat;		// 애니메이션 반복 여부
+	bool    bRepeatBlend;   // 블렌드 반복 여부 (PlayRepeat에서만 사용하는 함수)
 	bool    blend;			// 블렌드 사용여부
 	float   blendTime;
 };

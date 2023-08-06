@@ -497,6 +497,10 @@
     <ClCompile Include="CMonsterHPBarUIScript.cpp" />
     <ClCompile Include="CServerTypes.cpp">
       <Filter>Default</Filter>
+    <ClCompile Include="CSoundTestScript.cpp" />
+    <ClCompile Include="CTurretAttackScript.cpp" />
+    <ClCompile Include="CTimedEffect.cpp">
+      <Filter>Skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1060,6 +1064,12 @@
     <ClInclude Include="CUnitState.h">
       <Filter>State\Unit</Filter>
     </ClInclude>
+    <ClInclude Include="CSoundTestScript.h" />
+    <ClInclude Include="CTurretAttackScript.h" />
+    <ClInclude Include="CTimedEffect.h">
+      <Filter>Skill</Filter>
+    </ClInclude>
+
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">

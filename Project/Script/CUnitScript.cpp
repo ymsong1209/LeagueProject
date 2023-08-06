@@ -4,6 +4,7 @@
 #include "CSkill.h"
 
 #include "CChampionScript.h"
+#include "CTimedEffect.h"
 
 CUnitScript::CUnitScript(UINT ScriptType)
 	: CScript(ScriptType)
@@ -16,6 +17,7 @@ CUnitScript::CUnitScript(UINT ScriptType)
 	, m_fMoveSpeed(0)
 	, m_vNextPos{}
 	, m_fFaceRot(0)
+	, m_fMoveSpeedFactor(1)
 	, m_bUnitDead(false)
 	, m_ChampType(ChampionType::NONE)
 {
@@ -43,6 +45,65 @@ void CUnitScript::begin()
 
 }
 
+void CUnitScript::tick()
+{
+	CheckTimedEffect();
+	CheckCC();
+}
+
+void CUnitScript::CheckTimedEffect()
+{
+	for (auto it = m_TimedEffectList.begin(); it != m_TimedEffectList.end(); )
+	{
+		// 지속 시간이 끝난 효과 제거
+		if ((*it)->isFinished())
+		{
+			delete* it; 
+			it = m_TimedEffectList.erase(it);  // 리스트에서 제거
+		}
+		else
+		{
+			(*it)->tick();
+			it++;
+		}
+	}
+}
+
+void CUnitScript::CheckCC()
+{
+	// 걸려있는 CC기에 따라 행동 제약 변경
+
+	if ((m_eCurCC & CC::SLOW) != 0)  // 천천히 움직임
+	{
+		// 이동속도 감소
+		m_fMoveSpeedFactor = 0.5f;
+	}
+	else
+	{
+		m_fMoveSpeedFactor = 1.f;
+	}
+
+	if ((m_eCurCC & CC::SILENCE) != 0) // 침묵 상태
+	{
+		RestrictAction(RESTRAINT::CAN_USE_SKILL);	// 스킬 사용 불가
+	}
+
+	if ((m_eCurCC & CC::ROOT) != 0) // 속박 상태
+	{
+		RestrictAction(RESTRAINT::CAN_MOVE);	// 움직임 불가
+	}
+
+	if ((m_eCurCC & CC::STUN) != 0) // 스턴 상태
+	{
+		m_eRestraint = RESTRAINT::BLOCK; // 모든 행동 제약
+	}
+
+	if ((m_eCurCC & CC::AIRBORNE) != 0) // 에어본 상태
+	{
+		m_eRestraint = RESTRAINT::BLOCK; // 모든 행동 제약
+	}
+}
+
 bool CUnitScript::PathFindMove(float _fSpeed, bool _IsRotation)
 {
 	if (GetOwner()->PathFinder() == nullptr)
@@ -62,7 +123,9 @@ bool CUnitScript::PathFindMove(float _fSpeed, bool _IsRotation)
 			// 가야할 방향 구하기
 			Vec3 Dir = (NextPos - CurPos).Normalize();
 
-			Vec3 NewPos = CurPos + (Dir * _fSpeed * EditorDT);
+			float Speed = _fSpeed * m_fMoveSpeedFactor;
+
+			Vec3 NewPos = CurPos + (Dir * Speed * EditorDT);
 
 			m_vNextPos = NewPos;
 
@@ -117,4 +180,19 @@ void CUnitScript::GetHit(SkillType _type, CGameObject* _SkillTarget, CGameObject
 
 		Skill->GetHit(_SkillUser->GetScript<CUnitScript>(), TargetScript, _SkillLevel);
 	}
+}
+
+void CUnitScript::RestrictAction(RESTRAINT restriction)
+{
+	m_eRestraint = static_cast<RESTRAINT>(m_eRestraint & ~restriction);
+}
+
+void CUnitScript::ApplyCC(CC _ccType)
+{
+	m_eCurCC = static_cast<CC>(static_cast<int>(m_eCurCC) | static_cast<int>(_ccType));
+}
+
+void CUnitScript::RemoveCC(CC _ccType)
+{
+	m_eCurCC = static_cast<CC>(static_cast<int>(m_eCurCC) & ~static_cast<int>(_ccType));
 }

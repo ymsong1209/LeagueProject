@@ -26,13 +26,14 @@ void CSendServerEventMgr::SendHitPacket(UINT64 _skillObjId, UINT64 _hitObjId, UI
 	CSendServerEventMgr::GetInst()->AddServerSendEvent(evn);
 }
 
-void CSendServerEventMgr::SendAnimPacket(UINT64 _targetId, wstring _animName, bool _repeat, bool _blend, float _blentTime)
+void CSendServerEventMgr::SendAnimPacket(UINT64 _targetId, wstring _animName, bool _repeat, bool _bRepeatBlend, bool _bUseBlend, float _blentTime)
 {
 	AnimInfo* animInfo = new AnimInfo();
 	animInfo->animName = _animName;
 	animInfo->targetId = _targetId;
 	animInfo->bRepeat = _repeat;
-	animInfo->blend = _blend;
+	animInfo->bRepeatBlend = _bRepeatBlend;
+	animInfo->blend = _bUseBlend;
 	animInfo->blendTime = _blentTime;
 
 	tServerEvent evn = {};
