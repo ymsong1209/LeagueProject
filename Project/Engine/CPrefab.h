@@ -2,6 +2,7 @@
 #include "CRes.h"
 class CGameObject;
 
+//PrefabObject는 CLevelSaveJson이 아니라 CLevelSave함수 사용합니다.
 class CPrefab :
 	public CRes
 {

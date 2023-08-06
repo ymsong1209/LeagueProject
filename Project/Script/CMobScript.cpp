@@ -34,3 +34,23 @@ void CMobScript::tick()
 {
 	CUnitScript::tick();
 }
+
+void CMobScript::SaveToLevelFile(FILE* _File)
+{
+	CUnitScript::SaveToLevelFile(_File);
+}
+
+void CMobScript::LoadFromLevelFile(FILE* _FILE)
+{
+	CUnitScript::LoadFromLevelFile(_FILE);
+}
+
+void CMobScript::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
+{
+	CUnitScript::SaveToLevelJsonFile(_objValue, allocator);
+}
+
+void CMobScript::LoadFromLevelJsonFile(const Value& _componentValue)
+{
+	CUnitScript::LoadFromLevelJsonFile(_componentValue);
+}

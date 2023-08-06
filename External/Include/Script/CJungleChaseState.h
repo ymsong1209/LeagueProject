@@ -11,6 +11,9 @@ public:
     virtual void Exit() override;
 
 public:
+    void HandleEvent(CGameEvent& event) override;
+
+public:
     CJungleChaseState();
     ~CJungleChaseState();
 };

@@ -13,7 +13,6 @@
 CKrugScript::CKrugScript()
 	:CJungleMonsterScript((UINT)KRUGSCRIPT)
 {
-	m_eJungleType = JungleType::KRUG;
 }
 
 CKrugScript::~CKrugScript()

@@ -704,7 +704,7 @@ bool CCamera::OutlineCheck(CGameObject* _Obj)
 			Vec3 Pos = _Obj->Transform()->GetWorldPos();
 			Matrix scaleMatrix = _Obj->Collider3D()->GetColliderScaleMat();
 			Vec3 scale = {};
-			scale.x = scaleMatrix._11;
+			scale.x = scaleMatrix._11 / 2.f;
 			bool IsCollide = RayIntersectsSphere(Pos, scale.x);
 			return IsCollide;
 		}

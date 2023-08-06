@@ -2,6 +2,8 @@
 #include "CAttackRangeScript.h"
 #include "CUnitScript.h"
 
+
+
 CAttackRangeScript::CAttackRangeScript()
 	: CScript((UINT)SCRIPT_TYPE::ATTACKRANGESCRIPT)
 	, m_vecUnitsInRange{}
@@ -12,6 +14,10 @@ CAttackRangeScript::~CAttackRangeScript()
 {
 }
 
+void CAttackRangeScript::begin()
+{
+	GetOwner()->ChangeLayer(L"AttackRange");
+}
 
 void CAttackRangeScript::BeginOverlap(CCollider2D* _Other)
 {

@@ -6,6 +6,8 @@ class CAttackRangeScript :
 {
    
 public:
+    virtual void begin() override;
+
     CAttackRangeScript();
     ~CAttackRangeScript();
 
@@ -17,6 +19,7 @@ private:
 public:
     virtual void BeginOverlap(CCollider2D* _Other);
     virtual void EndOverlap(CCollider2D* _Other);
+
 
 public:
     vector<CGameObject*>& GetUnitsInRange() { return m_vecUnitsInRange; };

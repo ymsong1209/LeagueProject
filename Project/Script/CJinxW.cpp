@@ -25,7 +25,7 @@ CJinxW::CJinxW()
 	CGameObject* PrefabObject = Projectile->Clone();
 	NewPrefab->RegisterProtoObject(Projectile);
 
-	m_vecSkillObj.push_back(NewPrefab);
+	//m_vecSkillObj.push_back(NewPrefab);
 
 	// 투사체 스크립트
 	m_iProjectileCount = 1;
@@ -73,21 +73,21 @@ void CJinxW::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _S
 	float Damage = 0;
 
 	// 시전자의 레벨, 기본 공격력 등에 따라 데미지 계산
-	CChampionScript* ChampScript = dynamic_cast<CChampionScript*>(_UserScript);
-	if (ChampScript != nullptr)
+	CChampionScript* ChamScript = dynamic_cast<CChampionScript*>(_UserScript);
+	if (ChamScript != nullptr)
 	{
 		float BaseDamage = 50.f;
-		int   level		 = ChampScript->GetLevel();
-		float AttackPow  = ChampScript->GetAttackPower();
+		int   level		 = ChamScript->GetLevel();
+		float AttackPow  = ChamScript->GetAttackPower();
 
 		// 예시입니다
 		Damage = BaseDamage + (level * 2) + (AttackPow * 0.3f);
 	}
 	
-	CChampionScript* TargetChampScript = dynamic_cast<CChampionScript*>(_TargetScript);
-	if (TargetChampScript != nullptr)
+	CUnitScript* TargetUnitScript = dynamic_cast<CUnitScript*>(_TargetScript);
+	if (TargetUnitScript != nullptr)
 	{
-		float DefencePow = TargetChampScript->GetDefencePower();
+		float DefencePow = TargetUnitScript->GetDefencePower();
 
 		Damage -= DefencePow;
 
@@ -100,7 +100,7 @@ void CJinxW::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _S
 		}
 	}
 
-	TargetChampScript->SetCurHPVar(-Damage);
+	TargetUnitScript->SetCurHPVar(-Damage);
 
 	// 2초 동안 둔화시킵니다.
 	CTimedEffect* JinxWSlow = new CTimedEffect(TargetChampScript, 2.f, 0, 0, CC::SLOW);

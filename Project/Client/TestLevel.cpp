@@ -25,14 +25,12 @@
 #include <Script\CMinimapUIScript.h>
 #include <Script\CMouseCursorUIScript.h>
 #include <Script/CTurretScript.h>
-#include <Script/CJinxScript.h>
-#include <Script/CGrompScript.h>
 #include <Script\CFontUIScript.h>
 #include <Script\CScorePanelScript.h>
 #include <Script/CJinxScript.h>
+#include <Script/CAttackRangeScript.h>
 
-#include <Script/CTurretScript.h>
-#include <Script/CJinxScript.h>
+
 #include <Script/CGrompScript.h>
 #include <Script/CMurkWolfScript.h>
 #include <Script/CMurkWolfMiniScript.h>
@@ -41,7 +39,7 @@
 #include <Script/CKrugScript.h>
 #include <Script/CKrugMiniScript.h>
 #include <Script/CBlueScript.h>
-//#include <Script/CRedScript.h>
+#include <Script/CRedScript.h>
 
 void CreateTestLevel()
 {
@@ -271,9 +269,22 @@ void CreateTestLevel()
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
 		
 		pObj->Transform()->SetUseMouseOutline(true);
+		CJinxScript* jinxscript = pObj->GetScript<CJinxScript>();
+		jinxscript->SetFaction(Faction::BLUE);
 		
 		SpawnGameObject(pObj, Vec3(0, 0, 0), L"Player");*/
 
+		CGameObject* JinxAttackRange = new CGameObject;
+		JinxAttackRange->SetName(L"AttackRange");
+		JinxAttackRange->AddComponent(new CTransform);
+		JinxAttackRange->AddComponent(new CCollider2D);
+		JinxAttackRange->AddComponent(new CAttackRangeScript);
+		JinxAttackRange->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+		JinxAttackRange->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+		JinxAttackRange->Collider2D()->SetAbsolute(true);
+		JinxAttackRange->Collider2D()->SetOffsetScale(Vec2(100.f, 100.f));
+		pObj->AddChild(JinxAttackRange);
+		JinxAttackRange->ChangeLayer(L"AttackRange");
 
 
 		//-------------------------------넥서스-----------------------------------------
@@ -637,6 +648,7 @@ void SpawnJungleMob()
 			Gromp->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(270.f), 0.f));
 			CGrompScript* Script = Gromp->GetScript<CGrompScript>();
 			Script->SetAggroPos(Vec3(323.f, 0.f, 1242.f));
+			Script->SetUnitType(UnitType::SOUTH_GROMP);
 			SpawnGameObject(Gromp, Vec3(323.f, 10.f, 1242.f), L"Mob");
 
 			CGameObject* GrompAggro = new CGameObject;
@@ -662,6 +674,7 @@ void SpawnJungleMob()
 			MurkWolf->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(24.f), 0.f));
 			CMurkWolfScript* script = MurkWolf->GetScript <CMurkWolfScript>();
 			script->SetAggroPos(Vec3(564.f, 0.f, 959.f));
+			script->SetUnitType(UnitType::SOUTH_MURKWOLF);
 			SpawnGameObject(MurkWolf, Vec3(550.f, 15.f, 944.f), L"Mob");
 
 			CGameObject* MurkWolfAggro = new CGameObject;
@@ -686,6 +699,7 @@ void SpawnJungleMob()
 			MurkWolf_Mini->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(36.f), 0.f));
 			CMurkWolfMiniScript* Script = MurkWolf_Mini->GetScript<CMurkWolfMiniScript>();
 			Script->SetAggroPos(Vec3(564.f, 0.f, 964.f));
+			Script->SetUnitType(UnitType::SOUTH_MURKWOLF_MINI_L);
 			SpawnGameObject(MurkWolf_Mini, Vec3(552.f, 15.f, 964.f), L"Mob");
 		}
 		//블루팀 늑대 째깐이(우)
@@ -700,6 +714,7 @@ void SpawnJungleMob()
 			MurkWolf_Mini->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(36.f), 0.f));
 			CMurkWolfMiniScript* Script = MurkWolf_Mini->GetScript<CMurkWolfMiniScript>();
 			Script->SetAggroPos(Vec3(564.f, 0.f, 964.f));
+			Script->SetUnitType(UnitType::SOUTH_MURKWOLF_MINI_R);
 			SpawnGameObject(MurkWolf_Mini, Vec3(580.f, 15.f, 944.f), L"Mob");
 		}
 		//블루팀 돌거북
@@ -714,6 +729,7 @@ void SpawnJungleMob()
 			Krug->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
 			CKrugScript* Script = Krug->GetScript<CKrugScript>();
 			Script->SetAggroPos(Vec3(1238.f, 0.f, 389.f));
+			Script->SetUnitType(UnitType::SOUTH_KRUG);
 			SpawnGameObject(Krug, Vec3(1221.f, 15.f, 379.f), L"Mob");
 
 			CGameObject* KrugAggro = new CGameObject;
@@ -738,6 +754,7 @@ void SpawnJungleMob()
 			Krug_Mini->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
 			CKrugMiniScript* Script = Krug_Mini->GetScript<CKrugMiniScript>();
 			Script->SetAggroPos(Vec3(1238.f, 0.f, 389.f));
+			Script->SetUnitType(UnitType::SOUTH_KRUG_MINI);
 			SpawnGameObject(Krug_Mini, Vec3(1252.f, 15.f, 379.f), L"Mob");
 		}
 		//블루팀 칼날부리
@@ -749,9 +766,10 @@ void SpawnJungleMob()
 			RazorBeak->AddComponent(new CRazorBeakScript);
 			RazorBeak->SetName(L"SOUTH_RazorBeak");
 			RazorBeak->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
-			RazorBeak->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(-90.f), 0.f));
+			RazorBeak->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(-66.f), 0.f));
 			CRazorBeakScript* Script = RazorBeak->GetScript<CRazorBeakScript>();
 			Script->SetAggroPos(Vec3(1033.f, 0.f, 782.f));
+			Script->SetUnitType(UnitType::SOUTH_RAZORBEAK);
 			SpawnGameObject(RazorBeak, Vec3(1008.f, 15.f, 800.f), L"Mob");
 
 			CGameObject* RazorBeakAggro = new CGameObject;
@@ -772,12 +790,57 @@ void SpawnJungleMob()
 			CGameObject* RazorBeak = nullptr;
 			RazorBeak = pMeshData->Instantiate();
 			RazorBeak->AddComponent(new CRazorBeakMiniScript);
-			RazorBeak->SetName(L"SOUTH_RazorBeak_Mini");
-			RazorBeak->Transform()->SetRelativeScale(0.1f, 0.1f, 0.1f);
+			RazorBeak->SetName(L"SOUTH_RazorBeak_Mini1");
+			RazorBeak->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
 			RazorBeak->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
 			CRazorBeakMiniScript* Script = RazorBeak->GetScript<CRazorBeakMiniScript>();
 			Script->SetAggroPos(Vec3(1033.f, 0.f, 782.f));
+			Script->SetUnitType(UnitType::SOUTH_RAZORBEAK_MINI_1);
 			SpawnGameObject(RazorBeak, Vec3(1026.f, 15.f, 810.f), L"Mob");
+
+			RazorBeak = nullptr;
+			RazorBeak = pMeshData->Instantiate();
+			RazorBeak->AddComponent(new CRazorBeakMiniScript);
+			RazorBeak->SetName(L"SOUTH_RazorBeak_Mini2");
+			RazorBeak->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
+			RazorBeak->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(73.f), 0.f));
+			Script = RazorBeak->GetScript<CRazorBeakMiniScript>();
+			Script->SetAggroPos(Vec3(1033.f, 0.f, 782.f));
+			Script->SetUnitType(UnitType::SOUTH_RAZORBEAK_MINI_2);
+			SpawnGameObject(RazorBeak, Vec3(1048.f, 15.f, 799.f), L"Mob");
+
+			RazorBeak = nullptr;
+			RazorBeak = pMeshData->Instantiate();
+			RazorBeak->AddComponent(new CRazorBeakMiniScript);
+			RazorBeak->SetName(L"SOUTH_RazorBeak_Mini3");
+			RazorBeak->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
+			RazorBeak->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(-90.f), 0.f));
+			Script = RazorBeak->GetScript<CRazorBeakMiniScript>();
+			Script->SetAggroPos(Vec3(1033.f, 0.f, 782.f));
+			Script->SetUnitType(UnitType::SOUTH_RAZORBEAK_MINI_3);
+			SpawnGameObject(RazorBeak, Vec3(1031.f, 15.f, 782.f), L"Mob");
+
+			RazorBeak = nullptr;
+			RazorBeak = pMeshData->Instantiate();
+			RazorBeak->AddComponent(new CRazorBeakMiniScript);
+			RazorBeak->SetName(L"SOUTH_RazorBeak_Mini4");
+			RazorBeak->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
+			RazorBeak->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
+			Script = RazorBeak->GetScript<CRazorBeakMiniScript>();
+			Script->SetAggroPos(Vec3(1033.f, 0.f, 782.f));
+			Script->SetUnitType(UnitType::SOUTH_RAZORBEAK_MINI_4);
+			SpawnGameObject(RazorBeak, Vec3(1012.f, 15.f, 765.f), L"Mob");
+
+			RazorBeak = nullptr;
+			RazorBeak = pMeshData->Instantiate();
+			RazorBeak->AddComponent(new CRazorBeakMiniScript);
+			RazorBeak->SetName(L"SOUTH_RazorBeak_Mini5");
+			RazorBeak->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
+			RazorBeak->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(69.f), 0.f));
+			Script = RazorBeak->GetScript<CRazorBeakMiniScript>();
+			Script->SetAggroPos(Vec3(1033.f, 0.f, 782.f));
+			Script->SetUnitType(UnitType::SOUTH_RAZORBEAK_MINI_5);
+			SpawnGameObject(RazorBeak, Vec3(1048.f, 15.f, 767.f), L"Mob");
 		}
 		//블루팀 블루
 		{
@@ -791,6 +854,7 @@ void SpawnJungleMob()
 			Blue->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(90.f), 0.f));
 			CBlueScript* Script = Blue->GetScript<CBlueScript>();
 			Script->SetAggroPos(Vec3(563.f, 0.f, 1164.f));
+			Script->SetUnitType(UnitType::SOUTH_BLUE);
 			SpawnGameObject(Blue, Vec3(563.f, 15.f, 1164.f), L"Mob");
 
 			CGameObject* BlueAggro = new CGameObject;
@@ -803,7 +867,294 @@ void SpawnJungleMob()
 			BlueAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
 			SpawnGameObject(BlueAggro, Vec3(563.f, 0.f, 1164.f), 0);
 		}
+		//블루팀 레드
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\jungle_red.fbx");
+			CGameObject* Red = nullptr;
+			Red = pMeshData->Instantiate();
+			Red->AddComponent(new CRedScript);
+			Red->SetName(L"South_Red");
+			Red->Transform()->SetRelativeScale(0.35f, 0.35f, 0.35f);
+			Red->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(46.f), 0.f));
+			CRedScript* Script = Red->GetScript<CRedScript>();
+			Script->SetAggroPos(Vec3(1123, 15.f, 559.f));
+			Script->SetUnitType(UnitType::SOUTH_RED);
+			SpawnGameObject(Red, Vec3(1136, 15.f, 580.f), L"Mob");
+
+			CGameObject* RedAggro = new CGameObject;
+			RedAggro->SetName(L"SOUTH_RedAggroRadius");
+			RedAggro->AddComponent(new CTransform);
+			RedAggro->AddComponent(new CCollider2D);
+			RedAggro->Transform()->SetRelativeScale(Vec3(190, 190.f, 190.f));
+			RedAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			RedAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+			RedAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			SpawnGameObject(RedAggro, Vec3(1123, 15.f, 559.f), 0);
+		}
 	}
-	
+	//--------------------------------------------
+
+	//-------------------------------------------
+
+	//레드팀
+	{
+		//레드팀 두꺼비
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\gromp.fbx");
+			CGameObject* Gromp = nullptr;
+			Gromp = pMeshData->Instantiate();
+			Gromp->AddComponent(new CGrompScript);
+			Gromp->SetName(L"NORTH_Gromp");
+			Gromp->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
+			Gromp->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(58.f), 0.f));
+			CGrompScript* Script = Gromp->GetScript<CGrompScript>();
+			Script->SetAggroPos(Vec3(1823.f, 0.f, 943.f));
+			Script->SetUnitType(UnitType::NORTH_GROMP);
+			SpawnGameObject(Gromp, Vec3(1859.f, 10.f, 956.f), L"Mob");
+
+			CGameObject* GrompAggro = new CGameObject;
+			GrompAggro->SetName(L"NORTH_GrompAggroRadius");
+			GrompAggro->AddComponent(new CTransform);
+			GrompAggro->AddComponent(new CCollider2D);
+			GrompAggro->Transform()->SetRelativeScale(Vec3(150.f, 150.f, 150.f));
+			GrompAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			GrompAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+			GrompAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			SpawnGameObject(GrompAggro, Vec3(1823.f, 0.f, 436.f), 0);
+		}
+
+		//레드팀 늑대
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\MurkWolf.fbx");
+			CGameObject* MurkWolf = nullptr;
+			MurkWolf = pMeshData->Instantiate();
+			MurkWolf->AddComponent(new CMurkWolfScript);
+			MurkWolf->SetName(L"NORTH_MurkWolf");
+			MurkWolf->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
+			MurkWolf->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(-21.f), XMConvertToRadians(-180.f)));
+			CMurkWolfScript* script = MurkWolf->GetScript <CMurkWolfScript>();
+			script->SetAggroPos(Vec3(1633.f, 0.f, 1265.f));
+			script->SetUnitType(UnitType::NORTH_MURKWOLF);
+			SpawnGameObject(MurkWolf, Vec3(1619.f, 15.f, 1236.f), L"Mob");
+
+			CGameObject* MurkWolfAggro = new CGameObject;
+			MurkWolfAggro->SetName(L"NORTH_MurkWolfAggroRadius");
+			MurkWolfAggro->AddComponent(new CTransform);
+			MurkWolfAggro->AddComponent(new CCollider2D);
+			MurkWolfAggro->Transform()->SetRelativeScale(Vec3(190, 190.f, 190.f));
+			MurkWolfAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			MurkWolfAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+			MurkWolfAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			SpawnGameObject(MurkWolfAggro, Vec3(1633.f, 0.f, 1265.f), 0);
+		}
+		//레드팀 늑대 째깐이(좌)
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\MurkWolf_Mini.fbx");
+			CGameObject* MurkWolf_Mini = nullptr;
+			MurkWolf_Mini = pMeshData->Instantiate();
+			MurkWolf_Mini->AddComponent(new CMurkWolfMiniScript);
+			MurkWolf_Mini->SetName(L"NORTH_MurkWolf_Mini_L");
+			MurkWolf_Mini->Transform()->SetRelativeScale(0.15f, 0.15f, 0.15);
+			MurkWolf_Mini->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(-30.f), XMConvertToRadians(-180.f)));
+			CMurkWolfMiniScript* Script = MurkWolf_Mini->GetScript<CMurkWolfMiniScript>();
+			Script->SetAggroPos(Vec3(1633.f, 0.f, 1265.f));
+			Script->SetUnitType(UnitType::NORTH_MURKWOLF_MINI_L);
+			SpawnGameObject(MurkWolf_Mini, Vec3(1592.f, 19.f, 1232.f), L"Mob");
+		}
+		//레드팀 늑대 째깐이(우)
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\MurkWolf_Mini.fbx");
+			CGameObject* MurkWolf_Mini = nullptr;
+			MurkWolf_Mini = pMeshData->Instantiate();
+			MurkWolf_Mini->AddComponent(new CMurkWolfMiniScript);
+			MurkWolf_Mini->SetName(L"NORTH_MurkWolf_Mini_R");
+			MurkWolf_Mini->Transform()->SetRelativeScale(0.15f, 0.15f, 0.15f);
+			MurkWolf_Mini->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(-30.f), XMConvertToRadians(-180.f)));
+			CMurkWolfMiniScript* Script = MurkWolf_Mini->GetScript<CMurkWolfMiniScript>();
+			Script->SetAggroPos(Vec3(1633.f, 0.f, 1265.f));
+			Script->SetUnitType(UnitType::NORTH_MURKWOLF_MINI_R);
+			SpawnGameObject(MurkWolf_Mini, Vec3(1634, 15.f, 1208.f), L"Mob");
+		}
+		//레드팀 돌거북
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Krug.fbx");
+			CGameObject* Krug = nullptr;
+			Krug = pMeshData->Instantiate();
+			Krug->AddComponent(new CKrugScript);
+			Krug->SetName(L"NORTH_Krug");
+			Krug->Transform()->SetRelativeScale(0.25f, 0.25f, 0.25f);
+			Krug->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(-4.f), XMConvertToRadians(-180.f)));
+			CKrugScript* Script = Krug->GetScript<CKrugScript>();
+			Script->SetAggroPos(Vec3(942.f, 0.f, 1845.f));
+			Script->SetUnitType(UnitType::NORTH_KRUG);
+			SpawnGameObject(Krug, Vec3(966, 15.f, 1800.f), L"Mob");
+
+			CGameObject* KrugAggro = new CGameObject;
+			KrugAggro->SetName(L"NORTH_KrugAggroRadius");
+			KrugAggro->AddComponent(new CTransform);
+			KrugAggro->AddComponent(new CCollider2D);
+			KrugAggro->Transform()->SetRelativeScale(Vec3(170, 170.f, 170.f));
+			KrugAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			KrugAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+			KrugAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			SpawnGameObject(KrugAggro, Vec3(942.f, 0.f, 1845.f), 0);
+		}
+		//레드팀 돌거북 째깐이
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Krug_Mini.fbx");
+			CGameObject* Krug_Mini = nullptr;
+			Krug_Mini = pMeshData->Instantiate();
+			Krug_Mini->AddComponent(new CKrugMiniScript);
+			Krug_Mini->SetName(L"NORTH_Krug_Mini");
+			Krug_Mini->Transform()->SetRelativeScale(0.15f, 0.15f, 0.15f);
+			Krug_Mini->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(4.f), XMConvertToRadians(180.f)));
+			CKrugMiniScript* Script = Krug_Mini->GetScript<CKrugMiniScript>();
+			Script->SetAggroPos(Vec3(942.f, 0.f, 1845.f));
+			Script->SetUnitType(UnitType::NORTH_KRUG_MINI);
+			SpawnGameObject(Krug_Mini, Vec3(935.f, 15.f, 1791.f), L"Mob");
+		}
+		//레드팀 칼날부리
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\RazorBeak.fbx");
+			CGameObject* RazorBeak = nullptr;
+			RazorBeak = pMeshData->Instantiate();
+			RazorBeak->AddComponent(new CRazorBeakScript);
+			RazorBeak->SetName(L"NORTH_RazorBeak");
+			RazorBeak->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
+			RazorBeak->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(90.f), XMConvertToRadians(180.f)));
+			CRazorBeakScript* Script = RazorBeak->GetScript<CRazorBeakScript>();
+			Script->SetAggroPos(Vec3(1145.f, 0.f, 1438.f));
+			Script->SetUnitType(UnitType::NORTH_RAZORBEAK);
+			SpawnGameObject(RazorBeak, Vec3(1170.f, 15.f, 1390.f), L"Mob");
+
+			CGameObject* RazorBeakAggro = new CGameObject;
+			RazorBeakAggro->SetName(L"NORTH_RazorBeakAggroRadius");
+			RazorBeakAggro->AddComponent(new CTransform);
+			RazorBeakAggro->AddComponent(new CCollider2D);
+			RazorBeakAggro->Transform()->SetRelativeScale(Vec3(170, 170.f, 170.f));
+			RazorBeakAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			RazorBeakAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+			RazorBeakAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			SpawnGameObject(RazorBeakAggro, Vec3(1145.f, 0.f, 1438.f), 0);
+		}
+
+		//레드팀 칼날부리 째깐이
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\RazorBeak_Mini.fbx");
+			CGameObject* RazorBeak = nullptr;
+			RazorBeak = pMeshData->Instantiate();
+			RazorBeak->AddComponent(new CRazorBeakMiniScript);
+			RazorBeak->SetName(L"NORTH_RazorBeak_Mini1");
+			RazorBeak->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
+			RazorBeak->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(-46.f), XMConvertToRadians(180.f)));
+			CRazorBeakMiniScript* Script = RazorBeak->GetScript<CRazorBeakMiniScript>();
+			Script->SetAggroPos(Vec3(1145.f, 0.f, 1438.f));
+			Script->SetUnitType(UnitType::NORTH_RAZORBEAK_MINI_1);
+			SpawnGameObject(RazorBeak, Vec3(1139, 15.f, 1419.f), L"Mob");
+
+			RazorBeak = nullptr;
+			RazorBeak = pMeshData->Instantiate();
+			RazorBeak->AddComponent(new CRazorBeakMiniScript);
+			RazorBeak->SetName(L"NORTH_RazorBeak_Mini2");
+			RazorBeak->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
+			RazorBeak->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(52.f), XMConvertToRadians(180.f)));
+			Script = RazorBeak->GetScript<CRazorBeakMiniScript>();
+			Script->SetAggroPos(Vec3(1145.f, 0.f, 1438.f));
+			Script->SetUnitType(UnitType::NORTH_RAZORBEAK_MINI_2);
+			SpawnGameObject(RazorBeak, Vec3(1176, 15.f, 1419.f), L"Mob");
+
+			RazorBeak = nullptr;
+			RazorBeak = pMeshData->Instantiate();
+			RazorBeak->AddComponent(new CRazorBeakMiniScript);
+			RazorBeak->SetName(L"NORTH_RazorBeak_Mini3");
+			RazorBeak->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
+			RazorBeak->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(90.f), 0.f));
+			Script = RazorBeak->GetScript<CRazorBeakMiniScript>();
+			Script->SetAggroPos(Vec3(1145.f, 0.f, 1438.f));
+			Script->SetUnitType(UnitType::NORTH_RAZORBEAK_MINI_3);
+			SpawnGameObject(RazorBeak, Vec3(1159, 15.f, 1405.f), L"Mob");
+
+			RazorBeak = nullptr;
+			RazorBeak = pMeshData->Instantiate();
+			RazorBeak->AddComponent(new CRazorBeakMiniScript);
+			RazorBeak->SetName(L"NORTH_RazorBeak_Mini4");
+			RazorBeak->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
+			RazorBeak->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(0.f), XMConvertToRadians(-90.f), XMConvertToRadians(0.f)));
+			Script = RazorBeak->GetScript<CRazorBeakMiniScript>();
+			Script->SetAggroPos(Vec3(1145.f, 0.f, 1438.f));
+			Script->SetUnitType(UnitType::NORTH_RAZORBEAK_MINI_4);
+			SpawnGameObject(RazorBeak, Vec3(1140, 15.f, 1385.f), L"Mob");
+
+			RazorBeak = nullptr;
+			RazorBeak = pMeshData->Instantiate();
+			RazorBeak->AddComponent(new CRazorBeakMiniScript);
+			RazorBeak->SetName(L"NORTH_RazorBeak_Mini5");
+			RazorBeak->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
+			RazorBeak->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(0.f), XMConvertToRadians(180.f)));
+			Script = RazorBeak->GetScript<CRazorBeakMiniScript>();
+			Script->SetAggroPos(Vec3(1145.f, 0.f, 1438.f));
+			Script->SetUnitType(UnitType::NORTH_RAZORBEAK_MINI_5);
+			SpawnGameObject(RazorBeak, Vec3(1157, 15.f, 1370.f), L"Mob");
+		}
+		//레드팀 블루
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\jungle_blue.fbx");
+			CGameObject* Blue = nullptr;
+			Blue = pMeshData->Instantiate();
+			Blue->AddComponent(new CBlueScript);
+			Blue->SetName(L"NORTH_Blue");
+			Blue->Transform()->SetRelativeScale(0.22f, 0.22f, 0.22f);
+			Blue->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(-57.f), 0.f));
+			CBlueScript* Script = Blue->GetScript<CBlueScript>();
+			Script->SetAggroPos(Vec3(1653.f, 0.f, 1011.f));
+			Script->SetUnitType(UnitType::NORTH_BLUE);
+			SpawnGameObject(Blue, Vec3(1636, 10.f, 1009.f), L"Mob");
+
+			CGameObject* BlueAggro = new CGameObject;
+			BlueAggro->SetName(L"NORTH_BlueAggroRadius");
+			BlueAggro->AddComponent(new CTransform);
+			BlueAggro->AddComponent(new CCollider2D);
+			BlueAggro->Transform()->SetRelativeScale(Vec3(170, 170.f, 170.f));
+			BlueAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			BlueAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+			BlueAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			SpawnGameObject(BlueAggro, Vec3(1653.f, 0.f, 1011.f), 0);
+		}
+		//레드팀 레드
+		{
+			Ptr<CMeshData> pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\jungle_red.fbx");
+			CGameObject* Red = nullptr;
+			Red = pMeshData->Instantiate();
+			Red->AddComponent(new CRedScript);
+			Red->SetName(L"NORTH_Red");
+			Red->Transform()->SetRelativeScale(0.35f, 0.35f, 0.35f);
+			Red->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(-54.f), XMConvertToRadians(-180.f)));
+			CRedScript* Script = Red->GetScript<CRedScript>();
+			Script->SetAggroPos(Vec3(1055, 15.f, 1637.f));
+			Script->SetUnitType(UnitType::NORTH_RED);
+			SpawnGameObject(Red, Vec3(1049, 15.f, 1607.f), L"Mob");
+
+			CGameObject* RedAggro = new CGameObject;
+			RedAggro->SetName(L"NORTH_RedAggroRadius");
+			RedAggro->AddComponent(new CTransform);
+			RedAggro->AddComponent(new CCollider2D);
+			RedAggro->Transform()->SetRelativeScale(Vec3(190, 190.f, 190.f));
+			RedAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			RedAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+			RedAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			SpawnGameObject(RedAggro, Vec3(1055, 15.f, 1637.f), 0);
+		}
+	}
 
 }

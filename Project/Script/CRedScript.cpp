@@ -14,7 +14,6 @@
 CRedScript::CRedScript()
 	:CJungleMonsterScript((UINT)REDSCRIPT)
 {
-	m_eJungleType = JungleType::RED;
 }
 
 CRedScript::~CRedScript()

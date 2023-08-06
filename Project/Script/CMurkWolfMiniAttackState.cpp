@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CMurkWolfMiniAttackState.h"
 #include <Engine/CAnim3D.h>
+#include "CMurkWolfMiniScript.h"
 
 CMurkWolfMiniAttackState::CMurkWolfMiniAttackState()
 	: m_iAttackAnimNum(1)
@@ -26,6 +27,8 @@ void CMurkWolfMiniAttackState::Enter()
 
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
 	GetOwner()->Animator3D()->PlayOnce(basename);
+	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, basename, false, false, false, 0.f);
 	CJungleAttackState::Enter();
 }
 

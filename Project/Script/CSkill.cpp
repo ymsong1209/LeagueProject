@@ -18,6 +18,8 @@ CSkill::CSkill()
 
 CSkill::~CSkill()
 {
+	if (m_ProjectileScript)
+		delete m_ProjectileScript;
 }
 
 void CSkill::tick()

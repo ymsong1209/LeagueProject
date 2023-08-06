@@ -16,6 +16,8 @@ public:
 
     CLONE(CUnitScript);
 
+
+
 protected:
     UINT64                  m_iServerID;        // 서버에게 부여받은 ID
     wstring                 m_strNickname;      // 닉네임
@@ -88,6 +90,7 @@ public:
     UINT64           GetServerID() { return m_iServerID; }
     wstring          GetNickname() const { return m_strNickname; }
     bool             IsHost() const { return m_bHost; }
+    void             SetUnitType(UnitType _type) { m_eUnitType = _type; }
     UnitType         GetUnitType() const { return m_eUnitType; }
     Faction          GetFaction() const { return m_eFaction; }
 
@@ -117,4 +120,11 @@ public:
 
     CSkill* GetSkill(int _i) { if (_i < 0 || _i >= 5) return nullptr; return m_Skill[_i]; }
     int     GetSkillLevel(int _i) { return m_SkillLevel[_i]; }
+
+public:
+    virtual void SaveToLevelFile(FILE* _File) override;
+    virtual void LoadFromLevelFile(FILE* _FILE) override;
+
+    virtual void SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)override;
+    virtual void LoadFromLevelJsonFile(const Value& _componentValue)override;
 };
