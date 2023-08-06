@@ -208,7 +208,15 @@ void CChampionScript::GetInput()
 
 			if (m_Skill[1]->CSkill::Use())
 			{
-				// 스킬 이벤트
+				// Q이벤트 발생
+				PlayerQEvent* evn = dynamic_cast<PlayerQEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_SKILL_Q));
+				if (evn != nullptr)
+				{
+					evn->Clear();
+					evn->SetUserObj(GetOwner());
+					evn->SetTargetObj(nullptr);
+					CGameEventMgr::GetInst()->NotifyEvent(*evn);
+				}
 			}
 		}
 		if (KEY_TAP(KEY::W))

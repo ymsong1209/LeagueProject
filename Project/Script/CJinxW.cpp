@@ -7,7 +7,7 @@
 CJinxW::CJinxW()
 {
 	m_strSkillName = L"Zap!";
-	m_fCoolDown = 0.f;
+	m_fCoolDown = 5.f;
 	m_iMaxLevel = 5;
 	m_fCost = 50.f;
 
@@ -58,6 +58,9 @@ bool CJinxW::Use()
 		Vec3(0, 0, 0),
 		true,
 		GetMouseDir());
+
+	// 쿨타임 초기화
+	m_fCurCoolDown = m_fCoolDown;
 
 	return true;
 	// W 투사체 발사

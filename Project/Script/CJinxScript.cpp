@@ -7,10 +7,12 @@
 #include "CJinxRespawnState.h"
 #include "CJinxAttackState.h"
 #include "CJinxWState.h"
+#include "CJinxQState.h"
 
 #include "CBasicAttack.h"
 #include "CJinxQ.h"
 #include "CJinxw.h"
+
 
 CJinxScript::CJinxScript()
 	:CChampionScript((UINT)JINXSCRIPT)
@@ -31,6 +33,7 @@ void CJinxScript::begin()
 	GetOwner()->Fsm()->AddState(L"Death", new CJinxDeathState);
 	GetOwner()->Fsm()->AddState(L"Respawn", new CJinxRespawnState);
 	GetOwner()->Fsm()->AddState(L"Attack", new CJinxAttackState);
+	GetOwner()->Fsm()->AddState(L"Q", new CJinxQState);
 	GetOwner()->Fsm()->AddState(L"W", new CJinxWState);
 
 	// Skill¿¡ Jinx Skill Ãß°¡

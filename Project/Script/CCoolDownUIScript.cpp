@@ -70,7 +70,6 @@ void CCoolDownUIScript::tick()
 
 	MeshRender()->GetMaterial(0)->SetScalarParam(FLOAT_0, &m_fCoolRatio);
 
-
 	//=============폰트출력===============
 	if (UICamera && m_SkillType != COOL_DOWN_TYPE::PASSIVE && m_bSkillUse)
 	{
