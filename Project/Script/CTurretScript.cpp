@@ -9,7 +9,7 @@
 CTurretScript::CTurretScript()
 	:CStructureScript((UINT)SCRIPT_TYPE::TURRETSCRIPT)
 {
-	m_eFaction = Faction::RED;
+	//m_eFaction = Faction::RED;
 
 	m_fAttackPower = 1;
 	m_fDefencePower = 0;
