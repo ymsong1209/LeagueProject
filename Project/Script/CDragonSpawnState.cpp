@@ -13,6 +13,7 @@ CDragonSpawnState::~CDragonSpawnState()
 }
 void CDragonSpawnState::Enter()
 {
+	m_bSpawnFinished = false;
 	GetOwner()->Animator3D()->PlayOnce(L"Elder_Dragon\\sru_dragon_elder_spawn");
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"Elder_Dragon\\sru_dragon_elder_spawn", false, false, false, 0.f);
@@ -20,7 +21,14 @@ void CDragonSpawnState::Enter()
 
 void CDragonSpawnState::tick()
 {
-	if (GetOwner()->Animator3D()->GetCurAnim()->IsFinish()) {
+	if (GetOwner()->Animator3D()->GetCurAnim()->IsFinish() && m_bSpawnFinished == false) {
+		GetOwner()->Animator3D()->GetCurAnim()->Reset();
+		GetOwner()->Animator3D()->PlayOnce(L"Elder_Dragon\\sru_dragon_idle_ag2n");
+		UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+		CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"Elder_Dragon\\sru_dragon_idle_ag2n", false, false, false, 0.f);
+		m_bSpawnFinished = true;
+	}
+	else if (GetOwner()->Animator3D()->GetCurAnim()->IsFinish() && m_bSpawnFinished == true) {
 		GetOwner()->Fsm()->ChangeState(L"Idle");
 	}
 }

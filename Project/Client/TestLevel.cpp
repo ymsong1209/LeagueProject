@@ -47,8 +47,8 @@ void CreateTestLevel()
 	//return;	
 
 	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
-	pCurLevel->ChangeState(LEVEL_STATE::PLAY);
-	CTimeMgr::GetInst()->SetTimeScale(1.f);    // TestLevel에서 강제로 PLAY모드로 전환해서 DT를 흐르게 하기 위함. 추후 삭제
+	//pCurLevel->ChangeState(LEVEL_STATE::PLAY);
+	//CTimeMgr::GetInst()->SetTimeScale(1.f);    // TestLevel에서 강제로 PLAY모드로 전환해서 DT를 흐르게 하기 위함. 추후 삭제
 
 	//롤맵 레이어에는 롤맵만 넣을것!
 	pCurLevel->GetLayer(0)->SetName(L"Default");
@@ -243,7 +243,7 @@ void CreateTestLevel()
 		//pObj->Transform()->SetRelativeScale(Vec3(0.3, 0.3, 0.3));
 		//SpawnGameObject(pObj, Vec3(190.f, 0.f, 607.f), 0);
 
-		/*pMeshData = nullptr;
+		pMeshData = nullptr;
 		pObj = nullptr;
 		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
 		pObj = pMeshData->Instantiate();
@@ -273,19 +273,19 @@ void CreateTestLevel()
 		CJinxScript* jinxscript = pObj->GetScript<CJinxScript>();
 		jinxscript->SetFaction(Faction::BLUE);
 		
-		SpawnGameObject(pObj, Vec3(0, 0, 0), L"Player");*/
+		SpawnGameObject(pObj, Vec3(0, 0, 0), L"Player");
 
-		//CGameObject* JinxAttackRange = new CGameObject;
-		//JinxAttackRange->SetName(L"AttackRange");
-		//JinxAttackRange->AddComponent(new CTransform);
-		//JinxAttackRange->AddComponent(new CCollider2D);
-		//JinxAttackRange->AddComponent(new CAttackRangeScript);
-		//JinxAttackRange->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-		//JinxAttackRange->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-		//JinxAttackRange->Collider2D()->SetAbsolute(true);
-		//JinxAttackRange->Collider2D()->SetOffsetScale(Vec2(100.f, 100.f));
-		//pObj->AddChild(JinxAttackRange);
-		//JinxAttackRange->ChangeLayer(L"AttackRange");
+		CGameObject* JinxAttackRange = new CGameObject;
+		JinxAttackRange->SetName(L"AttackRange");
+		JinxAttackRange->AddComponent(new CTransform);
+		JinxAttackRange->AddComponent(new CCollider2D);
+		JinxAttackRange->AddComponent(new CAttackRangeScript);
+		JinxAttackRange->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+		JinxAttackRange->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+		JinxAttackRange->Collider2D()->SetAbsolute(true);
+		JinxAttackRange->Collider2D()->SetOffsetScale(Vec2(100.f, 100.f));
+		pObj->AddChild(JinxAttackRange);
+		JinxAttackRange->ChangeLayer(L"AttackRange");
 
 
 		//-------------------------------넥서스-----------------------------------------
@@ -417,7 +417,7 @@ void CreateTestLevel()
 
 
 	PlaceLand();
-	//SpawnJungleMob();
+	SpawnJungleMob();
 
 
 	 // TestFastForward
