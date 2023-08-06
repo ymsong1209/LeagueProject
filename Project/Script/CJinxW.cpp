@@ -103,10 +103,10 @@ void CJinxW::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _S
 	TargetUnitScript->SetCurHPVar(-Damage);
 
 	// 2ÃÊ µ¿¾È µÐÈ­½ÃÅµ´Ï´Ù.
-	CTimedEffect* JinxWSlow = new CTimedEffect(TargetChampScript, 2.f, 0, 0, CC::SLOW);
-	TargetChampScript->AddTimedEffect(JinxWSlow);
+	CTimedEffect* JinxWSlow = new CTimedEffect(TargetUnitScript, 2.f, 0, 0, CC::SLOW);
+	TargetUnitScript->AddTimedEffect(JinxWSlow);
 
 	// Å×½ºÆ®¿ë µµÆ®µô
-	CTimedEffect* TestDot = new CTimedEffect(TargetChampScript, 3.f, 5.f, 6, CC::CLEAR);
-	TargetChampScript->AddTimedEffect(TestDot);
+	CTimedEffect* TestDot = new CTimedEffect(TargetUnitScript, 3.f, 5.f, 6, CC::CLEAR);
+	TargetUnitScript->AddTimedEffect(TestDot);
 }
