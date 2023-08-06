@@ -5,6 +5,7 @@
 #include "CUnitScript.h"
 #include "CChampionAttackState.h"
 #include "CGameEvent.h"
+#include "CChampionSkillState.h"
 
 CChampionWalkState::CChampionWalkState()
 {

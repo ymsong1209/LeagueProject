@@ -6,6 +6,7 @@
 
 #include "CChampionAttackState.h"
 #include "CGameEvent.h"
+#include "CChampionSkillState.h"
 
 CChampionRespawnState::CChampionRespawnState()
 {
@@ -57,7 +58,22 @@ void CChampionRespawnState::HandleEvent(CGameEvent& event)
 		GetOwnerFSM()->ChangeState(L"Attack");
 	}
 	break;
+	case GAME_EVENT_TYPE::GET_HIT:
+	{
+		GetHitEvent* HitEvent = dynamic_cast<GetHitEvent*>(&event);
 
+		// 맞은 타겟이 본인인 경우에만 이벤트에 반응
+		if (HitEvent->GetTargetObj() == GetOwner())
+		{
+			CGameObject* SkillUser = HitEvent->GetUserObj();
+			CGameObject* SkillTarget = HitEvent->GetTargetObj();
+			SkillType skilltype = HitEvent->GetSkillType();
+			int	skillLevel = HitEvent->GetSkillLevel();
+
+			GetOwnerFSM()->GetOwner()->GetScript<CUnitScript>()->GetHit(skilltype, SkillTarget, SkillUser, skillLevel);
+		}
+	}
+	break;
 	case GAME_EVENT_TYPE::PLAYER_MOVE:
 		GetOwnerFSM()->ChangeState(L"Walk");
 		break;
@@ -70,7 +86,17 @@ void CChampionRespawnState::HandleEvent(CGameEvent& event)
 	case GAME_EVENT_TYPE::PLAYER_SKILL_W:
 	{
 		if (GetOwnerFSM()->FindState(L"W") != nullptr)
+		{
+			PlayerWEvent* WEvent = dynamic_cast<PlayerWEvent*>(&event);
+
+			CChampionSkillState* SkillState = dynamic_cast<CChampionSkillState*>(GetOwnerFSM()->FindState(L"W"));
+			if (SkillState != nullptr)
+			{
+				SkillState->SetUserObj(WEvent->GetUserObj());
+				SkillState->SetTargetObj(WEvent->GetTargetObj());
+			}
 			GetOwnerFSM()->ChangeState(L"W");
+		}
 		break;
 	}
 	case GAME_EVENT_TYPE::PLAYER_SKILL_E:
