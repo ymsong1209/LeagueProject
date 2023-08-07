@@ -21,6 +21,9 @@
 #include "CKrugMiniScript.h"
 #include "CKrugScript.h"
 #include "CMinimapUIScript.h"
+#include "CMinionHPBarPosScript.h"
+#include "CMinionHPRatioScript.h"
+#include "CMinionHPSpawnScript.h"
 #include "CMinionScript.h"
 #include "CMobScript.h"
 #include "CMonsterHPBarUIScript.h"
@@ -67,6 +70,9 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CKrugMiniScript");
 	_vec.push_back(L"CKrugScript");
 	_vec.push_back(L"CMinimapUIScript");
+	_vec.push_back(L"CMinionHPBarPosScript");
+	_vec.push_back(L"CMinionHPRatioScript");
+	_vec.push_back(L"CMinionHPSpawnScript");
 	_vec.push_back(L"CMinionScript");
 	_vec.push_back(L"CMobScript");
 	_vec.push_back(L"CMonsterHPBarUIScript");
@@ -134,6 +140,12 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CKrugScript;
 	if (L"CMinimapUIScript" == _strScriptName)
 		return new CMinimapUIScript;
+	if (L"CMinionHPBarPosScript" == _strScriptName)
+		return new CMinionHPBarPosScript;
+	if (L"CMinionHPRatioScript" == _strScriptName)
+		return new CMinionHPRatioScript;
+	if (L"CMinionHPSpawnScript" == _strScriptName)
+		return new CMinionHPSpawnScript;
 	if (L"CMinionScript" == _strScriptName)
 		return new CMinionScript;
 	if (L"CMobScript" == _strScriptName)
@@ -246,6 +258,15 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::MINIMAPUISCRIPT:
 		return new CMinimapUIScript;
+		break;
+	case (UINT)SCRIPT_TYPE::MINIONHPBARPOSSCRIPT:
+		return new CMinionHPBarPosScript;
+		break;
+	case (UINT)SCRIPT_TYPE::MINIONHPRATIOSCRIPT:
+		return new CMinionHPRatioScript;
+		break;
+	case (UINT)SCRIPT_TYPE::MINIONHPSPAWNSCRIPT:
+		return new CMinionHPSpawnScript;
 		break;
 	case (UINT)SCRIPT_TYPE::MINIONSCRIPT:
 		return new CMinionScript;
@@ -402,6 +423,18 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::MINIMAPUISCRIPT:
 		return L"CMinimapUIScript";
+		break;
+
+	case SCRIPT_TYPE::MINIONHPBARPOSSCRIPT:
+		return L"CMinionHPBarPosScript";
+		break;
+
+	case SCRIPT_TYPE::MINIONHPRATIOSCRIPT:
+		return L"CMinionHPRatioScript";
+		break;
+
+	case SCRIPT_TYPE::MINIONHPSPAWNSCRIPT:
+		return L"CMinionHPSpawnScript";
 		break;
 
 	case SCRIPT_TYPE::MINIONSCRIPT:

@@ -18,7 +18,11 @@ CJungleMonsterScript
 CKrugMiniScript
 CKrugScript
 CMinimapUIScript
+CMinionHPBarPosScript
+CMinionHPRatioScript
+CMinionHPSpawnScript
 CMinionScript
+CMobBarPanelScript
 CMobScript
 CMonsterHPBarUIScript
 CMouseCursorUIScript

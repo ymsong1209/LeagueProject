@@ -37,6 +37,8 @@
 #include <Script\COtherPlayerScript.h>
 #include "ServerEventMgr.h"
 #include <Script/CSendServerEventMgr.h>
+#include <Script\CMinionHPRatioScript.h>
+#include <Script\CMinionHPBarPosScript.h>
 
 // ===============================================
 //   Add
@@ -207,6 +209,23 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			// 추후 추가 unitscript에 변수 채우기 + spawnPos도 서버가 줄 예정
 			//Script->SetCurHP
 			//script->SetCurMP
+
+			//체력바 부분
+			CGameObject* HPBar = new CGameObject;
+			HPBar->SetName(L"HPBar");
+			HPBar->AddComponent(new CTransform);
+			HPBar->AddComponent(new CMeshRender);
+			HPBar->AddComponent(new CMinionHPRatioScript);
+			pObj->AddChild(HPBar);
+
+			//체력바 패널부분
+			CGameObject* BarPanel = new CGameObject;
+			BarPanel->SetName(L"BarPanel");
+			BarPanel->AddComponent(new CTransform);
+			BarPanel->AddComponent(new CMeshRender);
+			BarPanel->AddComponent(new CMinionHPBarPosScript);
+			pObj->AddChild(BarPanel);
+
 			pObj->Transform()->SetRelativeScale(Vec3(0.1f, 0.1f, 0.1f));
 			Vec3 spawnPos = Vec3(100.f + (50 * _objects.size()), 30.f, 100.f);
 			SpawnGameObject(pObj, spawnPos, L"Mob");

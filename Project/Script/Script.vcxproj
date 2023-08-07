@@ -267,6 +267,9 @@
     <ClInclude Include="CMinimapUIScript.h" />
     <ClInclude Include="CMinionAttackState.h" />
     <ClInclude Include="CMinionDeathState.h" />
+    <ClInclude Include="CMinionHPBarPosScript.h" />
+    <ClInclude Include="CMinionHPRatioScript.h" />
+    <ClInclude Include="CMinionHPSpawnScript.h" />
     <ClInclude Include="CMinionScript.h" />
     <ClInclude Include="CMinionWalkState.h" />
     <ClInclude Include="CMobScript.h" />
@@ -468,6 +471,9 @@
     <ClCompile Include="CMinimapUIScript.cpp" />
     <ClCompile Include="CMinionAttackState.cpp" />
     <ClCompile Include="CMinionDeathState.cpp" />
+    <ClCompile Include="CMinionHPBarPosScript.cpp" />
+    <ClCompile Include="CMinionHPRatioScript.cpp" />
+    <ClCompile Include="CMinionHPSpawnScript.cpp" />
     <ClCompile Include="CMinionScript.cpp" />
     <ClCompile Include="CMinionWalkState.cpp" />
     <ClCompile Include="CMobScript.cpp" />

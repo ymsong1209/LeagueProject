@@ -40,6 +40,8 @@
 #include <Script/CKrugMiniScript.h>
 #include <Script/CBlueScript.h>
 #include <Script/CRedScript.h>
+#include <Script\CMinionHPSpawnScript.h>
+#include <Script\CMinionHPRatioScript.h>
 
 void CreateTestLevel()
 {
@@ -254,6 +256,7 @@ void CreateTestLevel()
 		pObj->AddComponent(new CPathFinder);
 		pObj->AddComponent(new CCollider3D);
 		pObj->AddComponent(new CCollider2D);
+		pObj->AddComponent(new CMinionHPSpawnScript);
 		pObj->AddComponent(new CFsm);
 		
 		pObj->Collider2D()->SetAbsolute(false);
@@ -267,14 +270,28 @@ void CreateTestLevel()
 		pObj->Collider3D()->SetDrawCollision(false);
 		pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true,true,0.1f);
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		
 		pObj->Transform()->SetUseMouseOutline(true);
 		CJinxScript* jinxscript = pObj->GetScript<CJinxScript>();
 		jinxscript->SetFaction(Faction::BLUE);
-		
 		SpawnGameObject(pObj, Vec3(0, 0, 0), L"Player");*/
 
-		CGameObject* JinxAttackRange = new CGameObject;
+
+		/*pMeshData = nullptr;
+		pObj = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\minion_melee.fbx");
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"minion_melee");
+		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\minion_melee");
+		pObj->Animator3D()->PlayRepeat(L"minion_melee\\Idle1", true, true, 0.1f);
+		pObj->Transform()->SetRelativeScale(Vec3(0.145f, 0.145f, 0.145f));
+		pObj->AddComponent(new CUnitScript);
+		pObj->GetScript<CUnitScript>()->SetFaction(Faction::BLUE);
+		Vec3 spawnPos = Vec3(200.f, 30.f, 200.f);
+		SpawnGameObject(pObj, spawnPos, L"Mob");*/
+
+
+
+		/*CGameObject* JinxAttackRange = new CGameObject;
 		JinxAttackRange->SetName(L"AttackRange");
 		JinxAttackRange->AddComponent(new CTransform);
 		JinxAttackRange->AddComponent(new CCollider2D);
@@ -284,7 +301,7 @@ void CreateTestLevel()
 		JinxAttackRange->Collider2D()->SetAbsolute(true);
 		JinxAttackRange->Collider2D()->SetOffsetScale(Vec2(100.f, 100.f));
 		pObj->AddChild(JinxAttackRange);
-		JinxAttackRange->ChangeLayer(L"AttackRange");
+		JinxAttackRange->ChangeLayer(L"AttackRange");*/
 
 
 		//-------------------------------넥서스-----------------------------------------
