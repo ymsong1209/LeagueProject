@@ -1484,7 +1484,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = nullptr;
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\jungle_red");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
-			pObj->SetName(L"South_Red");
+			pObj->SetName(L"North_Red");
 			pObj->Transform()->SetRelativeScale(0.35f, 0.35f, 0.35f);
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(-54.f), XMConvertToRadians(-180.f)));
 			pObj->AddComponent(new CCollider3D);
