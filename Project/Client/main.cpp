@@ -67,7 +67,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     ImGuiMgr::GetInst()->init(g_hWnd);
 
     // 테스트 용 레벨 생성
-    //CreateTestLevel();
+    CreateTestLevel();
     //CreateLoginLevel();
 
     // 메세지 루프

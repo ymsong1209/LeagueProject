@@ -21,6 +21,7 @@ CUnitState::CUnitState(const CUnitState& other)
 
 CUnitState::~CUnitState()
 {
+	CGameEventMgr::GetInst()->RemoveListener(m_Listener);
 }
 
 void CUnitState::tick()

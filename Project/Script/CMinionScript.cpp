@@ -21,11 +21,14 @@ CMinionScript::~CMinionScript()
 
 void CMinionScript::begin()
 {
-	m_fHP = m_fMaxHP;
 	GetOwner()->Transform()->SetUseMouseOutline(true);
-	
-	// 진영
-	//SetFaction(Faction::RED);
+
+	m_eRestraint = RESTRAINT::DEFAULT;
+
+	// test
+	SetFaction(Faction::BLUE);
+	SetLane(Lane::TOP);
+	//SetMinionType(MinionType::RANGED);
 
 	// 미니언 타입 별 정보 세팅
 	switch (m_eMinionType)
@@ -33,16 +36,38 @@ void CMinionScript::begin()
 	case MinionType::MELEE:
 	{
 		m_fAttackPower = 1.f;
-		m_fAttackRange = 50.f;
-		m_fAttackSpeed = 2.f;
+		m_fAttackRange = 30.f;
+		m_fAttackSpeed = 1.5f;
+		m_fMoveSpeed = 50.f;
 		m_fMaxHP = 50.f;
 	}
 	break;
 	case MinionType::RANGED:
+	{
+		m_fAttackPower = 2.f;
+		m_fAttackRange = 200.f;
+		m_fAttackSpeed = 2.5f;
+		m_fMoveSpeed = 50.f;
+		m_fMaxHP = 50.f;
+	}
 		break;
 	case MinionType::SEIGE:
+	{
+		m_fAttackPower = 3.f;
+		m_fAttackRange = 100.f;
+		m_fAttackSpeed = 2.5f;
+		m_fMoveSpeed = 50.f;
+		m_fMaxHP = 50.f;
+	}
 		break;
 	case MinionType::SUPER:
+	{
+		m_fAttackPower = 5.f;
+		m_fAttackRange = 50.f;
+		m_fAttackSpeed = 2.f;
+		m_fMoveSpeed = 50.f;
+		m_fMaxHP = 50.f;
+	}
 		break;
 	}
 
@@ -52,18 +77,66 @@ void CMinionScript::begin()
 	case Lane::TOP:
 	{
 		// Top 동선에서 지나야할 곳 m_vecWayPoint로 pushback
+		if (m_eFaction == Faction::BLUE)
+		{
+			m_vecWayPoint.push_back(Vec3(170.f, 15.f, 754.f));
+			m_vecWayPoint.push_back(Vec3(318.f, 15.f, 1862.f));
+			m_vecWayPoint.push_back(Vec3(885.f, 15.f, 2013.f));
+			m_vecWayPoint.push_back(Vec3(1420.f, 15.f, 2013.f));
+			m_vecWayPoint.push_back(Vec3(1880.f, 15.f, 1988.f));
+		}
+		else if (m_eFaction == Faction::RED)
+		{
+			m_vecWayPoint.push_back(Vec3(1716.f, 15.f, 2056.f));
+			m_vecWayPoint.push_back(Vec3(1422.f, 15.f, 2019.f));
+			m_vecWayPoint.push_back(Vec3(311.f, 15.f, 1836.f));
+			m_vecWayPoint.push_back(Vec3(170.f, 15.f, 761.f));
+			m_vecWayPoint.push_back(Vec3(182.f, 15.f, 297.f));
+		}
 	}
-		break;
+	break;
 	case Lane::MID:
 	{
 		// Mid 동선에서 지나야할 곳 m_vecWayPoint로 pushback
+		if (m_eFaction == Faction::BLUE)
+		{
+			m_vecWayPoint.push_back(Vec3(395.f, 15.f, 377.f));
+			m_vecWayPoint.push_back(Vec3(607.f, 15.f, 618.f));
+			m_vecWayPoint.push_back(Vec3(1080.f, 15.f, 1080.f));
+			m_vecWayPoint.push_back(Vec3(1566.f, 15.f, 1581.f));
+			m_vecWayPoint.push_back(Vec3(1900.f, 15.f, 1900.f));
+		}
+		else if (m_eFaction == Faction::RED)
+		{
+			m_vecWayPoint.push_back(Vec3(1561.f, 15.f, 1569.f));
+			m_vecWayPoint.push_back(Vec3(1101.f, 15.f, 1087.f));
+			m_vecWayPoint.push_back(Vec3(620.f, 15.f, 649.f));
+			m_vecWayPoint.push_back(Vec3(421.f, 15.f, 438.f));
+			m_vecWayPoint.push_back(Vec3(291.f, 15.f, 299.f));
+		}
 	}
-		break;
+	break;
 	case Lane::BOTTOM:
 	{
 		// Bot 동선에서 지나야할 곳 m_vecWayPoint로 pushback
+		if (m_eFaction == Faction::BLUE)
+		{
+			m_vecWayPoint.push_back(Vec3(746.f, 15.f, 190.f));
+			m_vecWayPoint.push_back(Vec3(1275.f, 15.f, 182.f));
+			m_vecWayPoint.push_back(Vec3(1864.f, 15.f, 371.f));
+			m_vecWayPoint.push_back(Vec3(2005.f, 15.f, 1434.f));
+			m_vecWayPoint.push_back(Vec3(2000.f, 15.f, 1888.f));
+		}
+		else if (m_eFaction == Faction::RED)
+		{
+			m_vecWayPoint.push_back(Vec3(2009.f, 15.f, 1444.f));
+			m_vecWayPoint.push_back(Vec3(2001.f, 15.f, 1036.f));
+			m_vecWayPoint.push_back(Vec3(1849.f, 15.f, 357.f));
+			m_vecWayPoint.push_back(Vec3(747.f, 15.f, 183.f));
+			m_vecWayPoint.push_back(Vec3(288.f, 15.f, 186.f));
+		}
 	}
-		break;
+	break;
 	}
 
 
@@ -79,17 +152,31 @@ void CMinionScript::begin()
 	m_Skill[0] = new CBasicAttack;
 	m_Skill[0]->SetOwnerScript(this);
 
+	// 사거리 적용
+	CGameObject* AttackRange = GetOwner()->FindChildObjByName(L"AttackRange");
+	AttackRange->Collider2D()->SetOffsetScale(Vec2(m_fAttackRange, m_fAttackRange));
+
+	m_fHP = m_fMaxHP;
+
 }
 
 void CMinionScript::tick() 
 {
+	if (m_fHP == 0)
+	{
+		//죽음
+		m_bUnitDead = true;
+		GetOwner()->Fsm()->ChangeState(L"Death");
+	}
+
 	CUnitScript::tick();
 
 	// 공속 쿨타임 세줌
 	AttackCoolDown();
 
-	// 타겟 지정
-	SelectTarget();
+	// 타겟 찾기
+	if(!m_pTarget)
+		FindTarget();
 
 
 	/*
@@ -119,34 +206,32 @@ void CMinionScript::Move()
 
 		// 재검증 후, 목표지점 도착 확인 시 WayPointIdx++
 		if (IsAtWayPoint())
-			m_iWayPointIdx++;
+		{
+			if(m_iWayPointIdx < m_vecWayPoint.size() - 1)
+				m_iWayPointIdx++;
+
+			GetOwner()->PathFinder()->FindPath(m_vecWayPoint[m_iWayPointIdx]);
+		}
 	}
 }
 
-void CMinionScript::SelectTarget()
+void CMinionScript::FindTarget()
 {
-	// 공격 타겟 설정
-	if (!m_pTarget)
-	{
-		CGameObject* AttackRange = GetOwner()->FindChildObjByName(L"AttackRange");
-		vector<CGameObject*> UnitsInRange = AttackRange->GetScript<CAttackRangeScript>()->GetUnitsInRange();
-		if (UnitsInRange.size() > 0)
-			m_pTarget = UnitsInRange[0];
-	}
+	CGameObject* AttackRange = GetOwner()->FindChildObjByName(L"AttackRange");
+	vector<CGameObject*> UnitsInRange = AttackRange->GetScript<CAttackRangeScript>()->GetUnitsInRange();
+	if (UnitsInRange.size() > 0)
+		m_pTarget = UnitsInRange[0];
 	else
-	{
-		// 타겟이 있는 경우
-
-	}
+		m_pTarget = nullptr;
 }
 
 void CMinionScript::AttackCoolDown()
 {
 	if (!CanAttack())
 	{
-		m_curAttackCoolTime += DT;
-		if (m_curAttackCoolTime >= m_fAttackSpeed)
-			m_curAttackCoolTime = m_fAttackSpeed;
+		m_fCurAttackCoolTime += DT;
+		if (m_fCurAttackCoolTime >= m_fAttackSpeed)
+			m_fCurAttackCoolTime = m_fAttackSpeed;
 	}
 }
 
@@ -192,7 +277,7 @@ bool CMinionScript::IsAtWayPoint()
 
 	float distance = sqrt(pow(WayPoint.x - MinionPos.x, 2) + pow(WayPoint.z - MinionPos.z, 2));
 	
-	if (distance <= 1.f)
+	if (distance <= 5.f)
 		return true;
 	else
 		return false;
