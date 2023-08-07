@@ -27,16 +27,6 @@ CGameEventMgr::~CGameEventMgr()
 	Safe_Del_Array(m_vecEvent);
 }
 
-void CGameEventMgr::RemoveListener(IGameEventListener* _listener)
-{
-	auto it = find(m_vecListener.begin(), m_vecListener.end(), _listener);
-
-	if (it != m_vecListener.end())
-	{
-		m_vecListener.erase(it);
-	}
-}
-
 void CGameEventMgr::NotifyEvent(CGameEvent& _event)
 {
 	for (auto listener : m_vecListener)
