@@ -21,8 +21,8 @@ CKrugScript::~CKrugScript()
 }
 void CKrugScript::begin()
 {
-	m_fHP = 1;
-	m_fMaxHP = 1;
+	m_fHP = 30;
+	m_fMaxHP = 30;
 	m_fAttackRange = 30.f;
 	GetOwner()->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Krug");
 	if (GetOwner()->GetComponent(COMPONENT_TYPE::FSM) == nullptr) GetOwner()->AddComponent(new CFsm);

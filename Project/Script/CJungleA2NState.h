@@ -11,7 +11,7 @@ public:
     virtual void tick();
     virtual void Exit();
 public:
-   // void HandleEvent(CGameEvent& event) override;
+    void HandleEvent(CGameEvent& event) override;
 
 public:
     CJungleA2NState();

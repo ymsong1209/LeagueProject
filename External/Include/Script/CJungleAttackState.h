@@ -8,7 +8,7 @@ public:
     virtual void Exit() override;
     virtual void tick() override;
 public:
-    //void HandleEvent(CGameEvent& event) override;
+    void HandleEvent(CGameEvent& event) override;
 public:
     CJungleAttackState();
     ~CJungleAttackState();

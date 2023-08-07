@@ -90,18 +90,18 @@ void CJungleMonsterScript::tick()
 
 void CJungleMonsterScript::BeginOverlap(CCollider2D* _Other)
 {
-	if (_Other->GetOwner()->GetLayerIndex() == CLevelMgr::GetInst()->GetCurLevel()->FindLayerByName(L"SkillProjectile")->GetLayerIndex()) {
-		CProjectileScript* script = _Other->GetOwner()->GetScript<CProjectileScript>();
-		if ((script->GetTargetObj() && script->GetTargetObj() == GetOwner()) ||
-			script->GetTargetObj() == nullptr) {
-			CUnitScript* UserScript = _Other->GetOwner()->GetScript<CUnitScript>();
-			//m_fHP -= UserScript->GetAttackPower();
-			--m_fHP;
-			if (m_pTarget == nullptr) {
-				m_pTarget = script->GetUserObj();
-			}
-		}
-	}
+	//if (_Other->GetOwner()->GetLayerIndex() == CLevelMgr::GetInst()->GetCurLevel()->FindLayerByName(L"SkillProjectile")->GetLayerIndex()) {
+	//	CProjectileScript* script = _Other->GetOwner()->GetScript<CProjectileScript>();
+	//	if ((script->GetTargetObj() && script->GetTargetObj() == GetOwner()) ||
+	//		script->GetTargetObj() == nullptr) {
+	//		CUnitScript* UserScript = _Other->GetOwner()->GetScript<CUnitScript>();
+	//		//m_fHP -= UserScript->GetAttackPower();
+	//		--m_fHP;
+	//		if (m_pTarget == nullptr) {
+	//			m_pTarget = script->GetUserObj();
+	//		}
+	//	}
+	//}
 
 	//if (GetOwner()->Fsm()->GetCurState() == GetOwner()->Fsm()->FindState(L"Chase")) {
 	//	if (_Other->GetOwner() == m_pTarget) {
