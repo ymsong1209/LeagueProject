@@ -58,7 +58,6 @@ struct SoundInfoPacket
         return true;
     }
 };
-
 struct ObjectMove
 {
 public:
@@ -77,7 +76,7 @@ public:
     };
 public:
     ObjectMove() {}
-    ObjectMove(int _LV, float _HP, float _MP, float _AttackPower, float _DefencePower, ObjectMove::MoveDir _moveDir, ObjectMove::Pos _pos, CC _CC)
+    ObjectMove(int _LV, float _HP, float _MP, float _AttackPower, float _DefencePower, float MaxHP, float MaxMP, bool bUnitDead, ObjectMove::MoveDir _moveDir, ObjectMove::Pos _pos, CC _CC)
         : LV(_LV)
         , HP(_HP)
         , MP(_MP)
@@ -94,6 +93,9 @@ public:
     float MP;
     float AttackPower;
     float DefencePower;
+    float MaxHP;
+    float MaxMP;
+    bool  bUnitDead;
 
     MoveDir moveDir;
     Pos pos;

@@ -156,9 +156,14 @@ void ServerEventMgr::clienttick()
 					// NewObject->GetScript<CUnitScript>()->SetLV(objectMove->LV);
 					NewObject->GetScript<CUnitScript>()->SetCurHP(objectMove->HP);
 					NewObject->GetScript<CUnitScript>()->SetCurMP(objectMove->MP);
+					NewObject->GetScript<CUnitScript>()->SetMaxHP(objectMove->MaxHP);
+					NewObject->GetScript<CUnitScript>()->SetMaxMP(objectMove->MaxMP);
+
 					NewObject->GetScript<CUnitScript>()->SetAttackPower(objectMove->AttackPower);
 					NewObject->GetScript<CUnitScript>()->SetDefencePower(objectMove->DefencePower);
 					NewObject->GetScript<CUnitScript>()->SetCC(objectMove->CC);
+
+					NewObject->GetScript<CUnitScript>()->SetUnitDead(objectMove->bUnitDead);
 				}
 				NewObject->Transform()->SetRelativePos(Vec3(objectMove->pos.x, objectMove->pos.y, objectMove->pos.z));
 				NewObject->Transform()->SetRelativeRot(Vec3(objectMove->moveDir.x, objectMove->moveDir.y, objectMove->moveDir.z));

@@ -32,7 +32,6 @@ public:
     CLONE(CChampionScript);
 
 protected:
-    int                     m_iLevel;           // 레벨
     float                   m_fExp;             // 경험치
 
     float                   m_fRespawnTime;     // 부활 대기시간

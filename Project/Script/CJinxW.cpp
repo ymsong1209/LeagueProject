@@ -112,4 +112,9 @@ void CJinxW::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _S
   
   CSkill::GetHit(_UserScript, _TargetScript, _SkillLevel);
 
+  // 피격자 사망시 KDACS 패킷 전송
+  if (_TargetScript->GetCurHP() <= 0)
+	  CSendServerEventMgr::GetInst()->SendKDACSPacket(_UserScript->GetServerID()
+		  , _TargetScript->GetServerID()
+		  , _TargetScript->GetUnitType());
 }

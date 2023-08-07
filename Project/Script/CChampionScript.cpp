@@ -14,7 +14,6 @@
 
 CChampionScript::CChampionScript(UINT ScriptType)
 	: CUnitScript(ScriptType)
-	, m_iLevel(1)
 	, m_fExp(0)
 	, m_EquippedSpell{}
 	, m_fRespawnTime(5)
