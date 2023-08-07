@@ -14,6 +14,11 @@ CMinionDeathState::~CMinionDeathState()
 
 void CMinionDeathState::tick()
 {
+	if (GetOwner()->Animator3D()->GetCurAnim()->IsFinish())
+	{
+		// �������� DespawnPacket ������
+		//DestroyObject(GetOwner());
+  }
 }
 
 void CMinionDeathState::Enter()
