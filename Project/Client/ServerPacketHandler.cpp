@@ -410,15 +410,19 @@ void ServerPacketHandler::Handle_S_PLAYER_MOVE(PacketSessionRef& session, BYTE* 
 		evn.wParam = (DWORD_PTR)obj;
 
 		ObjectMove* objMove = new ObjectMove();
-		objMove->AttackPower = _playerMove.AttackPower;
-		objMove->CC = _playerMove.CC;
-		objMove->DefencePower = _playerMove.DefencePower;
+		objMove->LV = _playerMove.LV;
 		objMove->HP = _playerMove.HP;
 		objMove->MP = _playerMove.MP;
-		objMove->LV = _playerMove.LV;
+		objMove->MaxHP = _playerMove.MaxHP;
+		objMove->MaxMP = _playerMove.MaxMP;
+		objMove->AttackPower = _playerMove.AttackPower;
+		objMove->DefencePower = _playerMove.DefencePower;
+		objMove->CC = _playerMove.CC;
+		objMove->bUnitDead = _playerMove.bUnitDead;
+
 		objMove->pos = _playerMove.pos;
 		objMove->moveDir = _playerMove.moveDir;
-		objMove->CC = _playerMove.CC;
+
 		evn.lParam = (DWORD_PTR)objMove;
 
 		ServerEventMgr::GetInst()->AddEvent(evn);
@@ -548,8 +552,14 @@ void ServerPacketHandler::Handle_S_OBJECT_MOVE(PacketSessionRef& session, BYTE* 
 		objMove->LV = _objectMove.LV;
 		objMove->HP = _objectMove.HP;
 		objMove->MP = _objectMove.MP;
+		objMove->MaxHP = _objectMove.MaxHP;
+		objMove->MaxMP = _objectMove.MaxMP;
 		objMove->AttackPower = _objectMove.AttackPower;
 		objMove->DefencePower = _objectMove.DefencePower;
+
+		objMove->CC = _objectMove.CC;
+		objMove->bUnitDead = _objectMove.bUnitDead;
+
 		objMove->moveDir = _objectMove.moveDir;
 		objMove->pos = _objectMove.pos;
 

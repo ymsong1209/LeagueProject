@@ -5,6 +5,7 @@ CCameraMoveScript
 CChampionScript
 CCharacterUIScript
 CCoolDownUIScript
+CDragonScript
 CExpRatioUIScript
 CFontUIScript
 CGrompScript

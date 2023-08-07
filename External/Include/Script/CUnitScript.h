@@ -32,6 +32,8 @@ protected:
     CSkill*                 m_Skill[5];         // 타워/몹은 오직 0번 스킬(평타)만 있음!
     int                     m_SkillLevel[5];    // 타워/몹은 오직 0번 스킬 1렙 고정
 
+    int                     m_iLevel;           // 레벨
+
     float                   m_fHP;              // 체력
     float                   m_fMaxHP;           // 전체 체력
     float                   m_fMP;
@@ -76,16 +78,24 @@ public:
 
     void  SetCurHP(float _f) { m_fHP = _f; }         // 현재 체력 = 인자값
     void  SetCurHPVar(float _f) { m_fHP += _f; }     // 현재 체력 += 인자값
+    void  SetMaxHP(float _f) { m_fMaxHP = _f; }
+
     void  SetCurMP(float _f) { m_fMP = _f; }
     void  SetCurMPVar(float _f) { m_fMP += _f; }
+    void  SetMaxMP(float _f) { m_fMaxMP = _f; }
+
     void  SetCC(CC _cc) { m_eCurCC = _cc; }
+    void  SetLevel(int _level) { m_iLevel = _level; }
 
     float GetCurHP() { return m_fHP; }
     float GetMaxHP() { return m_fMaxHP; }
     //float GetMaxHP() const { return m_fMaxHP; }
+
     float GetCurMP() { return m_fMP; }
     float GetMaxMP() const { return m_fMaxMP; }
+
     CC    GetCC() { return m_eCurCC; }
+    int   GetLevel() { return m_iLevel; }
 
     UINT64           GetServerID() { return m_iServerID; }
     wstring          GetNickname() const { return m_strNickname; }
