@@ -268,6 +268,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\gromp");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"SOUTH_Gromp");
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
 			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(270.f), 0.f));
 			pObj->AddComponent(new CCollider3D);
@@ -313,6 +314,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\MurkWolf");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"SOUTH_MurkWolf");
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
 			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(24.f), 0.f));
 			pObj->AddComponent(new CCollider3D);
@@ -359,6 +361,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\MurkWolf_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"SOUTH_MurkWolf_Mini_L");
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetRelativeScale(0.15f, 0.15f, 0.15);
 			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(36.f), 0.f));
 			pObj->AddComponent(new CCollider3D);
@@ -404,6 +407,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\MurkWolf_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"SOUTH_MurkWolf_Mini_R");
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetRelativeScale(0.15f, 0.15f, 0.15f);
 			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(36.f), 0.f));
 			pObj->AddComponent(new CCollider3D);
@@ -449,6 +453,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Krug");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"SOUTH_Krug");
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
 			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
 			pObj->AddComponent(new CCollider3D);
@@ -492,6 +497,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Krug_Mini.fbx");
 			pObj = nullptr;
 			pObj = pMeshData->Instantiate();
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Krug_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"SOUTH_Krug_Mini");
 			pObj->Transform()->SetRelativeScale(0.12f, 0.12f, 0.12f);
@@ -539,6 +545,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\RazorBeak");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"SOUTH_RazorBeak");
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
 			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(-66.f), 0.f));
 			pObj->AddComponent(new CCollider3D);
@@ -584,6 +591,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\RazorBeak_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"SOUTH_RazorBeak_Mini1");
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
 			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
 			pObj->AddComponent(new CCollider3D);
@@ -629,6 +637,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\RazorBeak_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"SOUTH_RazorBeak_Mini2");
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
 			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(73.f), 0.f));
 			pObj->AddComponent(new CCollider3D);
@@ -672,6 +681,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\RazorBeak_Mini.fbx");
 			pObj = nullptr;
 			pObj = pMeshData->Instantiate();
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\RazorBeak_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"SOUTH_RazorBeak_Mini3");
 			pObj->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
@@ -719,6 +729,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\RazorBeak_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"SOUTH_RazorBeak_Mini4");
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
 			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
 			pObj->AddComponent(new CCollider3D);
@@ -764,6 +775,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\RazorBeak_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"SOUTH_RazorBeak_Mini5");
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
 			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(69.f), 0.f));
 			pObj->AddComponent(new CCollider3D);
@@ -809,6 +821,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\jungle_blue");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"South_Blue");
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetRelativeScale(0.2f, 0.2f, 0.2f);
 			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(90.f), 0.f));
 			pObj->AddComponent(new CCollider3D);
@@ -854,6 +867,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\jungle_red");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"South_Red");
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetRelativeScale(0.35f, 0.35f, 0.35f);
 			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(46.f), 0.f));
 			pObj->AddComponent(new CCollider3D);
@@ -899,6 +913,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\gromp");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"NORTH_Gromp");
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
 			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(58.f), 0.f));
 			pObj->AddComponent(new CCollider3D);
@@ -944,6 +959,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\MurkWolf");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"NORTH_MurkWolf");
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
 			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(24.f), 0.f));
 			pObj->AddComponent(new CCollider3D);
@@ -990,6 +1006,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\MurkWolf_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"NORTH_MurkWolf_Mini_L");
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetRelativeScale(0.15f, 0.15f, 0.15);
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(-30.f), XMConvertToRadians(-180.f)));
 			pObj->AddComponent(new CCollider3D);
@@ -1035,6 +1052,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\MurkWolf_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"NORTH_MurkWolf_Mini_R");
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetRelativeScale(0.15f, 0.15f, 0.15f);
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(-30.f), XMConvertToRadians(-180.f)));
 			pObj->AddComponent(new CCollider3D);
@@ -1080,6 +1098,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Krug");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"NORTH_Krug");
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetRelativeScale(0.25f, 0.25f, 0.25f);
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(-4.f), XMConvertToRadians(-180.f)));
 			pObj->AddComponent(new CCollider3D);
@@ -1125,6 +1144,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Krug_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"SOUTH_Krug_Mini");
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetRelativeScale(0.15f, 0.15f, 0.15f);
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(4.f), XMConvertToRadians(180.f)));
 			pObj->AddComponent(new CCollider3D);
@@ -1170,6 +1190,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\RazorBeak");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"NORTH_RazorBeak");
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(90.f), XMConvertToRadians(180.f)));
 			pObj->AddComponent(new CCollider3D);
@@ -1215,6 +1236,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\RazorBeak_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"NORTH_RazorBeak_Mini1");
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(-46.f), XMConvertToRadians(180.f)));
 			pObj->AddComponent(new CCollider3D);
@@ -1260,6 +1282,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\RazorBeak_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"NORTH_RazorBeak_Mini2");
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(52.f), XMConvertToRadians(180.f)));
 			pObj->AddComponent(new CCollider3D);
@@ -1305,6 +1328,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\RazorBeak_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"NORTH_RazorBeak_Mini3");
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
 			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(90.f), 0.f));
 			pObj->AddComponent(new CCollider3D);
@@ -1350,6 +1374,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\RazorBeak_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"NORTH_RazorBeak_Mini4");
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(0.f), XMConvertToRadians(-90.f), XMConvertToRadians(0.f)));
 			pObj->AddComponent(new CCollider3D);
@@ -1395,6 +1420,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\RazorBeak_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"NORTH_RazorBeak_Mini5");
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(0.f), XMConvertToRadians(180.f)));
 			pObj->AddComponent(new CCollider3D);
@@ -1440,6 +1466,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\jungle_blue");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"NORTH_Blue");
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetRelativeScale(0.22f, 0.22f, 0.22f);
 			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(-57.f), 0.f));
 			pObj->AddComponent(new CCollider3D);
@@ -1485,6 +1512,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\jungle_red");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
 			pObj->SetName(L"North_Red");
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetRelativeScale(0.35f, 0.35f, 0.35f);
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(-54.f), XMConvertToRadians(-180.f)));
 			pObj->AddComponent(new CCollider3D);

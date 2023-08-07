@@ -136,9 +136,9 @@ void CJungleMonsterScript::CheckReturnTime()
 	//나중에 DT로 바꿔야함
 	m_fCurReturnTime += DT;
 	
-	CChampionScript* ChampScript = m_pTarget->GetScript<CChampionScript>();
+	CUnitScript* Champscript = m_pTarget->GetScript<CUnitScript>();
 	
-	if (m_fMaxReturnTime < m_fCurReturnTime || ChampScript->IsUnitDead()) {
+	if (m_fMaxReturnTime < m_fCurReturnTime || Champscript->IsUnitDead()) {
 		GetOwner()->Fsm()->ChangeState(L"Return");
 		m_pTarget = nullptr;
 		m_bReturnActive = false;
