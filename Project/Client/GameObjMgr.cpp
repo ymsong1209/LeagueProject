@@ -288,7 +288,7 @@ void GameObjMgr::SendObjectMove(uint64 _id, CGameObject* _obj, ClientServiceRef 
 void GameObjMgr::SendPlacedObjectUpdate(uint64 _id, CGameObject* _obj, ClientServiceRef _service)
 {
 	// 배치형 오브젝트의 업데이트를 서버에 보낸다. (HP 변경시에만)
-	CGameObject* obj = FindObject(_id);
+	CGameObject* obj = FindPlacedObject(_id);
 
 	if (obj == nullptr || obj->GetLayerIndex() == -1)
 		return;
