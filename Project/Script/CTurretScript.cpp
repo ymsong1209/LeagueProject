@@ -226,6 +226,7 @@ void CTurretScript::SelectTarget()
 	}
 }
 
+
 bool CTurretScript::IsValidTarget(CGameObject* _obj)
 {
 	if (!(_obj->GetScript<CUnitScript>()->IsUnitDead()))

@@ -119,6 +119,7 @@ public:
     void    SetAttackRange(float _range) { m_fAttackRange = _range; }
 
     float   GetFaceRot() { return m_fFaceRot; }
+    float   GetMoveSpeed() { return m_fMoveSpeed; }
 
     // ºñµ¿±â
     void GetHit(SkillType _type, CGameObject* _SkillTarget, CGameObject* _SkillUser, int _SkillLevel);
