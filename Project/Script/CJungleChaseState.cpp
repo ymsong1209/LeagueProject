@@ -14,7 +14,7 @@ CJungleChaseState::~CJungleChaseState()
 
 void CJungleChaseState::Enter()
 {
-
+	CUnitState::Enter();
 }
 
 void CJungleChaseState::tick()
@@ -46,6 +46,7 @@ void CJungleChaseState::tick()
 
 void CJungleChaseState::Exit()
 {
+	CUnitState::Exit();
 	GetOwner()->Animator3D()->Reset();
 }
 

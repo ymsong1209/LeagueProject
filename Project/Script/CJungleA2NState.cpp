@@ -13,6 +13,7 @@ CJungleA2NState::~CJungleA2NState()
 
 void CJungleA2NState::Enter()
 {
+	CUnitState::Enter();
 }
 
 void CJungleA2NState::tick()
@@ -24,6 +25,7 @@ void CJungleA2NState::tick()
 
 void CJungleA2NState::Exit()
 {
+	CUnitState::Exit();
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
 }
 

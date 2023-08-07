@@ -13,7 +13,7 @@ CJungleAttackState::~CJungleAttackState()
 
 void CJungleAttackState::Enter()
 {
-	//m_ptarget에 공격로직을 줌
+	CUnitState::Enter();
 }
 
 void CJungleAttackState::tick()
@@ -36,7 +36,7 @@ void CJungleAttackState::tick()
 
 void CJungleAttackState::Exit()
 {
-	
+	CUnitState::Exit();
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
 }
 

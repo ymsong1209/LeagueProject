@@ -12,6 +12,7 @@ CJungleDeathState::~CJungleDeathState()
 
 void CJungleDeathState::Enter()
 {
+	CUnitState::Enter();
 	CJungleMonsterScript* script = GetOwner()->GetScript<CJungleMonsterScript>();
 	script->SetUnitDead(true);
 }
@@ -26,6 +27,7 @@ void CJungleDeathState::tick()
 
 void CJungleDeathState::Exit()
 {
+	CUnitState::Exit();
 }
 
 

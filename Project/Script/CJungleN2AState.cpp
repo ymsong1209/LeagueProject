@@ -13,6 +13,7 @@ CJungleN2AState::~CJungleN2AState()
 
 void CJungleN2AState::Enter()
 {
+	CUnitState::Enter();
 	m_bDetectChampion = true;
 }
 
@@ -47,6 +48,7 @@ void CJungleN2AState::tick()
 
 void CJungleN2AState::Exit()
 {
+	CUnitState::Exit();
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
 	m_bDetectChampion = true;
 }

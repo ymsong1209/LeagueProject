@@ -13,7 +13,7 @@ CJungleIdleState::~CJungleIdleState()
 
 void CJungleIdleState::Enter()
 {
-	
+	CUnitState::Enter();
 }
 
 void CJungleIdleState::tick()
@@ -34,6 +34,7 @@ void CJungleIdleState::tick()
 
 void CJungleIdleState::Exit()
 {
+	CUnitState::Exit();
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
 }
 

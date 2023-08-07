@@ -13,6 +13,7 @@ CJungleAlertState::~CJungleAlertState()
 
 void CJungleAlertState::Enter()
 {
+	CUnitState::Enter();
 	m_bDetectChampion = true;
 }
 
@@ -44,6 +45,7 @@ void CJungleAlertState::tick()
 
 void CJungleAlertState::Exit()
 {
+	CUnitState::Exit();
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
 	m_bDetectChampion = true;
 }
