@@ -507,11 +507,6 @@
     <ClCompile Include="CJungleSpawnState.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
     </ClCompile>
-    <ClCompile Include="CMonsterHPBarUIScript.cpp" />
-    <ClCompile Include="CServerTypes.cpp" />
-    <ClCompile Include="CMinionChaseState.cpp">
-      <Filter>State\Unit\Minion</Filter>
-
     <ClCompile Include="CDragonAlertState.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
     </ClCompile>
@@ -556,7 +551,6 @@
     </ClCompile>
     <ClCompile Include="CDragonAggro2AlertState.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
-
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -608,11 +602,6 @@
       <Filter>UIScript</Filter>
     </ClInclude>
     <ClInclude Include="CTimedEffect.h" />
-
-    <ClInclude Include="CMonsterHPBarUIScript.h" />
-    <ClInclude Include="CMinionChaseState.h">
-      <Filter>State\Unit\Minion</Filter>
-
     <ClInclude Include="CDragonAlertState.h">
       <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
     </ClInclude>
@@ -658,7 +647,6 @@
     </ClInclude>
     <ClInclude Include="CDragonAggro2AlertState.h">
       <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
-
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

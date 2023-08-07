@@ -281,7 +281,6 @@
     <ClInclude Include="CKrugSpawnState.h" />
     <ClInclude Include="CMinimapUIScript.h" />
     <ClInclude Include="CMinionAttackState.h" />
-    <ClInclude Include="CMinionChaseState.h" />
     <ClInclude Include="CMinionDeathState.h" />
     <ClInclude Include="CMinionScript.h" />
     <ClInclude Include="CMinionWalkState.h" />
@@ -499,7 +498,6 @@
     <ClCompile Include="CKrugSpawnState.cpp" />
     <ClCompile Include="CMinimapUIScript.cpp" />
     <ClCompile Include="CMinionAttackState.cpp" />
-    <ClCompile Include="CMinionChaseState.cpp" />
     <ClCompile Include="CMinionDeathState.cpp" />
     <ClCompile Include="CMinionScript.cpp" />
     <ClCompile Include="CMinionWalkState.cpp" />

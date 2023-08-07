@@ -16,36 +16,35 @@ void CMinionDeathState::tick()
 {
 	if (GetOwner()->Animator3D()->GetCurAnim()->IsFinish())
 	{
-		// ¼­¹ö¿¡°Ô DespawnPacket º¸³»±â
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ DespawnPacket ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		//DestroyObject(GetOwner());
-	}
+  }
 }
 
 void CMinionDeathState::Enter()
 {
 	CMinionScript* MinionScript = GetOwnerFSM()->GetOwner()->GetScript<CMinionScript>();
 	MinionType Type = MinionScript->GetMinionType();
-
 	switch (Type)
 	{
 	case MinionType::MELEE:
 	{
-		GetOwner()->Animator3D()->PlayOnce(L"minion_melee\\Death", true, 0.1f);
+		//GetOwner()->Animator3D()->PlayLoop(L"minionmelee\\Walk");
 	}
 	break;
 	case MinionType::RANGED:
 	{
-		GetOwner()->Animator3D()->PlayOnce(L"minion_caster\\_chaos_death", true, 0.1f);
+		//GetOwner()->Animator3D()->PlayLoop(L"minionranged\\Walk");
 	}
 	break;
 	case MinionType::SEIGE:
 	{
-		GetOwner()->Animator3D()->PlayOnce(L"minion_siege\\cannon_chaos_attack1", true, 0.1f);
+		//GetOwner()->Animator3D()->PlayLoop(L"minionsiege\\Walk");
 	}
 	break;
 	case MinionType::SUPER:
 	{
-		GetOwner()->Animator3D()->PlayOnce(L"minion_super\\Death_Base", true, 0.1f);
+		//GetOwner()->Animator3D()->PlayLoop(L"minionsuper\\Walk");
 	}
 	break;
 	}
