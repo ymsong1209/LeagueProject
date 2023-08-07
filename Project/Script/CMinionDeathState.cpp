@@ -16,7 +16,8 @@ void CMinionDeathState::tick()
 {
 	if (GetOwner()->Animator3D()->GetCurAnim()->IsFinish())
 	{
-		DestroyObject(GetOwner());
+		// 서버에게 DespawnPacket 보내기
+		//DestroyObject(GetOwner());
 	}
 }
 
