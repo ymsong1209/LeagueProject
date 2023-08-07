@@ -13,6 +13,7 @@ CDragonAggroState::~CDragonAggroState()
 
 void CDragonAggroState::Enter()
 {
+	CUnitState::Enter();
 	m_iAggroAnimNum = 1;
 	wstring basename = L"Elder_Dragon\\sru_dragon_idle_aggro";
 	basename += std::to_wstring(m_iAggroAnimNum);
@@ -69,6 +70,7 @@ void CDragonAggroState::Exit()
 {
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
 	m_bDetectChampion = true;
+	CUnitState::Exit();
 }
 
 void CDragonAggroState::HandleEvent(CGameEvent& event)

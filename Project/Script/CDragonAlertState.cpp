@@ -14,6 +14,7 @@ CDragonAlertState::~CDragonAlertState()
 
 void CDragonAlertState::Enter()
 {
+	CUnitState::Enter();
 	m_iAlertAnimNum = 1;
 	wstring basename = L"Elder_Dragon\\sru_dragon_idle_alert";
 	basename += std::to_wstring(m_iAlertAnimNum);
@@ -84,6 +85,7 @@ void CDragonAlertState::Exit()
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
 	m_bDetectChampion = true;
 	m_bChampInAggro = false;
+	CUnitState::Exit();
 }
 
 void CDragonAlertState::HandleEvent(CGameEvent& event)

@@ -13,6 +13,7 @@ CDragonReturnState::~CDragonReturnState()
 
 void CDragonReturnState::Enter()
 {
+	CUnitState::Enter();
 	CDragonScript* script = GetOwner()->GetScript<CDragonScript>();
 	Vec3 SpawnPos = script->GetSpawnPos();
 	GetOwner()->PathFinder()->FindPath(SpawnPos);
@@ -48,6 +49,7 @@ void CDragonReturnState::Exit()
 	GetOwner()->Transform()->SetRelativePos(script->GetSpawnPos());
 	GetOwner()->Transform()->SetRelativeRot(script->GetSpawnRot());
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
+	CUnitState::Exit();
 }
 
 void CDragonReturnState::HandleEvent(CGameEvent& event)

@@ -13,6 +13,7 @@ CDragonAlert2NormalState::~CDragonAlert2NormalState()
 
 void CDragonAlert2NormalState::Enter()
 {
+	CUnitState::Enter();
 	wstring basename = L"Elder_Dragon\\sru_dragon_idle_al2n";
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
 	GetOwner()->Animator3D()->PlayOnce(basename, true, 0.5f);
@@ -36,6 +37,7 @@ void CDragonAlert2NormalState::tick()
 void CDragonAlert2NormalState::Exit()
 {
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
+	CUnitState::Exit();
 }
 
 void CDragonAlert2NormalState::HandleEvent(CGameEvent& event)

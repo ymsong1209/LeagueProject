@@ -12,6 +12,7 @@ CDragonFlyStartState::~CDragonFlyStartState()
 
 void CDragonFlyStartState::Enter()
 {
+	CUnitState::Enter();
 	wstring basename = L"Elder_Dragon\\Spell2";
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
 	GetOwner()->Animator3D()->PlayOnce(basename, true, 0.5f);
@@ -33,6 +34,7 @@ void CDragonFlyStartState::tick()
 void CDragonFlyStartState::Exit()
 {
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
+	CUnitState::Exit();
 }
 
 void CDragonFlyStartState::HandleEvent(CGameEvent& event)

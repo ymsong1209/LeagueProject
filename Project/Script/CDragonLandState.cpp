@@ -12,6 +12,7 @@ CDragonLandState::~CDragonLandState()
 
 void CDragonLandState::Enter()
 {
+	CUnitState::Enter();
 	wstring basename = L"Elder_Dragon\\Landing";
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
 	GetOwner()->Animator3D()->PlayOnce(basename, true, 0.5f);
@@ -35,6 +36,7 @@ void CDragonLandState::Exit()
 	CDragonScript* script = GetOwner()->GetScript<CDragonScript>();
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
 	script->ReleaseTarget();
+	CUnitState::Exit();
 }
 
 void CDragonLandState::HandleEvent(CGameEvent& event)

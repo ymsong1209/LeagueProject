@@ -1172,7 +1172,7 @@ void SpawnJungleMob()
 		Dragon = pMeshData->Instantiate();
 		Dragon->AddComponent(new CDragonScript);
 		Dragon->SetName(L"Dragon");
-		Dragon->Transform()->SetRelativeScale(0.35f, 0.35f, 0.35f);
+		Dragon->Transform()->SetRelativeScale(0.33f, 0.33f, 0.33f);
 		Dragon->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(-44.f), XMConvertToRadians(-180.f)));
 		CDragonScript* Script = Dragon->GetScript<CDragonScript>();
 		Script->SetAggroPos(Vec3(1451, 15.f, 649.f));

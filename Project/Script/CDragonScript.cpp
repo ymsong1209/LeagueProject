@@ -112,18 +112,18 @@ void CDragonScript::tick()
 
 void CDragonScript::BeginOverlap(CCollider2D* _Other)
 {
-	if (GetOwner()->Fsm()->GetCurState() == GetOwner()->Fsm()->FindState(L"Chase")) {
+	/*if (GetOwner()->Fsm()->GetCurState() == GetOwner()->Fsm()->FindState(L"Chase")) {
 		if (_Other->GetOwner() == m_pTarget) {
 			GetOwner()->Fsm()->ChangeState(L"Attack");
 		}
-	}
+	}*/
 }
 
 void CDragonScript::EndOverlap(CCollider2D* _Other)
 {
-	if (m_pTarget) {
+	/*if (m_pTarget) {
 		GetOwner()->Fsm()->ChangeState(L"Chase");
-	}
+	}*/
 
 }
 
@@ -180,7 +180,7 @@ void CDragonScript::CheckReturnActive()
 	if (!m_pTarget) return;
 
 	Vec3 Targetpos = m_pTarget->Transform()->GetRelativePos();
-	float distance = sqrt(pow(m_vAggroPos.x - Targetpos.x, 2.f) + pow(m_vAggroPos.z - Targetpos.z, 2.f));
+	float distance = sqrt(pow(m_vAlertPos.x - Targetpos.x, 2.f) + pow(m_vAlertPos.z - Targetpos.z, 2.f));
 	if (distance > m_fAlertRange && m_bReturnActive == false)
 		m_bReturnActive = true;
 	else if (distance < m_fAlertRange && m_bReturnActive == true) {

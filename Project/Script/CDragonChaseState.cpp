@@ -14,6 +14,7 @@ CDragonChaseState::~CDragonChaseState()
 
 void CDragonChaseState::Enter()
 {
+	CUnitState::Enter();
 	GetOwner()->Animator3D()->PlayRepeat(L"Elder_Dragon\\sru_dragon_flying_run", false);
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"Elder_Dragon\\sru_dragon_flying_run", true, false, false, 0.f);
@@ -48,7 +49,7 @@ void CDragonChaseState::tick()
 
 void CDragonChaseState::Exit()
 {
-
+	CUnitState::Exit();
 }
 
 void CDragonChaseState::HandleEvent(CGameEvent& event)

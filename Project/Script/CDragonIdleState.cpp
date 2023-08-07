@@ -13,6 +13,7 @@ CDragonIdleState::~CDragonIdleState()
 
 void CDragonIdleState::Enter()
 {
+	CUnitState::Enter();
 	GetOwner()->Animator3D()->PlayRepeat(L"Elder_Dragon\\sru_dragon_idle_normal", false);
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"Elder_Dragon\\sru_dragon_idle_normal", false, false, false, 0.0f);
@@ -37,6 +38,7 @@ void CDragonIdleState::tick()
 void CDragonIdleState::Exit()
 {
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
+	CUnitState::Exit();
 }
 
 

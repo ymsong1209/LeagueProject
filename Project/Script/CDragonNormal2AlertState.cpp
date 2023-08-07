@@ -14,6 +14,7 @@ CDragonNormal2AlertState::~CDragonNormal2AlertState()
 
 void CDragonNormal2AlertState::Enter()
 {
+	CUnitState::Enter();
 	GetOwner()->Animator3D()->PlayOnce(L"Elder_Dragon\\sru_dragon_idle_n2al", true, 0.5f);
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"Elder_Dragon\\sru_dragon_idle_n2al", false, false, true, 0.5f);
@@ -33,7 +34,7 @@ void CDragonNormal2AlertState::tick()
 void CDragonNormal2AlertState::Exit()
 {
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
-	
+	CUnitState::Exit();
 }
 
 void CDragonNormal2AlertState::HandleEvent(CGameEvent& event)

@@ -12,6 +12,7 @@ CDragonAttackState::~CDragonAttackState()
 
 void CDragonAttackState::Enter()
 {
+	CUnitState::Enter();
 	m_fAttackCoolTime = 0.f;
 }
 
@@ -53,6 +54,7 @@ void CDragonAttackState::tick()
 void CDragonAttackState::Exit()
 {
 	m_fAttackCoolTime = 0.f;
+	CUnitState::Exit();
 }
 
 void CDragonAttackState::HandleEvent(CGameEvent& event)

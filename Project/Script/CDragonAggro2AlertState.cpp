@@ -13,6 +13,7 @@ CDragonAggro2AlertState::~CDragonAggro2AlertState()
 
 void CDragonAggro2AlertState::Enter()
 {
+	CUnitState::Enter();
 	wstring basename = L"Elder_Dragon\\sru_dragon_idle_ag2al";
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
 	GetOwner()->Animator3D()->PlayOnce(basename, true, 0.5f);
@@ -36,6 +37,7 @@ void CDragonAggro2AlertState::tick()
 void CDragonAggro2AlertState::Exit()
 {
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
+	CUnitState::Exit();
 }
 
 void CDragonAggro2AlertState::HandleEvent(CGameEvent& event)
