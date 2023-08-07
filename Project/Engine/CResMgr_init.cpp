@@ -1873,4 +1873,14 @@ void CResMgr::CreateDefaultMaterial()
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"ContourShader"));
 	AddRes(L"ContourMtrl", pMtrl);
+
+	// TurretTrailMtrl
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std2DShader"));
+	AddRes(L"TurretTrailMtrl", pMtrl);
+
+	// TrretBlazeMtrl
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std2DShader"));
+	AddRes(L"TurretBlazeMtrl", pMtrl);
 }

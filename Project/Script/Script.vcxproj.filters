@@ -494,6 +494,9 @@
     <ClCompile Include="CWorldHPUIScript.cpp">
       <Filter>UIScript</Filter>
     </ClCompile>
+    <ClCompile Include="CTestTurretScript.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -542,6 +545,9 @@
     </ClInclude>
     <ClInclude Include="CWorldHPUIScript.h">
       <Filter>UIScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CTestTurretScript.h">
+      <Filter>Test</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1170,6 +1176,9 @@
     </Filter>
     <Filter Include="State\Unit\Structure">
       <UniqueIdentifier>{fb41b8d0-38af-4bf3-ab36-3c9e55a63c22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test">
+      <UniqueIdentifier>{6a36a469-ed3f-4958-87b3-33521fc38300}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,5 @@
 {
-    "levelName": "level\\abc.json",
+    "levelName": "level\\abcd.json",
     "layers": [
         {
             "layerName": "Default",
@@ -381,7 +381,7 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": -0.0,
+                                "y": 0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
@@ -489,7 +489,7 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": -0.0,
+                                "y": 0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
@@ -539,11 +539,11 @@
                             "vRelativeScale": {
                                 "x": 500.0,
                                 "y": 500.0,
-                                "z": 0.0010000000474974513
+                                "z": 0.0
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": -0.0,
+                                "y": 0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
@@ -575,13 +575,461 @@
                             "iMtrlCount": 1,
                             "vecMtrls[0]SharedMtrl": {
                                 "IsNull": false,
-                                "Key": "TurretBlazeMtrl",
+                                "Key": "Std2DMtrl",
                                 "RelativePath": ""
                             },
                             "DynamicMtrls": [
                                 {
                                     "vecMtrls[0]DynamicMtrl": null,
-                                    "IsDynamicMtrlExist": false
+                                    "IsDynamicMtrlExist": true,
+                                    "ConstMtrlData": {
+                                        "mtrl": {
+                                            "vDiff": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.0,
+                                                "w": 0.0
+                                            },
+                                            "vSpec": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.0,
+                                                "w": 0.0
+                                            },
+                                            "vAmb": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.0,
+                                                "w": 0.0
+                                            },
+                                            "vEmv": {
+                                                "x": 0.0,
+                                                "y": 0.0,
+                                                "z": 0.0,
+                                                "w": 0.0
+                                            }
+                                        },
+                                        "arrInt[12]s": [
+                                            {
+                                                "arrInt[0]": 0
+                                            },
+                                            {
+                                                "arrInt[1]": 0
+                                            },
+                                            {
+                                                "arrInt[2]": 0
+                                            },
+                                            {
+                                                "arrInt[3]": 0
+                                            },
+                                            {
+                                                "arrInt[4]": 0
+                                            },
+                                            {
+                                                "arrInt[5]": 0
+                                            },
+                                            {
+                                                "arrInt[6]": 0
+                                            },
+                                            {
+                                                "arrInt[7]": 0
+                                            },
+                                            {
+                                                "arrInt[8]": 0
+                                            },
+                                            {
+                                                "arrInt[9]": 0
+                                            },
+                                            {
+                                                "arrInt[10]": 0
+                                            },
+                                            {
+                                                "arrInt[11]": 0
+                                            }
+                                        ],
+                                        "arrFloat[12]s": [
+                                            {
+                                                "arrFloat[0]": 0.0
+                                            },
+                                            {
+                                                "arrFloat[1]": 0.0
+                                            },
+                                            {
+                                                "arrFloat[2]": 0.0
+                                            },
+                                            {
+                                                "arrFloat[3]": 0.0
+                                            },
+                                            {
+                                                "arrFloat[4]": 0.0
+                                            },
+                                            {
+                                                "arrFloat[5]": 0.0
+                                            },
+                                            {
+                                                "arrFloat[6]": 0.0
+                                            },
+                                            {
+                                                "arrFloat[7]": 0.0
+                                            },
+                                            {
+                                                "arrFloat[8]": 0.0
+                                            },
+                                            {
+                                                "arrFloat[9]": 0.0
+                                            },
+                                            {
+                                                "arrFloat[10]": 0.0
+                                            },
+                                            {
+                                                "arrFloat[11]": 0.0
+                                            }
+                                        ],
+                                        "arrV2[12]s": [
+                                            {
+                                                "arrV2[0]": {
+                                                    "x": 0.0,
+                                                    "y": 0.0
+                                                }
+                                            },
+                                            {
+                                                "arrV2[1]": {
+                                                    "x": 0.0,
+                                                    "y": 0.0
+                                                }
+                                            },
+                                            {
+                                                "arrV2[2]": {
+                                                    "x": 0.0,
+                                                    "y": 0.0
+                                                }
+                                            },
+                                            {
+                                                "arrV2[3]": {
+                                                    "x": 0.0,
+                                                    "y": 0.0
+                                                }
+                                            },
+                                            {
+                                                "arrV2[4]": {
+                                                    "x": 0.0,
+                                                    "y": 0.0
+                                                }
+                                            },
+                                            {
+                                                "arrV2[5]": {
+                                                    "x": 0.0,
+                                                    "y": 0.0
+                                                }
+                                            },
+                                            {
+                                                "arrV2[6]": {
+                                                    "x": 0.0,
+                                                    "y": 0.0
+                                                }
+                                            },
+                                            {
+                                                "arrV2[7]": {
+                                                    "x": 0.0,
+                                                    "y": 0.0
+                                                }
+                                            },
+                                            {
+                                                "arrV2[8]": {
+                                                    "x": 0.0,
+                                                    "y": 0.0
+                                                }
+                                            },
+                                            {
+                                                "arrV2[9]": {
+                                                    "x": 0.0,
+                                                    "y": 0.0
+                                                }
+                                            },
+                                            {
+                                                "arrV2[10]": {
+                                                    "x": 0.0,
+                                                    "y": 0.0
+                                                }
+                                            },
+                                            {
+                                                "arrV2[11]": {
+                                                    "x": 0.0,
+                                                    "y": 0.0
+                                                }
+                                            }
+                                        ],
+                                        "arrV4[12]s": [
+                                            {
+                                                "arrV4[0]": {
+                                                    "x": 0.0,
+                                                    "y": 0.0,
+                                                    "z": 0.0,
+                                                    "w": 0.0
+                                                }
+                                            },
+                                            {
+                                                "arrV4[1]": {
+                                                    "x": 0.0,
+                                                    "y": 0.0,
+                                                    "z": 0.0,
+                                                    "w": 0.0
+                                                }
+                                            },
+                                            {
+                                                "arrV4[2]": {
+                                                    "x": 0.0,
+                                                    "y": 0.0,
+                                                    "z": 0.0,
+                                                    "w": 0.0
+                                                }
+                                            },
+                                            {
+                                                "arrV4[3]": {
+                                                    "x": 0.0,
+                                                    "y": 0.0,
+                                                    "z": 0.0,
+                                                    "w": 0.0
+                                                }
+                                            },
+                                            {
+                                                "arrV4[4]": {
+                                                    "x": 0.0,
+                                                    "y": 0.0,
+                                                    "z": 0.0,
+                                                    "w": 0.0
+                                                }
+                                            },
+                                            {
+                                                "arrV4[5]": {
+                                                    "x": 0.0,
+                                                    "y": 0.0,
+                                                    "z": 0.0,
+                                                    "w": 0.0
+                                                }
+                                            },
+                                            {
+                                                "arrV4[6]": {
+                                                    "x": 0.0,
+                                                    "y": 0.0,
+                                                    "z": 0.0,
+                                                    "w": 0.0
+                                                }
+                                            },
+                                            {
+                                                "arrV4[7]": {
+                                                    "x": 0.0,
+                                                    "y": 0.0,
+                                                    "z": 0.0,
+                                                    "w": 0.0
+                                                }
+                                            },
+                                            {
+                                                "arrV4[8]": {
+                                                    "x": 0.0,
+                                                    "y": 0.0,
+                                                    "z": 0.0,
+                                                    "w": 0.0
+                                                }
+                                            },
+                                            {
+                                                "arrV4[9]": {
+                                                    "x": 0.0,
+                                                    "y": 0.0,
+                                                    "z": 0.0,
+                                                    "w": 0.0
+                                                }
+                                            },
+                                            {
+                                                "arrV4[10]": {
+                                                    "x": 0.0,
+                                                    "y": 0.0,
+                                                    "z": 0.0,
+                                                    "w": 0.0
+                                                }
+                                            },
+                                            {
+                                                "arrV4[11]": {
+                                                    "x": 0.0,
+                                                    "y": 0.0,
+                                                    "z": 0.0,
+                                                    "w": 0.0
+                                                }
+                                            }
+                                        ],
+                                        "arrMat[4]s": [
+                                            {
+                                                "arrMat[0]": {
+                                                    "m00": 1.0,
+                                                    "m01": 0.0,
+                                                    "m02": 0.0,
+                                                    "m03": 0.0,
+                                                    "m10": 0.0,
+                                                    "m11": 1.0,
+                                                    "m12": 0.0,
+                                                    "m13": 0.0,
+                                                    "m20": 0.0,
+                                                    "m21": 0.0,
+                                                    "m22": 1.0,
+                                                    "m23": 0.0,
+                                                    "m30": 0.0,
+                                                    "m31": 0.0,
+                                                    "m32": 0.0,
+                                                    "m33": 1.0
+                                                }
+                                            },
+                                            {
+                                                "arrMat[1]": {
+                                                    "m00": 1.0,
+                                                    "m01": 0.0,
+                                                    "m02": 0.0,
+                                                    "m03": 0.0,
+                                                    "m10": 0.0,
+                                                    "m11": 1.0,
+                                                    "m12": 0.0,
+                                                    "m13": 0.0,
+                                                    "m20": 0.0,
+                                                    "m21": 0.0,
+                                                    "m22": 1.0,
+                                                    "m23": 0.0,
+                                                    "m30": 0.0,
+                                                    "m31": 0.0,
+                                                    "m32": 0.0,
+                                                    "m33": 1.0
+                                                }
+                                            },
+                                            {
+                                                "arrMat[2]": {
+                                                    "m00": 1.0,
+                                                    "m01": 0.0,
+                                                    "m02": 0.0,
+                                                    "m03": 0.0,
+                                                    "m10": 0.0,
+                                                    "m11": 1.0,
+                                                    "m12": 0.0,
+                                                    "m13": 0.0,
+                                                    "m20": 0.0,
+                                                    "m21": 0.0,
+                                                    "m22": 1.0,
+                                                    "m23": 0.0,
+                                                    "m30": 0.0,
+                                                    "m31": 0.0,
+                                                    "m32": 0.0,
+                                                    "m33": 1.0
+                                                }
+                                            },
+                                            {
+                                                "arrMat[3]": {
+                                                    "m00": 1.0,
+                                                    "m01": 0.0,
+                                                    "m02": 0.0,
+                                                    "m03": 0.0,
+                                                    "m10": 0.0,
+                                                    "m11": 1.0,
+                                                    "m12": 0.0,
+                                                    "m13": 0.0,
+                                                    "m20": 0.0,
+                                                    "m21": 0.0,
+                                                    "m22": 1.0,
+                                                    "m23": 0.0,
+                                                    "m30": 0.0,
+                                                    "m31": 0.0,
+                                                    "m32": 0.0,
+                                                    "m33": 1.0
+                                                }
+                                            }
+                                        ],
+                                        "arrTex[(UINT)TEX_PARAM::TEX_END]s": [
+                                            {
+                                                "arrTex[0]": 1
+                                            },
+                                            {
+                                                "arrTex[1]": 0
+                                            },
+                                            {
+                                                "arrTex[2]": 0
+                                            },
+                                            {
+                                                "arrTex[3]": 0
+                                            },
+                                            {
+                                                "arrTex[4]": 0
+                                            },
+                                            {
+                                                "arrTex[5]": 0
+                                            },
+                                            {
+                                                "arrTex[6]": 0
+                                            },
+                                            {
+                                                "arrTex[7]": 0
+                                            },
+                                            {
+                                                "arrTex[8]": 0
+                                            },
+                                            {
+                                                "arrTex[9]": 0
+                                            },
+                                            {
+                                                "arrTex[10]": 0
+                                            },
+                                            {
+                                                "arrTex[11]": 0
+                                            }
+                                        ],
+                                        "arrAnimData[4]s": [
+                                            {
+                                                "arrAnimData[0]": 0
+                                            },
+                                            {
+                                                "arrAnimData[1]": 0
+                                            },
+                                            {
+                                                "arrAnimData[2]": 0
+                                            },
+                                            {
+                                                "arrAnimData[3]": 0
+                                            }
+                                        ]
+                                    },
+                                    "TEX_PARAM[0]": {
+                                        "IsNull": false,
+                                        "Key": "texture\\turret\\sru_chaos_sparks.dds",
+                                        "RelativePath": "texture\\turret\\sru_chaos_sparks.dds"
+                                    },
+                                    "TEX_PARAM[1]": {
+                                        "IsNull": true
+                                    },
+                                    "TEX_PARAM[2]": {
+                                        "IsNull": true
+                                    },
+                                    "TEX_PARAM[3]": {
+                                        "IsNull": true
+                                    },
+                                    "TEX_PARAM[4]": {
+                                        "IsNull": true
+                                    },
+                                    "TEX_PARAM[5]": {
+                                        "IsNull": true
+                                    },
+                                    "TEX_PARAM[6]": {
+                                        "IsNull": true
+                                    },
+                                    "TEX_PARAM[7]": {
+                                        "IsNull": true
+                                    },
+                                    "TEX_PARAM[8]": {
+                                        "IsNull": true
+                                    },
+                                    "TEX_PARAM[9]": {
+                                        "IsNull": true
+                                    },
+                                    "TEX_PARAM[10]": {
+                                        "IsNull": true
+                                    },
+                                    "TEX_PARAM[11]": {
+                                        "IsNull": true
+                                    }
                                 }
                             ],
                             "MeshMoveDataInfo": {
@@ -639,7 +1087,7 @@
                                 {
                                     "TRANSFORM": 0,
                                     "vRelativePos": {
-                                        "x": 1.0,
+                                        "x": 11.0,
                                         "y": 176.0,
                                         "z": 0.0
                                     },
@@ -703,27 +1151,475 @@
                                     "iMtrlCount": 1,
                                     "vecMtrls[0]SharedMtrl": {
                                         "IsNull": false,
-                                        "Key": "TurretTrailMtrl",
+                                        "Key": "Std2DMtrl",
                                         "RelativePath": ""
                                     },
                                     "DynamicMtrls": [
                                         {
                                             "vecMtrls[0]DynamicMtrl": null,
-                                            "IsDynamicMtrlExist": false
+                                            "IsDynamicMtrlExist": true,
+                                            "ConstMtrlData": {
+                                                "mtrl": {
+                                                    "vDiff": {
+                                                        "x": 0.0,
+                                                        "y": 0.0,
+                                                        "z": 0.0,
+                                                        "w": 0.0
+                                                    },
+                                                    "vSpec": {
+                                                        "x": 0.0,
+                                                        "y": 0.0,
+                                                        "z": 0.0,
+                                                        "w": 0.0
+                                                    },
+                                                    "vAmb": {
+                                                        "x": 0.0,
+                                                        "y": 0.0,
+                                                        "z": 0.0,
+                                                        "w": 0.0
+                                                    },
+                                                    "vEmv": {
+                                                        "x": 0.0,
+                                                        "y": 0.0,
+                                                        "z": 0.0,
+                                                        "w": 0.0
+                                                    }
+                                                },
+                                                "arrInt[12]s": [
+                                                    {
+                                                        "arrInt[0]": 0
+                                                    },
+                                                    {
+                                                        "arrInt[1]": 0
+                                                    },
+                                                    {
+                                                        "arrInt[2]": 0
+                                                    },
+                                                    {
+                                                        "arrInt[3]": 0
+                                                    },
+                                                    {
+                                                        "arrInt[4]": 0
+                                                    },
+                                                    {
+                                                        "arrInt[5]": 0
+                                                    },
+                                                    {
+                                                        "arrInt[6]": 0
+                                                    },
+                                                    {
+                                                        "arrInt[7]": 0
+                                                    },
+                                                    {
+                                                        "arrInt[8]": 0
+                                                    },
+                                                    {
+                                                        "arrInt[9]": 0
+                                                    },
+                                                    {
+                                                        "arrInt[10]": 0
+                                                    },
+                                                    {
+                                                        "arrInt[11]": 0
+                                                    }
+                                                ],
+                                                "arrFloat[12]s": [
+                                                    {
+                                                        "arrFloat[0]": 0.0
+                                                    },
+                                                    {
+                                                        "arrFloat[1]": 0.0
+                                                    },
+                                                    {
+                                                        "arrFloat[2]": 0.0
+                                                    },
+                                                    {
+                                                        "arrFloat[3]": 0.0
+                                                    },
+                                                    {
+                                                        "arrFloat[4]": 0.0
+                                                    },
+                                                    {
+                                                        "arrFloat[5]": 0.0
+                                                    },
+                                                    {
+                                                        "arrFloat[6]": 0.0
+                                                    },
+                                                    {
+                                                        "arrFloat[7]": 0.0
+                                                    },
+                                                    {
+                                                        "arrFloat[8]": 0.0
+                                                    },
+                                                    {
+                                                        "arrFloat[9]": 0.0
+                                                    },
+                                                    {
+                                                        "arrFloat[10]": 0.0
+                                                    },
+                                                    {
+                                                        "arrFloat[11]": 0.0
+                                                    }
+                                                ],
+                                                "arrV2[12]s": [
+                                                    {
+                                                        "arrV2[0]": {
+                                                            "x": 0.0,
+                                                            "y": 0.0
+                                                        }
+                                                    },
+                                                    {
+                                                        "arrV2[1]": {
+                                                            "x": 0.0,
+                                                            "y": 0.0
+                                                        }
+                                                    },
+                                                    {
+                                                        "arrV2[2]": {
+                                                            "x": 0.0,
+                                                            "y": 0.0
+                                                        }
+                                                    },
+                                                    {
+                                                        "arrV2[3]": {
+                                                            "x": 0.0,
+                                                            "y": 0.0
+                                                        }
+                                                    },
+                                                    {
+                                                        "arrV2[4]": {
+                                                            "x": 0.0,
+                                                            "y": 0.0
+                                                        }
+                                                    },
+                                                    {
+                                                        "arrV2[5]": {
+                                                            "x": 0.0,
+                                                            "y": 0.0
+                                                        }
+                                                    },
+                                                    {
+                                                        "arrV2[6]": {
+                                                            "x": 0.0,
+                                                            "y": 0.0
+                                                        }
+                                                    },
+                                                    {
+                                                        "arrV2[7]": {
+                                                            "x": 0.0,
+                                                            "y": 0.0
+                                                        }
+                                                    },
+                                                    {
+                                                        "arrV2[8]": {
+                                                            "x": 0.0,
+                                                            "y": 0.0
+                                                        }
+                                                    },
+                                                    {
+                                                        "arrV2[9]": {
+                                                            "x": 0.0,
+                                                            "y": 0.0
+                                                        }
+                                                    },
+                                                    {
+                                                        "arrV2[10]": {
+                                                            "x": 0.0,
+                                                            "y": 0.0
+                                                        }
+                                                    },
+                                                    {
+                                                        "arrV2[11]": {
+                                                            "x": 0.0,
+                                                            "y": 0.0
+                                                        }
+                                                    }
+                                                ],
+                                                "arrV4[12]s": [
+                                                    {
+                                                        "arrV4[0]": {
+                                                            "x": 0.0,
+                                                            "y": 0.0,
+                                                            "z": 0.0,
+                                                            "w": 0.0
+                                                        }
+                                                    },
+                                                    {
+                                                        "arrV4[1]": {
+                                                            "x": 0.0,
+                                                            "y": 0.0,
+                                                            "z": 0.0,
+                                                            "w": 0.0
+                                                        }
+                                                    },
+                                                    {
+                                                        "arrV4[2]": {
+                                                            "x": 0.0,
+                                                            "y": 0.0,
+                                                            "z": 0.0,
+                                                            "w": 0.0
+                                                        }
+                                                    },
+                                                    {
+                                                        "arrV4[3]": {
+                                                            "x": 0.0,
+                                                            "y": 0.0,
+                                                            "z": 0.0,
+                                                            "w": 0.0
+                                                        }
+                                                    },
+                                                    {
+                                                        "arrV4[4]": {
+                                                            "x": 0.0,
+                                                            "y": 0.0,
+                                                            "z": 0.0,
+                                                            "w": 0.0
+                                                        }
+                                                    },
+                                                    {
+                                                        "arrV4[5]": {
+                                                            "x": 0.0,
+                                                            "y": 0.0,
+                                                            "z": 0.0,
+                                                            "w": 0.0
+                                                        }
+                                                    },
+                                                    {
+                                                        "arrV4[6]": {
+                                                            "x": 0.0,
+                                                            "y": 0.0,
+                                                            "z": 0.0,
+                                                            "w": 0.0
+                                                        }
+                                                    },
+                                                    {
+                                                        "arrV4[7]": {
+                                                            "x": 0.0,
+                                                            "y": 0.0,
+                                                            "z": 0.0,
+                                                            "w": 0.0
+                                                        }
+                                                    },
+                                                    {
+                                                        "arrV4[8]": {
+                                                            "x": 0.0,
+                                                            "y": 0.0,
+                                                            "z": 0.0,
+                                                            "w": 0.0
+                                                        }
+                                                    },
+                                                    {
+                                                        "arrV4[9]": {
+                                                            "x": 0.0,
+                                                            "y": 0.0,
+                                                            "z": 0.0,
+                                                            "w": 0.0
+                                                        }
+                                                    },
+                                                    {
+                                                        "arrV4[10]": {
+                                                            "x": 0.0,
+                                                            "y": 0.0,
+                                                            "z": 0.0,
+                                                            "w": 0.0
+                                                        }
+                                                    },
+                                                    {
+                                                        "arrV4[11]": {
+                                                            "x": 0.0,
+                                                            "y": 0.0,
+                                                            "z": 0.0,
+                                                            "w": 0.0
+                                                        }
+                                                    }
+                                                ],
+                                                "arrMat[4]s": [
+                                                    {
+                                                        "arrMat[0]": {
+                                                            "m00": 1.0,
+                                                            "m01": 0.0,
+                                                            "m02": 0.0,
+                                                            "m03": 0.0,
+                                                            "m10": 0.0,
+                                                            "m11": 1.0,
+                                                            "m12": 0.0,
+                                                            "m13": 0.0,
+                                                            "m20": 0.0,
+                                                            "m21": 0.0,
+                                                            "m22": 1.0,
+                                                            "m23": 0.0,
+                                                            "m30": 0.0,
+                                                            "m31": 0.0,
+                                                            "m32": 0.0,
+                                                            "m33": 1.0
+                                                        }
+                                                    },
+                                                    {
+                                                        "arrMat[1]": {
+                                                            "m00": 1.0,
+                                                            "m01": 0.0,
+                                                            "m02": 0.0,
+                                                            "m03": 0.0,
+                                                            "m10": 0.0,
+                                                            "m11": 1.0,
+                                                            "m12": 0.0,
+                                                            "m13": 0.0,
+                                                            "m20": 0.0,
+                                                            "m21": 0.0,
+                                                            "m22": 1.0,
+                                                            "m23": 0.0,
+                                                            "m30": 0.0,
+                                                            "m31": 0.0,
+                                                            "m32": 0.0,
+                                                            "m33": 1.0
+                                                        }
+                                                    },
+                                                    {
+                                                        "arrMat[2]": {
+                                                            "m00": 1.0,
+                                                            "m01": 0.0,
+                                                            "m02": 0.0,
+                                                            "m03": 0.0,
+                                                            "m10": 0.0,
+                                                            "m11": 1.0,
+                                                            "m12": 0.0,
+                                                            "m13": 0.0,
+                                                            "m20": 0.0,
+                                                            "m21": 0.0,
+                                                            "m22": 1.0,
+                                                            "m23": 0.0,
+                                                            "m30": 0.0,
+                                                            "m31": 0.0,
+                                                            "m32": 0.0,
+                                                            "m33": 1.0
+                                                        }
+                                                    },
+                                                    {
+                                                        "arrMat[3]": {
+                                                            "m00": 1.0,
+                                                            "m01": 0.0,
+                                                            "m02": 0.0,
+                                                            "m03": 0.0,
+                                                            "m10": 0.0,
+                                                            "m11": 1.0,
+                                                            "m12": 0.0,
+                                                            "m13": 0.0,
+                                                            "m20": 0.0,
+                                                            "m21": 0.0,
+                                                            "m22": 1.0,
+                                                            "m23": 0.0,
+                                                            "m30": 0.0,
+                                                            "m31": 0.0,
+                                                            "m32": 0.0,
+                                                            "m33": 1.0
+                                                        }
+                                                    }
+                                                ],
+                                                "arrTex[(UINT)TEX_PARAM::TEX_END]s": [
+                                                    {
+                                                        "arrTex[0]": 1
+                                                    },
+                                                    {
+                                                        "arrTex[1]": 0
+                                                    },
+                                                    {
+                                                        "arrTex[2]": 0
+                                                    },
+                                                    {
+                                                        "arrTex[3]": 0
+                                                    },
+                                                    {
+                                                        "arrTex[4]": 0
+                                                    },
+                                                    {
+                                                        "arrTex[5]": 0
+                                                    },
+                                                    {
+                                                        "arrTex[6]": 0
+                                                    },
+                                                    {
+                                                        "arrTex[7]": 0
+                                                    },
+                                                    {
+                                                        "arrTex[8]": 0
+                                                    },
+                                                    {
+                                                        "arrTex[9]": 0
+                                                    },
+                                                    {
+                                                        "arrTex[10]": 0
+                                                    },
+                                                    {
+                                                        "arrTex[11]": 0
+                                                    }
+                                                ],
+                                                "arrAnimData[4]s": [
+                                                    {
+                                                        "arrAnimData[0]": 0
+                                                    },
+                                                    {
+                                                        "arrAnimData[1]": 0
+                                                    },
+                                                    {
+                                                        "arrAnimData[2]": 0
+                                                    },
+                                                    {
+                                                        "arrAnimData[3]": 0
+                                                    }
+                                                ]
+                                            },
+                                            "TEX_PARAM[0]": {
+                                                "IsNull": false,
+                                                "Key": "texture\\turret\\trail.dds",
+                                                "RelativePath": "texture\\turret\\trail.dds"
+                                            },
+                                            "TEX_PARAM[1]": {
+                                                "IsNull": true
+                                            },
+                                            "TEX_PARAM[2]": {
+                                                "IsNull": true
+                                            },
+                                            "TEX_PARAM[3]": {
+                                                "IsNull": true
+                                            },
+                                            "TEX_PARAM[4]": {
+                                                "IsNull": true
+                                            },
+                                            "TEX_PARAM[5]": {
+                                                "IsNull": true
+                                            },
+                                            "TEX_PARAM[6]": {
+                                                "IsNull": true
+                                            },
+                                            "TEX_PARAM[7]": {
+                                                "IsNull": true
+                                            },
+                                            "TEX_PARAM[8]": {
+                                                "IsNull": true
+                                            },
+                                            "TEX_PARAM[9]": {
+                                                "IsNull": true
+                                            },
+                                            "TEX_PARAM[10]": {
+                                                "IsNull": true
+                                            },
+                                            "TEX_PARAM[11]": {
+                                                "IsNull": true
+                                            }
                                         }
                                     ],
                                     "MeshMoveDataInfo": {
                                         "OutputTexFuncValue": {
-                                            "x": 0.800000011920929,
+                                            "x": 0.0,
                                             "y": 0.0,
                                             "z": 0.0,
                                             "w": 0.0
                                         },
                                         "OutputTePreviousPos": {
-                                            "x": 4.783547878265381,
+                                            "x": 0.0,
                                             "y": 0.0
                                         },
-                                        "OutputTexMovingStyle": 1,
+                                        "OutputTexMovingStyle": 0,
                                         "isAdditiveTextureUsed": 0,
                                         "AdditiveColor": {
                                             "x": 0.0,
@@ -781,7 +1677,7 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": -0.0,
+                                "y": 0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
@@ -1923,7 +2819,7 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": -0.0,
+                                "y": 0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
@@ -2352,7 +3248,7 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": -0.0,
+                                "y": 0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,

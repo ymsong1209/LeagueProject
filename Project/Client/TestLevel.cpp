@@ -41,6 +41,7 @@
 #include <Script/CKrugScript.h>
 #include <Script/CKrugMiniScript.h>
 #include <Script/CBlueScript.h>
+#include <Script/CTestTurretScript.h>
 //#include <Script/CRedScript.h>
 
 void CreateTestLevel()
@@ -425,23 +426,88 @@ void CreateTestLevel()
 	 pRectFast->AddComponent(new CMeshRender);
 	 pRectFast->AddComponent(new CTransform);
 	 pRectFast->AddComponent(new CCollider2D);
+	 
 
-	 pRectFast->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
-	 pRectFast->Transform()->SetUseMouseOutline(true);
+
+	 pRectFast->Transform()->SetRelativeScale(Vec3(311.996f, 119.007f, 0.f));
+	 //pRectFast->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 1.f));
+	 pRectFast->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
+	 pRectFast->Transform()->SetRelativePos(Vec3(1.f, 176.f, 0.f));
+	 pRectFast->Transform()->SetRelativeRot(Vec3(0.f, 0.f, XM_PI/2.f));
+	 pRectFast->Transform()->SetUseMouseOutline(false);
+	 pRectFast->Transform()->SetAbsolute(true);
+	 
 
 	 pRectFast->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	 pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
-	 pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MiniMapMtrl"), 0);
+	 pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"TurretTrailMtrl"), 0);
+	 //pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MiniMapMtrl"), 0);
 	 //pRectFast->MeshRender()->GetDynamicMaterial(0);
-	 pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\MiniMap.dds"));
-	 pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"FogFilterMap"));
+	 pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\turret\\trail.dds"));
+	 //pRectFast->MeshRender()->GetDynamicMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Fighter.bmp"));
+	 //pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"FogFilterMap"));
 
-	 pRectFast->Collider2D()->SetAbsolute(false);
+	 pRectFast->Collider2D()->SetAbsolute(true);
 	 pRectFast->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
 	 pRectFast->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f,0.f));
 	 pRectFast->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
 
-	 SpawnGameObject(pRectFast, Vec3(-600.f, 0.f, 500.f), 0);
+	 //SpawnGameObject(pRectFast, Vec3(-794, 40, 504.f), 0);
+
+
+	 // TestFastForwardCircle
+	 CGameObject* pCircleFast = new CGameObject;
+	 pCircleFast->SetName(L"CircleFast");
+	 pCircleFast->AddComponent(new CMeshRender);
+	 pCircleFast->AddComponent(new CTransform);
+	 //pCircleFast->AddComponent(new CCollider2D);
+
+	 pCircleFast->Transform()->SetRelativeScale(Vec3(500.f, 500.f, 0.f));
+	 
+	 pCircleFast->Transform()->SetUseMouseOutline(false);
+
+	 pCircleFast->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CircleMesh"));
+	 pCircleFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"TurretBlazeMtrl"), 0);
+	 //pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MiniMapMtrl"), 0);
+	 //pRectFast->MeshRender()->GetDynamicMaterial(0);
+	 pCircleFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\turret\\sru_chaos_sparks.dds"));
+	 //pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"FogFilterMap"));
+
+	/* pCircleFast->Collider2D()->SetAbsolute(false);
+	 pCircleFast->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+	 pCircleFast->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+	 pCircleFast->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);*/
+
+	 pCircleFast->AddChild(pRectFast);
+
+
+
+	 pRectFast->Transform()->SetRelativeScale(Vec3(311.996f, 119.007f, 0.f));
+	 //pRectFast->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 1.f));
+	 pRectFast->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
+	 pRectFast->Transform()->SetRelativePos(Vec3(1.f, 176.f, 0.f));
+	 pRectFast->Transform()->SetRelativeRot(Vec3(0.f, 0.f, XM_PI / 2.f));
+	 pRectFast->Transform()->SetUseMouseOutline(false);
+	 pRectFast->Transform()->SetAbsolute(true);
+
+
+	 pRectFast->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	 pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"TurretTrailMtrl"), 0);
+	 //pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MiniMapMtrl"), 0);
+	 //pRectFast->MeshRender()->GetDynamicMaterial(0);
+	 pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\turret\\trail.dds"));
+	 //pRectFast->MeshRender()->GetDynamicMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Fighter.bmp"));
+	 //pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"FogFilterMap"));
+
+	 pRectFast->Collider2D()->SetAbsolute(true);
+	 pRectFast->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+	 pRectFast->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+	 pRectFast->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
+	 pRectFast->GetRenderComponent()->SetFrustumCheck(true);
+
+		 
+
+
+	 SpawnGameObject(pCircleFast, Vec3(-744.664f, -83.502f, 349.207f), 0);
 
 
 	// // Ray Test Object1
@@ -518,8 +584,9 @@ void CreateTestLevel()
 	TestTurret->AddComponent(new CTransform);
 	TestTurret->AddComponent(new CCollider2D);
 	TestTurret->SetName(L"TestTurret");
-	TestTurret->AddComponent(new CTurretScript);
+	TestTurret->AddComponent(new CTestTurretScript);
 	TestTurret->AddComponent(new CMeshRender);
+	TestTurret->AddComponent(new CTestTurretScript);
 	TestTurret->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
 	TestTurret->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
 	TestTurret->Transform()->SetRelativeScale(40.f, 40.f, 40.f);
@@ -527,7 +594,8 @@ void CreateTestLevel()
 	TestTurret->Collider2D()->SetAbsolute(true);
 	TestTurret->Collider2D()->SetOffsetScale(Vec2(250.f, 250.f));
 	TestTurret->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-	SpawnGameObject(TestTurret, Vec3(200.f, 0.f, 200.f), 0);
+	
+	SpawnGameObject(TestTurret, Vec3(400.f, 100.f, 400.f), 0);
 
 	
 	
