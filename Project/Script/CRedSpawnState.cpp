@@ -29,6 +29,7 @@ void CRedSpawnState::Exit()
 {
 	CRedScript* script = GetOwner()->GetScript<CRedScript>();
 	script->SetAggroRange(75.f);
+	script->SetAttackRange(45.f);
 
 	GetOwner()->AddComponent(new CCollider3D);
 	GetOwner()->Collider3D()->SetAbsolute(true);
@@ -39,7 +40,7 @@ void CRedSpawnState::Exit()
 	GetOwner()->Collider2D()->SetAbsolute(true);
 	GetOwner()->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
 	GetOwner()->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-	GetOwner()->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
+	GetOwner()->Collider2D()->SetOffsetScale(Vec2(80.f, 80.f));
 
 	CJungleSpawnState::Exit();
 }

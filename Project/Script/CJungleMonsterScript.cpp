@@ -19,7 +19,7 @@ CJungleMonsterScript::CJungleMonsterScript(UINT ScriptType)
 {
 	//몬스터가 스폰된 이후에 aggro범위, hitbox생성해야함
 	m_fAggroRange = 0.f;
-	m_fAttackRange = 100.f;
+	m_fAttackRange = 0.f;
 	m_fHP = 10;
 	m_fMaxHP = 10;
 	m_fAttackPower = 10;
@@ -35,7 +35,7 @@ CJungleMonsterScript::CJungleMonsterScript()
 {
 	//몬스터가 스폰된 이후에 aggro범위, hitbox생성해야함
 	m_fAggroRange = 0.f;
-	m_fAttackRange = 100.f;
+	m_fAttackRange = 0.f;
 	m_fHP = 10;
 	m_fMaxHP = 10;
 	m_fAttackPower = 10;
@@ -89,19 +89,18 @@ void CJungleMonsterScript::tick()
 
 void CJungleMonsterScript::BeginOverlap(CCollider2D* _Other)
 {
-	if (GetOwner()->Fsm()->GetCurState() == GetOwner()->Fsm()->FindState(L"Chase")) {
-		if (_Other->GetOwner() == m_pTarget) {
-			GetOwner()->Fsm()->ChangeState(L"Attack");
-		}
-	}
+	//if (GetOwner()->Fsm()->GetCurState() == GetOwner()->Fsm()->FindState(L"Chase")) {
+	//	if (_Other->GetOwner() == m_pTarget) {
+	//		GetOwner()->Fsm()->ChangeState(L"Attack");
+	//	}
+	//}
 }
 
 void CJungleMonsterScript::EndOverlap(CCollider2D* _Other)
 {
-	if (m_pTarget) {
-		GetOwner()->Fsm()->ChangeState(L"Chase");
-	}
-
+	//if (m_pTarget) {
+	//	GetOwner()->Fsm()->ChangeState(L"Chase");
+	//}
 }
 
 

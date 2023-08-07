@@ -8156,7 +8156,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
@@ -8301,7 +8301,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
@@ -8446,7 +8446,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
@@ -8591,7 +8591,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
@@ -8736,7 +8736,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
@@ -8881,7 +8881,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
@@ -9026,7 +9026,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
@@ -9171,7 +9171,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
@@ -9316,7 +9316,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
@@ -9461,7 +9461,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
@@ -9606,7 +9606,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
@@ -9751,7 +9751,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
@@ -9896,7 +9896,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
@@ -10041,7 +10041,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
@@ -10204,7 +10204,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
@@ -10349,7 +10349,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
@@ -10494,7 +10494,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
@@ -10639,7 +10639,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
@@ -10784,7 +10784,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
@@ -10929,7 +10929,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
@@ -11074,7 +11074,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
@@ -11219,7 +11219,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
@@ -11364,7 +11364,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
@@ -11509,7 +11509,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
@@ -11654,7 +11654,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
@@ -11799,7 +11799,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
@@ -11944,7 +11944,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
@@ -12089,7 +12089,7 @@
                             "AttackPower": 10.0,
                             "DefencePower": 0.0,
                             "AttackSpeed": 0.0,
-                            "AttackRange": 100.0,
+                            "AttackRange": 0.0,
                             "MoveSpeed": 0.0,
                             "MoveSpeedFactor": 1.0,
                             "AggroPos": {
