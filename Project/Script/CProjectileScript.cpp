@@ -30,6 +30,11 @@ void CProjectileScript::tick()
 {
 	if (m_bUnitDead)
 		return;
+	if (m_TargetObj && m_TargetObj->IsDead()) {
+		DestroyObject(GetOwner());
+		return;
+	}
+	
 }
 
 void CProjectileScript::BeginOverlap(CCollider2D* _Other)

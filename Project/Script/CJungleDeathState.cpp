@@ -22,7 +22,7 @@ void CJungleDeathState::tick()
 {
 	if (GetOwner()->Animator3D()->GetCurAnim()->IsFinish() && m_bPacketSend == false) {
 		CJungleMonsterScript* script = GetOwner()->GetScript<CJungleMonsterScript>();
-		CSendServerEventMgr::GetInst()->SendDespawnPacket(script->GetServerID(), 0.f);
+		CSendServerEventMgr::GetInst()->SendDespawnPacket(script->GetServerID(), 0.1f);
 		m_bPacketSend = true;
 	}
 }

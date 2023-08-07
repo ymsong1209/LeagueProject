@@ -50,24 +50,24 @@ void CJungleChaseState::Exit()
 	GetOwner()->Animator3D()->Reset();
 }
 
-void CJungleChaseState::HandleEvent(CGameEvent& event)
-{
-	if (!IsActive())
-		return;
-
-	if (event.GetType() == GAME_EVENT_TYPE::GET_HIT) {
-		GetHitEvent* HitEvent = dynamic_cast<GetHitEvent*>(&event);
-
-		// 맞은 타겟이 본인인 경우에만 이벤트에 반응
-		if (HitEvent->GetTargetObj() == GetOwner())
-		{
-			CGameObject* SkillUser = HitEvent->GetUserObj();
-			CGameObject* SkillTarget = HitEvent->GetTargetObj();
-			SkillType skilltype = HitEvent->GetSkillType();
-			int	skillLevel = HitEvent->GetSkillLevel();
-
-			GetOwnerFSM()->GetOwner()->GetScript<CUnitScript>()->GetHit(skilltype, SkillTarget, SkillUser, skillLevel);
-		}
-	}
-
-}
+//void CJungleChaseState::HandleEvent(CGameEvent& event)
+//{
+//	if (!IsActive())
+//		return;
+//
+//	if (event.GetType() == GAME_EVENT_TYPE::GET_HIT) {
+//		GetHitEvent* HitEvent = dynamic_cast<GetHitEvent*>(&event);
+//
+//		// 맞은 타겟이 본인인 경우에만 이벤트에 반응
+//		if (HitEvent->GetTargetObj() == GetOwner())
+//		{
+//			CGameObject* SkillUser = HitEvent->GetUserObj();
+//			CGameObject* SkillTarget = HitEvent->GetTargetObj();
+//			SkillType skilltype = HitEvent->GetSkillType();
+//			int	skillLevel = HitEvent->GetSkillLevel();
+//
+//			GetOwnerFSM()->GetOwner()->GetScript<CUnitScript>()->GetHit(skilltype, SkillTarget, SkillUser, skillLevel);
+//		}
+//	}
+//
+//}

@@ -19,6 +19,7 @@ void CBasicAttackScript::begin()
 void CBasicAttackScript::tick()
 {
 	CProjectileScript::tick();
+	
 
 	Vec3 TargetPos = m_TargetObj->Transform()->GetRelativePos();
 	Vec3 UserPos = m_UserObj->Transform()->GetRelativePos();
