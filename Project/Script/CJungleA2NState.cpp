@@ -29,6 +29,9 @@ void CJungleA2NState::Exit()
 
 void CJungleA2NState::HandleEvent(CGameEvent& event)
 {
+	if (!IsActive())
+		return;
+
 	if (event.GetType() == GAME_EVENT_TYPE::GET_HIT) {
 		GetHitEvent* HitEvent = dynamic_cast<GetHitEvent*>(&event);
 

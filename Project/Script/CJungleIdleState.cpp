@@ -13,6 +13,7 @@ CJungleIdleState::~CJungleIdleState()
 
 void CJungleIdleState::Enter()
 {
+	
 }
 
 void CJungleIdleState::tick()
@@ -39,6 +40,9 @@ void CJungleIdleState::Exit()
 
 void CJungleIdleState::HandleEvent(CGameEvent& event)
 {
+	if (!IsActive())
+		return;
+
 	if (event.GetType() == GAME_EVENT_TYPE::GET_HIT) {
 		GetHitEvent* HitEvent = dynamic_cast<GetHitEvent*>(&event);
 

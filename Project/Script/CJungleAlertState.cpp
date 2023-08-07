@@ -23,11 +23,11 @@ void CJungleAlertState::tick()
 	
 	CJungleMonsterScript* script = GetOwner()->GetScript<CJungleMonsterScript>();
 	const vector<CGameObject*>& Champions = CLevelMgr::GetInst()->GetCurLevel()->FindLayerByName(L"Player")->GetObjects();
-	Vec3 MonSpawnPos = script->GetSpawnPos();
+	Vec3 AggroPos = script->GetAggroPos();
 	float AggroRadius = script->GetAggroRange();
 	for (const CGameObject* Champ : Champions) {
 		Vec3 ChampPos = Champ->Transform()->GetRelativePos();
-		float distance = sqrt(pow(ChampPos.x - MonSpawnPos.x, 2.f) + pow(ChampPos.z - MonSpawnPos.z, 2.f));
+		float distance = sqrt(pow(ChampPos.x - AggroPos.x, 2.f) + pow(ChampPos.z - AggroPos.z, 2.f));
 		// 아직 어그로 범위에 챔피언이 하나라도 있음
 		if (distance < AggroRadius) {
 			m_bDetectChampion = true;
@@ -50,6 +50,9 @@ void CJungleAlertState::Exit()
 
 void CJungleAlertState::HandleEvent(CGameEvent& event)
 {
+	if (!IsActive())
+		return;
+
 	if (event.GetType() == GAME_EVENT_TYPE::GET_HIT) {
 		GetHitEvent* HitEvent = dynamic_cast<GetHitEvent*>(&event);
 

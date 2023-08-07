@@ -41,6 +41,7 @@
 #include <Script/CBlueScript.h>
 #include <Script/CRedScript.h>
 #include <Script/CInGameCameraScript.h>
+#include <Script/CDragonScript.h>
 
 void CreateTestLevel()
 {
@@ -243,37 +244,37 @@ void CreateTestLevel()
 		//pObj->Transform()->SetRelativeScale(Vec3(0.3, 0.3, 0.3));
 		//SpawnGameObject(pObj, Vec3(190.f, 0.f, 607.f), 0);
 
-		/*pMeshData = nullptr;
-		pObj = nullptr;
-		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
-		pObj = pMeshData->Instantiate();
-		pObj->SetName(L"Jinx");
-		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
-		pObj->GetRenderComponent()->SetFrustumCheck(false);
-		pObj->AddComponent(new CPlayerScript);
-		pObj->AddComponent(new CJinxScript);
-		pObj->AddComponent(new CPathFinder);
-		pObj->AddComponent(new CCollider3D);
-		pObj->AddComponent(new CCollider2D);
-		pObj->AddComponent(new CFsm);
-		
-		pObj->Collider2D()->SetAbsolute(false);
-		pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-		pObj->Collider2D()->SetOffsetScale(Vec2(20.f, 20.f));
-		pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-		
-		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
-		pObj->Collider3D()->SetAbsolute(true);
-		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
-		pObj->Collider3D()->SetDrawCollision(false);
-		pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true,true,0.1f);
-		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		
-		pObj->Transform()->SetUseMouseOutline(true);
-		CJinxScript* jinxscript = pObj->GetScript<CJinxScript>();
-		jinxscript->SetFaction(Faction::BLUE);
-		
-		SpawnGameObject(pObj, Vec3(0, 0, 0), L"Player");*/
+		//pMeshData = nullptr;
+		//pObj = nullptr;
+		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx.fbx");
+		//pObj = pMeshData->Instantiate();
+		//pObj->SetName(L"Jinx");
+		//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
+		//pObj->GetRenderComponent()->SetFrustumCheck(false);
+		//pObj->AddComponent(new CPlayerScript);
+		//pObj->AddComponent(new CJinxScript);
+		//pObj->AddComponent(new CPathFinder);
+		//pObj->AddComponent(new CCollider3D);
+		//pObj->AddComponent(new CCollider2D);
+		//pObj->AddComponent(new CFsm);
+		//
+		//pObj->Collider2D()->SetAbsolute(false);
+		//pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+		//pObj->Collider2D()->SetOffsetScale(Vec2(20.f, 20.f));
+		//pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+		//
+		//pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+		//pObj->Collider3D()->SetAbsolute(true);
+		//pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
+		//pObj->Collider3D()->SetDrawCollision(false);
+		//pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true,true,0.1f);
+		//pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+		//
+		//pObj->Transform()->SetUseMouseOutline(true);
+		//CJinxScript* jinxscript = pObj->GetScript<CJinxScript>();
+		//jinxscript->SetFaction(Faction::BLUE);
+		//
+		//SpawnGameObject(pObj, Vec3(0, 0, 0), L"Player");
 
 		//CGameObject* JinxAttackRange = new CGameObject;
 		//JinxAttackRange->SetName(L"AttackRange");
@@ -930,7 +931,7 @@ void SpawnJungleMob()
 			GrompAggro->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
 			GrompAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
 			GrompAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-			SpawnGameObject(GrompAggro, Vec3(1823.f, 0.f, 436.f), 0);
+			SpawnGameObject(GrompAggro, Vec3(1823.f, 0.f, 943.f), 0);
 		}
 
 		//레드팀 늑대
@@ -1163,6 +1164,43 @@ void SpawnJungleMob()
 			RedAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
 			SpawnGameObject(RedAggro, Vec3(1055, 15.f, 1637.f), 0);
 		}
+	}
+	//드래곤
+	{
+		Ptr<CMeshData> pMeshData = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Elder_Dragon.fbx");
+		CGameObject* Dragon = nullptr;
+		Dragon = pMeshData->Instantiate();
+		Dragon->AddComponent(new CDragonScript);
+		Dragon->SetName(L"Dragon");
+		Dragon->Transform()->SetRelativeScale(0.35f, 0.35f, 0.35f);
+		Dragon->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(-44.f), XMConvertToRadians(-180.f)));
+		CDragonScript* Script = Dragon->GetScript<CDragonScript>();
+		Script->SetAggroPos(Vec3(1451, 15.f, 649.f));
+		Script->SetAlertPos(Vec3(1483, 15.f, 689.f));
+		Script->SetUnitType(UnitType::DRAGON);
+		SpawnGameObject(Dragon, Vec3(1451, 0.f, 656.f), L"Mob");
+
+		CGameObject* DragonAlertRadius = new CGameObject;
+		DragonAlertRadius->SetName(L"DragonAlertRadius");
+		DragonAlertRadius->AddComponent(new CTransform);
+		DragonAlertRadius->AddComponent(new CCollider2D);
+		DragonAlertRadius->Transform()->SetRelativeScale(Vec3(300, 300.f, 300.f));
+		DragonAlertRadius->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+		DragonAlertRadius->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+		DragonAlertRadius->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+		SpawnGameObject(DragonAlertRadius, Vec3(1483, 15.f, 689.f), 0);
+
+		CGameObject* DragonAggroRadius = new CGameObject;
+		DragonAggroRadius->SetName(L"DragonAggroRadius");
+		DragonAggroRadius->AddComponent(new CTransform);
+		DragonAggroRadius->AddComponent(new CCollider2D);
+		DragonAggroRadius->Transform()->SetRelativeScale(Vec3(200, 200.f, 200.f));
+		DragonAggroRadius->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+		DragonAggroRadius->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+		DragonAggroRadius->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+		SpawnGameObject(DragonAggroRadius, Vec3(1451, 15.f, 649.f), 0);
+
 	}
 
 }
