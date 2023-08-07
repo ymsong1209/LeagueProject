@@ -210,7 +210,10 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			//Script->SetCurHP
 			//script->SetCurMP
 
-			//체력바 부분
+
+			pObj->Transform()->SetRelativeScale(Vec3(0.14f, 0.14f, 0.14f));
+			Vec3 spawnPos = Vec3(100.f + (50 * _objects.size()), 30.f, 100.f);
+			
 			CGameObject* HPBar = new CGameObject;
 			HPBar->SetName(L"HPBar");
 			HPBar->AddComponent(new CTransform);
@@ -218,18 +221,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			HPBar->AddComponent(new CMinionHPRatioScript);
 			pObj->AddChild(HPBar);
 
-			//체력바 패널부분
-			CGameObject* BarPanel = new CGameObject;
-			BarPanel->SetName(L"BarPanel");
-			BarPanel->AddComponent(new CTransform);
-			BarPanel->AddComponent(new CMeshRender);
-			BarPanel->AddComponent(new CMinionHPBarPosScript);
-			pObj->AddChild(BarPanel);
-
-			pObj->Transform()->SetRelativeScale(Vec3(0.1f, 0.1f, 0.1f));
-			Vec3 spawnPos = Vec3(100.f + (50 * _objects.size()), 30.f, 100.f);
 			SpawnGameObject(pObj, spawnPos, L"Mob");
-
 			_objects.insert(std::make_pair(_objectId, pObj));
 
 		}

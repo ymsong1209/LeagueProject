@@ -671,9 +671,9 @@ float4 PS_JungleBarRatioShader(VS_OUT _in) : SV_Target
     float totalWidth = 151;
     float totalHeight = 43;
     float leftx = 4;
-    float Rightx = 146;
+    float Rightx = 147.2;
     float upY = 21;
-    float downY = 32;
+    float downY = 33;
     // Define UV boundaries
     // Sample the color from the texture
     float4 vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
@@ -739,7 +739,7 @@ float4 PS_MinionBarRatioShader(VS_OUT _in) : SV_Target
 
     // Define HP and MP ratios
     //float HP_ratio = g_float_0;
-    float HP_ratio = 1.f;
+    float HP_ratio = g_float_0;
 
     // Normalize the UV.x with respect to the HP and MP bar widths
     float normalized_HP_UV_x = (_in.vUV.x - HPuv_1.x) / (HPuv_2.x - HPuv_1.x);

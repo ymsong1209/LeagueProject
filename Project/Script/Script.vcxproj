@@ -201,6 +201,7 @@
     <ClInclude Include="CChampionWalkState.h" />
     <ClInclude Include="CCharacterUIScript.h" />
     <ClInclude Include="CCoolDownUIScript.h" />
+    <ClInclude Include="CDragonHPUIScript.h" />
     <ClInclude Include="CExpRatioUIScript.h" />
     <ClInclude Include="CFlash.h" />
     <ClInclude Include="CFontUIScript.h" />
@@ -240,6 +241,8 @@
     <ClInclude Include="CJungleChaseState.h" />
     <ClInclude Include="CJungleDeathState.h" />
     <ClInclude Include="CJungleIdleState.h" />
+    <ClInclude Include="CJungleMINIHPScript.h" />
+    <ClInclude Include="CJungleMobHPScript.h" />
     <ClInclude Include="CJungleMonsterScript.h" />
     <ClInclude Include="CJungleN2AState.h" />
     <ClInclude Include="CJungleReturnState.h" />
@@ -269,11 +272,9 @@
     <ClInclude Include="CMinionDeathState.h" />
     <ClInclude Include="CMinionHPBarPosScript.h" />
     <ClInclude Include="CMinionHPRatioScript.h" />
-    <ClInclude Include="CMinionHPSpawnScript.h" />
     <ClInclude Include="CMinionScript.h" />
     <ClInclude Include="CMinionWalkState.h" />
     <ClInclude Include="CMobScript.h" />
-    <ClInclude Include="CMonsterHPBarUIScript.h" />
     <ClInclude Include="CMouseCursorUIScript.h" />
     <ClInclude Include="CMoveCursorUIScript.h" />
     <ClInclude Include="CMurkWolfA2NState.h" />
@@ -406,6 +407,7 @@
     <ClCompile Include="CChampionWalkState.cpp" />
     <ClCompile Include="CCharacterUIScript.cpp" />
     <ClCompile Include="CCoolDownUIScript.cpp" />
+    <ClCompile Include="CDragonHPUIScript.cpp" />
     <ClCompile Include="CExpRatioUIScript.cpp" />
     <ClCompile Include="CFlash.cpp" />
     <ClCompile Include="CFontUIScript.cpp" />
@@ -444,6 +446,8 @@
     <ClCompile Include="CJungleChaseState.cpp" />
     <ClCompile Include="CJungleDeathState.cpp" />
     <ClCompile Include="CJungleIdleState.cpp" />
+    <ClCompile Include="CJungleMINIHPScript.cpp" />
+    <ClCompile Include="CJungleMobHPScript.cpp" />
     <ClCompile Include="CJungleMonsterScript.cpp" />
     <ClCompile Include="CJungleN2AState.cpp" />
     <ClCompile Include="CJungleReturnState.cpp" />
@@ -473,11 +477,9 @@
     <ClCompile Include="CMinionDeathState.cpp" />
     <ClCompile Include="CMinionHPBarPosScript.cpp" />
     <ClCompile Include="CMinionHPRatioScript.cpp" />
-    <ClCompile Include="CMinionHPSpawnScript.cpp" />
     <ClCompile Include="CMinionScript.cpp" />
     <ClCompile Include="CMinionWalkState.cpp" />
     <ClCompile Include="CMobScript.cpp" />
-    <ClCompile Include="CMonsterHPBarUIScript.cpp" />
     <ClCompile Include="CMouseCursorUIScript.cpp" />
     <ClCompile Include="CMoveCursorUIScript.cpp" />
     <ClCompile Include="CMurkWolfA2NState.cpp" />

@@ -5,6 +5,7 @@ CCameraMoveScript
 CChampionScript
 CCharacterUIScript
 CCoolDownUIScript
+CDragonHPUIScript
 CExpRatioUIScript
 CFontUIScript
 CGrompScript
@@ -14,17 +15,16 @@ CInhibitorScript
 CInventoryUIScript
 CJinxScript
 CJinxWScript
+CJungleMINIHPScript
+CJungleMobHPScript
 CJungleMonsterScript
 CKrugMiniScript
 CKrugScript
 CMinimapUIScript
 CMinionHPBarPosScript
 CMinionHPRatioScript
-CMinionHPSpawnScript
 CMinionScript
-CMobBarPanelScript
 CMobScript
-CMonsterHPBarUIScript
 CMouseCursorUIScript
 CMoveCursorUIScript
 CMurkWolfMiniScript

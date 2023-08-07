@@ -11,7 +11,6 @@ public:
     virtual void tick() override;
     virtual void BeginOverlap(CCollider2D* _Other) override;
 
-
 public:
     CLONE(CMinionHPBarPosScript);
 

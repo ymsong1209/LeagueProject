@@ -34,8 +34,8 @@ void CWorldHPUIScript::tick()
 			CurrentMP = 0.f;
 		//-------------------------
 
-		MeshRender()->GetMaterial(0)->SetScalarParam(FLOAT_0, &CurrentHPRatio);
-		MeshRender()->GetMaterial(0)->SetScalarParam(FLOAT_1, &CurrentMPRatio);
+		MeshRender()->GetDynamicMaterial(0)->SetScalarParam(FLOAT_0, &CurrentHPRatio);
+		MeshRender()->GetDynamicMaterial(0)->SetScalarParam(FLOAT_1, &CurrentMPRatio);
 	}
 	
 }

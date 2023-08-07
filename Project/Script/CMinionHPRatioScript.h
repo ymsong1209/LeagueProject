@@ -5,16 +5,17 @@ class CMinionHPRatioScript :
     public CScript
 {
 private:
-    CGameObject* BarPanel;
-    CGameObject* HPPanel;
+    float m_fRatio;
+    float m_fCurHP;
+    float m_fTotalHP;
+    int MyNum;
 
 public:
     virtual void begin() override;
     virtual void tick() override;
     virtual void BeginOverlap(CCollider2D* _Other) override;
 
-
-    //void UISpawn(CGameObject* _PlayerObj, CGameObject* _WorldBarObj);
+    void SetMyNum(int _Num) { _Num = MyNum; }
 public:
     CLONE(CMinionHPRatioScript);
 

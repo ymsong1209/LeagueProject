@@ -504,14 +504,15 @@
     <ClCompile Include="CJungleSpawnState.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
     </ClCompile>
-    <ClCompile Include="CMonsterHPBarUIScript.cpp" />
     <ClCompile Include="CServerTypes.cpp" />
-    <ClCompile Include="CMinionHPSpawnScript.cpp" />
     <ClCompile Include="CMinionHPRatioScript.cpp" />
     <ClCompile Include="CChampionScript.cpp">
       <Filter>Scripts\Unit\Champion</Filter>
     </ClCompile>
     <ClCompile Include="CMinionHPBarPosScript.cpp" />
+    <ClCompile Include="CDragonHPUIScript.cpp" />
+    <ClCompile Include="CJungleMobHPScript.cpp" />
+    <ClCompile Include="CJungleMINIHPScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -562,10 +563,11 @@
       <Filter>UIScript</Filter>
     </ClInclude>
     <ClInclude Include="CTimedEffect.h" />
-    <ClInclude Include="CMonsterHPBarUIScript.h" />
-    <ClInclude Include="CMinionHPSpawnScript.h" />
     <ClInclude Include="CMinionHPRatioScript.h" />
     <ClInclude Include="CMinionHPBarPosScript.h" />
+    <ClInclude Include="CDragonHPUIScript.h" />
+    <ClInclude Include="CJungleMobHPScript.h" />
+    <ClInclude Include="CJungleMINIHPScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">
