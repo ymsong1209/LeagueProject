@@ -12,7 +12,7 @@ CKrugIdleState::~CKrugIdleState()
 
 void CKrugIdleState::Enter()
 {
-	
+	CJungleIdleState::Enter();
 	GetOwner()->Animator3D()->PlayOnce(L"Krug\\krug_idle_normal");
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"Krug\\krug_idle_normal", false, false, false, 0.f);

@@ -3,6 +3,7 @@
 #include <Engine/CAnim3D.h>
 #include "CJungleMonsterScript.h"
 CJungleDeathState::CJungleDeathState()
+	:m_bPacketSend(false)
 {
 }
 
@@ -19,9 +20,10 @@ void CJungleDeathState::Enter()
 
 void CJungleDeathState::tick()
 {
-	if (GetOwner()->Animator3D()->GetCurAnim()->IsFinish()) {
+	if (GetOwner()->Animator3D()->GetCurAnim()->IsFinish() && m_bPacketSend == false) {
 		CJungleMonsterScript* script = GetOwner()->GetScript<CJungleMonsterScript>();
 		CSendServerEventMgr::GetInst()->SendDespawnPacket(script->GetServerID(), 0.f);
+		m_bPacketSend = true;
 	}
 }
 

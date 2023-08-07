@@ -70,10 +70,12 @@ void CJungleN2AState::HandleEvent(CGameEvent& event)
 			int	skillLevel = HitEvent->GetSkillLevel();
 
 			GetOwnerFSM()->GetOwner()->GetScript<CUnitScript>()->GetHit(skilltype, SkillTarget, SkillUser, skillLevel);
+
+			CJungleMonsterScript* script = GetOwner()->GetScript<CJungleMonsterScript>();
+			script->GetHit(HitEvent->GetUserObj());
 		}
 
-		CJungleMonsterScript* script = GetOwner()->GetScript<CJungleMonsterScript>();
-		script->GetHit(HitEvent->GetUserObj());
+		
 	}
 
 }

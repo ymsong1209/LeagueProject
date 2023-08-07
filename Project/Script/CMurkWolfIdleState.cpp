@@ -13,6 +13,7 @@ CMurkWolfIdleState::~CMurkWolfIdleState()
 
 void CMurkWolfIdleState::Enter()
 {
+	CJungleIdleState::Enter();
 	m_iIdleAnimNum = 1;
 	GetOwner()->Animator3D()->PlayOnce(L"MurkWolf\\sru_murkwolf_idle1_model.002");
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
