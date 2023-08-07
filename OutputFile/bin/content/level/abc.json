@@ -381,7 +381,7 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": -0.0,
+                                "y": 0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
@@ -489,7 +489,7 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": -0.0,
+                                "y": 0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
@@ -714,16 +714,16 @@
                                     ],
                                     "MeshMoveDataInfo": {
                                         "OutputTexFuncValue": {
-                                            "x": 0.800000011920929,
+                                            "x": 0.0,
                                             "y": 0.0,
                                             "z": 0.0,
                                             "w": 0.0
                                         },
                                         "OutputTePreviousPos": {
-                                            "x": 4.783547878265381,
+                                            "x": 0.0,
                                             "y": 0.0
                                         },
-                                        "OutputTexMovingStyle": 1,
+                                        "OutputTexMovingStyle": 0,
                                         "isAdditiveTextureUsed": 0,
                                         "AdditiveColor": {
                                             "x": 0.0,
@@ -781,7 +781,7 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": -0.0,
+                                "y": 0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
@@ -1923,7 +1923,7 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": -0.0,
+                                "y": 0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
@@ -2040,6 +2040,175 @@
                             "scriptName": "CTestTurretScript"
                         }
                     ],
+                    "children": []
+                },
+                {
+                    "ObjName": "ParticleTestObject",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 100.0,
+                                "y": 100.0,
+                                "z": 100.0
+                            },
+                            "vRelativeScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
+                        },
+                        {
+                            "PARTICLESYSTEM": 11,
+                            "Mesh": {
+                                "IsNull": false,
+                                "Key": "PointMesh",
+                                "RelativePath": ""
+                            },
+                            "fBounding": 150.0,
+                            "bFrustumCheck": true,
+                            "bDynamicShadow": false,
+                            "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": false,
+                            "vBoundingBoxOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "iMtrlCount": 1,
+                            "vecMtrls[0]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "ParticleRenderMtrl",
+                                "RelativePath": ""
+                            },
+                            "DynamicMtrls": [
+                                {
+                                    "vecMtrls[0]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                }
+                            ],
+                            "ParticleModule": {
+                                "vSpawnColor": {
+                                    "x": 0.4000000059604645,
+                                    "y": 1.0,
+                                    "z": 0.4000000059604645,
+                                    "w": 0.0
+                                },
+                                "vSpawnScaleMin": {
+                                    "x": 15.0,
+                                    "y": 15.0,
+                                    "z": 1.0,
+                                    "w": 0.0
+                                },
+                                "vSpawnScaleMax": {
+                                    "x": 20.0,
+                                    "y": 20.0,
+                                    "z": 1.0,
+                                    "w": 0.0
+                                },
+                                "vBoxShapeScale": {
+                                    "x": 200.0,
+                                    "y": 200.0,
+                                    "z": 200.0
+                                },
+                                "fSphereShapeRadius": 0.0,
+                                "SpawnShapeType": 0,
+                                "SpawnRate": 20,
+                                "Space": 0,
+                                "MinLifeTime": 3.0,
+                                "MaxLifeTime": 5.0,
+                                "spawnpad[3]": [
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "vStartColor": {
+                                    "x": 0.20000000298023224,
+                                    "y": 0.30000001192092896,
+                                    "z": 1.0,
+                                    "w": 1.0
+                                },
+                                "vEndColor": {
+                                    "x": 0.4000000059604645,
+                                    "y": 1.0,
+                                    "z": 0.4000000059604645,
+                                    "w": 1.0
+                                },
+                                "StartScale": 1.5,
+                                "EndScale": 0.20000000298023224,
+                                "iMaxParticleCount": 1000,
+                                "ipad": 0,
+                                "vVelocityDir": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "AddVelocityType": 0,
+                                "OffsetAngle": 0.0,
+                                "Speed": 700.0,
+                                "addvpad": 0,
+                                "StartDrag": 500.0,
+                                "EndDrag": -500.0,
+                                "fNoiseTerm": 0.30000001192092896,
+                                "fNoiseForce": 50.0,
+                                "fGravityForce": 0.0,
+                                "GravityPad[3]": [
+                                    0.0,
+                                    0.0,
+                                    0.0
+                                ],
+                                "VelocityAlignment": 1,
+                                "VelocityScale": 1,
+                                "AnimationUse": 0,
+                                "AnimationLoop": 0,
+                                "bRotate": 0,
+                                "vMaxSpeed": 500.0,
+                                "fRotationAngle": 0.0,
+                                "fRotateSpeed": 0.0,
+                                "vMaxVelocityScale": {
+                                    "x": 15.0,
+                                    "y": 1.0,
+                                    "z": 1.0,
+                                    "w": 0.0
+                                },
+                                "iAnimXCount": 0,
+                                "iAnimYCount": 0,
+                                "fAnimFrmTime": 0.0,
+                                "renderpad": 0,
+                                "ModuleCheck[PARTICLE_MODULE]": [
+                                    1,
+                                    1,
+                                    0,
+                                    1,
+                                    1,
+                                    0,
+                                    1,
+                                    0
+                                ]
+                            },
+                            "UpdateCS": {
+                                "IsNull": false,
+                                "Key": "ParticleUpdateCS",
+                                "RelativePath": ""
+                            }
+                        },
+                        16
+                    ],
+                    "scripts": [],
                     "children": []
                 },
                 {
@@ -2352,7 +2521,7 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": -0.0,
+                                "y": 0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,

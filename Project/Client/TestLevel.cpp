@@ -438,7 +438,7 @@ void CreateTestLevel()
 	 pRectFast->Transform()->SetAbsolute(true);
 	 
 
-	 pRectFast->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	 pRectFast->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"TrapezoidMesh"));
 	 pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"TurretTrailMtrl"), 0);
 	 //pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MiniMapMtrl"), 0);
 	 //pRectFast->MeshRender()->GetDynamicMaterial(0);
@@ -596,6 +596,15 @@ void CreateTestLevel()
 	TestTurret->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
 	
 	SpawnGameObject(TestTurret, Vec3(400.f, 100.f, 400.f), 0);
+
+
+
+	CGameObject* ParticleTestObject = new CGameObject;
+	ParticleTestObject->SetName(L"ParticleTestObject");
+	ParticleTestObject->AddComponent(new CParticleSystem);
+	ParticleTestObject->AddComponent(new CTransform);
+
+	SpawnGameObject(ParticleTestObject, Vec3(100.f, 100.f, 100.f), 0);
 
 	
 	
