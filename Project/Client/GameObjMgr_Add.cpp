@@ -157,54 +157,13 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 		switch (_objectInfo.unitType)
 		{
-		case UnitType::TURRET:
-		{
-			if (_objectInfo.faction == Faction::RED)
-			{
-				// 프리팹 다르게?? 
-			}
-			else if (_objectInfo.faction == Faction::BLUE)
-			{
-				
-			}
-
-			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\TurretRubble.prefab");
-			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
-			pObj = pPrefab->Instantiate();
-			Vec3 Scale = pObj->Transform()->GetRelativeScale();
-			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
-
-			if (MyPlayer.host)
-			{
-				//pObj->AddComponent(new CTurretScript);
-				// script->setLane, _objectInfo.lane
-				pObj->AddComponent(new CUnitScript);  // 추후 주석처리
-				// 공격범위 시야 자식오브젝트도 추가해야할듯.
-				
-			}
-			else
-			{
-				pObj->AddComponent(new CUnitScript);
-			}
-			
-			// 공통
-			CUnitScript* Script = pObj->GetScript<CUnitScript>();
-			Script->SetServerID(_objectId);
-			Script->SetFaction(_objectInfo.faction);
-			SpawnGameObject(pObj
-				, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z)
-				, L"Structure");
-
-			_placedObjects.insert(std::make_pair(_objectId, pObj));
-		}
-		break;
 
 		case UnitType::MELEE_MINION:
 		{
 			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\minion_melee.fbx");
 			pObj = pMeshData->Instantiate();
 
-			pObj->SetName(L"minion_melee");
+			
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\minion_melee");
 			pObj->Animator3D()->PlayRepeat(L"minion_melee\\Idle1", true, true, 0.1f);
 
@@ -219,6 +178,18 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			//pObj->Collider3D()->SetAbsolute(true);
 			//pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
 			//pObj->Collider3D()->SetDrawCollision(false);
+
+			if (_objectInfo.faction == Faction::RED)
+			{
+				pObj->SetName(L"red_minion_melee");
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\minion_melee_Red.mtrl"), 0);
+			}
+			else if (_objectInfo.faction == Faction::BLUE)
+			{
+				pObj->SetName(L"blue_minion_melee");
+				
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\minion_melee_Blue.mtrl"), 0);
+			}
 
 			// 방장은 진짜 계산 오브젝트 생성,  방장이 아닐 경우 허상을 생성
 			if (MyPlayer.host)
@@ -261,9 +232,23 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 		{
 		}
 		break;
+		case UnitType::SIEGE_MINION:
+		{
 
-		//case UnitType::SOUTH_GROMP://블루팀 두꺼비
-		//{
+		}
+		break;
+		case UnitType::SUPER_MINION:
+		{
+
+		}
+		break;
+		// =======================================================================================================================
+		//  
+		// Jungle Mob(Objects) 
+		// 
+		// =======================================================================================================================
+		case UnitType::SOUTH_GROMP://블루팀 두꺼비
+		{
 		//	pMeshData = nullptr;
 		//	pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\gromp.fbx");
 		//	pObj = nullptr;
@@ -302,14 +287,175 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 		//	Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 		//
 		//	_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
-		//}
-		//break;
-
-
 		}
+		break;
+
+		// =======================================================================================================================
+		//  
+		// Structures(PlacedObjects) TURRET, INHIBITOR, NEXUS
+		// 
+		// =======================================================================================================================
+		case UnitType::TURRET:
+		{
+			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\TurretRubble.prefab");
+			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
+			pObj = pPrefab->Instantiate();
+			Vec3 Scale = pObj->Transform()->GetRelativeScale();
+			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
 
 
-	}
+			if (_objectInfo.faction == Faction::RED)
+			{				
+				pObj->SetName(L"red_turret");
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Turret_Red_Break_1.mtrl"), 0);
+			}
+			else if (_objectInfo.faction == Faction::BLUE)
+			{
+				pObj->SetName(L"blue_turret");
+
+			}
+
+			if (MyPlayer.host)
+			{
+				//pObj->AddComponent(new CTurretScript);
+				// script->setLane, _objectInfo.lane
+				pObj->AddComponent(new CUnitScript);  // 추후 주석처리
+				// 공격범위 시야 자식오브젝트도 추가해야할듯.
+
+			}
+			else
+			{
+				pObj->AddComponent(new CUnitScript);
+			}
+
+			// 공통
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);
+			Script->SetFaction(_objectInfo.faction);
+			Script->SetUnitType(UnitType::TURRET);
+			SpawnGameObject(pObj
+				, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z)
+				, L"Structure");
+
+			_placedObjects.insert(std::make_pair(_objectId, pObj));
+		}
+		break;
+
+		case UnitType::INHIBITOR:
+		{
+			pMeshData = nullptr;
+			pObj = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Inhibitor.fbx");
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->Animator3D()->PlayRepeat(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true, true, 0.1f);
+			pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
+			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
+			pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+
+			if (_objectInfo.faction == Faction::RED)
+			{
+				pObj->SetName(L"red_Inhibitor");
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\inhibitor_red_Mtrl.mtrl"), 0);
+			}
+			else if (_objectInfo.faction == Faction::BLUE)
+			{
+				pObj->SetName(L"blue_Inhibitor");
+
+			}
+			//억제기 평상시 애니메이션은 idle1 애니메이션임!! 
+			//억제기의 평상시에는 1번에 alphaTex 이미지를 넣어주고, 0번 머터리얼에 억제기 기본 머터리얼을 넣어주면됨(기본적으로 되어있어서 따로 세팅해줄 필요는 없음)
+			//억제기가 폭발할때는 0번머터리얼에 alphaTex 이미지를 넣어주고, 1번머터리얼에 억제기 전용 destroy텍스쳐를 입혀주면됨 (따로 세팅해줘야함)
+			if (MyPlayer.host)
+			{
+				//pObj->AddComponent(new CInhibitorScript);
+				// script->setLane, _objectInfo.lane
+				pObj->AddComponent(new CUnitScript);  // 추후 주석처리
+				// 공격범위 시야 자식오브젝트도 추가해야할듯.
+
+			}
+			else
+			{
+				pObj->AddComponent(new CUnitScript);
+			}
+
+			// 공통
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);
+			Script->SetFaction(_objectInfo.faction);
+			Script->SetUnitType(UnitType::INHIBITOR);
+			SpawnGameObject(pObj
+				, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z)
+				, L"Structure");
+
+			_placedObjects.insert(std::make_pair(_objectId, pObj));
+		}
+		break;
+
+		case UnitType::NEXUS:
+		{
+			//-------------------------------넥서스-----------------------------------------
+			//넥서스는 0번머터리얼을 쓰면 1번 머터리얼에는 알파텍스쳐를 장착하고, 1번머터리얼을 쓰면 0번머터리얼에 알파 텍스쳐를 장착해줘야한다.
+			//-----터지는 넥서스쪽 보기 ------ 
+			//pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\nexus_destroyed_red_clear.png"));
+			//pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
+
+			//-----빙빙 도는 넥서스쪽 보기------ 
+			/*pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
+			pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\nexus_red_clear.png"));*/
+			pMeshData = nullptr;
+			pObj = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\nexus.fbx");
+			pObj = pMeshData->Instantiate();
+			pObj->SetName(L"blue_nexus");
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\nexus");
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->Animator3D()->PlayRepeat(L"nexus\\sruap_order_idle.anm_skinned_mesh.001", true, true, 0.1f);
+			pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
+			pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\sruap_ordernexus_tx_cm_clear.png"));
+			pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+			
+			if (_objectInfo.faction == Faction::RED)
+			{
+				pObj->SetName(L"red_nexus");
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\nexus_Mat_Red.mtrl"), 1);
+			}
+			else if (_objectInfo.faction == Faction::BLUE)
+			{
+				pObj->SetName(L"blue_nexus");
+
+			}
+
+
+			if (MyPlayer.host)
+			{
+				//pObj->AddComponent(new CInhibitorScript);
+				// script->setLane, _objectInfo.lane
+				pObj->AddComponent(new CUnitScript);  // 추후 주석처리
+				// 공격범위 시야 자식오브젝트도 추가해야할듯.
+
+			}
+			else
+			{
+				pObj->AddComponent(new CUnitScript);
+			}
+
+			// 공통
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);
+			Script->SetFaction(_objectInfo.faction);
+			Script->SetUnitType(UnitType::NEXUS);
+			SpawnGameObject(pObj, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z), L"Structure");
+			_placedObjects.insert(std::make_pair(_objectId, pObj));
+		}
+		break;
+
+
+		} // End Swich case
+
+
+	} // End mutex lock
 }
 
 void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
