@@ -1,11 +1,15 @@
 #pragma once
 #include "CUnitState.h"
-class CMinionWalkState :
+class CMinionChaseState :
     public CUnitState
 {
 public:
-    CMinionWalkState();
-    ~CMinionWalkState();
+    CMinionChaseState();
+    ~CMinionChaseState();
+
+private:
+    float       m_fAggroTime;
+    float       m_fTime;
 
 public:
     virtual void tick() override;

@@ -1,28 +1,59 @@
 #include "pch.h"
-#include "CMinionWalkState.h"
-#include <Engine\CAnimator3D.h>
-#include <Engine\CAnim3D.h>
+#include "CMinionChaseState.h"
 #include "CMinionScript.h"
 
-CMinionWalkState::CMinionWalkState()
+CMinionChaseState::CMinionChaseState()
+	: m_fAggroTime(0)
+	, m_fTime(0)
 {
 }
 
-CMinionWalkState::~CMinionWalkState()
+CMinionChaseState::~CMinionChaseState()
 {
 }
 
-void CMinionWalkState::tick()
+void CMinionChaseState::tick()
 {
-	// Waypoint를 향해 Move
-	GetOwner()->GetScript<CMinionScript>()->Move();
 
-	// 공격 타겟이 있다면
-	if (GetOwner()->GetScript<CMinionScript>()->GetTarget())
-		GetOwnerFSM()->ChangeState(L"Chase");
+	CGameObject* Target = GetOwner()->GetScript<CMinionScript>()->GetTarget();
+	if (!GetOwner()->GetScript<CMinionScript>()->IsTargetValid(Target))
+	{
+		// 타겟이 이미 죽었다면 Walk로
+		GetOwnerFSM()->ChangeState(L"Walk");
+	}
+	else
+	{
+		// 타겟이 살아있고 사거리 내부에 없다면 AggroTime만큼 추적한다. (Target의 현재 위치로 PathFind)
+		m_fAggroTime += DT;
+
+		if (GetOwner()->GetScript<CMinionScript>()->GetAggroTime() > m_fAggroTime)
+		{
+			m_fTime += DT;
+			if (m_fTime >= 0.1f)
+			{
+				GetOwner()->PathFinder()->FindPath(Target->Transform()->GetRelativePos());
+				m_fTime = 0;
+			}
+
+			GetOwner()->GetScript<CMinionScript>()->Move();
+
+			// 사거리 내부에 들어왔다면
+			if (GetOwner()->GetScript<CMinionScript>()->IsTargetInRange(Target))
+			{
+				// 공격 가능한 경우 Attack으로
+				if (GetOwner()->GetScript<CMinionScript>()->CanAttack())
+					GetOwnerFSM()->ChangeState(L"Attack");
+			}
+		}
+		else
+		{
+			// AggroTime이 지나면 다시 WalkState로
+			GetOwnerFSM()->ChangeState(L"Walk");
+		}
+	}
 }
 
-void CMinionWalkState::Enter()
+void CMinionChaseState::Enter()
 {
 	CMinionScript* MinionScript = GetOwnerFSM()->GetOwner()->GetScript<CMinionScript>();
 	MinionType Type = MinionScript->GetMinionType();
@@ -51,18 +82,17 @@ void CMinionWalkState::Enter()
 	break;
 	}
 
-	// 다음 WayPoint를 향해 길찾기
-	Vec3 WayPoint = GetOwner()->GetScript<CMinionScript>()->GetWayPoint();
-	GetOwner()->PathFinder()->FindPath(WayPoint);
+	m_fAggroTime = 0;
+	m_fTime = 0;
 }
 
-void CMinionWalkState::Exit()
+void CMinionChaseState::Exit()
 {
 	// 길찾기 컴포넌트에 남은 경로값이 있다면 Clear
 	GetOwner()->PathFinder()->ClearPath();
 }
 
-void CMinionWalkState::HandleEvent(CGameEvent& event)
+void CMinionChaseState::HandleEvent(CGameEvent& event)
 {
 	if (!IsActive())
 		return;
