@@ -46,7 +46,6 @@
 void CreateTestLevel()
 {
 	//return;	
-
 	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
 	pCurLevel->ChangeState(LEVEL_STATE::PLAY);
 	CTimeMgr::GetInst()->SetTimeScale(1.f);    // TestLevel에서 강제로 PLAY모드로 전환해서 DT를 흐르게 하기 위함. 추후 삭제
@@ -88,7 +87,7 @@ void CreateTestLevel()
 	pMainCam->Camera()->SetLayerMask(31, false);// UI Layer 는 렌더링하지 않는다.
 	pMainCam->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(60.f),0.f, 0.f));
 
-	SpawnGameObject(pMainCam, Vec3(0.f, 526.f, -9.f), 0);
+	SpawnGameObject(pMainCam, Vec3(120.f, 525.f, -152.f), 0);
 
 	// UI cameara
 	CGameObject* pUICam = new CGameObject;

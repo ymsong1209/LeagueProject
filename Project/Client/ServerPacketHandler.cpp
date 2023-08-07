@@ -153,9 +153,6 @@ void ServerPacketHandler::Handle_S_LOGIN(PacketSessionRef& session, BYTE* buffer
 	if(MyPlayer.id == 0)
 		MyPlayer.id = _PlayerId;
 
-	// 진영 선택 레벨 
-	//CreateFactionLevel();
-
 	PKT_S_LOGIN::PlayerList playerIdBuffs = pkt->GetPlayerList();
 	for (auto& playerIdBuff : playerIdBuffs)
 	{
@@ -217,8 +214,6 @@ void ServerPacketHandler::Handle_S_PICK_FACTION(PacketSessionRef& session, BYTE*
 		cout << "S_PICK_FACTION Success" << endl;
 	else
 		cout << "S_PICK_FACTION Fail" << endl;
-	// 챔피언 픽 레벨로 이동
-	//CreateChampionPickLevel();
 
 	std::cout << "===============================" << endl;
 }
@@ -278,23 +273,24 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 		// 맵 불러옴
 		CreateTestLevel();
 
-		////=========json level load===========================================
-		//CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevelFromJson(L"level\\createTest.json");
+
+		//////=========json level load===========================================
+		//CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevelFromJson(L"level\\InGameLevel.json");
 		//tEvent evn = {};
 		//evn.Type = EVENT_TYPE::LEVEL_CHANGE;
 		//evn.wParam = (DWORD_PTR)pLoadedLevel;
 		//CEventMgr::GetInst()->AddEvent(evn);
-		////inspector  UI update
+		//// inspector  UI update
 		//InspectorUI* inspector = (InspectorUI*)ImGuiMgr::GetInst()->FindUI("##Inspector");
 		//inspector->SetTargetObject(nullptr);
 		//
 		//// if curState is stop,  next level state is also stop
 		//CLevel* level = CUR_LEVEL;
 		//if (level->GetState() == LEVEL_STATE::STOP) {
-		//	CTimeMgr::GetInst()->SetTimeScale(0.f);
+		//    CTimeMgr::GetInst()->SetTimeScale(0.f);
 		//}
-		//===================================================================
-
+		//level->ChangeState(LEVEL_STATE::PLAY);
+		////===================================================================
 
 
 		PKT_S_GAME_START::PlayerInfoList playerInfoBuffs = pkt->GetPlayerInfoList();
@@ -359,13 +355,13 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 
 	// 모든 플레이어 생성후, UI를위한 오브젝트, 플레이어 vector 생성
 	map<uint64, CGameObject*> mapPlayers = GameObjMgr::GetInst()->GetPlayers();
-
 	vector<CGameObject*> vecAllPlayer;
 	for (const auto& pair : mapPlayers) {
 		vecAllPlayer.push_back(pair.second);
 	}
 	CSendServerEventMgr::GetInst()->SetVecAllPlyer(vecAllPlayer);
 	
+
 	CGameObject* UIObj = new CGameObject; //각종 스크립트에서 처리할 것들
 	UIObj->SetName(L"UIObj");
 	UIObj->AddComponent(new CTransform);
