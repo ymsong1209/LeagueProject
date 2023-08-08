@@ -13,7 +13,10 @@ void CWorldHPUIScript::tick()
 	{
 		bool IsCulling = m_OwnerObj->GetRenderComponent()->IsCulled();
 		if (IsCulling)
+		{
 			GetOwner()->GetRenderComponent()->SetSortExcept(true);
+			return;
+		}
 
 
 		CurrentHP = (int)m_OwnerObj->GetScript<CUnitScript>()->GetCurHP();
@@ -41,6 +44,7 @@ void CWorldHPUIScript::tick()
 
 		MeshRender()->GetDynamicMaterial(0)->SetScalarParam(FLOAT_0, &CurrentHPRatio);
 		MeshRender()->GetDynamicMaterial(0)->SetScalarParam(FLOAT_1, &CurrentMPRatio);
+
 	}
 	
 }

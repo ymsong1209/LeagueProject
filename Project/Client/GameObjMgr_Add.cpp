@@ -50,6 +50,7 @@
 #include <Script/CBlueScript.h>
 #include <Script/CRedScript.h>
 #include <Script/CDragonScript.h>
+#include <Script\CMinionHPRatioScript.h>
 
 
 

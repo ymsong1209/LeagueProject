@@ -558,6 +558,22 @@
     <ClCompile Include="CScriptMgr.cpp">
       <Filter>Manager\1. ScriptMgr</Filter>
     </ClCompile>
+    <ClCompile Include="CChampionScript.cpp" />
+    <ClCompile Include="CDragonHPUIScript.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleMINIHPScript.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleMobHPScript.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClCompile>
+    <ClCompile Include="CMinionHPBarPosScript.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClCompile>
+    <ClCompile Include="CMinionHPRatioScript.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -657,6 +673,21 @@
     <ClInclude Include="CMonsterHPBarUIScript.h" />
     <ClInclude Include="CMinionChaseState.h">
       <Filter>State\Unit\Minion</Filter>
+    </ClInclude>
+    <ClInclude Include="CDragonHPUIScript.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleMINIHPScript.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleMobHPScript.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClInclude>
+    <ClInclude Include="CMinionHPBarPosScript.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClInclude>
+    <ClInclude Include="CMinionHPRatioScript.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -33,12 +33,15 @@ void CMinionHPRatioScript::tick()
 	if (!GetOwner()->GetParent()->IsDead())
 	{
 		CGameObject* ParentObj = GetOwner()->GetParent();
+		bool IsCulling = ParentObj->GetRenderComponent()->IsCulled();
+		bool IsRaySightCulling = ParentObj->GetRenderComponent()->IsUsingRaySightCulling();
+		if (IsCulling && IsRaySightCulling)
+			return;
+
 		m_fCurHP = ParentObj->GetScript<CUnitScript>()->GetCurHP();
 		m_fTotalHP = ParentObj->GetScript<CUnitScript>()->GetMaxHP();
 		Transform()->SetAbsolute(false);
-		Transform()->SetRelativePos(Vec3(0.f, 100.f, 50.f));
-		Transform()->SetRelativeRot(Vec3(XMConvertToRadians(60.f), 0.f, 0.f));
-
+		Transform()->SetBillBoard(true);
 		//============================================================================
 		// 현재 자식은 직교투영이고, 부모는 원근투영이라서 문제가 됨. 자식이 부모의 Pos,Scale,Rot를 가져와서 자신의 행렬에 적용시키는데 
 		// 이값들은 원근 기준의 좌표이기때문에 원근상의 좌표가 직교투영에 계속 영향을 줘서 그냥똑같이 월드상에 배치해야 할것같음.

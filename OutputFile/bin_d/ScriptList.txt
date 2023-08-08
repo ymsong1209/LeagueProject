@@ -26,7 +26,6 @@ CMinionHPBarPosScript
 CMinionHPRatioScript
 CMinionScript
 CMobScript
-CMonsterHPBarUIScript
 CMouseCursorUIScript
 CMoveCursorUIScript
 CMurkWolfMiniScript

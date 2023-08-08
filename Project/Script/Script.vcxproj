@@ -201,7 +201,6 @@
     <ClInclude Include="CChampionWalkState.h" />
     <ClInclude Include="CCharacterUIScript.h" />
     <ClInclude Include="CCoolDownUIScript.h" />
-    <ClInclude Include="CDragonHPUIScript.h" />
     <ClInclude Include="CDragonAggro2AlertState.h" />
     <ClInclude Include="CDragonAggroState.h" />
     <ClInclude Include="CDragonAlert2AggroState.h" />
@@ -211,6 +210,7 @@
     <ClInclude Include="CDragonChaseState.h" />
     <ClInclude Include="CDragonDeathState.h" />
     <ClInclude Include="CDragonFlyStartState.h" />
+    <ClInclude Include="CDragonHPUIScript.h" />
     <ClInclude Include="CDragonIdleState.h" />
     <ClInclude Include="CDragonLandState.h" />
     <ClInclude Include="CDragonNormal2AlertState.h" />
@@ -291,6 +291,7 @@
     <ClInclude Include="CMinionScript.h" />
     <ClInclude Include="CMinionWalkState.h" />
     <ClInclude Include="CMobScript.h" />
+    <ClInclude Include="CMonsterHPBarUIScript.h" />
     <ClInclude Include="CMouseCursorUIScript.h" />
     <ClInclude Include="CMoveCursorUIScript.h" />
     <ClInclude Include="CMurkWolfA2NState.h" />
@@ -424,7 +425,6 @@
     <ClCompile Include="CChampionWalkState.cpp" />
     <ClCompile Include="CCharacterUIScript.cpp" />
     <ClCompile Include="CCoolDownUIScript.cpp" />
-    <ClCompile Include="CDragonHPUIScript.cpp" />
     <ClCompile Include="CDragonAggro2AlertState.cpp" />
     <ClCompile Include="CDragonAggroState.cpp" />
     <ClCompile Include="CDragonAlert2AggroState.cpp" />
@@ -434,6 +434,7 @@
     <ClCompile Include="CDragonChaseState.cpp" />
     <ClCompile Include="CDragonDeathState.cpp" />
     <ClCompile Include="CDragonFlyStartState.cpp" />
+    <ClCompile Include="CDragonHPUIScript.cpp" />
     <ClCompile Include="CDragonIdleState.cpp" />
     <ClCompile Include="CDragonLandState.cpp" />
     <ClCompile Include="CDragonNormal2AlertState.cpp" />
@@ -513,6 +514,7 @@
     <ClCompile Include="CMinionScript.cpp" />
     <ClCompile Include="CMinionWalkState.cpp" />
     <ClCompile Include="CMobScript.cpp" />
+    <ClCompile Include="CMonsterHPBarUIScript.cpp" />
     <ClCompile Include="CMouseCursorUIScript.cpp" />
     <ClCompile Include="CMoveCursorUIScript.cpp" />
     <ClCompile Include="CMurkWolfA2NState.cpp" />
