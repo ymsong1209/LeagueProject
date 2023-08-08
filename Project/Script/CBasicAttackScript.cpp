@@ -36,7 +36,7 @@ void CBasicAttackScript::tick()
 }
 
 
-void CBasicAttackScript::OnOverlap(CCollider2D* _Other)
+void CBasicAttackScript::BeginOverlap(CCollider2D* _Other)
 {
 	if (m_TargetObj == nullptr)
 		return;

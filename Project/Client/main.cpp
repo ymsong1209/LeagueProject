@@ -77,9 +77,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // 해상도 수정
     SetProcessDPIAware();
     
-    //AllocConsole();
+    AllocConsole();
     //// 표준 출력을 콘솔 창으로 리디렉션
-    //freopen("CONOUT$", "w", stdout);
+    freopen("CONOUT$", "w", stdout);
     
     
     
@@ -186,7 +186,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     
     //// 콘솔 창 닫기
     ////fclose(stdout);
-    //FreeConsole();
+    FreeConsole();
 
 
     return (int) msg.wParam;
