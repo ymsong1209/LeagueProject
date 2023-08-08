@@ -14,7 +14,7 @@ CMinionChaseState::~CMinionChaseState()
 
 void CMinionChaseState::tick()
 {
-	CMinionScript* minionScript = GetOwner()->GetScript<CMinionScript>();
+	CMinionScript* minionScript = GetOwner()->GetScript<CMinionScript>(); // 오타 수정
 	CGameObject* target = minionScript->GetTarget();
 
 	if (!minionScript->IsTargetValid(target))
@@ -25,7 +25,7 @@ void CMinionChaseState::tick()
 
 	m_fAggroTime += DT;
 
-	if (minionScript->GetAggroTime() > m_fAggroTime)
+	if (m_fAggroTime <= minionScript->GetAggroTime())
 	{
 		m_fTime += DT;
 
