@@ -288,8 +288,13 @@ bool CMinionScript::IsTargetInRange(CGameObject* _Obj)
 	if (it == UnitsInRange.end())
 		return false;
 
-	else
-		return true;
+	else 
+	{
+		if ((*it)->GetScript<CUnitScript>()->IsUnitDead())
+			return false;
+		else
+			return true;
+	}
 }
 
 bool CMinionScript::IsAtWayPoint()
