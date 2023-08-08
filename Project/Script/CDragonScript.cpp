@@ -165,7 +165,7 @@ void CDragonScript::CheckReturnTime()
 	//나중에 DT로 바꿔야함
 	m_fCurReturnTime += DT;
 
-	CChampionScript* ChampScript = m_pTarget->GetScript<CChampionScript>();
+	CUnitScript* ChampScript = m_pTarget->GetScript<CUnitScript>();
 
 	if (m_fMaxReturnTime < m_fCurReturnTime || ChampScript->IsUnitDead()) {
 		GetOwner()->Fsm()->ChangeState(L"Return");
