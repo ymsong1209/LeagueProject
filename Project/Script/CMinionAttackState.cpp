@@ -17,16 +17,6 @@ void CMinionAttackState::tick()
 {
 	if (GetOwner()->Animator3D()->GetCurAnim()->IsFinish())
 	{
-		CGameObject* Target = GetOwner()->GetScript<CMinionScript>()->GetTarget();
-
-		// 공격
-		CSkill* BasicAttack = GetOwner()->GetScript<CMinionScript>()->GetSkill(0);
-		BasicAttack->SetUserObj(GetOwner());
-		BasicAttack->SetTargetObj(Target);
-
-		BasicAttack->Use();
-		GetOwner()->GetScript<CMinionScript>()->ResetAttackCoolTime();
-
 		GetOwnerFSM()->ChangeState(L"Chase");
 	}
 }
@@ -72,7 +62,15 @@ void CMinionAttackState::Enter()
 
 void CMinionAttackState::Exit()
 {
+	CGameObject* Target = GetOwner()->GetScript<CMinionScript>()->GetTarget();
 
+	// 공격
+	CSkill* BasicAttack = GetOwner()->GetScript<CMinionScript>()->GetSkill(0);
+	BasicAttack->SetUserObj(GetOwner());
+	BasicAttack->SetTargetObj(Target);
+
+	BasicAttack->Use();
+	GetOwner()->GetScript<CMinionScript>()->ResetAttackCoolTime();
 }
 
 void CMinionAttackState::HandleEvent(CGameEvent& event)
