@@ -185,24 +185,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 		case UnitType::MELEE_MINION:
 		{
-			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\minion_melee.fbx");
-			pObj = pMeshData->Instantiate();
-
-			
-			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\minion_melee");
-			pObj->Animator3D()->PlayRepeat(L"minion_melee\\Idle1", true, true, 0.1f);
-
-			//pObj->AddComponent(new CCollider3D);
-			//pObj->AddComponent(new CCollider2D);
-
-			//pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-			//pObj->Collider2D()->SetOffsetScale(Vec2(50.f, 50.f));
-			//pObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
-
-			//pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
-			//pObj->Collider3D()->SetAbsolute(true);
-			//pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
-			//pObj->Collider3D()->SetDrawCollision(false);
+			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MeleeMinion.prefab");
+			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
+			pObj = pPrefab->Instantiate();
 
 			if (_objectInfo.faction == Faction::RED)
 			{
@@ -212,37 +197,26 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			else if (_objectInfo.faction == Faction::BLUE)
 			{
 				pObj->SetName(L"blue_minion_melee");
-				
 				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\minion_melee_Blue.mtrl"), 0);
 			}
 
 			// 방장은 진짜 계산 오브젝트 생성,  방장이 아닐 경우 허상을 생성
 			if (MyPlayer.host)
 			{
-				pObj->AddComponent(new CUnitScript);
-
-				if (_objectInfo.lane == Lane::TOP)
-				{
-					// 미니언 라인 Top 설정
-				}
-				else if (_objectInfo.lane == Lane::MID)
-				{
-					// 미니언 라인 Mid 설정
-				}
-				else if (_objectInfo.lane == Lane::BOTTOM)
-				{
-					// 미니언 라인 Bottom 설정
-				}
+				pObj->AddComponent(new CMinionScript);
+				pObj->GetScript<CMinionScript>()->SetLane(_objectInfo.lane);
 			}
 			else
 			{
 				pObj->AddComponent(new CUnitScript);
+				pObj->GetScript<CUnitScript>()->SetLane(_objectInfo.lane);
 			}
 
 			// 공통
 			CUnitScript* Script = pObj->GetScript<CUnitScript>();
 			Script->SetServerID(_objectId);
 			Script->SetFaction(_objectInfo.faction);
+			Script->SetUnitType(UnitType::MELEE_MINION);
 
 			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
@@ -268,15 +242,138 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 		break;
 		case UnitType::RANGED_MINION:
 		{
+			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\RangedMinion.prefab");
+			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
+			pObj = pPrefab->Instantiate();
+
+			if (_objectInfo.faction == Faction::RED)
+			{
+				pObj->SetName(L"red_minion_ranged");
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\minion_caster_Red.mtrl"), 0);
+			}
+			else if (_objectInfo.faction == Faction::BLUE)
+			{
+				pObj->SetName(L"blue_minion_ranged");
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\minion_caster_Blue.mtrl"), 0);
+			}
+
+			// 방장은 진짜 계산 오브젝트 생성,  방장이 아닐 경우 허상을 생성
+			if (MyPlayer.host)
+			{
+				pObj->AddComponent(new CMinionScript);
+				pObj->GetScript<CMinionScript>()->SetLane(_objectInfo.lane);
+			}
+			else
+			{
+				pObj->AddComponent(new CUnitScript);
+				pObj->GetScript<CUnitScript>()->SetLane(_objectInfo.lane);
+			}
+			
+
+			// 공통
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);
+			Script->SetFaction(_objectInfo.faction);
+			Script->SetUnitType(UnitType::RANGED_MINION);
+
+			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
+			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+
+			SpawnGameObject(pObj, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z), L"Mob");
+
+			_objects.insert(std::make_pair(_objectId, pObj));
+
 		}
 		break;
 		case UnitType::SIEGE_MINION:
 		{
+			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\SiegeMinion.prefab");
+			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
+			pObj = pPrefab->Instantiate();
+
+			if (_objectInfo.faction == Faction::RED)
+			{
+				pObj->SetName(L"red_minion_siege");
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Minion_siege_Red.mtrl"), 0);
+			}
+			else if (_objectInfo.faction == Faction::BLUE)
+			{
+				pObj->SetName(L"blue_minion_siege");
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Minion_siege_Blue.mtrl"), 0);
+			}
+
+			// 방장은 진짜 계산 오브젝트 생성,  방장이 아닐 경우 허상을 생성
+			if (MyPlayer.host)
+			{
+				pObj->AddComponent(new CMinionScript);
+				pObj->GetScript<CMinionScript>()->SetLane(_objectInfo.lane);
+			}
+			else
+			{
+				pObj->AddComponent(new CUnitScript);
+				pObj->GetScript<CUnitScript>()->SetLane(_objectInfo.lane);
+			}
+
+			// 공통
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);
+			Script->SetFaction(_objectInfo.faction);
+			Script->SetUnitType(UnitType::SIEGE_MINION);
+
+			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
+			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+
+			SpawnGameObject(pObj, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z), L"Mob");
+
+			_objects.insert(std::make_pair(_objectId, pObj));
 
 		}
 		break;
 		case UnitType::SUPER_MINION:
 		{
+			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\SuperMinion.prefab");
+			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
+			pObj = pPrefab->Instantiate();
+
+			if (_objectInfo.faction == Faction::RED)
+			{
+				pObj->SetName(L"red_minion_super");
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\minion_super_Red.mtrl"), 0);
+			}
+			else if (_objectInfo.faction == Faction::BLUE)
+			{
+				pObj->SetName(L"blue_minion_super");
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\minion_super_Blue.mtrl"), 0);
+			}
+
+			// 방장은 진짜 계산 오브젝트 생성,  방장이 아닐 경우 허상을 생성
+				// 방장은 진짜 계산 오브젝트 생성,  방장이 아닐 경우 허상을 생성
+			if (MyPlayer.host)
+			{
+				pObj->AddComponent(new CMinionScript);
+				pObj->GetScript<CMinionScript>()->SetLane(_objectInfo.lane);
+			}
+			else
+			{
+				pObj->AddComponent(new CUnitScript);
+				pObj->GetScript<CUnitScript>()->SetLane(_objectInfo.lane);
+			}
+
+			// 공통
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);
+			Script->SetFaction(_objectInfo.faction);
+			Script->SetUnitType(UnitType::SUPER_MINION);
+
+			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
+			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+
+			SpawnGameObject(pObj, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z), L"Mob");
+
+			_objects.insert(std::make_pair(_objectId, pObj));
 
 		}
 		break;

@@ -149,7 +149,8 @@ void ServerEventMgr::clienttick()
 				CGameObject* NewObject = (CGameObject*)m_vecEvent[i].wParam;
 				ObjectMove* objectMove = (ObjectMove*)(m_vecEvent[i].lParam);
 
-				if (NewObject == nullptr) continue;
+				if (NewObject == nullptr
+					|| objectMove->LV <= 0) continue;
 
 				if (NewObject->GetScript<CUnitScript>() != nullptr)
 				{

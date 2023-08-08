@@ -42,6 +42,11 @@ void CChampionScript::begin()
 {
 	CUnitScript::begin();
 
+	// FSM
+	if (GetOwner()->Fsm() == nullptr)
+		return;
+	GetOwner()->Fsm()->ChangeState(L"Idle");
+
 	// 스킬 레벨 초기화
 	m_SkillLevel[0] = 1;
 	m_SkillLevel[2] = 1;
