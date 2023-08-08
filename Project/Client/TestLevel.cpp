@@ -45,6 +45,8 @@
 
 void CreateTestLevel()
 {
+	// 귀신 퇴치용 주석
+	// 
 	//return;	
 	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
 	pCurLevel->ChangeState(LEVEL_STATE::PLAY);
