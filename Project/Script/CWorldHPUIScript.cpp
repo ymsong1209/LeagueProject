@@ -11,6 +11,14 @@ void CWorldHPUIScript::tick()
 {
 	if (m_OwnerObj)
 	{
+		bool IsCull = m_OwnerObj->GetRenderComponent()->IsCulled();
+		bool UseRaySight = m_OwnerObj->GetRenderComponent()->IsUsingRaySightCulling();
+		if (IsCull && UseRaySight)
+		{
+			GetOwner()->GetRenderComponent()->SetSortExcept(true );
+			return;
+		}
+
 		CurrentHP = (int)m_OwnerObj->GetScript<CUnitScript>()->GetCurHP();
 		TotalHP = (int)m_OwnerObj->GetScript<CUnitScript>()->GetMaxHP();
 		CurrentMP = (int)m_OwnerObj->GetScript<CUnitScript>()->GetCurMP();

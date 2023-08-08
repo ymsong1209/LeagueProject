@@ -29,6 +29,14 @@ void CJungleMINIHPScript::tick()
 	if (GetOwner()->GetParent() && !GetOwner()->GetParent()->IsDead())
 	{
 		CGameObject* ParentObj = GetOwner()->GetParent();
+		bool IsCull = ParentObj->GetRenderComponent()->IsCulled();
+		bool UseRaySight = ParentObj->GetRenderComponent()->IsUsingRaySightCulling();
+		if (IsCull && UseRaySight)
+		{
+			GetOwner()->GetRenderComponent()->SetSortExcept(true);
+			return;
+		}
+
 		CUnitScript* UnitScript = ParentObj->GetScript<CUnitScript>();
 		UnitType UnitType = UnitScript->GetUnitType();
 

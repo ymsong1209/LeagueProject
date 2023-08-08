@@ -158,7 +158,6 @@ void CTransform::SaveToLevelFile(FILE* _File)
 
 	fwrite(&m_bUseMouseOutLine, sizeof(bool), 1, _File);
 	fwrite(&m_fOutlinethickness, sizeof(float), 1, _File);
-	fwrite(&m_bNoParentaffected, sizeof(bool), 1, _File);
 
 }
 
@@ -178,7 +177,6 @@ void CTransform::LoadFromLevelFile(FILE* _FILE)
 
 	fread(&m_bUseMouseOutLine, sizeof(bool), 1, _FILE);
 	fread(&m_fOutlinethickness, sizeof(float), 1, _FILE);
-	fread(&m_bNoParentaffected, sizeof(bool), 1, _FILE);
 }
 
 void CTransform::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)

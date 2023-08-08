@@ -548,7 +548,6 @@
     <ClCompile Include="CDragonAggro2AlertState.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
     </ClCompile>
-    <ClCompile Include="CMonsterHPBarUIScript.cpp" />
     <ClCompile Include="CMinionChaseState.cpp">
       <Filter>State\Unit\Minion</Filter>
     </ClCompile>
@@ -557,6 +556,14 @@
     </ClCompile>
     <ClCompile Include="CScriptMgr.cpp">
       <Filter>Manager\1. ScriptMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CChampionScript.cpp" />
+    <ClCompile Include="CJungleMINIHPScript.cpp" />
+    <ClCompile Include="CJungleMobHPScript.cpp" />
+    <ClCompile Include="CMinionHPBarPosScript.cpp" />
+    <ClCompile Include="CMinionHPRatioScript.cpp" />
+    <ClCompile Include="CDragonHPUIScript.cpp">
+      <Filter>UIScript</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -654,9 +661,15 @@
     <ClInclude Include="CDragonAggro2AlertState.h">
       <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
     </ClInclude>
-    <ClInclude Include="CMonsterHPBarUIScript.h" />
     <ClInclude Include="CMinionChaseState.h">
       <Filter>State\Unit\Minion</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleMINIHPScript.h" />
+    <ClInclude Include="CJungleMobHPScript.h" />
+    <ClInclude Include="CMinionHPBarPosScript.h" />
+    <ClInclude Include="CMinionHPRatioScript.h" />
+    <ClInclude Include="CDragonHPUIScript.h">
+      <Filter>UIScript</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

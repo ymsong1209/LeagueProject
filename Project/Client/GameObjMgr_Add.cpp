@@ -223,6 +223,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+
+			CGameObject* MinionHP = new CGameObject;
+			MinionHP->SetName(L"South_BlueHP");
+			MinionHP->AddComponent(new CTransform);
+			MinionHP->AddComponent(new CMeshRender);
+			MinionHP->AddComponent(new CMinionHPRatioScript);
+			pObj->AddChild(MinionHP);
 
 			SpawnGameObject(pObj,Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z), L"Mob");
 

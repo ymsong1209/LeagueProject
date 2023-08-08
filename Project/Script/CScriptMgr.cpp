@@ -390,7 +390,7 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 	case SCRIPT_TYPE::DRAGONHPUISCRIPT:
 		return L"CDragonHPUIScript";
 		break;
-		
+
 	case SCRIPT_TYPE::DRAGONSCRIPT:
 		return L"CDragonScript";
 		break;

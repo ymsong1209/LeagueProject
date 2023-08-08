@@ -9,6 +9,7 @@ private:
     float m_fCurHP;
     float m_fTotalHP;
     int MyNum;
+    Vec2 OffsetBarPos;
 
 public:
     virtual void begin() override;
