@@ -146,8 +146,7 @@ bool CChampionScript::CheckDeath()
 
 void CChampionScript::CheckStatus()
 {
-	//m_fHP += 0.5f * DT;
-	m_fHP += 0.1f * DT;
+	m_fHP += 0.5f * DT;
 	m_fMP += 5.0f * DT;
 
 	if (m_fHP > m_fMaxHP)

@@ -1769,7 +1769,7 @@
                     "children": []
                 },
                 {
-                    "ObjName": "MeleeMinion",
+                    "ObjName": "MeleeMinion_NoRange",
                     "components": [
                         {
                             "TRANSFORM": 0,
@@ -1795,6 +1795,27 @@
                             "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.07199999690055847
+                        },
+                        {
+                            "COLLIDER2D": 1,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 70.0,
+                                "y": 70.0,
+                                "z": 1.0
+                            },
+                            "vOffsetRot": {
+                                "x": 1.5707963705062866,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "Shape": 1,
+                            "DrawCollision": true
                         },
                         {
                             "ANIMATOR3D": 4,
@@ -1918,69 +1939,10 @@
                             "MoveSpeedFactor": 1.0
                         }
                     ],
-                    "children": [
-                        {
-                            "ObjName": "AttackRange",
-                            "components": [
-                                {
-                                    "TRANSFORM": 0,
-                                    "vRelativePos": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0
-                                    },
-                                    "vRelativeScale": {
-                                        "x": 1.0,
-                                        "y": 1.0,
-                                        "z": 1.0
-                                    },
-                                    "vRelativeRot": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0
-                                    },
-                                    "bAbsolute": false,
-                                    "IsNoGizmoObj": false,
-                                    "GizmoBounding_Radius": 50.0,
-                                    "IsShootingRay": false,
-                                    "RayRange": 20.0,
-                                    "UseMouseOutLine": false,
-                                    "Outlinethickness": 0.07199999690055847
-                                },
-                                {
-                                    "COLLIDER2D": 1,
-                                    "vOffsetPos": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0
-                                    },
-                                    "vOffsetScale": {
-                                        "x": 50.0,
-                                        "y": 0.0,
-                                        "z": 1.0
-                                    },
-                                    "vOffsetRot": {
-                                        "x": 1.5707963705062866,
-                                        "y": 0.0,
-                                        "z": 0.0
-                                    },
-                                    "bAbsolute": true,
-                                    "Shape": 1,
-                                    "DrawCollision": true
-                                },
-                                16
-                            ],
-                            "scripts": [
-                                {
-                                    "scriptName": "CAttackRangeScript"
-                                }
-                            ],
-                            "children": []
-                        }
-                    ]
+                    "children": []
                 },
                 {
-                    "ObjName": "RangedMinion",
+                    "ObjName": "RangedMinion_NoRane",
                     "components": [
                         {
                             "TRANSFORM": 0,
@@ -2006,6 +1968,27 @@
                             "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.0
+                        },
+                        {
+                            "COLLIDER2D": 1,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 70.0,
+                                "y": 70.0,
+                                "z": 1.0
+                            },
+                            "vOffsetRot": {
+                                "x": 1.5707963705062866,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "Shape": 1,
+                            "DrawCollision": true
                         },
                         {
                             "ANIMATOR3D": 4,
@@ -2129,69 +2112,10 @@
                             "MoveSpeedFactor": 1.0
                         }
                     ],
-                    "children": [
-                        {
-                            "ObjName": "AttackRange",
-                            "components": [
-                                {
-                                    "TRANSFORM": 0,
-                                    "vRelativePos": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0
-                                    },
-                                    "vRelativeScale": {
-                                        "x": 1.0,
-                                        "y": 1.0,
-                                        "z": 1.0
-                                    },
-                                    "vRelativeRot": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0
-                                    },
-                                    "bAbsolute": false,
-                                    "IsNoGizmoObj": false,
-                                    "GizmoBounding_Radius": 50.0,
-                                    "IsShootingRay": false,
-                                    "RayRange": 20.0,
-                                    "UseMouseOutLine": false,
-                                    "Outlinethickness": 0.0
-                                },
-                                {
-                                    "COLLIDER2D": 1,
-                                    "vOffsetPos": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0
-                                    },
-                                    "vOffsetScale": {
-                                        "x": 50.0,
-                                        "y": 0.0,
-                                        "z": 1.0
-                                    },
-                                    "vOffsetRot": {
-                                        "x": 1.5707963705062866,
-                                        "y": 0.0,
-                                        "z": 0.0
-                                    },
-                                    "bAbsolute": true,
-                                    "Shape": 1,
-                                    "DrawCollision": true
-                                },
-                                16
-                            ],
-                            "scripts": [
-                                {
-                                    "scriptName": "CAttackRangeScript"
-                                }
-                            ],
-                            "children": []
-                        }
-                    ]
+                    "children": []
                 },
                 {
-                    "ObjName": "SeigeMinion",
+                    "ObjName": "SeigeMinion_NoRange",
                     "components": [
                         {
                             "TRANSFORM": 0,
@@ -2217,6 +2141,27 @@
                             "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.0
+                        },
+                        {
+                            "COLLIDER2D": 1,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 130.0,
+                                "y": 130.0,
+                                "z": 1.0
+                            },
+                            "vOffsetRot": {
+                                "x": 1.5707963705062866,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "Shape": 1,
+                            "DrawCollision": true
                         },
                         {
                             "ANIMATOR3D": 4,
@@ -2340,69 +2285,10 @@
                             "MoveSpeedFactor": 1.0
                         }
                     ],
-                    "children": [
-                        {
-                            "ObjName": "AttackRange",
-                            "components": [
-                                {
-                                    "TRANSFORM": 0,
-                                    "vRelativePos": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0
-                                    },
-                                    "vRelativeScale": {
-                                        "x": 1.0,
-                                        "y": 1.0,
-                                        "z": 1.0
-                                    },
-                                    "vRelativeRot": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0
-                                    },
-                                    "bAbsolute": false,
-                                    "IsNoGizmoObj": false,
-                                    "GizmoBounding_Radius": 50.0,
-                                    "IsShootingRay": false,
-                                    "RayRange": 20.0,
-                                    "UseMouseOutLine": false,
-                                    "Outlinethickness": 0.0
-                                },
-                                {
-                                    "COLLIDER2D": 1,
-                                    "vOffsetPos": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0
-                                    },
-                                    "vOffsetScale": {
-                                        "x": 50.0,
-                                        "y": 0.0,
-                                        "z": 1.0
-                                    },
-                                    "vOffsetRot": {
-                                        "x": 1.5707963705062866,
-                                        "y": 0.0,
-                                        "z": 0.0
-                                    },
-                                    "bAbsolute": true,
-                                    "Shape": 1,
-                                    "DrawCollision": true
-                                },
-                                16
-                            ],
-                            "scripts": [
-                                {
-                                    "scriptName": "CAttackRangeScript"
-                                }
-                            ],
-                            "children": []
-                        }
-                    ]
+                    "children": []
                 },
                 {
-                    "ObjName": "SuperMinion",
+                    "ObjName": "SuperMinion_NoRange",
                     "components": [
                         {
                             "TRANSFORM": 0,
@@ -2428,6 +2314,27 @@
                             "RayRange": 20.0,
                             "UseMouseOutLine": false,
                             "Outlinethickness": 0.0
+                        },
+                        {
+                            "COLLIDER2D": 1,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 130.0,
+                                "y": 130.0,
+                                "z": 1.0
+                            },
+                            "vOffsetRot": {
+                                "x": 1.5707963705062866,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "Shape": 1,
+                            "DrawCollision": true
                         },
                         {
                             "ANIMATOR3D": 4,
@@ -2551,66 +2458,239 @@
                             "MoveSpeedFactor": 1.0
                         }
                     ],
-                    "children": [
+                    "children": []
+                },
+                {
+                    "ObjName": "AttackRange",
+                    "components": [
                         {
-                            "ObjName": "AttackRange",
-                            "components": [
-                                {
-                                    "TRANSFORM": 0,
-                                    "vRelativePos": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0
-                                    },
-                                    "vRelativeScale": {
-                                        "x": 1.0,
-                                        "y": 1.0,
-                                        "z": 1.0
-                                    },
-                                    "vRelativeRot": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0
-                                    },
-                                    "bAbsolute": false,
-                                    "IsNoGizmoObj": false,
-                                    "GizmoBounding_Radius": 50.0,
-                                    "IsShootingRay": false,
-                                    "RayRange": 20.0,
-                                    "UseMouseOutLine": false,
-                                    "Outlinethickness": 0.0
-                                },
-                                {
-                                    "COLLIDER2D": 1,
-                                    "vOffsetPos": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0
-                                    },
-                                    "vOffsetScale": {
-                                        "x": 50.0,
-                                        "y": 0.0,
-                                        "z": 1.0
-                                    },
-                                    "vOffsetRot": {
-                                        "x": 1.5707963705062866,
-                                        "y": 0.0,
-                                        "z": 0.0
-                                    },
-                                    "bAbsolute": true,
-                                    "Shape": 1,
-                                    "DrawCollision": true
-                                },
-                                16
-                            ],
-                            "scripts": [
-                                {
-                                    "scriptName": "CAttackRangeScript"
-                                }
-                            ],
-                            "children": []
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vRelativeScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
+                        },
+                        {
+                            "COLLIDER2D": 1,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 35.0,
+                                "y": 35.0,
+                                "z": 1.0
+                            },
+                            "vOffsetRot": {
+                                "x": 1.5707963705062866,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": true,
+                            "Shape": 1,
+                            "DrawCollision": true
+                        },
+                        16
+                    ],
+                    "scripts": [
+                        {
+                            "scriptName": "CAttackRangeScript"
                         }
-                    ]
+                    ],
+                    "children": []
+                },
+                {
+                    "ObjName": "AttackRange",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vRelativeScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.0
+                        },
+                        {
+                            "COLLIDER2D": 1,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 80.0,
+                                "y": 80.0,
+                                "z": 1.0
+                            },
+                            "vOffsetRot": {
+                                "x": 1.5707963705062866,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": true,
+                            "Shape": 1,
+                            "DrawCollision": true
+                        },
+                        16
+                    ],
+                    "scripts": [
+                        {
+                            "scriptName": "CAttackRangeScript"
+                        }
+                    ],
+                    "children": []
+                },
+                {
+                    "ObjName": "AttackRange",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vRelativeScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": -0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.0
+                        },
+                        {
+                            "COLLIDER2D": 1,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 45.0,
+                                "y": 45.0,
+                                "z": 1.0
+                            },
+                            "vOffsetRot": {
+                                "x": 1.5707963705062866,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": true,
+                            "Shape": 1,
+                            "DrawCollision": true
+                        },
+                        16
+                    ],
+                    "scripts": [
+                        {
+                            "scriptName": "CAttackRangeScript"
+                        }
+                    ],
+                    "children": []
+                },
+                {
+                    "ObjName": "AttackRange",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 447.3919372558594,
+                                "y": 15.0,
+                                "z": 100.0
+                            },
+                            "vRelativeScale": {
+                                "x": 0.20000000298023224,
+                                "y": 0.20000000298023224,
+                                "z": 0.20000000298023224
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": -0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.0
+                        },
+                        {
+                            "COLLIDER2D": 1,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 50.0,
+                                "y": 50.0,
+                                "z": 1.0
+                            },
+                            "vOffsetRot": {
+                                "x": 1.5707963705062866,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": true,
+                            "Shape": 1,
+                            "DrawCollision": true
+                        },
+                        16
+                    ],
+                    "scripts": [
+                        {
+                            "scriptName": "CAttackRangeScript"
+                        }
+                    ],
+                    "children": []
                 }
             ]
         },
@@ -7344,7 +7424,7 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": 0.03490658476948738,
+                                "y": 0.03490463271737099,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
