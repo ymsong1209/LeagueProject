@@ -52,7 +52,6 @@ protected:
     float                   m_fFaceRot;
 
     ChampionType            m_ChampType; 
-    MinionType              m_eMinionType;
     Lane                    m_eLane;
     bool                    m_bUnitDead;        // 유닛이 죽었는지(HP 0 이하)
     vector<CTimedEffect*>   m_TimedEffectList;  // 지속딜 / CC기 관련 리스트

@@ -11,7 +11,6 @@ CMinionScript::CMinionScript()
 	:CMobScript((UINT)SCRIPT_TYPE::MINIONSCRIPT)
 	, m_vecWayPoint{}
 {
-	AddScriptParam(SCRIPT_PARAM::INT, &m_eMinionType, "Type");
 }
 
 CMinionScript::~CMinionScript()
@@ -44,7 +43,7 @@ void CMinionScript::begin()
 	case UnitType::RANGED_MINION:
 	{
 		m_fAttackPower = 2.f;
-		m_fAttackRange = 200.f;
+		m_fAttackRange = 100.f;
 		m_fAttackSpeed = 2.5f;
 		m_fMoveSpeed = 50.f;
 		m_fMaxHP = 50.f;
@@ -53,7 +52,7 @@ void CMinionScript::begin()
 	case UnitType::SIEGE_MINION:
 	{
 		m_fAttackPower = 3.f;
-		m_fAttackRange = 100.f;
+		m_fAttackRange = 80.f;
 		m_fAttackSpeed = 2.5f;
 		m_fMoveSpeed = 50.f;
 		m_fMaxHP = 50.f;
