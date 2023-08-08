@@ -572,7 +572,21 @@ void CCamera::SortObject()
 
 				if (vecObject[j]->GetRenderComponent() != nullptr && vecObject[j]->GetRenderComponent()->IsUsingRaySightCulling() && vecObject[j]->Transform()->GetIsShootingRay() != true)
 				{
+					CGameObject* GrandParent = vecObject[j]; //최상위 부모
+					bool escape = false;
+					while (escape == false) {
+						GrandParent = vecObject[j]->GetParent();
+						if (GrandParent == nullptr) {
+							GrandParent = vecObject[j];
+							escape = true;
+						}
+					}
+					/*
 					if (false == CheckRayCollideBox(vecObject[j])) {
+						continue;
+					}*/
+
+					if (false == CheckRayCollideBox(GrandParent)) {
 						continue;
 					}
 				}
