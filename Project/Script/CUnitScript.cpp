@@ -61,35 +61,83 @@ void CUnitScript::begin()
 
 void CUnitScript::tick()
 {
-	// 허상 움직임 보간 
-	Vec3 vCurPos = Transform()->GetRelativePos();
-	float duration = 0.1f; // 1/10초
-	if (m_bRcvMove && vCurPos != m_vMovePos)
-	{
-		if (m_fT == 0) // 이동이 처음 시작되면 t를 초기화
-		{
-			m_fT = DT / duration;
-		}
-		else // 그렇지 않으면 t를 업데이트
-		{
-			m_fT += DT / duration;
-		}
-
-		if (m_fT > 1) m_fT = 1;
-
-		Vec3 NewPos = vCurPos + (m_vMovePos - vCurPos) * m_fT;
-		Transform()->SetRelativePos(NewPos);
-
-		if (m_fT >= 1)
-		{
-			m_bRcvMove = false;
-			m_fT = 0; // 다음 이동을 위해 t를 0으로 초기화
-		}
-	}
-
 	CheckTimedEffect();
 	CheckCC();
+
+	// 가짜는 방장이 아닌 컴에서 플레이어를 제외한 모든 오브젝트
+	// 방장 컴에서는 방장과 오브젝트를 제외한 모든 플레이어
+	// 이 Unit이 본인 플레이어면 안함. -> 즉 본인플레이어 아니면 다 해야함.
+	// 이 프로그램이 방장 클라인데, 이 Unit은 방장이 아니면 안함. -> 즉 방장컴 objects들은 안함.(진짜니까)
+
+	if (CSendServerEventMgr::GetInst()->GetMyPlayer() == nullptr) return;
+
+	if (CSendServerEventMgr::GetInst()->GetMyPlayer()->GetScript<CUnitScript>()->IsHost()) // 방장일 경우 // 방장 외 챔피언은 보간 (그외X)
+	{
+		if ((m_eUnitType == UnitType::CHAMPION) && !m_bHost)
+		{
+			// 허상 움직임 보간 
+			Vec3 vCurPos = Transform()->GetRelativePos();
+			float duration = 0.1f; // 1/10초
+			if (m_bRcvMove && vCurPos != m_vMovePos)
+			{
+				if (m_fT == 0) // 이동이 처음 시작되면 t를 초기화
+				{
+					m_fT = DT / duration;
+				}
+				else // 그렇지 않으면 t를 업데이트
+				{
+					m_fT += DT / duration;
+				}
+
+				if (m_fT > 1) m_fT = 1;
+
+				Vec3 NewPos = vCurPos + (m_vMovePos - vCurPos) * m_fT;
+				Transform()->SetRelativePos(NewPos);
+
+				if (m_fT >= 1)
+				{
+					m_bRcvMove = false;
+					m_fT = 0; // 다음 이동을 위해 t를 0으로 초기화
+				}
+			}
+		}
+	}
+	else // 방장이 아닐경우
+	{
+		if (CSendServerEventMgr::GetInst()->GetMyPlayer() != GetOwner())
+		{
+			// 허상 움직임 보간 
+			Vec3 vCurPos = Transform()->GetRelativePos();
+			float duration = 0.1f; // 1/10초
+			if (m_bRcvMove && vCurPos != m_vMovePos)
+			{
+				if (m_fT == 0) // 이동이 처음 시작되면 t를 초기화
+				{
+					m_fT = DT / duration;
+				}
+				else // 그렇지 않으면 t를 업데이트
+				{
+					m_fT += DT / duration;
+				}
+
+				if (m_fT > 1) m_fT = 1;
+
+				Vec3 NewPos = vCurPos + (m_vMovePos - vCurPos) * m_fT;
+				Transform()->SetRelativePos(NewPos);
+
+				if (m_fT >= 1)
+				{
+					m_bRcvMove = false;
+					m_fT = 0; // 다음 이동을 위해 t를 0으로 초기화
+				}
+			}
+		}
+
+	}
+	
+
 }
+
 
 void CUnitScript::CheckTimedEffect()
 {

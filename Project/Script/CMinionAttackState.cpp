@@ -23,6 +23,8 @@ void CMinionAttackState::tick()
 
 void CMinionAttackState::Enter()
 {
+	CUnitState::Enter();
+
 	CMinionScript* MinionScript = GetOwnerFSM()->GetOwner()->GetScript<CMinionScript>();
 	UnitType Type = MinionScript->GetUnitType();
 
@@ -56,21 +58,23 @@ void CMinionAttackState::Enter()
 	break;
 	}
 
-	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+	UINT64 targetId = MinionScript->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, true, false, 0.0f);
-}
 
-void CMinionAttackState::Exit()
-{
-	CGameObject* Target = GetOwner()->GetScript<CMinionScript>()->GetTarget();
+	CGameObject* Target = MinionScript->GetTarget();
 
 	// АјАн
-	CSkill* BasicAttack = GetOwner()->GetScript<CMinionScript>()->GetSkill(0);
+	CSkill* BasicAttack = MinionScript->GetSkill(0);
 	BasicAttack->SetUserObj(GetOwner());
 	BasicAttack->SetTargetObj(Target);
 
 	BasicAttack->Use();
-	GetOwner()->GetScript<CMinionScript>()->ResetAttackCoolTime();
+	MinionScript->ResetAttackCoolTime();
+}
+
+void CMinionAttackState::Exit()
+{
+	CUnitState::Exit();
 }
 
 void CMinionAttackState::HandleEvent(CGameEvent& event)

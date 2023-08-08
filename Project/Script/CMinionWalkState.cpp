@@ -24,6 +24,8 @@ void CMinionWalkState::tick()
 
 void CMinionWalkState::Enter()
 {
+	CUnitState::Enter();
+
 	CMinionScript* MinionScript = GetOwnerFSM()->GetOwner()->GetScript<CMinionScript>();
 	UnitType Type = MinionScript->GetUnitType();
 
@@ -67,6 +69,8 @@ void CMinionWalkState::Enter()
 
 void CMinionWalkState::Exit()
 {
+	CUnitState::Exit();
+
 	// 길찾기 컴포넌트에 남은 경로값이 있다면 Clear
 	GetOwner()->PathFinder()->ClearPath();
 }

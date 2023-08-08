@@ -66,6 +66,7 @@ public:
    
     virtual void begin() override;
     virtual void tick() override;
+    virtual void BeginOverlap(CCollider2D* _collider) override {};
 
     virtual UnitType GetType() { return m_eUnitType; }
     virtual Faction GetFaction() { return m_eFaction; }

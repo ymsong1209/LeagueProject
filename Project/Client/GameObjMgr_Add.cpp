@@ -220,6 +220,8 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetOutlineThickness(0.072f);
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
 
 			SpawnGameObject(pObj,Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z), L"Mob");
@@ -237,12 +239,12 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			if (_objectInfo.faction == Faction::RED)
 			{
 				pObj->SetName(L"red_minion_ranged");
-				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\minion_caster_Red.mtrl"), 0);
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\minion_caster_red.mtrl"), 0);
 			}
 			else if (_objectInfo.faction == Faction::BLUE)
 			{
 				pObj->SetName(L"blue_minion_ranged");
-				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\minion_caster_Blue.mtrl"), 0);
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\minion_caster_blue.mtrl"), 0);
 			}
 
 			// 방장은 진짜 계산 오브젝트 생성,  방장이 아닐 경우 허상을 생성
@@ -266,6 +268,8 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetOutlineThickness(0.072f);
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
 
 			SpawnGameObject(pObj, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z), L"Mob");
@@ -311,6 +315,8 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetOutlineThickness(0.072f);
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
 
 			SpawnGameObject(pObj, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z), L"Mob");
@@ -357,6 +363,8 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetOutlineThickness(0.072f);
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
 
 			SpawnGameObject(pObj, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z), L"Mob");
@@ -1744,54 +1752,54 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
-		case UnitType::DRAGON://레드팀 레드
+		case UnitType::DRAGON:// 드래곤
 		{
-			pMeshData = nullptr;
-			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Elder_Dragon.fbx");
-			pObj = nullptr;
-			pObj = pMeshData->Instantiate();
-			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Elder_Dragon");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
-			pObj->SetName(L"Elder_Dragon");
-			pObj->Transform()->SetUseMouseOutline(true);
-			pObj->Transform()->SetRelativeScale(0.33f, 0.33f, 0.33f);
-			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(-44.f), XMConvertToRadians(-180.f)));
-			pObj->AddComponent(new CCollider3D);
-			pObj->Collider3D()->SetAbsolute(true);
-			pObj->Collider3D()->SetDrawCollision(false);
-			pObj->Collider3D()->SetOffsetScale(Vec3(125.f, 125.f, 125.f));
-
-			pObj->AddComponent(new CCollider2D);
-			pObj->Collider2D()->SetAbsolute(true);
-			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-			pObj->Collider2D()->SetOffsetScale(Vec2(200.f, 200.f));
-			if (MyPlayer.host) // 방장인 경우에 진짜
-			{
-				pObj->AddComponent(new CDragonScript);
-
-				CDragonScript* Script = pObj->GetScript<CDragonScript>();
-
-				Script->SetAggroPos(Vec3(1451, 15.f, 649.f));
-				Script->SetAlertPos(Vec3(1483, 15.f, 689.f));
-				SpawnGameObject(pObj, Vec3(1451, 0.f, 656.f), L"Mob");
-			}
-			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
-			{
-				pObj->AddComponent(new CUnitScript);
-				CUnitScript* Script = pObj->GetScript<CUnitScript>();
-				SpawnGameObject(pObj, Vec3(1451, 0.f, 656.f), L"Mob");
-			}
-
-			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
-			CUnitScript* Script = pObj->GetScript<CUnitScript>();
-			Script->SetServerID(_objectId);  // 서버 id
-			Script->SetUnitType(UnitType::DRAGON);  // UnitType
-			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
-			pObj->GetRenderComponent()->SetFrustumCheck(true);
-			pObj->GetRenderComponent()->SetRaySightCulling(true);
-			pObj->Transform()->SetIsShootingRay(false);
-			pObj->Transform()->SetRayRange(0.f);
-			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			//pMeshData = nullptr;
+			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Elder_Dragon.fbx");
+			//pObj = nullptr;
+			//pObj = pMeshData->Instantiate();
+			//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Elder_Dragon");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			//pObj->SetName(L"Elder_Dragon");
+			//pObj->Transform()->SetUseMouseOutline(true);
+			//pObj->Transform()->SetRelativeScale(0.33f, 0.33f, 0.33f);
+			//pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(-44.f), XMConvertToRadians(-180.f)));
+			//pObj->AddComponent(new CCollider3D);
+			//pObj->Collider3D()->SetAbsolute(true);
+			//pObj->Collider3D()->SetDrawCollision(false);
+			//pObj->Collider3D()->SetOffsetScale(Vec3(125.f, 125.f, 125.f));
+			//
+			//pObj->AddComponent(new CCollider2D);
+			//pObj->Collider2D()->SetAbsolute(true);
+			//pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			//pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			//pObj->Collider2D()->SetOffsetScale(Vec2(200.f, 200.f));
+			//if (MyPlayer.host) // 방장인 경우에 진짜
+			//{
+			//	pObj->AddComponent(new CDragonScript);
+			//
+			//	CDragonScript* Script = pObj->GetScript<CDragonScript>();
+			//
+			//	Script->SetAggroPos(Vec3(1451, 15.f, 649.f));
+			//	Script->SetAlertPos(Vec3(1483, 15.f, 689.f));
+			//	SpawnGameObject(pObj, Vec3(1451, 0.f, 656.f), L"Mob");
+			//}
+			//else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			//{
+			//	pObj->AddComponent(new CUnitScript);
+			//	CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			//	SpawnGameObject(pObj, Vec3(1451, 0.f, 656.f), L"Mob");
+			//}
+			//
+			//// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			//CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			//Script->SetServerID(_objectId);  // 서버 id
+			//Script->SetUnitType(UnitType::DRAGON);  // UnitType
+			//Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			//pObj->GetRenderComponent()->SetFrustumCheck(true);
+			//pObj->GetRenderComponent()->SetRaySightCulling(true);
+			//pObj->Transform()->SetIsShootingRay(false);
+			//pObj->Transform()->SetRayRange(0.f);
+			//_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
 		// =======================================================================================================================
