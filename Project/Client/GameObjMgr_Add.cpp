@@ -135,6 +135,19 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 		CUnitScript* pUnit = pObj->GetScript<CUnitScript>();
 		pUnit->SetChampType(_info.champion);
 
+		pObj->GetRenderComponent()->SetRaySightCulling(true);
+
+		if (_info.faction == MyPlayer.faction)
+		{
+			pObj->Transform()->SetIsShootingRay(true);
+			pObj->Transform()->SetRayRange(200.f);
+		}
+		else
+		{
+			pObj->Transform()->SetIsShootingRay(false);
+		}
+
+
 		pObj->AddComponent(new CCollider3D);
 		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
 		pObj->Collider3D()->SetAbsolute(true);
@@ -302,6 +315,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetServerID(_objectId);  // 서버 id
 			Script->SetUnitType(UnitType::SOUTH_GROMP);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
@@ -350,6 +366,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::SOUTH_MURKWOLF);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -396,6 +415,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::SOUTH_MURKWOLF_MINI_L);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -442,6 +464,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::SOUTH_MURKWOLF_MINI_R);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -488,6 +513,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::SOUTH_KRUG);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -534,6 +562,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::SOUTH_KRUG_MINI);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -580,6 +611,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::SOUTH_RAZORBEAK);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -626,6 +660,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::SOUTH_RAZORBEAK_MINI_1);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -672,6 +709,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::SOUTH_RAZORBEAK_MINI_2);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -718,6 +758,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::SOUTH_RAZORBEAK_MINI_3);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -764,6 +807,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::SOUTH_RAZORBEAK_MINI_4);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -810,6 +856,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::SOUTH_RAZORBEAK_MINI_5);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -856,6 +905,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::SOUTH_BLUE);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -902,6 +954,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::SOUTH_RED);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -948,6 +1003,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::NORTH_GROMP);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -995,6 +1053,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::NORTH_MURKWOLF);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1041,6 +1102,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::NORTH_MURKWOLF_MINI_L);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1087,6 +1151,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::NORTH_MURKWOLF_MINI_R);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1133,6 +1200,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::NORTH_KRUG);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1179,6 +1249,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::NORTH_KRUG_MINI);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1225,6 +1298,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::NORTH_RAZORBEAK);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1271,6 +1347,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::NORTH_RAZORBEAK_MINI_1);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1317,6 +1396,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::NORTH_RAZORBEAK_MINI_2);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1363,6 +1445,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::NORTH_RAZORBEAK_MINI_3);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1409,6 +1494,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::NORTH_RAZORBEAK_MINI_4);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1455,6 +1543,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::NORTH_RAZORBEAK_MINI_5);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1501,6 +1592,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::NORTH_BLUE);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1547,6 +1641,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::NORTH_RED);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1594,6 +1691,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::DRAGON);  // UnitType
 			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;

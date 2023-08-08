@@ -141,6 +141,11 @@ void CMinionScript::begin()
 
 
 	// FSM에 State 추가
+	if (GetOwner()->GetComponent(COMPONENT_TYPE::FSM) == nullptr) GetOwner()->AddComponent(new CFsm);
+	if (GetOwner()->GetComponent(COMPONENT_TYPE::PATHFINDER) == nullptr) GetOwner()->AddComponent(new CPathFinder);
+	if (GetOwner()->GetComponent(COMPONENT_TYPE::COLLIDER2D) == nullptr)	GetOwner()->AddComponent(new CCollider2D);
+	if (GetOwner()->GetComponent(COMPONENT_TYPE::COLLIDER3D) == nullptr) GetOwner()->AddComponent(new CCollider3D);
+
 	GetOwner()->Fsm()->AddState(L"Walk", new CMinionWalkState);
 	GetOwner()->Fsm()->AddState(L"Death", new CMinionDeathState);
 	GetOwner()->Fsm()->AddState(L"Attack", new CMinionAttackState);
@@ -154,6 +159,21 @@ void CMinionScript::begin()
 
 	// 사거리 적용
 	CGameObject* AttackRange = GetOwner()->FindChildObjByName(L"AttackRange");
+	if (AttackRange == nullptr) {
+		AttackRange = new CGameObject;
+		AttackRange->AddComponent(new CTransform);
+		AttackRange->AddComponent(new CCollider2D);
+		AttackRange->AddComponent(new CAttackRangeScript);
+
+		AttackRange->SetName(L"AttackRange");
+		AttackRange->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+		AttackRange->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+		AttackRange->Collider2D()->SetAbsolute(true);
+		AttackRange->Collider2D()->SetOffsetScale(Vec2(100.f, 100.f));
+		GetOwner()->AddChild(AttackRange);
+		AttackRange->ChangeLayer(L"AttackRange");
+
+	}
 	AttackRange->Collider2D()->SetOffsetScale(Vec2(m_fAttackRange, m_fAttackRange));
 
 	m_fHP = m_fMaxHP;
