@@ -45,4 +45,5 @@ void CJinxWState::Exit()
 
 void CJinxWState::HandleEvent(CGameEvent& event)
 {
+	CChampionSkillState::HandleEvent(event);
 }
