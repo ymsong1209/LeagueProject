@@ -87,6 +87,9 @@ void CGameObject::RegisterObject()
 {
 	// 레이어 등록
 	CLayer* pCurLayer = CLevelMgr::GetInst()->GetCurLevel()->GetLayer(m_iLayerIdx);
+	if (GetRenderComponent() != nullptr) {
+		GetRenderComponent()->SetSortExcept(false);
+	}
 	pCurLayer->RegisterObject(this);
 	for (size_t i = 0; i < m_vecChild.size(); ++i)
 	{

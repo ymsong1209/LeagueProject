@@ -19,11 +19,12 @@ void CJungleSpawnState::tick()
 
 void CJungleSpawnState::Enter()
 {
-	
+	CUnitState::Enter();
 }
 
 void CJungleSpawnState::Exit()
 {
+	CUnitState::Exit();
 	CJungleMonsterScript* script = GetOwner()->GetScript<CJungleMonsterScript>();
 	Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
 	script->SetSpawnPos(CurPos);

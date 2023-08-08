@@ -14,6 +14,8 @@ CRenderComponent::CRenderComponent(COMPONENT_TYPE _type)
 	, m_bRaySightCulling(false)
 	, m_bUseBoundingOffset(false)
 	, m_vBoundingBoxOffset(Vec3(0.f, 0.f, 0.f))
+	, m_bCulled(false)
+	, m_bSortExcept(false)
 {
 }
 
@@ -28,6 +30,8 @@ CRenderComponent::CRenderComponent(const CRenderComponent& _other)
 	, m_bRaySightCulling(_other.m_bRaySightCulling)
 	, m_bUseBoundingOffset(_other.m_bUseBoundingOffset)
 	, m_vBoundingBoxOffset(_other.m_vBoundingBoxOffset)
+	, m_bCulled(_other.m_bCulled)
+	, m_bSortExcept(_other.m_bSortExcept)
 {
 
 }

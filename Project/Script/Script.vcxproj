@@ -202,6 +202,21 @@
     <ClInclude Include="CCharacterUIScript.h" />
     <ClInclude Include="CCoolDownUIScript.h" />
     <ClInclude Include="CDragonHPUIScript.h" />
+    <ClInclude Include="CDragonAggro2AlertState.h" />
+    <ClInclude Include="CDragonAggroState.h" />
+    <ClInclude Include="CDragonAlert2AggroState.h" />
+    <ClInclude Include="CDragonAlert2NormalState.h" />
+    <ClInclude Include="CDragonAlertState.h" />
+    <ClInclude Include="CDragonAttackState.h" />
+    <ClInclude Include="CDragonChaseState.h" />
+    <ClInclude Include="CDragonDeathState.h" />
+    <ClInclude Include="CDragonFlyStartState.h" />
+    <ClInclude Include="CDragonIdleState.h" />
+    <ClInclude Include="CDragonLandState.h" />
+    <ClInclude Include="CDragonNormal2AlertState.h" />
+    <ClInclude Include="CDragonReturnState.h" />
+    <ClInclude Include="CDragonScript.h" />
+    <ClInclude Include="CDragonSpawnState.h" />
     <ClInclude Include="CExpRatioUIScript.h" />
     <ClInclude Include="CFlash.h" />
     <ClInclude Include="CFontUIScript.h" />
@@ -269,6 +284,7 @@
     <ClInclude Include="CKrugSpawnState.h" />
     <ClInclude Include="CMinimapUIScript.h" />
     <ClInclude Include="CMinionAttackState.h" />
+    <ClInclude Include="CMinionChaseState.h" />
     <ClInclude Include="CMinionDeathState.h" />
     <ClInclude Include="CMinionHPBarPosScript.h" />
     <ClInclude Include="CMinionHPRatioScript.h" />
@@ -381,6 +397,7 @@
     <ClInclude Include="CInGameCameraScript.h" />
     <ClInclude Include="IGameEventListener.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CAttackRangeScript.cpp" />
@@ -408,6 +425,21 @@
     <ClCompile Include="CCharacterUIScript.cpp" />
     <ClCompile Include="CCoolDownUIScript.cpp" />
     <ClCompile Include="CDragonHPUIScript.cpp" />
+    <ClCompile Include="CDragonAggro2AlertState.cpp" />
+    <ClCompile Include="CDragonAggroState.cpp" />
+    <ClCompile Include="CDragonAlert2AggroState.cpp" />
+    <ClCompile Include="CDragonAlert2NormalState.cpp" />
+    <ClCompile Include="CDragonAlertState.cpp" />
+    <ClCompile Include="CDragonAttackState.cpp" />
+    <ClCompile Include="CDragonChaseState.cpp" />
+    <ClCompile Include="CDragonDeathState.cpp" />
+    <ClCompile Include="CDragonFlyStartState.cpp" />
+    <ClCompile Include="CDragonIdleState.cpp" />
+    <ClCompile Include="CDragonLandState.cpp" />
+    <ClCompile Include="CDragonNormal2AlertState.cpp" />
+    <ClCompile Include="CDragonReturnState.cpp" />
+    <ClCompile Include="CDragonScript.cpp" />
+    <ClCompile Include="CDragonSpawnState.cpp" />
     <ClCompile Include="CExpRatioUIScript.cpp" />
     <ClCompile Include="CFlash.cpp" />
     <ClCompile Include="CFontUIScript.cpp" />
@@ -474,6 +506,7 @@
     <ClCompile Include="CKrugSpawnState.cpp" />
     <ClCompile Include="CMinimapUIScript.cpp" />
     <ClCompile Include="CMinionAttackState.cpp" />
+    <ClCompile Include="CMinionChaseState.cpp" />
     <ClCompile Include="CMinionDeathState.cpp" />
     <ClCompile Include="CMinionHPBarPosScript.cpp" />
     <ClCompile Include="CMinionHPRatioScript.cpp" />
@@ -590,6 +623,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Script.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Script.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -12,6 +12,7 @@ CJungleReturnState::~CJungleReturnState()
 
 void CJungleReturnState::Enter()
 {
+	CUnitState::Enter();
 	CJungleMonsterScript* script = GetOwner()->GetScript<CJungleMonsterScript>();
 	Vec3 SpawnPos = script->GetSpawnPos();
 	GetOwner()->PathFinder()->FindPath(SpawnPos);
@@ -43,6 +44,7 @@ void CJungleReturnState::tick()
 
 void CJungleReturnState::Exit()
 {
+	CUnitState::Exit();
 	CJungleMonsterScript* script = GetOwner()->GetScript<CJungleMonsterScript>();
 	GetOwner()->Transform()->SetRelativePos(script->GetSpawnPos());
 	GetOwner()->Transform()->SetRelativeRot(script->GetSpawnRot());
@@ -51,6 +53,9 @@ void CJungleReturnState::Exit()
 
 void CJungleReturnState::HandleEvent(CGameEvent& event)
 {
+	if (!IsActive())
+		return;
+
 	if (event.GetType() == GAME_EVENT_TYPE::GET_HIT) {
 		GetHitEvent* HitEvent = dynamic_cast<GetHitEvent*>(&event);
 

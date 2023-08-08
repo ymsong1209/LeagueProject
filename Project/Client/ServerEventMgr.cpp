@@ -153,14 +153,21 @@ void ServerEventMgr::clienttick()
 
 				if (NewObject->GetScript<CUnitScript>() != nullptr)
 				{
-					// NewObject->GetScript<CUnitScript>()->SetLV(objectMove->LV);
+					NewObject->GetScript<CUnitScript>()->SetLevel(objectMove->LV);
 					NewObject->GetScript<CUnitScript>()->SetCurHP(objectMove->HP);
 					NewObject->GetScript<CUnitScript>()->SetCurMP(objectMove->MP);
+					NewObject->GetScript<CUnitScript>()->SetMaxHP(objectMove->MaxHP);
+					NewObject->GetScript<CUnitScript>()->SetMaxMP(objectMove->MaxMP);
+
 					NewObject->GetScript<CUnitScript>()->SetAttackPower(objectMove->AttackPower);
 					NewObject->GetScript<CUnitScript>()->SetDefencePower(objectMove->DefencePower);
 					NewObject->GetScript<CUnitScript>()->SetCC(objectMove->CC);
+
+					NewObject->GetScript<CUnitScript>()->SetUnitDead(objectMove->bUnitDead);
 				}
-				NewObject->Transform()->SetRelativePos(Vec3(objectMove->pos.x, objectMove->pos.y, objectMove->pos.z));
+				NewObject->GetScript<CUnitScript>()->SetRcvMove(true);
+				NewObject->GetScript<CUnitScript>()->SetMovePos(Vec3(objectMove->pos.x, objectMove->pos.y, objectMove->pos.z));
+				//NewObject->Transform()->SetRelativePos(Vec3(objectMove->pos.x, objectMove->pos.y, objectMove->pos.z));
 				NewObject->Transform()->SetRelativeRot(Vec3(objectMove->moveDir.x, objectMove->moveDir.y, objectMove->moveDir.z));
 
 				// 사용이 끝난 후에는 메모리를 해제
@@ -172,6 +179,8 @@ void ServerEventMgr::clienttick()
 			case SERVER_EVENT_TYPE::ANIM_PACKET:
 			{
 				CGameObject* NewObject = (CGameObject*)m_vecEvent[i].wParam;
+
+				if (NewObject == nullptr) break;
 				AnimInfo* animInfo = (AnimInfo*)(m_vecEvent[i].lParam);
 
 				if (animInfo->bRepeat)

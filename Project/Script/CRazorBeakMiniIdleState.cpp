@@ -14,6 +14,7 @@ CRazorBeakMiniIdleState::~CRazorBeakMiniIdleState()
 
 void CRazorBeakMiniIdleState::Enter()
 {
+	CJungleIdleState::Enter();
 	m_iIdleAnimNum = 1;
 	GetOwner()->Animator3D()->PlayOnce(L"RazorBeak_Mini\\Idle_Normal1");
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();

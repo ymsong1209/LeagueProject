@@ -13,6 +13,7 @@ CJungleA2NState::~CJungleA2NState()
 
 void CJungleA2NState::Enter()
 {
+	CUnitState::Enter();
 }
 
 void CJungleA2NState::tick()
@@ -24,11 +25,15 @@ void CJungleA2NState::tick()
 
 void CJungleA2NState::Exit()
 {
+	CUnitState::Exit();
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
 }
 
 void CJungleA2NState::HandleEvent(CGameEvent& event)
 {
+	if (!IsActive())
+		return;
+
 	if (event.GetType() == GAME_EVENT_TYPE::GET_HIT) {
 		GetHitEvent* HitEvent = dynamic_cast<GetHitEvent*>(&event);
 
@@ -41,10 +46,10 @@ void CJungleA2NState::HandleEvent(CGameEvent& event)
 			int	skillLevel = HitEvent->GetSkillLevel();
 
 			GetOwnerFSM()->GetOwner()->GetScript<CUnitScript>()->GetHit(skilltype, SkillTarget, SkillUser, skillLevel);
-		}
 
-		CJungleMonsterScript* script = GetOwner()->GetScript<CJungleMonsterScript>();
-		script->GetHit(HitEvent->GetUserObj());
+			CJungleMonsterScript* script = GetOwner()->GetScript<CJungleMonsterScript>();
+			script->GetHit(HitEvent->GetUserObj());
+		}
 	}
 
 }

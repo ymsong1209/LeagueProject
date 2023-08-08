@@ -32,6 +32,8 @@ protected:
     CSkill*                 m_Skill[5];         // 타워/몹은 오직 0번 스킬(평타)만 있음!
     int                     m_SkillLevel[5];    // 타워/몹은 오직 0번 스킬 1렙 고정
 
+    int                     m_iLevel;           // 레벨
+
     float                   m_fHP;              // 체력
     float                   m_fMaxHP;           // 전체 체력
     float                   m_fMP;
@@ -53,7 +55,14 @@ protected:
     bool                    m_bUnitDead;        // 유닛이 죽었는지(HP 0 이하)
     vector<CTimedEffect*>   m_TimedEffectList;  // 지속딜 / CC기 관련 리스트
 
+    bool                    m_bRcvMove;
+    Vec3                    m_vMovePos;
+    float                   m_fT;                // 보간 파라미터
+
 public:
+    void    SetRcvMove(bool _bool) { m_bRcvMove = _bool; }
+    void    SetMovePos(Vec3 _vec3) { m_vMovePos = _vec3; }
+   
     virtual void begin() override;
     virtual void tick() override;
 
@@ -76,16 +85,24 @@ public:
 
     void  SetCurHP(float _f) { m_fHP = _f; }         // 현재 체력 = 인자값
     void  SetCurHPVar(float _f) { m_fHP += _f; }     // 현재 체력 += 인자값
+    void  SetMaxHP(float _f) { m_fMaxHP = _f; }
+
     void  SetCurMP(float _f) { m_fMP = _f; }
     void  SetCurMPVar(float _f) { m_fMP += _f; }
+    void  SetMaxMP(float _f) { m_fMaxMP = _f; }
+
     void  SetCC(CC _cc) { m_eCurCC = _cc; }
+    void  SetLevel(int _level) { m_iLevel = _level; }
 
     float GetCurHP() { return m_fHP; }
     float GetMaxHP() { return m_fMaxHP; }
     //float GetMaxHP() const { return m_fMaxHP; }
+
     float GetCurMP() { return m_fMP; }
     float GetMaxMP() const { return m_fMaxMP; }
+
     CC    GetCC() { return m_eCurCC; }
+    int   GetLevel() { return m_iLevel; }
 
     UINT64           GetServerID() { return m_iServerID; }
     wstring          GetNickname() const { return m_strNickname; }
@@ -109,6 +126,7 @@ public:
     void    SetAttackRange(float _range) { m_fAttackRange = _range; }
 
     float   GetFaceRot() { return m_fFaceRot; }
+    float   GetMoveSpeed() { return m_fMoveSpeed; }
 
     // 비동기
     void GetHit(SkillType _type, CGameObject* _SkillTarget, CGameObject* _SkillUser, int _SkillLevel);

@@ -3,6 +3,7 @@
 #include <Engine/CAnim3D.h>
 #include "CJungleMonsterScript.h"
 CJungleDeathState::CJungleDeathState()
+	:m_bPacketSend(false)
 {
 }
 
@@ -12,26 +13,23 @@ CJungleDeathState::~CJungleDeathState()
 
 void CJungleDeathState::Enter()
 {
+	CUnitState::Enter();
 	CJungleMonsterScript* script = GetOwner()->GetScript<CJungleMonsterScript>();
 	script->SetUnitDead(true);
 }
 
 void CJungleDeathState::tick()
 {
-	if (GetOwner()->Animator3D()->GetCurAnim()->IsFinish()) {
-		// 죽음 이벤트 서버에 쏴야함?
-		//DestroyObject(GetOwner())
-		// 
-		//DeathEvent* evn = dynamic_cast<DeathEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_KILL_MOB));
-		//if (evn != nullptr)
-		//{
-		//	CGameEventMgr::GetInst()->NotifyEvent(*evn);
-		//}
+	if (GetOwner()->Animator3D()->GetCurAnim()->IsFinish() && m_bPacketSend == false) {
+		CJungleMonsterScript* script = GetOwner()->GetScript<CJungleMonsterScript>();
+		CSendServerEventMgr::GetInst()->SendDespawnPacket(script->GetServerID(), 0.f);
+		m_bPacketSend = true;
 	}
 }
 
 void CJungleDeathState::Exit()
 {
+	CUnitState::Exit();
 }
 
 

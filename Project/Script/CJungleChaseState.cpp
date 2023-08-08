@@ -14,7 +14,7 @@ CJungleChaseState::~CJungleChaseState()
 
 void CJungleChaseState::Enter()
 {
-
+	CUnitState::Enter();
 }
 
 void CJungleChaseState::tick()
@@ -46,11 +46,15 @@ void CJungleChaseState::tick()
 
 void CJungleChaseState::Exit()
 {
+	CUnitState::Exit();
 	GetOwner()->Animator3D()->Reset();
 }
 
 void CJungleChaseState::HandleEvent(CGameEvent& event)
 {
+	if (!IsActive())
+		return;
+
 	if (event.GetType() == GAME_EVENT_TYPE::GET_HIT) {
 		GetHitEvent* HitEvent = dynamic_cast<GetHitEvent*>(&event);
 

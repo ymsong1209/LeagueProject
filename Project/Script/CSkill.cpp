@@ -20,6 +20,12 @@ CSkill::~CSkill()
 {
 	if (m_ProjectileScript)
 		delete m_ProjectileScript;
+
+	for (int i = 0; i < m_vecSkillObj.size(); i++)
+	{
+		if (m_vecSkillObj[i] != nullptr)
+			delete m_vecSkillObj[i].Get();
+	}
 }
 
 void CSkill::tick()
@@ -66,6 +72,20 @@ vector<CGameObject*> CSkill::GetProjectile()
 	}
 
 	return vecProj;
+}
+
+void CSkill::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _skillLevel)
+{
+	// 스킬을 쏜 사람도 챔피언, 맞는 사람도 챔피언일 경우
+	if (_UserScript->GetUnitType() == UnitType::CHAMPION && _TargetScript->GetUnitType() == UnitType::CHAMPION())
+	{
+		// 스킬 쏜 사람이 현재 상대 포탑 내부에 있다면
+		if (static_cast<CChampionScript*>(_UserScript)->IsInsideEnemyTurretRange())
+		{
+			// 챔피언 공격중 옵션 true
+			static_cast<CChampionScript*>(_UserScript)->SetAttackingChampion(true);
+		}
+	}
 }
 
 Vec3 CSkill::GetMousePos()
