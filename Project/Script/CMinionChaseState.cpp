@@ -29,7 +29,8 @@ void CMinionChaseState::tick()
 	{
 		m_fTime += DT;
 
-		if (m_fTime >= 0.1f)
+		// 첫 번째 tick에서 또는 매 0.1초마다 PathFinder를 호출
+		if (m_fTime >= 0.1f || m_fTime < 0.0f)
 		{
 			GetOwner()->PathFinder()->FindPath(target->Transform()->GetRelativePos());
 			m_fTime = 0;
@@ -86,8 +87,8 @@ void CMinionChaseState::Enter()
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, true, true, true, 0.1f);
 
-	m_fAggroTime = 0;
-	m_fTime = 0;
+	m_fAggroTime = 0.f;
+	m_fTime = -1.f;
 }
 
 void CMinionChaseState::Exit()
