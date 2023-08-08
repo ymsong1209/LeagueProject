@@ -10,6 +10,7 @@
 CMinionScript::CMinionScript()
 	:CMobScript((UINT)SCRIPT_TYPE::MINIONSCRIPT)
 	, m_vecWayPoint{}
+	, m_fAggroTime(2.f)
 {
 }
 
@@ -69,6 +70,8 @@ void CMinionScript::begin()
 	break;
 	}
 
+	//test
+	//m_fMoveSpeed = 200.f;
 	// 본인의 Lane, MinionType에 따라 정보 변경
 	switch (m_eLane)
 	{
@@ -147,7 +150,7 @@ void CMinionScript::begin()
 	GetOwner()->Fsm()->AddState(L"Walk", new CMinionWalkState);
 	GetOwner()->Fsm()->AddState(L"Death", new CMinionDeathState);
 	GetOwner()->Fsm()->AddState(L"Attack", new CMinionAttackState);
-	GetOwner()->Fsm()->AddState(L"Chase", new CMinionAttackState);
+	GetOwner()->Fsm()->AddState(L"Chase", new CMinionChaseState);
 
 	GetOwner()->Fsm()->ChangeState(L"Walk");
 
@@ -259,7 +262,7 @@ bool CMinionScript::IsTargetValid(CGameObject* _Obj)
 		m_pTarget = nullptr;
 		return false;
 	}
-	if (!(_Obj->GetScript<CUnitScript>()->IsUnitDead()))
+	if (_Obj->GetScript<CUnitScript>()->IsUnitDead())
 	{
 		m_pTarget = nullptr;
 		return false;
