@@ -87,6 +87,7 @@ enum RESTRAINT
 
 enum class MinionType
 {
+	NONE,
 	MELEE,      // 근거리
 	RANGED,     // 원거리
 	SEIGE,      // 대포

@@ -20,6 +20,7 @@ CUnitScript::CUnitScript(UINT ScriptType)
 	, m_fMoveSpeedFactor(1)
 	, m_bUnitDead(false)
 	, m_ChampType(ChampionType::NONE)
+	, m_iLevel(1)
 {
 }
 
@@ -37,6 +38,7 @@ CUnitScript::CUnitScript()
 	, m_fMoveSpeedFactor(1)
 	, m_bUnitDead(false)
 	, m_ChampType(ChampionType::NONE)
+	, m_iLevel(1)
 {
 }
 
@@ -48,9 +50,9 @@ CUnitScript::~CUnitScript()
 void CUnitScript::begin()
 {
 	// FSM
-	if (GetOwner()->Fsm() == nullptr)
-		return;
-	GetOwner()->Fsm()->ChangeState(L"Idle");
+	//if (GetOwner()->Fsm() == nullptr)
+	//	return;
+	//GetOwner()->Fsm()->ChangeState(L"Idle");
 	
 	// 체력
 	m_fHP = m_fMaxHP;
@@ -59,17 +61,18 @@ void CUnitScript::begin()
 
 void CUnitScript::tick()
 {
+	// 허상 움직임 보간 
 	Vec3 vCurPos = Transform()->GetRelativePos();
-	float duration = 0.125f; // 1/8초
+	float duration = 0.1f; // 1/10초
 	if (m_bRcvMove && vCurPos != m_vMovePos)
 	{
 		if (m_fT == 0) // 이동이 처음 시작되면 t를 초기화
 		{
-			m_fT = DT / 0.125f;
+			m_fT = DT / duration;
 		}
 		else // 그렇지 않으면 t를 업데이트
 		{
-			m_fT += DT / 0.125f;
+			m_fT += DT / duration;
 		}
 
 		if (m_fT > 1) m_fT = 1;
@@ -83,6 +86,7 @@ void CUnitScript::tick()
 			m_fT = 0; // 다음 이동을 위해 t를 0으로 초기화
 		}
 	}
+
 	CheckTimedEffect();
 	CheckCC();
 }

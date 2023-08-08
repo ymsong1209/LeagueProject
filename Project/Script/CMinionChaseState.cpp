@@ -56,31 +56,40 @@ void CMinionChaseState::tick()
 void CMinionChaseState::Enter()
 {
 	CMinionScript* MinionScript = GetOwnerFSM()->GetOwner()->GetScript<CMinionScript>();
-	MinionType Type = MinionScript->GetMinionType();
+	UnitType Type = MinionScript->GetUnitType();
+
+	wstring animName;
 
 	switch (Type)
 	{
-	case MinionType::MELEE:
+	case UnitType::MELEE_MINION:
 	{
-		GetOwner()->Animator3D()->PlayRepeat(L"minion_melee\\Run", true, true, 0.1f);
+		animName = L"minion_melee\\Run";
+		GetOwner()->Animator3D()->PlayRepeat(animName, true, true, 0.1f);
 	}
 	break;
-	case MinionType::RANGED:
+	case UnitType::RANGED_MINION:
 	{
-		GetOwner()->Animator3D()->PlayRepeat(L"minion_caster\\_run", true, true, 0.1f);
+		animName = L"minion_caster\\_run";
+		GetOwner()->Animator3D()->PlayRepeat(animName, true, true, 0.1f);
 	}
 	break;
-	case MinionType::SEIGE:
+	case UnitType::SIEGE_MINION:
 	{
-		GetOwner()->Animator3D()->PlayRepeat(L"minion_siege\\cannon_chaos_run1", true, true, 0.1f);
+		animName = L"minion_siege\\cannon_chaos_run1";
+		GetOwner()->Animator3D()->PlayRepeat(animName, true, true, 0.1f);
 	}
 	break;
-	case MinionType::SUPER:
+	case UnitType::SUPER_MINION:
 	{
-		GetOwner()->Animator3D()->PlayRepeat(L"minion_super\\Run", true, true, 0.1f);
+		animName = L"minion_super\\Run";
+		GetOwner()->Animator3D()->PlayRepeat(animName, true, true, 0.1f);
 	}
 	break;
 	}
+
+	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, true, true, true, 0.1f);
 
 	m_fAggroTime = 0;
 	m_fTime = 0;
