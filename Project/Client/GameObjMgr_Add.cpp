@@ -237,12 +237,12 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			if (_objectInfo.faction == Faction::RED)
 			{
 				pObj->SetName(L"red_minion_ranged");
-				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\minion_caster_Red.mtrl"), 0);
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\minion_caster_red.mtrl"), 0);
 			}
 			else if (_objectInfo.faction == Faction::BLUE)
 			{
 				pObj->SetName(L"blue_minion_ranged");
-				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\minion_caster_Blue.mtrl"), 0);
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\minion_caster_blue.mtrl"), 0);
 			}
 
 			// 방장은 진짜 계산 오브젝트 생성,  방장이 아닐 경우 허상을 생성

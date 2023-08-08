@@ -16,7 +16,8 @@ void CMinionDeathState::tick()
 {
 	if (GetOwner()->Animator3D()->GetCurAnim()->IsFinish())
 	{
-		DestroyObject(GetOwner());
+		CSendServerEventMgr::GetInst()->SendDespawnPacket(GetOwner()->GetScript<CUnitScript>()->GetServerID(), 0.f);
+		//DestroyObject(GetOwner());
 	}
 }
 
