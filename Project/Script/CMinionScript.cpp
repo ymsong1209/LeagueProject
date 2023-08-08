@@ -26,8 +26,8 @@ void CMinionScript::begin()
 	m_eRestraint = RESTRAINT::DEFAULT;
 
 	// test
-	SetFaction(Faction::BLUE);
-	SetLane(Lane::TOP);
+	//SetFaction(Faction::BLUE);
+	//SetLane(Lane::TOP);
 	//SetMinionType(MinionType::RANGED);
 
 	// 미니언 타입 별 정보 세팅
