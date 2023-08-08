@@ -472,14 +472,7 @@ void CreateTestLevel()
 	 pCircleFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\turret\\sru_chaos_sparks.dds"));
 	 //pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"FogFilterMap"));
 
-	/* pCircleFast->Collider2D()->SetAbsolute(false);
-	 pCircleFast->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
-	 pCircleFast->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
-	 pCircleFast->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);*/
-
 	 pCircleFast->AddChild(pRectFast);
-
-
 
 	 pRectFast->Transform()->SetRelativeScale(Vec3(311.996f, 119.007f, 0.f));
 	 //pRectFast->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 1.f));
@@ -503,6 +496,23 @@ void CreateTestLevel()
 	 pRectFast->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
 	 pRectFast->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
 	 pRectFast->GetRenderComponent()->SetFrustumCheck(true);
+
+
+	 // TestFastForward
+	CGameObject* DummyObj = new CGameObject;
+	DummyObj->SetName(L"DummyObject");
+	DummyObj->AddComponent(new CMeshRender);
+	DummyObj->AddComponent(new CTransform);
+	DummyObj->Transform()->SetUseMouseOutline(false);
+
+	DummyObj->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 0.f));
+	DummyObj->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	DummyObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
+	DummyObj->MeshRender()->GetDynamicMaterial(0);
+
+	SpawnGameObject(DummyObj, Vec3(0.f, 0.f, 0.f), 0);
+
+
 
 		 
 
