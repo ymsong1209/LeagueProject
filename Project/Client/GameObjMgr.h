@@ -22,6 +22,7 @@ private:
 
 	// Objects, PlacedObjects Prev
 	map<uint64, Vec3> _objectsPrevPos;
+	map<uint64, float> _objectsPrevHP;
 	map<uint64, float> _placedObjectsPrevHP;
 
 public:
