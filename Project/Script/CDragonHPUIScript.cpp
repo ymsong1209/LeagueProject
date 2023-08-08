@@ -18,6 +18,14 @@ void CDragonHPUIScript::tick()
 	if (GetOwner()->GetParent() && !GetOwner()->GetParent()->IsDead())
 	{
 		CGameObject* ParentObj = GetOwner()->GetParent();
+		bool IsCulling = ParentObj->GetRenderComponent()->IsCulled();
+		bool IsRaySightCulling = ParentObj->GetRenderComponent()->IsUsingRaySightCulling();
+		if (IsCulling && IsRaySightCulling)
+		{
+			GetOwner()->GetRenderComponent()->SetSortExcept(true);
+			return;
+		}
+
 		m_fCurHP = ParentObj->GetScript<CUnitScript>()->GetCurHP();
 		m_fTotalHP = ParentObj->GetScript<CUnitScript>()->GetMaxHP();
 
@@ -65,7 +73,7 @@ void CDragonHPUIScript::tick()
 
 		//==========닉네임, 레벨 폰트 출력==============
 		Vec2 FontDefaultPos = Vec2(worldVec.x + (Resolution.x / 2), worldVec.y + (Resolution.y / 2));
-		
+
 		tFont Font2 = {};
 		Font2.wInputText = to_wstring((int)m_fCurHP); // 원래 여기에 닉네임 가져와야함
 		Font2.fontType = FONT_TYPE::RIX_KOR_L;

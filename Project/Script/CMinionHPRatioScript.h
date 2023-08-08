@@ -10,6 +10,7 @@ private:
     float m_fTotalHP;
     int MyNum;
 
+    Vec2 OffsetBarPos;
 public:
     virtual void begin() override;
     virtual void tick() override;

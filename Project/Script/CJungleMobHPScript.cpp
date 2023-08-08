@@ -54,6 +54,14 @@ void CJungleMobHPScript::tick()
 	if (GetOwner()->GetParent() && !GetOwner()->GetParent()->IsDead())
 	{
 		CGameObject* ParentObj = GetOwner()->GetParent();
+		bool IsCulling = ParentObj->GetRenderComponent()->IsCulled();
+		bool IsRaySightCulling = ParentObj->GetRenderComponent()->IsUsingRaySightCulling();
+		if (IsCulling && IsRaySightCulling)
+		{
+			GetOwner()->GetRenderComponent()->SetSortExcept(true);
+			return;
+		}
+
 		CUnitScript* UnitScript = ParentObj->GetScript<CUnitScript>();
 		UnitType UnitType = UnitScript->GetUnitType();
 

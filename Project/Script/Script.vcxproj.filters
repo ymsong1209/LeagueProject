@@ -562,9 +562,6 @@
     <ClCompile Include="CDragonHPUIScript.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
     </ClCompile>
-    <ClCompile Include="CJungleMINIHPScript.cpp">
-      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
-    </ClCompile>
     <ClCompile Include="CJungleMobHPScript.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
     </ClCompile>
@@ -573,6 +570,9 @@
     </ClCompile>
     <ClCompile Include="CMinionHPRatioScript.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClCompile>
+    <ClCompile Include="CJungleMINIHPScript.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -677,9 +677,6 @@
     <ClInclude Include="CDragonHPUIScript.h">
       <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
     </ClInclude>
-    <ClInclude Include="CJungleMINIHPScript.h">
-      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
-    </ClInclude>
     <ClInclude Include="CJungleMobHPScript.h">
       <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
     </ClInclude>
@@ -688,6 +685,9 @@
     </ClInclude>
     <ClInclude Include="CMinionHPRatioScript.h">
       <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClInclude>
+    <ClInclude Include="CJungleMINIHPScript.h">
+      <Filter>Scripts\Unit\Mob\Jungle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
