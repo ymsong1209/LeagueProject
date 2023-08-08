@@ -69,9 +69,11 @@ void CUnitScript::tick()
 	// 이 Unit이 본인 플레이어면 안함. -> 즉 본인플레이어 아니면 다 해야함.
 	// 이 프로그램이 방장 클라인데, 이 Unit은 방장이 아니면 안함. -> 즉 방장컴 objects들은 안함.(진짜니까)
 
+	if (CSendServerEventMgr::GetInst()->GetMyPlayer() == nullptr) return;
+
 	if (CSendServerEventMgr::GetInst()->GetMyPlayer()->GetScript<CUnitScript>()->IsHost()) // 방장일 경우 // 방장 외 챔피언은 보간 (그외X)
 	{
-		if (m_eUnitType == UnitType::CHAMPION && !m_bHost)
+		if ((m_eUnitType == UnitType::CHAMPION) && !m_bHost)
 		{
 			// 허상 움직임 보간 
 			Vec3 vCurPos = Transform()->GetRelativePos();
