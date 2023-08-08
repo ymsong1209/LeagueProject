@@ -34,8 +34,8 @@ void CPathFinder::FindPath(Vec3 endPos)
 	// 새 경로를 찾을 때마다 새로운 경로로 대체함
 	float dist = (endPos - m_vPrevEndPos).Length();
 
-	if (dist > 10.f) //이전에 찍어둔 목적지와 현재 요청한 목적지의 차이가 10픽셀밖에안된다면 길찾기를 진행하지 않음 : 매번 비슷한곳을찍었을때 캐릭터가 덜덜떠는 현상 방지하기 위함!
-	{
+	//if (dist > 10.f) //이전에 찍어둔 목적지와 현재 요청한 목적지의 차이가 10픽셀밖에안된다면 길찾기를 진행하지 않음 : 매번 비슷한곳을찍었을때 캐릭터가 덜덜떠는 현상 방지하기 위함!
+	//{
 		m_vecPath.clear();
 		// 오브젝트의 현재 위치
 		Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
@@ -48,7 +48,7 @@ void CPathFinder::FindPath(Vec3 endPos)
 		m_vNextPos = Vec3(m_vecPath[0].x, m_vecPath[0].y, m_vecPath[0].z);
 
 		m_vPrevEndPos = endPos;
-	}
+	//}
 
 }
 

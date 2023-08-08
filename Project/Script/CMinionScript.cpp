@@ -182,11 +182,15 @@ void CMinionScript::begin()
 
 void CMinionScript::tick()
 {
-	if (m_fHP == 0)
+	if (m_bUnitDead)
+		return;
+
+	if (m_fHP <= 0)
 	{
 		//Á×À½
 		m_bUnitDead = true;
 		GetOwner()->Fsm()->ChangeState(L"Death");
+		return;
 	}
 
 	CUnitScript::tick();
@@ -229,9 +233,8 @@ void CMinionScript::Move()
 		{
 			if (m_iWayPointIdx < m_vecWayPoint.size() - 1)
 				m_iWayPointIdx++;
-
-			GetOwner()->PathFinder()->FindPath(m_vecWayPoint[m_iWayPointIdx]);
 		}
+		GetOwner()->PathFinder()->FindPath(m_vecWayPoint[m_iWayPointIdx]);
 	}
 }
 
@@ -296,7 +299,7 @@ bool CMinionScript::IsAtWayPoint()
 
 	float distance = sqrt(pow(WayPoint.x - MinionPos.x, 2) + pow(WayPoint.z - MinionPos.z, 2));
 
-	if (distance <= 5.f)
+	if (distance <= 10.5f)
 		return true;
 	else
 		return false;

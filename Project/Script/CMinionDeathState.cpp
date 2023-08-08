@@ -16,13 +16,15 @@ void CMinionDeathState::tick()
 {
 	if (GetOwner()->Animator3D()->GetCurAnim()->IsFinish())
 	{
-		CSendServerEventMgr::GetInst()->SendDespawnPacket(GetOwner()->GetScript<CUnitScript>()->GetServerID(), 0.f);
+		CSendServerEventMgr::GetInst()->SendDespawnPacket(GetOwner()->GetScript<CUnitScript>()->GetServerID(), 1.f);
 		//DestroyObject(GetOwner());
 	}
 }
 
 void CMinionDeathState::Enter()
 {
+	CUnitState::Enter();
+
 	CMinionScript* MinionScript = GetOwnerFSM()->GetOwner()->GetScript<CMinionScript>();
 	UnitType Type = MinionScript->GetUnitType();
 
@@ -62,4 +64,5 @@ void CMinionDeathState::Enter()
 
 void CMinionDeathState::Exit()
 {
+	CUnitState::Exit();
 }
