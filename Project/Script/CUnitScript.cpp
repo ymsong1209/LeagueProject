@@ -50,9 +50,9 @@ CUnitScript::~CUnitScript()
 void CUnitScript::begin()
 {
 	// FSM
-	if (GetOwner()->Fsm() == nullptr)
-		return;
-	GetOwner()->Fsm()->ChangeState(L"Idle");
+	//if (GetOwner()->Fsm() == nullptr)
+	//	return;
+	//GetOwner()->Fsm()->ChangeState(L"Idle");
 	
 	// Ã¼·Â
 	m_fHP = m_fMaxHP;
