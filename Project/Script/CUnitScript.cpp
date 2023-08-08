@@ -71,7 +71,7 @@ void CUnitScript::tick()
 
 	if (CSendServerEventMgr::GetInst()->GetMyPlayer()->GetScript<CUnitScript>()->IsHost()) // 방장일 경우 // 방장 외 챔피언은 보간 (그외X)
 	{
-		if (m_eUnitType == UnitType::CHAMPION)
+		if (m_eUnitType == UnitType::CHAMPION && !m_bHost)
 		{
 			// 허상 움직임 보간 
 			Vec3 vCurPos = Transform()->GetRelativePos();

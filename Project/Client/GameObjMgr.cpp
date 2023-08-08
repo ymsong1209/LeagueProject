@@ -230,15 +230,15 @@ void GameObjMgr::SendMyPlayerMove(ClientServiceRef _service)
 void GameObjMgr::SendObjectMove(uint64 _id, CGameObject* _obj, ClientServiceRef _service)
 {
 	// 오브젝트의 움직임을 서버에 보낸다.
-	CGameObject* obj = FindObject(_id);
 
-	if (_obj != obj || obj == nullptr || obj->GetLayerIndex() == -1)
+	if (_obj == nullptr || _obj->GetLayerIndex() == -1)
 		return;
 	
-	Vec3  CurPos = obj->Transform()->GetRelativePos();
-	Vec3  CurRot = obj->Transform()->GetRelativeRot();
-	float CurHP = obj->GetScript<CUnitScript>()->GetCurHP();
-	float CurMP = obj->GetScript<CUnitScript>()->GetCurMP();
+	Vec3  CurPos = _obj->Transform()->GetRelativePos();
+	Vec3  CurRot = _obj->Transform()->GetRelativeRot();
+	float CurHP = _obj->GetScript<CUnitScript>()->GetCurHP();
+	float CurMP = _obj->GetScript<CUnitScript>()->GetCurMP();
+	int   CurLevel = _obj->GetScript<CUnitScript>()->GetLevel();
 
 	auto it = _objectsPrevPos.find(_id);
 	if (it != _objectsPrevPos.end()) // PrevPos가 있다. 	
@@ -259,12 +259,12 @@ void GameObjMgr::SendObjectMove(uint64 _id, CGameObject* _obj, ClientServiceRef 
 			ObjectMove move = {};
 			if (_obj->GetScript<CUnitScript>() != nullptr)
 			{
-				float CurAttackPower = obj->GetScript<CUnitScript>()->GetAttackPower();
-				float CurDefencePower = obj->GetScript<CUnitScript>()->GetDefencePower();
-				float MaxHP = obj->GetScript<CUnitScript>()->GetMaxHP();
-				float MaxMP = obj->GetScript<CUnitScript>()->GetMaxMP();
-				CC CurCC = obj->GetScript<CUnitScript>()->GetCC();
-				bool bUnitDead = obj->GetScript<CUnitScript>()->IsUnitDead();
+				float CurAttackPower = _obj->GetScript<CUnitScript>()->GetAttackPower();
+				float CurDefencePower = _obj->GetScript<CUnitScript>()->GetDefencePower();
+				float MaxHP = _obj->GetScript<CUnitScript>()->GetMaxHP();
+				float MaxMP = _obj->GetScript<CUnitScript>()->GetMaxMP();
+				CC CurCC = _obj->GetScript<CUnitScript>()->GetCC();
+				bool bUnitDead = _obj->GetScript<CUnitScript>()->IsUnitDead();
 
 				move.HP = CurHP;
 				move.MP = CurMP;
@@ -275,6 +275,7 @@ void GameObjMgr::SendObjectMove(uint64 _id, CGameObject* _obj, ClientServiceRef 
 				move.DefencePower = CurDefencePower;
 				move.CC = CurCC;
 				move.bUnitDead = bUnitDead;
+				move.LV = CurLevel;
 			}
 
 			move.pos.x = CurPos.x;
