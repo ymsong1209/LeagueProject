@@ -11,8 +11,6 @@ public:
     CLONE(CMinionScript);
 
 protected:
-    Lane            m_eLane;            // 미니언 라인(탑/미드/봇)
-
     vector<Vec3>    m_vecWayPoint;      // 라인 별 웨이포인트
     int             m_iWayPointIdx;     // 몇 번째 웨이포인트로 향해야하는지
 

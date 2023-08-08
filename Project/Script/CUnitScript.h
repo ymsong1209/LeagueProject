@@ -85,9 +85,6 @@ public:
     void SetChampType(ChampionType _Type) { m_ChampType = _Type; }
     ChampionType GetChampType() { return m_ChampType; }
 
-    void SetMinionType(MinionType _Type) { m_eMinionType = _Type; }
-    MinionType GetMinionType() { return m_eMinionType; }
-
     void SetLane(Lane _lane) { m_eLane = _lane; }
     Lane GetLane() { return m_eLane; }
 

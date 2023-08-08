@@ -11,8 +11,6 @@ public:
     CLONE(CMinionScript);
 
 protected:
-    Lane            m_eLane;            // 미니언 라인(탑/미드/봇)
-
     vector<Vec3>    m_vecWayPoint;      // 라인 별 웨이포인트
     int             m_iWayPointIdx;     // 몇 번째 웨이포인트로 향해야하는지
 
@@ -27,10 +25,6 @@ public:
     virtual void tick() override;
 
 public:
-    Lane        GetLane() { return m_eLane; }
-
-    void        SetLane(Lane _lane) { m_eLane = (Lane)_lane; }
-
     int         GetWayPointIdx() { return m_iWayPointIdx; }
     Vec3        GetWayPoint() { if (m_vecWayPoint.size() == 0) return Vec3(NaN, NaN, NaN);  return m_vecWayPoint[m_iWayPointIdx]; }
 

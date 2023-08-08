@@ -246,7 +246,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			CUnitScript* Script = pObj->GetScript<CUnitScript>();
 			Script->SetServerID(_objectId);
 			Script->SetFaction(_objectInfo.faction);
-			Script->SetMinionType(MinionType::MELEE);
+			Script->SetUnitType(UnitType::MELEE_MINION);
 
 			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
@@ -321,7 +321,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			CUnitScript* Script = pObj->GetScript<CUnitScript>();
 			Script->SetServerID(_objectId);
 			Script->SetFaction(_objectInfo.faction);
-			Script->SetMinionType(MinionType::RANGED);
+			Script->SetUnitType(UnitType::RANGED_MINION);
 
 			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
@@ -396,7 +396,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			CUnitScript* Script = pObj->GetScript<CUnitScript>();
 			Script->SetServerID(_objectId);
 			Script->SetFaction(_objectInfo.faction);
-			Script->SetMinionType(MinionType::SEIGE);
+			Script->SetUnitType(UnitType::SIEGE_MINION);
 
 			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
@@ -471,7 +471,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			CUnitScript* Script = pObj->GetScript<CUnitScript>();
 			Script->SetServerID(_objectId);
 			Script->SetFaction(_objectInfo.faction);
-			Script->SetMinionType(MinionType::SUPER);
+			Script->SetUnitType(UnitType::SUPER_MINION);
 
 			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));

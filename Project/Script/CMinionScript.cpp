@@ -9,7 +9,6 @@
 
 CMinionScript::CMinionScript()
 	:CMobScript((UINT)SCRIPT_TYPE::MINIONSCRIPT)
-	, m_eLane(Lane::NONE)
 	, m_vecWayPoint{}
 {
 	AddScriptParam(SCRIPT_PARAM::INT, &m_eMinionType, "Type");
@@ -31,9 +30,9 @@ void CMinionScript::begin()
 	//SetMinionType(MinionType::RANGED);
 
 	// 미니언 타입 별 정보 세팅
-	switch (m_eMinionType)
+	switch (m_eUnitType)
 	{
-	case MinionType::MELEE:
+	case UnitType::MELEE_MINION:
 	{
 		m_fAttackPower = 1.f;
 		m_fAttackRange = 30.f;
@@ -42,7 +41,7 @@ void CMinionScript::begin()
 		m_fMaxHP = 50.f;
 	}
 	break;
-	case MinionType::RANGED:
+	case UnitType::RANGED_MINION:
 	{
 		m_fAttackPower = 2.f;
 		m_fAttackRange = 200.f;
@@ -51,7 +50,7 @@ void CMinionScript::begin()
 		m_fMaxHP = 50.f;
 	}
 	break;
-	case MinionType::SEIGE:
+	case UnitType::SIEGE_MINION:
 	{
 		m_fAttackPower = 3.f;
 		m_fAttackRange = 100.f;
@@ -60,7 +59,7 @@ void CMinionScript::begin()
 		m_fMaxHP = 50.f;
 	}
 	break;
-	case MinionType::SUPER:
+	case UnitType::SUPER_MINION:
 	{
 		m_fAttackPower = 5.f;
 		m_fAttackRange = 50.f;
