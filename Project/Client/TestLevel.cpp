@@ -80,8 +80,8 @@ void CreateTestLevel()
 	pMainCam->SetName(L"MainCamera");
 	pMainCam->AddComponent(new CTransform);
 	pMainCam->AddComponent(new CCamera);
-	//pMainCam->AddComponent(new CCameraMoveScript);
-	pMainCam->AddComponent(new CInGameCameraScript);
+	pMainCam->AddComponent(new CCameraMoveScript);
+	//pMainCam->AddComponent(new CInGameCameraScript);
 	pMainCam->Camera()->SetProjType(PROJ_TYPE::PERSPECTIVE);
 	pMainCam->Camera()->SetCameraIndex(0);		// MainCamera 로 설정
 	pMainCam->Camera()->SetLayerMaskAll(true);	// 모든 레이어 체크

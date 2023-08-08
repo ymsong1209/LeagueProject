@@ -64,25 +64,25 @@ void CMinionChaseState::Enter()
 	{
 	case UnitType::MELEE_MINION:
 	{
-		wstring animName = L"minion_melee\\Run";
+		animName = L"minion_melee\\Run";
 		GetOwner()->Animator3D()->PlayRepeat(animName, true, true, 0.1f);
 	}
 	break;
 	case UnitType::RANGED_MINION:
 	{
-		wstring animName = L"minion_caster\\_run";
+		animName = L"minion_caster\\_run";
 		GetOwner()->Animator3D()->PlayRepeat(animName, true, true, 0.1f);
 	}
 	break;
 	case UnitType::SIEGE_MINION:
 	{
-		wstring animName = L"minion_siege\\cannon_chaos_run1";
+		animName = L"minion_siege\\cannon_chaos_run1";
 		GetOwner()->Animator3D()->PlayRepeat(animName, true, true, 0.1f);
 	}
 	break;
 	case UnitType::SUPER_MINION:
 	{
-		wstring animName = L"minion_super\\Run";
+		animName = L"minion_super\\Run";
 		GetOwner()->Animator3D()->PlayRepeat(animName, true, true, 0.1f);
 	}
 	break;

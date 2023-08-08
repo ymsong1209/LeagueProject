@@ -31,25 +31,25 @@ void CMinionDeathState::Enter()
 	{
 	case UnitType::MELEE_MINION:
 	{
-		wstring animName = L"minion_melee\\Death";
+		animName = L"minion_melee\\Death";
 		GetOwner()->Animator3D()->PlayOnce(animName, true, 0.1f);
 	}
 	break;
 	case UnitType::RANGED_MINION:
 	{
-		wstring animName = L"minion_caster\\_chaos_death";
+		animName = L"minion_caster\\_chaos_death";
 		GetOwner()->Animator3D()->PlayOnce(animName, true, 0.1f);
 	}
 	break;
 	case UnitType::SIEGE_MINION:
 	{
-		wstring animName = L"minion_siege\\cannon_chaos_attack1";
+		animName = L"minion_siege\\cannon_chaos_attack1";
 		GetOwner()->Animator3D()->PlayOnce(animName, true, 0.1f);
 	}
 	break;
 	case UnitType::SUPER_MINION:
 	{
-		wstring animName = L"minion_super\\Death_Base";
+		animName = L"minion_super\\Death_Base";
 		GetOwner()->Animator3D()->PlayOnce(animName, true, 0.1f);
 	}
 	break;
