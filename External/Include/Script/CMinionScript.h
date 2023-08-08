@@ -24,6 +24,7 @@ public:
     virtual void begin() override;
     virtual void tick() override;
 
+    virtual void OnOverlap(CCollider2D* _collider) override;
 public:
     int         GetWayPointIdx() { return m_iWayPointIdx; }
     Vec3        GetWayPoint() { if (m_vecWayPoint.size() == 0) return Vec3(NaN, NaN, NaN);  return m_vecWayPoint[m_iWayPointIdx]; }

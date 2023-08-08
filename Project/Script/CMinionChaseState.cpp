@@ -22,6 +22,15 @@ void CMinionChaseState::tick()
 		GetOwnerFSM()->ChangeState(L"Walk");
 		return;
 	}
+	if (minionScript->IsTargetInRange(target) && !minionScript->CanAttack())
+	{
+		return;
+	}
+	if (minionScript->IsTargetInRange(target) && minionScript->CanAttack())
+	{
+		GetOwnerFSM()->ChangeState(L"Attack");
+		return;
+	}
 
 	m_fAggroTime += DT;
 
@@ -41,11 +50,13 @@ void CMinionChaseState::tick()
 		if (minionScript->IsTargetInRange(target) && minionScript->CanAttack())
 		{
 			GetOwnerFSM()->ChangeState(L"Attack");
+			return;
 		}
 	}
 	else
 	{
 		GetOwnerFSM()->ChangeState(L"Walk");
+		return;
 	}
 }
 

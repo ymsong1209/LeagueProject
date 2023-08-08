@@ -37,8 +37,8 @@ void CMinionScript::begin()
 		m_fAttackPower = 1.f;
 		m_fAttackRange = 30.f;
 		m_fAttackSpeed = 1.5f;
-		m_fMoveSpeed = 50.f;
-		m_fMaxHP = 50.f;
+		m_fMoveSpeed = 35.f;
+		m_fMaxHP = 150.f;
 	}
 	break;
 	case UnitType::RANGED_MINION:
@@ -46,8 +46,8 @@ void CMinionScript::begin()
 		m_fAttackPower = 2.f;
 		m_fAttackRange = 100.f;
 		m_fAttackSpeed = 2.5f;
-		m_fMoveSpeed = 50.f;
-		m_fMaxHP = 50.f;
+		m_fMoveSpeed = 35.f;
+		m_fMaxHP = 80.f;
 	}
 	break;
 	case UnitType::SIEGE_MINION:
@@ -55,8 +55,8 @@ void CMinionScript::begin()
 		m_fAttackPower = 3.f;
 		m_fAttackRange = 80.f;
 		m_fAttackSpeed = 2.5f;
-		m_fMoveSpeed = 50.f;
-		m_fMaxHP = 50.f;
+		m_fMoveSpeed = 35.f;
+		m_fMaxHP = 150.f;
 	}
 	break;
 	case UnitType::SUPER_MINION:
@@ -64,8 +64,8 @@ void CMinionScript::begin()
 		m_fAttackPower = 5.f;
 		m_fAttackRange = 50.f;
 		m_fAttackSpeed = 2.f;
-		m_fMoveSpeed = 50.f;
-		m_fMaxHP = 50.f;
+		m_fMoveSpeed = 35.f;
+		m_fMaxHP = 150.f;
 	}
 	break;
 	}
@@ -211,6 +211,11 @@ void CMinionScript::tick()
 	5. 타겟 오브젝트가 죽지 않았지만 사거리 내에 없는 경우, 2초간 타겟을 따라간다.
 	6. 다시 사거리 내에 공격할 오브젝트가 없다면, Walk 상태로 전환되어 전진을 계속한다.
 	*/
+}
+
+void CMinionScript::OnOverlap(CCollider2D* _collider)
+{
+	CUnitScript::OnOverlap(_collider);
 }
 
 void CMinionScript::Move()
