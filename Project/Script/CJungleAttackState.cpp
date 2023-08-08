@@ -2,7 +2,7 @@
 #include "CJungleAttackState.h"
 #include <Engine/CAnim3D.h>
 #include "CJungleMonsterScript.h"
-
+#include "CBasicAttack.h"
 CJungleAttackState::CJungleAttackState()
 {
 }
@@ -13,30 +13,37 @@ CJungleAttackState::~CJungleAttackState()
 
 void CJungleAttackState::Enter()
 {
-	//m_ptarget에 공격로직을 줌
+	CUnitState::Enter();
 }
 
 void CJungleAttackState::tick()
 {
 	if (GetOwner()->Animator3D()->GetCurAnim()->IsFinish()) {
-		// 공격 이벤트 발생
-		BasicAttackEvent* evn = dynamic_cast<BasicAttackEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_BASIC_ATTACK));
 		CJungleMonsterScript* script = GetOwner()->GetScript<CJungleMonsterScript>();
-			if (evn != nullptr)
-			{
-				evn->Clear();
-				evn->SetUserObj(GetOwner());
-				evn->SetTargetObj(script->GetTarget());
+		CSkill* skill = script->GetSkill(0);
+		skill->SetUserObj(GetOwner());
+		skill->SetTargetObj(script->GetTarget());
+		skill->Use();
 
-				CGameEventMgr::GetInst()->NotifyEvent(*evn);
-			}
+
+		//// 공격 이벤트 발생
+		//BasicAttackEvent* evn = dynamic_cast<BasicAttackEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_BASIC_ATTACK));
+		//
+		//	if (evn != nullptr)
+		//	{
+		//		evn->Clear();
+		//		evn->SetUserObj(GetOwner());
+		//		evn->SetTargetObj(script->GetTarget());
+
+		//		CGameEventMgr::GetInst()->NotifyEvent(*evn);
+		//	}
 		GetOwner()->Fsm()->ChangeState(L"Chase");
 	}
 }
 
 void CJungleAttackState::Exit()
 {
-	
+	CUnitState::Exit();
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
 }
 
@@ -44,6 +51,9 @@ void CJungleAttackState::Exit()
 
 void CJungleAttackState::HandleEvent(CGameEvent& event)
 {
+	if (!IsActive())
+		return;
+
 	if (event.GetType() == GAME_EVENT_TYPE::GET_HIT) {
 		GetHitEvent* HitEvent = dynamic_cast<GetHitEvent*>(&event);
 

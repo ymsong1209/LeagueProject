@@ -16,9 +16,13 @@ private:
 	// My Player Prev
 	CUnitScript* MyPlayerScript;
 	Vec3 PrevPos = Vec3(0, 0, 0);  // playerScript의 prevPos는 매 틱마다 이전좌표고, 이건 1/10초전 좌표.
+	float PrevHP = 55;
+	float PrevMP = 55;
+	CC    PrevCC = CC::CLEAR;
 
 	// Objects, PlacedObjects Prev
 	map<uint64, Vec3> _objectsPrevPos;
+	map<uint64, float> _objectsPrevHP;
 	map<uint64, float> _placedObjectsPrevHP;
 
 public:

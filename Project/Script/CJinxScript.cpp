@@ -18,7 +18,8 @@ CJinxScript::CJinxScript()
 	:CChampionScript((UINT)JINXSCRIPT)
 {
 	m_fMaxHP = 50;
-	m_fAttackPower = 5.f;
+	//m_fAttackPower = 5.f;
+	m_fAttackPower = 10.f;
 	m_fMoveSpeed = 100.f;
 }
 

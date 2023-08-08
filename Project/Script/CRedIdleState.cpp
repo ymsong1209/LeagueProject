@@ -14,6 +14,7 @@ CRedIdleState::~CRedIdleState()
 
 void CRedIdleState::Enter()
 {
+	CJungleIdleState::Enter();
 	m_iIdleAnimNum = 1;
 	GetOwner()->Animator3D()->PlayOnce(L"jungle_red\\sru_red_idle1");
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();

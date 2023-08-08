@@ -6,6 +6,7 @@ CChampionScript
 CCharacterUIScript
 CCoolDownUIScript
 CDragonHPUIScript
+CDragonScript
 CExpRatioUIScript
 CFontUIScript
 CGrompScript

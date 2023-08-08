@@ -29,17 +29,21 @@ void CBlueSpawnState::Exit()
 {
 	CBlueScript* script = GetOwner()->GetScript<CBlueScript>();
 	script->SetAggroRange(85.f);
-
-	GetOwner()->AddComponent(new CCollider3D);
-	GetOwner()->Collider3D()->SetAbsolute(true);
-	GetOwner()->Collider3D()->SetDrawCollision(false);
-	GetOwner()->Collider3D()->SetOffsetScale(Vec3(55.f, 55.f, 55.f));
-
-	GetOwner()->AddComponent(new CCollider2D);
-	GetOwner()->Collider2D()->SetAbsolute(true);
-	GetOwner()->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-	GetOwner()->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-	GetOwner()->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
+	script->SetAttackRange(35.f);
+	if (GetOwner()->GetComponent(COMPONENT_TYPE::COLLIDER3D) == nullptr) {
+		GetOwner()->AddComponent(new CCollider3D);
+		GetOwner()->Collider3D()->SetAbsolute(true);
+		GetOwner()->Collider3D()->SetDrawCollision(false);
+		GetOwner()->Collider3D()->SetOffsetScale(Vec3(55.f, 55.f, 55.f));
+	}
+	
+	if (GetOwner()->GetComponent(COMPONENT_TYPE::COLLIDER2D) == nullptr) {
+		GetOwner()->AddComponent(new CCollider2D);
+		GetOwner()->Collider2D()->SetAbsolute(true);
+		GetOwner()->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+		GetOwner()->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+		GetOwner()->Collider2D()->SetOffsetScale(Vec2(60.f, 60.f));
+	}
 
 	CJungleSpawnState::Exit();
 }

@@ -22,8 +22,8 @@ CRazorBeakScript::~CRazorBeakScript()
 }
 void CRazorBeakScript::begin()
 {
-	m_fHP = 100;
-	m_fMaxHP = 100;
+	m_fHP = 20;
+	m_fMaxHP = 20;
 	m_fAttackRange = 30.f;
 	GetOwner()->Animator3D()->LoadEveryAnimFromFolder(L"animation\\RazorBeak");
 	if (GetOwner()->GetComponent(COMPONENT_TYPE::FSM) == nullptr) GetOwner()->AddComponent(new CFsm);

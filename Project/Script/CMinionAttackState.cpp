@@ -3,6 +3,7 @@
 #include <Engine\CAnimator3D.h>
 #include <Engine\CAnim3D.h>
 #include "CMinionScript.h"
+#include "CSkill.h"
 
 CMinionAttackState::CMinionAttackState()
 {
@@ -14,40 +15,88 @@ CMinionAttackState::~CMinionAttackState()
 
 void CMinionAttackState::tick()
 {
+	if (GetOwner()->Animator3D()->GetCurAnim()->IsFinish())
+	{
+		GetOwnerFSM()->ChangeState(L"Chase");
+	}
 }
 
 void CMinionAttackState::Enter()
 {
-	// 애니메이션
 	CMinionScript* MinionScript = GetOwnerFSM()->GetOwner()->GetScript<CMinionScript>();
-	MinionType Type = MinionScript->GetMinionType();
+	UnitType Type = MinionScript->GetUnitType();
+
+	wstring animName;
+
 	switch (Type)
 	{
-	case MinionType::MELEE:
+	case UnitType::MELEE_MINION:
 	{
-		//GetOwner()->Animator3D()->PlayLoop(L"minionmelee\\Walk");
+		animName = L"minion_melee\\Attack1";
+		GetOwner()->Animator3D()->PlayOnce(animName, true, 0.1f);
 	}
 	break;
-	case MinionType::RANGED:
+	case UnitType::RANGED_MINION:
 	{
-		//GetOwner()->Animator3D()->PlayLoop(L"minionranged\\Walk");
+		animName = L"minion_caster\\_attack";
+		GetOwner()->Animator3D()->PlayOnce(animName, true, 0.1f);
 	}
 	break;
-	case MinionType::SEIGE:
+	case UnitType::SIEGE_MINION:
 	{
-		//GetOwner()->Animator3D()->PlayLoop(L"minionsiege\\Walk");
+		animName = L"minion_siege\\cannon_chaos_attack1";
+		GetOwner()->Animator3D()->PlayOnce(animName, true, 0.1f);
 	}
 	break;
-	case MinionType::SUPER:
+	case UnitType::SUPER_MINION:
 	{
-		//GetOwner()->Animator3D()->PlayLoop(L"minionsuper\\Walk");
+		animName = L"minion_super\\Attack1";
+		GetOwner()->Animator3D()->PlayOnce(animName, true, 0.1f);
 	}
 	break;
 	}
 
-	// 공격 투사체
+	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, true, false, 0.0f);
 }
 
 void CMinionAttackState::Exit()
 {
+	CGameObject* Target = GetOwner()->GetScript<CMinionScript>()->GetTarget();
+
+	// 공격
+	CSkill* BasicAttack = GetOwner()->GetScript<CMinionScript>()->GetSkill(0);
+	BasicAttack->SetUserObj(GetOwner());
+	BasicAttack->SetTargetObj(Target);
+
+	BasicAttack->Use();
+	GetOwner()->GetScript<CMinionScript>()->ResetAttackCoolTime();
 }
+
+void CMinionAttackState::HandleEvent(CGameEvent& event)
+{
+	if (!IsActive())
+		return;
+
+	switch (event.GetType())
+	{
+	case GAME_EVENT_TYPE::GET_HIT:
+	{
+		GetHitEvent* HitEvent = dynamic_cast<GetHitEvent*>(&event);
+
+		// 맞은 타겟이 본인인 경우에만 이벤트에 반응
+		if (HitEvent->GetTargetObj() == GetOwner())
+		{
+			CGameObject* SkillUser = HitEvent->GetUserObj();
+			CGameObject* SkillTarget = HitEvent->GetTargetObj();
+			SkillType skilltype = HitEvent->GetSkillType();
+			int	skillLevel = HitEvent->GetSkillLevel();
+
+			GetOwnerFSM()->GetOwner()->GetScript<CUnitScript>()->GetHit(skilltype, SkillTarget, SkillUser, skillLevel);
+		}
+	}
+	break;
+	}
+
+}
+

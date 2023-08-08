@@ -3,7 +3,6 @@
   <ItemGroup>
     <ClCompile Include="COtherPlayerScript.cpp" />
     <ClCompile Include="CPlayerScript.cpp" />
-    <ClCompile Include="CScriptMgr.cpp" />
     <ClCompile Include="CInGameCameraScript.cpp" />
     <ClCompile Include="CSkill.cpp" />
     <ClCompile Include="CStructureScript.cpp" />
@@ -504,15 +503,61 @@
     <ClCompile Include="CJungleSpawnState.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
     </ClCompile>
-    <ClCompile Include="CServerTypes.cpp" />
-    <ClCompile Include="CMinionHPRatioScript.cpp" />
-    <ClCompile Include="CChampionScript.cpp">
-      <Filter>Scripts\Unit\Champion</Filter>
+    <ClCompile Include="CDragonAlertState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
     </ClCompile>
-    <ClCompile Include="CMinionHPBarPosScript.cpp" />
-    <ClCompile Include="CDragonHPUIScript.cpp" />
-    <ClCompile Include="CJungleMobHPScript.cpp" />
-    <ClCompile Include="CJungleMINIHPScript.cpp" />
+    <ClCompile Include="CDragonAttackState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClCompile>
+    <ClCompile Include="CDragonChaseState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClCompile>
+    <ClCompile Include="CDragonDeathState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClCompile>
+    <ClCompile Include="CDragonIdleState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClCompile>
+    <ClCompile Include="CDragonScript.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClCompile>
+    <ClCompile Include="CDragonReturnState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClCompile>
+    <ClCompile Include="CDragonSpawnState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClCompile>
+    <ClCompile Include="CDragonAlert2AggroState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClCompile>
+    <ClCompile Include="CDragonAlert2NormalState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClCompile>
+    <ClCompile Include="CDragonFlyStartState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClCompile>
+    <ClCompile Include="CDragonLandState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClCompile>
+    <ClCompile Include="CDragonNormal2AlertState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClCompile>
+    <ClCompile Include="CDragonAggroState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClCompile>
+    <ClCompile Include="CDragonAggro2AlertState.cpp">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonsterHPBarUIScript.cpp" />
+    <ClCompile Include="CMinionChaseState.cpp">
+      <Filter>State\Unit\Minion</Filter>
+    </ClCompile>
+    <ClCompile Include="CServerTypes.cpp">
+      <Filter>Default</Filter>
+    </ClCompile>
+    <ClCompile Include="CScriptMgr.cpp">
+      <Filter>Manager\1. ScriptMgr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -563,11 +608,56 @@
       <Filter>UIScript</Filter>
     </ClInclude>
     <ClInclude Include="CTimedEffect.h" />
-    <ClInclude Include="CMinionHPRatioScript.h" />
-    <ClInclude Include="CMinionHPBarPosScript.h" />
-    <ClInclude Include="CDragonHPUIScript.h" />
-    <ClInclude Include="CJungleMobHPScript.h" />
-    <ClInclude Include="CJungleMINIHPScript.h" />
+    <ClInclude Include="CDragonAlertState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClInclude>
+    <ClInclude Include="CDragonAttackState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClInclude>
+    <ClInclude Include="CDragonChaseState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClInclude>
+    <ClInclude Include="CDragonDeathState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClInclude>
+    <ClInclude Include="CDragonIdleState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClInclude>
+    <ClInclude Include="CDragonScript.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="CDragonReturnState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClInclude>
+    <ClInclude Include="CDragonSpawnState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClInclude>
+    <ClInclude Include="CDragonAlert2AggroState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClInclude>
+    <ClInclude Include="CDragonAlert2NormalState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClInclude>
+    <ClInclude Include="CDragonFlyStartState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClInclude>
+    <ClInclude Include="CDragonLandState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClInclude>
+    <ClInclude Include="CDragonNormal2AlertState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClInclude>
+    <ClInclude Include="CDragonAggroState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClInclude>
+    <ClInclude Include="CDragonAggro2AlertState.h">
+      <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonsterHPBarUIScript.h" />
+    <ClInclude Include="CMinionChaseState.h">
+      <Filter>State\Unit\Minion</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">
@@ -1198,10 +1288,16 @@
     <Filter Include="State\Unit\Structure">
       <UniqueIdentifier>{fb41b8d0-38af-4bf3-ab36-3c9e55a63c22}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\Unit\Mob\Jungle\Dragon">
+      <UniqueIdentifier>{02c092f3-6ab1-4ed9-b7da-29ff1699d04a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="UIScript">
       <UniqueIdentifier>{6b48a3ea-5546-4150-a739-2374ab84deed}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Script.rc" />
   </ItemGroup>
 </Project>

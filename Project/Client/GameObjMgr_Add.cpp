@@ -39,6 +39,21 @@
 #include <Script/CSendServerEventMgr.h>
 #include <Script\CMinionHPRatioScript.h>
 #include <Script\CMinionHPBarPosScript.h>
+#include <Script/CGrompScript.h>
+
+#include <Script/CTurretScript.h>
+
+#include <Script/CMurkWolfScript.h>
+#include <Script/CMurkWolfMiniScript.h>
+#include <Script/CRazorBeakScript.h>
+#include <Script/CRazorBeakMiniScript.h>
+#include <Script/CKrugScript.h>
+#include <Script/CKrugMiniScript.h>
+#include <Script/CBlueScript.h>
+#include <Script/CRedScript.h>
+#include <Script/CDragonScript.h>
+
+
 
 // ===============================================
 //   Add
@@ -122,6 +137,19 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 		CUnitScript* pUnit = pObj->GetScript<CUnitScript>();
 		pUnit->SetChampType(_info.champion);
 
+		pObj->GetRenderComponent()->SetRaySightCulling(true);
+
+		if (_info.faction == MyPlayer.faction)
+		{
+			pObj->Transform()->SetIsShootingRay(true);
+			pObj->Transform()->SetRayRange(200.f);
+		}
+		else
+		{
+			pObj->Transform()->SetIsShootingRay(false);
+		}
+
+
 		pObj->AddComponent(new CCollider3D);
 		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
 		pObj->Collider3D()->SetAbsolute(true);
@@ -152,48 +180,1654 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 		std::lock_guard<std::mutex> lock(m);
 
 		Ptr<CMeshData> pMeshData = nullptr;
-		CGameObject* pObj = new CGameObject;
+		CGameObject* pObj;
 
 		switch (_objectInfo.unitType)
 		{
+
 		case UnitType::MELEE_MINION:
 		{
-			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\minion_melee.fbx");
-			pObj = pMeshData->Instantiate();
+			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MeleeMinion.prefab");
+			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
+			pObj = pPrefab->Instantiate();
 
-			pObj->SetName(L"minion_melee");
-			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\minion_melee");
-			pObj->Animator3D()->PlayRepeat(L"minion_melee\\Idle1", true, true, 0.1f);
-
-			//pObj->AddComponent(new CCollider3D);
-			//pObj->AddComponent(new CCollider2D);
-
-			//pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-			//pObj->Collider2D()->SetOffsetScale(Vec2(50.f, 50.f));
-			//pObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
-
-			//pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
-			//pObj->Collider3D()->SetAbsolute(true);
-			//pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
-			//pObj->Collider3D()->SetDrawCollision(false);
+			if (_objectInfo.faction == Faction::RED)
+			{
+				pObj->SetName(L"red_minion_melee");
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\minion_melee_Red.mtrl"), 0);
+			}
+			else if (_objectInfo.faction == Faction::BLUE)
+			{
+				pObj->SetName(L"blue_minion_melee");
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\minion_melee_Blue.mtrl"), 0);
+			}
 
 			// 방장은 진짜 계산 오브젝트 생성,  방장이 아닐 경우 허상을 생성
 			if (MyPlayer.host)
 			{
 				pObj->AddComponent(new CMinionScript);
+				pObj->GetScript<CMinionScript>()->SetLane(_objectInfo.lane);
+			}
+			else
+			{
+				pObj->AddComponent(new CUnitScript);
+				pObj->GetScript<CUnitScript>()->SetLane(_objectInfo.lane);
+			}
 
-				if (_objectInfo.lane == Lane::TOP)
-				{
-					// 미니언 라인 Top 설정
-				}
-				else if (_objectInfo.lane == Lane::MID)
-				{
-					// 미니언 라인 Mid 설정
-				}
-				else if (_objectInfo.lane == Lane::BOTTOM)
-				{
-					// 미니언 라인 Bottom 설정
-				}
+			// 공통
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);
+			Script->SetFaction(_objectInfo.faction);
+			Script->SetUnitType(UnitType::MELEE_MINION);
+
+			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
+			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+
+			SpawnGameObject(pObj,Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z), L"Mob");
+
+			_objects.insert(std::make_pair(_objectId, pObj));
+
+		}
+		break;
+		case UnitType::RANGED_MINION:
+		{
+			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\RangedMinion.prefab");
+			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
+			pObj = pPrefab->Instantiate();
+
+			if (_objectInfo.faction == Faction::RED)
+			{
+				pObj->SetName(L"red_minion_ranged");
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\minion_caster_Red.mtrl"), 0);
+			}
+			else if (_objectInfo.faction == Faction::BLUE)
+			{
+				pObj->SetName(L"blue_minion_ranged");
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\minion_caster_Blue.mtrl"), 0);
+			}
+
+			// 방장은 진짜 계산 오브젝트 생성,  방장이 아닐 경우 허상을 생성
+			if (MyPlayer.host)
+			{
+				pObj->AddComponent(new CMinionScript);
+				pObj->GetScript<CMinionScript>()->SetLane(_objectInfo.lane);
+			}
+			else
+			{
+				pObj->AddComponent(new CUnitScript);
+				pObj->GetScript<CUnitScript>()->SetLane(_objectInfo.lane);
+			}
+			
+
+			// 공통
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);
+			Script->SetFaction(_objectInfo.faction);
+			Script->SetUnitType(UnitType::RANGED_MINION);
+
+			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
+			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+
+			SpawnGameObject(pObj, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z), L"Mob");
+
+			_objects.insert(std::make_pair(_objectId, pObj));
+
+		}
+		break;
+		case UnitType::SIEGE_MINION:
+		{
+			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\SiegeMinion.prefab");
+			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
+			pObj = pPrefab->Instantiate();
+
+			if (_objectInfo.faction == Faction::RED)
+			{
+				pObj->SetName(L"red_minion_siege");
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Minion_siege_Red.mtrl"), 0);
+			}
+			else if (_objectInfo.faction == Faction::BLUE)
+			{
+				pObj->SetName(L"blue_minion_siege");
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Minion_siege_Blue.mtrl"), 0);
+			}
+
+			// 방장은 진짜 계산 오브젝트 생성,  방장이 아닐 경우 허상을 생성
+			if (MyPlayer.host)
+			{
+				pObj->AddComponent(new CMinionScript);
+				pObj->GetScript<CMinionScript>()->SetLane(_objectInfo.lane);
+			}
+			else
+			{
+				pObj->AddComponent(new CUnitScript);
+				pObj->GetScript<CUnitScript>()->SetLane(_objectInfo.lane);
+			}
+
+			// 공통
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);
+			Script->SetFaction(_objectInfo.faction);
+			Script->SetUnitType(UnitType::SIEGE_MINION);
+
+			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
+			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+
+			SpawnGameObject(pObj, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z), L"Mob");
+
+			_objects.insert(std::make_pair(_objectId, pObj));
+
+		}
+		break;
+		case UnitType::SUPER_MINION:
+		{
+			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\SuperMinion.prefab");
+			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
+			pObj = pPrefab->Instantiate();
+
+			if (_objectInfo.faction == Faction::RED)
+			{
+				pObj->SetName(L"red_minion_super");
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\minion_super_Red.mtrl"), 0);
+			}
+			else if (_objectInfo.faction == Faction::BLUE)
+			{
+				pObj->SetName(L"blue_minion_super");
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\minion_super_Blue.mtrl"), 0);
+			}
+
+			// 방장은 진짜 계산 오브젝트 생성,  방장이 아닐 경우 허상을 생성
+				// 방장은 진짜 계산 오브젝트 생성,  방장이 아닐 경우 허상을 생성
+			if (MyPlayer.host)
+			{
+				pObj->AddComponent(new CMinionScript);
+				pObj->GetScript<CMinionScript>()->SetLane(_objectInfo.lane);
+			}
+			else
+			{
+				pObj->AddComponent(new CUnitScript);
+				pObj->GetScript<CUnitScript>()->SetLane(_objectInfo.lane);
+			}
+
+			// 공통
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);
+			Script->SetFaction(_objectInfo.faction);
+			Script->SetUnitType(UnitType::SUPER_MINION);
+
+			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
+			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+
+			SpawnGameObject(pObj, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z), L"Mob");
+
+			_objects.insert(std::make_pair(_objectId, pObj));
+
+		}
+		break;
+		// =======================================================================================================================
+		//  
+		// Jungle Mob(Objects) 
+		// 
+		// =======================================================================================================================
+		case UnitType::SOUTH_GROMP://블루팀 두꺼비
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\gromp.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\gromp");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"SOUTH_Gromp");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
+			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(270.f), 0.f));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(50.f, 50.f, 50.f));
+			
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CGrompScript);
+
+				CGrompScript* Script = pObj->GetScript<CGrompScript>();
+
+				Script->SetAggroPos(Vec3(323.f, 0.f, 1242.f));
+				SpawnGameObject(pObj, Vec3(323.f, 10.f, 1242.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(323.f, 10.f, 1242.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::SOUTH_GROMP);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::SOUTH_MURKWOLF://블루팀 늑대
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\MurkWolf.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\MurkWolf");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"SOUTH_MurkWolf");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
+			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(24.f), 0.f));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(55.f, 55.f, 55.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
+
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CMurkWolfScript);
+
+				CMurkWolfScript* script = pObj->GetScript <CMurkWolfScript>();
+
+				script->SetAggroPos(Vec3(564.f, 0.f, 959.f));
+				SpawnGameObject(pObj, Vec3(550.f, 15.f, 944.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(550.f, 15.f, 944.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::SOUTH_MURKWOLF);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::SOUTH_MURKWOLF_MINI_L://블루팀 늑대 째깐이(좌)
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\MurkWolf_Mini.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\MurkWolf_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"SOUTH_MurkWolf_Mini_L");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.15f, 0.15f, 0.15);
+			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(36.f), 0.f));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(20.f, 20.f, 20.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CMurkWolfMiniScript);
+
+				CMurkWolfMiniScript* Script = pObj->GetScript<CMurkWolfMiniScript>();
+
+				Script->SetAggroPos(Vec3(564.f, 0.f, 964.f));
+				SpawnGameObject(pObj, Vec3(552.f, 15.f, 964.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(552.f, 15.f, 964.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::SOUTH_MURKWOLF_MINI_L);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::SOUTH_MURKWOLF_MINI_R://블루팀 늑대 째깐이(우)
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\MurkWolf_Mini.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\MurkWolf_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"SOUTH_MurkWolf_Mini_R");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.15f, 0.15f, 0.15f);
+			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(36.f), 0.f));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(20.f, 20.f, 20.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CMurkWolfMiniScript);
+
+				CMurkWolfMiniScript* Script = pObj->GetScript<CMurkWolfMiniScript>();
+
+				Script->SetAggroPos(Vec3(564.f, 0.f, 964.f));
+				SpawnGameObject(pObj, Vec3(580.f, 15.f, 944.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(580.f, 15.f, 944.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::SOUTH_MURKWOLF_MINI_R);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::SOUTH_KRUG://블루팀 돌거북
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Krug.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Krug");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"SOUTH_Krug");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
+			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(40.f, 40.f, 40.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CKrugScript);
+
+				CKrugScript* Script = pObj->GetScript<CKrugScript>();
+
+				Script->SetAggroPos(Vec3(1238.f, 0.f, 389.f));
+				SpawnGameObject(pObj, Vec3(1221.f, 15.f, 379.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(1221.f, 15.f, 379.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::SOUTH_KRUG);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::SOUTH_KRUG_MINI://블루팀 돌거북 째깐이
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Krug_Mini.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Krug_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"SOUTH_Krug_Mini");
+			pObj->Transform()->SetRelativeScale(0.12f, 0.12f, 0.12f);
+			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(20.f, 20.f, 20.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CKrugMiniScript);
+
+				CKrugMiniScript* Script = pObj->GetScript<CKrugMiniScript>();
+
+				Script->SetAggroPos(Vec3(1238.f, 0.f, 389.f));
+				SpawnGameObject(pObj, Vec3(1252.f, 15.f, 379.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(1252.f, 15.f, 379.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::SOUTH_KRUG_MINI);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::SOUTH_RAZORBEAK://블루팀 칼날부리
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\RazorBeak.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\RazorBeak");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"SOUTH_RazorBeak");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
+			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(-66.f), 0.f));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(25.f, 25.f, 25.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CRazorBeakScript);
+
+				CRazorBeakScript* Script = pObj->GetScript<CRazorBeakScript>();
+
+				Script->SetAggroPos(Vec3(1033.f, 0.f, 782.f));
+				SpawnGameObject(pObj, Vec3(1008.f, 15.f, 800.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(1008.f, 15.f, 800.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::SOUTH_RAZORBEAK);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::SOUTH_RAZORBEAK_MINI_1://블루팀 칼날부리 째깐이 1
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\RazorBeak_Mini.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\RazorBeak_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"SOUTH_RazorBeak_Mini1");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
+			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(20.f, 20.f, 20.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CRazorBeakMiniScript);
+
+				CRazorBeakMiniScript* Script = pObj->GetScript<CRazorBeakMiniScript>();
+
+				Script->SetAggroPos(Vec3(1033.f, 0.f, 782.f));
+				SpawnGameObject(pObj, Vec3(1026.f, 15.f, 810.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(1026.f, 15.f, 810.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::SOUTH_RAZORBEAK_MINI_1);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::SOUTH_RAZORBEAK_MINI_2://블루팀 칼날부리 째깐이 2
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\RazorBeak_Mini.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\RazorBeak_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"SOUTH_RazorBeak_Mini2");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
+			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(73.f), 0.f));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(20.f, 20.f, 20.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CRazorBeakMiniScript);
+
+				CRazorBeakMiniScript* Script = pObj->GetScript<CRazorBeakMiniScript>();
+
+				Script->SetAggroPos(Vec3(1033.f, 0.f, 782.f));
+				SpawnGameObject(pObj, Vec3(1048.f, 15.f, 799.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(1048.f, 15.f, 799.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::SOUTH_RAZORBEAK_MINI_2);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::SOUTH_RAZORBEAK_MINI_3://블루팀 칼날부리 째깐이 3
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\RazorBeak_Mini.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\RazorBeak_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"SOUTH_RazorBeak_Mini3");
+			pObj->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
+			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(-90.f), 0.f));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(20.f, 20.f, 20.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CRazorBeakMiniScript);
+
+				CRazorBeakMiniScript* Script = pObj->GetScript<CRazorBeakMiniScript>();
+
+				Script->SetAggroPos(Vec3(1033.f, 0.f, 782.f));
+				SpawnGameObject(pObj, Vec3(1031.f, 15.f, 782.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(1031.f, 15.f, 782.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::SOUTH_RAZORBEAK_MINI_3);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::SOUTH_RAZORBEAK_MINI_4://블루팀 칼날부리 째깐이 4
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\RazorBeak_Mini.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\RazorBeak_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"SOUTH_RazorBeak_Mini4");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
+			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(4.f), 0.f));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(20.f, 20.f, 20.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CRazorBeakMiniScript);
+
+				CRazorBeakMiniScript* Script = pObj->GetScript<CRazorBeakMiniScript>();
+
+				Script->SetAggroPos(Vec3(1033.f, 0.f, 782.f));
+				SpawnGameObject(pObj, Vec3(1012.f, 15.f, 765.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(1012.f, 15.f, 765.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::SOUTH_RAZORBEAK_MINI_4);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::SOUTH_RAZORBEAK_MINI_5://블루팀 칼날부리 째깐이 5
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\RazorBeak_Mini.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\RazorBeak_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"SOUTH_RazorBeak_Mini5");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
+			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(69.f), 0.f));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(20.f, 20.f, 20.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CRazorBeakMiniScript);
+
+				CRazorBeakMiniScript* Script = pObj->GetScript<CRazorBeakMiniScript>();
+
+				Script->SetAggroPos(Vec3(1033.f, 0.f, 782.f));
+				SpawnGameObject(pObj, Vec3(1048.f, 15.f, 767.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(1048.f, 15.f, 767.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::SOUTH_RAZORBEAK_MINI_5);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::SOUTH_BLUE://블루팀 블루
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\jungle_blue.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\jungle_blue");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"South_Blue");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.2f, 0.2f, 0.2f);
+			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(90.f), 0.f));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(55.f, 55.f, 55.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(60.f, 60.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CBlueScript);
+
+				CBlueScript* Script = pObj->GetScript<CBlueScript>();
+
+				Script->SetAggroPos(Vec3(563.f, 0.f, 1164.f));
+				SpawnGameObject(pObj, Vec3(563.f, 15.f, 1164.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(563.f, 15.f, 1164.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::SOUTH_BLUE);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::SOUTH_RED://블루팀 레드
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\jungle_red.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\jungle_red");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"South_Red");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.35f, 0.35f, 0.35f);
+			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(46.f), 0.f));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(55.f, 55.f, 55.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(80.f, 80.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CRedScript);
+
+				CRedScript* Script = pObj->GetScript<CRedScript>();
+
+				Script->SetAggroPos(Vec3(1123, 15.f, 559.f));
+				SpawnGameObject(pObj, Vec3(1136, 15.f, 580.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(1136, 15.f, 580.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::SOUTH_RED);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::NORTH_GROMP://레드팀 두꺼비
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\gromp.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\gromp");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"NORTH_Gromp");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
+			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(58.f), 0.f));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(50.f, 50.f, 50.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CGrompScript);
+
+				CGrompScript* Script = pObj->GetScript<CGrompScript>();
+
+				Script->SetAggroPos(Vec3(1823.f, 0.f, 943.f));
+				SpawnGameObject(pObj, Vec3(1859.f, 10.f, 956.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(1859.f, 10.f, 956.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::NORTH_GROMP);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::NORTH_MURKWOLF://레드팀 늑대
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\MurkWolf.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\MurkWolf");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"NORTH_MurkWolf");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
+			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(24.f), 0.f));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(55.f, 55.f, 55.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
+
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CMurkWolfScript);
+
+				CMurkWolfScript* script = pObj->GetScript <CMurkWolfScript>();
+
+				script->SetAggroPos(Vec3(1633.f, 0.f, 1265.f));
+				SpawnGameObject(pObj, Vec3(1619.f, 15.f, 1236.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(1619.f, 15.f, 1236.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::NORTH_MURKWOLF);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::NORTH_MURKWOLF_MINI_L://레드팀 늑대 째깐이(좌)
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\MurkWolf_Mini.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\MurkWolf_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"NORTH_MurkWolf_Mini_L");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.15f, 0.15f, 0.15);
+			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(-30.f), XMConvertToRadians(-180.f)));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(20.f, 20.f, 20.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CMurkWolfMiniScript);
+
+				CMurkWolfMiniScript* Script = pObj->GetScript<CMurkWolfMiniScript>();
+
+				Script->SetAggroPos(Vec3(1633.f, 0.f, 1265.f));
+				SpawnGameObject(pObj, Vec3(1592.f, 19.f, 1232.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(1592.f, 19.f, 1232.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::NORTH_MURKWOLF_MINI_L);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::NORTH_MURKWOLF_MINI_R://레드팀 늑대 째깐이(우)
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\MurkWolf_Mini.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\MurkWolf_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"NORTH_MurkWolf_Mini_R");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.15f, 0.15f, 0.15f);
+			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(-30.f), XMConvertToRadians(-180.f)));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(20.f, 20.f, 20.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CMurkWolfMiniScript);
+
+				CMurkWolfMiniScript* Script = pObj->GetScript<CMurkWolfMiniScript>();
+
+				Script->SetAggroPos(Vec3(1633.f, 0.f, 1265.f));
+				SpawnGameObject(pObj, Vec3(1634, 15.f, 1208.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(1634, 15.f, 1208.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::NORTH_MURKWOLF_MINI_R);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::NORTH_KRUG://레드팀 돌거북
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Krug.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Krug");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"NORTH_Krug");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.25f, 0.25f, 0.25f);
+			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(-4.f), XMConvertToRadians(-180.f)));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(40.f, 40.f, 40.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CKrugScript);
+
+				CKrugScript* Script = pObj->GetScript<CKrugScript>();
+
+				Script->SetAggroPos(Vec3(942.f, 0.f, 1845.f));
+				SpawnGameObject(pObj, Vec3(966, 15.f, 1800.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(966, 15.f, 1800.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::NORTH_KRUG);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::NORTH_KRUG_MINI://레드팀 돌거북 째깐이
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Krug_Mini.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Krug_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"SOUTH_Krug_Mini");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.15f, 0.15f, 0.15f);
+			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(4.f), XMConvertToRadians(180.f)));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(20.f, 20.f, 20.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CKrugMiniScript);
+
+				CKrugMiniScript* Script = pObj->GetScript<CKrugMiniScript>();
+
+				Script->SetAggroPos(Vec3(942.f, 0.f, 1845.f));
+				SpawnGameObject(pObj, Vec3(935.f, 15.f, 1791.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(935.f, 15.f, 1791.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::NORTH_KRUG_MINI);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::NORTH_RAZORBEAK://레드팀 칼날부리
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\RazorBeak.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\RazorBeak");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"NORTH_RazorBeak");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.18f, 0.18f, 0.18f);
+			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(90.f), XMConvertToRadians(180.f)));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(25.f, 25.f, 25.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CRazorBeakScript);
+
+				CRazorBeakScript* Script = pObj->GetScript<CRazorBeakScript>();
+
+				Script->SetAggroPos(Vec3(1145.f, 0.f, 1438.f));
+				SpawnGameObject(pObj, Vec3(1170.f, 15.f, 1390.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(1170.f, 15.f, 1390.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::NORTH_RAZORBEAK);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::NORTH_RAZORBEAK_MINI_1://레드팀 칼날부리 째깐이 1
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\RazorBeak_Mini.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\RazorBeak_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"NORTH_RazorBeak_Mini1");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
+			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(-46.f), XMConvertToRadians(180.f)));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(20.f, 20.f, 20.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CRazorBeakMiniScript);
+
+				CRazorBeakMiniScript* Script = pObj->GetScript<CRazorBeakMiniScript>();
+
+				Script->SetAggroPos(Vec3(1145.f, 0.f, 1438.f));
+				SpawnGameObject(pObj, Vec3(1139, 15.f, 1419.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(1139, 15.f, 1419.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::NORTH_RAZORBEAK_MINI_1);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::NORTH_RAZORBEAK_MINI_2://레드팀 칼날부리 째깐이 2
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\RazorBeak_Mini.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\RazorBeak_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"NORTH_RazorBeak_Mini2");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
+			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(52.f), XMConvertToRadians(180.f)));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(20.f, 20.f, 20.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CRazorBeakMiniScript);
+
+				CRazorBeakMiniScript* Script = pObj->GetScript<CRazorBeakMiniScript>();
+
+				Script->SetAggroPos(Vec3(1145.f, 0.f, 1438.f));
+				SpawnGameObject(pObj, Vec3(1176, 15.f, 1419.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(1176, 15.f, 1419.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::NORTH_RAZORBEAK_MINI_2);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::NORTH_RAZORBEAK_MINI_3://레드팀 칼날부리 째깐이 3
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\RazorBeak_Mini.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\RazorBeak_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"NORTH_RazorBeak_Mini3");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
+			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(90.f), 0.f));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(20.f, 20.f, 20.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CRazorBeakMiniScript);
+
+				CRazorBeakMiniScript* Script = pObj->GetScript<CRazorBeakMiniScript>();
+
+				Script->SetAggroPos(Vec3(1145.f, 0.f, 1438.f));
+				SpawnGameObject(pObj, Vec3(1159, 15.f, 1405.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(1031.f, 15.f, 782.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::NORTH_RAZORBEAK_MINI_3);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::NORTH_RAZORBEAK_MINI_4://레드팀 칼날부리 째깐이 4
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\RazorBeak_Mini.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\RazorBeak_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"NORTH_RazorBeak_Mini4");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
+			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(0.f), XMConvertToRadians(-90.f), XMConvertToRadians(0.f)));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(20.f, 20.f, 20.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CRazorBeakMiniScript);
+
+				CRazorBeakMiniScript* Script = pObj->GetScript<CRazorBeakMiniScript>();
+
+				Script->SetAggroPos(Vec3(1145.f, 0.f, 1438.f));
+				SpawnGameObject(pObj, Vec3(1140, 15.f, 1385.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(1140, 15.f, 1385.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::NORTH_RAZORBEAK_MINI_4);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::NORTH_RAZORBEAK_MINI_5://블루팀 칼날부리 째깐이 5
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\RazorBeak_Mini.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\RazorBeak_Mini");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"NORTH_RazorBeak_Mini5");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.14f, 0.14f, 0.14f);
+			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(0.f), XMConvertToRadians(180.f)));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(20.f, 20.f, 20.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(40.f, 40.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CRazorBeakMiniScript);
+
+				CRazorBeakMiniScript* Script = pObj->GetScript<CRazorBeakMiniScript>();
+
+				Script->SetAggroPos(Vec3(1145.f, 0.f, 1438.f));
+				SpawnGameObject(pObj, Vec3(1157, 15.f, 1370.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(1157, 15.f, 1370.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::NORTH_RAZORBEAK_MINI_5);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::NORTH_BLUE://레드팀 블루
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\jungle_blue.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\jungle_blue");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"NORTH_Blue");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.22f, 0.22f, 0.22f);
+			pObj->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(-57.f), 0.f));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(55.f, 55.f, 55.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(60.f, 60.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CBlueScript);
+
+				CBlueScript* Script = pObj->GetScript<CBlueScript>();
+
+				Script->SetAggroPos(Vec3(1653.f, 0.f, 1011.f));
+				SpawnGameObject(pObj, Vec3(1636, 10.f, 1009.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(1636, 10.f, 1009.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::NORTH_BLUE);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::NORTH_RED://레드팀 레드
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\jungle_red.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\jungle_red");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"North_Red");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.35f, 0.35f, 0.35f);
+			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(-54.f), XMConvertToRadians(-180.f)));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(55.f, 55.f, 55.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(80.f, 80.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CRedScript);
+
+				CRedScript* Script = pObj->GetScript<CRedScript>();
+
+				Script->SetAggroPos(Vec3(1055, 15.f, 1637.f));
+				SpawnGameObject(pObj, Vec3(1049, 15.f, 1607.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(1049, 15.f, 1607.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::NORTH_RED);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		case UnitType::DRAGON://레드팀 레드
+		{
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Elder_Dragon.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Elder_Dragon");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"Elder_Dragon");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.33f, 0.33f, 0.33f);
+			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(-44.f), XMConvertToRadians(-180.f)));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(125.f, 125.f, 125.f));
+
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(200.f, 200.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CDragonScript);
+
+				CDragonScript* Script = pObj->GetScript<CDragonScript>();
+
+				Script->SetAggroPos(Vec3(1451, 15.f, 649.f));
+				Script->SetAlertPos(Vec3(1483, 15.f, 689.f));
+				SpawnGameObject(pObj, Vec3(1451, 0.f, 656.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(1451, 0.f, 656.f), L"Mob");
+			}
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::DRAGON);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+		}
+		break;
+		// =======================================================================================================================
+		//  
+		// Structures(PlacedObjects) TURRET, INHIBITOR, NEXUS
+		// 
+		// =======================================================================================================================
+		case UnitType::TURRET:
+		{
+			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\TurretRubble.prefab");
+			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
+			pObj = pPrefab->Instantiate();
+			Vec3 Scale = pObj->Transform()->GetRelativeScale();
+			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
+
+
+			if (_objectInfo.faction == Faction::RED)
+			{				
+				pObj->SetName(L"red_turret");
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Turret_Red_Break_1.mtrl"), 0);
+			}
+			else if (_objectInfo.faction == Faction::BLUE)
+			{
+				pObj->SetName(L"blue_turret");
+
+			}
+
+			if (MyPlayer.host)
+			{
+				//pObj->AddComponent(new CTurretScript);
+				// script->setLane, _objectInfo.lane
+				pObj->AddComponent(new CUnitScript);  // 추후 주석처리
+				// 공격범위 시야 자식오브젝트도 추가해야할듯.
+
 			}
 			else
 			{
@@ -204,39 +1838,131 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			CUnitScript* Script = pObj->GetScript<CUnitScript>();
 			Script->SetServerID(_objectId);
 			Script->SetFaction(_objectInfo.faction);
-
-
-			// 추후 추가 unitscript에 변수 채우기 + spawnPos도 서버가 줄 예정
-			//Script->SetCurHP
-			//script->SetCurMP
-
-
-			pObj->Transform()->SetRelativeScale(Vec3(0.14f, 0.14f, 0.14f));
-			Vec3 spawnPos = Vec3(100.f + (50 * _objects.size()), 30.f, 100.f);
-			
-			CGameObject* HPBar = new CGameObject;
-			HPBar->SetName(L"HPBar");
-			HPBar->AddComponent(new CTransform);
-			HPBar->AddComponent(new CMeshRender);
-			HPBar->AddComponent(new CMinionHPRatioScript);
-			pObj->AddChild(HPBar);
-
-			SpawnGameObject(pObj, spawnPos, L"Mob");
-			_objects.insert(std::make_pair(_objectId, pObj));
-
+			Script->SetUnitType(UnitType::TURRET);
+			SpawnGameObject(pObj
+				, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z)
+				, L"Structure");
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			_placedObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 
-		case UnitType::RANGED_MINION:
+		case UnitType::INHIBITOR:
 		{
+			pMeshData = nullptr;
+			pObj = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Inhibitor.fbx");
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->Animator3D()->PlayRepeat(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true, true, 0.1f);
+			pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
+			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
+			pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+
+			if (_objectInfo.faction == Faction::RED)
+			{
+				pObj->SetName(L"red_Inhibitor");
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\inhibitor_red_Mtrl.mtrl"), 0);
+			}
+			else if (_objectInfo.faction == Faction::BLUE)
+			{
+				pObj->SetName(L"blue_Inhibitor");
+
+			}
+			//억제기 평상시 애니메이션은 idle1 애니메이션임!! 
+			//억제기의 평상시에는 1번에 alphaTex 이미지를 넣어주고, 0번 머터리얼에 억제기 기본 머터리얼을 넣어주면됨(기본적으로 되어있어서 따로 세팅해줄 필요는 없음)
+			//억제기가 폭발할때는 0번머터리얼에 alphaTex 이미지를 넣어주고, 1번머터리얼에 억제기 전용 destroy텍스쳐를 입혀주면됨 (따로 세팅해줘야함)
+			if (MyPlayer.host)
+			{
+				//pObj->AddComponent(new CInhibitorScript);
+				// script->setLane, _objectInfo.lane
+				pObj->AddComponent(new CUnitScript);  // 추후 주석처리
+				// 공격범위 시야 자식오브젝트도 추가해야할듯.
+
+			}
+			else
+			{
+				pObj->AddComponent(new CUnitScript);
+			}
+
+			// 공통
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);
+			Script->SetFaction(_objectInfo.faction);
+			Script->SetUnitType(UnitType::INHIBITOR);
+			SpawnGameObject(pObj
+				, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z)
+				, L"Structure");
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			_placedObjects.insert(std::make_pair(_objectId, pObj));
+		}
+		break;
+
+		case UnitType::NEXUS:
+		{
+			//-------------------------------넥서스-----------------------------------------
+			//넥서스는 0번머터리얼을 쓰면 1번 머터리얼에는 알파텍스쳐를 장착하고, 1번머터리얼을 쓰면 0번머터리얼에 알파 텍스쳐를 장착해줘야한다.
+			//-----터지는 넥서스쪽 보기 ------ 
+			//pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\nexus_destroyed_red_clear.png"));
+			//pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
+
+			//-----빙빙 도는 넥서스쪽 보기------ 
+			/*pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
+			pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\nexus_red_clear.png"));*/
+			pMeshData = nullptr;
+			pObj = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\nexus.fbx");
+			pObj = pMeshData->Instantiate();
+			pObj->SetName(L"blue_nexus");
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\nexus");
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->Animator3D()->PlayRepeat(L"nexus\\sruap_order_idle.anm_skinned_mesh.001", true, true, 0.1f);
+			pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
+			pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\sruap_ordernexus_tx_cm_clear.png"));
+			pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+			
+			if (_objectInfo.faction == Faction::RED)
+			{
+				pObj->SetName(L"red_nexus");
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\nexus_Mat_Red.mtrl"), 1);
+			}
+			else if (_objectInfo.faction == Faction::BLUE)
+			{
+				pObj->SetName(L"blue_nexus");
+
+			}
+
+
+			if (MyPlayer.host)
+			{
+				//pObj->AddComponent(new CInhibitorScript);
+				// script->setLane, _objectInfo.lane
+				pObj->AddComponent(new CUnitScript);  // 추후 주석처리
+				// 공격범위 시야 자식오브젝트도 추가해야할듯.
+
+			}
+			else
+			{
+				pObj->AddComponent(new CUnitScript);
+			}
+
+			// 공통
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);
+			Script->SetFaction(_objectInfo.faction);
+			Script->SetUnitType(UnitType::NEXUS);
+			SpawnGameObject(pObj, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z), L"Structure");
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			_placedObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 
 
-		}
+		} // End Swich case
 
 
-	}
+	} // End mutex lock
 }
 
 void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)

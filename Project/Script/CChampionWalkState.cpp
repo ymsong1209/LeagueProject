@@ -5,6 +5,7 @@
 #include "CUnitScript.h"
 #include "CChampionAttackState.h"
 #include "CGameEvent.h"
+#include "CChampionSkillState.h"
 
 CChampionWalkState::CChampionWalkState()
 {
@@ -47,7 +48,7 @@ void CChampionWalkState::HandleEvent(CGameEvent& event)
 		BasicAttackEvent* AttackEvent = dynamic_cast<BasicAttackEvent*>(&event);
 
 		CChampionAttackState* AttackState = dynamic_cast<CChampionAttackState*>(GetOwnerFSM()->FindState(L"Attack"));
-		if (AttackState != nullptr)
+		if (AttackState != nullptr && AttackEvent->GetUserObj() == GetOwner())
 		{
 			AttackState->SetUserObj(AttackEvent->GetUserObj());
 			AttackState->SetTargetObj(AttackEvent->GetTargetObj());
@@ -82,7 +83,17 @@ void CChampionWalkState::HandleEvent(CGameEvent& event)
 	case GAME_EVENT_TYPE::PLAYER_SKILL_W:
 	{
 		if (GetOwnerFSM()->FindState(L"W") != nullptr)
+		{
+			PlayerWEvent* WEvent = dynamic_cast<PlayerWEvent*>(&event);
+
+			CChampionSkillState* SkillState = dynamic_cast<CChampionSkillState*>(GetOwnerFSM()->FindState(L"W"));
+			if (SkillState != nullptr)
+			{
+				SkillState->SetUserObj(WEvent->GetUserObj());
+				SkillState->SetTargetObj(WEvent->GetTargetObj());
+			}
 			GetOwnerFSM()->ChangeState(L"W");
+		}
 		break;
 	}
 	case GAME_EVENT_TYPE::PLAYER_SKILL_E:

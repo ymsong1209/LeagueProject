@@ -12,22 +12,22 @@ CBasicAttack::CBasicAttack()
 	m_fCoolDown = 0.f;
 	m_iLevel = 1;
 
-	//// Åõ»çÃ¼ »ı¼º
-	//CGameObject* Projectile = new CGameObject;
-	//Projectile->AddComponent(new CTransform);
-	//Projectile->AddComponent(new CCollider2D);
-	//Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-	//Projectile->Collider2D()->SetOffsetScale(Vec2(5.f, 5.f));
-	//Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
-	//Projectile->SetName(L"Projectile");
+	// íˆ¬ì‚¬ì²´ ìƒì„±
+	CGameObject* Projectile = new CGameObject;
+	Projectile->AddComponent(new CTransform);
+	Projectile->AddComponent(new CCollider2D);
+	Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+	Projectile->Collider2D()->SetOffsetScale(Vec2(5.f, 5.f));
+	Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
+	Projectile->SetName(L"Projectile");
 
-	//Ptr<CPrefab> NewPrefab = new CPrefab;
-	//CGameObject* PrefabObject = Projectile->Clone(); 
-	//NewPrefab->RegisterProtoObject(PrefabObject);
+	Ptr<CPrefab> NewPrefab = new CPrefab;
+	CGameObject* PrefabObject = Projectile->Clone(); 
+	NewPrefab->RegisterProtoObject(PrefabObject);
 
-	//m_vecSkillObj.push_back(NewPrefab);
+	m_vecSkillObj.push_back(NewPrefab);
 
-	// Åõ»çÃ¼ ½ºÅ©¸³Æ®
+	// íˆ¬ì‚¬ì²´ ìŠ¤í¬ë¦½íŠ¸
 	m_iProjectileCount = 1;
 	m_ProjectileScript = new CBasicAttackScript;
 }
@@ -39,16 +39,16 @@ CBasicAttack::~CBasicAttack()
 
 void CBasicAttack::tick()
 {
-	// ÄğÅ¸ÀÓ °è»ê ÇÊ¿ä ¾øÀ½
+	// ì¿¨íƒ€ì„ ê³„ì‚° í•„ìš” ì—†ìŒ
 }
 
 bool CBasicAttack::Use()
 {
-	// ¼­¹ö¿¡°Ô ±âº» °ø°İ »ç¿ë ½ÅÈ£¸¦ Àü´Ş
+	// ì„œë²„ì—ê²Œ ê¸°ë³¸ ê³µê²© ì‚¬ìš© ì‹ í˜¸ë¥¼ ì „ë‹¬
 	CSendServerEventMgr::GetInst()->SendUseSkillPacket(
 		m_UserObj->GetScript<CUnitScript>()->GetServerID(),
 		m_TargetObj->GetScript<CUnitScript>()->GetServerID(),
-		1,				// ±âº» °ø°İÀÇ ·¹º§Àº ¾ğÁ¦³ª 1
+		1,				// ê¸°ë³¸ ê³µê²©ì˜ ë ˆë²¨ì€ ì–¸ì œë‚˜ 1
 		SkillType::BASIC_ATTACK,
 		Vec3(0, 0, 0),
 		m_iProjectileCount,
@@ -62,22 +62,22 @@ bool CBasicAttack::Use()
 
 void CBasicAttack::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _Skilllevel)
 {
-	// ÆòÅ¸ Åõ»çÃ¼°¡ Àû°ú Ãæµ¹½Ã ÀÌ ÇÔ¼ö¿¡ º»ÀÎ ½ºÅ©¸³Æ® ³Ö¾î¼­ È£ÃâÇÒ °ÍÀÓ
+	// í‰íƒ€ íˆ¬ì‚¬ì²´ê°€ ì ê³¼ ì¶©ëŒì‹œ ì´ í•¨ìˆ˜ì— ë³¸ì¸ ìŠ¤í¬ë¦½íŠ¸ ë„£ì–´ì„œ í˜¸ì¶œí•  ê²ƒì„
 
 	float Damage = 0;
 
-	// ½ÃÀüÀÚÀÇ ·¹º§, ±âº» °ø°İ·Â µî¿¡ µû¶ó µ¥¹ÌÁö °è»ê
+	// ì‹œì „ìì˜ ë ˆë²¨, ê¸°ë³¸ ê³µê²©ë ¥ ë“±ì— ë”°ë¼ ë°ë¯¸ì§€ ê³„ì‚°
 	CUnitScript* UnitScript = dynamic_cast<CUnitScript*>(_UserScript);
 	if (UnitScript != nullptr)
 	{
 		float BaseDamage = 0.f;
 		float AttackPow = UnitScript->GetAttackPower();
 
-		// ¿¹½ÃÀÔ´Ï´Ù
+		// ì˜ˆì‹œì…ë‹ˆë‹¤
 		Damage = AttackPow;
 	}
 
-	// µ¥¹ÌÁö¿¡¼­ Å¸°ÙÀÇ ¹æ¾î·Â¸¸Å­À» Á¦ÇÑ µÚ ½ÇÁ¦ ¹İ¿µÇÒ µ¥¹ÌÁö °è»ê
+	// ë°ë¯¸ì§€ì—ì„œ íƒ€ê²Ÿì˜ ë°©ì–´ë ¥ë§Œí¼ì„ ì œí•œ ë’¤ ì‹¤ì œ ë°˜ì˜í•  ë°ë¯¸ì§€ ê³„ì‚°
 	float DefencePow = _TargetScript->GetDefencePower();
 	
 	Damage -= DefencePow;
@@ -85,13 +85,16 @@ void CBasicAttack::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, 
 	float minDam = 10.f;
 	if (Damage < minDam)
 	{
-		// µ¥¹ÌÁö ÃÖ¼Ò°ª
+		// ë°ë¯¸ì§€ ìµœì†Œê°’
 		Damage = minDam;
 	}
 
 	_TargetScript->SetCurHPVar(-Damage);
 
-	// ÇÇ°İÀÚ »ç¸Á½Ã KDACS ÆĞÅ¶ Àü¼Û
+
+	CSkill::GetHit(_UserScript,  _TargetScript, _Skilllevel);
+
+	// í”¼ê²©ì ì‚¬ë§ì‹œ KDACS íŒ¨í‚· ì „ì†¡
 	if (_TargetScript->GetCurHP() <= 0)
 		CSendServerEventMgr::GetInst()->SendKDACSPacket(_UserScript->GetServerID()
 														, _TargetScript->GetServerID()
