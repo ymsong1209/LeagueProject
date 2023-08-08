@@ -530,6 +530,13 @@ void CCamera::SortObject()
 					&& nullptr == pRenderCom->GetMaterial(0)->GetShader())
 					continue;
 
+				// 렌더링 안하고 싶은 object는 제외
+				if (pRenderCom->IsSortExcept())
+					continue;
+
+
+				pRenderCom->SetCulled(false);
+
 				// FrustumCheck
 				if (pRenderCom->IsUseFrustumCheck())
 				{
@@ -551,8 +558,10 @@ void CCamera::SortObject()
 						CRenderMgr::GetInst()->AddDebugBoundingInfo(info);
 					}
 
-					if (false == m_Frustum.FrustumCheckBySphere(vWorldPos, pRenderCom->GetBounding()))
+					if (false == m_Frustum.FrustumCheckBySphere(vWorldPos, pRenderCom->GetBounding())) {
+						pRenderCom->SetCulled(true);
 						continue;
+					}
 				}
 
 				if (m_isGizmoEditMode == 1) //에디트 모드일때만 클릭체크
@@ -572,21 +581,8 @@ void CCamera::SortObject()
 
 				if (vecObject[j]->GetRenderComponent() != nullptr && vecObject[j]->GetRenderComponent()->IsUsingRaySightCulling() && vecObject[j]->Transform()->GetIsShootingRay() != true)
 				{
-					CGameObject* GrandParent = vecObject[j]; //최상위 부모
-					bool escape = false;
-					while (escape == false) {
-						GrandParent = vecObject[j]->GetParent();
-						if (GrandParent == nullptr) {
-							GrandParent = vecObject[j];
-							escape = true;
-						}
-					}
-					/*
 					if (false == CheckRayCollideBox(vecObject[j])) {
-						continue;
-					}*/
-
-					if (false == CheckRayCollideBox(GrandParent)) {
+						vecObject[j]->GetRenderComponent()->SetCulled(true);
 						continue;
 					}
 				}
