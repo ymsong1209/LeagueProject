@@ -244,11 +244,10 @@ void CMinionScript::FindTarget()
 
 void CMinionScript::AttackCoolDown()
 {
-	if (!CanAttack())
+	m_fCurAttackCoolTime += DT;
+	if (m_fCurAttackCoolTime >= m_fAttackSpeed)
 	{
-		m_fCurAttackCoolTime += DT;
-		if (m_fCurAttackCoolTime >= m_fAttackSpeed)
-			m_fCurAttackCoolTime = m_fAttackSpeed;
+		m_fCurAttackCoolTime = m_fAttackSpeed;
 	}
 }
 
