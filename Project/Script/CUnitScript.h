@@ -52,7 +52,7 @@ protected:
     float                   m_fFaceRot;
 
     ChampionType            m_ChampType; 
-    MinionType              m_MinionType;
+    MinionType              m_eMinionType;
     bool                    m_bUnitDead;        // 유닛이 죽었는지(HP 0 이하)
     vector<CTimedEffect*>   m_TimedEffectList;  // 지속딜 / CC기 관련 리스트
 
@@ -84,8 +84,8 @@ public:
     void SetChampType(ChampionType _Type) { m_ChampType = _Type; }
     ChampionType GetChampType() { return m_ChampType; }
 
-    void SetMinionType(MinionType _Type) { m_MinionType = _Type; }
-    MinionType GetMinionType() { return m_MinionType; }
+    void SetMinionType(MinionType _Type) { m_eMinionType = _Type; }
+    MinionType GetMinionType() { return m_eMinionType; }
 
     void  SetCurHP(float _f) { m_fHP = _f; }         // 현재 체력 = 인자값
     void  SetCurHPVar(float _f) { m_fHP += _f; }     // 현재 체력 += 인자값
