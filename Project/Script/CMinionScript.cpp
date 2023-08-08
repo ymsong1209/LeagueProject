@@ -172,7 +172,6 @@ void CMinionScript::begin()
 		AttackRange->Collider2D()->SetOffsetScale(Vec2(100.f, 100.f));
 		GetOwner()->AddChild(AttackRange);
 		AttackRange->ChangeLayer(L"AttackRange");
-
 	}
 	AttackRange->Collider2D()->SetOffsetScale(Vec2(m_fAttackRange, m_fAttackRange));
 
@@ -203,8 +202,8 @@ void CMinionScript::tick()
 	1. 라인별 타겟 포인트로 전진한다.
 	2. 타겟포인트에 도착하면, 벡터의 인덱스를 증가시켜 다음 타겟포인트로 전진한다.
 	3. 전진 도중 사거리 내에 공격할 수 있는 몹을 만나면, 공격 상태로 전환한다.
-	4. 사거리 내의 적 중 우선순위를 따져 타겟 오브젝트를 결정한다.
-	5. 타겟 오브젝트가 더 이상 사거리 내에 없거나 죽었다면, 타겟 오브젝트를 다시 결정한다.
+	4. 타겟 오브젝트가 죽었다면, 다시 Walk 상태로 전환한다.
+	5. 타겟 오브젝트가 죽지 않았지만 사거리 내에 없는 경우, 2초간 타겟을 따라간다.
 	6. 다시 사거리 내에 공격할 오브젝트가 없다면, Walk 상태로 전환되어 전진을 계속한다.
 	*/
 }
