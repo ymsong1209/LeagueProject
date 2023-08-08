@@ -188,8 +188,6 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MeleeMinion.prefab");
 			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
 			pObj = pPrefab->Instantiate();
-			Vec3 Scale = pObj->Transform()->GetRelativeScale();
-			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
 
 			if (_objectInfo.faction == Faction::RED)
 			{
@@ -248,8 +246,6 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\RangedMinion.prefab");
 			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
 			pObj = pPrefab->Instantiate();
-			Vec3 Scale = pObj->Transform()->GetRelativeScale();
-			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
 
 			if (_objectInfo.faction == Faction::RED)
 			{
@@ -308,8 +304,6 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\SiegeMinion.prefab");
 			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
 			pObj = pPrefab->Instantiate();
-			Vec3 Scale = pObj->Transform()->GetRelativeScale();
-			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
 
 			if (_objectInfo.faction == Faction::RED)
 			{
@@ -368,8 +362,6 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\SuperMinion.prefab");
 			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
 			pObj = pPrefab->Instantiate();
-			Vec3 Scale = pObj->Transform()->GetRelativeScale();
-			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
 
 			if (_objectInfo.faction == Faction::RED)
 			{
