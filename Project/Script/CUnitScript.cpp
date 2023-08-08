@@ -61,33 +61,37 @@ void CUnitScript::begin()
 
 void CUnitScript::tick()
 {
-	if (m_bHost)
+	if (CSendServerEventMgr::GetInst()->GetMyPlayer() != GetOwner())
 	{
-		// 허상 움직임 보간 
-		Vec3 vCurPos = Transform()->GetRelativePos();
-		float duration = 0.1f; // 1/10초
-		if (m_bRcvMove && vCurPos != m_vMovePos)
+		if (CSendServerEventMgr::GetInst()->GetMyPlayer()->GetScript<CUnitScript>()->IsHost() && (m_bHost == false))
 		{
-			if (m_fT == 0) // 이동이 처음 시작되면 t를 초기화
+			// 허상 움직임 보간 
+			Vec3 vCurPos = Transform()->GetRelativePos();
+			float duration = 0.1f; // 1/10초
+			if (m_bRcvMove && vCurPos != m_vMovePos)
 			{
-				m_fT = DT / duration;
-			}
-			else // 그렇지 않으면 t를 업데이트
-			{
-				m_fT += DT / duration;
-			}
+				if (m_fT == 0) // 이동이 처음 시작되면 t를 초기화
+				{
+					m_fT = DT / duration;
+				}
+				else // 그렇지 않으면 t를 업데이트
+				{
+					m_fT += DT / duration;
+				}
 
-			if (m_fT > 1) m_fT = 1;
+				if (m_fT > 1) m_fT = 1;
 
-			Vec3 NewPos = vCurPos + (m_vMovePos - vCurPos) * m_fT;
-			Transform()->SetRelativePos(NewPos);
+				Vec3 NewPos = vCurPos + (m_vMovePos - vCurPos) * m_fT;
+				Transform()->SetRelativePos(NewPos);
 
-			if (m_fT >= 1)
-			{
-				m_bRcvMove = false;
-				m_fT = 0; // 다음 이동을 위해 t를 0으로 초기화
+				if (m_fT >= 1)
+				{
+					m_bRcvMove = false;
+					m_fT = 0; // 다음 이동을 위해 t를 0으로 초기화
+				}
 			}
 		}
+
 	}
 
 
