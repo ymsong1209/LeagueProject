@@ -35,7 +35,7 @@ public:
     void        SetMinionType(MinionType _type) { m_eMinionType = (MinionType)_type; }
 
     int         GetWayPointIdx() { return m_iWayPointIdx; }
-    Vec3        GetWayPoint() { return m_vecWayPoint[m_iWayPointIdx]; }
+    Vec3        GetWayPoint() { if (m_vecWayPoint.size() == 0) return;  return m_vecWayPoint[m_iWayPointIdx]; }
 
     float       GetAggroTime() { return m_fAggroTime; }
     CGameObject* GetTarget() { return m_pTarget; }
