@@ -243,7 +243,18 @@ void CMinionScript::FindTarget()
 	CGameObject* AttackRange = GetOwner()->FindChildObjByName(L"AttackRange");
 	vector<CGameObject*> UnitsInRange = AttackRange->GetScript<CAttackRangeScript>()->GetUnitsInRange();
 	if (UnitsInRange.size() > 0)
-		m_pTarget = UnitsInRange[0];
+	{
+		m_pTarget = nullptr;
+
+		for (int i = 0; i < UnitsInRange.size(); i++)
+		{
+			if (!UnitsInRange[i]->GetScript<CUnitScript>()->IsUnitDead())
+			{
+				m_pTarget = UnitsInRange[i];
+				return;
+			}
+		}
+	}
 	else
 		m_pTarget = nullptr;
 }
