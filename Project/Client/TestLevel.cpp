@@ -165,6 +165,50 @@ void CreateTestLevel()
 	SpawnGameObject(pSkyBox, Vec3(0.f, 0.f, 0.f), 0);
 
 
+	//CGameObject* MapCollider = new CGameObject;
+	//MapCollider->SetName(L"MapCollider");
+
+	//MapCollider->AddComponent(new CTransform);
+	//MapCollider->AddComponent(new CMeshRender);
+	//MapCollider->AddComponent(new CCollider2D);
+
+
+	//MapCollider->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	//MapCollider->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
+
+	//MapCollider->Transform()->SetRelativeScale(Vec3(1000.f, 1000.f, 0));
+
+	//MapCollider->Collider2D()->SetAbsolute(false);
+	//MapCollider->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+
+	//MapCollider->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
+	////MapCollider->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+
+	//
+	//SpawnGameObject(MapCollider, Vec3(0.f, 0.f, 0.f), 0);
+
+
+ 
+
+	//RayCubeTestObj1->AddComponent(new CMeshRender);
+	//RayCubeTestObj1->AddComponent(new CTransform);
+	//RayCubeTestObj1->AddComponent(new CCollider3D);
+	//RayCubeTestObj1->Transform()->SetUseMouseOutline(true);
+
+	//RayCubeTestObj1->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
+	//RayCubeTestObj1->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
+	//RayCubeTestObj1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
+	//RayCubeTestObj1->MeshRender()->GetDynamicMaterial(0);
+
+	//RayCubeTestObj1->Collider3D()->SetAbsolute(false);
+	//RayCubeTestObj1->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
+	//RayCubeTestObj1->Collider3D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
+	//RayCubeTestObj1->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::CUBE);
+
+
+	//SpawnGameObject(RayCubeTestObj1, Vec3(-600.f, -450.f, 700.f), 0);
+
+
 	//// Shadow Test Object
 	//CGameObject* pObject = new CGameObject;
 	//pObject->SetName(L"Sphere Object");
@@ -511,6 +555,53 @@ void CreateTestLevel()
 	DummyObj->MeshRender()->GetDynamicMaterial(0);
 
 	SpawnGameObject(DummyObj, Vec3(0.f, 0.f, 0.f), 0);
+
+
+	// Malphite Basick Attack Outliner
+	CGameObject* BasickAttackOutline = new CGameObject;
+	BasickAttackOutline->SetName(L"BasicAttackOutline");
+	BasickAttackOutline->AddComponent(new CMeshRender);
+	BasickAttackOutline->AddComponent(new CTransform);
+	BasickAttackOutline->Transform()->SetUseMouseOutline(false);
+	BasickAttackOutline->Transform()->SetAbsolute(true);
+	BasickAttackOutline->Transform()->SetRelativePos(Vec3(0.f, 0.f, -4.f));
+
+	BasickAttackOutline->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 0.f));
+	BasickAttackOutline->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	BasickAttackOutline->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MalphiteBasickAttackOutlineMtrl"), 0);
+	BasickAttackOutline->MeshRender()->GetDynamicMaterial(0);
+
+	//BasicAttack->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\caitlyn_skin06_radial_01"));
+	BasickAttackOutline->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\caitlyn_skin06_radial_01.dds"));
+	BasickAttackOutline->MeshRender()->SetAdditiveTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\malphite_base_p_glowing_fire.dds"));
+	BasickAttackOutline->MeshRender()->SetAdditiveTexColor(Vec4(255.f, 100.f, 0.f, 0.f));
+
+
+
+	// Malpthie Basic Attack
+	CGameObject* BasicAttack = new CGameObject;
+	BasicAttack->SetName(L"BasicAttack");
+	BasicAttack->AddComponent(new CMeshRender);
+	BasicAttack->AddComponent(new CTransform);
+	BasicAttack->Transform()->SetUseMouseOutline(false);
+
+	BasicAttack->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 0.f));
+	BasicAttack->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	BasicAttack->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MalphiteBasickAttackMtrl"), 0);
+	BasicAttack->MeshRender()->GetDynamicMaterial(0);
+
+	//BasicAttack->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\caitlyn_skin06_radial_01"));
+	BasicAttack->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\malphite_base_z_hiteffect.dds"));
+	BasicAttack->MeshRender()->SetPunctureTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\malphite_base_z_hiteffect.dds"));
+	BasicAttack->MeshRender()->SetAdditiveTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\malphite_color-hurtbeam.dds"));
+	BasicAttack->MeshRender()->SetAdditiveTexColor(Vec4(255.f, 100.f, 0.f, 0.f));
+
+	BasicAttack->AddChild(BasickAttackOutline);
+
+	SpawnGameObject(BasicAttack, Vec3(-950.f, 0.f, 0.f), 0);
+
+
+	 
 
 
 

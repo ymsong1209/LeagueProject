@@ -873,7 +873,7 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_Std2D");
 
 	pShader->SetRSType(RS_TYPE::CULL_NONE);
-	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
 	pShader->SetBSType(BS_TYPE::ALPHA_BLEND);
 
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_TRANSPARENT);
@@ -1931,4 +1931,15 @@ void CResMgr::CreateDefaultMaterial()
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std2DShader"));
 	AddRes(L"TurretBlazeMtrl", pMtrl);
+
+
+	// MalphiteBasicAttackMtrl
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std2DShader"));
+	AddRes(L"MalphiteBasickAttackMtrl", pMtrl);
+
+	// MalphiteBasickAttackOutlineMtrl
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"Std2DShader"));
+	AddRes(L"MalphiteBasickAttackOutlineMtrl", pMtrl);
 }
