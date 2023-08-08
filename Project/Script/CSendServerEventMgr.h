@@ -56,6 +56,7 @@ public:
     // Despawn : 이 오브젝트를 없애라.
     // KDACS : 얘 죽음 (KDA 업데이트 용, 미니언CS)
     // Sound : 사운드
+    // Mtrl  : 재질 바꿔줘
     void SendHitPacket(UINT64 _skillObjId, UINT64 _hitObjId, UINT64 _useObjId, int _skillLevel, SkillType _skillType);
     void SendAnimPacket(UINT64 _targetId, wstring _animName, bool _repeat, bool _bRepeatBlend,  bool _bUseBlend, float _blentTime);
     void SendUseSkillPacket(UINT64 _ownerId, UINT64 _targetObjId, int _skillLevel
@@ -64,5 +65,6 @@ public:
     void SendDespawnPacket(UINT64 _objId, float _lifeSpan);
     void SendKDACSPacket(UINT64 _killerId, UINT64 _victimId, UnitType _deadObjUnitType);
     void SendSoundPacket();
+    void SendMtrlPakcet(UINT64 _objId, int _mtrlIndex, TEX_PARAM _texParam, wstring _MtrlName);
 };
 

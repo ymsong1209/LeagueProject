@@ -464,9 +464,31 @@ void GameObjMgr::SendKDACS(KDACSInfo* _kdacsInfo, ClientServiceRef _service)
 	}
 }
 
+void GameObjMgr::SendObjectMtrl(MtrlInfo* _mtrlInfo, ClientServiceRef _service)
+{
+	std::mutex m;
+	{
+		std::lock_guard<std::mutex> lock(m);
+
+		MtrlInfoPacket mtrlInfoPacket = {};
+		mtrlInfoPacket.targetId = _mtrlInfo->targetId;
+		mtrlInfoPacket.iMtrlIndex = _mtrlInfo->iMtrlIndex;
+		mtrlInfoPacket.tex_param = _mtrlInfo->tex_param;
+
+		wstring _mtrlName = _mtrlInfo->wMtrlName;
+
+		PKT_C_OBJECT_MTRL_WRITE  pktWriter(mtrlInfoPacket);
+		PKT_C_OBJECT_MTRL_WRITE::MtrlNameList mtrlNamePacket = pktWriter.ReserveMtrlNameList(_mtrlName.size());
+		for (int i = 0; i < _mtrlName.size(); i++)
+		{
+			mtrlNamePacket[i] = { _mtrlName[i] };
+		}
+	}
+
+}
+
 void GameObjMgr::SendObjectAnim(AnimInfo* _animInfo, ClientServiceRef _service)
 {
-	// _id 오브젝트의 애니메이션을 보낸다.
 	std::mutex m;
 	{
 		std::lock_guard<std::mutex> lock(m);
