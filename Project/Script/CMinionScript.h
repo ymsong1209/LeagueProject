@@ -27,10 +27,6 @@ public:
     virtual void tick() override;
 
 public:
-    Lane        GetLane() { return m_eLane; }
-
-    void        SetLane(Lane _lane) { m_eLane = (Lane)_lane; }
-
     int         GetWayPointIdx() { return m_iWayPointIdx; }
     Vec3        GetWayPoint() { if (m_vecWayPoint.size() == 0) return Vec3(NaN, NaN, NaN);  return m_vecWayPoint[m_iWayPointIdx]; }
 

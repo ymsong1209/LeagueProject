@@ -224,6 +224,22 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			else
 			{
 				pObj->AddComponent(new CUnitScript);
+
+				if (_objectInfo.lane == Lane::TOP)
+				{
+					// 미니언 라인 Top 설정
+					pObj->GetScript<CUnitScript>()->SetLane(Lane::TOP);
+				}
+				else if (_objectInfo.lane == Lane::MID)
+				{
+					// 미니언 라인 Mid 설정
+					pObj->GetScript<CUnitScript>()->SetLane(Lane::MID);
+				}
+				else if (_objectInfo.lane == Lane::BOTTOM)
+				{
+					// 미니언 라인 Bottom 설정
+					pObj->GetScript<CUnitScript>()->SetLane(Lane::BOTTOM);
+				}
 			}
 
 			// 공통
@@ -283,6 +299,22 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			else
 			{
 				pObj->AddComponent(new CUnitScript);
+
+				if (_objectInfo.lane == Lane::TOP)
+				{
+					// 미니언 라인 Top 설정
+					pObj->GetScript<CUnitScript>()->SetLane(Lane::TOP);
+				}
+				else if (_objectInfo.lane == Lane::MID)
+				{
+					// 미니언 라인 Mid 설정
+					pObj->GetScript<CUnitScript>()->SetLane(Lane::MID);
+				}
+				else if (_objectInfo.lane == Lane::BOTTOM)
+				{
+					// 미니언 라인 Bottom 설정
+					pObj->GetScript<CUnitScript>()->SetLane(Lane::BOTTOM);
+				}
 			}
 
 			// 공통
@@ -342,6 +374,22 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			else
 			{
 				pObj->AddComponent(new CUnitScript);
+
+				if (_objectInfo.lane == Lane::TOP)
+				{
+					// 미니언 라인 Top 설정
+					pObj->GetScript<CUnitScript>()->SetLane(Lane::TOP);
+				}
+				else if (_objectInfo.lane == Lane::MID)
+				{
+					// 미니언 라인 Mid 설정
+					pObj->GetScript<CUnitScript>()->SetLane(Lane::MID);
+				}
+				else if (_objectInfo.lane == Lane::BOTTOM)
+				{
+					// 미니언 라인 Bottom 설정
+					pObj->GetScript<CUnitScript>()->SetLane(Lane::BOTTOM);
+				}
 			}
 
 			// 공통
@@ -401,6 +449,22 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			else
 			{
 				pObj->AddComponent(new CUnitScript);
+
+				if (_objectInfo.lane == Lane::TOP)
+				{
+					// 미니언 라인 Top 설정
+					pObj->GetScript<CUnitScript>()->SetLane(Lane::TOP);
+				}
+				else if (_objectInfo.lane == Lane::MID)
+				{
+					// 미니언 라인 Mid 설정
+					pObj->GetScript<CUnitScript>()->SetLane(Lane::MID);
+				}
+				else if (_objectInfo.lane == Lane::BOTTOM)
+				{
+					// 미니언 라인 Bottom 설정
+					pObj->GetScript<CUnitScript>()->SetLane(Lane::BOTTOM);
+				}
 			}
 
 			// 공통
