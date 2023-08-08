@@ -1,5 +1,5 @@
 {
-    "levelName": "level\\miniontest.json",
+    "levelName": "level\\11Miniontest.json",
     "layers": [
         {
             "layerName": "Default",
@@ -10,9 +10,9 @@
                         {
                             "TRANSFORM": 0,
                             "vRelativePos": {
-                                "x": 0.0,
-                                "y": 526.0,
-                                "z": -9.0
+                                "x": 120.0,
+                                "y": 525.0,
+                                "z": -152.0
                             },
                             "vRelativeScale": {
                                 "x": 1.0,
@@ -49,7 +49,7 @@
                     ],
                     "scripts": [
                         {
-                            "scriptName": "CCameraMoveScript"
+                            "scriptName": "CInGameCameraScript"
                         }
                     ],
                     "children": []
@@ -133,15 +133,15 @@
                             "LightInfo": {
                                 "Color": {
                                     "vDiffuse": {
-                                        "x": 0.5,
-                                        "y": 0.5,
-                                        "z": 0.5,
+                                        "x": 0.4000000059604645,
+                                        "y": 0.4000000059604645,
+                                        "z": 0.4000000059604645,
                                         "w": 0.0
                                     },
                                     "vAmbient": {
-                                        "x": 0.6499999761581421,
-                                        "y": 0.6499999761581421,
-                                        "z": 0.6499999761581421,
+                                        "x": 0.4000000059604645,
+                                        "y": 0.4000000059604645,
+                                        "z": 0.4000000059604645,
                                         "w": 0.0
                                     },
                                     "vSpecular": {
@@ -1769,19 +1769,19 @@
                     "children": []
                 },
                 {
-                    "ObjName": "MeleeMinion_NoRange",
+                    "ObjName": "MeleeMinion",
                     "components": [
                         {
                             "TRANSFORM": 0,
                             "vRelativePos": {
-                                "x": 317.77801513671875,
-                                "y": 15.0,
-                                "z": 100.0
+                                "x": 314.0,
+                                "y": 16.0,
+                                "z": 146.0
                             },
                             "vRelativeScale": {
-                                "x": 0.20000000298023224,
-                                "y": 0.20000000298023224,
-                                "z": 0.20000000298023224
+                                "x": 0.18000000715255737,
+                                "y": 0.18000000715255737,
+                                "z": 0.18000000715255737
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
@@ -1804,8 +1804,8 @@
                                 "z": 0.0
                             },
                             "vOffsetScale": {
-                                "x": 70.0,
-                                "y": 70.0,
+                                "x": 50.0,
+                                "y": 50.0,
                                 "z": 1.0
                             },
                             "vOffsetRot": {
@@ -1818,10 +1818,27 @@
                             "DrawCollision": true
                         },
                         {
+                            "COLLIDER3D": 2,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 120.0,
+                                "y": 120.0,
+                                "z": 120.0
+                            },
+                            "bAbsolute": false,
+                            "Shape": 0,
+                            "bWall": false,
+                            "DrawCollision": false
+                        },
+                        {
                             "ANIMATOR3D": 4,
                             "IsEmpty": false,
                             "MeshDataRelativePath": "meshdata\\minion_melee.mdat",
-                            "bRepeat": false,
+                            "bRepeat": true,
                             "fAnimSpeed": 1.0,
                             "mapAnim": [
                                 {
@@ -1834,7 +1851,7 @@
                                     "Anim3DRelativePath": "animation\\minion_melee\\Run.anim3d"
                                 }
                             ],
-                            "strCurAnimName": ""
+                            "strCurAnimName": "minion_melee\\Run"
                         },
                         {
                             "FSM": 8
@@ -1919,42 +1936,23 @@
                         },
                         16
                     ],
-                    "scripts": [
-                        {
-                            "scriptName": "CMinionScript",
-                            "NickName": "",
-                            "UnitType": 0,
-                            "Faction": 0,
-                            "CurCC": 0,
-                            "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 50.0,
-                            "MP": 0.0,
-                            "MaxMP": 0.0,
-                            "AttackPower": 0.0,
-                            "DefencePower": 0.0,
-                            "AttackSpeed": 0.0,
-                            "AttackRange": 0.0,
-                            "MoveSpeed": 0.0,
-                            "MoveSpeedFactor": 1.0
-                        }
-                    ],
+                    "scripts": [],
                     "children": []
                 },
                 {
-                    "ObjName": "RangedMinion_NoRane",
+                    "ObjName": "RangedMinion",
                     "components": [
                         {
                             "TRANSFORM": 0,
                             "vRelativePos": {
-                                "x": 262.0,
-                                "y": 15.0,
-                                "z": 103.0
+                                "x": 360.0,
+                                "y": 16.0,
+                                "z": 146.0
                             },
                             "vRelativeScale": {
-                                "x": 0.20000000298023224,
-                                "y": 0.20000000298023224,
-                                "z": 0.20000000298023224
+                                "x": 0.18000000715255737,
+                                "y": 0.18000000715255737,
+                                "z": 0.18000000715255737
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
@@ -1977,8 +1975,8 @@
                                 "z": 0.0
                             },
                             "vOffsetScale": {
-                                "x": 70.0,
-                                "y": 70.0,
+                                "x": 50.0,
+                                "y": 50.0,
                                 "z": 1.0
                             },
                             "vOffsetRot": {
@@ -1991,10 +1989,27 @@
                             "DrawCollision": true
                         },
                         {
+                            "COLLIDER3D": 2,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 120.0,
+                                "y": 120.0,
+                                "z": 120.0
+                            },
+                            "bAbsolute": false,
+                            "Shape": 0,
+                            "bWall": false,
+                            "DrawCollision": false
+                        },
+                        {
                             "ANIMATOR3D": 4,
                             "IsEmpty": false,
                             "MeshDataRelativePath": "meshdata\\minion_caster.mdat",
-                            "bRepeat": false,
+                            "bRepeat": true,
                             "fAnimSpeed": 1.0,
                             "mapAnim": [
                                 {
@@ -2007,7 +2022,7 @@
                                     "Anim3DRelativePath": "animation\\minion_caster\\_run.anim3d"
                                 }
                             ],
-                            "strCurAnimName": "minion_caster\\_attack"
+                            "strCurAnimName": "minion_caster\\_run"
                         },
                         {
                             "FSM": 8
@@ -2092,42 +2107,23 @@
                         },
                         16
                     ],
-                    "scripts": [
-                        {
-                            "scriptName": "CMinionScript",
-                            "NickName": "",
-                            "UnitType": 1,
-                            "Faction": 0,
-                            "CurCC": 0,
-                            "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 50.0,
-                            "MP": 0.0,
-                            "MaxMP": 0.0,
-                            "AttackPower": 0.0,
-                            "DefencePower": 0.0,
-                            "AttackSpeed": 0.0,
-                            "AttackRange": 0.0,
-                            "MoveSpeed": 0.0,
-                            "MoveSpeedFactor": 1.0
-                        }
-                    ],
+                    "scripts": [],
                     "children": []
                 },
                 {
-                    "ObjName": "SeigeMinion_NoRange",
+                    "ObjName": "SiegeMinion",
                     "components": [
                         {
                             "TRANSFORM": 0,
                             "vRelativePos": {
-                                "x": 361.3149719238281,
-                                "y": 15.0,
-                                "z": 100.0
+                                "x": 406.0,
+                                "y": 16.0,
+                                "z": 146.0
                             },
                             "vRelativeScale": {
-                                "x": 0.20000000298023224,
-                                "y": 0.20000000298023224,
-                                "z": 0.20000000298023224
+                                "x": 0.18000000715255737,
+                                "y": 0.18000000715255737,
+                                "z": 0.18000000715255737
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
@@ -2150,8 +2146,8 @@
                                 "z": 0.0
                             },
                             "vOffsetScale": {
-                                "x": 130.0,
-                                "y": 130.0,
+                                "x": 70.0,
+                                "y": 70.0,
                                 "z": 1.0
                             },
                             "vOffsetRot": {
@@ -2164,10 +2160,27 @@
                             "DrawCollision": true
                         },
                         {
+                            "COLLIDER3D": 2,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 120.0,
+                                "y": 120.0,
+                                "z": 120.0
+                            },
+                            "bAbsolute": false,
+                            "Shape": 0,
+                            "bWall": false,
+                            "DrawCollision": false
+                        },
+                        {
                             "ANIMATOR3D": 4,
                             "IsEmpty": false,
                             "MeshDataRelativePath": "meshdata\\minion_siege.mdat",
-                            "bRepeat": false,
+                            "bRepeat": true,
                             "fAnimSpeed": 1.0,
                             "mapAnim": [
                                 {
@@ -2265,42 +2278,23 @@
                         },
                         16
                     ],
-                    "scripts": [
-                        {
-                            "scriptName": "CMinionScript",
-                            "NickName": "",
-                            "UnitType": 0,
-                            "Faction": 0,
-                            "CurCC": 0,
-                            "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 50.0,
-                            "MP": 0.0,
-                            "MaxMP": 0.0,
-                            "AttackPower": 0.0,
-                            "DefencePower": 0.0,
-                            "AttackSpeed": 0.0,
-                            "AttackRange": 0.0,
-                            "MoveSpeed": 0.0,
-                            "MoveSpeedFactor": 1.0
-                        }
-                    ],
+                    "scripts": [],
                     "children": []
                 },
                 {
-                    "ObjName": "SuperMinion_NoRange",
+                    "ObjName": "SuperMinion",
                     "components": [
                         {
                             "TRANSFORM": 0,
                             "vRelativePos": {
-                                "x": 447.3919372558594,
-                                "y": 15.0,
-                                "z": 100.0
+                                "x": 445.0,
+                                "y": 16.0,
+                                "z": 146.0
                             },
                             "vRelativeScale": {
-                                "x": 0.20000000298023224,
-                                "y": 0.20000000298023224,
-                                "z": 0.20000000298023224
+                                "x": 0.18000000715255737,
+                                "y": 0.18000000715255737,
+                                "z": 0.18000000715255737
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
@@ -2323,8 +2317,8 @@
                                 "z": 0.0
                             },
                             "vOffsetScale": {
-                                "x": 130.0,
-                                "y": 130.0,
+                                "x": 70.0,
+                                "y": 70.0,
                                 "z": 1.0
                             },
                             "vOffsetRot": {
@@ -2337,10 +2331,27 @@
                             "DrawCollision": true
                         },
                         {
+                            "COLLIDER3D": 2,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 120.0,
+                                "y": 120.0,
+                                "z": 120.0
+                            },
+                            "bAbsolute": false,
+                            "Shape": 0,
+                            "bWall": false,
+                            "DrawCollision": false
+                        },
+                        {
                             "ANIMATOR3D": 4,
                             "IsEmpty": false,
                             "MeshDataRelativePath": "meshdata\\minion_super.mdat",
-                            "bRepeat": false,
+                            "bRepeat": true,
                             "fAnimSpeed": 1.0,
                             "mapAnim": [
                                 {
@@ -2353,7 +2364,7 @@
                                     "Anim3DRelativePath": "animation\\minion_super\\Run.anim3d"
                                 }
                             ],
-                            "strCurAnimName": ""
+                            "strCurAnimName": "minion_super\\Run"
                         },
                         {
                             "FSM": 8
@@ -2384,428 +2395,6 @@
                                 "IsNull": false,
                                 "Key": "material\\minion_super_Red.mtrl",
                                 "RelativePath": "material\\minion_super_Red.mtrl"
-                            },
-                            "DynamicMtrls": [
-                                {
-                                    "vecMtrls[0]DynamicMtrl": null,
-                                    "IsDynamicMtrlExist": false
-                                }
-                            ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
-                        },
-                        16
-                    ],
-                    "scripts": [
-                        {
-                            "scriptName": "CMinionScript",
-                            "NickName": "",
-                            "UnitType": 0,
-                            "Faction": 0,
-                            "CurCC": 0,
-                            "Restraint": 0,
-                            "HP": 0.0,
-                            "MaxHP": 50.0,
-                            "MP": 0.0,
-                            "MaxMP": 0.0,
-                            "AttackPower": 0.0,
-                            "DefencePower": 0.0,
-                            "AttackSpeed": 0.0,
-                            "AttackRange": 0.0,
-                            "MoveSpeed": 0.0,
-                            "MoveSpeedFactor": 1.0
-                        }
-                    ],
-                    "children": []
-                },
-                {
-                    "ObjName": "AttackRange",
-                    "components": [
-                        {
-                            "TRANSFORM": 0,
-                            "vRelativePos": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "vRelativeScale": {
-                                "x": 1.0,
-                                "y": 1.0,
-                                "z": 1.0
-                            },
-                            "vRelativeRot": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "bAbsolute": false,
-                            "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 50.0,
-                            "IsShootingRay": false,
-                            "RayRange": 20.0,
-                            "UseMouseOutLine": false,
-                            "Outlinethickness": 0.07199999690055847
-                        },
-                        {
-                            "COLLIDER2D": 1,
-                            "vOffsetPos": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "vOffsetScale": {
-                                "x": 35.0,
-                                "y": 35.0,
-                                "z": 1.0
-                            },
-                            "vOffsetRot": {
-                                "x": 1.5707963705062866,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "bAbsolute": true,
-                            "Shape": 1,
-                            "DrawCollision": true
-                        },
-                        16
-                    ],
-                    "scripts": [
-                        {
-                            "scriptName": "CAttackRangeScript"
-                        }
-                    ],
-                    "children": []
-                },
-                {
-                    "ObjName": "AttackRange",
-                    "components": [
-                        {
-                            "TRANSFORM": 0,
-                            "vRelativePos": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "vRelativeScale": {
-                                "x": 1.0,
-                                "y": 1.0,
-                                "z": 1.0
-                            },
-                            "vRelativeRot": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "bAbsolute": false,
-                            "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 50.0,
-                            "IsShootingRay": false,
-                            "RayRange": 20.0,
-                            "UseMouseOutLine": false,
-                            "Outlinethickness": 0.0
-                        },
-                        {
-                            "COLLIDER2D": 1,
-                            "vOffsetPos": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "vOffsetScale": {
-                                "x": 80.0,
-                                "y": 80.0,
-                                "z": 1.0
-                            },
-                            "vOffsetRot": {
-                                "x": 1.5707963705062866,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "bAbsolute": true,
-                            "Shape": 1,
-                            "DrawCollision": true
-                        },
-                        16
-                    ],
-                    "scripts": [
-                        {
-                            "scriptName": "CAttackRangeScript"
-                        }
-                    ],
-                    "children": []
-                },
-                {
-                    "ObjName": "AttackRange",
-                    "components": [
-                        {
-                            "TRANSFORM": 0,
-                            "vRelativePos": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "vRelativeScale": {
-                                "x": 1.0,
-                                "y": 1.0,
-                                "z": 1.0
-                            },
-                            "vRelativeRot": {
-                                "x": 0.0,
-                                "y": -0.0,
-                                "z": 0.0
-                            },
-                            "bAbsolute": false,
-                            "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 50.0,
-                            "IsShootingRay": false,
-                            "RayRange": 20.0,
-                            "UseMouseOutLine": false,
-                            "Outlinethickness": 0.0
-                        },
-                        {
-                            "COLLIDER2D": 1,
-                            "vOffsetPos": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "vOffsetScale": {
-                                "x": 45.0,
-                                "y": 45.0,
-                                "z": 1.0
-                            },
-                            "vOffsetRot": {
-                                "x": 1.5707963705062866,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "bAbsolute": true,
-                            "Shape": 1,
-                            "DrawCollision": true
-                        },
-                        16
-                    ],
-                    "scripts": [
-                        {
-                            "scriptName": "CAttackRangeScript"
-                        }
-                    ],
-                    "children": []
-                },
-                {
-                    "ObjName": "AttackRange",
-                    "components": [
-                        {
-                            "TRANSFORM": 0,
-                            "vRelativePos": {
-                                "x": 447.3919372558594,
-                                "y": 15.0,
-                                "z": 100.0
-                            },
-                            "vRelativeScale": {
-                                "x": 0.20000000298023224,
-                                "y": 0.20000000298023224,
-                                "z": 0.20000000298023224
-                            },
-                            "vRelativeRot": {
-                                "x": 0.0,
-                                "y": -0.0,
-                                "z": 0.0
-                            },
-                            "bAbsolute": false,
-                            "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 50.0,
-                            "IsShootingRay": false,
-                            "RayRange": 20.0,
-                            "UseMouseOutLine": false,
-                            "Outlinethickness": 0.0
-                        },
-                        {
-                            "COLLIDER2D": 1,
-                            "vOffsetPos": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "vOffsetScale": {
-                                "x": 50.0,
-                                "y": 50.0,
-                                "z": 1.0
-                            },
-                            "vOffsetRot": {
-                                "x": 1.5707963705062866,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "bAbsolute": true,
-                            "Shape": 1,
-                            "DrawCollision": true
-                        },
-                        16
-                    ],
-                    "scripts": [
-                        {
-                            "scriptName": "CAttackRangeScript"
-                        }
-                    ],
-                    "children": []
-                },
-                {
-                    "ObjName": "MeleeMinion",
-                    "components": [
-                        {
-                            "TRANSFORM": 0,
-                            "vRelativePos": {
-                                "x": 381.0,
-                                "y": 10.0,
-                                "z": 300.0
-                            },
-                            "vRelativeScale": {
-                                "x": 0.18000000715255737,
-                                "y": 0.18000000715255737,
-                                "z": 0.18000000715255737
-                            },
-                            "vRelativeRot": {
-                                "x": 0.0,
-                                "y": -0.0,
-                                "z": 0.0
-                            },
-                            "bAbsolute": false,
-                            "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 50.0,
-                            "IsShootingRay": false,
-                            "RayRange": 20.0,
-                            "UseMouseOutLine": false,
-                            "Outlinethickness": 0.07199999690055847
-                        },
-                        {
-                            "COLLIDER2D": 1,
-                            "vOffsetPos": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "vOffsetScale": {
-                                "x": 50.0,
-                                "y": 50.0,
-                                "z": 1.0
-                            },
-                            "vOffsetRot": {
-                                "x": 1.5707963705062866,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "bAbsolute": false,
-                            "Shape": 1,
-                            "DrawCollision": true
-                        },
-                        {
-                            "COLLIDER3D": 2,
-                            "vOffsetPos": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "vOffsetScale": {
-                                "x": 120.0,
-                                "y": 120.0,
-                                "z": 120.0
-                            },
-                            "bAbsolute": false,
-                            "Shape": 0,
-                            "bWall": false,
-                            "DrawCollision": true
-                        },
-                        {
-                            "ANIMATOR3D": 4,
-                            "IsEmpty": false,
-                            "MeshDataRelativePath": "meshdata\\minion_melee.mdat",
-                            "bRepeat": true,
-                            "fAnimSpeed": 1.0,
-                            "mapAnim": [
-                                {
-                                    "Anim3DRelativePath": "animation\\minion_melee\\Attack1.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\minion_melee\\Death.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\minion_melee\\Run.anim3d"
-                                }
-                            ],
-                            "strCurAnimName": "minion_melee\\Run"
-                        },
-                        {
-                            "FSM": 8
-                        },
-                        {
-                            "PATHFINDER": 9
-                        },
-                        {
-                            "MESHRENDER": 10,
-                            "Mesh": {
-                                "IsNull": false,
-                                "Key": "mesh\\minion_melee.mesh",
-                                "RelativePath": "mesh\\minion_melee.mesh"
-                            },
-                            "fBounding": 150.0,
-                            "bFrustumCheck": true,
-                            "bDynamicShadow": false,
-                            "bShowDebugBoundShape": false,
-                            "bRaySightCulling": false,
-                            "bUseBoundingOffset": false,
-                            "vBoundingBoxOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "iMtrlCount": 1,
-                            "vecMtrls[0]SharedMtrl": {
-                                "IsNull": false,
-                                "Key": "material\\minion_melee_Red.mtrl",
-                                "RelativePath": "material\\minion_melee_Red.mtrl"
                             },
                             "DynamicMtrls": [
                                 {
@@ -2939,7 +2528,7 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": -0.0,
+                                "y": 0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
@@ -4406,7 +3995,7 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": 0.0,
+                                "y": -0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
@@ -7124,1222 +6713,7 @@
         },
         {
             "layerName": "Structure",
-            "gameObjects": [
-                {
-                    "ObjName": "blue_nexus",
-                    "components": [
-                        {
-                            "TRANSFORM": 0,
-                            "vRelativePos": {
-                                "x": 229.6999969482422,
-                                "y": 15.899999618530273,
-                                "z": 241.5
-                            },
-                            "vRelativeScale": {
-                                "x": 0.18000000715255737,
-                                "y": 0.18000000715255737,
-                                "z": 0.18000000715255737
-                            },
-                            "vRelativeRot": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "bAbsolute": false,
-                            "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 50.0,
-                            "IsShootingRay": false,
-                            "RayRange": 20.0,
-                            "UseMouseOutLine": false,
-                            "Outlinethickness": 0.07199999690055847
-                        },
-                        {
-                            "ANIMATOR3D": 4,
-                            "IsEmpty": false,
-                            "MeshDataRelativePath": "meshdata\\nexus.mdat",
-                            "bRepeat": true,
-                            "fAnimSpeed": 1.0,
-                            "mapAnim": [
-                                {
-                                    "Anim3DRelativePath": "animation\\nexus\\sruap_order_balloon_death.anm_skinned_mesh.002.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\nexus\\sruap_order_death.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\nexus\\sruap_order_idle.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\nexus\\sruap_order_spawn.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\nexus\\sruap_order_spawn_hold.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\nexus\\nexus_model-nexus_model-nexus_model-nexusAllAction.anim3d"
-                                }
-                            ],
-                            "strCurAnimName": "nexus\\sruap_order_idle.anm_skinned_mesh.001"
-                        },
-                        {
-                            "MESHRENDER": 10,
-                            "Mesh": {
-                                "IsNull": false,
-                                "Key": "mesh\\nexus.mesh",
-                                "RelativePath": "mesh\\nexus.mesh"
-                            },
-                            "fBounding": 150.0,
-                            "bFrustumCheck": false,
-                            "bDynamicShadow": false,
-                            "bShowDebugBoundShape": false,
-                            "bRaySightCulling": false,
-                            "bUseBoundingOffset": false,
-                            "vBoundingBoxOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "iMtrlCount": 2,
-                            "vecMtrls[0]SharedMtrl": {
-                                "IsNull": false,
-                                "Key": "material\\nexus_Destroyed_Blue.mtrl",
-                                "RelativePath": "material\\nexus_Destroyed_Blue.mtrl"
-                            },
-                            "vecMtrls[1]SharedMtrl": {
-                                "IsNull": false,
-                                "Key": "material\\nexus_Mat_Blue.mtrl",
-                                "RelativePath": "material\\nexus_Mat_Blue.mtrl"
-                            },
-                            "DynamicMtrls": [
-                                {
-                                    "vecMtrls[0]DynamicMtrl": null,
-                                    "IsDynamicMtrlExist": false
-                                },
-                                {
-                                    "vecMtrls[1]DynamicMtrl": null,
-                                    "IsDynamicMtrlExist": false
-                                }
-                            ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
-                        },
-                        16
-                    ],
-                    "scripts": [],
-                    "children": []
-                },
-                {
-                    "ObjName": "blue_Inhibitor",
-                    "components": [
-                        {
-                            "TRANSFORM": 0,
-                            "vRelativePos": {
-                                "x": 537.7100219726563,
-                                "y": 14.199999809265137,
-                                "z": 546.9000244140625
-                            },
-                            "vRelativeScale": {
-                                "x": 0.18000000715255737,
-                                "y": 0.18000000715255737,
-                                "z": 0.18000000715255737
-                            },
-                            "vRelativeRot": {
-                                "x": 0.0,
-                                "y": -0.793775737285614,
-                                "z": 0.0
-                            },
-                            "bAbsolute": false,
-                            "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 50.0,
-                            "IsShootingRay": false,
-                            "RayRange": 20.0,
-                            "UseMouseOutLine": false,
-                            "Outlinethickness": 0.07199999690055847
-                        },
-                        {
-                            "ANIMATOR3D": 4,
-                            "IsEmpty": false,
-                            "MeshDataRelativePath": "meshdata\\Inhibitor.mdat",
-                            "bRepeat": true,
-                            "fAnimSpeed": 1.0,
-                            "mapAnim": [
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_death.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_hold.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_idle2.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_idle3.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_idle_dead.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_respawn.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_spawn.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_blue-Inhibitor_AllAnim.anim3d"
-                                }
-                            ],
-                            "strCurAnimName": "Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001"
-                        },
-                        {
-                            "MESHRENDER": 10,
-                            "Mesh": {
-                                "IsNull": false,
-                                "Key": "mesh\\Inhibitor.mesh",
-                                "RelativePath": "mesh\\Inhibitor.mesh"
-                            },
-                            "fBounding": 150.0,
-                            "bFrustumCheck": false,
-                            "bDynamicShadow": false,
-                            "bShowDebugBoundShape": false,
-                            "bRaySightCulling": false,
-                            "bUseBoundingOffset": false,
-                            "vBoundingBoxOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "iMtrlCount": 2,
-                            "vecMtrls[0]SharedMtrl": {
-                                "IsNull": false,
-                                "Key": "material\\inhibitor_blue_Mtrl.mtrl",
-                                "RelativePath": "material\\inhibitor_blue_Mtrl.mtrl"
-                            },
-                            "vecMtrls[1]SharedMtrl": {
-                                "IsNull": false,
-                                "Key": "material\\inhibitor_blue_Destroyed_Mtrl.mtrl",
-                                "RelativePath": "material\\inhibitor_blue_Destroyed_Mtrl.mtrl"
-                            },
-                            "DynamicMtrls": [
-                                {
-                                    "vecMtrls[0]DynamicMtrl": null,
-                                    "IsDynamicMtrlExist": false
-                                },
-                                {
-                                    "vecMtrls[1]DynamicMtrl": null,
-                                    "IsDynamicMtrlExist": false
-                                }
-                            ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
-                        },
-                        16
-                    ],
-                    "scripts": [],
-                    "children": []
-                },
-                {
-                    "ObjName": "blue_Inhibitor2",
-                    "components": [
-                        {
-                            "TRANSFORM": 0,
-                            "vRelativePos": {
-                                "x": 169.86000061035156,
-                                "y": 14.199999809265137,
-                                "z": 527.02001953125
-                            },
-                            "vRelativeScale": {
-                                "x": 0.18000000715255737,
-                                "y": 0.18000000715255737,
-                                "z": 0.18000000715255737
-                            },
-                            "vRelativeRot": {
-                                "x": 0.0,
-                                "y": -1.561720609664917,
-                                "z": 0.0
-                            },
-                            "bAbsolute": false,
-                            "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 50.0,
-                            "IsShootingRay": false,
-                            "RayRange": 20.0,
-                            "UseMouseOutLine": false,
-                            "Outlinethickness": 0.07199999690055847
-                        },
-                        {
-                            "ANIMATOR3D": 4,
-                            "IsEmpty": false,
-                            "MeshDataRelativePath": "meshdata\\Inhibitor.mdat",
-                            "bRepeat": true,
-                            "fAnimSpeed": 1.0,
-                            "mapAnim": [
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_death.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_hold.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_idle2.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_idle3.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_idle_dead.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_respawn.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_spawn.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_blue-Inhibitor_AllAnim.anim3d"
-                                }
-                            ],
-                            "strCurAnimName": "Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001"
-                        },
-                        {
-                            "MESHRENDER": 10,
-                            "Mesh": {
-                                "IsNull": false,
-                                "Key": "mesh\\Inhibitor.mesh",
-                                "RelativePath": "mesh\\Inhibitor.mesh"
-                            },
-                            "fBounding": 150.0,
-                            "bFrustumCheck": false,
-                            "bDynamicShadow": false,
-                            "bShowDebugBoundShape": false,
-                            "bRaySightCulling": false,
-                            "bUseBoundingOffset": false,
-                            "vBoundingBoxOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "iMtrlCount": 2,
-                            "vecMtrls[0]SharedMtrl": {
-                                "IsNull": false,
-                                "Key": "material\\inhibitor_blue_Mtrl.mtrl",
-                                "RelativePath": "material\\inhibitor_blue_Mtrl.mtrl"
-                            },
-                            "vecMtrls[1]SharedMtrl": {
-                                "IsNull": false,
-                                "Key": "material\\inhibitor_blue_Destroyed_Mtrl.mtrl",
-                                "RelativePath": "material\\inhibitor_blue_Destroyed_Mtrl.mtrl"
-                            },
-                            "DynamicMtrls": [
-                                {
-                                    "vecMtrls[0]DynamicMtrl": null,
-                                    "IsDynamicMtrlExist": false
-                                },
-                                {
-                                    "vecMtrls[1]DynamicMtrl": null,
-                                    "IsDynamicMtrlExist": false
-                                }
-                            ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
-                        },
-                        16
-                    ],
-                    "scripts": [],
-                    "children": []
-                },
-                {
-                    "ObjName": "blue_Inhibitor2",
-                    "components": [
-                        {
-                            "TRANSFORM": 0,
-                            "vRelativePos": {
-                                "x": 634.969970703125,
-                                "y": 14.199999809265137,
-                                "z": 183.0800018310547
-                            },
-                            "vRelativeScale": {
-                                "x": 0.18000000715255737,
-                                "y": 0.18000000715255737,
-                                "z": 0.18000000715255737
-                            },
-                            "vRelativeRot": {
-                                "x": 0.0,
-                                "y": 0.03490463271737099,
-                                "z": 0.0
-                            },
-                            "bAbsolute": false,
-                            "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 50.0,
-                            "IsShootingRay": false,
-                            "RayRange": 20.0,
-                            "UseMouseOutLine": false,
-                            "Outlinethickness": 0.07199999690055847
-                        },
-                        {
-                            "ANIMATOR3D": 4,
-                            "IsEmpty": false,
-                            "MeshDataRelativePath": "meshdata\\Inhibitor.mdat",
-                            "bRepeat": true,
-                            "fAnimSpeed": 1.0,
-                            "mapAnim": [
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_death.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_hold.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_idle2.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_idle3.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_idle_dead.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_respawn.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_spawn.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_blue-Inhibitor_AllAnim.anim3d"
-                                }
-                            ],
-                            "strCurAnimName": "Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001"
-                        },
-                        {
-                            "MESHRENDER": 10,
-                            "Mesh": {
-                                "IsNull": false,
-                                "Key": "mesh\\Inhibitor.mesh",
-                                "RelativePath": "mesh\\Inhibitor.mesh"
-                            },
-                            "fBounding": 150.0,
-                            "bFrustumCheck": false,
-                            "bDynamicShadow": false,
-                            "bShowDebugBoundShape": false,
-                            "bRaySightCulling": false,
-                            "bUseBoundingOffset": false,
-                            "vBoundingBoxOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "iMtrlCount": 2,
-                            "vecMtrls[0]SharedMtrl": {
-                                "IsNull": false,
-                                "Key": "material\\inhibitor_blue_Mtrl.mtrl",
-                                "RelativePath": "material\\inhibitor_blue_Mtrl.mtrl"
-                            },
-                            "vecMtrls[1]SharedMtrl": {
-                                "IsNull": false,
-                                "Key": "material\\inhibitor_blue_Destroyed_Mtrl.mtrl",
-                                "RelativePath": "material\\inhibitor_blue_Destroyed_Mtrl.mtrl"
-                            },
-                            "DynamicMtrls": [
-                                {
-                                    "vecMtrls[0]DynamicMtrl": null,
-                                    "IsDynamicMtrlExist": false
-                                },
-                                {
-                                    "vecMtrls[1]DynamicMtrl": null,
-                                    "IsDynamicMtrlExist": false
-                                }
-                            ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
-                        },
-                        16
-                    ],
-                    "scripts": [],
-                    "children": []
-                },
-                {
-                    "ObjName": "red_nexus",
-                    "components": [
-                        {
-                            "TRANSFORM": 0,
-                            "vRelativePos": {
-                                "x": 1952.1739501953125,
-                                "y": 15.260000228881836,
-                                "z": 1956.219970703125
-                            },
-                            "vRelativeScale": {
-                                "x": 0.18000000715255737,
-                                "y": 0.18000000715255737,
-                                "z": 0.18000000715255737
-                            },
-                            "vRelativeRot": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "bAbsolute": false,
-                            "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 50.0,
-                            "IsShootingRay": false,
-                            "RayRange": 20.0,
-                            "UseMouseOutLine": false,
-                            "Outlinethickness": 0.07199999690055847
-                        },
-                        {
-                            "ANIMATOR3D": 4,
-                            "IsEmpty": false,
-                            "MeshDataRelativePath": "meshdata\\nexus.mdat",
-                            "bRepeat": true,
-                            "fAnimSpeed": 1.0,
-                            "mapAnim": [
-                                {
-                                    "Anim3DRelativePath": "animation\\nexus\\sruap_order_balloon_death.anm_skinned_mesh.002.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\nexus\\sruap_order_death.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\nexus\\sruap_order_idle.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\nexus\\sruap_order_spawn.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\nexus\\sruap_order_spawn_hold.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\nexus\\nexus_model-nexus_model-nexus_model-nexusAllAction.anim3d"
-                                }
-                            ],
-                            "strCurAnimName": "nexus\\sruap_order_idle.anm_skinned_mesh.001"
-                        },
-                        {
-                            "MESHRENDER": 10,
-                            "Mesh": {
-                                "IsNull": false,
-                                "Key": "mesh\\nexus.mesh",
-                                "RelativePath": "mesh\\nexus.mesh"
-                            },
-                            "fBounding": 150.0,
-                            "bFrustumCheck": false,
-                            "bDynamicShadow": false,
-                            "bShowDebugBoundShape": false,
-                            "bRaySightCulling": false,
-                            "bUseBoundingOffset": false,
-                            "vBoundingBoxOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "iMtrlCount": 2,
-                            "vecMtrls[0]SharedMtrl": {
-                                "IsNull": false,
-                                "Key": "material\\nexus_Destroyed_Blue.mtrl",
-                                "RelativePath": "material\\nexus_Destroyed_Blue.mtrl"
-                            },
-                            "vecMtrls[1]SharedMtrl": {
-                                "IsNull": false,
-                                "Key": "material\\nexus_Mat_Red.mtrl",
-                                "RelativePath": "material\\nexus_Mat_Red.mtrl"
-                            },
-                            "DynamicMtrls": [
-                                {
-                                    "vecMtrls[0]DynamicMtrl": null,
-                                    "IsDynamicMtrlExist": false
-                                },
-                                {
-                                    "vecMtrls[1]DynamicMtrl": null,
-                                    "IsDynamicMtrlExist": false
-                                }
-                            ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
-                        },
-                        16
-                    ],
-                    "scripts": [],
-                    "children": []
-                },
-                {
-                    "ObjName": "red_Inhibitor1",
-                    "components": [
-                        {
-                            "TRANSFORM": 0,
-                            "vRelativePos": {
-                                "x": 1661.699951171875,
-                                "y": 14.800000190734863,
-                                "z": 2013.9000244140625
-                            },
-                            "vRelativeScale": {
-                                "x": 0.18000000715255737,
-                                "y": 0.18000000715255737,
-                                "z": 0.18000000715255737
-                            },
-                            "vRelativeRot": {
-                                "x": -3.1415927410125732,
-                                "y": 0.0,
-                                "z": -3.1415927410125732
-                            },
-                            "bAbsolute": false,
-                            "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 50.0,
-                            "IsShootingRay": false,
-                            "RayRange": 20.0,
-                            "UseMouseOutLine": false,
-                            "Outlinethickness": 0.07199999690055847
-                        },
-                        {
-                            "ANIMATOR3D": 4,
-                            "IsEmpty": false,
-                            "MeshDataRelativePath": "meshdata\\Inhibitor.mdat",
-                            "bRepeat": true,
-                            "fAnimSpeed": 1.0,
-                            "mapAnim": [
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_death.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_hold.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_idle2.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_idle3.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_idle_dead.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_respawn.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_spawn.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_blue-Inhibitor_AllAnim.anim3d"
-                                }
-                            ],
-                            "strCurAnimName": "Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001"
-                        },
-                        {
-                            "MESHRENDER": 10,
-                            "Mesh": {
-                                "IsNull": false,
-                                "Key": "mesh\\Inhibitor.mesh",
-                                "RelativePath": "mesh\\Inhibitor.mesh"
-                            },
-                            "fBounding": 150.0,
-                            "bFrustumCheck": false,
-                            "bDynamicShadow": false,
-                            "bShowDebugBoundShape": false,
-                            "bRaySightCulling": false,
-                            "bUseBoundingOffset": false,
-                            "vBoundingBoxOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "iMtrlCount": 2,
-                            "vecMtrls[0]SharedMtrl": {
-                                "IsNull": false,
-                                "Key": "material\\inhibitor_red_Mtrl.mtrl",
-                                "RelativePath": "material\\inhibitor_red_Mtrl.mtrl"
-                            },
-                            "vecMtrls[1]SharedMtrl": {
-                                "IsNull": false,
-                                "Key": "material\\inhibitor_blue_Destroyed_Mtrl.mtrl",
-                                "RelativePath": "material\\inhibitor_blue_Destroyed_Mtrl.mtrl"
-                            },
-                            "DynamicMtrls": [
-                                {
-                                    "vecMtrls[0]DynamicMtrl": null,
-                                    "IsDynamicMtrlExist": false
-                                },
-                                {
-                                    "vecMtrls[1]DynamicMtrl": null,
-                                    "IsDynamicMtrlExist": false
-                                }
-                            ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
-                        },
-                        16
-                    ],
-                    "scripts": [],
-                    "children": []
-                },
-                {
-                    "ObjName": "red_Inhibitor2",
-                    "components": [
-                        {
-                            "TRANSFORM": 0,
-                            "vRelativePos": {
-                                "x": 1711.0,
-                                "y": 14.800000190734863,
-                                "z": 1721.0
-                            },
-                            "vRelativeScale": {
-                                "x": 0.18000000715255737,
-                                "y": 0.18000000715255737,
-                                "z": 0.18000000715255737
-                            },
-                            "vRelativeRot": {
-                                "x": -3.1415927410125732,
-                                "y": 0.7853981852531433,
-                                "z": -3.1415927410125732
-                            },
-                            "bAbsolute": false,
-                            "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 50.0,
-                            "IsShootingRay": false,
-                            "RayRange": 20.0,
-                            "UseMouseOutLine": false,
-                            "Outlinethickness": 0.07199999690055847
-                        },
-                        {
-                            "ANIMATOR3D": 4,
-                            "IsEmpty": false,
-                            "MeshDataRelativePath": "meshdata\\Inhibitor.mdat",
-                            "bRepeat": true,
-                            "fAnimSpeed": 1.0,
-                            "mapAnim": [
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_death.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_hold.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_idle2.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_idle3.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_idle_dead.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_respawn.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_spawn.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_blue-Inhibitor_AllAnim.anim3d"
-                                }
-                            ],
-                            "strCurAnimName": "Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001"
-                        },
-                        {
-                            "MESHRENDER": 10,
-                            "Mesh": {
-                                "IsNull": false,
-                                "Key": "mesh\\Inhibitor.mesh",
-                                "RelativePath": "mesh\\Inhibitor.mesh"
-                            },
-                            "fBounding": 150.0,
-                            "bFrustumCheck": false,
-                            "bDynamicShadow": false,
-                            "bShowDebugBoundShape": false,
-                            "bRaySightCulling": false,
-                            "bUseBoundingOffset": false,
-                            "vBoundingBoxOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "iMtrlCount": 2,
-                            "vecMtrls[0]SharedMtrl": {
-                                "IsNull": false,
-                                "Key": "material\\inhibitor_red_Mtrl.mtrl",
-                                "RelativePath": "material\\inhibitor_red_Mtrl.mtrl"
-                            },
-                            "vecMtrls[1]SharedMtrl": {
-                                "IsNull": false,
-                                "Key": "material\\inhibitor_blue_Destroyed_Mtrl.mtrl",
-                                "RelativePath": "material\\inhibitor_blue_Destroyed_Mtrl.mtrl"
-                            },
-                            "DynamicMtrls": [
-                                {
-                                    "vecMtrls[0]DynamicMtrl": null,
-                                    "IsDynamicMtrlExist": false
-                                },
-                                {
-                                    "vecMtrls[1]DynamicMtrl": null,
-                                    "IsDynamicMtrlExist": false
-                                }
-                            ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
-                        },
-                        16
-                    ],
-                    "scripts": [],
-                    "children": []
-                },
-                {
-                    "ObjName": "red_Inhibitor3",
-                    "components": [
-                        {
-                            "TRANSFORM": 0,
-                            "vRelativePos": {
-                                "x": 2006.9000244140625,
-                                "y": 14.800000190734863,
-                                "z": 1670.0999755859375
-                            },
-                            "vRelativeScale": {
-                                "x": 0.18000000715255737,
-                                "y": 0.18000000715255737,
-                                "z": 0.18000000715255737
-                            },
-                            "vRelativeRot": {
-                                "x": -3.1415927410125732,
-                                "y": 1.5707963705062866,
-                                "z": -3.1415927410125732
-                            },
-                            "bAbsolute": false,
-                            "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 50.0,
-                            "IsShootingRay": false,
-                            "RayRange": 20.0,
-                            "UseMouseOutLine": false,
-                            "Outlinethickness": 0.07199999690055847
-                        },
-                        {
-                            "ANIMATOR3D": 4,
-                            "IsEmpty": false,
-                            "MeshDataRelativePath": "meshdata\\Inhibitor.mdat",
-                            "bRepeat": true,
-                            "fAnimSpeed": 1.0,
-                            "mapAnim": [
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_death.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_hold.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_idle2.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_idle3.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_idle_dead.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_respawn.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_spawn.anm_skinned_mesh.001.anim3d"
-                                },
-                                {
-                                    "Anim3DRelativePath": "animation\\Inhibitor\\inhibitor_blue-Inhibitor_AllAnim.anim3d"
-                                }
-                            ],
-                            "strCurAnimName": "Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001"
-                        },
-                        {
-                            "MESHRENDER": 10,
-                            "Mesh": {
-                                "IsNull": false,
-                                "Key": "mesh\\Inhibitor.mesh",
-                                "RelativePath": "mesh\\Inhibitor.mesh"
-                            },
-                            "fBounding": 150.0,
-                            "bFrustumCheck": false,
-                            "bDynamicShadow": false,
-                            "bShowDebugBoundShape": false,
-                            "bRaySightCulling": false,
-                            "bUseBoundingOffset": false,
-                            "vBoundingBoxOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "iMtrlCount": 2,
-                            "vecMtrls[0]SharedMtrl": {
-                                "IsNull": false,
-                                "Key": "material\\inhibitor_red_Mtrl.mtrl",
-                                "RelativePath": "material\\inhibitor_red_Mtrl.mtrl"
-                            },
-                            "vecMtrls[1]SharedMtrl": {
-                                "IsNull": false,
-                                "Key": "material\\inhibitor_blue_Destroyed_Mtrl.mtrl",
-                                "RelativePath": "material\\inhibitor_blue_Destroyed_Mtrl.mtrl"
-                            },
-                            "DynamicMtrls": [
-                                {
-                                    "vecMtrls[0]DynamicMtrl": null,
-                                    "IsDynamicMtrlExist": false
-                                },
-                                {
-                                    "vecMtrls[1]DynamicMtrl": null,
-                                    "IsDynamicMtrlExist": false
-                                }
-                            ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
-                        },
-                        16
-                    ],
-                    "scripts": [],
-                    "children": []
-                }
-            ]
+            "gameObjects": []
         },
         {
             "layerName": "Mob",

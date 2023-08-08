@@ -185,7 +185,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 		case UnitType::MELEE_MINION:
 		{
-			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MeleeMinion_NoRange.prefab");
+			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MeleeMinion.prefab");
 			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
 			pObj = pPrefab->Instantiate();
 			Vec3 Scale = pObj->Transform()->GetRelativeScale();
@@ -245,7 +245,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 		break;
 		case UnitType::RANGED_MINION:
 		{
-			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\RangedMinion_NoRane.prefab");
+			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\RangedMinion.prefab");
 			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
 			pObj = pPrefab->Instantiate();
 			Vec3 Scale = pObj->Transform()->GetRelativeScale();
@@ -305,7 +305,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 		break;
 		case UnitType::SIEGE_MINION:
 		{
-			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\SeigeMinion_NoRange.prefab");
+			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\SiegeMinion.prefab");
 			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
 			pObj = pPrefab->Instantiate();
 			Vec3 Scale = pObj->Transform()->GetRelativeScale();
@@ -365,7 +365,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 		break;
 		case UnitType::SUPER_MINION:
 		{
-			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\SuperMinion_NoRange.prefab");
+			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\SuperMinion.prefab");
 			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
 			pObj = pPrefab->Instantiate();
 			Vec3 Scale = pObj->Transform()->GetRelativeScale();
