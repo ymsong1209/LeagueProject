@@ -190,6 +190,7 @@
     <ClInclude Include="CBlueReturnState.h" />
     <ClInclude Include="CBlueScript.h" />
     <ClInclude Include="CBlueSpawnState.h" />
+    <ClInclude Include="CBushScript.h" />
     <ClInclude Include="CCameraMoveScript.h" />
     <ClInclude Include="CChampionAttackState.h" />
     <ClInclude Include="CChampionDeathState.h" />
@@ -409,6 +410,7 @@
     <ClCompile Include="CBlueReturnState.cpp" />
     <ClCompile Include="CBlueScript.cpp" />
     <ClCompile Include="CBlueSpawnState.cpp" />
+    <ClCompile Include="CBushScript.cpp" />
     <ClCompile Include="CCameraMoveScript.cpp" />
     <ClCompile Include="CChampionAttackState.cpp" />
     <ClCompile Include="CChampionDeathState.cpp" />

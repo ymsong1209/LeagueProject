@@ -557,6 +557,7 @@
     <ClCompile Include="CMinionChaseState.cpp">
       <Filter>State\Unit\Minion</Filter>
     </ClCompile>
+    <ClCompile Include="CBushScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -657,6 +658,7 @@
     <ClInclude Include="CMinionChaseState.h">
       <Filter>State\Unit\Minion</Filter>
     </ClInclude>
+    <ClInclude Include="CBushScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">
