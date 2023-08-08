@@ -184,12 +184,12 @@ void GameObjMgr::SendMyPlayerMove(ClientServiceRef _service)
 	CC CurCC = obj->GetScript<CUnitScript>()->GetCC();
 
 
-	// 이전과 변화가 없다면 move packet을 보내지 않는다. return
-	if (PrevPos == CurPos
-		&& PrevHP == CurHP
-		&& PrevMP == CurMP
-		&& PrevCC == CurCC) 
-		return;
+	//// 이전과 변화가 없다면 move packet을 보내지 않는다. return
+	//if (PrevPos == CurPos
+	//	&& PrevHP == CurHP
+	//	&& PrevMP == CurMP
+	//	&& PrevCC == CurCC) 
+	//	return;
 
 	PrevPos = CurPos;
 	PrevHP = CurHP;
@@ -247,10 +247,10 @@ void GameObjMgr::SendObjectMove(uint64 _id, CGameObject* _obj, ClientServiceRef 
 		if (it1 != _objectsPrevHP.end())  // PrevHP 가 있다.
 		{
 			
-			// 이전 좌표, 이전 HP 똑같다면 move packet을 보내지 않는다. return
-			if (_objectsPrevPos.at(_id) == CurPos
-				&& _objectsPrevHP.at(_id) == CurHP)
-				return;
+			//// 이전 좌표, 이전 HP 똑같다면 move packet을 보내지 않는다. return
+			//if (_objectsPrevPos.at(_id) == CurPos
+			//	&& _objectsPrevHP.at(_id) == CurHP)
+			//	return;
 
 			_objectsPrevPos.at(_id) = CurPos; // 현재 좌표를 이전좌표로 저장
 			_objectsPrevHP.at(_id) = CurHP;   // 현재 HP를 이전 HP 로 저장
