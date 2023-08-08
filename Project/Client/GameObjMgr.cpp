@@ -175,23 +175,29 @@ void GameObjMgr::SendMyPlayerMove(ClientServiceRef _service)
 		return;
 
 	Vec3  CurPos = obj->Transform()->GetRelativePos();
-
-	//if (PrevPos == CurPos) // 이전 좌표와 변화가 없다면 move packet을 보내지 않는다. return
-	//	return;
-
-	PrevPos = CurPos;
-
 	Vec3  CurRot = obj->Transform()->GetRelativeRot();
 	int   CurLV = obj->GetScript<CUnitScript>()->GetLevel();
 	float CurHP = obj->GetScript<CUnitScript>()->GetCurHP();
 	float CurMP = obj->GetScript<CUnitScript>()->GetCurMP();
 	float MaxHP = obj->GetScript<CUnitScript>()->GetMaxHP();
 	float MaxMP = obj->GetScript<CUnitScript>()->GetMaxMP();
+	CC CurCC = obj->GetScript<CUnitScript>()->GetCC();
+
+
+	// 이전과 변화가 없다면 move packet을 보내지 않는다. return
+	if (PrevPos == CurPos
+		&& PrevHP == CurHP
+		&& PrevMP == CurMP
+		&& PrevCC == CurCC) 
+		return;
+
+	PrevPos = CurPos;
+	PrevHP = CurHP;
+	PrevMP = CurMP;
+	PrevCC = CurCC;
 
 	float CurAttackPower = obj->GetScript<CUnitScript>()->GetAttackPower();
 	float CurDefencePower = obj->GetScript<CUnitScript>()->GetDefencePower();
-	CC CurCC = obj->GetScript<CUnitScript>()->GetCC();
-	
 	bool bUnitDead = obj->GetScript<CUnitScript>()->IsUnitDead();
 
 

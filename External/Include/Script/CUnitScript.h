@@ -55,7 +55,14 @@ protected:
     bool                    m_bUnitDead;        // 유닛이 죽었는지(HP 0 이하)
     vector<CTimedEffect*>   m_TimedEffectList;  // 지속딜 / CC기 관련 리스트
 
+    bool                    m_bRcvMove;
+    Vec3                    m_vMovePos;
+    float                   m_fT;                // 보간 파라미터
+
 public:
+    void    SetRcvMove(bool _bool) { m_bRcvMove = _bool; }
+    void    SetMovePos(Vec3 _vec3) { m_vMovePos = _vec3; }
+   
     virtual void begin() override;
     virtual void tick() override;
 

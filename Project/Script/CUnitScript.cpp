@@ -59,6 +59,30 @@ void CUnitScript::begin()
 
 void CUnitScript::tick()
 {
+	Vec3 vCurPos = Transform()->GetRelativePos();
+	float duration = 0.125f; // 1/8초
+	if (m_bRcvMove && vCurPos != m_vMovePos)
+	{
+		if (m_fT == 0) // 이동이 처음 시작되면 t를 초기화
+		{
+			m_fT = DT / 0.125f;
+		}
+		else // 그렇지 않으면 t를 업데이트
+		{
+			m_fT += DT / 0.125f;
+		}
+
+		if (m_fT > 1) m_fT = 1;
+
+		Vec3 NewPos = vCurPos + (m_vMovePos - vCurPos) * m_fT;
+		Transform()->SetRelativePos(NewPos);
+
+		if (m_fT >= 1)
+		{
+			m_bRcvMove = false;
+			m_fT = 0; // 다음 이동을 위해 t를 0으로 초기화
+		}
+	}
 	CheckTimedEffect();
 	CheckCC();
 }

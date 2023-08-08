@@ -219,7 +219,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			// 방장은 진짜 계산 오브젝트 생성,  방장이 아닐 경우 허상을 생성
 			if (MyPlayer.host)
 			{
-				pObj->AddComponent(new CMinionScript);
+				pObj->AddComponent(new CUnitScript);
 
 				if (_objectInfo.lane == Lane::TOP)
 				{
