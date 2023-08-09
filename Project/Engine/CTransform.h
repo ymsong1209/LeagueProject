@@ -30,6 +30,13 @@ private:
     float   m_fRayRange;
     float   m_fOutlinethickness;
 
+    bool    m_bBillBoard;
+    bool    m_bCustomBillBoard;
+    Vec3    m_vCustomBillBoardAngle;
+
+    bool    m_bNoParentaffected; //아예 부모오브젝트의 포즈,스케일,로테이션 영향을 안받고 싶은경우 true 
+                                //=> 자식오브젝트 UI카메라가 직교, 부모가 메인카메라 원근 이라서 직교자식이 원근부모 영향을 받아 이상하게 좌표값이 나와서 만들었어요
+
 public:
     void SetRelativePos(Vec3 _vPos) { m_vRelativePos = _vPos; }
     void SetRelativeScale(Vec3 _vScale) { m_vRelativeScale = _vScale; }
@@ -52,7 +59,7 @@ public:
     Vec3 GetWorldPos() { return m_matWorld.Translation(); }
     const Matrix& GetWorldInvMat() const { return m_matWorldInv; }
 
-    const Matrix&  GetWorldRotMat() { return m_matWorldRot; }
+    const Matrix& GetWorldRotMat() { return m_matWorldRot; }
     const Matrix& GetWorldScaleMat() { return m_matWorldScale; }
     const Matrix& GetWorldPosMat() { return m_matWorldPos; }
     const Matrix& GetWorldMat() const { return m_matWorld; }
@@ -69,7 +76,7 @@ public:
     bool GetGizmoObjExcept() { return m_bGizmoObjExcept; }
     // 기즈모한테 선택되지 않아야하는 오브젝트일 경우 true
 
-    
+
     void SetIsShootingRay(bool _ray) { m_bIsShootingRay = _ray; }
     bool GetIsShootingRay() { return m_bIsShootingRay; }
 
@@ -81,6 +88,17 @@ public:
 
     void SetOutlineThickness(float _Thickenss) { m_fOutlinethickness = _Thickenss; }
     float GetOutlineThickness() { return m_fOutlinethickness; }
+
+    bool  IsBillBoard() { return m_bBillBoard; }
+    void  SetBillBoard(bool _state) { m_bBillBoard = _state; }
+
+    bool  IsUsingCustomBillBoard() { return m_bCustomBillBoard; }
+    void  SetUsingCustomBillBoard(bool _state) { m_bCustomBillBoard = _state; }
+    void  SetCustomBillBoardAngle(Vec3 _Angle) { m_vCustomBillBoardAngle = _Angle; }
+    Vec3  GetCustomBillBoardAngle() { return m_vCustomBillBoardAngle; }
+
+    void SetNoParentaffected(bool _IsNoAffected) { m_bNoParentaffected = _IsNoAffected; }
+    bool GetNoParentaffected() { return m_bNoParentaffected; }
 
 public:
     virtual void finaltick() override;
@@ -99,4 +117,5 @@ public:
     CTransform(const CTransform& _other);
     ~CTransform();
 };
+
 

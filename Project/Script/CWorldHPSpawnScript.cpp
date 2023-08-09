@@ -85,6 +85,13 @@ void CWorldHPSpawnScript::BeginOverlap(CCollider2D* _Other)
 
 void CWorldHPSpawnScript::UISpawn(CGameObject* _PlayerObj, CGameObject* _WorldBarObj)
 {
+	bool IsCull = _PlayerObj->GetRenderComponent()->IsCulled();
+	bool UseRaySight = _PlayerObj->GetRenderComponent()->IsUsingRaySightCulling();
+	if (IsCull && UseRaySight)
+	{
+		return;
+	}
+
 	Vec3 Pos = _PlayerObj->Transform()->GetRelativePos();
 	CCamera* MainCam = CRenderMgr::GetInst()->GetMainCam();
 	Matrix viewmat = MainCam->GetViewMat();

@@ -332,9 +332,6 @@
     <ClCompile Include="CAttackRangeScript.cpp">
       <Filter>Scripts\Unit\Champion\AttackRange</Filter>
     </ClCompile>
-    <ClCompile Include="CChampionScript.cpp">
-      <Filter>Scripts\Unit\Champion</Filter>
-    </ClCompile>
     <ClCompile Include="CJinxScript.cpp">
       <Filter>Scripts\Unit\Champion</Filter>
     </ClCompile>
@@ -548,7 +545,6 @@
     <ClCompile Include="CDragonAggro2AlertState.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
     </ClCompile>
-    <ClCompile Include="CMonsterHPBarUIScript.cpp" />
     <ClCompile Include="CMinionChaseState.cpp">
       <Filter>State\Unit\Minion</Filter>
     </ClCompile>
@@ -710,7 +706,6 @@
     <ClInclude Include="CDragonAggro2AlertState.h">
       <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
     </ClInclude>
-    <ClInclude Include="CMonsterHPBarUIScript.h" />
     <ClInclude Include="CMinionChaseState.h">
       <Filter>State\Unit\Minion</Filter>
     </ClInclude>

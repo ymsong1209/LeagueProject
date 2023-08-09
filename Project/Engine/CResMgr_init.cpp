@@ -1075,8 +1075,8 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_BarRatioShader");
 	pShader->SetRSType(RS_TYPE::CULL_NONE);
 	pShader->SetDSType(DS_TYPE::LESS);
-	pShader->SetBSType(BS_TYPE::MASK);
-	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI_MASK);
+	pShader->SetBSType(BS_TYPE::ALPHA_BLEND);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI_OPAQUE);
 	// Param
 	pShader->AddTexParam(TEX_0, "Output Texture");
 	pShader->AddScalarParam(FLOAT_0, "Ratio      ");
@@ -1086,6 +1086,131 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->AddScalarParam(FLOAT_4, "DownY      ");
 	pShader->AddScalarParam(FLOAT_5, "TotalWidth ");
 	pShader->AddScalarParam(FLOAT_6, "TotalHeight");
+	AddRes(pShader->GetKey(), pShader);
+
+	// ============================
+	// JungleBarRatioShader
+	// RasterizerState      : None
+	// BlendState           : Mask
+	// DepthStencilState    : Less
+	
+	// g_tex_0              : Output Texture
+	// g_float_0            : 현재 bar대비 비율 (마나or체력 비율)
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"JungleBarRatioShader");
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_JungleBarRatioShader");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_JungleBarRatioShader");
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::ALPHA_BLEND);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI_OPAQUE);
+	// Param
+	pShader->AddTexParam(TEX_0, "Output Texture");
+	AddRes(pShader->GetKey(), pShader);
+
+	// ============================
+	// MinionBarRatioShader
+	// RasterizerState      : None
+	// BlendState           : Mask
+	// DepthStencilState    : Less
+	
+	// g_tex_0              : Output Texture
+	// g_float_0            : 현재 bar대비 비율 (마나or체력 비율)
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"MinionBarRatioShader");
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_MinionBarRatioShader");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_MinionBarRatioShader");
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::ALPHA_BLEND);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI_TRANSPARENT);
+	// Param
+	pShader->AddTexParam(TEX_0, "Output Texture");
+	AddRes(pShader->GetKey(), pShader);
+
+	// ============================
+	// TurretBarRatioShader
+	// RasterizerState      : None
+	// BlendState           : Mask
+	// DepthStencilState    : Less
+	
+	// g_tex_0              : Output Texture
+	// g_float_0            : 현재 bar대비 비율 (마나or체력 비율)
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"TurretBarRatioShader");
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_TurretBarRatioShader");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_TurretBarRatioShader");
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	pShader->SetBSType(BS_TYPE::ALPHA_BLEND);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_TRANSPARENT);
+	// Param
+	pShader->AddTexParam(TEX_0, "Output Texture");
+	AddRes(pShader->GetKey(), pShader);
+
+	// ============================
+	// InhibitorBarRatioShader
+	// RasterizerState      : None
+	// BlendState           : Mask
+	// DepthStencilState    : Less
+	
+	// g_tex_0              : Output Texture
+	// g_float_0            : 현재 bar대비 비율 (마나or체력 비율)
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"InhibitorBarRatioShader");
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_InhibitorBarRatioShader");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_InhibitorBarRatioShader");
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	pShader->SetBSType(BS_TYPE::ALPHA_BLEND);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_TRANSPARENT);
+	// Param
+	pShader->AddTexParam(TEX_0, "Output Texture");
+	AddRes(pShader->GetKey(), pShader);
+
+	// ============================
+	// JungleMiniRatioShader
+	// RasterizerState      : None
+	// BlendState           : Mask
+	// DepthStencilState    : Less
+	
+	// g_tex_0              : Output Texture
+	// g_float_0            : 현재 bar대비 비율 (마나or체력 비율)
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"JungleMiniRatioShader");
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_MinionBarRatioShader");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_MinionBarRatioShader");
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::ALPHA_BLEND);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_UI_OPAQUE);
+	// Param
+	pShader->AddTexParam(TEX_0, "Output Texture");
+	AddRes(pShader->GetKey(), pShader);
+
+	// ============================
+	// 2dDefaultShader
+	// RasterizerState      : None
+	// BlendState           : Mask
+	// DepthStencilState    : Less
+	
+	// g_tex_0              : Output Texture
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"2dDefaultShader");
+	pShader->CreateVertexShader(L"shader\\std2d.fx", "VS_2dDefaultShader");
+	pShader->CreatePixelShader(L"shader\\std2d.fx", "PS_2dDefaultShader");
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::ALPHA_BLEND);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_MASK);
+	// Param
+	pShader->AddTexParam(TEX_0, "Output Texture");
 	AddRes(pShader->GetKey(), pShader);
 
 
@@ -1652,7 +1777,6 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->SetBSType(BS_TYPE::DEFAULT);
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_CONTOURPAINT);
 	AddRes(pShader->GetKey(), pShader);
-
 
 }
 
