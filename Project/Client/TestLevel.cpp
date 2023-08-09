@@ -42,6 +42,7 @@
 #include <Script/CKrugMiniScript.h>
 #include <Script/CBlueScript.h>
 #include <Script/CTestTurretScript.h>
+#include <Script/CMalphiteBasicAttackScript.h>
 //#include <Script/CRedScript.h>
 
 void CreateTestLevel()
@@ -494,6 +495,7 @@ void CreateTestLevel()
 	 pRectFast->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
 	 pRectFast->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f,0.f));
 	 pRectFast->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
+	 pRectFast->MeshRender()->SetFrustumCheck(false);
 
 	 //SpawnGameObject(pRectFast, Vec3(-794, 40, 504.f), 0);
 
@@ -508,6 +510,7 @@ void CreateTestLevel()
 	 pCircleFast->Transform()->SetRelativeScale(Vec3(500.f, 500.f, 0.f));
 	 
 	 pCircleFast->Transform()->SetUseMouseOutline(false);
+	 pCircleFast->MeshRender()->SetFrustumCheck(false);
 
 	 pCircleFast->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CircleMesh"));
 	 pCircleFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"TurretBlazeMtrl"), 0);
@@ -583,6 +586,7 @@ void CreateTestLevel()
 	BasicAttack->SetName(L"BasicAttack");
 	BasicAttack->AddComponent(new CMeshRender);
 	BasicAttack->AddComponent(new CTransform);
+	BasicAttack->AddComponent(new CMalphiteBasicAttackScript);
 	BasicAttack->Transform()->SetUseMouseOutline(false);
 
 	BasicAttack->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 0.f));

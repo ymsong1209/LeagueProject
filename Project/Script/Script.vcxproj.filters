@@ -497,6 +497,9 @@
     <ClCompile Include="CTestTurretScript.cpp">
       <Filter>Test</Filter>
     </ClCompile>
+    <ClCompile Include="CMalphiteBasicAttackScript.cpp">
+      <Filter>Malphite</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -548,6 +551,9 @@
     </ClInclude>
     <ClInclude Include="CTestTurretScript.h">
       <Filter>Test</Filter>
+    </ClInclude>
+    <ClInclude Include="CMalphiteBasicAttackScript.h">
+      <Filter>Malphite</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1179,6 +1185,9 @@
     </Filter>
     <Filter Include="Test">
       <UniqueIdentifier>{6a36a469-ed3f-4958-87b3-33521fc38300}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Malphite">
+      <UniqueIdentifier>{a3f6799e-2f8d-4ecb-a40f-5093f86675b8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
