@@ -60,8 +60,8 @@ private:
 
     vector<Matrix>				m_vecFinalBoneMat; // 텍스쳐에 전달할 최종 행렬정보
 
-    CStructuredBuffer* m_pBoneFinalMatBuffer;  // 특정 프레임의 최종 행렬
-
+    CStructuredBuffer*          m_pBoneFinalMatBuffer;  // 특정 프레임의 최종 행렬
+    bool						m_bFinalMatUpdate; // 최종행렬 연산 수행여부
     wstring                     m_MeshDataRelativePath; //애니메이션은 mesh랑 material이 세팅되어야함. 
 
 
