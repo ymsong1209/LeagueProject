@@ -5,6 +5,7 @@ class CJungleChaseState :
 {
 private:
     float       m_fTime;
+    Vec3        m_vTargetPos;
 public:
     virtual void Enter() override;
     virtual void tick() override;
