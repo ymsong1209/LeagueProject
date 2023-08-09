@@ -9,6 +9,7 @@
 #include "CChampionScript.h"
 #include "CCharacterUIScript.h"
 #include "CCoolDownUIScript.h"
+#include "CDragonHPUIScript.h"
 #include "CDragonScript.h"
 #include "CExpRatioUIScript.h"
 #include "CFontUIScript.h"
@@ -19,6 +20,8 @@
 #include "CInventoryUIScript.h"
 #include "CJinxScript.h"
 #include "CJinxWScript.h"
+#include "CJungleMINIHPScript.h"
+#include "CJungleMobHPScript.h"
 #include "CJungleMonsterScript.h"
 #include "CKrugMiniScript.h"
 #include "CKrugScript.h"
@@ -27,9 +30,10 @@
 #include "CMalphiteRScript.h"
 #include "CMalphiteScript.h"
 #include "CMinimapUIScript.h"
+#include "CMinionHPBarPosScript.h"
+#include "CMinionHPRatioScript.h"
 #include "CMinionScript.h"
 #include "CMobScript.h"
-#include "CMonsterHPBarUIScript.h"
 #include "CMouseCursorUIScript.h"
 #include "CMoveCursorUIScript.h"
 #include "CMurkWolfMiniScript.h"
@@ -45,6 +49,7 @@
 #include "CSoundTestScript.h"
 #include "CStructureScript.h"
 #include "CTurretAttackScript.h"
+#include "CTurretHPUIScript.h"
 #include "CTurretScript.h"
 #include "CUIScript.h"
 #include "CUnitScript.h"
@@ -61,6 +66,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CChampionScript");
 	_vec.push_back(L"CCharacterUIScript");
 	_vec.push_back(L"CCoolDownUIScript");
+	_vec.push_back(L"CDragonHPUIScript");
 	_vec.push_back(L"CDragonScript");
 	_vec.push_back(L"CExpRatioUIScript");
 	_vec.push_back(L"CFontUIScript");
@@ -71,6 +77,8 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CInventoryUIScript");
 	_vec.push_back(L"CJinxScript");
 	_vec.push_back(L"CJinxWScript");
+	_vec.push_back(L"CJungleMINIHPScript");
+	_vec.push_back(L"CJungleMobHPScript");
 	_vec.push_back(L"CJungleMonsterScript");
 	_vec.push_back(L"CKrugMiniScript");
 	_vec.push_back(L"CKrugScript");
@@ -79,9 +87,10 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CMalphiteRScript");
 	_vec.push_back(L"CMalphiteScript");
 	_vec.push_back(L"CMinimapUIScript");
+	_vec.push_back(L"CMinionHPBarPosScript");
+	_vec.push_back(L"CMinionHPRatioScript");
 	_vec.push_back(L"CMinionScript");
 	_vec.push_back(L"CMobScript");
-	_vec.push_back(L"CMonsterHPBarUIScript");
 	_vec.push_back(L"CMouseCursorUIScript");
 	_vec.push_back(L"CMoveCursorUIScript");
 	_vec.push_back(L"CMurkWolfMiniScript");
@@ -97,6 +106,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CSoundTestScript");
 	_vec.push_back(L"CStructureScript");
 	_vec.push_back(L"CTurretAttackScript");
+	_vec.push_back(L"CTurretHPUIScript");
 	_vec.push_back(L"CTurretScript");
 	_vec.push_back(L"CUIScript");
 	_vec.push_back(L"CUnitScript");
@@ -122,6 +132,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CCharacterUIScript;
 	if (L"CCoolDownUIScript" == _strScriptName)
 		return new CCoolDownUIScript;
+	if (L"CDragonHPUIScript" == _strScriptName)
+		return new CDragonHPUIScript;
 	if (L"CDragonScript" == _strScriptName)
 		return new CDragonScript;
 	if (L"CExpRatioUIScript" == _strScriptName)
@@ -142,6 +154,10 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CJinxScript;
 	if (L"CJinxWScript" == _strScriptName)
 		return new CJinxWScript;
+	if (L"CJungleMINIHPScript" == _strScriptName)
+		return new CJungleMINIHPScript;
+	if (L"CJungleMobHPScript" == _strScriptName)
+		return new CJungleMobHPScript;
 	if (L"CJungleMonsterScript" == _strScriptName)
 		return new CJungleMonsterScript;
 	if (L"CKrugMiniScript" == _strScriptName)
@@ -158,12 +174,14 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CMalphiteScript;
 	if (L"CMinimapUIScript" == _strScriptName)
 		return new CMinimapUIScript;
+	if (L"CMinionHPBarPosScript" == _strScriptName)
+		return new CMinionHPBarPosScript;
+	if (L"CMinionHPRatioScript" == _strScriptName)
+		return new CMinionHPRatioScript;
 	if (L"CMinionScript" == _strScriptName)
 		return new CMinionScript;
 	if (L"CMobScript" == _strScriptName)
 		return new CMobScript;
-	if (L"CMonsterHPBarUIScript" == _strScriptName)
-		return new CMonsterHPBarUIScript;
 	if (L"CMouseCursorUIScript" == _strScriptName)
 		return new CMouseCursorUIScript;
 	if (L"CMoveCursorUIScript" == _strScriptName)
@@ -194,6 +212,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CStructureScript;
 	if (L"CTurretAttackScript" == _strScriptName)
 		return new CTurretAttackScript;
+	if (L"CTurretHPUIScript" == _strScriptName)
+		return new CTurretHPUIScript;
 	if (L"CTurretScript" == _strScriptName)
 		return new CTurretScript;
 	if (L"CUIScript" == _strScriptName)
@@ -235,6 +255,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::COOLDOWNUISCRIPT:
 		return new CCoolDownUIScript;
 		break;
+	case (UINT)SCRIPT_TYPE::DRAGONHPUISCRIPT:
+		return new CDragonHPUIScript;
+		break;
 	case (UINT)SCRIPT_TYPE::DRAGONSCRIPT:
 		return new CDragonScript;
 		break;
@@ -265,6 +288,12 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::JINXWSCRIPT:
 		return new CJinxWScript;
 		break;
+	case (UINT)SCRIPT_TYPE::JUNGLEMINIHPSCRIPT:
+		return new CJungleMINIHPScript;
+		break;
+	case (UINT)SCRIPT_TYPE::JUNGLEMOBHPSCRIPT:
+		return new CJungleMobHPScript;
+		break;
 	case (UINT)SCRIPT_TYPE::JUNGLEMONSTERSCRIPT:
 		return new CJungleMonsterScript;
 		break;
@@ -289,14 +318,17 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::MINIMAPUISCRIPT:
 		return new CMinimapUIScript;
 		break;
+	case (UINT)SCRIPT_TYPE::MINIONHPBARPOSSCRIPT:
+		return new CMinionHPBarPosScript;
+		break;
+	case (UINT)SCRIPT_TYPE::MINIONHPRATIOSCRIPT:
+		return new CMinionHPRatioScript;
+		break;
 	case (UINT)SCRIPT_TYPE::MINIONSCRIPT:
 		return new CMinionScript;
 		break;
 	case (UINT)SCRIPT_TYPE::MOBSCRIPT:
 		return new CMobScript;
-		break;
-	case (UINT)SCRIPT_TYPE::MONSTERHPBARUISCRIPT:
-		return new CMonsterHPBarUIScript;
 		break;
 	case (UINT)SCRIPT_TYPE::MOUSECURSORUISCRIPT:
 		return new CMouseCursorUIScript;
@@ -342,6 +374,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::TURRETATTACKSCRIPT:
 		return new CTurretAttackScript;
+		break;
+	case (UINT)SCRIPT_TYPE::TURRETHPUISCRIPT:
+		return new CTurretHPUIScript;
 		break;
 	case (UINT)SCRIPT_TYPE::TURRETSCRIPT:
 		return new CTurretScript;
@@ -398,6 +433,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CCoolDownUIScript";
 		break;
 
+	case SCRIPT_TYPE::DRAGONHPUISCRIPT:
+		return L"CDragonHPUIScript";
+		break;
+
 	case SCRIPT_TYPE::DRAGONSCRIPT:
 		return L"CDragonScript";
 		break;
@@ -438,6 +477,14 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CJinxWScript";
 		break;
 
+	case SCRIPT_TYPE::JUNGLEMINIHPSCRIPT:
+		return L"CJungleMINIHPScript";
+		break;
+
+	case SCRIPT_TYPE::JUNGLEMOBHPSCRIPT:
+		return L"CJungleMobHPScript";
+		break;
+
 	case SCRIPT_TYPE::JUNGLEMONSTERSCRIPT:
 		return L"CJungleMonsterScript";
 		break;
@@ -470,16 +517,20 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CMinimapUIScript";
 		break;
 
+	case SCRIPT_TYPE::MINIONHPBARPOSSCRIPT:
+		return L"CMinionHPBarPosScript";
+		break;
+
+	case SCRIPT_TYPE::MINIONHPRATIOSCRIPT:
+		return L"CMinionHPRatioScript";
+		break;
+
 	case SCRIPT_TYPE::MINIONSCRIPT:
 		return L"CMinionScript";
 		break;
 
 	case SCRIPT_TYPE::MOBSCRIPT:
 		return L"CMobScript";
-		break;
-
-	case SCRIPT_TYPE::MONSTERHPBARUISCRIPT:
-		return L"CMonsterHPBarUIScript";
 		break;
 
 	case SCRIPT_TYPE::MOUSECURSORUISCRIPT:
@@ -540,6 +591,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::TURRETATTACKSCRIPT:
 		return L"CTurretAttackScript";
+		break;
+
+	case SCRIPT_TYPE::TURRETHPUISCRIPT:
+		return L"CTurretHPUIScript";
 		break;
 
 	case SCRIPT_TYPE::TURRETSCRIPT:

@@ -40,6 +40,10 @@
 #include <Script/CKrugMiniScript.h>
 #include <Script/CBlueScript.h>
 #include <Script/CRedScript.h>
+#include <Script\CMinionHPRatioScript.h>
+#include <Script\CDragonHPUIScript.h>
+#include <Script\CJungleMobHPScript.h>
+#include <Script\CJungleMINIHPScript.h>
 #include <Script/CInGameCameraScript.h>
 #include <Script/CDragonScript.h>
 
@@ -81,7 +85,7 @@ void CreateTestLevel()
 	CCollisionMgr::GetInst()->LayerCheck(L"Mob", L"Map_Wall");
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Bush");
 
-	 //Main Camera Object 생성
+	//Main Camera Object 생성
 	CGameObject* pMainCam = new CGameObject;
 	pMainCam->SetName(L"MainCamera");
 	pMainCam->AddComponent(new CTransform);
@@ -92,7 +96,7 @@ void CreateTestLevel()
 	pMainCam->Camera()->SetCameraIndex(0);		// MainCamera 로 설정
 	pMainCam->Camera()->SetLayerMaskAll(true);	// 모든 레이어 체크
 	pMainCam->Camera()->SetLayerMask(31, false);// UI Layer 는 렌더링하지 않는다.
-	pMainCam->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(60.f),0.f, 0.f));
+	pMainCam->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(60.f), 0.f, 0.f));
 
 	SpawnGameObject(pMainCam, Vec3(120.f, 525.f, -152.f), 0);
 
@@ -210,7 +214,7 @@ void CreateTestLevel()
 
 	//SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 0.f), 0);
 
-	
+
 
 	CGameObject* LoLMapCollider = new CGameObject;
 	LoLMapCollider->SetName(L"LoLMapCollider");
@@ -223,6 +227,54 @@ void CreateTestLevel()
 	LoLMapCollider->Transform()->SetGizmoObjExcept(true);
 	SpawnGameObject(LoLMapCollider, Vec3(0.f, 0.f, 0.f), L"Lolmap");
 
+
+
+	//======메모: 미니언,드래곤,정글몹 자식으로 붙일 체력바 부분=================================================
+
+	// 1. 미니언
+	/*CGameObject* HPBar = new CGameObject;
+	HPBar->SetName(L"HPBar");
+	HPBar->AddComponent(new CTransform);
+	HPBar->AddComponent(new CMeshRender);
+	HPBar->AddComponent(new CMinionHPRatioScript);
+	pObj->AddChild(HPBar);
+	
+	2. 장로드래곤
+	CGameObject* DragonBar = new CGameObject;
+	DragonBar->SetName(L"DragonBar");
+	DragonBar->AddComponent(new CTransform);
+	DragonBar->AddComponent(new CMeshRender);
+	DragonBar->AddComponent(new CDragonHPUIScript);
+
+	3. 정글몬스터들
+
+	
+	*/
+
+	
+	//=======================================
+	Ptr<CMeshData> pMeshData2 = nullptr;
+	CGameObject* pObj2 = nullptr;
+	pMeshData2 = CResMgr::GetInst()->LoadFBX(L"fbx\\Elder_Dragon.fbx");
+	pObj2 = pMeshData2->Instantiate();
+	pObj2->SetName(L"Elder_Dragon");
+	pObj2->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Elder_Dragon");
+	pObj2->Animator3D()->PlayRepeat(L"Elder_Dragon\\sru_dragon_flying_run", true, true, 0.1f);
+	pObj2->Transform()->SetRelativeScale(Vec3(0.33f, 0.33f, 0.33f));
+	pObj2->AddComponent(new CUnitScript);
+	//pObj2->GetScript<CUnitScript>()->SetFaction(Faction::BLUE);
+	Vec3 spawnPos = Vec3(1454.188f, -24.114f, 650.603f);
+	SpawnGameObject(pObj2, spawnPos, L"Mob");
+
+	CGameObject* DragonBar = new CGameObject;
+	DragonBar->SetName(L"DragonBar");
+	DragonBar->AddComponent(new CTransform);
+	DragonBar->AddComponent(new CMeshRender);
+	DragonBar->AddComponent(new CDragonHPUIScript);
+	//SpawnGameObject(DragonBar, spawnPos, L"Mob");
+
+	pObj2->AddChild(DragonBar);
+	//======메모: 미니언,드래곤,정글몹 자식으로 붙일 체력바 부분=================================================
 
 
 	// ============
@@ -321,11 +373,11 @@ void CreateTestLevel()
 
 
 
-	
+
 
 	CGameObject* pSoundTestObj = new CGameObject;
 	pSoundTestObj->SetName(L"pSoundTestObj");
-	
+
 	pSoundTestObj->AddComponent(new CMeshRender);
 	pSoundTestObj->AddComponent(new CTransform);
 	pSoundTestObj->AddComponent(new CSoundTestScript);
@@ -350,7 +402,7 @@ void PlaceLand()
 
 		// 파일 경로 만들기
 		wstring strFilePath = CPathMgr::GetInst()->GetContentPath();
-		strFilePath+= L"lolmap.txt";
+		strFilePath += L"lolmap.txt";
 
 		// 읽기모드로 파일열기
 		std::wifstream file(strFilePath);
@@ -543,6 +595,13 @@ void SpawnJungleMob()
 			GrompAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
 			GrompAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
 			SpawnGameObject(GrompAggro, Vec3(323.f, 0.f, 1242.f), 0);
+
+			CGameObject* GrompHP = new CGameObject;
+			GrompHP->SetName(L"GrompHP");
+			GrompHP->AddComponent(new CTransform);
+			GrompHP->AddComponent(new CMeshRender);
+			GrompHP->AddComponent(new CJungleMobHPScript);
+			Gromp->AddChild(GrompHP);
 		}
 
 		//블루팀 늑대
@@ -569,6 +628,13 @@ void SpawnJungleMob()
 			MurkWolfAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
 			MurkWolfAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
 			SpawnGameObject(MurkWolfAggro, Vec3(564.f, 0.f, 959.f), 0);
+
+			CGameObject* MurkWolfHP = new CGameObject;
+			MurkWolfHP->SetName(L"SOUTH_MurkWolfHP");
+			MurkWolfHP->AddComponent(new CTransform);
+			MurkWolfHP->AddComponent(new CMeshRender);
+			MurkWolfHP->AddComponent(new CJungleMobHPScript);
+			MurkWolf->AddChild(MurkWolfHP);
 		}
 		//블루팀 늑대 째깐이(좌)
 		{
@@ -584,6 +650,13 @@ void SpawnJungleMob()
 			Script->SetAggroPos(Vec3(564.f, 0.f, 964.f));
 			Script->SetUnitType(UnitType::SOUTH_MURKWOLF_MINI_L);
 			SpawnGameObject(MurkWolf_Mini, Vec3(552.f, 15.f, 964.f), L"Mob");
+
+			CGameObject* MurkWolf_MiniHP = new CGameObject;
+			MurkWolf_MiniHP->SetName(L"SOUTH_MurkWolf_Mini_L_HP");
+			MurkWolf_MiniHP->AddComponent(new CTransform);
+			MurkWolf_MiniHP->AddComponent(new CMeshRender);
+			MurkWolf_MiniHP->AddComponent(new CJungleMINIHPScript);
+			MurkWolf_Mini->AddChild(MurkWolf_MiniHP);
 		}
 		//블루팀 늑대 째깐이(우)
 		{
@@ -599,6 +672,13 @@ void SpawnJungleMob()
 			Script->SetAggroPos(Vec3(564.f, 0.f, 964.f));
 			Script->SetUnitType(UnitType::SOUTH_MURKWOLF_MINI_R);
 			SpawnGameObject(MurkWolf_Mini, Vec3(580.f, 15.f, 944.f), L"Mob");
+
+			CGameObject* MurkWolf_MiniHP = new CGameObject;
+			MurkWolf_MiniHP->SetName(L"SOUTH_MurkWolf_Mini_R_HP");
+			MurkWolf_MiniHP->AddComponent(new CTransform);
+			MurkWolf_MiniHP->AddComponent(new CMeshRender);
+			MurkWolf_MiniHP->AddComponent(new CJungleMINIHPScript);
+			MurkWolf_Mini->AddChild(MurkWolf_MiniHP);
 		}
 		//블루팀 돌거북
 		{
@@ -624,6 +704,14 @@ void SpawnJungleMob()
 			KrugAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
 			KrugAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
 			SpawnGameObject(KrugAggro, Vec3(1238.f, 0.f, 389.f), 0);
+
+			CGameObject* KrugHP = new CGameObject;
+			KrugHP->SetName(L"SOUTH_KrugHP");
+			KrugHP->AddComponent(new CTransform);
+			KrugHP->AddComponent(new CMeshRender);
+			KrugHP->AddComponent(new CJungleMobHPScript);
+			Krug->AddChild(KrugHP);
+
 		}
 		//블루팀 돌거북 째깐이
 		{
@@ -639,6 +727,13 @@ void SpawnJungleMob()
 			Script->SetAggroPos(Vec3(1238.f, 0.f, 389.f));
 			Script->SetUnitType(UnitType::SOUTH_KRUG_MINI);
 			SpawnGameObject(Krug_Mini, Vec3(1252.f, 15.f, 379.f), L"Mob");
+
+			CGameObject* Krug_MiniHP = new CGameObject;
+			Krug_MiniHP->SetName(L"SOUTH_Krug_Mini_HP");
+			Krug_MiniHP->AddComponent(new CTransform);
+			Krug_MiniHP->AddComponent(new CMeshRender);
+			Krug_MiniHP->AddComponent(new CJungleMINIHPScript);
+			Krug_Mini->AddChild(Krug_MiniHP);
 		}
 		//블루팀 칼날부리
 		{
@@ -664,6 +759,13 @@ void SpawnJungleMob()
 			RazorBeakAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
 			RazorBeakAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
 			SpawnGameObject(RazorBeakAggro, Vec3(1033.f, 0.f, 782.f), 0);
+
+			CGameObject* RazorBeakHP = new CGameObject;
+			RazorBeakHP->SetName(L"SOUTH_RazorBeakHP");
+			RazorBeakHP->AddComponent(new CTransform);
+			RazorBeakHP->AddComponent(new CMeshRender);
+			RazorBeakHP->AddComponent(new CJungleMobHPScript);
+			RazorBeak->AddChild(RazorBeakHP);
 		}
 
 		//블루팀 칼날부리 째깐이
@@ -681,6 +783,13 @@ void SpawnJungleMob()
 			Script->SetUnitType(UnitType::SOUTH_RAZORBEAK_MINI_1);
 			SpawnGameObject(RazorBeak, Vec3(1026.f, 15.f, 810.f), L"Mob");
 
+			CGameObject* RazorBeakHP = new CGameObject;
+			RazorBeakHP->SetName(L"SOUTH_RazorBeak_Mini1_HP");
+			RazorBeakHP->AddComponent(new CTransform);
+			RazorBeakHP->AddComponent(new CMeshRender);
+			RazorBeakHP->AddComponent(new CJungleMINIHPScript);
+			RazorBeak->AddChild(RazorBeakHP);
+
 			RazorBeak = nullptr;
 			RazorBeak = pMeshData->Instantiate();
 			RazorBeak->AddComponent(new CRazorBeakMiniScript);
@@ -691,6 +800,13 @@ void SpawnJungleMob()
 			Script->SetAggroPos(Vec3(1033.f, 0.f, 782.f));
 			Script->SetUnitType(UnitType::SOUTH_RAZORBEAK_MINI_2);
 			SpawnGameObject(RazorBeak, Vec3(1048.f, 15.f, 799.f), L"Mob");
+
+			RazorBeakHP = new CGameObject;
+			RazorBeakHP->SetName(L"SOUTH_RazorBeak_Mini2_HP");
+			RazorBeakHP->AddComponent(new CTransform);
+			RazorBeakHP->AddComponent(new CMeshRender);
+			RazorBeakHP->AddComponent(new CJungleMINIHPScript);
+			RazorBeak->AddChild(RazorBeakHP);
 
 			RazorBeak = nullptr;
 			RazorBeak = pMeshData->Instantiate();
@@ -703,6 +819,13 @@ void SpawnJungleMob()
 			Script->SetUnitType(UnitType::SOUTH_RAZORBEAK_MINI_3);
 			SpawnGameObject(RazorBeak, Vec3(1031.f, 15.f, 782.f), L"Mob");
 
+			RazorBeakHP = new CGameObject;
+			RazorBeakHP->SetName(L"SOUTH_RazorBeak_Mini3_HP");
+			RazorBeakHP->AddComponent(new CTransform);
+			RazorBeakHP->AddComponent(new CMeshRender);
+			RazorBeakHP->AddComponent(new CJungleMINIHPScript);
+			RazorBeak->AddChild(RazorBeakHP);
+
 			RazorBeak = nullptr;
 			RazorBeak = pMeshData->Instantiate();
 			RazorBeak->AddComponent(new CRazorBeakMiniScript);
@@ -714,6 +837,13 @@ void SpawnJungleMob()
 			Script->SetUnitType(UnitType::SOUTH_RAZORBEAK_MINI_4);
 			SpawnGameObject(RazorBeak, Vec3(1012.f, 15.f, 765.f), L"Mob");
 
+			RazorBeakHP = new CGameObject;
+			RazorBeakHP->SetName(L"SOUTH_RazorBeak_Mini4_HP");
+			RazorBeakHP->AddComponent(new CTransform);
+			RazorBeakHP->AddComponent(new CMeshRender);
+			RazorBeakHP->AddComponent(new CJungleMINIHPScript);
+			RazorBeak->AddChild(RazorBeakHP);
+
 			RazorBeak = nullptr;
 			RazorBeak = pMeshData->Instantiate();
 			RazorBeak->AddComponent(new CRazorBeakMiniScript);
@@ -724,6 +854,13 @@ void SpawnJungleMob()
 			Script->SetAggroPos(Vec3(1033.f, 0.f, 782.f));
 			Script->SetUnitType(UnitType::SOUTH_RAZORBEAK_MINI_5);
 			SpawnGameObject(RazorBeak, Vec3(1048.f, 15.f, 767.f), L"Mob");
+
+			RazorBeakHP = new CGameObject;
+			RazorBeakHP->SetName(L"SOUTH_RazorBeak_Mini5_HP");
+			RazorBeakHP->AddComponent(new CTransform);
+			RazorBeakHP->AddComponent(new CMeshRender);
+			RazorBeakHP->AddComponent(new CJungleMINIHPScript);
+			RazorBeak->AddChild(RazorBeakHP);
 		}
 		//블루팀 블루
 		{
@@ -749,6 +886,13 @@ void SpawnJungleMob()
 			BlueAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
 			BlueAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
 			SpawnGameObject(BlueAggro, Vec3(563.f, 0.f, 1164.f), 0);
+
+			CGameObject* BlueHP = new CGameObject;
+			BlueHP->SetName(L"South_BlueHP");
+			BlueHP->AddComponent(new CTransform);
+			BlueHP->AddComponent(new CMeshRender);
+			BlueHP->AddComponent(new CJungleMobHPScript);
+			Blue->AddChild(BlueHP);
 		}
 		//블루팀 레드
 		{
@@ -774,6 +918,13 @@ void SpawnJungleMob()
 			RedAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
 			RedAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
 			SpawnGameObject(RedAggro, Vec3(1123, 15.f, 559.f), 0);
+
+			CGameObject* RedHP = new CGameObject;
+			RedHP->SetName(L"South_RedHP");
+			RedHP->AddComponent(new CTransform);
+			RedHP->AddComponent(new CMeshRender);
+			RedHP->AddComponent(new CJungleMobHPScript);
+			Red->AddChild(RedHP);
 		}
 	}
 	//--------------------------------------------
@@ -832,6 +983,13 @@ void SpawnJungleMob()
 			MurkWolfAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
 			MurkWolfAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
 			SpawnGameObject(MurkWolfAggro, Vec3(1633.f, 0.f, 1265.f), 0);
+
+			CGameObject* MurkWolfHP = new CGameObject;
+			MurkWolfHP->SetName(L"NORTH_MurkWolfHP");
+			MurkWolfHP->AddComponent(new CTransform);
+			MurkWolfHP->AddComponent(new CMeshRender);
+			MurkWolfHP->AddComponent(new CJungleMobHPScript);
+			MurkWolf->AddChild(MurkWolfHP);
 		}
 		//레드팀 늑대 째깐이(좌)
 		{
@@ -847,6 +1005,13 @@ void SpawnJungleMob()
 			Script->SetAggroPos(Vec3(1633.f, 0.f, 1265.f));
 			Script->SetUnitType(UnitType::NORTH_MURKWOLF_MINI_L);
 			SpawnGameObject(MurkWolf_Mini, Vec3(1592.f, 19.f, 1232.f), L"Mob");
+
+			CGameObject* MurkWolf_MiniHP = new CGameObject;
+			MurkWolf_MiniHP->SetName(L"NORTH_MurkWolf_Mini_L_HP");
+			MurkWolf_MiniHP->AddComponent(new CTransform);
+			MurkWolf_MiniHP->AddComponent(new CMeshRender);
+			MurkWolf_MiniHP->AddComponent(new CJungleMINIHPScript);
+			MurkWolf_Mini->AddChild(MurkWolf_MiniHP);
 		}
 		//레드팀 늑대 째깐이(우)
 		{
@@ -862,6 +1027,13 @@ void SpawnJungleMob()
 			Script->SetAggroPos(Vec3(1633.f, 0.f, 1265.f));
 			Script->SetUnitType(UnitType::NORTH_MURKWOLF_MINI_R);
 			SpawnGameObject(MurkWolf_Mini, Vec3(1634, 15.f, 1208.f), L"Mob");
+
+			CGameObject* MurkWolf_MiniHP = new CGameObject;
+			MurkWolf_MiniHP->SetName(L"NORTH_MurkWolf_Mini_R_HP");
+			MurkWolf_MiniHP->AddComponent(new CTransform);
+			MurkWolf_MiniHP->AddComponent(new CMeshRender);
+			MurkWolf_MiniHP->AddComponent(new CJungleMINIHPScript);
+			MurkWolf_Mini->AddChild(MurkWolf_MiniHP);
 		}
 		//레드팀 돌거북
 		{
@@ -887,6 +1059,13 @@ void SpawnJungleMob()
 			KrugAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
 			KrugAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
 			SpawnGameObject(KrugAggro, Vec3(942.f, 0.f, 1845.f), 0);
+
+			CGameObject* KrugHP = new CGameObject;
+			KrugHP->SetName(L"NORTH_KrugHP");
+			KrugHP->AddComponent(new CTransform);
+			KrugHP->AddComponent(new CMeshRender);
+			KrugHP->AddComponent(new CJungleMobHPScript);
+			Krug->AddChild(KrugHP);
 		}
 		//레드팀 돌거북 째깐이
 		{
@@ -902,6 +1081,13 @@ void SpawnJungleMob()
 			Script->SetAggroPos(Vec3(942.f, 0.f, 1845.f));
 			Script->SetUnitType(UnitType::NORTH_KRUG_MINI);
 			SpawnGameObject(Krug_Mini, Vec3(935.f, 15.f, 1791.f), L"Mob");
+
+			CGameObject* Krug_MiniHP = new CGameObject;
+			Krug_MiniHP->SetName(L"NORTH_Krug_Mini_HP");
+			Krug_MiniHP->AddComponent(new CTransform);
+			Krug_MiniHP->AddComponent(new CMeshRender);
+			Krug_MiniHP->AddComponent(new CJungleMINIHPScript);
+			Krug_Mini->AddChild(Krug_MiniHP);
 		}
 		//레드팀 칼날부리
 		{
@@ -927,6 +1113,13 @@ void SpawnJungleMob()
 			RazorBeakAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
 			RazorBeakAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
 			SpawnGameObject(RazorBeakAggro, Vec3(1145.f, 0.f, 1438.f), 0);
+
+			CGameObject* RazorBeakHP = new CGameObject;
+			RazorBeakHP->SetName(L"NORTH_RazorBeakHP");
+			RazorBeakHP->AddComponent(new CTransform);
+			RazorBeakHP->AddComponent(new CMeshRender);
+			RazorBeakHP->AddComponent(new CJungleMobHPScript);
+			RazorBeak->AddChild(RazorBeakHP);
 		}
 
 		//레드팀 칼날부리 째깐이
@@ -944,6 +1137,13 @@ void SpawnJungleMob()
 			Script->SetUnitType(UnitType::NORTH_RAZORBEAK_MINI_1);
 			SpawnGameObject(RazorBeak, Vec3(1139, 15.f, 1419.f), L"Mob");
 
+			CGameObject* RazorBeakHP = new CGameObject;
+			RazorBeakHP->SetName(L"NORTH_RazorBeak_Mini1_HP");
+			RazorBeakHP->AddComponent(new CTransform);
+			RazorBeakHP->AddComponent(new CMeshRender);
+			RazorBeakHP->AddComponent(new CJungleMINIHPScript);
+			RazorBeak->AddChild(RazorBeakHP);
+
 			RazorBeak = nullptr;
 			RazorBeak = pMeshData->Instantiate();
 			RazorBeak->AddComponent(new CRazorBeakMiniScript);
@@ -954,6 +1154,13 @@ void SpawnJungleMob()
 			Script->SetAggroPos(Vec3(1145.f, 0.f, 1438.f));
 			Script->SetUnitType(UnitType::NORTH_RAZORBEAK_MINI_2);
 			SpawnGameObject(RazorBeak, Vec3(1176, 15.f, 1419.f), L"Mob");
+
+			RazorBeakHP = new CGameObject;
+			RazorBeakHP->SetName(L"NORTH_RazorBeak_Mini2_HP");
+			RazorBeakHP->AddComponent(new CTransform);
+			RazorBeakHP->AddComponent(new CMeshRender);
+			RazorBeakHP->AddComponent(new CJungleMINIHPScript);
+			RazorBeak->AddChild(RazorBeakHP);
 
 			RazorBeak = nullptr;
 			RazorBeak = pMeshData->Instantiate();
@@ -966,6 +1173,13 @@ void SpawnJungleMob()
 			Script->SetUnitType(UnitType::NORTH_RAZORBEAK_MINI_3);
 			SpawnGameObject(RazorBeak, Vec3(1159, 15.f, 1405.f), L"Mob");
 
+			RazorBeakHP = new CGameObject;
+			RazorBeakHP->SetName(L"NORTH_RazorBeak_Mini3_HP");
+			RazorBeakHP->AddComponent(new CTransform);
+			RazorBeakHP->AddComponent(new CMeshRender);
+			RazorBeakHP->AddComponent(new CJungleMINIHPScript);
+			RazorBeak->AddChild(RazorBeakHP);
+
 			RazorBeak = nullptr;
 			RazorBeak = pMeshData->Instantiate();
 			RazorBeak->AddComponent(new CRazorBeakMiniScript);
@@ -977,6 +1191,13 @@ void SpawnJungleMob()
 			Script->SetUnitType(UnitType::NORTH_RAZORBEAK_MINI_4);
 			SpawnGameObject(RazorBeak, Vec3(1140, 15.f, 1385.f), L"Mob");
 
+			RazorBeakHP = new CGameObject;
+			RazorBeakHP->SetName(L"NORTH_RazorBeak_Mini4_HP");
+			RazorBeakHP->AddComponent(new CTransform);
+			RazorBeakHP->AddComponent(new CMeshRender);
+			RazorBeakHP->AddComponent(new CJungleMINIHPScript);
+			RazorBeak->AddChild(RazorBeakHP);
+
 			RazorBeak = nullptr;
 			RazorBeak = pMeshData->Instantiate();
 			RazorBeak->AddComponent(new CRazorBeakMiniScript);
@@ -987,6 +1208,13 @@ void SpawnJungleMob()
 			Script->SetAggroPos(Vec3(1145.f, 0.f, 1438.f));
 			Script->SetUnitType(UnitType::NORTH_RAZORBEAK_MINI_5);
 			SpawnGameObject(RazorBeak, Vec3(1157, 15.f, 1370.f), L"Mob");
+
+			RazorBeakHP = new CGameObject;
+			RazorBeakHP->SetName(L"NORTH_RazorBeak_Mini5_HP");
+			RazorBeakHP->AddComponent(new CTransform);
+			RazorBeakHP->AddComponent(new CMeshRender);
+			RazorBeakHP->AddComponent(new CJungleMINIHPScript);
+			RazorBeak->AddChild(RazorBeakHP);
 		}
 		//레드팀 블루
 		{
@@ -1012,6 +1240,13 @@ void SpawnJungleMob()
 			BlueAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
 			BlueAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
 			SpawnGameObject(BlueAggro, Vec3(1653.f, 0.f, 1011.f), 0);
+
+			CGameObject* BlueHP = new CGameObject;
+			BlueHP->SetName(L"NORTH_BlueHP");
+			BlueHP->AddComponent(new CTransform);
+			BlueHP->AddComponent(new CMeshRender);
+			BlueHP->AddComponent(new CJungleMobHPScript);
+			Blue->AddChild(BlueHP);
 		}
 		//레드팀 레드
 		{
@@ -1037,6 +1272,13 @@ void SpawnJungleMob()
 			RedAggro->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
 			RedAggro->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
 			SpawnGameObject(RedAggro, Vec3(1055, 15.f, 1637.f), 0);
+
+			CGameObject* RedHP = new CGameObject;
+			RedHP->SetName(L"NORTH_RedHP");
+			RedHP->AddComponent(new CTransform);
+			RedHP->AddComponent(new CMeshRender);
+			RedHP->AddComponent(new CJungleMobHPScript);
+			Red->AddChild(RedHP);
 		}
 	}
 	//드래곤
