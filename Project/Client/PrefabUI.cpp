@@ -52,11 +52,21 @@ int PrefabUI::render_update()
 
 	//EditorCamera의 Position에 스폰됩니다.
 	CGameObject* LoLMap = CLevelMgr::GetInst()->GetCurLevel()->FindObjectByName(L"LoLMapCollider");
-	tRay ray = m_pEditorCam->GetRay();
-	IntersectResult result = m_pEditorCam->IsCollidingBtwRayRect(ray, LoLMap);
-	Vec3 EndPos = result.vCrossPoint;
-	
-	m_vConvertedMousePos = Vec4(EndPos.x, EndPos.y, EndPos.z, 1.f);
+	if (LoLMap != nullptr) {
+		tRay ray = m_pEditorCam->GetRay();
+		IntersectResult result = m_pEditorCam->IsCollidingBtwRayRect(ray, LoLMap);
+		Vec3 EndPos = result.vCrossPoint;
+		if (result.bResult) {
+			m_vConvertedMousePos = Vec4(EndPos.x, EndPos.y, EndPos.z, 1.f);
+		}
+		else {
+			m_vConvertedMousePos = m_pEditorCam->Transform()->GetRelativePos();
+		}
+
+	}
+	else {
+		m_vConvertedMousePos = m_pEditorCam->Transform()->GetRelativePos();
+	}
 
 	CPrefab* pPrefab = (CPrefab*)GetTargetRes().Get();
 	CGameObject* PrefabObject = pPrefab->GetProtoObject();
