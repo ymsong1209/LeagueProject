@@ -46,6 +46,7 @@
 #include "CRazorBeakScript.h"
 #include "CRedScript.h"
 #include "CScorePanelScript.h"
+#include "CSkillLevelUIScript.h"
 #include "CSoundTestScript.h"
 #include "CStructureScript.h"
 #include "CTurretAttackScript.h"
@@ -103,6 +104,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CRazorBeakScript");
 	_vec.push_back(L"CRedScript");
 	_vec.push_back(L"CScorePanelScript");
+	_vec.push_back(L"CSkillLevelUIScript");
 	_vec.push_back(L"CSoundTestScript");
 	_vec.push_back(L"CStructureScript");
 	_vec.push_back(L"CTurretAttackScript");
@@ -206,6 +208,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CRedScript;
 	if (L"CScorePanelScript" == _strScriptName)
 		return new CScorePanelScript;
+	if (L"CSkillLevelUIScript" == _strScriptName)
+		return new CSkillLevelUIScript;
 	if (L"CSoundTestScript" == _strScriptName)
 		return new CSoundTestScript;
 	if (L"CStructureScript" == _strScriptName)
@@ -365,6 +369,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::SCOREPANELSCRIPT:
 		return new CScorePanelScript;
+		break;
+	case (UINT)SCRIPT_TYPE::SKILLLEVELUISCRIPT:
+		return new CSkillLevelUIScript;
 		break;
 	case (UINT)SCRIPT_TYPE::SOUNDTESTSCRIPT:
 		return new CSoundTestScript;
@@ -579,6 +586,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::SCOREPANELSCRIPT:
 		return L"CScorePanelScript";
+		break;
+
+	case SCRIPT_TYPE::SKILLLEVELUISCRIPT:
+		return L"CSkillLevelUIScript";
 		break;
 
 	case SCRIPT_TYPE::SOUNDTESTSCRIPT:

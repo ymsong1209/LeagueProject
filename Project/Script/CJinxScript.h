@@ -23,5 +23,6 @@ public:
 
 public:
     void SetWeaponMode(JinxWeaponMode _mode) { m_eWeaponMode = _mode; }
+    JinxWeaponMode GetWeaponMode() { return m_eWeaponMode; }
 };
 

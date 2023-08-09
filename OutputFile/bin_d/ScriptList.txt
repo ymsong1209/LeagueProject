@@ -31,7 +31,6 @@ CMinionHPBarPosScript
 CMinionHPRatioScript
 CMinionScript
 CMobScript
-CMonsterHPBarUIScript
 CMouseCursorUIScript
 CMoveCursorUIScript
 CMurkWolfMiniScript
@@ -44,6 +43,7 @@ CRazorBeakMiniScript
 CRazorBeakScript
 CRedScript
 CScorePanelScript
+CSkillLevelUIScript
 CSoundTestScript
 CStructureScript
 CTurretAttackScript

@@ -24,7 +24,7 @@ void CInventoryUIScript::begin()
 	Inventory->Transform()->SetRelativeScale(Vec3(1.f, 1.f, 0.1f)); //현재 우리가 사용하는 아이템 이름과 아이템 머터리얼 이름이 같아야함
 	SpawnGameObject(Inventory, Vec3(45.f, -108.f, 400.f), 31);
 	//==============디버깅용  임시 아이템 지정 (원래 챔피언 스크립트에서 받아와야함)==================
-	for (size_t i = 0; i < 4; ++i)
+	for (size_t i = 0; i < 6; ++i)
 	{
 		m_Inventory[i] = new CItem();
 

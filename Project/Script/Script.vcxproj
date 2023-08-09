@@ -401,6 +401,7 @@
     <ClInclude Include="CSendServerEventMgr.h" />
     <ClInclude Include="CServerTypes.h" />
     <ClInclude Include="CSkill.h" />
+    <ClInclude Include="CSkillLevelUIScript.h" />
     <ClInclude Include="CSkillMgr.h" />
     <ClInclude Include="CSoundTestScript.h" />
     <ClInclude Include="CStructureScript.h" />
@@ -643,6 +644,7 @@
     <ClCompile Include="CSendServerEventMgr.cpp" />
     <ClCompile Include="CServerTypes.cpp" />
     <ClCompile Include="CSkill.cpp" />
+    <ClCompile Include="CSkillLevelUIScript.cpp" />
     <ClCompile Include="CSkillMgr.cpp" />
     <ClCompile Include="CSoundTestScript.cpp" />
     <ClCompile Include="CStructureScript.cpp" />

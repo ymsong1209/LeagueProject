@@ -4,6 +4,7 @@
 #include <Engine\CCamera.h>
 #include "CUnitScript.h"
 #include "CSkill.h"
+#include "CJinxScript.h"
 
 CCoolDownUIScript::CCoolDownUIScript(COOL_DOWN_TYPE _SkillType)
 	:CScript((UINT)SCRIPT_TYPE::COOLDOWNUISCRIPT)
@@ -11,6 +12,7 @@ CCoolDownUIScript::CCoolDownUIScript(COOL_DOWN_TYPE _SkillType)
 	, m_bSkillUse(false)
 	, m_fCoolRatio(0.f)
 	, m_SkillType(_SkillType)
+	, m_ChampType(ChampionType::END)
 {
 }
 
@@ -26,35 +28,57 @@ CCoolDownUIScript::~CCoolDownUIScript()
 
 void CCoolDownUIScript::begin()
 {
-
+	m_PlayerUnitScript = CSendServerEventMgr::GetInst()->GetMyPlayer()->GetScript<CUnitScript>();
+	m_SkillQ = m_PlayerUnitScript->GetSkill(1);
+	m_SkillW = m_PlayerUnitScript->GetSkill(2);
+	m_SkillE = m_PlayerUnitScript->GetSkill(3);
+	m_SkillR = m_PlayerUnitScript->GetSkill(4);
 }
 
 void CCoolDownUIScript::tick()
 {
-	CUnitScript* UnitInfo = CSendServerEventMgr::GetInst()->GetMyPlayer()->GetScript<CUnitScript>();
-
-	if (m_SkillType == COOL_DOWN_TYPE::Q && UnitInfo->GetSkill(1))
+	if (m_SkillType == COOL_DOWN_TYPE::Q && m_SkillQ)
 	{
-		m_fCooldownTime = UnitInfo->GetSkill(1)->GetCoolDown();
-		m_fCurCoolTime = UnitInfo->GetSkill(1)->GetCurCoolDown();
+		m_fCooldownTime = m_SkillQ->GetCoolDown();
+		m_fCurCoolTime = m_SkillQ->GetCurCoolDown();
+
+		if (m_ChampType == ChampionType::JINX)
+		{
+			CJinxScript* JinxScript = CSendServerEventMgr::GetInst()->GetMyPlayer()->GetScript<CJinxScript>();
+
+			//=====================µð¹ö±ë¿ë=====================
+			JinxWeaponMode JinxMode2 = JinxScript->GetWeaponMode();
+			if (KEY_TAP(KEY::Q) && JinxMode2 == JinxWeaponMode::MINIGUN)
+				JinxScript->SetWeaponMode(JinxWeaponMode::ROCKET_LAUNCHER);
+			else if(KEY_TAP(KEY::Q) && JinxMode2 == JinxWeaponMode::ROCKET_LAUNCHER)
+				JinxScript->SetWeaponMode(JinxWeaponMode::MINIGUN);
+			//==================================================
+
+			JinxWeaponMode JinxMode = JinxScript->GetWeaponMode();
+
+			if(JinxMode == JinxWeaponMode::MINIGUN)
+				MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\UI\\Jinx\\JINX_Q.dds"));
+			if (JinxMode == JinxWeaponMode::ROCKET_LAUNCHER)
+				MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\UI\\Jinx\\jinx_q1.dds"));
+		}
 	}
 
-	if (m_SkillType == COOL_DOWN_TYPE::W && UnitInfo->GetSkill(2))
+	if (m_SkillType == COOL_DOWN_TYPE::W && m_SkillW)
 	{
-		m_fCooldownTime = UnitInfo->GetSkill(2)->GetCoolDown();
-		m_fCurCoolTime = UnitInfo->GetSkill(2)->GetCurCoolDown();
+		m_fCooldownTime = m_SkillW->GetCoolDown();
+		m_fCurCoolTime = m_SkillW->GetCurCoolDown();
 	}
 
-	if (m_SkillType == COOL_DOWN_TYPE::E && UnitInfo->GetSkill(3))
+	if (m_SkillType == COOL_DOWN_TYPE::E && m_SkillE)
 	{
-		m_fCooldownTime = UnitInfo->GetSkill(3)->GetCoolDown();
-		m_fCurCoolTime = UnitInfo->GetSkill(3)->GetCurCoolDown();
+		m_fCooldownTime = m_SkillE->GetCoolDown();
+		m_fCurCoolTime = m_SkillE->GetCurCoolDown();
 	}
 
-	if (m_SkillType == COOL_DOWN_TYPE::R && UnitInfo->GetSkill(4))
+	if (m_SkillType == COOL_DOWN_TYPE::R && m_SkillR)
 	{
-		m_fCooldownTime = UnitInfo->GetSkill(4)->GetCoolDown();
-		m_fCurCoolTime = UnitInfo->GetSkill(4)->GetCurCoolDown();
+		m_fCooldownTime = m_SkillR->GetCoolDown();
+		m_fCurCoolTime = m_SkillR->GetCurCoolDown();
 	}
 
 	if (m_fCurCoolTime <= 0)

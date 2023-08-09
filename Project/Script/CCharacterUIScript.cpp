@@ -7,6 +7,7 @@
 #include "CHpMpRatioUIScript.h"
 #include <Engine\CRenderMgr.h>
 #include <Engine\CCamera.h>
+#include "CSkillLevelUIScript.h"
 
 CCharacterUIScript::CCharacterUIScript()
 	:CUIScript(CHARACTERUISCRIPT)
@@ -68,7 +69,7 @@ void CCharacterUIScript::SkillUILoad()
 {
 	//JINX_E
 	/* 주 의 !!*/
-	//머터리얼 이름은 CHARACTER_TYPE + "_" + SkillNum 형태로 되어있어야함 (ex: MALPHGITE_Q)
+	//머터리얼 이름은 CHARACTER_TYPE + "_" + SkillNum 형태로 되어있어야함 (ex: MALPHITE_Q)
 	//그래야 알아서 캐릭터별로 머터리얼을 찾아옴
 	//챔피언 아이콘은  CharacterType _ CIRCLE 임  (JINX_CIRCLE)
 	CUIScript::begin();
@@ -78,6 +79,7 @@ void CCharacterUIScript::SkillUILoad()
 	wstring CharacterType = ChampionType_WSTR[(UINT)GetCharacterType()];
 	wstring ChampMtrlPath = UIpath + CharacterType + under + L"CIRCLE" + mtrl;
 
+	//MALPHITE_CIRCLE
 	CharacterImage = new CGameObject; //캐릭터 패널 배치
 	CharacterImage->SetName(L"UICharacterPanel");
 	CharacterImage->AddComponent(new CTransform);
@@ -137,8 +139,23 @@ void CCharacterUIScript::SkillUILoad()
 		break;
 		}
 
+		Obj->GetScript<CCoolDownUIScript>()->SetChampType(GetCharacterType());
 		GetUIBackPanel()->AddChild(Obj);
 	}
+
+
+	//MALPHITE_CIRCLE
+	CGameObject* SkillLevel_UI = new CGameObject; //캐릭터 패널 배치
+	SkillLevel_UI->SetName(L"SkillLevel_UI");
+	SkillLevel_UI->AddComponent(new CTransform);
+	SkillLevel_UI->AddComponent(new CMeshRender);
+	SkillLevel_UI->AddComponent(new CSkillLevelUIScript);
+	SkillLevel_UI->Transform()->SetRelativeScale(Vec3(190.f, 6.f, 1.f));
+	SkillLevel_UI->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	SkillLevel_UI->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\SkillLevelBar.mtrl"),0);
+	SkillLevel_UI->Transform()->SetAbsolute(true);
+	SkillLevel_UI->Transform()->SetRelativePos(Vec3(-52.f, -10.f, -10.f));
+	GetUIBackPanel()->AddChild(SkillLevel_UI);
 }
 
 void CCharacterUIScript::SpellUILoad()
