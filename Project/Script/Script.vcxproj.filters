@@ -542,12 +542,6 @@
     <ClCompile Include="CServerTypes.cpp">
       <Filter>Default</Filter>
     </ClCompile>
-    <ClCompile Include="CInGameCameraScript.cpp">
-      <Filter>Scripts\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="CScriptMgr.cpp">
-      <Filter>Manager\1. ScriptMgr</Filter>
-    </ClCompile>
     <ClCompile Include="CJinxE.cpp">
       <Filter>Scripts\Skill\Skill_Jinx</Filter>
     </ClCompile>
@@ -574,6 +568,12 @@
     </ClCompile>
     <ClCompile Include="CCameraMoveScript.cpp">
       <Filter>Scripts\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CInGameCameraScript.cpp">
+      <Filter>Scripts\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CScriptMgr.cpp">
+      <Filter>Manager\1. ScriptMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -695,10 +695,10 @@
     <ClInclude Include="CJinxWScript.h">
       <Filter>Scripts\SkillProjectile\Projectile_Jinx</Filter>
     </ClInclude>
-    <ClInclude Include="CJinxW.h">
+    <ClInclude Include="CJinxQ.h">
       <Filter>Scripts\Skill\Skill_Jinx</Filter>
     </ClInclude>
-    <ClInclude Include="CJinxQ.h">
+    <ClInclude Include="CJinxW.h">
       <Filter>Scripts\Skill\Skill_Jinx</Filter>
     </ClInclude>
   </ItemGroup>
