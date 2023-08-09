@@ -530,6 +530,13 @@ void CCamera::SortObject()
 					&& nullptr == pRenderCom->GetMaterial(0)->GetShader())
 					continue;
 
+				// 렌더링 안하고 싶은 object는 제외
+				if (pRenderCom->IsSortExcept())
+					continue;
+
+
+				pRenderCom->SetCulled(false);
+
 				// FrustumCheck
 				if (pRenderCom->IsUseFrustumCheck())
 				{
@@ -551,19 +558,14 @@ void CCamera::SortObject()
 						CRenderMgr::GetInst()->AddDebugBoundingInfo(info);
 					}
 
-					if (false == m_Frustum.FrustumCheckBySphere(vWorldPos, pRenderCom->GetBounding()))
+					if (false == m_Frustum.FrustumCheckBySphere(vWorldPos, pRenderCom->GetBounding())) {
+						pRenderCom->SetCulled(true);
 						continue;
+					}
 				}
 
 				if (m_isGizmoEditMode == 1) //에디트 모드일때만 클릭체크
 					GizmoClickCheck(vecObject[j], pCurLevel); //기즈모 클릭 체크
-
-				//아웃라인 출력 오브젝트 테스트
-				if (vecObject[j]->Transform()->GetUseMouseOutline() == true)
-				{
-					if (OutlineCheck(vecObject[j]))
-						m_vecContour.push_back(vecObject[j]);
-				}
 
 
 				CollideRay();
@@ -573,8 +575,17 @@ void CCamera::SortObject()
 				if (vecObject[j]->GetRenderComponent() != nullptr && vecObject[j]->GetRenderComponent()->IsUsingRaySightCulling() && vecObject[j]->Transform()->GetIsShootingRay() != true)
 				{
 					if (false == CheckRayCollideBox(vecObject[j])) {
+						vecObject[j]->GetRenderComponent()->SetCulled(true);
 						continue;
 					}
+				}
+
+
+				//아웃라인 출력 오브젝트 테스트
+				if (vecObject[j]->Transform()->GetUseMouseOutline() == true)
+				{
+					if (OutlineCheck(vecObject[j]))
+						m_vecContour.push_back(vecObject[j]);
 				}
 				// 메테리얼 개수만큼 반복
 				UINT iMtrlCount = pRenderCom->GetMtrlCount();

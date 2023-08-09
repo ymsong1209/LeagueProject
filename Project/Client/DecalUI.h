@@ -13,6 +13,7 @@ public:
     int ChooseTexture();
     void SetLayerCheck();
     void SetBSType();
+    void SelectAlpha();
 
     void SelectTextureBtn(DWORD_PTR _Key);
 public:

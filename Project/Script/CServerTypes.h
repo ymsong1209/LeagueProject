@@ -177,6 +177,10 @@ enum class SkillType
 	DARIUS_W,
 	DARIUS_E,
 	DARIUS_R,
+	MALPHITE_Q,
+	MALPHITE_W,
+	MALPHITE_E,
+	MALPHITE_R,
 };
 
 struct SkillInfo

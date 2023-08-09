@@ -159,6 +159,7 @@
       <MinFilesInUnityFile>10</MinFilesInUnityFile>
       <MaxFilesInUnityFile>20</MaxFilesInUnityFile>
       <UnityFilesDirectory>$(ProjectDir)</UnityFilesDirectory>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -190,6 +191,7 @@
     <ClInclude Include="CBlueReturnState.h" />
     <ClInclude Include="CBlueScript.h" />
     <ClInclude Include="CBlueSpawnState.h" />
+    <ClInclude Include="CBushScript.h" />
     <ClInclude Include="CCameraMoveScript.h" />
     <ClInclude Include="CChampionAttackState.h" />
     <ClInclude Include="CChampionDeathState.h" />
@@ -210,6 +212,7 @@
     <ClInclude Include="CDragonChaseState.h" />
     <ClInclude Include="CDragonDeathState.h" />
     <ClInclude Include="CDragonFlyStartState.h" />
+    <ClInclude Include="CDragonHPUIScript.h" />
     <ClInclude Include="CDragonIdleState.h" />
     <ClInclude Include="CDragonLandState.h" />
     <ClInclude Include="CDragonNormal2AlertState.h" />
@@ -259,6 +262,8 @@
     <ClInclude Include="CJungleChaseState.h" />
     <ClInclude Include="CJungleDeathState.h" />
     <ClInclude Include="CJungleIdleState.h" />
+    <ClInclude Include="CJungleMINIHPScript.h" />
+    <ClInclude Include="CJungleMobHPScript.h" />
     <ClInclude Include="CJungleMonsterScript.h" />
     <ClInclude Include="CJungleN2AState.h" />
     <ClInclude Include="CJungleReturnState.h" />
@@ -283,14 +288,33 @@
     <ClInclude Include="CKrugReturnState.h" />
     <ClInclude Include="CKrugScript.h" />
     <ClInclude Include="CKrugSpawnState.h" />
+    <ClInclude Include="CMalphiteAttackState.h" />
+    <ClInclude Include="CMalphiteDeathState.h" />
+    <ClInclude Include="CMalphiteE.h" />
+    <ClInclude Include="CMalphiteEDecalScript.h" />
+    <ClInclude Include="CMalphiteEScript.h" />
+    <ClInclude Include="CMalphiteEState.h" />
+    <ClInclude Include="CMalphiteIdleState.h" />
+    <ClInclude Include="CMalphiteQ.h" />
+    <ClInclude Include="CMalphiteQScript.h" />
+    <ClInclude Include="CMalphiteQState.h" />
+    <ClInclude Include="CMalphiteR.h" />
+    <ClInclude Include="CMalphiteRecallState.h" />
+    <ClInclude Include="CMalphiteRespawnState.h" />
+    <ClInclude Include="CMalphiteRScript.h" />
+    <ClInclude Include="CMalphiteRState.h" />
+    <ClInclude Include="CMalphiteScript.h" />
+    <ClInclude Include="CMalphiteWalkState.h" />
+    <ClInclude Include="CMalphiteWState.h" />
     <ClInclude Include="CMinimapUIScript.h" />
     <ClInclude Include="CMinionAttackState.h" />
     <ClInclude Include="CMinionChaseState.h" />
     <ClInclude Include="CMinionDeathState.h" />
+    <ClInclude Include="CMinionHPBarPosScript.h" />
+    <ClInclude Include="CMinionHPRatioScript.h" />
     <ClInclude Include="CMinionScript.h" />
     <ClInclude Include="CMinionWalkState.h" />
     <ClInclude Include="CMobScript.h" />
-    <ClInclude Include="CMonsterHPBarUIScript.h" />
     <ClInclude Include="CMouseCursorUIScript.h" />
     <ClInclude Include="CMoveCursorUIScript.h" />
     <ClInclude Include="CMurkWolfA2NState.h" />
@@ -387,6 +411,7 @@
     <ClInclude Include="CStructureScript.h" />
     <ClInclude Include="CTimedEffect.h" />
     <ClInclude Include="CTurretAttackScript.h" />
+    <ClInclude Include="CTurretHPUIScript.h" />
     <ClInclude Include="CTurretScript.h" />
     <ClInclude Include="CUIScript.h" />
     <ClInclude Include="CUnitScript.h" />
@@ -413,6 +438,7 @@
     <ClCompile Include="CBlueReturnState.cpp" />
     <ClCompile Include="CBlueScript.cpp" />
     <ClCompile Include="CBlueSpawnState.cpp" />
+    <ClCompile Include="CBushScript.cpp" />
     <ClCompile Include="CCameraMoveScript.cpp" />
     <ClCompile Include="CChampionAttackState.cpp" />
     <ClCompile Include="CChampionDeathState.cpp" />
@@ -433,6 +459,7 @@
     <ClCompile Include="CDragonChaseState.cpp" />
     <ClCompile Include="CDragonDeathState.cpp" />
     <ClCompile Include="CDragonFlyStartState.cpp" />
+    <ClCompile Include="CDragonHPUIScript.cpp" />
     <ClCompile Include="CDragonIdleState.cpp" />
     <ClCompile Include="CDragonLandState.cpp" />
     <ClCompile Include="CDragonNormal2AlertState.cpp" />
@@ -481,6 +508,8 @@
     <ClCompile Include="CJungleChaseState.cpp" />
     <ClCompile Include="CJungleDeathState.cpp" />
     <ClCompile Include="CJungleIdleState.cpp" />
+    <ClCompile Include="CJungleMINIHPScript.cpp" />
+    <ClCompile Include="CJungleMobHPScript.cpp" />
     <ClCompile Include="CJungleMonsterScript.cpp" />
     <ClCompile Include="CJungleN2AState.cpp" />
     <ClCompile Include="CJungleReturnState.cpp" />
@@ -505,14 +534,33 @@
     <ClCompile Include="CKrugReturnState.cpp" />
     <ClCompile Include="CKrugScript.cpp" />
     <ClCompile Include="CKrugSpawnState.cpp" />
+    <ClCompile Include="CMalphiteAttackState.cpp" />
+    <ClCompile Include="CMalphiteDeathState.cpp" />
+    <ClCompile Include="CMalphiteE.cpp" />
+    <ClCompile Include="CMalphiteEDecalScript.cpp" />
+    <ClCompile Include="CMalphiteEScript.cpp" />
+    <ClCompile Include="CMalphiteEState.cpp" />
+    <ClCompile Include="CMalphiteIdleState.cpp" />
+    <ClCompile Include="CMalphiteQ.cpp" />
+    <ClCompile Include="CMalphiteQScript.cpp" />
+    <ClCompile Include="CMalphiteQState.cpp" />
+    <ClCompile Include="CMalphiteR.cpp" />
+    <ClCompile Include="CMalphiteRecallState.cpp" />
+    <ClCompile Include="CMalphiteRespawnState.cpp" />
+    <ClCompile Include="CMalphiteRScript.cpp" />
+    <ClCompile Include="CMalphiteRState.cpp" />
+    <ClCompile Include="CMalphiteScript.cpp" />
+    <ClCompile Include="CMalphiteWalkState.cpp" />
+    <ClCompile Include="CMalphiteWState.cpp" />
     <ClCompile Include="CMinimapUIScript.cpp" />
     <ClCompile Include="CMinionAttackState.cpp" />
     <ClCompile Include="CMinionChaseState.cpp" />
     <ClCompile Include="CMinionDeathState.cpp" />
+    <ClCompile Include="CMinionHPBarPosScript.cpp" />
+    <ClCompile Include="CMinionHPRatioScript.cpp" />
     <ClCompile Include="CMinionScript.cpp" />
     <ClCompile Include="CMinionWalkState.cpp" />
     <ClCompile Include="CMobScript.cpp" />
-    <ClCompile Include="CMonsterHPBarUIScript.cpp" />
     <ClCompile Include="CMouseCursorUIScript.cpp" />
     <ClCompile Include="CMoveCursorUIScript.cpp" />
     <ClCompile Include="CMurkWolfA2NState.cpp" />
@@ -610,6 +658,7 @@
     <ClCompile Include="CStructureScript.cpp" />
     <ClCompile Include="CTimedEffect.cpp" />
     <ClCompile Include="CTurretAttackScript.cpp" />
+    <ClCompile Include="CTurretHPUIScript.cpp" />
     <ClCompile Include="CTurretScript.cpp" />
     <ClCompile Include="CUIScript.cpp" />
     <ClCompile Include="CUnitScript.cpp" />

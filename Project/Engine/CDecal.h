@@ -10,6 +10,7 @@ private:
     Vec4            m_vLightDiffuse;
     bool            m_bShowDebug;   //Imgui에서 DebugShape를 보여주게 할지 check
     int             m_iLayerCheck;  //어느 layer에 칠할 것인지 비트연산자로 조합, shader에서 비트연산자를 분리해 색칠을 한다.
+    float           m_fAlpha;
     BS_TYPE         m_BSType;      
 
 
@@ -28,6 +29,9 @@ public:
     const Vec4& GetLightDiffuse() { return m_vLightDiffuse; }
     Ptr<CTexture> GetDecalTex() { return m_DecalTex; }
     const BS_TYPE& GetBSType() { return m_BSType; }
+
+    void SetAlpha(float _alpha) { m_fAlpha = _alpha; }
+    float GetAlpha() { return m_fAlpha; }
 
     virtual void finaltick() override;
     virtual void render() override;

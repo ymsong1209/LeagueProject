@@ -90,6 +90,7 @@ void CJungleMonsterScript::tick()
 
 void CJungleMonsterScript::BeginOverlap(CCollider2D* _Other)
 {
+	int a = 0;
 	//if (_Other->GetOwner()->GetLayerIndex() == CLevelMgr::GetInst()->GetCurLevel()->FindLayerByName(L"SkillProjectile")->GetLayerIndex()) {
 	//	CProjectileScript* script = _Other->GetOwner()->GetScript<CProjectileScript>();
 	//	if ((script->GetTargetObj() && script->GetTargetObj() == GetOwner()) ||
