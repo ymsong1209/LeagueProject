@@ -18,8 +18,8 @@ CMalphiteWalkState::~CMalphiteWalkState()
 
 void CMalphiteWalkState::Enter()
 {
-	wstring animName = L"Malphite\\Run_Base";
-	GetOwner()->Animator3D()->PlayRepeat(L"Jinx\\Run", false , true, 0.5f);
+	wstring animName = L"Malphite\\Run";
+	GetOwner()->Animator3D()->PlayRepeat(L"Malphite\\Run", false , true, 0.5f);
 
 
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();

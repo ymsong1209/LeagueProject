@@ -24,7 +24,9 @@
 #include <Script\CUnitScript.h>
 #include <Script\CChampionScript.h>
 #include <Script\CJinxScript.h>
+#include <Script/CMalphiteScript.h>
 #include <Script\CJinxWScript.h>
+#include <Script/CMalphiteEScript.h>
 #include <Script\CCameraMoveScript.h>
 
 #include <Script\CSkill.h>
@@ -91,7 +93,22 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 			pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
 
 		}break;
+		case ChampionType::MALPHITE:
+		{
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Malphite.fbx");
+			pObj = pMeshData->Instantiate();
 
+			if (myPlayer)
+				pObj->AddComponent(new CMalphiteScript);
+			else
+				pObj->AddComponent(new CUnitScript);
+
+
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Malphite");
+			pObj->Animator3D()->PlayRepeat(L"Malphite\\Idle1", true, true, 0.1f);
+			pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+
+		}break;
 		case ChampionType::AMUMU:
 		{
 		}break;

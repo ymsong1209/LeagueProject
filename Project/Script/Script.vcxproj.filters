@@ -609,7 +609,16 @@
     <ClCompile Include="CMalphiteRScript.cpp">
       <Filter>Scripts\SkillProjectile\Malphite</Filter>
     </ClCompile>
-    <ClCompile Include="CMalphiteEDecalScript.cpp" />
+    <ClCompile Include="CChampionScript.cpp" />
+    <ClCompile Include="CDragonHPUIScript.cpp" />
+    <ClCompile Include="CJungleMINIHPScript.cpp" />
+    <ClCompile Include="CJungleMobHPScript.cpp" />
+    <ClCompile Include="CMinionHPBarPosScript.cpp" />
+    <ClCompile Include="CMinionHPRatioScript.cpp" />
+    <ClCompile Include="CTurretHPUIScript.cpp" />
+    <ClCompile Include="CMalphiteEDecalScript.cpp">
+      <Filter>Scripts\SkillProjectile\Malphite</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -764,7 +773,15 @@
     <ClInclude Include="CMalphiteRScript.h">
       <Filter>Scripts\SkillProjectile\Malphite</Filter>
     </ClInclude>
-    <ClInclude Include="CMalphiteEDecalScript.h" />
+    <ClInclude Include="CDragonHPUIScript.h" />
+    <ClInclude Include="CJungleMINIHPScript.h" />
+    <ClInclude Include="CJungleMobHPScript.h" />
+    <ClInclude Include="CMinionHPBarPosScript.h" />
+    <ClInclude Include="CMinionHPRatioScript.h" />
+    <ClInclude Include="CTurretHPUIScript.h" />
+    <ClInclude Include="CMalphiteEDecalScript.h">
+      <Filter>Scripts\SkillProjectile\Malphite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">

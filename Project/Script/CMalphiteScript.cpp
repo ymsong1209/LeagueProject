@@ -13,6 +13,7 @@
 
 #include "CBasicAttack.h"
 #include "CMalphiteQ.h"
+
 #include "CMalphiteE.h"
 #include "CMalphiteR.h"
 
@@ -21,6 +22,9 @@ CMalphiteScript::CMalphiteScript()
 	:CChampionScript((UINT)MALPHITESCRIPT)
 {
 	m_fMaxHP = 50;
+	m_fMaxMP = 50;
+	m_fHP = 50;
+	m_fMP = 50;
 	//m_fAttackPower = 5.f;
 	m_fAttackPower = 10.f;
 	m_fMoveSpeed = 100.f;
@@ -49,10 +53,12 @@ void CMalphiteScript::begin()
 	m_Skill[0]->SetOwnerScript(this);
 	m_Skill[1] = new CMalphiteQ;
 	m_Skill[1]->SetOwnerScript(this);
-	m_Skill[2] = new CMalphiteE;
-	m_Skill[2]->SetOwnerScript(this);
-	m_Skill[3] = new CMalphiteR;
+	//m_Skill[2] = new CMalphiteE;
+	//m_Skill[2]->SetOwnerScript(this);
+	m_Skill[3] = new CMalphiteE;
 	m_Skill[3]->SetOwnerScript(this);
+	m_Skill[4] = new CMalphiteR;
+	m_Skill[4]->SetOwnerScript(this);
 
 	// Spell에 소환사 주문 추가
 
