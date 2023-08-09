@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "CJinxQState.h"
+#include "CChampionScript.h"
+#include "CSkill.h"
 
 CJinxQState::CJinxQState()
 {
@@ -15,13 +17,21 @@ void CJinxQState::tick()
 
 void CJinxQState::Enter()
 {
-	//wstring animName = L"Jinx\\Death_model.002";
-	//GetOwner()->Animator3D()->PlayOnce(animName, false, 0.1f);
-	//
-	// 
-	//SendAnimPacket(animName, false, true, 0.1f);
-
 	CChampionSkillState::Enter();
+
+	CSkill* JinxQ = GetOwner()->GetScript<CChampionScript>()->GetSkill(1);
+	JinxQ->SetUserObj(m_UserObj);
+	JinxQ->SetTargetObj(m_TargetObj);
+	JinxQ->SetOwnerScript(GetOwner()->GetScript<CChampionScript>());
+
+	JinxQ->Use();
+
+	// 애니메이션
+	wstring animName = L"Jinx\\Spell1";
+	GetOwner()->Animator3D()->PlayOnce(animName, true);
+
+	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, true, true, 0.1f);
 }
 
 void CJinxQState::Exit()

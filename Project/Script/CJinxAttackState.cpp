@@ -32,10 +32,6 @@ void CJinxAttackState::Enter()
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, true, false, 0.0f);
 
 
-
-
-
-
 	CChampionAttackState::Enter();
 }
 

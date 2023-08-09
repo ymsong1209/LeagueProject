@@ -3,7 +3,6 @@
   <ItemGroup>
     <ClCompile Include="COtherPlayerScript.cpp" />
     <ClCompile Include="CPlayerScript.cpp" />
-    <ClCompile Include="CInGameCameraScript.cpp" />
     <ClCompile Include="CSkill.cpp" />
     <ClCompile Include="CStructureScript.cpp" />
     <ClCompile Include="CTurretScript.cpp" />
@@ -311,22 +310,10 @@
     <ClCompile Include="CSkillMgr.cpp">
       <Filter>Manager\3. SkillMgr</Filter>
     </ClCompile>
-    <ClCompile Include="CScriptMgr.cpp">
-      <Filter>Manager\1. ScriptMgr</Filter>
-    </ClCompile>
     <ClCompile Include="CSendServerEventMgr.cpp">
       <Filter>Manager\2. SendServerEventMgr</Filter>
     </ClCompile>
-    <ClCompile Include="CInGameCameraScript.cpp">
-      <Filter>Scripts\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="CCameraMoveScript.cpp">
-      <Filter>Scripts\Camera</Filter>
-    </ClCompile>
     <ClCompile Include="CBasicAttackScript.cpp">
-      <Filter>Scripts\SkillProjectile</Filter>
-    </ClCompile>
-    <ClCompile Include="CJinxWScript.cpp">
       <Filter>Scripts\SkillProjectile</Filter>
     </ClCompile>
     <ClCompile Include="CProjectileScript.cpp">
@@ -363,19 +350,16 @@
       <Filter>Scripts\Unit</Filter>
     </ClCompile>
     <ClCompile Include="CJinxQ.cpp">
-      <Filter>Scripts\Skill\Jinx</Filter>
+      <Filter>Scripts\Skill\Skill_Jinx</Filter>
     </ClCompile>
     <ClCompile Include="CJinxW.cpp">
-      <Filter>Scripts\Skill\Jinx</Filter>
+      <Filter>Scripts\Skill\Skill_Jinx</Filter>
     </ClCompile>
     <ClCompile Include="CFlash.cpp">
       <Filter>Scripts\Skill\Spell</Filter>
     </ClCompile>
     <ClCompile Include="CHeal.cpp">
       <Filter>Scripts\Skill\Spell</Filter>
-    </ClCompile>
-    <ClCompile Include="CBasicAttack.cpp">
-      <Filter>Scripts\Skill</Filter>
     </ClCompile>
     <ClCompile Include="CSkill.cpp">
       <Filter>Scripts\Skill</Filter>
@@ -558,8 +542,38 @@
     <ClCompile Include="CServerTypes.cpp">
       <Filter>Default</Filter>
     </ClCompile>
+    <ClCompile Include="CInGameCameraScript.cpp">
+      <Filter>Scripts\Camera</Filter>
+    </ClCompile>
     <ClCompile Include="CScriptMgr.cpp">
       <Filter>Manager\1. ScriptMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxE.cpp">
+      <Filter>Scripts\Skill\Skill_Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxR.cpp">
+      <Filter>Scripts\Skill\Skill_Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxEState.cpp">
+      <Filter>State\Unit\Champion\Jinx\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxRState.cpp">
+      <Filter>State\Unit\Champion\Jinx\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="CBasicAttack.cpp">
+      <Filter>Scripts\Skill\BaseAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxWScript.cpp">
+      <Filter>Scripts\SkillProjectile\Projectile_Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CScriptMgr.cpp">
+      <Filter>Manager\1. ScriptMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CInGameCameraScript.cpp">
+      <Filter>Scripts\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CCameraMoveScript.cpp">
+      <Filter>Scripts\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -629,7 +643,6 @@
     <ClInclude Include="CDragonScript.h">
       <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h" />
     <ClInclude Include="CDragonReturnState.h">
       <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
     </ClInclude>
@@ -660,6 +673,33 @@
     <ClInclude Include="CMonsterHPBarUIScript.h" />
     <ClInclude Include="CMinionChaseState.h">
       <Filter>State\Unit\Minion</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Default</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxE.h">
+      <Filter>Scripts\Skill\Skill_Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxR.h">
+      <Filter>Scripts\Skill\Skill_Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxEState.h">
+      <Filter>State\Unit\Champion\Jinx\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxRState.h">
+      <Filter>State\Unit\Champion\Jinx\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="CBasicAttack.h">
+      <Filter>Scripts\Skill\BaseAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxWScript.h">
+      <Filter>Scripts\SkillProjectile\Projectile_Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxW.h">
+      <Filter>Scripts\Skill\Skill_Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxQ.h">
+      <Filter>Scripts\Skill\Skill_Jinx</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -704,11 +744,9 @@
     <ClInclude Include="CInhibitorSpawnState.h" />
     <ClInclude Include="CJinxDeathState.h" />
     <ClInclude Include="CJinxIdleState.h" />
-    <ClInclude Include="CJinxQ.h" />
     <ClInclude Include="CJinxQState.h" />
     <ClInclude Include="CJinxRespawnState.h" />
     <ClInclude Include="CJinxScript.h" />
-    <ClInclude Include="CJinxW.h" />
     <ClInclude Include="CJinxWalkState.h" />
     <ClInclude Include="CMinionAttackState.h" />
     <ClInclude Include="CMinionDeathState.h" />
@@ -1056,9 +1094,6 @@
     <ClInclude Include="CBasicAttackScript.h">
       <Filter>Scripts\SkillProjectile</Filter>
     </ClInclude>
-    <ClInclude Include="CJinxWScript.h">
-      <Filter>Scripts\SkillProjectile</Filter>
-    </ClInclude>
     <ClInclude Include="CProjectileScript.h">
       <Filter>Scripts\SkillProjectile</Filter>
     </ClInclude>
@@ -1103,9 +1138,6 @@
     </ClInclude>
     <ClInclude Include="CHeal.h">
       <Filter>Scripts\Skill\Spell</Filter>
-    </ClInclude>
-    <ClInclude Include="CBasicAttack.h">
-      <Filter>Scripts\Skill</Filter>
     </ClInclude>
     <ClInclude Include="CSkill.h">
       <Filter>Scripts\Skill</Filter>
@@ -1258,9 +1290,6 @@
     <Filter Include="Scripts\Skill">
       <UniqueIdentifier>{31db7dae-bb4d-47f2-87a4-04117a326ba3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\Skill\Jinx">
-      <UniqueIdentifier>{b0fcf10c-52c4-4198-bf30-5408d5ed9a15}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Scripts\Skill\Spell">
       <UniqueIdentifier>{102eea86-97e5-4019-a5a2-a671cb0376c6}</UniqueIdentifier>
     </Filter>
@@ -1294,6 +1323,15 @@
     <Filter Include="Scripts\Unit\Mob\Jungle\Dragon">
       <UniqueIdentifier>{02c092f3-6ab1-4ed9-b7da-29ff1699d04a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\Skill\BaseAttack">
+      <UniqueIdentifier>{0d8e3661-b52c-4cbb-8120-be5ef6b69339}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Skill\Skill_Jinx">
+      <UniqueIdentifier>{b0fcf10c-52c4-4198-bf30-5408d5ed9a15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\SkillProjectile\Projectile_Jinx">
+      <UniqueIdentifier>{92ffb53b-8c88-4b92-a061-24ec2046c3aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="UIScript">
@@ -1301,6 +1339,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Script.rc" />
+    <ResourceCompile Include="Script.rc">
+      <Filter>Default</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

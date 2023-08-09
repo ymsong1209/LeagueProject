@@ -1,27 +1,28 @@
 #include "pch.h"
-#include "CJinxWState.h"
+#include "CJinxEState.h"
 #include "CChampionScript.h"
 #include "CSkill.h"
 
-CJinxWState::CJinxWState()
+CJinxEState::CJinxEState()
 {
-	SetName(L"W");
+	SetName(L"E");
 }
 
-CJinxWState::~CJinxWState()
+CJinxEState::~CJinxEState()
 {
 }
 
-void CJinxWState::tick()
+void CJinxEState::tick()
 {
 	CChampionSkillState::tick();
 }
 
-void CJinxWState::Enter()
+void CJinxEState::Enter()
 {
+
 	CChampionSkillState::Enter();
 
-	CSkill* JinxW = GetOwner()->GetScript<CChampionScript>()->GetSkill(2);
+	CSkill* JinxW = GetOwner()->GetScript<CChampionScript>()->GetSkill(3);
 	JinxW->SetUserObj(m_UserObj);
 	JinxW->SetTargetObj(m_TargetObj);
 	JinxW->SetOwnerScript(GetOwner()->GetScript<CChampionScript>());
@@ -29,19 +30,18 @@ void CJinxWState::Enter()
 	JinxW->Use();
 
 	// 애니메이션
-	wstring animName = L"Jinx\\Spell2";
+	wstring animName = L"Jinx\\Spell3";
 	GetOwner()->Animator3D()->PlayOnce(animName, true);
 
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, true, true, 0.1f);
+
 }
 
-void CJinxWState::Exit()
+void CJinxEState::Exit()
 {
-	CChampionSkillState::Exit();
 }
 
-void CJinxWState::HandleEvent(CGameEvent& event)
+void CJinxEState::HandleEvent(CGameEvent& event)
 {
-	CChampionSkillState::HandleEvent(event);
 }
