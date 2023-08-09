@@ -42,6 +42,11 @@ void CChampionScript::begin()
 {
 	CUnitScript::begin();
 
+	// FSM
+	if (GetOwner()->Fsm() == nullptr)
+		return;
+	GetOwner()->Fsm()->ChangeState(L"Idle");
+
 	// 스킬 레벨 초기화
 	m_SkillLevel[0] = 1;
 	m_SkillLevel[2] = 1;
@@ -119,6 +124,7 @@ bool CChampionScript::CheckDeath()
 		if (m_fRespawnTime <= 0)
 		{
 			m_fHP = m_fMaxHP;
+			m_bUnitDead = false;
 			m_fRespawnTime = 5;
 			m_eCurCC = CC::CLEAR;
 			m_eRestraint = RESTRAINT::DEFAULT;
@@ -146,8 +152,8 @@ bool CChampionScript::CheckDeath()
 
 void CChampionScript::CheckStatus()
 {
-	m_fHP += 0.5f * DT;
-	m_fMP += 5.0f * DT;
+	//m_fHP += 0.5f * DT;
+	//m_fMP += 5.0f * DT;
 
 	if (m_fHP > m_fMaxHP)
 		m_fHP = m_fMaxHP;

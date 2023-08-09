@@ -230,60 +230,73 @@ void GameObjMgr::SendMyPlayerMove(ClientServiceRef _service)
 void GameObjMgr::SendObjectMove(uint64 _id, CGameObject* _obj, ClientServiceRef _service)
 {
 	// 오브젝트의 움직임을 서버에 보낸다.
-	CGameObject* obj = FindObject(_id);
 
-	if (_obj != obj || obj == nullptr || obj->GetLayerIndex() == -1)
+	if (_obj == nullptr || _obj->GetLayerIndex() == -1)
 		return;
 	
-	Vec3  CurPos = obj->Transform()->GetRelativePos();
-	
+	Vec3  CurPos = _obj->Transform()->GetRelativePos();
+	Vec3  CurRot = _obj->Transform()->GetRelativeRot();
+	float CurHP = _obj->GetScript<CUnitScript>()->GetCurHP();
+	float CurMP = _obj->GetScript<CUnitScript>()->GetCurMP();
+	int   CurLevel = _obj->GetScript<CUnitScript>()->GetLevel();
+
 	auto it = _objectsPrevPos.find(_id);
 	if (it != _objectsPrevPos.end()) // PrevPos가 있다. 	
 	{
-		//// 이전 좌표와 똑같다면 move packet을 보내지 않는다. return
-		//if (_objectsPrevPos.at(_id) == CurPos) 
-		//	return;
-	
-		_objectsPrevPos.at(_id) = CurPos; // 현재 좌표를 이전좌표로 저장
-		
-		Vec3  CurRot = obj->Transform()->GetRelativeRot();
-	
-		ObjectMove move = {};
-		if (_obj->GetScript<CUnitScript>() != nullptr)
+		auto it1 = _objectsPrevHP.find(_id);
+		if (it1 != _objectsPrevHP.end())  // PrevHP 가 있다.
 		{
-			float CurHP = obj->GetScript<CUnitScript>()->GetCurHP();
-			float CurMP = obj->GetScript<CUnitScript>()->GetCurMP();
-			float CurAttackPower = obj->GetScript<CUnitScript>()->GetAttackPower();
-			float CurDefencePower = obj->GetScript<CUnitScript>()->GetDefencePower();
-			float MaxHP = obj->GetScript<CUnitScript>()->GetMaxHP();
-			float MaxMP = obj->GetScript<CUnitScript>()->GetMaxMP();
-			CC CurCC = obj->GetScript<CUnitScript>()->GetCC();
-			bool bUnitDead = obj->GetScript<CUnitScript>()->IsUnitDead();
-			move.HP = CurHP;
-			move.MP = CurMP;
-			move.MaxHP = MaxHP;
-			move.MaxMP = MaxMP;
+			
+			// 이전 좌표, 이전 HP 똑같다면 move packet을 보내지 않는다. return
+			if (_objectsPrevPos.at(_id) == CurPos
+				&& _objectsPrevHP.at(_id) == CurHP)
+				return;
 
-			move.AttackPower = CurAttackPower;
-			move.DefencePower = CurDefencePower;
-			move.CC = CurCC;
-			move.bUnitDead = bUnitDead;
+			_objectsPrevPos.at(_id) = CurPos; // 현재 좌표를 이전좌표로 저장
+			_objectsPrevHP.at(_id) = CurHP;   // 현재 HP를 이전 HP 로 저장
+
+
+			ObjectMove move = {};
+			if (_obj->GetScript<CUnitScript>() != nullptr)
+			{
+				float CurAttackPower = _obj->GetScript<CUnitScript>()->GetAttackPower();
+				float CurDefencePower = _obj->GetScript<CUnitScript>()->GetDefencePower();
+				float MaxHP = _obj->GetScript<CUnitScript>()->GetMaxHP();
+				float MaxMP = _obj->GetScript<CUnitScript>()->GetMaxMP();
+				CC CurCC = _obj->GetScript<CUnitScript>()->GetCC();
+				bool bUnitDead = _obj->GetScript<CUnitScript>()->IsUnitDead();
+
+				move.HP = CurHP;
+				move.MP = CurMP;
+				move.MaxHP = MaxHP;
+				move.MaxMP = MaxMP;
+
+				move.AttackPower = CurAttackPower;
+				move.DefencePower = CurDefencePower;
+				move.CC = CurCC;
+				move.bUnitDead = bUnitDead;
+				move.LV = CurLevel;
+			}
+
+			move.pos.x = CurPos.x;
+			move.pos.y = CurPos.y;
+			move.pos.z = CurPos.z;
+			move.moveDir.x = CurRot.x;
+			move.moveDir.y = CurRot.y;
+			move.moveDir.z = CurRot.z;
+
+			// 서버에게 패킷 전송
+			std::cout << "C_OBJECT_MOVE Pakcet. id : " << _id << endl;
+
+			PKT_C_OBJECT_MOVE_WRITE pktWriter(_id, move);
+			SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+			_service->Broadcast(sendBuffer);
+			std::cout << "===============================" << endl;
 		}
-	
-		move.pos.x = CurPos.x;
-		move.pos.y = CurPos.y;
-		move.pos.z = CurPos.z;
-		move.moveDir.x = CurRot.x;
-		move.moveDir.y = CurRot.y;
-		move.moveDir.z = CurRot.z;
-	
-		// 서버에게 패킷 전송
-		std::cout << "C_OBJECT_MOVE Pakcet. id : " << _id << endl;
-	
-		PKT_C_OBJECT_MOVE_WRITE pktWriter(_id, move);
-		SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
-		_service->Broadcast(sendBuffer);
-		std::cout << "===============================" << endl;
+		else
+		{
+			_objectsPrevHP.insert(pair(_id, CurHP));
+		}
 	}
 	else
 	{

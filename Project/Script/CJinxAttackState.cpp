@@ -41,6 +41,7 @@ void CJinxAttackState::Enter()
 
 void CJinxAttackState::Exit()
 {
+	CChampionAttackState::Exit();
 }
 
 void CJinxAttackState::HandleEvent(CGameEvent& event)

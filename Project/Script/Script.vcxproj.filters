@@ -3,7 +3,6 @@
   <ItemGroup>
     <ClCompile Include="COtherPlayerScript.cpp" />
     <ClCompile Include="CPlayerScript.cpp" />
-    <ClCompile Include="CScriptMgr.cpp" />
     <ClCompile Include="CInGameCameraScript.cpp" />
     <ClCompile Include="CSkill.cpp" />
     <ClCompile Include="CStructureScript.cpp" />
@@ -553,11 +552,16 @@
       <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
     </ClCompile>
     <ClCompile Include="CMonsterHPBarUIScript.cpp" />
-    <ClCompile Include="CServerTypes.cpp" />
     <ClCompile Include="CMinionChaseState.cpp">
       <Filter>State\Unit\Minion</Filter>
     </ClCompile>
     <ClCompile Include="CBushScript.cpp" />
+    <ClCompile Include="CServerTypes.cpp">
+      <Filter>Default</Filter>
+    </ClCompile>
+    <ClCompile Include="CScriptMgr.cpp">
+      <Filter>Manager\1. ScriptMgr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />

@@ -149,7 +149,9 @@ void ServerEventMgr::clienttick()
 				CGameObject* NewObject = (CGameObject*)m_vecEvent[i].wParam;
 				ObjectMove* objectMove = (ObjectMove*)(m_vecEvent[i].lParam);
 
-				if (NewObject == nullptr) continue;
+
+				if (NewObject == nullptr
+					|| objectMove->LV <= 0) continue;
 
 				if (NewObject->GetScript<CUnitScript>() != nullptr)
 				{
@@ -164,9 +166,9 @@ void ServerEventMgr::clienttick()
 					NewObject->GetScript<CUnitScript>()->SetCC(objectMove->CC);
 
 					NewObject->GetScript<CUnitScript>()->SetUnitDead(objectMove->bUnitDead);
+					NewObject->GetScript<CUnitScript>()->SetRcvMove(true);
+					NewObject->GetScript<CUnitScript>()->SetMovePos(Vec3(objectMove->pos.x, objectMove->pos.y, objectMove->pos.z));
 				}
-				NewObject->GetScript<CUnitScript>()->SetRcvMove(true);
-				NewObject->GetScript<CUnitScript>()->SetMovePos(Vec3(objectMove->pos.x, objectMove->pos.y, objectMove->pos.z));
 				//NewObject->Transform()->SetRelativePos(Vec3(objectMove->pos.x, objectMove->pos.y, objectMove->pos.z));
 				NewObject->Transform()->SetRelativeRot(Vec3(objectMove->moveDir.x, objectMove->moveDir.y, objectMove->moveDir.z));
 
@@ -257,7 +259,8 @@ void ServerEventMgr::clienttick()
 				float   lifespan = (float)m_vecEvent[i].lParam;
 
 				CGameObject* despawnObj = GameObjMgr::GetInst()->DeleteObjectInMap(despawnId);
-				despawnObj->SetLifeSpan(lifespan);
+				if(despawnObj != nullptr)
+					despawnObj->SetLifeSpan(lifespan);
 			}
 			break;
 

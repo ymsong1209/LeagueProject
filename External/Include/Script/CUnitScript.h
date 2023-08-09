@@ -51,7 +51,8 @@ protected:
     Vec3                    m_vNextPos;
     float                   m_fFaceRot;
 
-    ChampionType            m_ChampType;         
+    ChampionType            m_ChampType; 
+    Lane                    m_eLane;
     bool                    m_bUnitDead;        // 유닛이 죽었는지(HP 0 이하)
     vector<CTimedEffect*>   m_TimedEffectList;  // 지속딜 / CC기 관련 리스트
 
@@ -65,6 +66,7 @@ public:
    
     virtual void begin() override;
     virtual void tick() override;
+    virtual void BeginOverlap(CCollider2D* _collider) override {};
 
     virtual UnitType GetType() { return m_eUnitType; }
     virtual Faction GetFaction() { return m_eFaction; }
@@ -82,6 +84,9 @@ public:
 public:
     void SetChampType(ChampionType _Type) { m_ChampType = _Type; }
     ChampionType GetChampType() { return m_ChampType; }
+
+    void SetLane(Lane _lane) { m_eLane = _lane; }
+    Lane GetLane() { return m_eLane; }
 
     void  SetCurHP(float _f) { m_fHP = _f; }         // 현재 체력 = 인자값
     void  SetCurHPVar(float _f) { m_fHP += _f; }     // 현재 체력 += 인자값

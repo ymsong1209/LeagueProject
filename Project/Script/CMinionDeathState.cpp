@@ -16,40 +16,53 @@ void CMinionDeathState::tick()
 {
 	if (GetOwner()->Animator3D()->GetCurAnim()->IsFinish())
 	{
-		DestroyObject(GetOwner());
+		CSendServerEventMgr::GetInst()->SendDespawnPacket(GetOwner()->GetScript<CUnitScript>()->GetServerID(), 0.1f);
+		//DestroyObject(GetOwner());
 	}
 }
 
 void CMinionDeathState::Enter()
 {
-	CMinionScript* MinionScript = GetOwnerFSM()->GetOwner()->GetScript<CMinionScript>();
-	MinionType Type = MinionScript->GetMinionType();
+	CUnitState::Enter();
 
+	CMinionScript* MinionScript = GetOwnerFSM()->GetOwner()->GetScript<CMinionScript>();
+	UnitType Type = MinionScript->GetUnitType();
+
+	wstring animName;
+	
 	switch (Type)
 	{
-	case MinionType::MELEE:
+	case UnitType::MELEE_MINION:
 	{
-		GetOwner()->Animator3D()->PlayOnce(L"minion_melee\\Death", true, 0.1f);
+		animName = L"minion_melee\\Death";
+		GetOwner()->Animator3D()->PlayOnce(animName, true, 0.1f);
 	}
 	break;
-	case MinionType::RANGED:
+	case UnitType::RANGED_MINION:
 	{
-		GetOwner()->Animator3D()->PlayOnce(L"minion_caster\\_chaos_death", true, 0.1f);
+		animName = L"minion_caster\\_chaos_death";
+		GetOwner()->Animator3D()->PlayOnce(animName, true, 0.1f);
 	}
 	break;
-	case MinionType::SEIGE:
+	case UnitType::SIEGE_MINION:
 	{
-		GetOwner()->Animator3D()->PlayOnce(L"minion_siege\\cannon_chaos_attack1", true, 0.1f);
+		animName = L"minion_siege\\cannon_chaos_attack1";
+		GetOwner()->Animator3D()->PlayOnce(animName, true, 0.1f);
 	}
 	break;
-	case MinionType::SUPER:
+	case UnitType::SUPER_MINION:
 	{
-		GetOwner()->Animator3D()->PlayOnce(L"minion_super\\Death_Base", true, 0.1f);
+		animName = L"minion_super\\Death_Base";
+		GetOwner()->Animator3D()->PlayOnce(animName, true, 0.1f);
 	}
 	break;
 	}
+
+	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, true, true, 0.1f);
 }
 
 void CMinionDeathState::Exit()
 {
+	CUnitState::Exit();
 }

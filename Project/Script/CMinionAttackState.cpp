@@ -17,53 +17,64 @@ void CMinionAttackState::tick()
 {
 	if (GetOwner()->Animator3D()->GetCurAnim()->IsFinish())
 	{
-		CGameObject* Target = GetOwner()->GetScript<CMinionScript>()->GetTarget();
-
-		// 공격
-		CSkill* BasicAttack = GetOwner()->GetScript<CMinionScript>()->GetSkill(0);
-		BasicAttack->SetUserObj(GetOwner());
-		BasicAttack->SetTargetObj(Target);
-
-		BasicAttack->Use();
-		GetOwner()->GetScript<CMinionScript>()->ResetAttackCoolTime();
-
 		GetOwnerFSM()->ChangeState(L"Chase");
 	}
 }
 
 void CMinionAttackState::Enter()
 {
+	CUnitState::Enter();
+
 	CMinionScript* MinionScript = GetOwnerFSM()->GetOwner()->GetScript<CMinionScript>();
-	MinionType Type = MinionScript->GetMinionType();
+	UnitType Type = MinionScript->GetUnitType();
+
+	wstring animName;
 
 	switch (Type)
 	{
-	case MinionType::MELEE:
+	case UnitType::MELEE_MINION:
 	{
-		GetOwner()->Animator3D()->PlayOnce(L"minion_melee\\Attack1", true, 0.1f);
+		animName = L"minion_melee\\Attack1";
+		GetOwner()->Animator3D()->PlayOnce(animName, true, 0.1f);
 	}
 	break;
-	case MinionType::RANGED:
+	case UnitType::RANGED_MINION:
 	{
-		GetOwner()->Animator3D()->PlayOnce(L"minion_caster\\_attack", true, 0.1f);
+		animName = L"minion_caster\\_attack";
+		GetOwner()->Animator3D()->PlayOnce(animName, true, 0.1f);
 	}
 	break;
-	case MinionType::SEIGE:
+	case UnitType::SIEGE_MINION:
 	{
-		GetOwner()->Animator3D()->PlayOnce(L"minion_siege\\cannon_chaos_attack1", true, 0.1f);
+		animName = L"minion_siege\\cannon_chaos_attack1";
+		GetOwner()->Animator3D()->PlayOnce(animName, true, 0.1f);
 	}
 	break;
-	case MinionType::SUPER:
+	case UnitType::SUPER_MINION:
 	{
-		GetOwner()->Animator3D()->PlayOnce(L"minion_super\\Attack1", true, 0.1f);
+		animName = L"minion_super\\Attack1";
+		GetOwner()->Animator3D()->PlayOnce(animName, true, 0.1f);
 	}
 	break;
 	}
+
+	UINT64 targetId = MinionScript->GetServerID();
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, true, false, 0.0f);
+
+	CGameObject* Target = MinionScript->GetTarget();
+
+	// 공격
+	CSkill* BasicAttack = MinionScript->GetSkill(0);
+	BasicAttack->SetUserObj(GetOwner());
+	BasicAttack->SetTargetObj(Target);
+
+	BasicAttack->Use();
+	MinionScript->ResetAttackCoolTime();
 }
 
 void CMinionAttackState::Exit()
 {
-
+	CUnitState::Exit();
 }
 
 void CMinionAttackState::HandleEvent(CGameEvent& event)

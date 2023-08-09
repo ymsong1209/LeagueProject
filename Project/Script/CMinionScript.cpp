@@ -9,10 +9,9 @@
 
 CMinionScript::CMinionScript()
 	:CMobScript((UINT)SCRIPT_TYPE::MINIONSCRIPT)
-	, m_eLane(Lane::NONE)
 	, m_vecWayPoint{}
+	, m_fAggroTime(2.f)
 {
-	AddScriptParam(SCRIPT_PARAM::INT, &m_eMinionType, "Type");
 }
 
 CMinionScript::~CMinionScript()
@@ -26,51 +25,53 @@ void CMinionScript::begin()
 	m_eRestraint = RESTRAINT::DEFAULT;
 
 	// test
-	SetFaction(Faction::BLUE);
-	SetLane(Lane::TOP);
+	//SetFaction(Faction::BLUE);
+	//SetLane(Lane::TOP);
 	//SetMinionType(MinionType::RANGED);
 
 	// 미니언 타입 별 정보 세팅
-	switch (m_eMinionType)
+	switch (m_eUnitType)
 	{
-	case MinionType::MELEE:
+	case UnitType::MELEE_MINION:
 	{
 		m_fAttackPower = 1.f;
 		m_fAttackRange = 30.f;
 		m_fAttackSpeed = 1.5f;
-		m_fMoveSpeed = 50.f;
-		m_fMaxHP = 50.f;
+		m_fMoveSpeed = 35.f;
+		m_fMaxHP = 150.f;
 	}
 	break;
-	case MinionType::RANGED:
+	case UnitType::RANGED_MINION:
 	{
 		m_fAttackPower = 2.f;
-		m_fAttackRange = 200.f;
-		m_fAttackSpeed = 2.5f;
-		m_fMoveSpeed = 50.f;
-		m_fMaxHP = 50.f;
-	}
-	break;
-	case MinionType::SEIGE:
-	{
-		m_fAttackPower = 3.f;
 		m_fAttackRange = 100.f;
 		m_fAttackSpeed = 2.5f;
-		m_fMoveSpeed = 50.f;
-		m_fMaxHP = 50.f;
+		m_fMoveSpeed = 35.f;
+		m_fMaxHP = 80.f;
 	}
 	break;
-	case MinionType::SUPER:
+	case UnitType::SIEGE_MINION:
+	{
+		m_fAttackPower = 3.f;
+		m_fAttackRange = 80.f;
+		m_fAttackSpeed = 2.5f;
+		m_fMoveSpeed = 35.f;
+		m_fMaxHP = 150.f;
+	}
+	break;
+	case UnitType::SUPER_MINION:
 	{
 		m_fAttackPower = 5.f;
 		m_fAttackRange = 50.f;
 		m_fAttackSpeed = 2.f;
-		m_fMoveSpeed = 50.f;
-		m_fMaxHP = 50.f;
+		m_fMoveSpeed = 35.f;
+		m_fMaxHP = 150.f;
 	}
 	break;
 	}
 
+	//test
+	//m_fMoveSpeed = 200.f;
 	// 본인의 Lane, MinionType에 따라 정보 변경
 	switch (m_eLane)
 	{
@@ -149,7 +150,7 @@ void CMinionScript::begin()
 	GetOwner()->Fsm()->AddState(L"Walk", new CMinionWalkState);
 	GetOwner()->Fsm()->AddState(L"Death", new CMinionDeathState);
 	GetOwner()->Fsm()->AddState(L"Attack", new CMinionAttackState);
-	GetOwner()->Fsm()->AddState(L"Chase", new CMinionAttackState);
+	GetOwner()->Fsm()->AddState(L"Chase", new CMinionChaseState);
 
 	GetOwner()->Fsm()->ChangeState(L"Walk");
 
@@ -181,11 +182,15 @@ void CMinionScript::begin()
 
 void CMinionScript::tick()
 {
-	if (m_fHP == 0)
+	if (m_bUnitDead)
+		return;
+
+	if (m_fHP <= 0)
 	{
 		//죽음
 		m_bUnitDead = true;
 		GetOwner()->Fsm()->ChangeState(L"Death");
+		return;
 	}
 
 	CUnitScript::tick();
@@ -208,6 +213,11 @@ void CMinionScript::tick()
 	*/
 }
 
+void CMinionScript::OnOverlap(CCollider2D* _collider)
+{
+	CUnitScript::OnOverlap(_collider);
+}
+
 void CMinionScript::Move()
 {
 	// 움직일 수 없는 상황인 경우 return
@@ -228,9 +238,8 @@ void CMinionScript::Move()
 		{
 			if (m_iWayPointIdx < m_vecWayPoint.size() - 1)
 				m_iWayPointIdx++;
-
-			GetOwner()->PathFinder()->FindPath(m_vecWayPoint[m_iWayPointIdx]);
 		}
+		GetOwner()->PathFinder()->FindPath(m_vecWayPoint[m_iWayPointIdx]);
 	}
 }
 
@@ -239,18 +248,28 @@ void CMinionScript::FindTarget()
 	CGameObject* AttackRange = GetOwner()->FindChildObjByName(L"AttackRange");
 	vector<CGameObject*> UnitsInRange = AttackRange->GetScript<CAttackRangeScript>()->GetUnitsInRange();
 	if (UnitsInRange.size() > 0)
-		m_pTarget = UnitsInRange[0];
+	{
+		m_pTarget = nullptr;
+
+		for (int i = 0; i < UnitsInRange.size(); i++)
+		{
+			if (!UnitsInRange[i]->GetScript<CUnitScript>()->IsUnitDead())
+			{
+				m_pTarget = UnitsInRange[i];
+				return;
+			}
+		}
+	}
 	else
 		m_pTarget = nullptr;
 }
 
 void CMinionScript::AttackCoolDown()
 {
-	if (!CanAttack())
+	m_fCurAttackCoolTime += DT;
+	if (m_fCurAttackCoolTime >= m_fAttackSpeed)
 	{
-		m_fCurAttackCoolTime += DT;
-		if (m_fCurAttackCoolTime >= m_fAttackSpeed)
-			m_fCurAttackCoolTime = m_fAttackSpeed;
+		m_fCurAttackCoolTime = m_fAttackSpeed;
 	}
 }
 
@@ -262,7 +281,7 @@ bool CMinionScript::IsTargetValid(CGameObject* _Obj)
 		m_pTarget = nullptr;
 		return false;
 	}
-	if (!(_Obj->GetScript<CUnitScript>()->IsUnitDead()))
+	if (_Obj->GetScript<CUnitScript>()->IsUnitDead())
 	{
 		m_pTarget = nullptr;
 		return false;
@@ -285,8 +304,13 @@ bool CMinionScript::IsTargetInRange(CGameObject* _Obj)
 	if (it == UnitsInRange.end())
 		return false;
 
-	else
-		return true;
+	else 
+	{
+		if ((*it)->GetScript<CUnitScript>()->IsUnitDead())
+			return false;
+		else
+			return true;
+	}
 }
 
 bool CMinionScript::IsAtWayPoint()
@@ -296,7 +320,7 @@ bool CMinionScript::IsAtWayPoint()
 
 	float distance = sqrt(pow(WayPoint.x - MinionPos.x, 2) + pow(WayPoint.z - MinionPos.z, 2));
 
-	if (distance <= 5.f)
+	if (distance <= 10.5f)
 		return true;
 	else
 		return false;

@@ -36,7 +36,7 @@ void CBasicAttackScript::tick()
 }
 
 
-void CBasicAttackScript::OnOverlap(CCollider2D* _Other)
+void CBasicAttackScript::BeginOverlap(CCollider2D* _Other)
 {
 	if (m_TargetObj == nullptr)
 		return;
@@ -48,8 +48,6 @@ void CBasicAttackScript::OnOverlap(CCollider2D* _Other)
 		CSendServerEventMgr::GetInst()->SendHitPacket(GetServerID(), m_iServerTargetID, m_iServerUserID, 1, SkillType::BASIC_ATTACK);
 	
 		// ÀÌÈÄ »ç¶óÁü
-		
-		this->GetOwner()->Transform()->SetRelativePos(-666.f, -666.f, -666.f);
 		m_fProjectileSpeed = 0.f;
 		m_bUnitDead = true;
 		CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 0.f);
