@@ -21,6 +21,7 @@ CAnimator3D::CAnimator3D()
 	, m_pCurAnim(nullptr)
 	, m_bRepeat(false)
 	, m_pBoneFinalMatBuffer(nullptr)
+	, m_bFinalMatUpdate(false)
 	, m_bBlend(false)
 	, m_bRepeatBlend(false)
 	, m_bRepeatBlending(false)
@@ -45,6 +46,7 @@ CAnimator3D::CAnimator3D(const CAnimator3D& _origin)
 	, m_pCurAnim(nullptr)
 	, m_bRepeat(_origin.m_bRepeat)
 	, m_pBoneFinalMatBuffer(nullptr)
+	, m_bFinalMatUpdate(false)
 	, m_bBlend(_origin.m_bBlend)
 	, m_bRepeatBlend(_origin.m_bRepeatBlend)
 	, m_fCurBlendTime(_origin.m_fCurBlendTime)
@@ -137,36 +139,41 @@ void CAnimator3D::finaltick()
 
 		m_pCurAnim->finaltick();
 	}
+
+	// 컴퓨트 쉐이더 연산여부
+	m_bFinalMatUpdate = false;
 }
 
 bool CAnimator3D::UpdateData()
 {
 	if (!m_pCurAnim) return false;
+	if (!m_bFinalMatUpdate)
+	{
 
+		// Animation3D Update Compute Shader
+		CAnimation3DShader* pUpdateShader = (CAnimation3DShader*)CResMgr::GetInst()->FindRes<CComputeShader>(L"Animation3DUpdateCS").Get();
 
-	// Animation3D Update Compute Shader
-	CAnimation3DShader* pUpdateShader = (CAnimation3DShader*)CResMgr::GetInst()->FindRes<CComputeShader>(L"Animation3DUpdateCS").Get();
+		// Bone Data
+		Ptr<CMesh> pMesh = MeshRender()->GetMesh();
+		check_mesh(pMesh);
 
-	// Bone Data
-	Ptr<CMesh> pMesh = MeshRender()->GetMesh();
-	check_mesh(pMesh);
+		pUpdateShader->SetFrameDataBuffer(pMesh->GetBoneFrameDataBuffer());
+		pUpdateShader->SetOffsetMatBuffer(pMesh->GetBoneOffsetBuffer());
+		pUpdateShader->SetOutputBuffer(m_pBoneFinalMatBuffer);
 
-	pUpdateShader->SetFrameDataBuffer(pMesh->GetBoneFrameDataBuffer());
-	pUpdateShader->SetOffsetMatBuffer(pMesh->GetBoneOffsetBuffer());
-	pUpdateShader->SetOutputBuffer(m_pBoneFinalMatBuffer);
+		UINT iBoneCount = (UINT)m_pVecBones->size();
+		pUpdateShader->SetBoneCount(iBoneCount);
+		pUpdateShader->SetFrameIndex(m_iStartFrm);
+		pUpdateShader->SetNextFrameIdx(m_iNextFrm);
+		pUpdateShader->SetBlendFrameIdx(m_iBlendStartFrm);
+		pUpdateShader->SetFrameRatio(m_fFrameRatio);
+		pUpdateShader->SetBlendRatio(m_fBlendRatio);
 
-	UINT iBoneCount = (UINT)m_pVecBones->size();
-	pUpdateShader->SetBoneCount(iBoneCount);
-	pUpdateShader->SetFrameIndex(m_iStartFrm);
-	pUpdateShader->SetNextFrameIdx(m_iNextFrm);
-	pUpdateShader->SetBlendFrameIdx(m_iBlendStartFrm);
-	pUpdateShader->SetFrameRatio(m_fFrameRatio);
-	pUpdateShader->SetBlendRatio(m_fBlendRatio);
+		// 업데이트 쉐이더 실행
+		pUpdateShader->Execute();
+		m_bFinalMatUpdate = true;
 
-	// 업데이트 쉐이더 실행
-	pUpdateShader->Execute();
-
-
+	}
 	// t30 레지스터에 최종행렬 데이터(구조버퍼) 바인딩		
 	m_pBoneFinalMatBuffer->UpdateData(30, PIPELINE_STAGE::PS_VERTEX);
 	return true;

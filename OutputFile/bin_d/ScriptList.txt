@@ -22,6 +22,10 @@ CJungleMobHPScript
 CJungleMonsterScript
 CKrugMiniScript
 CKrugScript
+CMalphiteEScript
+CMalphiteQScript
+CMalphiteRScript
+CMalphiteScript
 CMinimapUIScript
 CMinionHPBarPosScript
 CMinionHPRatioScript
