@@ -326,9 +326,6 @@
     <ClCompile Include="CBasicAttackScript.cpp">
       <Filter>Scripts\SkillProjectile</Filter>
     </ClCompile>
-    <ClCompile Include="CJinxWScript.cpp">
-      <Filter>Scripts\SkillProjectile</Filter>
-    </ClCompile>
     <ClCompile Include="CProjectileScript.cpp">
       <Filter>Scripts\SkillProjectile</Filter>
     </ClCompile>
@@ -562,6 +559,60 @@
     <ClCompile Include="CScriptMgr.cpp">
       <Filter>Manager\1. ScriptMgr</Filter>
     </ClCompile>
+    <ClCompile Include="CMalphiteScript.cpp">
+      <Filter>Scripts\Unit\Champion</Filter>
+    </ClCompile>
+    <ClCompile Include="CMalphiteEState.cpp">
+      <Filter>State\Unit\Champion\Malphite\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="CMalphiteQState.cpp">
+      <Filter>State\Unit\Champion\Malphite\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="CMalphiteRState.cpp">
+      <Filter>State\Unit\Champion\Malphite\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="CMalphiteWState.cpp">
+      <Filter>State\Unit\Champion\Malphite\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="CMalphiteAttackState.cpp">
+      <Filter>State\Unit\Champion\Malphite</Filter>
+    </ClCompile>
+    <ClCompile Include="CMalphiteDeathState.cpp">
+      <Filter>State\Unit\Champion\Malphite</Filter>
+    </ClCompile>
+    <ClCompile Include="CMalphiteIdleState.cpp">
+      <Filter>State\Unit\Champion\Malphite</Filter>
+    </ClCompile>
+    <ClCompile Include="CMalphiteRecallState.cpp">
+      <Filter>State\Unit\Champion\Malphite</Filter>
+    </ClCompile>
+    <ClCompile Include="CMalphiteRespawnState.cpp">
+      <Filter>State\Unit\Champion\Malphite</Filter>
+    </ClCompile>
+    <ClCompile Include="CMalphiteWalkState.cpp">
+      <Filter>State\Unit\Champion\Malphite</Filter>
+    </ClCompile>
+    <ClCompile Include="CMalphiteE.cpp">
+      <Filter>Scripts\Skill\Malphite</Filter>
+    </ClCompile>
+    <ClCompile Include="CMalphiteQ.cpp">
+      <Filter>Scripts\Skill\Malphite</Filter>
+    </ClCompile>
+    <ClCompile Include="CMalphiteR.cpp">
+      <Filter>Scripts\Skill\Malphite</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxWScript.cpp">
+      <Filter>Scripts\SkillProjectile\Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CMalphiteEScript.cpp">
+      <Filter>Scripts\SkillProjectile\Malphite</Filter>
+    </ClCompile>
+    <ClCompile Include="CMalphiteQScript.cpp">
+      <Filter>Scripts\SkillProjectile\Malphite</Filter>
+    </ClCompile>
+    <ClCompile Include="CMalphiteRScript.cpp">
+      <Filter>Scripts\SkillProjectile\Malphite</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -663,6 +714,60 @@
       <Filter>State\Unit\Minion</Filter>
     </ClInclude>
     <ClInclude Include="CBushScript.h" />
+    <ClInclude Include="CMalphiteScript.h">
+      <Filter>Scripts\Unit\Champion</Filter>
+    </ClInclude>
+    <ClInclude Include="CMalphiteEState.h">
+      <Filter>State\Unit\Champion\Malphite\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="CMalphiteQState.h">
+      <Filter>State\Unit\Champion\Malphite\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="CMalphiteRState.h">
+      <Filter>State\Unit\Champion\Malphite\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="CMalphiteWState.h">
+      <Filter>State\Unit\Champion\Malphite\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="CMalphiteAttackState.h">
+      <Filter>State\Unit\Champion\Malphite</Filter>
+    </ClInclude>
+    <ClInclude Include="CMalphiteDeathState.h">
+      <Filter>State\Unit\Champion\Malphite</Filter>
+    </ClInclude>
+    <ClInclude Include="CMalphiteIdleState.h">
+      <Filter>State\Unit\Champion\Malphite</Filter>
+    </ClInclude>
+    <ClInclude Include="CMalphiteRecallState.h">
+      <Filter>State\Unit\Champion\Malphite</Filter>
+    </ClInclude>
+    <ClInclude Include="CMalphiteRespawnState.h">
+      <Filter>State\Unit\Champion\Malphite</Filter>
+    </ClInclude>
+    <ClInclude Include="CMalphiteWalkState.h">
+      <Filter>State\Unit\Champion\Malphite</Filter>
+    </ClInclude>
+    <ClInclude Include="CMalphiteE.h">
+      <Filter>Scripts\Skill\Malphite</Filter>
+    </ClInclude>
+    <ClInclude Include="CMalphiteQ.h">
+      <Filter>Scripts\Skill\Malphite</Filter>
+    </ClInclude>
+    <ClInclude Include="CMalphiteR.h">
+      <Filter>Scripts\Skill\Malphite</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxWScript.h">
+      <Filter>Scripts\SkillProjectile\Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CMalphiteEScript.h">
+      <Filter>Scripts\SkillProjectile\Malphite</Filter>
+    </ClInclude>
+    <ClInclude Include="CMalphiteQScript.h">
+      <Filter>Scripts\SkillProjectile\Malphite</Filter>
+    </ClInclude>
+    <ClInclude Include="CMalphiteRScript.h">
+      <Filter>Scripts\SkillProjectile\Malphite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">
@@ -1058,9 +1163,6 @@
     <ClInclude Include="CBasicAttackScript.h">
       <Filter>Scripts\SkillProjectile</Filter>
     </ClInclude>
-    <ClInclude Include="CJinxWScript.h">
-      <Filter>Scripts\SkillProjectile</Filter>
-    </ClInclude>
     <ClInclude Include="CProjectileScript.h">
       <Filter>Scripts\SkillProjectile</Filter>
     </ClInclude>
@@ -1295,6 +1397,21 @@
     </Filter>
     <Filter Include="Scripts\Unit\Mob\Jungle\Dragon">
       <UniqueIdentifier>{02c092f3-6ab1-4ed9-b7da-29ff1699d04a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\Unit\Champion\Malphite">
+      <UniqueIdentifier>{307bb815-98de-46dd-9e01-cc358bafdbce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\Unit\Champion\Malphite\Skill">
+      <UniqueIdentifier>{98092fed-456d-46d6-9042-4cb63cb37ca6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Skill\Malphite">
+      <UniqueIdentifier>{9ad61063-da8e-47bc-9bb1-a42f56d3390d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\SkillProjectile\Jinx">
+      <UniqueIdentifier>{a7cbb1cb-83f4-4027-bb72-b244be72cd28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\SkillProjectile\Malphite">
+      <UniqueIdentifier>{5ec3d5a9-920c-48e5-81ee-7e69040ad680}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
