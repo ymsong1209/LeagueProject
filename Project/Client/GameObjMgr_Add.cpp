@@ -52,6 +52,10 @@
 #include <Script/CBlueScript.h>
 #include <Script/CRedScript.h>
 #include <Script/CDragonScript.h>
+#include <Script\CDragonHPUIScript.h>
+#include <Script\CMinionHPRatioScript.h>
+#include <Script\CJungleMINIHPScript.h>
+#include <Script/CJungleMobHPScript.h>
 
 
 
@@ -226,7 +230,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 
 			CGameObject* MinionHP = new CGameObject;
-			MinionHP->SetName(L"South_BlueHP");
+			MinionHP->SetName(L"MinionHP");
 			MinionHP->AddComponent(new CTransform);
 			MinionHP->AddComponent(new CMeshRender);
 			MinionHP->AddComponent(new CMinionHPRatioScript);
@@ -278,6 +282,13 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
 
+			CGameObject* HPBar = new CGameObject;
+			HPBar->SetName(L"HPBar");
+			HPBar->AddComponent(new CTransform);
+			HPBar->AddComponent(new CMeshRender);
+			HPBar->AddComponent(new CMinionHPRatioScript);
+			pObj->AddChild(HPBar);
+
 			SpawnGameObject(pObj, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z), L"Mob");
 
 			_objects.insert(std::make_pair(_objectId, pObj));
@@ -322,6 +333,13 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+
+			CGameObject* HPBar = new CGameObject;
+			HPBar->SetName(L"HPBar");
+			HPBar->AddComponent(new CTransform);
+			HPBar->AddComponent(new CMeshRender);
+			HPBar->AddComponent(new CMinionHPRatioScript);
+			pObj->AddChild(HPBar);
 
 			SpawnGameObject(pObj, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z), L"Mob");
 
@@ -368,6 +386,13 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+
+			CGameObject* HPBar = new CGameObject;
+			HPBar->SetName(L"HPBar");
+			HPBar->AddComponent(new CTransform);
+			HPBar->AddComponent(new CMeshRender);
+			HPBar->AddComponent(new CMinionHPRatioScript);
+			pObj->AddChild(HPBar);
 
 			SpawnGameObject(pObj, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z), L"Mob");
 
@@ -426,6 +451,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+
+			CGameObject* GrompHP = new CGameObject;
+			GrompHP->SetName(L"SOUTH_GrompHP");
+			GrompHP->AddComponent(new CTransform);
+			GrompHP->AddComponent(new CMeshRender);
+			GrompHP->AddComponent(new CJungleMobHPScript);
+			pObj->AddChild(GrompHP);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -476,6 +509,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* MurkWolfHP = new CGameObject;
+			MurkWolfHP->SetName(L"SOUTH_MurkWolfHP");
+			MurkWolfHP->AddComponent(new CTransform);
+			MurkWolfHP->AddComponent(new CMeshRender);
+			MurkWolfHP->AddComponent(new CJungleMobHPScript);
+			pObj->AddChild(MurkWolfHP);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -525,6 +566,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* MurkWolf_MiniHP = new CGameObject;
+			MurkWolf_MiniHP->SetName(L"SOUTH_MurkWolf_Mini_L_HP");
+			MurkWolf_MiniHP->AddComponent(new CTransform);
+			MurkWolf_MiniHP->AddComponent(new CMeshRender);
+			MurkWolf_MiniHP->AddComponent(new CJungleMINIHPScript);
+			pObj->AddChild(MurkWolf_MiniHP);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -574,6 +623,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* MurkWolf_MiniHP = new CGameObject;
+			MurkWolf_MiniHP->SetName(L"SOUTH_MurkWolf_Mini_R_HP");
+			MurkWolf_MiniHP->AddComponent(new CTransform);
+			MurkWolf_MiniHP->AddComponent(new CMeshRender);
+			MurkWolf_MiniHP->AddComponent(new CJungleMINIHPScript);
+			pObj->AddChild(MurkWolf_MiniHP);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -623,6 +680,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* KrugHP = new CGameObject;
+			KrugHP->SetName(L"SOUTH_KrugHP");
+			KrugHP->AddComponent(new CTransform);
+			KrugHP->AddComponent(new CMeshRender);
+			KrugHP->AddComponent(new CJungleMobHPScript);
+			pObj->AddChild(KrugHP);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -672,6 +737,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* Krug_MiniHP = new CGameObject;
+			Krug_MiniHP->SetName(L"SOUTH_Krug_Mini_HP");
+			Krug_MiniHP->AddComponent(new CTransform);
+			Krug_MiniHP->AddComponent(new CMeshRender);
+			Krug_MiniHP->AddComponent(new CJungleMINIHPScript);
+			pObj->AddChild(Krug_MiniHP);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -721,6 +794,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* RazorBeakHP = new CGameObject;
+			RazorBeakHP->SetName(L"SOUTH_RazorBeakHP");
+			RazorBeakHP->AddComponent(new CTransform);
+			RazorBeakHP->AddComponent(new CMeshRender);
+			RazorBeakHP->AddComponent(new CJungleMobHPScript);
+			pObj->AddChild(RazorBeakHP);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -770,6 +851,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* RazorBeakHP = new CGameObject;
+			RazorBeakHP->SetName(L"SOUTH_RazorBeak_Mini1_HP");
+			RazorBeakHP->AddComponent(new CTransform);
+			RazorBeakHP->AddComponent(new CMeshRender);
+			RazorBeakHP->AddComponent(new CJungleMINIHPScript);
+			pObj->AddChild(RazorBeakHP);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -819,6 +908,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* RazorBeakHP = new CGameObject;
+			RazorBeakHP->SetName(L"SOUTH_RazorBeak_Mini2_HP");
+			RazorBeakHP->AddComponent(new CTransform);
+			RazorBeakHP->AddComponent(new CMeshRender);
+			RazorBeakHP->AddComponent(new CJungleMINIHPScript);
+			pObj->AddChild(RazorBeakHP);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -868,6 +965,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* RazorBeakHP = new CGameObject;
+			RazorBeakHP->SetName(L"SOUTH_RazorBeak_Mini3_HP");
+			RazorBeakHP->AddComponent(new CTransform);
+			RazorBeakHP->AddComponent(new CMeshRender);
+			RazorBeakHP->AddComponent(new CJungleMINIHPScript);
+			pObj->AddChild(RazorBeakHP);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -917,6 +1022,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* RazorBeakHP = new CGameObject;
+			RazorBeakHP->SetName(L"SOUTH_RazorBeak_Mini4_HP");
+			RazorBeakHP->AddComponent(new CTransform);
+			RazorBeakHP->AddComponent(new CMeshRender);
+			RazorBeakHP->AddComponent(new CJungleMINIHPScript);
+			pObj->AddChild(RazorBeakHP);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -966,6 +1079,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* RazorBeakHP = new CGameObject;
+			RazorBeakHP->SetName(L"SOUTH_RazorBeak_Mini5_HP");
+			RazorBeakHP->AddComponent(new CTransform);
+			RazorBeakHP->AddComponent(new CMeshRender);
+			RazorBeakHP->AddComponent(new CJungleMINIHPScript);
+			pObj->AddChild(RazorBeakHP);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1015,6 +1136,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* BlueHP = new CGameObject;
+			BlueHP->SetName(L"SOUTH_BlueHP");
+			BlueHP->AddComponent(new CTransform);
+			BlueHP->AddComponent(new CMeshRender);
+			BlueHP->AddComponent(new CJungleMobHPScript);
+			pObj->AddChild(BlueHP);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1064,6 +1193,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* RedHP = new CGameObject;
+			RedHP->SetName(L"SOUTH_RedHP");
+			RedHP->AddComponent(new CTransform);
+			RedHP->AddComponent(new CMeshRender);
+			RedHP->AddComponent(new CJungleMobHPScript);
+			pObj->AddChild(RedHP);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1113,6 +1250,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* GrompHP = new CGameObject;
+			GrompHP->SetName(L"NORTH_GrompHP");
+			GrompHP->AddComponent(new CTransform);
+			GrompHP->AddComponent(new CMeshRender);
+			GrompHP->AddComponent(new CJungleMobHPScript);
+			pObj->AddChild(GrompHP);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1163,6 +1308,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* MurkWolfHP = new CGameObject;
+			MurkWolfHP->SetName(L"NORTH_MurkWolfHP");
+			MurkWolfHP->AddComponent(new CTransform);
+			MurkWolfHP->AddComponent(new CMeshRender);
+			MurkWolfHP->AddComponent(new CJungleMobHPScript);
+			pObj->AddChild(MurkWolfHP);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1212,6 +1365,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* MurkWolf_MiniHP = new CGameObject;
+			MurkWolf_MiniHP->SetName(L"NORTH_MurkWolf_Mini_L_HP");
+			MurkWolf_MiniHP->AddComponent(new CTransform);
+			MurkWolf_MiniHP->AddComponent(new CMeshRender);
+			MurkWolf_MiniHP->AddComponent(new CJungleMINIHPScript);
+			pObj->AddChild(MurkWolf_MiniHP);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1261,6 +1422,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* MurkWolf_MiniHP = new CGameObject;
+			MurkWolf_MiniHP->SetName(L"NORTH_MurkWolf_Mini_R_HP");
+			MurkWolf_MiniHP->AddComponent(new CTransform);
+			MurkWolf_MiniHP->AddComponent(new CMeshRender);
+			MurkWolf_MiniHP->AddComponent(new CJungleMINIHPScript);
+			pObj->AddChild(MurkWolf_MiniHP);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1310,6 +1479,15 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* KrugHP = new CGameObject;
+			KrugHP->SetName(L"NORTH_KrugHP");
+			KrugHP->AddComponent(new CTransform);
+			KrugHP->AddComponent(new CMeshRender);
+			KrugHP->AddComponent(new CJungleMobHPScript);
+			pObj->AddChild(KrugHP);
+
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1359,6 +1537,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* Krug_MiniHP = new CGameObject;
+			Krug_MiniHP->SetName(L"NORTH_Krug_Mini_HP");
+			Krug_MiniHP->AddComponent(new CTransform);
+			Krug_MiniHP->AddComponent(new CMeshRender);
+			Krug_MiniHP->AddComponent(new CJungleMINIHPScript);
+			pObj->AddChild(Krug_MiniHP);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1408,6 +1594,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* RazorBeakHP = new CGameObject;
+			RazorBeakHP->SetName(L"NORTH_RazorBeakHP");
+			RazorBeakHP->AddComponent(new CTransform);
+			RazorBeakHP->AddComponent(new CMeshRender);
+			RazorBeakHP->AddComponent(new CJungleMobHPScript);
+			pObj->AddChild(RazorBeakHP);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1457,6 +1651,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* RazorBeakHP = new CGameObject;
+			RazorBeakHP->SetName(L"NORTH_RazorBeak_Mini1_HP");
+			RazorBeakHP->AddComponent(new CTransform);
+			RazorBeakHP->AddComponent(new CMeshRender);
+			RazorBeakHP->AddComponent(new CJungleMINIHPScript);
+			pObj->AddChild(RazorBeakHP);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1506,6 +1708,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* RazorBeakHP = new CGameObject;
+			RazorBeakHP->SetName(L"NORTH_RazorBeak_Mini2_HP");
+			RazorBeakHP->AddComponent(new CTransform);
+			RazorBeakHP->AddComponent(new CMeshRender);
+			RazorBeakHP->AddComponent(new CJungleMINIHPScript);
+			pObj->AddChild(RazorBeakHP);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1555,6 +1765,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* RazorBeakHP = new CGameObject;
+			RazorBeakHP->SetName(L"NORTH_RazorBeak_Mini3_HP");
+			RazorBeakHP->AddComponent(new CTransform);
+			RazorBeakHP->AddComponent(new CMeshRender);
+			RazorBeakHP->AddComponent(new CJungleMINIHPScript);
+			pObj->AddChild(RazorBeakHP);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1604,6 +1822,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* RazorBeakHP = new CGameObject;
+			RazorBeakHP->SetName(L"NORTH_RazorBeak_Mini4_HP");
+			RazorBeakHP->AddComponent(new CTransform);
+			RazorBeakHP->AddComponent(new CMeshRender);
+			RazorBeakHP->AddComponent(new CJungleMINIHPScript);
+			pObj->AddChild(RazorBeakHP);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1653,6 +1879,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* RazorBeakHP = new CGameObject;
+			RazorBeakHP->SetName(L"NORTH_RazorBeak_Mini5_HP");
+			RazorBeakHP->AddComponent(new CTransform);
+			RazorBeakHP->AddComponent(new CMeshRender);
+			RazorBeakHP->AddComponent(new CJungleMINIHPScript);
+			pObj->AddChild(RazorBeakHP);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1702,6 +1936,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* BlueHP = new CGameObject;
+			BlueHP->SetName(L"NORTH_BlueHP");
+			BlueHP->AddComponent(new CTransform);
+			BlueHP->AddComponent(new CMeshRender);
+			BlueHP->AddComponent(new CJungleMobHPScript);
+			pObj->AddChild(BlueHP);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1751,6 +1993,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* RedHP = new CGameObject;
+			RedHP->SetName(L"NORTH_RedHP");
+			RedHP->AddComponent(new CTransform);
+			RedHP->AddComponent(new CMeshRender);
+			RedHP->AddComponent(new CJungleMobHPScript);
+			pObj->AddChild(RedHP);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
@@ -1801,6 +2051,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
+
+			CGameObject* DragonBar = new CGameObject;
+			DragonBar->SetName(L"DragonBar");
+			DragonBar->AddComponent(new CTransform);
+			DragonBar->AddComponent(new CMeshRender);
+			DragonBar->AddComponent(new CDragonHPUIScript);
+			pObj->AddChild(DragonBar);
+
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
