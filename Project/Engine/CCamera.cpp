@@ -567,13 +567,6 @@ void CCamera::SortObject()
 				if (m_isGizmoEditMode == 1) //에디트 모드일때만 클릭체크
 					GizmoClickCheck(vecObject[j], pCurLevel); //기즈모 클릭 체크
 
-				//아웃라인 출력 오브젝트 테스트
-				if (vecObject[j]->Transform()->GetUseMouseOutline() == true)
-				{
-					if (OutlineCheck(vecObject[j]))
-						m_vecContour.push_back(vecObject[j]);
-				}
-
 
 				CollideRay();
 
@@ -585,6 +578,14 @@ void CCamera::SortObject()
 						vecObject[j]->GetRenderComponent()->SetCulled(true);
 						continue;
 					}
+				}
+
+
+				//아웃라인 출력 오브젝트 테스트
+				if (vecObject[j]->Transform()->GetUseMouseOutline() == true)
+				{
+					if (OutlineCheck(vecObject[j]))
+						m_vecContour.push_back(vecObject[j]);
 				}
 				// 메테리얼 개수만큼 반복
 				UINT iMtrlCount = pRenderCom->GetMtrlCount();

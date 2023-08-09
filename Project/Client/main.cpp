@@ -78,7 +78,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     SetProcessDPIAware();
     
     AllocConsole();
-    // 표준 출력을 콘솔 창으로 리디렉션
+    //// 표준 출력을 콘솔 창으로 리디렉션
     freopen("CONOUT$", "w", stdout);
     
     
@@ -132,7 +132,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         {
             if (KEY_TAP(KEY::SPACE) && service->GetCurrentSessionCount() > 0)
             {
-                Send_CLogin(service, L"SSONG");
+                Send_CLogin(service, L"Rehpe");
             }
             else if (KEY_TAP(KEY::N))
             {

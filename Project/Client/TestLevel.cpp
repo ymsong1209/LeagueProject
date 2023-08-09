@@ -47,6 +47,8 @@
 #include <Script/CInGameCameraScript.h>
 #include <Script/CDragonScript.h>
 
+#include <Script/CBushScript.h>
+
 void CreateTestLevel()
 {
 	// 귀신 퇴치용 주석
@@ -67,6 +69,7 @@ void CreateTestLevel()
 	pCurLevel->GetLayer(6)->SetName(L"AttackRange");   //  공격범위
 	pCurLevel->GetLayer(7)->SetName(L"SkillProjectile");   // Skill 
 	pCurLevel->GetLayer(8)->SetName(L"Effect");   // Effect
+	pCurLevel->GetLayer(9)->SetName(L"Bush");   // Bush
 	pCurLevel->GetLayer(31)->SetName(L"ViewPort UI");   // UI
 
 	CCollisionMgr::GetInst()->LayerCheck(L"Mob", L"Mob");
@@ -80,6 +83,7 @@ void CreateTestLevel()
 	CCollisionMgr::GetInst()->LayerCheck(L"AttackRange", L"Structure");
 	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Map_Wall");
 	CCollisionMgr::GetInst()->LayerCheck(L"Mob", L"Map_Wall");
+	CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Bush");
 
 	//Main Camera Object 생성
 	CGameObject* pMainCam = new CGameObject;
@@ -351,155 +355,23 @@ void CreateTestLevel()
 	//SpawnJungleMob();
 	//PlaceStructure();
 
+	CGameObject* pBushObj = new CGameObject;
+	pBushObj->SetName(L"TestBush");
 
-	// TestFastForward
-	CGameObject* pRectFast = new CGameObject;
-	pRectFast->SetName(L"ReftFast");
-	pRectFast->AddComponent(new CMeshRender);
-	pRectFast->AddComponent(new CTransform);
-	pRectFast->AddComponent(new CCollider2D);
+	pBushObj->AddComponent(new CTransform);
+	pBushObj->AddComponent(new CCollider3D);
+	pBushObj->AddComponent(new CBushScript);
 
-	pRectFast->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
-	pRectFast->Transform()->SetUseMouseOutline(true);
+	pBushObj->Transform()->SetRelativeScale(Vec3(50.f, 50.f, 100.f));
+	pBushObj->Transform()->SetRelativeRot(Vec3(0.f, -13.f, 0.f));
+	pBushObj->Transform()->SetRelativePos(Vec3(701.f, 0.f, 469.f));
 
-	pRectFast->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
-	//pRectFast->MeshRender()->GetDynamicMaterial(0);
-	pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Fighter.bmp"));
+	pBushObj->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
+	pBushObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::CUBE);
 
-	pRectFast->Collider2D()->SetAbsolute(false);
-	pRectFast->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
-	pRectFast->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
-	pRectFast->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
-
-	SpawnGameObject(pRectFast, Vec3(-600.f, 0.f, 500.f), 0);
+	SpawnGameObject(pBushObj, Vec3(701.f, 0.f, 469.f), L"Bush");
 
 
-	// // Ray Test Object1
-	// CGameObject* RayTestObj1 = new CGameObject;
-	// RayTestObj1->SetName(L"RayTestObj1");
-
-	// RayTestObj1->AddComponent(new CMeshRender);
-	// RayTestObj1->AddComponent(new CTransform);
-	// RayTestObj1->AddComponent(new CCollider2D);
-
-	// RayTestObj1->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 0.f));
-	// RayTestObj1->Transform()->SetUseMouseOutline(true);
-	// //RayTestObj1->MeshRender()->SetUsingMovingVec(true);
-
-	// RayTestObj1->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	// RayTestObj1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
-	// RayTestObj1->MeshRender()->GetDynamicMaterial(0);
-	// RayTestObj1->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\link.png"));
-
-	// RayTestObj1->Collider2D()->SetAbsolute(false);
-	// RayTestObj1->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
-	// RayTestObj1->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f,0.f));
-	// RayTestObj1->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
-
-
-	// SpawnGameObject(RayTestObj1, Vec3(-600.f, 0.f, 600.f), 0);
-
-	 // Ray Cube Test Object 1
-	CGameObject* RayCubeTestObj1 = new CGameObject;
-	RayCubeTestObj1->SetName(L"RaySphereTesObj1");
-
-	RayCubeTestObj1->AddComponent(new CMeshRender);
-	RayCubeTestObj1->AddComponent(new CTransform);
-	RayCubeTestObj1->AddComponent(new CCollider3D);
-	RayCubeTestObj1->Transform()->SetUseMouseOutline(true);
-
-	RayCubeTestObj1->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
-	RayCubeTestObj1->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
-	RayCubeTestObj1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
-	RayCubeTestObj1->MeshRender()->GetDynamicMaterial(0);
-
-	RayCubeTestObj1->Collider3D()->SetAbsolute(false);
-	RayCubeTestObj1->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
-	RayCubeTestObj1->Collider3D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
-	RayCubeTestObj1->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
-
-
-	SpawnGameObject(RayCubeTestObj1, Vec3(-600.f, -450.f, 700.f), 0);
-
-
-	// Ray Cube Test Object 2
-	CGameObject* RayCubeTestObj2 = new CGameObject;
-	RayCubeTestObj2->SetName(L"RaySphereTesObj2");
-
-	RayCubeTestObj2->AddComponent(new CMeshRender);
-	RayCubeTestObj2->AddComponent(new CTransform);
-	RayCubeTestObj2->AddComponent(new CCollider3D);
-	RayCubeTestObj2->Transform()->SetUseMouseOutline(true);
-
-	RayCubeTestObj2->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 200.f));
-	RayCubeTestObj2->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
-	RayCubeTestObj2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
-	RayCubeTestObj2->MeshRender()->GetDynamicMaterial(0);
-
-	RayCubeTestObj2->Collider3D()->SetAbsolute(false);
-	RayCubeTestObj2->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
-	RayCubeTestObj2->Collider3D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
-	RayCubeTestObj2->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
-
-
-	SpawnGameObject(RayCubeTestObj2, Vec3(-600.f, -450.f, 960.f), 0);
-
-	CGameObject* TestTurret = new CGameObject;
-	TestTurret->AddComponent(new CTransform);
-	TestTurret->AddComponent(new CCollider2D);
-	TestTurret->SetName(L"TestTurret");
-	//ddddTestTurret->AddComponent(new CTurretScript);
-	TestTurret->AddComponent(new CMeshRender);
-	TestTurret->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
-	TestTurret->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
-	TestTurret->Transform()->SetRelativeScale(40.f, 40.f, 40.f);
-	TestTurret->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-	TestTurret->Collider2D()->SetAbsolute(true);
-	TestTurret->Collider2D()->SetOffsetScale(Vec2(250.f, 250.f));
-	TestTurret->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-	SpawnGameObject(TestTurret, Vec3(200.f, 0.f, 200.f), 0);
-
-
-
-
-
-	// TestFastForward
-	//CGameObject* pRectFast2 = new CGameObject;
-	//pRectFast2->SetName(L"MoveSphere");
-	//pRectFast2->AddComponent(new CMeshRender);
-	//pRectFast2->AddComponent(new CTransform);
-	//pRectFast2->AddComponent(new CCollider3D);
-	//pRectFast2->Transform()->SetUseMouseOutline(true);
-
-	//pRectFast2->Transform()->SetRelativeScale(Vec3(45.f, 45.f, 45.f));
-	//pRectFast2->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
-	//pRectFast2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
-	//pRectFast2->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
-	//pRectFast2->Collider3D()->SetAbsolute(false);
-	//pRectFast2->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
-	//pRectFast2->Collider3D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
-	//SpawnGameObject(pRectFast2, Vec3(0.f, 0.f, 0.f), 0);
-
-	// Anim Test Object
-	//CGameObject* pAnimTestObj = new CGameObject;
-	//pAnimTestObj->SetName(L"AnimTestObj");
-
-	//pAnimTestObj->AddComponent(new CMeshRender);
-	//pAnimTestObj->AddComponent(new CAnimator2D);
-	//pAnimTestObj->AddComponent(new CTransform);
-
-	//pAnimTestObj->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	//pAnimTestObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
-
-	//pAnimTestObj->Transform()->SetRelativeScale(Vec3(0.f, 0.f, 0.f));
-
-	// 테스트를 해보고 싶은데 FindRes 에 CAnim2D가 없어서 못해봤습니다..
-	// 추가할라고 마음 먹으면 할 수 있을 것 같긴한데, 너무 크게 바꾸는 것 같아 해보진 않았습니다.
-	//pAnimTestObj->Animator2D()->SetCurAnim(CResMgr::GetInst()->FindRes<CAnim2D>(L"Link_Basic").Get());
-
-
-	//SpawnGameObject(pAnimTestObj, Vec3(0.f, 0.f, 0.f), 0.f);
 
 
 

@@ -551,6 +551,7 @@
     <ClCompile Include="CMinionChaseState.cpp">
       <Filter>State\Unit\Minion</Filter>
     </ClCompile>
+    <ClCompile Include="CBushScript.cpp" />
     <ClCompile Include="CServerTypes.cpp">
       <Filter>Default</Filter>
     </ClCompile>
@@ -664,13 +665,7 @@
     <ClInclude Include="CMinionChaseState.h">
       <Filter>State\Unit\Minion</Filter>
     </ClInclude>
-    <ClInclude Include="CJungleMINIHPScript.h" />
-    <ClInclude Include="CJungleMobHPScript.h" />
-    <ClInclude Include="CMinionHPBarPosScript.h" />
-    <ClInclude Include="CMinionHPRatioScript.h" />
-    <ClInclude Include="CDragonHPUIScript.h">
-      <Filter>UIScript</Filter>
-    </ClInclude>
+    <ClInclude Include="CBushScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">

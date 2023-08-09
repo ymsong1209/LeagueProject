@@ -1,6 +1,7 @@
 CAttackRangeScript
 CBasicAttackScript
 CBlueScript
+CBushScript
 CCameraMoveScript
 CChampionScript
 CCharacterUIScript
