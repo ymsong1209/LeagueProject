@@ -22,6 +22,7 @@
 #include "CJungleMonsterScript.h"
 #include "CKrugMiniScript.h"
 #include "CKrugScript.h"
+#include "CMalphiteEDecalScript.h"
 #include "CMalphiteEScript.h"
 #include "CMalphiteQScript.h"
 #include "CMalphiteRScript.h"
@@ -74,6 +75,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CJungleMonsterScript");
 	_vec.push_back(L"CKrugMiniScript");
 	_vec.push_back(L"CKrugScript");
+	_vec.push_back(L"CMalphiteEDecalScript");
 	_vec.push_back(L"CMalphiteEScript");
 	_vec.push_back(L"CMalphiteQScript");
 	_vec.push_back(L"CMalphiteRScript");
@@ -148,6 +150,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CKrugMiniScript;
 	if (L"CKrugScript" == _strScriptName)
 		return new CKrugScript;
+	if (L"CMalphiteEDecalScript" == _strScriptName)
+		return new CMalphiteEDecalScript;
 	if (L"CMalphiteEScript" == _strScriptName)
 		return new CMalphiteEScript;
 	if (L"CMalphiteQScript" == _strScriptName)
@@ -273,6 +277,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::KRUGSCRIPT:
 		return new CKrugScript;
+		break;
+	case (UINT)SCRIPT_TYPE::MALPHITEEDECALSCRIPT:
+		return new CMalphiteEDecalScript;
 		break;
 	case (UINT)SCRIPT_TYPE::MALPHITEESCRIPT:
 		return new CMalphiteEScript;
@@ -448,6 +455,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::KRUGSCRIPT:
 		return L"CKrugScript";
+		break;
+
+	case SCRIPT_TYPE::MALPHITEEDECALSCRIPT:
+		return L"CMalphiteEDecalScript";
 		break;
 
 	case SCRIPT_TYPE::MALPHITEESCRIPT:

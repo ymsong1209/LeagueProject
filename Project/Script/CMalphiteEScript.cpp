@@ -17,6 +17,12 @@ void CMalphiteEScript::begin()
 {
 	// 첫 생성 위치 기억
 	m_vSpawnPos = GetOwner()->Transform()->GetRelativePos();
+
+	m_pDecal = new CGameObject;
+	m_pDecal->AddComponent(new CTransform);
+	//m_pDecal->AddComponent(new c)
+
+
 }
 
 void CMalphiteEScript::tick()

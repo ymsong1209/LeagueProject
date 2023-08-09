@@ -4,6 +4,10 @@
 class CMalphiteEScript :
     public CProjectileScript
 {
+private:
+    CGameObject* m_pDecal;
+
+
 public:
     CMalphiteEScript();
     ~CMalphiteEScript();

@@ -8,8 +8,7 @@ public:
     ~CMalphiteE();
 
 private:
-    CGameObject* m_JinxWObj;     // 스킬 사용시 생성할 오브젝트(프리팹) 
-    CScript* m_JinxWScript;
+    CGameObject*        m_MalphiteEProjectile;
 
 public:
     virtual void tick() override;

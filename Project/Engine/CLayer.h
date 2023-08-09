@@ -22,7 +22,7 @@ public:
 public:
     int GetLayerIndex() { return m_iLayerIdx; }
     const vector<CGameObject*>& GetParentObject() { return m_vecParentObj; }
-    const vector<CGameObject*>& GetObjects() { return m_vecObject; }
+    vector<CGameObject*>& GetObjects() { return m_vecObject; }
 
 
 private:

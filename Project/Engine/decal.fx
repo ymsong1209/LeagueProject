@@ -16,6 +16,7 @@
 // g_vec4_0 : LightColor
 // g_int_0  : LightUse
 // g_int_1  : layerCheck
+// g_float_2 : alpha
 // =========================
 struct VS_DECAL_IN
 {
@@ -94,6 +95,10 @@ PS_OUT PS_Decal(VS_DECAL_OUT _in)
         discard;
     }   
    
+    if (g_float_2)
+    {
+        output.vColor.a = g_float_2;
+    }
     return output;
 }
 
