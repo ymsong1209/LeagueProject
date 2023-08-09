@@ -19,6 +19,9 @@ CJinxWScript
 CJungleMonsterScript
 CKrugMiniScript
 CKrugScript
+CMalphiteEScript
+CMalphiteQScript
+CMalphiteRScript
 CMalphiteScript
 CMinimapUIScript
 CMinionScript

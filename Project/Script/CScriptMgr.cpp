@@ -22,6 +22,9 @@
 #include "CJungleMonsterScript.h"
 #include "CKrugMiniScript.h"
 #include "CKrugScript.h"
+#include "CMalphiteEScript.h"
+#include "CMalphiteQScript.h"
+#include "CMalphiteRScript.h"
 #include "CMalphiteScript.h"
 #include "CMinimapUIScript.h"
 #include "CMinionScript.h"
@@ -71,6 +74,9 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CJungleMonsterScript");
 	_vec.push_back(L"CKrugMiniScript");
 	_vec.push_back(L"CKrugScript");
+	_vec.push_back(L"CMalphiteEScript");
+	_vec.push_back(L"CMalphiteQScript");
+	_vec.push_back(L"CMalphiteRScript");
 	_vec.push_back(L"CMalphiteScript");
 	_vec.push_back(L"CMinimapUIScript");
 	_vec.push_back(L"CMinionScript");
@@ -142,6 +148,12 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CKrugMiniScript;
 	if (L"CKrugScript" == _strScriptName)
 		return new CKrugScript;
+	if (L"CMalphiteEScript" == _strScriptName)
+		return new CMalphiteEScript;
+	if (L"CMalphiteQScript" == _strScriptName)
+		return new CMalphiteQScript;
+	if (L"CMalphiteRScript" == _strScriptName)
+		return new CMalphiteRScript;
 	if (L"CMalphiteScript" == _strScriptName)
 		return new CMalphiteScript;
 	if (L"CMinimapUIScript" == _strScriptName)
@@ -261,6 +273,15 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::KRUGSCRIPT:
 		return new CKrugScript;
+		break;
+	case (UINT)SCRIPT_TYPE::MALPHITEESCRIPT:
+		return new CMalphiteEScript;
+		break;
+	case (UINT)SCRIPT_TYPE::MALPHITEQSCRIPT:
+		return new CMalphiteQScript;
+		break;
+	case (UINT)SCRIPT_TYPE::MALPHITERSCRIPT:
+		return new CMalphiteRScript;
 		break;
 	case (UINT)SCRIPT_TYPE::MALPHITESCRIPT:
 		return new CMalphiteScript;
@@ -427,6 +448,18 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::KRUGSCRIPT:
 		return L"CKrugScript";
+		break;
+
+	case SCRIPT_TYPE::MALPHITEESCRIPT:
+		return L"CMalphiteEScript";
+		break;
+
+	case SCRIPT_TYPE::MALPHITEQSCRIPT:
+		return L"CMalphiteQScript";
+		break;
+
+	case SCRIPT_TYPE::MALPHITERSCRIPT:
+		return L"CMalphiteRScript";
 		break;
 
 	case SCRIPT_TYPE::MALPHITESCRIPT:

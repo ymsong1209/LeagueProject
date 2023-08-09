@@ -8,7 +8,7 @@ public:
     CMalphiteEScript();
     ~CMalphiteEScript();
 
-    CLONE(CJinxWScript);
+    CLONE(CMalphiteEScript);
 
 private:
 
