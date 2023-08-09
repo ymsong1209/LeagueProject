@@ -97,7 +97,7 @@ PS_OUT PS_Decal(VS_DECAL_OUT _in)
    
     if (g_float_2)
     {
-        output.vColor.a = g_float_2;
+        output.vColor.a *= g_float_2;
     }
     return output;
 }
