@@ -4,6 +4,7 @@
 #include <Engine/CAnimator3D.h>
 #include <Engine/CAnim3D.h>
 
+#include "CUnitScript.h"
 #include "CChampionAttackState.h"
 #include "CGameEvent.h"
 #include "CChampionSkillState.h"
