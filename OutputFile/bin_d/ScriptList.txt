@@ -43,6 +43,7 @@ CScorePanelScript
 CSoundTestScript
 CStructureScript
 CTurretAttackScript
+CTurretHPUIScript
 CTurretScript
 CUIScript
 CUnitScript

@@ -56,6 +56,7 @@
 #include <Script\CMinionHPRatioScript.h>
 #include <Script\CJungleMINIHPScript.h>
 #include <Script/CJungleMobHPScript.h>
+#include <Script\CTurretHPUIScript.h>
 
 
 
@@ -2109,6 +2110,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 				, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z)
 				, L"Structure");
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+
+			CGameObject* HPBar = new CGameObject;
+			HPBar->SetName(L"TurretBar");
+			HPBar->AddComponent(new CTransform);
+			HPBar->AddComponent(new CMeshRender);
+			HPBar->AddComponent(new CTurretHPUIScript);
+			pObj->AddChild(HPBar);
+
 			_placedObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
@@ -2161,6 +2170,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 				, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z)
 				, L"Structure");
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+
+			CGameObject* HPBar = new CGameObject;
+			HPBar->SetName(L"TurretBar");
+			HPBar->AddComponent(new CTransform);
+			HPBar->AddComponent(new CMeshRender);
+			HPBar->AddComponent(new CTurretHPUIScript);
+			pObj->AddChild(HPBar);
+
 			_placedObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
@@ -2220,6 +2237,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetUnitType(UnitType::NEXUS);
 			SpawnGameObject(pObj, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z), L"Structure");
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+
+			CGameObject* HPBar = new CGameObject;
+			HPBar->SetName(L"TurretBar");
+			HPBar->AddComponent(new CTransform);
+			HPBar->AddComponent(new CMeshRender);
+			HPBar->AddComponent(new CTurretHPUIScript);
+			pObj->AddChild(HPBar);
+
 			_placedObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;

@@ -566,6 +566,7 @@
     <ClCompile Include="CDragonHPUIScript.cpp">
       <Filter>UIScript</Filter>
     </ClCompile>
+    <ClCompile Include="CTurretHPUIScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -666,6 +667,12 @@
       <Filter>State\Unit\Minion</Filter>
     </ClInclude>
     <ClInclude Include="CBushScript.h" />
+    <ClInclude Include="CDragonHPUIScript.h" />
+    <ClInclude Include="CJungleMINIHPScript.h" />
+    <ClInclude Include="CJungleMobHPScript.h" />
+    <ClInclude Include="CMinionHPBarPosScript.h" />
+    <ClInclude Include="CMinionHPRatioScript.h" />
+    <ClInclude Include="CTurretHPUIScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">

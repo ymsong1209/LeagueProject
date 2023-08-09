@@ -753,4 +753,113 @@ float4 PS_MinionBarRatioShader(VS_OUT _in) : SV_Target
     return vOutColor;
 }
 
+
+// ============================
+// TurretBarRatioShader
+// RasterizerState      : None
+// BlendState           : Mask
+// DepthStencilState    : Less
+
+// g_tex_0              : Output Texture
+// g_float_0            : 현재 bar대비 비율 (마나or체력 비율)
+// ============================
+
+VS_OUT VS_TurretBarRatioShader(VS_IN _in)
+{
+    VS_OUT output = (VS_OUT) 0.f;
+
+    output.vPosition = mul(float4(_in.vLocalPos, 1.f), g_matWVP);
+    output.vUV = _in.vUV; // UV 조정은 삭제
+
+    return output;
+}
+
+float4 PS_TurretBarRatioShader(VS_OUT _in) : SV_Target
+{
+    float totalWidth = 192.f;
+    float totalHeight = 35.f;
+    float leftx = 11.f;
+    float Rightx = 180.f;
+    float upY = 7.f;
+    float downY = 21.f;
+    // Define UV boundaries
+    // Sample the color from the texture
+    float4 vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
+    
+    float2 HPuv_1 = float2(leftx / totalWidth, upY / totalHeight);
+    float2 HPuv_2 = float2(Rightx / totalWidth, upY / totalHeight);
+    float2 HPuv_3 = float2(leftx / totalWidth, downY / totalHeight);
+    float2 HPuv_4 = float2(Rightx / totalWidth, downY / totalHeight);
+
+    // Define HP and MP ratios
+    //float HP_ratio = g_float_0;
+    float HP_ratio = g_float_0;
+
+    // Normalize the UV.x with respect to the HP and MP bar widths
+    float normalized_HP_UV_x = (_in.vUV.x - HPuv_1.x) / (HPuv_2.x - HPuv_1.x);
+
+    // Check if the UV is within HP or MP bar and beyond the remaining HP or MP
+    if ((_in.vUV.y >= HPuv_1.y && _in.vUV.y <= HPuv_3.y) && _in.vUV.x <= HPuv_2.x && normalized_HP_UV_x > HP_ratio)
+    {
+        vOutColor = float4(0.f, 0.f, 0.f, 0.75f);
+    }
+
+    return vOutColor;
+}
+
+
+
+// ============================
+// InhibitorBarRatioShader
+// RasterizerState      : None
+// BlendState           : Mask
+// DepthStencilState    : Less
+
+// g_tex_0              : Output Texture
+// g_float_0            : 현재 bar대비 비율 (마나or체력 비율)
+// ============================
+
+VS_OUT VS_InhibitorBarRatioShader(VS_IN _in)
+{
+    VS_OUT output = (VS_OUT) 0.f;
+
+    output.vPosition = mul(float4(_in.vLocalPos, 1.f), g_matWVP);
+    output.vUV = _in.vUV; // UV 조정은 삭제
+
+    return output;
+}
+
+float4 PS_InhibitorBarRatioShader(VS_OUT _in) : SV_Target
+{
+    float totalWidth = 151.f;
+    float totalHeight = 23.f;
+    float leftx = 3.f;
+    float Rightx = 147.f;
+    float upY = 3.f;
+    float downY = 14.f;
+    // Define UV boundaries
+    // Sample the color from the texture
+    float4 vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
+    
+    float2 HPuv_1 = float2(leftx / totalWidth, upY / totalHeight);
+    float2 HPuv_2 = float2(Rightx / totalWidth, upY / totalHeight);
+    float2 HPuv_3 = float2(leftx / totalWidth, downY / totalHeight);
+    float2 HPuv_4 = float2(Rightx / totalWidth, downY / totalHeight);
+
+    // Define HP and MP ratios
+    //float HP_ratio = g_float_0;
+    float HP_ratio = g_float_0;
+
+    // Normalize the UV.x with respect to the HP and MP bar widths
+    float normalized_HP_UV_x = (_in.vUV.x - HPuv_1.x) / (HPuv_2.x - HPuv_1.x);
+
+    // Check if the UV is within HP or MP bar and beyond the remaining HP or MP
+    if ((_in.vUV.y >= HPuv_1.y && _in.vUV.y <= HPuv_3.y) && _in.vUV.x <= HPuv_2.x && normalized_HP_UV_x > HP_ratio)
+    {
+        vOutColor = float4(0.f, 0.f, 0.f, 0.75f);
+    }
+
+    return vOutColor;
+}
+
 #endif
