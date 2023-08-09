@@ -116,7 +116,7 @@ void CTurretScript::ChangeAnim()
 			DestroyObject(TurretBase);
 		
 		// 자식 애니메이션 재생 후 삭제
-		CGameObject* TurretBreak1 = GetOwner()->FindChildObjByName(L"TurretBreak1");
+		CGameObject* TurretBreak1 = GetOwner()->FindChildObjByName(L"TurretBreak_1");
 		if (TurretBreak1)
 		{
 			if(TurretBreak1->Animator3D()->GetCurAnim()->GetName() != L"turret_idlebreak\\Turret_Cloth_Break1")
@@ -128,7 +128,7 @@ void CTurretScript::ChangeAnim()
 			}
 		}
 
-		CGameObject* TurretBreak2 = GetOwner()->FindChildObjByName(L"TurretBreak2");
+		CGameObject* TurretBreak2 = GetOwner()->FindChildObjByName(L"TurretBreak_2");
 		if (TurretBreak1)
 		{
 			if (TurretBreak1->Animator3D()->GetCurAnim()->GetName() != L"turret_idlebreak\\Turret_Cloth_Break2")
