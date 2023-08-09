@@ -695,8 +695,10 @@
     <ClInclude Include="CJinxWScript.h">
       <Filter>Scripts\SkillProjectile\Projectile_Jinx</Filter>
     </ClInclude>
+    <ClInclude Include="CJinxQ.h">
       <Filter>Scripts\Skill\Skill_Jinx</Filter>
     </ClInclude>
+    <ClInclude Include="CJinxW.h">
       <Filter>Scripts\Skill\Skill_Jinx</Filter>
     </ClInclude>
   </ItemGroup>
