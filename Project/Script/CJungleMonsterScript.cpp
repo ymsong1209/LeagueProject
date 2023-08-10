@@ -55,7 +55,9 @@ void CJungleMonsterScript::GetHit(CGameObject* _target)
 
 void CJungleMonsterScript::begin()
 {
-	
+	m_eCurCC = CC::CLEAR;
+	m_eRestraint = RESTRAINT::DEFAULT;
+
 	GetOwner()->Transform()->SetUseMouseOutline(true);
 	m_Skill[0] = new CBasicAttack;
 	m_Skill[0]->SetOwnerScript(this);
@@ -64,6 +66,7 @@ void CJungleMonsterScript::begin()
 
 void CJungleMonsterScript::tick()
 {
+	CUnitScript::tick();
 	if (CLevelMgr::GetInst()->GetCurLevel()->GetState() == LEVEL_STATE::STOP) return;
 	if (CheckDeath()) return;
 	

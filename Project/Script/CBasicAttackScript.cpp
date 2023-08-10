@@ -14,6 +14,7 @@ CBasicAttackScript::~CBasicAttackScript()
 
 void CBasicAttackScript::begin()
 {
+
 }
 
 void CBasicAttackScript::tick()
@@ -22,7 +23,7 @@ void CBasicAttackScript::tick()
 	
 
 	Vec3 TargetPos = m_TargetObj->Transform()->GetRelativePos();
-	Vec3 UserPos = m_UserObj->Transform()->GetRelativePos();
+	
 	Vec3 ProjectilePos = GetOwner()->Transform()->GetRelativePos();
 
 	// 방향 계산

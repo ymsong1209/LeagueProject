@@ -189,24 +189,27 @@ void CUnitScript::CheckCC()
 	if ((m_eCurCC & CC::AIRBORNE) != 0) // 에어본 상태
 	{
 		if (m_bAirBorneActive == false) {
+			GetOwner()->PathFinder()->ClearPath();
 			Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
-			GetOwner()->Transform()->SetRelativePos(Vec3(CurPos.x, CurPos.y + 100.f, CurPos.z));
+			m_vAirBorneStartPos = CurPos;
+			GetOwner()->Transform()->SetRelativePos(Vec3(CurPos.x, CurPos.y + 50.f, CurPos.z));
 				
 			m_bAirBorneActive = true;
 		}
 		else {
 			Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
-			GetOwner()->Transform()->SetRelativePos(Vec3(CurPos.x, CurPos.y - 50.f * DT, CurPos.z));
+			m_fAirBorneVelocity -= 2.f * DT;
+			GetOwner()->Transform()->SetRelativePos(Vec3(CurPos.x, CurPos.y + m_fAirBorneVelocity, CurPos.z));
+			if (CurPos.y + m_fAirBorneVelocity < m_vAirBorneStartPos.y) {
+				GetOwner()->Transform()->SetRelativePos(Vec3(CurPos.x, m_vAirBorneStartPos.y, CurPos.z));
+			}
 		}
 		
 		m_eRestraint = RESTRAINT::BLOCK; // 모든 행동 제약
 	}
 	else {
-		//Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
-		//if()
-		//GetOwner()->Transform()->SetRelativePos(Vec3(CurPos.x, 0.f, CurPos.z));
 		m_bAirBorneActive = false;
-
+		m_fAirBorneVelocity = 0.f;
 	}
 }
 
