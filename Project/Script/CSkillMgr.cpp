@@ -14,6 +14,7 @@
 #include "CJinxE.h"
 
 #include "CMalphiteQ.h"
+#include "CMalphiteW.h"
 #include "CMalphiteE.h"
 #include "CMalphiteR.h"
 
@@ -30,6 +31,9 @@ CSkillMgr::CSkillMgr()
 
     CMalphiteQ* malphQ = new CMalphiteQ;
     m_mapSkills.insert(make_pair(SkillType::MALPHITE_Q, malphQ));
+
+    CMalphiteW* malphW = new CMalphiteW;
+    m_mapSkills.insert(make_pair(SkillType::MALPHITE_W, malphW));
 
     CMalphiteE* malphE = new CMalphiteE;
     m_mapSkills.insert(make_pair(SkillType::MALPHITE_E, malphE));

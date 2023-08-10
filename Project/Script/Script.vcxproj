@@ -308,6 +308,7 @@
     <ClInclude Include="CMalphiteRScript.h" />
     <ClInclude Include="CMalphiteRState.h" />
     <ClInclude Include="CMalphiteScript.h" />
+    <ClInclude Include="CMalphiteW.h" />
     <ClInclude Include="CMalphiteWalkState.h" />
     <ClInclude Include="CMalphiteWState.h" />
     <ClInclude Include="CMinimapUIScript.h" />
@@ -558,6 +559,7 @@
     <ClCompile Include="CMalphiteRScript.cpp" />
     <ClCompile Include="CMalphiteRState.cpp" />
     <ClCompile Include="CMalphiteScript.cpp" />
+    <ClCompile Include="CMalphiteW.cpp" />
     <ClCompile Include="CMalphiteWalkState.cpp" />
     <ClCompile Include="CMalphiteWState.cpp" />
     <ClCompile Include="CMinimapUIScript.cpp" />

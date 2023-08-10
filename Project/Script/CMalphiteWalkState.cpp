@@ -72,6 +72,7 @@ void CMalphiteWalkState::HandleEvent(CGameEvent& event)
 			AttackState->SetTargetObj(AttackEvent->GetTargetObj());
 		}
 		GetOwnerFSM()->ChangeState(L"Attack");
+
 	}
 	break;
 

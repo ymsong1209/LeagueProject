@@ -79,7 +79,7 @@ public:
     void CheckCC();
 
     // 오브젝트의 PathFinder 컴포넌트에 남은 경로값이 있을 때, 해당 경로로 이동
-    bool PathFindMove(float _fSpeed, bool _IsRotation = true);
+    bool PathFindMove(float _fSpeed, bool _IsRotation = true); 
 
 public:
     void SetChampType(ChampionType _Type) { m_ChampType = _Type; }

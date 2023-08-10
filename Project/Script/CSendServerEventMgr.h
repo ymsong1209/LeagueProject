@@ -65,6 +65,7 @@ public:
     void SendDespawnPacket(UINT64 _objId, float _lifeSpan);
     void SendKDACSPacket(UINT64 _killerId, UINT64 _victimId, UnitType _deadObjUnitType);
     void SendSoundPacket();
-    void SendMtrlPakcet(UINT64 _objId, int _mtrlIndex, TEX_PARAM _texParam, wstring _TexName);
+    //settexparam할때 보내는 패킷
+    void SendMtrlPacket(UINT64 _objId, int _mtrlIndex, TEX_PARAM _texParam, wstring _TexName);
 };
 

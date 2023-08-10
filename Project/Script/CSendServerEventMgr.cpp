@@ -105,7 +105,7 @@ void CSendServerEventMgr::SendSoundPacket()
 {
 }
 
-void CSendServerEventMgr::SendMtrlPakcet(UINT64 _objId, int _mtrlIndex, TEX_PARAM _texParam, wstring _TexName)
+void CSendServerEventMgr::SendMtrlPacket(UINT64 _objId, int _mtrlIndex, TEX_PARAM _texParam, wstring _TexName)
 {
 	MtrlInfo* mtrlInfo = new MtrlInfo();
 	mtrlInfo->targetId = _objId;
@@ -114,7 +114,7 @@ void CSendServerEventMgr::SendMtrlPakcet(UINT64 _objId, int _mtrlIndex, TEX_PARA
 	mtrlInfo->wTexName = _TexName;
 
 	tServerEvent serverEvn = {};
-	serverEvn.Type = SERVER_EVENT_TYPE::SEND_KDA_CS_PACKET;
+	serverEvn.Type = SERVER_EVENT_TYPE::SEND_MTRL_PACKET;
 	serverEvn.wParam = (DWORD_PTR)mtrlInfo;
 	//serverEvn.lParam;
 	CSendServerEventMgr::GetInst()->AddServerSendEvent(serverEvn);

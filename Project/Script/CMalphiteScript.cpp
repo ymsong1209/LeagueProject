@@ -13,7 +13,7 @@
 
 #include "CBasicAttack.h"
 #include "CMalphiteQ.h"
-
+#include "CMalphiteW.h"
 #include "CMalphiteE.h"
 #include "CMalphiteR.h"
 
@@ -57,8 +57,8 @@ void CMalphiteScript::begin()
 	m_Skill[0]->SetOwnerScript(this);
 	m_Skill[1] = new CMalphiteQ;
 	m_Skill[1]->SetOwnerScript(this);
-	//m_Skill[2] = new CMalphiteE;
-	//m_Skill[2]->SetOwnerScript(this);
+	m_Skill[2] = new CMalphiteW;
+	m_Skill[2]->SetOwnerScript(this);
 	m_Skill[3] = new CMalphiteE;
 	m_Skill[3]->SetOwnerScript(this);
 	m_Skill[4] = new CMalphiteR;
@@ -84,7 +84,11 @@ void CMalphiteScript::tick()
 			m_fAttackPower = 10.f;
 
 			//ÀçÁúÀ» ¹Ù²ãÁÜ
-
+			UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+			Ptr<CTexture> normaltex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\malphite.dds");
+			if (normaltex == nullptr) assert(nullptr);
+			GetOwner()->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, normaltex);
+			CSendServerEventMgr::GetInst()->SendMtrlPacket(targetId, 0, TEX_0, L"texture\\FBXTexture\\malphite.dds");
 		}
 	}
 	

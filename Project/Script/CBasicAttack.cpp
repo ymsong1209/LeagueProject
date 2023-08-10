@@ -44,6 +44,7 @@ void CBasicAttack::tick()
 
 bool CBasicAttack::Use()
 {
+
 	// 서버에게 기본 공격 사용 신호를 전달
 	CSendServerEventMgr::GetInst()->SendUseSkillPacket(
 		m_UserObj->GetScript<CUnitScript>()->GetServerID(),
