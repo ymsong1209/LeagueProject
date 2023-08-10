@@ -16,6 +16,7 @@ void CGrompN2AState::Enter()
 	GetOwner()->Animator3D()->PlayOnce(L"gromp\\_idle1_n2a", true, 0.5f);
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"gromp\\_idle1_n2a", false, false, true, 0.5f);
+	CJungleN2AState::Enter();
 }
 
 void CGrompN2AState::tick()

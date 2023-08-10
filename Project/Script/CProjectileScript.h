@@ -51,6 +51,7 @@ public:
     void SetSpawnPos(Vec3 _v) { m_vSpawnPos = _v; }
     void SetSkillRange(float _f) { m_fSkillRange = _f; }
 
-
+    //target이 죽었거나, m_bunitdead가 되었을때 처리해줘야하는함수
+    virtual void Despawn() {}; 
 
 };

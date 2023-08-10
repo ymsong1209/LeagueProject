@@ -13,9 +13,12 @@ private:
 
     bool         m_bWActive;
     float        m_fWActiveTime;
+
+    
 public:
     virtual void begin() override;
     virtual void tick() override;
+    virtual void GetInput() override;
 
 public:
 

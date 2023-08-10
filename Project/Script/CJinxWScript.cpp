@@ -38,8 +38,7 @@ void CJinxWScript::tick()
 	if (distance >= m_fSkillRange)
 	{
 		if(!m_bUnitDead) // 이후 사라짐
-			CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 2.f);
-		//this->GetOwner()->Transform()->SetRelativePos(-666.f, -666.f, -666.f);
+			CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 0.2f);
 		m_fProjectileSpeed = 0.f;
 		m_bUnitDead = true;
 	}
@@ -57,9 +56,8 @@ void CJinxWScript::OnOverlap(CCollider2D* _Other)
 	{
 		// 피격자의 서버 아이디
 		UINT64 TargetServerID = _Other->GetOwner()->GetScript<CUnitScript>()->GetServerID();
-		// 방장컴이 서버에게 이 투사체가 피격자와 충돌했다고 전달
 		
-
+		// 방장컴이 서버에게 이 투사체가 피격자와 충돌했다고 전달
 		if (!m_bUnitDead)// 이후 사라짐
 		{
 			CSendServerEventMgr::GetInst()->SendHitPacket(GetServerID(), TargetServerID, m_iServerUserID, 1, SkillType::JINX_W);

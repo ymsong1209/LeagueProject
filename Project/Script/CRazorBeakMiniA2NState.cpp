@@ -17,6 +17,7 @@ void CRazorBeakMiniA2NState::Enter()
 	GetOwner()->Animator3D()->PlayOnce(L"RazorBeak_Mini\\sru_razorbeakmini_a2n", true, 0.5f);
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"RazorBeak_Mini\\sru_razorbeakmini_a2n", false, false, true, 0.5f);
+	CJungleA2NState::Enter();
 }
 
 void CRazorBeakMiniA2NState::tick()

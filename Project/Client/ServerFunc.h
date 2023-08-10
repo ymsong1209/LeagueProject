@@ -9,6 +9,7 @@ struct AnimInfoPacket {
     bool    bRepeatBlend;   // 블렌드 반복 여부
     bool    blend;          // 블렌드 사용여부
     float   blendTime;
+    float   animSpeed;      // 애니메이션 속도
 
     uint16  animNameOffset;
     uint16  animNameCount;
@@ -58,6 +59,30 @@ struct SoundInfoPacket
         return true;
     }
 };
+
+
+struct MtrlInfoPacket
+{
+    UINT64 targetId;
+    int iMtrlIndex;
+    TEX_PARAM  tex_param;
+
+    uint16 texNameOffset;
+    uint16 texNameCount;
+
+    struct texNameItem {//예시 L"texture\\FBXTexture\\alphaTex.png"
+        wchar_t texName;
+    };
+
+    bool Validate(BYTE* packetStart, uint16 packetSize, OUT uint32& size) {
+        if (texNameOffset + texNameCount * sizeof(texNameItem) > packetSize)
+            return false;
+
+        size += texNameCount * sizeof(texNameItem);
+        return true;
+    }
+};
+
 struct ObjectMove
 {
 public:

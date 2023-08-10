@@ -16,6 +16,7 @@ void CRedSpawnState::Enter()
 	GetOwner()->Animator3D()->PlayOnce(L"jungle_red\\sru_red_spawn");
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"jungle_red\\sru_red_spawn", false, false, false, 0.f);
+	CJungleSpawnState::Enter();
 }
 
 void CRedSpawnState::tick()

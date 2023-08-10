@@ -16,6 +16,7 @@ void CBlueA2NState::Enter()
 	GetOwner()->Animator3D()->PlayOnce(L"jungle_blue\\sru_blue_idle_a2n", true, 0.5f);
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"jungle_blue\\sru_blue_idle_a2n", false, false, true, 0.5f);
+	CJungleA2NState::Enter();
 }
 
 void CBlueA2NState::tick()

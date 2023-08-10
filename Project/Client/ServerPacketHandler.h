@@ -45,6 +45,9 @@ enum
 
 	C_TIME = 25,
 	S_TIME = 26,
+
+	C_OBJECT_MTRL = 27,
+	S_OBJECT_MTRL = 28,
 };
 
 class ServerPacketHandler
@@ -69,6 +72,8 @@ public:
 	static void Handle_S_KDA_CS(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_SOUND(PacketSessionRef& session, BYTE* buffer, int32 len);
 	static void Handle_S_TIME(PacketSessionRef& session, BYTE* buffer, int32 len);
+	static void Handle_S_OBJECT_MTRL(PacketSessionRef& session, BYTE* buffer, int32 len);
+
 
 private:
 	USE_LOCK;
@@ -918,6 +923,72 @@ struct PKT_S_TIME {
 };
 #pragma pack()
 
+#pragma pack(1)
+struct PKT_C_OBJECT_MTRL {
+	uint16		packetSize;
+	uint16		packetId;
+	MtrlInfoPacket mtrlInfo;
+
+	bool Validate() {
+		{
+			uint32 size = 0;
+			size += sizeof(PKT_C_OBJECT_MTRL);
+			if (packetSize < size)
+				return false;
+
+			if (mtrlInfo.Validate((BYTE*)this, packetSize, OUT size) == false)
+				return false;
+
+			if (size != packetSize)
+				return false;
+
+			return true;
+		}
+	}
+
+	using TexNameList = PacketList<MtrlInfoPacket::texNameItem>;
+
+	TexNameList GetTexNameList() {
+		BYTE* data = reinterpret_cast<BYTE*>(this);
+		data += mtrlInfo.texNameOffset;
+		return TexNameList(reinterpret_cast<MtrlInfoPacket::texNameItem*>(data), mtrlInfo.texNameCount);
+	}
+};
+#pragma pack()
+
+#pragma pack(1)
+struct PKT_S_OBJECT_MTRL {
+	uint16		packetSize;
+	uint16		packetId;
+	MtrlInfoPacket mtrlInfo;
+
+	bool Validate() {
+		{
+			uint32 size = 0;
+			size += sizeof(PKT_S_OBJECT_MTRL);
+			if (packetSize < size)
+				return false;
+
+			if (mtrlInfo.Validate((BYTE*)this, packetSize, OUT size) == false)
+				return false;
+
+			if (size != packetSize)
+				return false;
+
+			return true;
+		}
+	}
+
+	using TexNameList = PacketList<MtrlInfoPacket::texNameItem>;
+
+	TexNameList GetMtrlNameList() {
+		BYTE* data = reinterpret_cast<BYTE*>(this);
+		data += mtrlInfo.texNameOffset;
+		return TexNameList(reinterpret_cast<MtrlInfoPacket::texNameItem*>(data), mtrlInfo.texNameCount);
+	}
+};
+#pragma pack()
+
 //=====================================
 // 이 밑은 패킷 Write 클래스 모음입니다. |
 //=====================================
@@ -1288,46 +1359,6 @@ private:
 };
 #pragma pack()
 
-#pragma pack(1)
-class PKT_S_SOUND_WRITE {
-public:
-	using SoundNameList = PacketList<SoundInfoPacket::soundNameItem>;
-	using SoundNameItem = SoundInfoPacket::soundNameItem;
-
-	PKT_S_SOUND_WRITE(SoundInfoPacket _soundInfo)
-	{
-		_sendBuffer = GSendBufferManager->Open(4096);
-		// 초기화
-		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
-
-		_pkt = _bw.Reserve<PKT_S_SOUND>();
-		_pkt->packetSize = 0; // To Fill
-		_pkt->packetId = S_SOUND;
-		_pkt->soundInfo = _soundInfo;
-	}
-
-	SoundNameList ReserveAnimNameList(uint16 _soundNameCount) {
-		SoundNameItem* firstBuffsListItem = _bw.Reserve<SoundNameItem>(_soundNameCount);
-		_pkt->soundInfo.soundNameOffset = (uint64)firstBuffsListItem - (uint64)_pkt;
-		_pkt->soundInfo.soundNameCount = _soundNameCount;
-		return SoundNameList(firstBuffsListItem, _soundNameCount);
-	}
-
-	SendBufferRef CloseAndReturn()
-	{
-		// 패킷 사이즈 계산
-		_pkt->packetSize = _bw.WriteSize();
-
-		_sendBuffer->Close(_bw.WriteSize());
-		return _sendBuffer;
-	}
-
-private:
-	PKT_S_SOUND* _pkt = nullptr;
-	SendBufferRef _sendBuffer;
-	BufferWriter _bw;
-};
-#pragma pack()
 
 #pragma pack(1)
 class PKT_C_TIME_WRITE {
@@ -1354,6 +1385,48 @@ public:
 
 private:
 	PKT_C_TIME* _pkt = nullptr;
+	SendBufferRef _sendBuffer;
+	BufferWriter _bw;
+};
+#pragma pack()
+
+
+#pragma pack(1)
+class PKT_C_OBJECT_MTRL_WRITE {
+public:
+	using TexNameList = PacketList<MtrlInfoPacket::texNameItem>;
+	using TexNameItem = MtrlInfoPacket::texNameItem;
+
+	PKT_C_OBJECT_MTRL_WRITE(MtrlInfoPacket  _mtrlInfo)
+	{
+		_sendBuffer = GSendBufferManager->Open(4096);
+		// 초기화
+		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
+
+		_pkt = _bw.Reserve<PKT_C_OBJECT_MTRL>();
+		_pkt->packetSize = 0; // To Fill
+		_pkt->packetId = C_OBJECT_MTRL;
+		_pkt->mtrlInfo = _mtrlInfo;
+	}
+
+	TexNameList ReserveTexNameList(uint16 _texNameCount) {
+		TexNameItem* firstBuffsListItem = _bw.Reserve<TexNameItem>(_texNameCount);
+		_pkt->mtrlInfo.texNameOffset = (uint64)firstBuffsListItem - (uint64)_pkt;
+		_pkt->mtrlInfo.texNameCount = _texNameCount;
+		return TexNameList(firstBuffsListItem, _texNameCount);
+	}
+
+	SendBufferRef CloseAndReturn()
+	{
+		// 패킷 사이즈 계산
+		_pkt->packetSize = _bw.WriteSize();
+
+		_sendBuffer->Close(_bw.WriteSize());
+		return _sendBuffer;
+	}
+
+private:
+	PKT_C_OBJECT_MTRL* _pkt = nullptr;
 	SendBufferRef _sendBuffer;
 	BufferWriter _bw;
 };

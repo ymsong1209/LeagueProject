@@ -21,11 +21,11 @@ CSkill::~CSkill()
 	if (m_ProjectileScript)
 		delete m_ProjectileScript;
 
-	for (int i = 0; i < m_vecSkillObj.size(); i++)
+	/*for (int i = 0; i < m_vecSkillObj.size(); i++)
 	{
 		if (m_vecSkillObj[i] != nullptr)
 			delete m_vecSkillObj[i].Get();
-	}
+	}*/
 }
 
 void CSkill::tick()

@@ -56,11 +56,11 @@ void CS_FogFilterShader(int3 _iThreadID : SV_DispatchThreadID)
         float2 curThreadPos = float2(_iThreadID.x, _iThreadID.y);
         
         // World Center Pos를 텍스처 내 UV로 변경. 
-        float2 rayCenterPos = ConvertToThreadCoords(rayInfo.CenterPos.xz, WIDTH, HEIGHT, 3000, 3000);
+        float2 rayCenterPos = ConvertToThreadCoords(rayInfo.CenterPos.xz, WIDTH, HEIGHT, 2200, 2200);
         
         // ray 시야 범위도 World 길이 기준이니까 텍스처 내 길이로 변환
         // 지금 RayRange를 500으로 가정.
-        float radiusObjectVision = (rayInfo.MaxRadius / 3000.0) * WIDTH; // 혹은 HEIGHT 사용
+        float radiusObjectVision = (rayInfo.MaxRadius / 2200.f) * WIDTH; // 혹은 HEIGHT 사용
 
         // 1. 이 픽셀이 오브젝트의 시야 범위(시야 길이 반지름)보다 작으면 -> 원 안에 있음. (컬링용)
         if (length(curThreadPos - rayCenterPos) <= radiusObjectVision)
@@ -99,7 +99,7 @@ void CS_FogFilterShader(int3 _iThreadID : SV_DispatchThreadID)
                 // 3. 현재 각도가 어떤 ?번째 피자조각 내부일때, nTheta <= curTheta < nextTheta
             if (nTheta <= curTheta && curTheta < nextTheta)
             {
-                float RadiusConvertedToTexture = (float) nThRayInfo.Radius / 3000.f * (float) WIDTH; // 해당 레이의 반지름도 텍스처 내 길이로 변경
+                float RadiusConvertedToTexture = (float) nThRayInfo.Radius / 2200.f * (float) WIDTH; // 해당 레이의 반지름도 텍스처 내 길이로 변경
                     
                     // ?번째 피자가 가지는 시야범위 반지름 길이보다 내부에 있는지 판단
                 if (length(curThreadPos - rayCenterPos) <= RadiusConvertedToTexture)

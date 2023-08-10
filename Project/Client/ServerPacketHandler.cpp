@@ -270,6 +270,27 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 		cout << "S_GAME_START Success" << endl;
 		// 인게임 진입
 
+		/*RECT WindowPos;
+		HWND WindowHandle = CEngine::GetInst()->GetInst()->GetMainWnd();
+		GetWindowRect(WindowHandle, &WindowPos);
+
+		int topMenuBarHeight = GetSystemMetrics(SM_CYCAPTION);
+
+
+		Vec2 WindowResolution = CEngine::GetInst()->GetWindowResolution();
+
+		RECT rect;
+		long dx = 10;
+		rect.left = WindowPos.left + dx;
+		rect.top = WindowPos.top + topMenuBarHeight + dx;
+
+		rect.right = WindowPos.left + WindowResolution.x;
+		rect.bottom = WindowPos.top + WindowResolution.y + dx;
+
+		ClipCursor(&rect);*/
+
+
+
 		// 맵 불러옴
 		CreateTestLevel();
 
@@ -766,6 +787,51 @@ void ServerPacketHandler::Handle_S_TIME(PacketSessionRef& session, BYTE* buffer,
 	float	  _killerId = pkt->second;
 
 	// 모두가 본인의 시간을 업데이트 하는 코드 추가 필요
+
+	std::cout << "===============================" << endl;
+	m.unlock();
+}
+
+
+void ServerPacketHandler::Handle_S_OBJECT_MTRL(PacketSessionRef& session, BYTE* buffer, int32 len)
+{
+	std::mutex m;
+	m.lock();
+
+	cout << "S_OBJECT_MTRL Packet" << endl;
+	BufferReader br(buffer, len);
+
+	PKT_S_OBJECT_MTRL* pkt = reinterpret_cast<PKT_S_OBJECT_MTRL*>(buffer);
+
+	if (pkt->Validate() == false)
+	{
+		cout << "S_OBJECT_MTRL Validate False" << endl;
+		m.unlock();
+		return;
+	}
+
+	MtrlInfoPacket	 _mtrlInfoPacket = pkt->mtrlInfo;
+	PKT_S_OBJECT_MTRL::TexNameList mtrlNameBuffs = pkt->GetMtrlNameList();
+
+	// mtrl 이름
+	wstring _TexName = L"";
+	for (auto& mtrlNameBuff : mtrlNameBuffs)
+	{
+		_TexName.push_back(mtrlNameBuff.texName);
+	}
+	
+	MtrlInfo* mtrlInfo = new MtrlInfo();
+	mtrlInfo->targetId  = _mtrlInfoPacket.targetId;
+	mtrlInfo->iMtrlIndex = _mtrlInfoPacket.iMtrlIndex;
+	mtrlInfo->tex_param = _mtrlInfoPacket.tex_param;
+	mtrlInfo->wTexName = _TexName;
+
+	tServerEvent evn = {};
+	evn.Type = SERVER_EVENT_TYPE::MTRL_PACKET;
+	evn.wParam = (DWORD_PTR)mtrlInfo;
+
+	ServerEventMgr::GetInst()->AddEvent(evn);
+
 
 	std::cout << "===============================" << endl;
 	m.unlock();

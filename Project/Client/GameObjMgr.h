@@ -40,6 +40,8 @@ public:
 	void SendSkillHit(HitInfo* _hitInfo, ClientServiceRef _service);
 	void SendDespawn(UINT64 _despawnId, float lifespan, ClientServiceRef _service);
 	void SendKDACS(KDACSInfo* _kdacsInfo, ClientServiceRef _service);
+	void SendObjectMtrl(MtrlInfo* _mtrlInfo, ClientServiceRef _service);
+
 public:
 	CGameObject* FindPlayer(uint64 _targetId);
 	CGameObject* FindObject(uint64 _targetId);

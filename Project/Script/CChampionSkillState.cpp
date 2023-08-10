@@ -23,6 +23,7 @@ void CChampionSkillState::tick()
 void CChampionSkillState::Enter()
 {
 	CUnitState::Enter();
+	GetOwner()->PathFinder()->ClearPath();
 }
 
 void CChampionSkillState::Exit()

@@ -120,6 +120,13 @@ CGameObject* GameObjMgr::FindAllObject(uint64 _targetId)
 	std::mutex m;
 	m.lock();
 
+	if (_targetId == UINT64_MAX)
+	{
+		cout << "Maybe NonTarget Id" << endl;
+		m.unlock();
+		return nullptr;
+	}
+
 	_allObjects.insert(_players.begin(), _players.end());
 	_allObjects.insert(_objects.begin(), _objects.end());
 	_allObjects.insert(_placedObjects.begin(), _placedObjects.end());
@@ -464,9 +471,38 @@ void GameObjMgr::SendKDACS(KDACSInfo* _kdacsInfo, ClientServiceRef _service)
 	}
 }
 
+void GameObjMgr::SendObjectMtrl(MtrlInfo* _mtrlInfo, ClientServiceRef _service)
+{
+	std::mutex m;
+	{
+		std::lock_guard<std::mutex> lock(m);
+
+		MtrlInfoPacket mtrlInfoPacket = {};
+		mtrlInfoPacket.targetId = _mtrlInfo->targetId;
+		mtrlInfoPacket.iMtrlIndex = _mtrlInfo->iMtrlIndex;
+		mtrlInfoPacket.tex_param = _mtrlInfo->tex_param;
+
+		wstring _texName = _mtrlInfo->wTexName;
+
+		PKT_C_OBJECT_MTRL_WRITE  pktWriter(mtrlInfoPacket);
+		PKT_C_OBJECT_MTRL_WRITE::TexNameList texNamePacket = pktWriter.ReserveTexNameList(_texName.size());
+		for (int i = 0; i < _texName.size(); i++)
+		{
+			texNamePacket[i] = { _texName[i] };
+		}
+
+		// 서버에게 패킷 전송
+		std::cout << "Send C_OBJECT_MTRL Pakcet " << endl;
+		SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+		_service->Broadcast(sendBuffer);
+
+		std::cout << "===============================" << endl;
+	}
+
+}
+
 void GameObjMgr::SendObjectAnim(AnimInfo* _animInfo, ClientServiceRef _service)
 {
-	// _id 오브젝트의 애니메이션을 보낸다.
 	std::mutex m;
 	{
 		std::lock_guard<std::mutex> lock(m);
@@ -476,7 +512,7 @@ void GameObjMgr::SendObjectAnim(AnimInfo* _animInfo, ClientServiceRef _service)
 		animInfoPacket.bRepeat = _animInfo->bRepeat;
 		animInfoPacket.blend = _animInfo->blend;
 		animInfoPacket.blendTime = _animInfo->blendTime;
-
+		animInfoPacket.animSpeed = _animInfo->animSpeed;
 
 		wstring _animName = _animInfo->animName;
 

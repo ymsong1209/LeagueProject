@@ -1,5 +1,6 @@
 
 #include "CProjectileScript.h"
+#include "CSendServerEventMgr.h"
 
 CProjectileScript::CProjectileScript(UINT ScriptType)
 	: m_UserObj(nullptr)
@@ -29,9 +30,14 @@ void CProjectileScript::begin()
 void CProjectileScript::tick()
 {
 	if (m_bUnitDead)
+	{
+		Despawn();
 		return;
+	}
+		
 	if (m_TargetObj && m_TargetObj->IsDead()) {
-		DestroyObject(GetOwner());
+		CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 0.f);
+		Despawn();
 		return;
 	}
 	
