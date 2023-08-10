@@ -293,7 +293,15 @@ void CChampionScript::GetInput()
 
 		if (m_Skill[4]->CSkill::Use())
 		{
-			// 스킬 이벤트
+			// R 이벤트 발생
+			PlayerEEvent* evn = dynamic_cast<PlayerEEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_SKILL_R));
+			if (evn != nullptr)
+			{
+				evn->Clear();
+				evn->SetUserObj(GetOwner());
+				evn->SetTargetObj(nullptr);
+				CGameEventMgr::GetInst()->NotifyEvent(*evn);
+			}
 		}
 	}
 
