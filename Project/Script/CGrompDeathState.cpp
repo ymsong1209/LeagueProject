@@ -25,6 +25,7 @@ void CGrompDeathState::tick()
 
 void CGrompDeathState::Exit()
 {
+	CJungleDeathState::Exit();
 }
 
 

@@ -16,6 +16,7 @@ void CMurkWolfA2NState::Enter()
 	GetOwner()->Animator3D()->PlayOnce(L"MurkWolf\\sru_murkwolf_idle_a2n", true, 0.5f);
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"MurkWolf\\sru_murkwolf_idle_a2n", false, false, true, 0.5f);
+	CJungleA2NState::Enter();
 }
 
 void CMurkWolfA2NState::tick()

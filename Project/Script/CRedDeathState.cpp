@@ -27,5 +27,6 @@ void CRedDeathState::tick()
 
 void CRedDeathState::Exit()
 {
+	CJungleDeathState::Exit();
 }
 

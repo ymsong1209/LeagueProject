@@ -16,6 +16,7 @@ void CKrugN2AState::Enter()
 	GetOwner()->Animator3D()->PlayOnce(L"Krug\\krug_idle_n2ag", true, 0.5f);
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"Krug\\krug_idle_n2ag", false, false, true, 0.5f);
+	CJungleN2AState::Enter();
 }
 
 void CKrugN2AState::tick()

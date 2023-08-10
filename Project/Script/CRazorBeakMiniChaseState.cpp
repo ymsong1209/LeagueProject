@@ -17,6 +17,7 @@ void CRazorBeakMiniChaseState::Enter()
 	GetOwner()->Animator3D()->PlayRepeat(L"RazorBeak_Mini\\Run.002", false);
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"RazorBeak_Mini\\Run.002", true, false, false, 0.f);
+	CJungleChaseState::Enter();
 }
 
 void CRazorBeakMiniChaseState::tick()

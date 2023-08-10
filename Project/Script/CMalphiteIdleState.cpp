@@ -7,6 +7,8 @@
 #include "CUnitScript.h"
 #include "CChampionAttackState.h"
 #include "CChampionSkillState.h"
+#include <Engine/CRenderMgr.h>
+#include "CMalphiteRState.h"
 
 CMalphiteIdleState::CMalphiteIdleState()
 	:m_iIdleAnimNum(1)
@@ -152,7 +154,26 @@ void CMalphiteIdleState::HandleEvent(CGameEvent& event)
 	case GAME_EVENT_TYPE::PLAYER_SKILL_R:
 	{
 		if (GetOwnerFSM()->FindState(L"R") != nullptr)
+		{
+			PlayerREvent* EEvent = dynamic_cast<PlayerREvent*>(&event);
+
+			CMalphiteRState* SkillState = dynamic_cast<CMalphiteRState*>(GetOwnerFSM()->FindState(L"R"));
+			if (SkillState != nullptr)
+			{
+				SkillState->SetUserObj(EEvent->GetUserObj());
+				SkillState->SetTargetObj(nullptr);
+
+				CCamera* MainCam = CRenderMgr::GetInst()->GetMainCam();
+				tRay ray = MainCam->GetRay();
+
+				CGameObject* Map = CLevelMgr::GetInst()->GetCurLevel()->FindParentObjectByName(L"LoLMapCollider");
+				IntersectResult result = MainCam->IsCollidingBtwRayRect(ray, Map);
+				Vec3 TargetPos = result.vCrossPoint;	// Å¬¸¯ ÁÂÇ¥
+
+				SkillState->SetTargetPos(TargetPos);
+			}
 			GetOwnerFSM()->ChangeState(L"R");
+		}
 		break;
 	}
 	}

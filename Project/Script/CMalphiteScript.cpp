@@ -245,7 +245,7 @@ void CMalphiteScript::GetInput()
 		if (m_Skill[4]->CSkill::Use())
 		{
 			// R 이벤트 발생
-			PlayerEEvent* evn = dynamic_cast<PlayerEEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_SKILL_R));
+			PlayerREvent* evn = dynamic_cast<PlayerREvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_SKILL_R));
 			if (evn != nullptr)
 			{
 				evn->Clear();

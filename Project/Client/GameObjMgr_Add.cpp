@@ -75,6 +75,8 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 		Ptr<CMeshData> pMeshData = nullptr;
 		CGameObject* pObj = nullptr;
 
+		
+
 		switch (_info.champion)
 		{
 		case ChampionType::JINX:
@@ -130,13 +132,25 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 
 			pObj->SetName(L"MyPlayer");
 
-
 			// 사거리 자식 오브젝트 추가
 			CGameObject* AttackRange = new CGameObject;
 			AttackRange->AddComponent(new CTransform);
 			AttackRange->AddComponent(new CCollider2D);
+			AttackRange->Collider2D()->SetAbsolute(true);
 			AttackRange->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-			AttackRange->Collider2D()->SetOffsetScale(Vec2(2000.f, 2000.f));
+			
+			switch (_info.champion)
+			{
+			case ChampionType::JINX:
+			{
+				AttackRange->Collider2D()->SetOffsetScale(Vec2(200.f, 200.f));
+			}break;
+			case ChampionType::MALPHITE:
+			{
+				AttackRange->Collider2D()->SetOffsetScale(Vec2(60.f, 60.f));
+
+			}break;
+			}
 			AttackRange->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
 			AttackRange->AddComponent(new CAttackRangeScript);
 			AttackRange->SetName(L"AttackRange");
@@ -184,9 +198,6 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 		pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
 		pObj->Collider2D()->SetOffsetScale(Vec2(100.f, 100.f));
 		pObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0, 0));
-
-
-		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
 		
 		pObj->Transform()->SetRelativeRot(Vec3(_info.posInfo.moveDir.x, _info.posInfo.moveDir.y, _info.posInfo.moveDir.z));
 		Vec3 spawnPos = Vec3(_info.posInfo.pos.x, _info.posInfo.pos.y, _info.posInfo.pos.z);

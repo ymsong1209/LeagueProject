@@ -639,6 +639,9 @@
     <ClCompile Include="CMalphiteQModelScript.cpp">
       <Filter>Scripts\SkillProjectile\Malphite</Filter>
     </ClCompile>
+    <ClCompile Include="CMalphiteRDecalScript.cpp">
+      <Filter>Scripts\SkillProjectile\Malphite</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -818,6 +821,9 @@
       <Filter>Scripts\SkillProjectile\Malphite</Filter>
     </ClInclude>
     <ClInclude Include="CMalphiteQModelScript.h">
+      <Filter>Scripts\SkillProjectile\Malphite</Filter>
+    </ClInclude>
+    <ClInclude Include="CMalphiteRDecalScript.h">
       <Filter>Scripts\SkillProjectile\Malphite</Filter>
     </ClInclude>
   </ItemGroup>
