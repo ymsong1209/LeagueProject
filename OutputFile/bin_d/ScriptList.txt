@@ -8,6 +8,7 @@ CCoolDownUIScript
 CExpRatioUIScript
 CFontUIScript
 CGrompScript
+CGrowScaleScript
 CHpMpRatioUIScript
 CInGameCameraScript
 CInhibitorScript

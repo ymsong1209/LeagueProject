@@ -43,6 +43,7 @@
 #include <Script/CBlueScript.h>
 #include <Script/CTestTurretScript.h>
 #include <Script/CMalphiteBasicAttackScript.h>
+#include <Script/CGrowScaleScript.h>
 //#include <Script/CRedScript.h>
 
 void CreateTestLevel()
@@ -471,6 +472,7 @@ void CreateTestLevel()
 	 pRectFast->AddComponent(new CMeshRender);
 	 pRectFast->AddComponent(new CTransform);
 	 pRectFast->AddComponent(new CCollider2D);
+	 pRectFast->AddComponent(new CGrowScaleScript);
 	 
 
 
@@ -530,7 +532,7 @@ void CreateTestLevel()
 	 pRectFast->Transform()->SetAbsolute(true);
 
 
-	 pRectFast->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	 pRectFast->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"TrapezoidMeshLeft"));
 	 pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"TurretTrailMtrl"), 0);
 	 //pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MiniMapMtrl"), 0);
 	 //pRectFast->MeshRender()->GetDynamicMaterial(0);
@@ -558,6 +560,41 @@ void CreateTestLevel()
 	DummyObj->MeshRender()->GetDynamicMaterial(0);
 
 	SpawnGameObject(DummyObj, Vec3(0.f, 0.f, 0.f), 0);
+
+
+	// Anim Test Dummy
+	//CGameObject* AnimTestDummy = new CGameObject;
+	//AnimTestDummy->SetName(L"AnimTestDummy");
+	//AnimTestDummy->AddComponent(new CTransform);
+	//AnimTestDummy->AddComponent(new CAnimator2D);
+	//AnimTestDummy->AddComponent(new CMeshRender);
+	//AnimTestDummy->Transform()->SetUseMouseOutline(false);
+
+	//AnimTestDummy->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 0.f));
+	//AnimTestDummy->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	//AnimTestDummy->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
+	//AnimTestDummy->MeshRender()->GetDynamicMaterial(0);
+
+	//SpawnGameObject(AnimTestDummy, Vec3(-400.f, 0.f, 0.f), 0);
+
+
+
+	// Sphere Test Dummy
+	CGameObject* SphereTestDummy = new CGameObject;
+	SphereTestDummy->SetName(L"SphereTestDummy");
+	SphereTestDummy->AddComponent(new CTransform);
+	SphereTestDummy->AddComponent(new CMeshRender);
+	SphereTestDummy->Transform()->SetUseMouseOutline(false);
+
+	SphereTestDummy->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 100.f));
+	SphereTestDummy->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
+	SphereTestDummy->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3DMtrl"), 0);
+	SphereTestDummy->MeshRender()->GetDynamicMaterial(0);
+	SphereTestDummy->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Dragon\\fb_explosion_smoke_mult.dds"));
+
+	SpawnGameObject(SphereTestDummy, Vec3(-400.f, 0.f, 0.f), 0);
+
+
 
 
 	// Malphite Basick Attack Outliner

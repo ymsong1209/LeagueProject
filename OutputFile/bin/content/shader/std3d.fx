@@ -27,6 +27,10 @@
 #define Additive_Texture            g_tex_2
 #define Puncture_Texture            g_tex_3
 #define Additive_Color              g_vec4_0
+
+
+#define IsOutputTextureExist        g_btex_0
+#define Output_Texture              g_tex_0
 // ========================
 
 
@@ -71,29 +75,31 @@ VS_OUT VS_Std3D(VS_IN _in)
 
 float4 PS_Std3D(VS_OUT _in) : SV_Target
 {        
-    float4 vObjectColor = float4(0.4f, 0.4f, 0.4f, 1.f);    
+    //float4 vObjectColor = float4(0.4f, 0.4f, 0.4f, 1.f);    
     float4 vOutColor = float4(0.f, 0.f, 0.f, 1.f);
     
     float3 vViewNormal = _in.vViewNormal;
-
-    // Ray Test용 Code
-    if (RayTest == 30)
-    {
-        vOutColor = float4(1.f, 0.f, 0.f, 1.f);
-        return vOutColor;
-    }
-
-    else if (RayTest == 20)
-    {
-        vOutColor = float4(0.f, 0.f, 1.f, 1.f);
-        return vOutColor;
-    }
 
      
     // 텍스쳐가 있으면, 해당 색상을 사용한다.
     if(g_btex_0)
     {
-        vObjectColor = g_tex_0.Sample(g_sam_0, _in.vUV);
+        //vObjectColor = g_tex_0.Sample(g_sam_0, _in.vUV);
+        
+       
+            // 참조해야하는 UV값의 Offset
+        float2 Offset = float2(0.f, 0.f);
+
+            // Output Texture가 움직여야 하는지 확인
+        if (OutputTexMovingStyle != 0)
+        {
+            Offset = OutputTexPreviousPos;
+        }
+
+        vOutColor = Output_Texture.Sample(g_sam_0, _in.vUV + Offset);
+
+        //if (vOutColor.w == 0.f)
+        //    discard;
     }
        
     // NomalMap 이 있다면
@@ -111,17 +117,38 @@ float4 PS_Std3D(VS_OUT _in) : SV_Target
         vViewNormal = mul(vNormal, matRot);       
     }    
     
-    tLightColor lightcolor = (tLightColor) 0.f;        
+   
+    //if (isPunctureTextureUsed)
+    //{
+    //    // 참조해야하는 UV값의 Offset
+    //    float2 Offset = float2(0.f, 0.f);
+
+    //    // Puncture Texture 가 움직여야 되는지 확인 
+    //    if (PunctureTexMovingStyle != 0)
+    //    {
+    //        Offset = PunctureTexPreviousPos;
+    //    }
+
+    //    float4 vPunctureSample = g_puncture_tex.Sample(g_sam_0, _in.vUV + Offset);
+
+    //    vOutColor = float4(vOutColor.xyz, vPunctureSample.x);
+    //}
+
+
+    //// 색상 첨가 (Color Additive)
+    //if (isAdditiveTextureUsed)
+    //{
+    //    float4 vAdditiveSample = g_additive_tex.Sample(g_sam_0, _in.vUV);
+
+    //    if (vAdditiveSample.w != 0)
+    //    {
+    //        vOutColor = float4(vOutColor.x + saturate(AdditiveColor.x) * vAdditiveSample.x * vOutColor.w * vAdditiveSample.w,
+    //            vOutColor.y + saturate(AdditiveColor.y) * vAdditiveSample.y * vOutColor.w * vAdditiveSample.w,
+    //            vOutColor.z + saturate(AdditiveColor.z) * vAdditiveSample.z * vOutColor.w * vAdditiveSample.w,
+    //            vOutColor.w);
+    //    }
+    //}
     
-    for (int i = 0; i < g_Light3DCount; ++i)
-    {
-        CalcLight3D(_in.vViewPos, vViewNormal, i, lightcolor);
-    }
-        
-    // 광원 적용
-    vOutColor.xyz = vObjectColor.xyz * lightcolor.vDiffuse.xyz
-                    + lightcolor.vSpecular.xyz
-                    + vObjectColor.xyz * lightcolor.vAmbient.xyz;
     
     return vOutColor;
 }

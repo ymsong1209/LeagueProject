@@ -500,6 +500,9 @@
     <ClCompile Include="CMalphiteBasicAttackScript.cpp">
       <Filter>Malphite</Filter>
     </ClCompile>
+    <ClCompile Include="CGrowScaleScript.cpp">
+      <Filter>GrowScale</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -554,6 +557,9 @@
     </ClInclude>
     <ClInclude Include="CMalphiteBasicAttackScript.h">
       <Filter>Malphite</Filter>
+    </ClInclude>
+    <ClInclude Include="CGrowScaleScript.h">
+      <Filter>GrowScale</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1188,6 +1194,9 @@
     </Filter>
     <Filter Include="Malphite">
       <UniqueIdentifier>{a3f6799e-2f8d-4ecb-a40f-5093f86675b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GrowScale">
+      <UniqueIdentifier>{2870b358-5a05-42dc-a39b-1e1fcce28856}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

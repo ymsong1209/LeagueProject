@@ -153,6 +153,98 @@ void CResMgr::CreateDefaultMesh()
 
 
 
+	// ==============
+	// Trapezoid Mesh Right - Long, Left - Short
+	// ==============
+
+	v.vPos = Vec3(-0.5f, 0.25f, 0.f);
+	v.vColor = Vec4(1.f, 0.f, 0.f, 1.f);
+	v.vUV = Vec2(0.f, 0.f);
+
+	v.vTangent = Vec3(1.f, 0.f, 0.f);
+	v.vNormal = Vec3(0.f, 0.f, -1.f);
+	v.vBinormal = Vec3(0.f, -1.f, 0.f);
+
+	vecVtx.push_back(v);
+
+	v.vPos = Vec3(0.5f, 0.5f, 0.f);
+	v.vColor = Vec4(0.f, 1.f, 0.f, 1.f);
+	v.vUV = Vec2(1.f, 0.f);
+	vecVtx.push_back(v);
+
+	v.vPos = Vec3(0.5f, -0.5f, 0.f);
+	v.vColor = Vec4(0.f, 0.f, 1.f, 1.f);
+	v.vUV = Vec2(1.f, 1.f);
+	vecVtx.push_back(v);
+
+	v.vPos = Vec3(-0.5f, -0.25f, 0.f);
+	v.vColor = Vec4(0.f, 0.f, 0.f, 1.f);
+	v.vUV = Vec2(0.f, 1.f);
+	vecVtx.push_back(v);
+
+	vecIdx.push_back(0);
+	vecIdx.push_back(2);
+	vecIdx.push_back(3);
+
+	vecIdx.push_back(0);
+	vecIdx.push_back(1);
+	vecIdx.push_back(2);
+
+	pMesh = new CMesh(true);
+	pMesh->Create(vecVtx.data(), (UINT)vecVtx.size(), vecIdx.data(), (UINT)vecIdx.size());
+	AddRes(L"TrapezoidMeshRight", pMesh);
+
+	vecVtx.clear();
+	vecIdx.clear();
+
+
+	// ==============
+	// Trapezoid Mesh Left - Long, Right - Short
+	// ==============
+
+	v.vPos = Vec3(-0.5f, 0.5f, 0.f);
+	v.vColor = Vec4(1.f, 0.f, 0.f, 1.f);
+	v.vUV = Vec2(0.f, 0.f);
+
+	v.vTangent = Vec3(1.f, 0.f, 0.f);
+	v.vNormal = Vec3(0.f, 0.f, -1.f);
+	v.vBinormal = Vec3(0.f, -1.f, 0.f);
+
+	vecVtx.push_back(v);
+
+	v.vPos = Vec3(0.5f, 0.25f, 0.f);
+	v.vColor = Vec4(0.f, 1.f, 0.f, 1.f);
+	v.vUV = Vec2(1.f, 0.f);
+	vecVtx.push_back(v);
+
+	v.vPos = Vec3(0.5f, -0.25f, 0.f);
+	v.vColor = Vec4(0.f, 0.f, 1.f, 1.f);
+	v.vUV = Vec2(1.f, 1.f);
+	vecVtx.push_back(v);
+
+	v.vPos = Vec3(-0.5f, -0.5f, 0.f);
+	v.vColor = Vec4(0.f, 0.f, 0.f, 1.f);
+	v.vUV = Vec2(0.f, 1.f);
+	vecVtx.push_back(v);
+
+	vecIdx.push_back(0);
+	vecIdx.push_back(2);
+	vecIdx.push_back(3);
+
+	vecIdx.push_back(0);
+	vecIdx.push_back(1);
+	vecIdx.push_back(2);
+
+	pMesh = new CMesh(true);
+	pMesh->Create(vecVtx.data(), (UINT)vecVtx.size(), vecIdx.data(), (UINT)vecIdx.size());
+	AddRes(L"TrapezoidMeshLeft", pMesh);
+
+	vecVtx.clear();
+	vecIdx.clear();
+
+
+
+
 
 
 	// ===========
