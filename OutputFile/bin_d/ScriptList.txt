@@ -25,6 +25,8 @@ CKrugMiniScript
 CKrugScript
 CMalphiteEDecalScript
 CMalphiteEScript
+CMalphiteQDecalScript
+CMalphiteQModelScript
 CMalphiteQScript
 CMalphiteRScript
 CMalphiteScript

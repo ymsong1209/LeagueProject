@@ -633,8 +633,11 @@
     <ClCompile Include="CChampionScript.cpp">
       <Filter>Scripts\Unit\Champion</Filter>
     </ClCompile>
-    <ClCompile Include="CJinxEScript.cpp">
-      <Filter>Scripts\SkillProjectile\Jinx</Filter>
+    <ClCompile Include="CMalphiteQDecalScript.cpp">
+      <Filter>Scripts\SkillProjectile\Malphite</Filter>
+    </ClCompile>
+    <ClCompile Include="CMalphiteQModelScript.cpp">
+      <Filter>Scripts\SkillProjectile\Malphite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -811,8 +814,11 @@
     <ClInclude Include="CJinxE.h">
       <Filter>Scripts\Skill\Jinx</Filter>
     </ClInclude>
-    <ClInclude Include="CJinxEScript.h">
-      <Filter>Scripts\SkillProjectile\Jinx</Filter>
+    <ClInclude Include="CMalphiteQDecalScript.h">
+      <Filter>Scripts\SkillProjectile\Malphite</Filter>
+    </ClInclude>
+    <ClInclude Include="CMalphiteQModelScript.h">
+      <Filter>Scripts\SkillProjectile\Malphite</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

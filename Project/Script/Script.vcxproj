@@ -297,6 +297,8 @@
     <ClInclude Include="CMalphiteEState.h" />
     <ClInclude Include="CMalphiteIdleState.h" />
     <ClInclude Include="CMalphiteQ.h" />
+    <ClInclude Include="CMalphiteQDecalScript.h" />
+    <ClInclude Include="CMalphiteQModelScript.h" />
     <ClInclude Include="CMalphiteQScript.h" />
     <ClInclude Include="CMalphiteQState.h" />
     <ClInclude Include="CMalphiteR.h" />
@@ -544,6 +546,8 @@
     <ClCompile Include="CMalphiteEState.cpp" />
     <ClCompile Include="CMalphiteIdleState.cpp" />
     <ClCompile Include="CMalphiteQ.cpp" />
+    <ClCompile Include="CMalphiteQDecalScript.cpp" />
+    <ClCompile Include="CMalphiteQModelScript.cpp" />
     <ClCompile Include="CMalphiteQScript.cpp" />
     <ClCompile Include="CMalphiteQState.cpp" />
     <ClCompile Include="CMalphiteR.cpp" />
