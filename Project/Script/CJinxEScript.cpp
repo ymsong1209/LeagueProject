@@ -4,6 +4,8 @@
 #include <thread>
 CJinxEScript::CJinxEScript()
 	:CProjectileScript((UINT)SCRIPT_TYPE::JINXESCRIPT)
+	, m_fAccTime(0.f)
+	, m_fMaxTime(3.f)
 {
 	//m_fProjectileSpeed = 100.f;
 	//m_fSkillRange = 50.f;
@@ -19,14 +21,15 @@ void CJinxEScript::begin()
 	// 첫 생성 위치 기억
 	m_vSpawnPos = GetOwner()->Transform()->GetRelativePos();
 
-	// 5초 뒤 덫 삭제
-	thread t([=]() {
-		Sleep(3000);
-	CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 0.5f);
-	m_bUnitDead = true;
-	m_fProjectileSpeed = 0.f;
-		});
-	t.detach();
+	float distance = 40;
+	m_vDir = m_vDir.Normalize(); // 정규화하여 단위 벡터로 만듦
+
+	if (GetServerID() % 3 == 0)
+		GetOwner()->Transform()->SetRelativePos(m_vSpawnPos + Vec3(m_vDir.x * cos(XM_PI / 6.0f) + m_vDir.z * sin(XM_PI / 6.0f), m_vDir.y, -m_vDir.x * sin(XM_PI / 6.0f) + m_vDir.z * cos(XM_PI / 6.0f)) * distance); // 왼쪽 30도
+	else if (GetServerID() % 3 == 1)
+		GetOwner()->Transform()->SetRelativePos(m_vSpawnPos + m_vDir * distance); // 중간
+	else
+		GetOwner()->Transform()->SetRelativePos(m_vSpawnPos + Vec3(m_vDir.x * cos(-XM_PI / 6.0f) + m_vDir.z * sin(-XM_PI / 6.0f), m_vDir.y, -m_vDir.x * sin(-XM_PI / 6.0f) + m_vDir.z * cos(-XM_PI / 6.0f)) * distance); // 오른쪽 30도
 }
 
 void CJinxEScript::tick()
@@ -35,6 +38,16 @@ void CJinxEScript::tick()
 
 
 	CProjectileScript::tick();
+
+	if (m_fAccTime >= m_fMaxTime)
+	{
+		CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 0.2f);
+		m_bUnitDead = true;
+		m_fProjectileSpeed = 0.f;
+
+		m_fAccTime = 0.f;
+	}
+	m_fAccTime += DT;
 }
 
 void CJinxEScript::BeginOverlap(CCollider2D* _Other)

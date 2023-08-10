@@ -14,8 +14,8 @@ CJinxE::CJinxE()
 	CGameObject* Projectile = new CGameObject;
 	Projectile->AddComponent(new CTransform);
 	Projectile->AddComponent(new CCollider2D);
-	Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
-	Projectile->Collider2D()->SetOffsetScale(Vec2(5.f, 20.f));
+	Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+	Projectile->Collider2D()->SetOffsetScale(Vec2(10.f, 10.f));
 	Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
 	Projectile->Collider2D()->SetDrawCollision(true);
 	Projectile->SetName(L"JinxE");
@@ -25,9 +25,11 @@ CJinxE::CJinxE()
 	NewPrefab->RegisterProtoObject(Projectile);
 
 	m_vecSkillObj.push_back(NewPrefab);
+	m_vecSkillObj.push_back(NewPrefab);
+	m_vecSkillObj.push_back(NewPrefab);
 
 	// 투사체 스크립트
-	m_iProjectileCount = 1;
+	m_iProjectileCount = 3;
 	m_ProjectileScript = new CJinxEScript;
 }
 
@@ -45,19 +47,19 @@ bool CJinxE::Use()
 	// 스킬 쿨타임 초기화
 	if (!CSkill::Use())
 		return false;
-
+	
 	// 서버에게 JinxE 공격 사용 신호를 전달
 	CSendServerEventMgr::GetInst()->SendUseSkillPacket(
-	m_UserObj->GetScript<CUnitScript>()->GetServerID(),
-	UINT64_MAX,		// 논타겟팅일 경우 UINT64_MAX를 써주세요
-	m_UserObj->GetScript<CUnitScript>()->GetSkillLevel(3),
-	SkillType::JINX_E, 
-	Vec3(0, 0, 50),
-	m_iProjectileCount,
-	false,
-	Vec3(0, 0, 0),
-	true,
-	GetMouseDir());
+		m_UserObj->GetScript<CUnitScript>()->GetServerID(),
+		UINT64_MAX,		// 논타겟팅일 경우 UINT64_MAX를 써주세요
+		m_UserObj->GetScript<CUnitScript>()->GetSkillLevel(3),
+		SkillType::JINX_E,
+		Vec3(0, 0, 0),
+		m_iProjectileCount,
+		false,
+		GetMousePos(),
+		true,
+		GetMouseDir());
 
 
 	// 쿨타임 초기화

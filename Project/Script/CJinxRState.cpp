@@ -3,7 +3,7 @@
 #include "CChampionScript.h"
 #include "CSkill.h"
 #include "CJinxScript.h"
-
+#include <thread>
 CJinxRState::CJinxRState()
 {
 	SetName(L"R");
@@ -27,7 +27,12 @@ void CJinxRState::Enter()
 	JinxR->SetTargetObj(m_TargetObj);
 	JinxR->SetOwnerScript(GetOwner()->GetScript<CChampionScript>());
 
+	thread t([=]() {
+		Sleep(1000);
 	JinxR->Use();
+		});
+	t.detach();
+
 
 	// 애니메이션
 	wstring animName = L"";
