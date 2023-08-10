@@ -22,6 +22,7 @@
 
 #include <Engine\CPathFindMgr.h>
 #include <Engine\CAnim3D.h>
+#include <Engine\CResMgr.h>
 
 #include <Script\CUnitScript.h>
 #include <Script\CChampionScript.h>
@@ -63,8 +64,7 @@
 #include <Script\CTurretHPUIScript.h>
 #include <Script/CInGameCameraScript.h>
 
-
-
+static bool MinionSpawn = true;
 // ===============================================
 //   Add
 // ===============================================
@@ -228,6 +228,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 		case UnitType::MELEE_MINION:
 		{
+			if (MinionSpawn == false) break;
 			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MeleeMinion.prefab");
 			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
 			pObj = pPrefab->Instantiate();
@@ -296,6 +297,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 		break;
 		case UnitType::RANGED_MINION:
 		{
+			if (MinionSpawn == false) break;
 			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\RangedMinion.prefab");
 			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
 			pObj = pPrefab->Instantiate();
@@ -364,6 +366,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 		break;
 		case UnitType::SIEGE_MINION:
 		{
+			if (MinionSpawn == false) break;
 			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\SiegeMinion.prefab");
 			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
 			pObj = pPrefab->Instantiate();
@@ -371,12 +374,12 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			if (_objectInfo.faction == Faction::RED)
 			{
 				pObj->SetName(L"red_minion_siege");
-				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Minion_siege_Red.mtrl"), 0);
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Minion_Siege_Red.mtrl"), 0);
 			}
 			else if (_objectInfo.faction == Faction::BLUE)
 			{
 				pObj->SetName(L"blue_minion_siege");
-				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Minion_siege_Blue.mtrl"), 0);
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Minion_Siege_Blue.mtrl"), 0);
 			}
 
 			// 방장은 진짜 계산 오브젝트 생성,  방장이 아닐 경우 허상을 생성
@@ -432,6 +435,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 		break;
 		case UnitType::SUPER_MINION:
 		{
+			if (MinionSpawn == false) break;
 			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\SuperMinion.prefab");
 			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
 			pObj = pPrefab->Instantiate();
@@ -2163,19 +2167,38 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\TurretRubble.prefab");
 			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
 			pObj = pPrefab->Instantiate();
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetOutlineThickness(0.072f);
 			CGameObject* TurretBase = pObj->FindChildObjByName(L"TurretBase");
+			TurretBase->Transform()->SetUseMouseOutline(true);
+			TurretBase->Transform()->SetOutlineThickness(0.072f);
+			TurretBase->Collider3D()->SetOffsetScale(Vec3(320.f, 320.f, 320.f));
 			CGameObject* TurretBreak1 = pObj->FindChildObjByName(L"TurretBreak_1");
 			CGameObject* TurretBreak2 = pObj->FindChildObjByName(L"TurretBreak_2");
-			Vec3 Scale = pObj->Transform()->GetRelativeScale();
+			
+			TurretBreak1->Animator3D()->GetCurAnim()->Pause();
+			TurretBreak2->Animator3D()->GetCurAnim()->Pause();
+
+			// 포탑 자식 오브젝트에 UnitScript 붙여주기
+			TurretBase->AddComponent(new CUnitScript);
+			TurretBreak1->AddComponent(new CUnitScript);
+			TurretBreak2->AddComponent(new CUnitScript);
+
+			// 포탑에게 
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
 
 
 			if (_objectInfo.faction == Faction::RED)
 			{				
 				pObj->SetName(L"red_turret");
+				
 				// Rubble(잔해, 부모)
-				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Rubble_red.mtrl"), 0);
-				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Break1_red.mtrl"), 1);
+				Ptr<CTexture> AlphaTex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png");
+				pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
+				pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_1, AlphaTex);
+				//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Rubble_red.mtrl"), 0);
+				//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Break1_red.mtrl"), 1);
+				
 				// TurretBase(본체)
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Cloth1_red.mtrl"), 0);
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Cloth2_red.mtrl"), 1);
@@ -2183,21 +2206,31 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Stage1_red.mtrl"), 3);
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Stage2_red.mtrl"), 4);
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Rubble_red.mtrl"), 5);
+				
 				// TurretBreak1(붕괴 애니메이션1)
-				TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Cloth1_red.mtrl"), 0);
-				TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Mage_red.mtrl"), 1);
+				TurretBreak1->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
+				TurretBreak1->MeshRender()->GetMaterial(1)->SetTexParam(TEX_1, AlphaTex);
+				//TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Cloth1_red.mtrl"), 0);
+				//TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Mage_red.mtrl"), 1);
+				
 				// TurretBreak2(붕괴 애니메이션2)
-				TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage1_red.mtrl"), 0);
-				TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage2_red.mtrl"), 1);
+				TurretBreak2->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
+				TurretBreak2->MeshRender()->GetMaterial(1)->SetTexParam(TEX_1, AlphaTex);
+				//TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage1_red.mtrl"), 0);
+				//TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage2_red.mtrl"), 1);
 
 				
 			}
 			else if (_objectInfo.faction == Faction::BLUE)
 			{
 				pObj->SetName(L"blue_turret");
+
 				// Rubble(잔해, 부모)
-				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Rubble_blue.mtrl"), 0);
-				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Break1_blue.mtrl"), 1);
+				pObj->MeshRender()->SetMaterial(nullptr, 0);
+				pObj->MeshRender()->SetMaterial(nullptr, 1);
+				//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Rubble_blue.mtrl"), 0);
+				//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Break1_blue.mtrl"), 1);
+				
 				// TurretBase(본체)
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Cloth1_blue.mtrl"), 0);
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Cloth2_blue.mtrl"), 1);
@@ -2205,32 +2238,46 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Stage1_blue.mtrl"), 3);
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Stage2_blue.mtrl"), 4);
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Rubble_blue.mtrl"), 5);
+				
 				// TurretBreak1(붕괴 애니메이션1)
-				TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Cloth1_blue.mtrl"), 0);
-				TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Mage_blue.mtrl"), 1);
+				TurretBreak1->MeshRender()->SetMaterial(nullptr, 0);
+				TurretBreak1->MeshRender()->SetMaterial(nullptr, 1);
+				//TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Cloth1_blue.mtrl"), 0);
+				//TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Mage_blue.mtrl"), 1);
+				
 				// TurretBreak2(붕괴 애니메이션2)
-				TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage1_blue.mtrl"), 0);
-				TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage2_blue.mtrl"), 1);
+				TurretBreak2->MeshRender()->SetMaterial(nullptr, 0);
+				TurretBreak2->MeshRender()->SetMaterial(nullptr, 1);
+				//TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage1_blue.mtrl"), 0);
+				//TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage2_blue.mtrl"), 1);
 			}
 
 			if (MyPlayer.host)
 			{
-				//pObj->AddComponent(new CTurretScript);
-				// script->setLane, _objectInfo.lane
-				pObj->AddComponent(new CUnitScript);  // 추후 주석처리
-				// 공격범위 시야 자식오브젝트도 추가해야할듯.
+				// 방장일 경우 TurretScript
+				pObj->AddComponent(new CTurretScript);
+				//CTurretScript* Script = pObj->GetScript<CTurretScript>();
+				//Script->SetLane(_objectInfo.lane);
 
 			}
 			else
 			{
+				// 클라이언트는 UnitScript
 				pObj->AddComponent(new CUnitScript);
 			}
 
 			// 공통
 			CUnitScript* Script = pObj->GetScript<CUnitScript>();
 			Script->SetServerID(_objectId);
+
+			// 자식에게 서버 아이디 부여
+			TurretBase->GetScript<CUnitScript>()->SetServerID(_objectId+1);
+			TurretBreak1->GetScript<CUnitScript>()->SetServerID(_objectId+2);
+			TurretBreak2->GetScript<CUnitScript>()->SetServerID(_objectId+3);
+
 			Script->SetFaction(_objectInfo.faction);
 			Script->SetUnitType(UnitType::TURRET);
+			Script->SetLane(_objectInfo.lane);
 			SpawnGameObject(pObj
 				, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z)
 				, L"Structure");

@@ -1,4 +1,4 @@
-
+#include "pch.h"
 #include "CProjectileScript.h"
 #include "CSendServerEventMgr.h"
 
@@ -34,13 +34,23 @@ void CProjectileScript::tick()
 		Despawn();
 		return;
 	}
-		
-	if (m_TargetObj && m_TargetObj->IsDead()) {
-		CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 0.f);
-		Despawn();
-		return;
+
+	if (m_TargetObj)
+	{
+		if (m_TargetObj->IsDead() || m_TargetObj->GetScript<CUnitScript>()->IsUnitDead())
+		{
+			CSendServerEventMgr::GetInst()->SendDespawnPacket(this->GetServerID(), 0.f);
+			Despawn();
+			return;
+		}
+
 	}
-	
+
+	if (m_UserObj == nullptr || m_UserObj->IsDead() || m_UserObj->GetScript<CUnitScript>()->IsUnitDead())
+	{
+		CSendServerEventMgr::GetInst()->SendDespawnPacket(this->GetServerID(), 0.f);
+		return;
+	}	
 }
 
 void CProjectileScript::BeginOverlap(CCollider2D* _Other)

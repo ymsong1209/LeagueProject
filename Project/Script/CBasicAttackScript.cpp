@@ -21,6 +21,11 @@ void CBasicAttackScript::tick()
 {
 	CProjectileScript::tick();
 	
+	if (m_TargetObj == nullptr || m_TargetObj->IsDead())
+	{
+		CSendServerEventMgr::GetInst()->SendDespawnPacket(GetOwner()->GetScript<CUnitScript>()->GetServerID(), 0.f);
+		return;
+	}
 
 	Vec3 TargetPos = m_TargetObj->Transform()->GetRelativePos();
 	
@@ -39,8 +44,11 @@ void CBasicAttackScript::tick()
 
 void CBasicAttackScript::BeginOverlap(CCollider2D* _Other)
 {
-	if (m_TargetObj == nullptr)
+	if (m_TargetObj == nullptr || m_TargetObj->IsDead())
+	{
+		CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 0.f);
 		return;
+	}
 
 	// Å¸°Ù°ú ºÎµúÄ¡¸é
 	if (_Other == m_TargetObj->Collider2D())

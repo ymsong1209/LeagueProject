@@ -44,5 +44,6 @@ public:
     bool        IsTargetInRange(CGameObject* _Obj);
     bool        IsAtWayPoint();
     void        ResetAttackCoolTime() { m_fCurAttackCoolTime = 0; }
+    void        SetTargetNull() { m_pTarget = nullptr; }
 };
 
