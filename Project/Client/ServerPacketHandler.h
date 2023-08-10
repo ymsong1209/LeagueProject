@@ -1359,46 +1359,6 @@ private:
 };
 #pragma pack()
 
-#pragma pack(1)
-class PKT_S_SOUND_WRITE {
-public:
-	using SoundNameList = PacketList<SoundInfoPacket::soundNameItem>;
-	using SoundNameItem = SoundInfoPacket::soundNameItem;
-
-	PKT_S_SOUND_WRITE(SoundInfoPacket _soundInfo)
-	{
-		_sendBuffer = GSendBufferManager->Open(4096);
-		// 초기화
-		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
-
-		_pkt = _bw.Reserve<PKT_S_SOUND>();
-		_pkt->packetSize = 0; // To Fill
-		_pkt->packetId = S_SOUND;
-		_pkt->soundInfo = _soundInfo;
-	}
-
-	SoundNameList ReserveAnimNameList(uint16 _soundNameCount) {
-		SoundNameItem* firstBuffsListItem = _bw.Reserve<SoundNameItem>(_soundNameCount);
-		_pkt->soundInfo.soundNameOffset = (uint64)firstBuffsListItem - (uint64)_pkt;
-		_pkt->soundInfo.soundNameCount = _soundNameCount;
-		return SoundNameList(firstBuffsListItem, _soundNameCount);
-	}
-
-	SendBufferRef CloseAndReturn()
-	{
-		// 패킷 사이즈 계산
-		_pkt->packetSize = _bw.WriteSize();
-
-		_sendBuffer->Close(_bw.WriteSize());
-		return _sendBuffer;
-	}
-
-private:
-	PKT_S_SOUND* _pkt = nullptr;
-	SendBufferRef _sendBuffer;
-	BufferWriter _bw;
-};
-#pragma pack()
 
 #pragma pack(1)
 class PKT_C_TIME_WRITE {
@@ -1432,20 +1392,20 @@ private:
 
 
 #pragma pack(1)
-class PKT_S_OBJECT_MTRL_WRITE {
+class PKT_C_OBJECT_MTRL_WRITE {
 public:
 	using TexNameList = PacketList<MtrlInfoPacket::texNameItem>;
 	using TexNameItem = MtrlInfoPacket::texNameItem;
 
-	PKT_S_OBJECT_MTRL_WRITE(MtrlInfoPacket  _mtrlInfo)
+	PKT_C_OBJECT_MTRL_WRITE(MtrlInfoPacket  _mtrlInfo)
 	{
 		_sendBuffer = GSendBufferManager->Open(4096);
 		// 초기화
 		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
 
-		_pkt = _bw.Reserve<PKT_S_OBJECT_MTRL>();
+		_pkt = _bw.Reserve<PKT_C_OBJECT_MTRL>();
 		_pkt->packetSize = 0; // To Fill
-		_pkt->packetId = S_OBJECT_MTRL;
+		_pkt->packetId = C_OBJECT_MTRL;
 		_pkt->mtrlInfo = _mtrlInfo;
 	}
 
@@ -1466,9 +1426,8 @@ public:
 	}
 
 private:
-	PKT_S_OBJECT_MTRL* _pkt = nullptr;
+	PKT_C_OBJECT_MTRL* _pkt = nullptr;
 	SendBufferRef _sendBuffer;
 	BufferWriter _bw;
 };
 #pragma pack()
-

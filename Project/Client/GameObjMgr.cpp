@@ -485,11 +485,18 @@ void GameObjMgr::SendObjectMtrl(MtrlInfo* _mtrlInfo, ClientServiceRef _service)
 		wstring _texName = _mtrlInfo->wTexName;
 
 		PKT_C_OBJECT_MTRL_WRITE  pktWriter(mtrlInfoPacket);
-		PKT_C_OBJECT_MTRL_WRITE::MtrlNameList mtrlNamePacket = pktWriter.ReserveMtrlNameList(_texName.size());
+		PKT_C_OBJECT_MTRL_WRITE::TexNameList texNamePacket = pktWriter.ReserveTexNameList(_texName.size());
 		for (int i = 0; i < _texName.size(); i++)
 		{
-			mtrlNamePacket[i] = { _texName[i] };
+			texNamePacket[i] = { _texName[i] };
 		}
+
+		// 서버에게 패킷 전송
+		std::cout << "Send C_OBJECT_MTRL Pakcet " << endl;
+		SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+		_service->Broadcast(sendBuffer);
+
+		std::cout << "===============================" << endl;
 	}
 
 }
