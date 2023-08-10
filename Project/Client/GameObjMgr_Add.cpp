@@ -2099,9 +2099,13 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			CGameObject* TurretBase = pObj->FindChildObjByName(L"TurretBase");
 			TurretBase->Transform()->SetUseMouseOutline(true);
 			TurretBase->Transform()->SetOutlineThickness(0.072f);
+			TurretBase->Collider3D()->SetOffsetScale(Vec3(320.f, 320.f, 320.f));
 			CGameObject* TurretBreak1 = pObj->FindChildObjByName(L"TurretBreak_1");
 			CGameObject* TurretBreak2 = pObj->FindChildObjByName(L"TurretBreak_2");
 			
+			TurretBreak1->Animator3D()->GetCurAnim()->Pause();
+			TurretBreak2->Animator3D()->GetCurAnim()->Pause();
+
 			// 포탑 자식 오브젝트에 UnitScript 붙여주기
 			TurretBase->AddComponent(new CUnitScript);
 			TurretBreak1->AddComponent(new CUnitScript);

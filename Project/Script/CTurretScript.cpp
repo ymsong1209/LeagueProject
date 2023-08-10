@@ -116,13 +116,13 @@ void CTurretScript::ChangeAnim()
 		if (TurretBase->Animator3D()->GetCurAnim()->GetName() != L"turret_idlebreak\\Turret_Idle")
 			TurretBase->Animator3D()->PlayRepeat(L"turret_idlebreak\\Turret_Idle", false);
 	}
-	else if (33.f < HealthRatio && HealthRatio <= 0.66f)
+	else if (0.33f < HealthRatio && HealthRatio <= 0.66f)
 	{
 		CGameObject* TurretBase = GetOwner()->FindChildObjByName(L"TurretBase");
 		if (TurretBase->Animator3D()->GetCurAnim()->GetName() != L"turret_idlebreak\\Turret_Cloth_Break1")
 			TurretBase->Animator3D()->PlayOnce(L"turret_idlebreak\\Turret_Cloth_Break1", false);
 	}
-	else if (0 < HealthRatio && HealthRatio <= 33.f)
+	else if (0 < HealthRatio && HealthRatio <= 0.33f)
 	{
 		CGameObject* TurretBase = GetOwner()->FindChildObjByName(L"TurretBase");
 		if (TurretBase->Animator3D()->GetCurAnim()->GetName() != L"turret_idlebreak\\Turret_Cloth_Break2")
@@ -152,7 +152,7 @@ void CTurretScript::ChangeAnim()
 			TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Cloth1_red.mtrl"), 0);
 			TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Mage_red.mtrl"), 1);
 
-			if(TurretBreak1->Animator3D()->GetCurAnim()->GetName() != L"turret_break1\\turret_break1")
+			if(TurretBreak1->Animator3D()->GetCurAnim()->IsPause())
 				TurretBreak1->Animator3D()->PlayOnce(L"turret_break1\\turret_break1", false);
 			else
 			{
@@ -168,7 +168,7 @@ void CTurretScript::ChangeAnim()
 			TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage1_red.mtrl"), 0);
 			TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage2_red.mtrl"), 1);
 
-			if (TurretBreak2->Animator3D()->GetCurAnim()->GetName() != L"turret_break2\\turret_break2")
+			if (TurretBreak2->Animator3D()->GetCurAnim()->IsPause())
 				TurretBreak2->Animator3D()->PlayOnce(L"turret_break2\\turret_break2", false);
 			else
 			{
@@ -181,9 +181,6 @@ void CTurretScript::ChangeAnim()
 
 void CTurretScript::Attack()
 {
-	// 공격 쿨타임 초기화
-	m_fAttackCoolTime = 0;
-
 	// 공격 타겟이 없거나, 유효하지 않거나(죽었거나, 사거리에 더이상 존재하지 않는다면), 아군 챔피언을 공격한 적군이 있다면
 	if (!m_pAttackTarget || !IsValidTarget(m_pAttackTarget) || IsChampionAttackedAllyInTurretRange())
 	{
@@ -198,6 +195,9 @@ void CTurretScript::Attack()
 		BasicAttack->SetTargetObj(m_pAttackTarget);
 		
 		BasicAttack->Use();
+
+		// 공격 쿨타임 초기화
+		m_fAttackCoolTime = 0;
 	}
 }
 
