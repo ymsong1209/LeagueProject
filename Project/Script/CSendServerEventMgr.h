@@ -58,7 +58,7 @@ public:
     // Sound : »ç¿îµå
     // Mtrl  : ÀçÁú ¹Ù²ãÁà
     void SendHitPacket(UINT64 _skillObjId, UINT64 _hitObjId, UINT64 _useObjId, int _skillLevel, SkillType _skillType);
-    void SendAnimPacket(UINT64 _targetId, wstring _animName, bool _repeat, bool _bRepeatBlend,  bool _bUseBlend, float _blentTime);
+    void SendAnimPacket(UINT64 _targetId, wstring _animName, bool _repeat, bool _bRepeatBlend,  bool _bUseBlend, float _blentTime, float _animSpeed = 1.f);
     void SendUseSkillPacket(UINT64 _ownerId, UINT64 _targetObjId, int _skillLevel
                             , SkillType _skillType, Vec3 _offsetPos, int _projectileCount
                             , bool _useMousePos, Vec3 _mousePos, bool _useMouseDir, Vec3 _mouseDir);
