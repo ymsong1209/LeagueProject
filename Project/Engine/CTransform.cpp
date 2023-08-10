@@ -193,7 +193,7 @@ void CTransform::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& 
 	_objValue.AddMember("RayRange", m_fRayRange, allocator);
 	_objValue.AddMember("UseMouseOutLine", m_bUseMouseOutLine, allocator);
 	_objValue.AddMember("Outlinethickness", m_fOutlinethickness, allocator);
-	_objValue.AddMember("NoParentaffected", m_bNoParentaffected, allocator);
+	
 
 }
 
@@ -211,6 +211,5 @@ void CTransform::LoadFromLevelJsonFile(const Value& _componentValue)
 	m_fRayRange = _componentValue["RayRange"].GetFloat();
 	m_bUseMouseOutLine = _componentValue["UseMouseOutLine"].GetBool();
 	m_fOutlinethickness = _componentValue["Outlinethickness"].GetFloat();
-	m_bNoParentaffected = _componentValue["NoParentaffected"].GetBool();
 
 }

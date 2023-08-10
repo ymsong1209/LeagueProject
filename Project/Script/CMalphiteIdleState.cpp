@@ -34,11 +34,12 @@ void CMalphiteIdleState::tick()
 {
 	if (GetOwner()->Animator3D()->GetCurAnim()->IsFinish()) {
 		++m_iIdleAnimNum;
+		if (m_iIdleAnimNum > 4) m_iIdleAnimNum = 1;
 		wstring baseName = L"Malphite\\Idle";
 		baseName += std::to_wstring(m_iIdleAnimNum);
 		GetOwner()->Animator3D()->GetCurAnim()->Reset();
 		GetOwner()->Animator3D()->PlayOnce(baseName);
-
+	
 		UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 		CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, baseName, false, false, false, 0.f);
 	}

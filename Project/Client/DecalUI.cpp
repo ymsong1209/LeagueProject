@@ -25,6 +25,7 @@ int DecalUI::render_update()
 		return FALSE;
 	ShowDebug();
 	SetBSType();
+	SelectAlpha();
 	SetLayerCheck();
 	ShowAsLight();
 	ChooseTexture();
@@ -231,6 +232,16 @@ void DecalUI::SetBSType()
 				ImGui::SetItemDefaultFocus();
 		}
 		ImGui::EndCombo();
+	}
+}
+
+void DecalUI::SelectAlpha()
+{
+	float alpha = GetTarget()->Decal()->GetAlpha();
+	ImGui::Text("Alpha");
+	ImGui::SameLine();
+	if (ImGui::SliderFloat("##AlphaDecalUI", &alpha, 0.f, 1.f)) {
+		GetTarget()->Decal()->SetAlpha(alpha);
 	}
 }
 

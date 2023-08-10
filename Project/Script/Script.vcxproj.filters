@@ -616,7 +616,9 @@
     <ClCompile Include="CMinionHPBarPosScript.cpp" />
     <ClCompile Include="CMinionHPRatioScript.cpp" />
     <ClCompile Include="CTurretHPUIScript.cpp" />
-    <ClCompile Include="CSkillLevelUIScript.cpp" />
+    <ClCompile Include="CMalphiteEDecalScript.cpp">
+      <Filter>Scripts\SkillProjectile\Malphite</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -777,7 +779,9 @@
     <ClInclude Include="CMinionHPBarPosScript.h" />
     <ClInclude Include="CMinionHPRatioScript.h" />
     <ClInclude Include="CTurretHPUIScript.h" />
-    <ClInclude Include="CSkillLevelUIScript.h" />
+    <ClInclude Include="CMalphiteEDecalScript.h">
+      <Filter>Scripts\SkillProjectile\Malphite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">

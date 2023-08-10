@@ -287,6 +287,7 @@
     <ClInclude Include="CMalphiteAttackState.h" />
     <ClInclude Include="CMalphiteDeathState.h" />
     <ClInclude Include="CMalphiteE.h" />
+    <ClInclude Include="CMalphiteEDecalScript.h" />
     <ClInclude Include="CMalphiteEScript.h" />
     <ClInclude Include="CMalphiteEState.h" />
     <ClInclude Include="CMalphiteIdleState.h" />
@@ -529,6 +530,7 @@
     <ClCompile Include="CMalphiteAttackState.cpp" />
     <ClCompile Include="CMalphiteDeathState.cpp" />
     <ClCompile Include="CMalphiteE.cpp" />
+    <ClCompile Include="CMalphiteEDecalScript.cpp" />
     <ClCompile Include="CMalphiteEScript.cpp" />
     <ClCompile Include="CMalphiteEState.cpp" />
     <ClCompile Include="CMalphiteIdleState.cpp" />

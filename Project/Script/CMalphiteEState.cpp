@@ -21,9 +21,9 @@ void CMalphiteEState::Enter()
 {
 	CChampionSkillState::Enter();
 
-	CSkill* MalphiteE = GetOwner()->GetScript<CChampionScript>()->GetSkill(2);
+	CSkill* MalphiteE = GetOwner()->GetScript<CChampionScript>()->GetSkill(3);
 	MalphiteE->SetUserObj(m_UserObj);
-	MalphiteE->SetTargetObj(m_TargetObj);
+	MalphiteE->SetTargetObj(nullptr);
 	MalphiteE->SetOwnerScript(GetOwner()->GetScript<CChampionScript>());
 
 	MalphiteE->Use();
