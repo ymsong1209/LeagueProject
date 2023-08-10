@@ -300,7 +300,7 @@ struct MtrlInfo
 	UINT64 targetId;
 	int iMtrlIndex;
 	TEX_PARAM  tex_param;
-	wstring wMtrlName;   //예시 L"texture\\FBXTexture\\alphaTex.png"
+	wstring wTexName;   //예시 L"texture\\FBXTexture\\alphaTex.png"
 };
 
 enum JinxWeaponMode

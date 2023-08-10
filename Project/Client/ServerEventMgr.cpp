@@ -316,7 +316,7 @@ void ServerEventMgr::clienttick()
 				
 				if (pObj == nullptr || pObj->IsDead()) continue;
 
-				pObj->MeshRender()->GetMaterial(mtrlInfo->iMtrlIndex)->SetTexParam(mtrlInfo->tex_param, CResMgr::GetInst()->FindRes<CTexture>(mtrlInfo->wMtrlName));
+				pObj->MeshRender()->GetMaterial(mtrlInfo->iMtrlIndex)->SetTexParam(mtrlInfo->tex_param, CResMgr::GetInst()->FindRes<CTexture>(mtrlInfo->wTexName));
 
 				// 사용이 끝난 후에는 메모리를 해제
 				delete mtrlInfo;

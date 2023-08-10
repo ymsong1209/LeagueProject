@@ -482,13 +482,13 @@ void GameObjMgr::SendObjectMtrl(MtrlInfo* _mtrlInfo, ClientServiceRef _service)
 		mtrlInfoPacket.iMtrlIndex = _mtrlInfo->iMtrlIndex;
 		mtrlInfoPacket.tex_param = _mtrlInfo->tex_param;
 
-		wstring _mtrlName = _mtrlInfo->wMtrlName;
+		wstring _texName = _mtrlInfo->wTexName;
 
 		PKT_C_OBJECT_MTRL_WRITE  pktWriter(mtrlInfoPacket);
-		PKT_C_OBJECT_MTRL_WRITE::MtrlNameList mtrlNamePacket = pktWriter.ReserveMtrlNameList(_mtrlName.size());
-		for (int i = 0; i < _mtrlName.size(); i++)
+		PKT_C_OBJECT_MTRL_WRITE::MtrlNameList mtrlNamePacket = pktWriter.ReserveMtrlNameList(_texName.size());
+		for (int i = 0; i < _texName.size(); i++)
 		{
-			mtrlNamePacket[i] = { _mtrlName[i] };
+			mtrlNamePacket[i] = { _texName[i] };
 		}
 	}
 

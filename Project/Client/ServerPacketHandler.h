@@ -925,8 +925,8 @@ struct PKT_S_TIME {
 
 #pragma pack(1)
 struct PKT_C_OBJECT_MTRL {
-	uint16      packetSize;
-	uint16      packetId;
+	uint16		packetSize;
+	uint16		packetId;
 	MtrlInfoPacket mtrlInfo;
 
 	bool Validate() {
@@ -946,20 +946,20 @@ struct PKT_C_OBJECT_MTRL {
 		}
 	}
 
-	using MtrlNameList = PacketList<MtrlInfoPacket::mtrlNameItem>;
+	using TexNameList = PacketList<MtrlInfoPacket::texNameItem>;
 
-	MtrlNameList GetMtrlNameList() {
+	TexNameList GetTexNameList() {
 		BYTE* data = reinterpret_cast<BYTE*>(this);
-		data += mtrlInfo.mtrlNameOffset;
-		return MtrlNameList(reinterpret_cast<MtrlInfoPacket::mtrlNameItem*>(data), mtrlInfo.mtrlNameCount);
+		data += mtrlInfo.texNameOffset;
+		return TexNameList(reinterpret_cast<MtrlInfoPacket::texNameItem*>(data), mtrlInfo.texNameCount);
 	}
 };
 #pragma pack()
 
 #pragma pack(1)
 struct PKT_S_OBJECT_MTRL {
-	uint16      packetSize;
-	uint16      packetId;
+	uint16		packetSize;
+	uint16		packetId;
 	MtrlInfoPacket mtrlInfo;
 
 	bool Validate() {
@@ -979,15 +979,16 @@ struct PKT_S_OBJECT_MTRL {
 		}
 	}
 
-	using MtrlNameList = PacketList<MtrlInfoPacket::mtrlNameItem>;
+	using TexNameList = PacketList<MtrlInfoPacket::texNameItem>;
 
-	MtrlNameList GetMtrlNameList() {
+	TexNameList GetMtrlNameList() {
 		BYTE* data = reinterpret_cast<BYTE*>(this);
-		data += mtrlInfo.mtrlNameOffset;
-		return MtrlNameList(reinterpret_cast<MtrlInfoPacket::mtrlNameItem*>(data), mtrlInfo.mtrlNameCount);
+		data += mtrlInfo.texNameOffset;
+		return TexNameList(reinterpret_cast<MtrlInfoPacket::texNameItem*>(data), mtrlInfo.texNameCount);
 	}
 };
 #pragma pack()
+
 //=====================================
 // 이 밑은 패킷 Write 클래스 모음입니다. |
 //=====================================
@@ -1429,29 +1430,30 @@ private:
 };
 #pragma pack()
 
-#pragma pack(1)
-class PKT_C_OBJECT_MTRL_WRITE {
-public:
-	using MtrlNameList = PacketList<MtrlInfoPacket::mtrlNameItem>;
-	using MtrlNameItem = MtrlInfoPacket::mtrlNameItem;
 
-	PKT_C_OBJECT_MTRL_WRITE(MtrlInfoPacket  _mtrlInfo)
+#pragma pack(1)
+class PKT_S_OBJECT_MTRL_WRITE {
+public:
+	using TexNameList = PacketList<MtrlInfoPacket::texNameItem>;
+	using TexNameItem = MtrlInfoPacket::texNameItem;
+
+	PKT_S_OBJECT_MTRL_WRITE(MtrlInfoPacket  _mtrlInfo)
 	{
 		_sendBuffer = GSendBufferManager->Open(4096);
 		// 초기화
 		_bw = BufferWriter(_sendBuffer->Buffer(), _sendBuffer->AllocSize());
 
-		_pkt = _bw.Reserve<PKT_C_OBJECT_MTRL>();
+		_pkt = _bw.Reserve<PKT_S_OBJECT_MTRL>();
 		_pkt->packetSize = 0; // To Fill
-		_pkt->packetId = C_OBJECT_MTRL;
+		_pkt->packetId = S_OBJECT_MTRL;
 		_pkt->mtrlInfo = _mtrlInfo;
 	}
 
-	MtrlNameList ReserveMtrlNameList(uint16 _mtrlNameCount) {
-		MtrlNameItem* firstBuffsListItem = _bw.Reserve<MtrlNameItem>(_mtrlNameCount);
-		_pkt->mtrlInfo.mtrlNameOffset = (uint64)firstBuffsListItem - (uint64)_pkt;
-		_pkt->mtrlInfo.mtrlNameCount = _mtrlNameCount;
-		return MtrlNameList(firstBuffsListItem, _mtrlNameCount);
+	TexNameList ReserveTexNameList(uint16 _texNameCount) {
+		TexNameItem* firstBuffsListItem = _bw.Reserve<TexNameItem>(_texNameCount);
+		_pkt->mtrlInfo.texNameOffset = (uint64)firstBuffsListItem - (uint64)_pkt;
+		_pkt->mtrlInfo.texNameCount = _texNameCount;
+		return TexNameList(firstBuffsListItem, _texNameCount);
 	}
 
 	SendBufferRef CloseAndReturn()
@@ -1464,8 +1466,9 @@ public:
 	}
 
 private:
-	PKT_C_OBJECT_MTRL* _pkt = nullptr;
+	PKT_S_OBJECT_MTRL* _pkt = nullptr;
 	SendBufferRef _sendBuffer;
 	BufferWriter _bw;
 };
 #pragma pack()
+

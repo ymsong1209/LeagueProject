@@ -105,13 +105,13 @@ void CSendServerEventMgr::SendSoundPacket()
 {
 }
 
-void CSendServerEventMgr::SendMtrlPakcet(UINT64 _objId, int _mtrlIndex, TEX_PARAM _texParam, wstring _MtrlName)
+void CSendServerEventMgr::SendMtrlPakcet(UINT64 _objId, int _mtrlIndex, TEX_PARAM _texParam, wstring _TexName)
 {
 	MtrlInfo* mtrlInfo = new MtrlInfo();
 	mtrlInfo->targetId = _objId;
 	mtrlInfo->iMtrlIndex = _mtrlIndex;
 	mtrlInfo->tex_param = _texParam;
-	mtrlInfo->wMtrlName = _MtrlName;
+	mtrlInfo->wTexName = _TexName;
 
 	tServerEvent serverEvn = {};
 	serverEvn.Type = SERVER_EVENT_TYPE::SEND_KDA_CS_PACKET;

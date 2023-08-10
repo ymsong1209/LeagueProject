@@ -790,20 +790,20 @@ void ServerPacketHandler::Handle_S_OBJECT_MTRL(PacketSessionRef& session, BYTE* 
 	}
 
 	MtrlInfoPacket	 _mtrlInfoPacket = pkt->mtrlInfo;
-	PKT_S_OBJECT_MTRL::MtrlNameList mtrlNameBuffs = pkt->GetMtrlNameList();
+	PKT_S_OBJECT_MTRL::TexNameList mtrlNameBuffs = pkt->GetMtrlNameList();
 
 	// mtrl 이름
-	wstring _mtrlName = L"";
+	wstring _TexName = L"";
 	for (auto& mtrlNameBuff : mtrlNameBuffs)
 	{
-		_mtrlName.push_back(mtrlNameBuff.mtrlName);
+		_TexName.push_back(mtrlNameBuff.texName);
 	}
 	
 	MtrlInfo* mtrlInfo = new MtrlInfo();
 	mtrlInfo->targetId  = _mtrlInfoPacket.targetId;
 	mtrlInfo->iMtrlIndex = _mtrlInfoPacket.iMtrlIndex;
 	mtrlInfo->tex_param = _mtrlInfoPacket.tex_param;
-	mtrlInfo->wMtrlName = _mtrlName;
+	mtrlInfo->wTexName = _TexName;
 
 	tServerEvent evn = {};
 	evn.Type = SERVER_EVENT_TYPE::MTRL_PACKET;
