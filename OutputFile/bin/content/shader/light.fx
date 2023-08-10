@@ -91,7 +91,7 @@ PS_OUT PS_DirLightShader(VS_OUT _in)
     }
 
     //FogofWar
-    float2 FogUV = float2(vWorldPos.x / 3000.f, 1.f - vWorldPos.z / 3000.f);
+    float2 FogUV = float2(vWorldPos.x / 2200.f, 1.f - vWorldPos.z / 2200.f);
     float fog = g_tex_2.Sample(g_sam_0, FogUV).r;
     if (fog)
     {
