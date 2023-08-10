@@ -10,6 +10,8 @@ public:
     CLONE(CJinxEScript);
 
 private:
+    float m_fAccTime;
+    float m_fMaxTime;
 
 public:
     virtual void begin() override;

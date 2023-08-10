@@ -2418,7 +2418,7 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 						, OwnerPos + Vec3(_skillInfo.offsetPos.x, _skillInfo.offsetPos.y, _skillInfo.offsetPos.z)
 						, L"SkillProjectile");
 				}
-				_objects.insert(std::make_pair(_projectileId, vecProj[i]));
+				_objects.insert(std::make_pair(_projectileId + i, vecProj[i]));
 			}
 		}
 		else
@@ -2445,7 +2445,7 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 						, OwnerPos + Vec3(_skillInfo.offsetPos.x, _skillInfo.offsetPos.y, _skillInfo.offsetPos.z)
 						, L"SkillProjectile");
 				}
-				_objects.insert(std::make_pair(_projectileId, vecProj[i]));
+				_objects.insert(std::make_pair(_projectileId+i, vecProj[i]));
 			}
 		}
 	}
