@@ -190,7 +190,8 @@ void ServerEventMgr::clienttick()
 			{
 				CGameObject* NewObject = (CGameObject*)m_vecEvent[i].wParam;
 
-				if (NewObject == nullptr) break;
+				if (NewObject == nullptr || NewObject->IsDead()) continue;
+
 				AnimInfo* animInfo = (AnimInfo*)(m_vecEvent[i].lParam);
 
 				if (animInfo->bRepeat)
@@ -240,7 +241,7 @@ void ServerEventMgr::clienttick()
 					{
 						// 스킬 쏜애
 						CGameObject* skillOwnerObj = GameObjMgr::GetInst()->FindAllObject(skillInfo->OwnerId);
-
+						
 						// 스킬 맞은 애(타인)
 						CGameObject* skillTargetObj = GameObjMgr::GetInst()->FindAllObject(skillInfo->TargetId);
 
@@ -267,7 +268,7 @@ void ServerEventMgr::clienttick()
 				float   lifespan = (float)m_vecEvent[i].lParam;
 
 				CGameObject* despawnObj = GameObjMgr::GetInst()->DeleteObjectInMap(despawnId);
-				if(despawnObj != nullptr)
+				if(despawnObj != nullptr || despawnObj->IsDead())
 					despawnObj->SetLifeSpan(lifespan);
 			}
 			break;
@@ -313,7 +314,7 @@ void ServerEventMgr::clienttick()
 				MtrlInfo*	mtrlInfo = (MtrlInfo*)m_vecEvent[i].wParam;
 				CGameObject* pObj = GameObjMgr::GetInst()->FindAllObject(mtrlInfo->targetId);
 				
-				if (pObj == nullptr) continue;
+				if (pObj == nullptr || pObj->IsDead()) continue;
 
 				pObj->MeshRender()->GetMaterial(mtrlInfo->iMtrlIndex)->SetTexParam(mtrlInfo->tex_param, CResMgr::GetInst()->FindRes<CTexture>(mtrlInfo->wMtrlName));
 
