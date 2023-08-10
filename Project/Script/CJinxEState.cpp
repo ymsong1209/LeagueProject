@@ -20,15 +20,14 @@ void CJinxEState::tick()
 
 void CJinxEState::Enter()
 {
-
 	CChampionSkillState::Enter();
 
-	CSkill* JinxW = GetOwner()->GetScript<CChampionScript>()->GetSkill(3);
-	JinxW->SetUserObj(m_UserObj);
-	JinxW->SetTargetObj(m_TargetObj);
-	JinxW->SetOwnerScript(GetOwner()->GetScript<CChampionScript>());
+	CSkill* JinxE = GetOwner()->GetScript<CChampionScript>()->GetSkill(3);
+	JinxE->SetUserObj(m_UserObj);
+	JinxE->SetTargetObj(m_TargetObj);
+	JinxE->SetOwnerScript(GetOwner()->GetScript<CChampionScript>());
 
-	JinxW->Use();
+	JinxE->Use();
 
 	// 애니메이션
 	wstring animName = L"";
@@ -41,7 +40,6 @@ void CJinxEState::Enter()
 
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, true, true, 0.1f);
-
 }
 
 void CJinxEState::Exit()

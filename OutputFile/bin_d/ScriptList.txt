@@ -15,6 +15,7 @@ CHpMpRatioUIScript
 CInGameCameraScript
 CInhibitorScript
 CInventoryUIScript
+CJinxEScript
 CJinxScript
 CJinxWScript
 CJungleMINIHPScript
@@ -32,7 +33,6 @@ CMinionHPBarPosScript
 CMinionHPRatioScript
 CMinionScript
 CMobScript
-CMonsterHPBarUIScript
 CMouseCursorUIScript
 CMoveCursorUIScript
 CMurkWolfMiniScript

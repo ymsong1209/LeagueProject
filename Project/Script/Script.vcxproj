@@ -238,6 +238,7 @@
     <ClInclude Include="CInventoryUIScript.h" />
     <ClInclude Include="CJinxAttackState.h" />
     <ClInclude Include="CJinxE.h" />
+    <ClInclude Include="CJinxEScript.h" />
     <ClInclude Include="CJinxEState.h" />
     <ClInclude Include="CJinxR.h" />
     <ClInclude Include="CJinxRState.h" />
@@ -490,6 +491,7 @@
     <ClCompile Include="CJinxAttackState.cpp" />
     <ClCompile Include="CJinxDeathState.cpp" />
     <ClCompile Include="CJinxE.cpp" />
+    <ClCompile Include="CJinxEScript.cpp" />
     <ClCompile Include="CJinxEState.cpp" />
     <ClCompile Include="CJinxIdleState.cpp" />
     <ClCompile Include="CJinxQ.cpp" />

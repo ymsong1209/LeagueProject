@@ -31,11 +31,11 @@ void CJinxWState::Enter()
 
 	
 	thread t([=]() {
-
 		Sleep(500);
 		JinxW->Use();
 		});
 	t.detach();
+
 
 	// 애니메이션
 	wstring animName = L"";
