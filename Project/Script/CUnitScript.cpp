@@ -188,19 +188,25 @@ void CUnitScript::CheckCC()
 
 	if ((m_eCurCC & CC::AIRBORNE) != 0) // 에어본 상태
 	{
-		/*if (m_bCodeActive == false) {
-			y를 100만큼 올려라
-				근데 2초안ㅇ에 떨어져야함.
-				m_bcodeactive = true;
+		if (m_bAirBorneActive == false) {
+			Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
+			GetOwner()->Transform()->SetRelativePos(Vec3(CurPos.x, CurPos.y + 100.f, CurPos.z));
+				
+			m_bAirBorneActive = true;
 		}
-		y -= 50 * DT;*/
+		else {
+			Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
+			GetOwner()->Transform()->SetRelativePos(Vec3(CurPos.x, CurPos.y - 50.f * DT, CurPos.z));
+		}
+		
 		m_eRestraint = RESTRAINT::BLOCK; // 모든 행동 제약
 	}
 	else {
-		/*if (m_bcodeactive) {
-			y = 0;
-		}
-		m_bcodeactive = false;*/
+		//Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
+		//if()
+		//GetOwner()->Transform()->SetRelativePos(Vec3(CurPos.x, 0.f, CurPos.z));
+		m_bAirBorneActive = false;
+
 	}
 }
 

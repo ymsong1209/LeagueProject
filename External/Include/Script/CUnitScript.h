@@ -60,6 +60,8 @@ protected:
     Vec3                    m_vMovePos;
     float                   m_fT;                // 보간 파라미터
 
+    bool                    m_bAirBorneActive;
+
 public:
     void    SetRcvMove(bool _bool) { m_bRcvMove = _bool; }
     void    SetMovePos(Vec3 _vec3) { m_vMovePos = _vec3; }
