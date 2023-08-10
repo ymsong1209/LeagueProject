@@ -4,7 +4,7 @@
 #include "CJinxScript.h"
 
 CJinxQ::CJinxQ()
-	: m_iWeaponMode(0)
+	: m_eWeaponMode(JinxWeaponMode::MINIGUN)
 	, m_fSkillDamage(0)
 	, m_fSkillAttackSpeed(0)
 	, m_fSkillAttackRange(0)
@@ -26,7 +26,7 @@ void CJinxQ::tick()
 	// 레벨에 따른 공격력 / 공격속도 증감
 
 	// 미니건 모드일 때
-	if (m_iWeaponMode == 0)
+	if (m_eWeaponMode == JinxWeaponMode::MINIGUN)
 	{
 		// 데미지
 		m_fSkillDamage = m_iLevel + 5;
@@ -50,16 +50,16 @@ bool CJinxQ::Use()
 		return false;
 
 	// 사용 시 징크스가 무기를 바꿈
-	m_iWeaponMode++;
-
-	if (m_iWeaponMode > 1)
-		m_iWeaponMode = 0;
+	if (m_eWeaponMode == JinxWeaponMode::MINIGUN)
+		m_eWeaponMode = JinxWeaponMode::ROCKET_LAUNCHER;
+	else
+		m_eWeaponMode = JinxWeaponMode::MINIGUN;
 
 	// 징크스 스크립트의 무기 모드 변경
 	CJinxScript* Jinx = dynamic_cast<CJinxScript*>(m_OwnerScript);
 	if (Jinx != nullptr)
 	{
-		Jinx->SetWeaponMode((JinxWeaponMode)m_iWeaponMode);
+		Jinx->SetWeaponMode(m_eWeaponMode);
 	}
 
 	// 쿨타임 초기화

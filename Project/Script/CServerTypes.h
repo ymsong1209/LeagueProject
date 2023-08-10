@@ -14,6 +14,7 @@ enum class SERVER_EVENT_TYPE
 	KDA_CS_PACKET,		// wParam : KDACSInfo
 	SOUND_PACKET,
 	TIME_PACKET,
+	MTRL_PACKET,		 // wParam : MtrlInfo
 
 	// Script Send Packet
 	SEND_ANIM_PACKET,		  // wParam : X,  lParam : AnimInfo
@@ -22,6 +23,7 @@ enum class SERVER_EVENT_TYPE
 	SEND_DESPAWN_PACKET,      // wParam : objId,  lParam : lifeSpanTime
 	SEND_KDA_CS_PACKET,		  // wParam : KDACSInfo
 	SEND_SOUND_PACKET,
+	SEND_MTRL_PACKET,		  // wParam : MtrlInfo
 };
 
 // Event
@@ -260,3 +262,17 @@ enum class SUMMONERS_SPELL
 
 extern const wchar_t* SUMMONERS_SPELL_WSTR[(UINT)SUMMONERS_SPELL::END];
 
+
+struct MtrlInfo
+{
+	UINT64 targetId;
+	int iMtrlIndex;
+	TEX_PARAM  tex_param;
+	wstring wMtrlName;   //예시 L"texture\\FBXTexture\\alphaTex.png"
+};
+
+enum JinxWeaponMode
+{
+	MINIGUN = 0,           // 공격속도++
+	ROCKET_LAUNCHER = 1,    // 사거리++ 공격속도-- 범위피해
+};

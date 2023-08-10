@@ -5,6 +5,9 @@
 
 #include "CSendServerEventMgr.h"
 #include "CUnitScript.h"
+
+#include "CJinxScript.h"
+
 CJinxIdleState::CJinxIdleState()
 {
 	SetName(L"Idle");
@@ -21,8 +24,14 @@ void CJinxIdleState::tick()
 
 void CJinxIdleState::Enter()
 {
-	wstring animName = L"Jinx\\Idle1_Base";
-	GetOwner()->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true, true, 0.15f);
+	// 애니메이션
+	wstring animName = L"";
+	if (GetOwner()->GetScript<CJinxScript>()->GetWeaponMode() == JinxWeaponMode::MINIGUN)
+		animName = L"Jinx\\Idle1_Base";
+	else if (GetOwner()->GetScript<CJinxScript>()->GetWeaponMode() == JinxWeaponMode::ROCKET_LAUNCHER)
+		animName = L"Jinx\\jinx_rlauncher_idle1";
+
+	GetOwner()->Animator3D()->PlayRepeat(animName, true, true, 0.15f);
 
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, true, true, true, 0.15f);
@@ -32,7 +41,6 @@ void CJinxIdleState::Enter()
 
 void CJinxIdleState::Exit()
 {
-	GetOwner()->Animator3D()->FindAnim(L"Jinx\\Idle1_Base")->Reset();
 	CChampionIdleState::Exit();
 }
 

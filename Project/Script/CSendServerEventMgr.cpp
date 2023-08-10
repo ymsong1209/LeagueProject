@@ -104,3 +104,18 @@ void CSendServerEventMgr::SendKDACSPacket(UINT64 _killerId, UINT64 _victimId, Un
 void CSendServerEventMgr::SendSoundPacket()
 {
 }
+
+void CSendServerEventMgr::SendMtrlPakcet(UINT64 _objId, int _mtrlIndex, TEX_PARAM _texParam, wstring _MtrlName)
+{
+	MtrlInfo* mtrlInfo = new MtrlInfo();
+	mtrlInfo->targetId = _objId;
+	mtrlInfo->iMtrlIndex = _mtrlIndex;
+	mtrlInfo->tex_param = _texParam;
+	mtrlInfo->wMtrlName = _MtrlName;
+
+	tServerEvent serverEvn = {};
+	serverEvn.Type = SERVER_EVENT_TYPE::SEND_KDA_CS_PACKET;
+	serverEvn.wParam = (DWORD_PTR)mtrlInfo;
+	//serverEvn.lParam;
+	CSendServerEventMgr::GetInst()->AddServerSendEvent(serverEvn);
+}

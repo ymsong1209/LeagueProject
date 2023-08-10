@@ -6,18 +6,23 @@
 #include "CJinxDeathState.h"
 #include "CJinxRespawnState.h"
 #include "CJinxAttackState.h"
-#include "CJinxWState.h"
-#include "CJinxQState.h"
 
 #include "CBasicAttack.h"
+#include "CJinxQState.h"
+#include "CJinxWState.h"
+#include "CJinxEState.h"
+#include "CJinxRState.h"
+
 #include "CJinxQ.h"
 #include "CJinxw.h"
-
+#include "CJinxE.h"
+#include "CJinxR.h"
 
 CJinxScript::CJinxScript()
 	:CChampionScript((UINT)JINXSCRIPT)
 {
 	m_fMaxHP = 50;
+	m_fMaxMP = 300;
 	//m_fAttackPower = 5.f;
 	m_fAttackPower = 10.f;
 	m_fMoveSpeed = 100.f;
@@ -37,6 +42,8 @@ void CJinxScript::begin()
 	GetOwner()->Fsm()->AddState(L"Attack", new CJinxAttackState);
 	GetOwner()->Fsm()->AddState(L"Q", new CJinxQState);
 	GetOwner()->Fsm()->AddState(L"W", new CJinxWState);
+	GetOwner()->Fsm()->AddState(L"E", new CJinxEState);
+	GetOwner()->Fsm()->AddState(L"R", new CJinxRState);
 
 	// Skill에 Jinx Skill 추가
 	m_Skill[0] = new CBasicAttack;
@@ -45,19 +52,19 @@ void CJinxScript::begin()
 	m_Skill[1]->SetOwnerScript(this);
 	m_Skill[2] = new CJinxW;
 	m_Skill[2]->SetOwnerScript(this);
+	m_Skill[3] = new CJinxE;
+	m_Skill[3]->SetOwnerScript(this);
+	m_Skill[4] = new CJinxR;
+	m_Skill[4]->SetOwnerScript(this);
 
 	// Spell에 소환사 주문 추가
-
-
-	// 진영
-	// SetFaction(Faction::BLUE);
 
 	CChampionScript::begin();
 }
 
 void CJinxScript::tick()
 {
-	CChampionScript::tick();
+	CChampionScript::tick();   
 
 	// 징크스의 공격력 / 사거리 / 공격속도는 Q스킬의 추가 공격력을 포함한다.
 

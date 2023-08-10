@@ -120,6 +120,13 @@ CGameObject* GameObjMgr::FindAllObject(uint64 _targetId)
 	std::mutex m;
 	m.lock();
 
+	if (_targetId == UINT64_MAX)
+	{
+		cout << "Maybe NonTarget Id" << endl;
+		m.unlock();
+		return nullptr;
+	}
+
 	_allObjects.insert(_players.begin(), _players.end());
 	_allObjects.insert(_objects.begin(), _objects.end());
 	_allObjects.insert(_placedObjects.begin(), _placedObjects.end());
@@ -464,9 +471,31 @@ void GameObjMgr::SendKDACS(KDACSInfo* _kdacsInfo, ClientServiceRef _service)
 	}
 }
 
+void GameObjMgr::SendObjectMtrl(MtrlInfo* _mtrlInfo, ClientServiceRef _service)
+{
+	std::mutex m;
+	{
+		std::lock_guard<std::mutex> lock(m);
+
+		MtrlInfoPacket mtrlInfoPacket = {};
+		mtrlInfoPacket.targetId = _mtrlInfo->targetId;
+		mtrlInfoPacket.iMtrlIndex = _mtrlInfo->iMtrlIndex;
+		mtrlInfoPacket.tex_param = _mtrlInfo->tex_param;
+
+		wstring _mtrlName = _mtrlInfo->wMtrlName;
+
+		PKT_C_OBJECT_MTRL_WRITE  pktWriter(mtrlInfoPacket);
+		PKT_C_OBJECT_MTRL_WRITE::MtrlNameList mtrlNamePacket = pktWriter.ReserveMtrlNameList(_mtrlName.size());
+		for (int i = 0; i < _mtrlName.size(); i++)
+		{
+			mtrlNamePacket[i] = { _mtrlName[i] };
+		}
+	}
+
+}
+
 void GameObjMgr::SendObjectAnim(AnimInfo* _animInfo, ClientServiceRef _service)
 {
-	// _id 오브젝트의 애니메이션을 보낸다.
 	std::mutex m;
 	{
 		std::lock_guard<std::mutex> lock(m);

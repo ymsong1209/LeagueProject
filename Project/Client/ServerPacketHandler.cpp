@@ -770,3 +770,48 @@ void ServerPacketHandler::Handle_S_TIME(PacketSessionRef& session, BYTE* buffer,
 	std::cout << "===============================" << endl;
 	m.unlock();
 }
+
+
+void ServerPacketHandler::Handle_S_OBJECT_MTRL(PacketSessionRef& session, BYTE* buffer, int32 len)
+{
+	std::mutex m;
+	m.lock();
+
+	cout << "S_OBJECT_MTRL Packet" << endl;
+	BufferReader br(buffer, len);
+
+	PKT_S_OBJECT_MTRL* pkt = reinterpret_cast<PKT_S_OBJECT_MTRL*>(buffer);
+
+	if (pkt->Validate() == false)
+	{
+		cout << "S_OBJECT_MTRL Validate False" << endl;
+		m.unlock();
+		return;
+	}
+
+	MtrlInfoPacket	 _mtrlInfoPacket = pkt->mtrlInfo;
+	PKT_S_OBJECT_MTRL::MtrlNameList mtrlNameBuffs = pkt->GetMtrlNameList();
+
+	// mtrl 이름
+	wstring _mtrlName = L"";
+	for (auto& mtrlNameBuff : mtrlNameBuffs)
+	{
+		_mtrlName.push_back(mtrlNameBuff.mtrlName);
+	}
+	
+	MtrlInfo* mtrlInfo = new MtrlInfo();
+	mtrlInfo->targetId  = _mtrlInfoPacket.targetId;
+	mtrlInfo->iMtrlIndex = _mtrlInfoPacket.iMtrlIndex;
+	mtrlInfo->tex_param = _mtrlInfoPacket.tex_param;
+	mtrlInfo->wMtrlName = _mtrlName;
+
+	tServerEvent evn = {};
+	evn.Type = SERVER_EVENT_TYPE::MTRL_PACKET;
+	evn.wParam = (DWORD_PTR)mtrlInfo;
+
+	ServerEventMgr::GetInst()->AddEvent(evn);
+
+
+	std::cout << "===============================" << endl;
+	m.unlock();
+}

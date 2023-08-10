@@ -3,6 +3,7 @@
 #include <Engine\CAnimator3D.h>
 #include <Engine\CAnim3D.h>
 #include "CUnitScript.h"
+#include "CJinxScript.h"
 
 CJinxDeathState::CJinxDeathState()
 {
@@ -19,7 +20,13 @@ void CJinxDeathState::tick()
 
 void CJinxDeathState::Enter()
 {
-	wstring animName = L"Jinx\\Death_model.002";
+	// 애니메이션
+	wstring animName = L"";
+	if (GetOwner()->GetScript<CJinxScript>()->GetWeaponMode() == JinxWeaponMode::MINIGUN)
+		animName = L"Jinx\\Death_model.002";
+	else if (GetOwner()->GetScript<CJinxScript>()->GetWeaponMode() == JinxWeaponMode::ROCKET_LAUNCHER)
+		animName = L"Jinx\\jinx_rlauncher_death";
+
 	GetOwner()->Animator3D()->PlayOnce(animName, false);
 
 

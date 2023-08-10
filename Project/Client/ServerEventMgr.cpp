@@ -125,6 +125,14 @@ void ServerEventMgr::sendtick(ClientServiceRef _service)
 			_kdacsInfo = nullptr;
 			break;
 		}
+		case SERVER_EVENT_TYPE::SEND_MTRL_PACKET:
+		{
+			MtrlInfo* _mtrlInfo = (MtrlInfo*)(_vecScriptEvent[i].wParam);
+			GameObjMgr::GetInst()->SendObjectMtrl(_mtrlInfo, _service);
+			delete _mtrlInfo; // 메모리 사용 해제
+			_mtrlInfo = nullptr;
+			break;
+		}
 
 
 		}

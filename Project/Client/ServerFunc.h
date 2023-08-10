@@ -58,6 +58,29 @@ struct SoundInfoPacket
         return true;
     }
 };
+
+struct MtrlInfoPacket
+{
+    UINT64 targetId;
+    int iMtrlIndex;
+    TEX_PARAM  tex_param;
+
+    uint16 mtrlNameOffset;
+    uint16 mtrlNameCount;
+
+    struct mtrlNameItem {//¿¹½Ã L"texture\\FBXTexture\\alphaTex.png"
+        wchar_t mtrlName;;
+    };
+
+    bool Validate(BYTE* packetStart, uint16 packetSize, OUT uint32& size) {
+        if (mtrlNameOffset + mtrlNameCount * sizeof(mtrlNameItem) > packetSize)
+            return false;
+
+        size += mtrlNameCount * sizeof(mtrlNameItem);
+        return true;
+    }
+};
+
 struct ObjectMove
 {
 public:
