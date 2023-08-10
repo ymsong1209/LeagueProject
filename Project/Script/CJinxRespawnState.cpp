@@ -3,6 +3,7 @@
 #include <Engine\CAnimator3D.h>
 #include <Engine\CAnim3D.h>
 #include "CUnitScript.h"
+#include "CJinxScript.h"
 
 CJinxRespawnState::CJinxRespawnState()
 {
@@ -32,7 +33,6 @@ void CJinxRespawnState::Enter()
 
 void CJinxRespawnState::Exit()
 {
-	GetOwner()->Animator3D()->FindAnim(L"Jinx\\Respawn")->Reset();
 	CChampionRespawnState::Exit();
 }
 

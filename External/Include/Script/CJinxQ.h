@@ -8,7 +8,7 @@ public:
     ~CJinxQ();
 
 private:
-    int         m_iWeaponMode;
+    JinxWeaponMode m_eWeaponMode;
 
     float       m_fSkillDamage;
     float       m_fSkillAttackSpeed;

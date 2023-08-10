@@ -8,6 +8,7 @@
 #include "CChampionAttackState.h"
 #include "CGameEvent.h"
 #include "CChampionSkillState.h"
+#include "CUnitScript.h"
 
 CChampionRespawnState::CChampionRespawnState()
 {

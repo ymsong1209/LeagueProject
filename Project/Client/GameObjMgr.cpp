@@ -120,6 +120,13 @@ CGameObject* GameObjMgr::FindAllObject(uint64 _targetId)
 	std::mutex m;
 	m.lock();
 
+	if (_targetId == UINT64_MAX)
+	{
+		cout << "Maybe NonTarget Id" << endl;
+		m.unlock();
+		return nullptr;
+	}
+
 	_allObjects.insert(_players.begin(), _players.end());
 	_allObjects.insert(_objects.begin(), _objects.end());
 	_allObjects.insert(_placedObjects.begin(), _placedObjects.end());

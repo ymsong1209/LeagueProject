@@ -270,3 +270,9 @@ struct MtrlInfo
 	TEX_PARAM  tex_param;
 	wstring wMtrlName;   //예시 L"texture\\FBXTexture\\alphaTex.png"
 };
+
+enum JinxWeaponMode
+{
+	MINIGUN = 0,           // 공격속도++
+	ROCKET_LAUNCHER = 1,    // 사거리++ 공격속도-- 범위피해
+};

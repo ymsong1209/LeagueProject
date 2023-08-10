@@ -2,6 +2,7 @@
 #include "CJinxWState.h"
 #include "CChampionScript.h"
 #include "CSkill.h"
+#include "CJinxScript.h"
 
 CJinxWState::CJinxWState()
 {
@@ -29,7 +30,12 @@ void CJinxWState::Enter()
 	JinxW->Use();
 
 	// 애니메이션
-	wstring animName = L"Jinx\\Spell2";
+	wstring animName = L"";
+	if (GetOwner()->GetScript<CJinxScript>()->GetWeaponMode() == JinxWeaponMode::MINIGUN)
+		animName = L"Jinx\\Spell2";
+	else if (GetOwner()->GetScript<CJinxScript>()->GetWeaponMode() == JinxWeaponMode::ROCKET_LAUNCHER)
+		animName = L"Jinx\\jinx_rlauncher_spell2";
+	
 	GetOwner()->Animator3D()->PlayOnce(animName, true);
 
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
