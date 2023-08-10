@@ -65,27 +65,6 @@ enum class ChampionType
 
 extern const wchar_t* ChampionType_WSTR[(UINT)ChampionType::END];
 
-// 군중 제어기
-enum CC
-{
-	CLEAR = 0,
-	SLOW = 1 << 0,
-	SILENCE = 1 << 1,
-	ROOT = 1 << 2,
-	STUN = 1 << 3,
-	AIRBORNE = 1 << 4,
-};
-
-// 행동 제약
-enum RESTRAINT
-{
-	CAN_MOVE = 1 << 0,
-	CAN_ATTACK = 1 << 1,
-	CAN_USE_SKILL = 1 << 2,
-
-	DEFAULT = CAN_MOVE | CAN_ATTACK | CAN_USE_SKILL,
-	BLOCK = 0,
-};
 
 enum class MinionType
 {
@@ -149,6 +128,59 @@ enum class UnitType
 	END,
 };
 
+// 군중 제어기
+enum CC
+{
+
+	CLEAR = 0,													 // 0
+	SLOW = 1 << 0,												 // 1 
+	SILENCE = 1 << 1,											 // 2 
+	ROOT = 1 << 2,												 // 4 
+	STUN = 1 << 3,												 // 8 
+	AIRBORNE = 1 << 4,											 // 16
+
+	SLOW_SILENCE = SLOW | SILENCE,								 // 3
+	SLOW_ROOT = SLOW | ROOT,									 // 5
+	SILENCE_ROOT = SILENCE | ROOT,								 // 6
+	SLOW_SILENCE_ROOT = SLOW | SILENCE | ROOT, 					 // 7
+	SLOW_STUN = SLOW | STUN,									 // 9
+	SILENCE_STUN = SILENCE | STUN,								 // 10
+	SLOW_SILENCE_STUN = SLOW | SILENCE | STUN,					 // 11
+	ROOT_STUN = ROOT | STUN,									 // 12
+	SLOW_ROOT_STUN = SLOW | ROOT | STUN,						 // 13
+	SILENCE_ROOT_STUN = SILENCE | ROOT | STUN,					 // 14
+	SLOW_SILENCE_ROOT_STUN = SLOW | SILENCE | ROOT | STUN,	     // 15
+	SLOW_AIRBORNE = SLOW | AIRBORNE,							 // 17
+	SILENCE_AIRBORNE = SILENCE | AIRBORNE,						 // 18
+	SLOW_SILENCE_AIRBORNE = SLOW | SILENCE | AIRBORNE,			 // 19
+	ROOT_AIRBORNE = ROOT | AIRBORNE,							 // 20 
+	SLOW_ROOT_AIRBORNE = SLOW | ROOT | AIRBORNE,				 // 21
+	SILENCE_ROOT_AIRBORNE = SILENCE | ROOT | AIRBORNE,			 // 22
+	SLOW_SILENCE_ROOT_AIRBORNE = SLOW | SILENCE | ROOT | AIRBORNE,  // 23
+	STUN_AIRBORNE = STUN | AIRBORNE,							    // 24
+	SLOW_STUN_AIRBORNE = SLOW | STUN | AIRBORNE,					// 25
+	SILENCE_STUN_AIRBORNE = SILENCE | STUN | AIRBORNE,				// 26
+	SLOW_SILENCE_STUN_AIRBORNE = SLOW | SILENCE | STUN | AIRBORNE,  // 27
+	ROOT_STUN_AIRBORNE = ROOT | STUN | AIRBORNE,				    // 28
+	SLOW_ROOT_STUN_AIRBORNE = SLOW | ROOT | STUN | AIRBORNE,	    // 29
+	SILENCE_ROOT_STUN_AIRBORNE = SILENCE | ROOT | STUN | AIRBORNE,  // 30
+
+};
+
+// 행동 제약
+enum RESTRAINT
+{
+	CAN_MOVE = 1 << 0,									// 1
+	CAN_ATTACK = 1 << 1,								// 2
+	CAN_USE_SKILL = 1 << 2,								// 4 
+
+	CAN_MOVE_CAN_ATTACK = CAN_MOVE | CAN_ATTACK,				  // 3
+	CAN_MOVE_CAN_USE_SKILL = CAN_MOVE | CAN_USE_SKILL,			  // 5
+	CAN_ATTACK_CAN_USE_SKILL = CAN_ATTACK | CAN_USE_SKILL,		  // 6
+
+	DEFAULT = CAN_MOVE | CAN_ATTACK | CAN_USE_SKILL,   // 8
+	BLOCK = 0,
+};
 struct AnimInfo
 {
 	wstring animName;		// 변경할 애니메이션 이름
