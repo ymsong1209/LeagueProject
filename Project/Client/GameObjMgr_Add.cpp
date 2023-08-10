@@ -20,6 +20,7 @@
 
 #include <Engine\CPathFindMgr.h>
 #include <Engine\CAnim3D.h>
+#include <Engine\CResMgr.h>
 
 #include <Script\CUnitScript.h>
 #include <Script\CChampionScript.h>
@@ -60,8 +61,7 @@
 #include <Script/CJungleMobHPScript.h>
 #include <Script\CTurretHPUIScript.h>
 
-
-
+static bool MinionSpawn = false;
 // ===============================================
 //   Add
 // ===============================================
@@ -209,6 +209,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 		case UnitType::MELEE_MINION:
 		{
+			if (MinionSpawn == false) break;
 			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MeleeMinion.prefab");
 			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
 			pObj = pPrefab->Instantiate();
@@ -264,6 +265,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 		break;
 		case UnitType::RANGED_MINION:
 		{
+			if (MinionSpawn == false) break;
 			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\RangedMinion.prefab");
 			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
 			pObj = pPrefab->Instantiate();
@@ -319,6 +321,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 		break;
 		case UnitType::SIEGE_MINION:
 		{
+			if (MinionSpawn == false) break;
 			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\SiegeMinion.prefab");
 			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
 			pObj = pPrefab->Instantiate();
@@ -373,6 +376,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 		break;
 		case UnitType::SUPER_MINION:
 		{
+			if (MinionSpawn == false) break;
 			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\SuperMinion.prefab");
 			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
 			pObj = pPrefab->Instantiate();
@@ -2112,8 +2116,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 				pObj->SetName(L"red_turret");
 				
 				// Rubble(잔해, 부모)
-				pObj->MeshRender()->SetMaterial(nullptr, 0);
-				pObj->MeshRender()->SetMaterial(nullptr, 1);
+				Ptr<CTexture> AlphaTex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png");
+				pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
+				pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_1, AlphaTex);
 				//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Rubble_red.mtrl"), 0);
 				//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Break1_red.mtrl"), 1);
 				
@@ -2126,14 +2131,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Rubble_red.mtrl"), 5);
 				
 				// TurretBreak1(붕괴 애니메이션1)
-				TurretBreak1->MeshRender()->SetMaterial(nullptr, 0);
-				TurretBreak1->MeshRender()->SetMaterial(nullptr, 1);
+				TurretBreak1->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
+				TurretBreak1->MeshRender()->GetMaterial(1)->SetTexParam(TEX_1, AlphaTex);
 				//TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Cloth1_red.mtrl"), 0);
 				//TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Mage_red.mtrl"), 1);
 				
 				// TurretBreak2(붕괴 애니메이션2)
-				TurretBreak2->MeshRender()->SetMaterial(nullptr, 0);
-				TurretBreak2->MeshRender()->SetMaterial(nullptr, 1);
+				TurretBreak2->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
+				TurretBreak2->MeshRender()->GetMaterial(1)->SetTexParam(TEX_1, AlphaTex);
 				//TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage1_red.mtrl"), 0);
 				//TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage2_red.mtrl"), 1);
 
@@ -2187,6 +2192,12 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			// 공통
 			CUnitScript* Script = pObj->GetScript<CUnitScript>();
 			Script->SetServerID(_objectId);
+
+			// 자식에게 서버 아이디 부여
+			TurretBase->GetScript<CUnitScript>()->SetServerID(_objectId+1);
+			TurretBreak1->GetScript<CUnitScript>()->SetServerID(_objectId+2);
+			TurretBreak2->GetScript<CUnitScript>()->SetServerID(_objectId+3);
+
 			Script->SetFaction(_objectInfo.faction);
 			Script->SetUnitType(UnitType::TURRET);
 			Script->SetLane(_objectInfo.lane);
