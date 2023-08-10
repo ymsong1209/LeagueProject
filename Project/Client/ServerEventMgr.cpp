@@ -190,7 +190,7 @@ void ServerEventMgr::clienttick()
 			{
 				CGameObject* NewObject = (CGameObject*)m_vecEvent[i].wParam;
 
-				if (NewObject == nullptr || NewObject->IsDead()) continue;
+				if (NewObject == nullptr) continue;
 
 				AnimInfo* animInfo = (AnimInfo*)(m_vecEvent[i].lParam);
 
@@ -268,7 +268,7 @@ void ServerEventMgr::clienttick()
 				float   lifespan = (float)m_vecEvent[i].lParam;
 
 				CGameObject* despawnObj = GameObjMgr::GetInst()->DeleteObjectInMap(despawnId);
-				if(despawnObj != nullptr || despawnObj->IsDead())
+				if(despawnObj != nullptr)
 					despawnObj->SetLifeSpan(lifespan);
 			}
 			break;
