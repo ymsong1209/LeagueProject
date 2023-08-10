@@ -60,6 +60,10 @@ protected:
     Vec3                    m_vMovePos;
     float                   m_fT;                // 보간 파라미터
 
+    bool                    m_bAirBorneActive;
+    Vec3                    m_vAirBorneStartPos;
+    float                   m_fAirBorneVelocity;
+
 public:
     void    SetRcvMove(bool _bool) { m_bRcvMove = _bool; }
     void    SetMovePos(Vec3 _vec3) { m_vMovePos = _vec3; }
@@ -79,7 +83,7 @@ public:
     void CheckCC();
 
     // 오브젝트의 PathFinder 컴포넌트에 남은 경로값이 있을 때, 해당 경로로 이동
-    bool PathFindMove(float _fSpeed, bool _IsRotation = true);
+    bool PathFindMove(float _fSpeed, bool _IsRotation = true); 
 
 public:
     void SetChampType(ChampionType _Type) { m_ChampType = _Type; }

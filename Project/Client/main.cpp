@@ -132,7 +132,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         {
             if (KEY_TAP(KEY::SPACE) && service->GetCurrentSessionCount() > 0)
             {
-                Send_CLogin(service, L"Rehpe");
+                Send_CLogin(service, L"Ymsong");
             }
             else if (KEY_TAP(KEY::N))
             {
@@ -140,7 +140,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             }
             else if (KEY_TAP(KEY::M))
             { 
-                Send_CPickChampion(service,ChampionType::JINX);
+                Send_CPickChampion(service,ChampionType::MALPHITE);
             }
             else if (KEY_TAP(KEY::NUM_4))      
             {

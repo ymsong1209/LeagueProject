@@ -22,15 +22,24 @@ void CMalphiteWState::Enter()
 {
 	CChampionSkillState::Enter();
 
+	CSkill* MalphiteW = GetOwner()->GetScript<CChampionScript>()->GetSkill(2);
+	MalphiteW->SetOwnerScript(GetOwner()->GetScript<CChampionScript>());
+	MalphiteW->Use();
+
 	wstring animName = L"Malphite\\Spell1";
-	GetOwner()->Animator3D()->PlayOnce(animName, true);
+	GetOwner()->Animator3D()->PlayOnce(animName, true, 0.1f);
 
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
-	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, true, true, 0.1f);
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, false, true, 0.1f);
 
-	CMalphiteScript* chamscript = GetOwner()->GetScript<CMalphiteScript>();
-	chamscript->SetWActive(true);
+	Ptr<CTexture> glowtex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\malphite_glow.dds");
+	if (glowtex == nullptr) assert(nullptr);
+	GetOwner()->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, glowtex);
+	CSendServerEventMgr::GetInst()->SendMtrlPacket(targetId, 0, TEX_0, L"texture\\FBXTexture\\malphite_glow.dds");
 
+	CMalphiteScript* malphscript = GetOwner()->GetScript<CMalphiteScript>();
+	malphscript->SetAttackPower(20.f);
+	
 
 	//재질을 바꿉니다.
 

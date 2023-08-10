@@ -15,6 +15,7 @@ CHpMpRatioUIScript
 CInGameCameraScript
 CInhibitorScript
 CInventoryUIScript
+CJinxEScript
 CJinxScript
 CJinxWScript
 CJungleMINIHPScript
@@ -24,7 +25,10 @@ CKrugMiniScript
 CKrugScript
 CMalphiteEDecalScript
 CMalphiteEScript
+CMalphiteQDecalScript
+CMalphiteQModelScript
 CMalphiteQScript
+CMalphiteRDecalScript
 CMalphiteRScript
 CMalphiteScript
 CMinimapUIScript

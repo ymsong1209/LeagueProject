@@ -16,8 +16,8 @@ CMalphiteR::CMalphiteR()
 	CGameObject* Projectile = new CGameObject;
 	Projectile->AddComponent(new CTransform);
 	Projectile->AddComponent(new CCollider2D);
-	Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
-	Projectile->Collider2D()->SetOffsetScale(Vec2(5.f, 20.f));
+	Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+	Projectile->Collider2D()->SetOffsetScale(Vec2(80.f, 80.f));
 	Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
 	Projectile->Collider2D()->SetDrawCollision(true);
 	Projectile->SetName(L"UnstoppableForce");
@@ -52,8 +52,8 @@ bool CMalphiteR::Use()
 	CSendServerEventMgr::GetInst()->SendUseSkillPacket(
 		m_UserObj->GetScript<CUnitScript>()->GetServerID(),
 		UINT64_MAX,		// 논타겟팅일 경우 UINT64_MAX를 써주세요
-		m_UserObj->GetScript<CUnitScript>()->GetSkillLevel(2),
-		SkillType::JINX_W,
+		m_UserObj->GetScript<CUnitScript>()->GetSkillLevel(4),
+		SkillType::MALPHITE_R,
 		Vec3(0, 0, 0),
 		m_iProjectileCount,
 		false,
@@ -103,13 +103,9 @@ void CMalphiteR::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, in
 
 	TargetUnitScript->SetCurHPVar(-Damage);
 
-	// 2초 동안 둔화시킵니다.
-	CTimedEffect* JinxWSlow = new CTimedEffect(TargetUnitScript, 2.f, 0, 0, CC::SLOW);
-	TargetUnitScript->AddTimedEffect(JinxWSlow);
-
-	// 테스트용 도트딜
-	CTimedEffect* TestDot = new CTimedEffect(TargetUnitScript, 3.f, 5.f, 6, CC::CLEAR);
-	TargetUnitScript->AddTimedEffect(TestDot);
+	// 2초 동안 에어본시킵니다.
+	CTimedEffect* MalphAirborne = new CTimedEffect(TargetUnitScript, 1.5f, 0, 0, CC::AIRBORNE);
+	TargetUnitScript->AddTimedEffect(MalphAirborne);
 
 	CSkill::GetHit(_UserScript, _TargetScript, _SkillLevel);
 

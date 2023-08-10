@@ -482,14 +482,21 @@ void GameObjMgr::SendObjectMtrl(MtrlInfo* _mtrlInfo, ClientServiceRef _service)
 		mtrlInfoPacket.iMtrlIndex = _mtrlInfo->iMtrlIndex;
 		mtrlInfoPacket.tex_param = _mtrlInfo->tex_param;
 
-		wstring _mtrlName = _mtrlInfo->wMtrlName;
+		wstring _texName = _mtrlInfo->wTexName;
 
 		PKT_C_OBJECT_MTRL_WRITE  pktWriter(mtrlInfoPacket);
-		PKT_C_OBJECT_MTRL_WRITE::MtrlNameList mtrlNamePacket = pktWriter.ReserveMtrlNameList(_mtrlName.size());
-		for (int i = 0; i < _mtrlName.size(); i++)
+		PKT_C_OBJECT_MTRL_WRITE::TexNameList texNamePacket = pktWriter.ReserveTexNameList(_texName.size());
+		for (int i = 0; i < _texName.size(); i++)
 		{
-			mtrlNamePacket[i] = { _mtrlName[i] };
+			texNamePacket[i] = { _texName[i] };
 		}
+
+		// 서버에게 패킷 전송
+		std::cout << "Send C_OBJECT_MTRL Pakcet " << endl;
+		SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+		_service->Broadcast(sendBuffer);
+
+		std::cout << "===============================" << endl;
 	}
 
 }
@@ -505,7 +512,7 @@ void GameObjMgr::SendObjectAnim(AnimInfo* _animInfo, ClientServiceRef _service)
 		animInfoPacket.bRepeat = _animInfo->bRepeat;
 		animInfoPacket.blend = _animInfo->blend;
 		animInfoPacket.blendTime = _animInfo->blendTime;
-
+		animInfoPacket.animSpeed = _animInfo->animSpeed;
 
 		wstring _animName = _animInfo->animName;
 

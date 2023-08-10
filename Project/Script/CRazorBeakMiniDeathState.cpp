@@ -27,5 +27,6 @@ void CRazorBeakMiniDeathState::tick()
 
 void CRazorBeakMiniDeathState::Exit()
 {
+	CJungleDeathState::Exit();
 }
 

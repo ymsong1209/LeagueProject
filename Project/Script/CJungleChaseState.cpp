@@ -26,10 +26,16 @@ void CJungleChaseState::Enter()
 
 void CJungleChaseState::tick()
 {
+
 	CJungleMonsterScript* script = GetOwner()->GetScript<CJungleMonsterScript>();
 	//타겟이 설정 안되었는데 chasestate에 들어옴
 	if (script->GetTarget() == nullptr)
 		assert(nullptr);
+
+	
+	if ((script->GetCC() & CC::AIRBORNE) != 0) {
+		return;
+	}
 
 	Vec3 targetpos = script->GetTarget()->Transform()->GetRelativePos();
 	Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();

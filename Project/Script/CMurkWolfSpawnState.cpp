@@ -16,6 +16,7 @@ void CMurkWolfSpawnState::Enter()
 	GetOwner()->Animator3D()->PlayOnce(L"MurkWolf\\sru_murkwolf_spawn");
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"MurkWolf\\sru_murkwolf_spawn", false, false, false, 0.f);
+	CJungleSpawnState::Enter();
 }
 
 void CMurkWolfSpawnState::tick()

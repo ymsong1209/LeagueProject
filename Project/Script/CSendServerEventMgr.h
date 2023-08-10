@@ -58,13 +58,14 @@ public:
     // Sound : 사운드
     // Mtrl  : 재질 바꿔줘
     void SendHitPacket(UINT64 _skillObjId, UINT64 _hitObjId, UINT64 _useObjId, int _skillLevel, SkillType _skillType);
-    void SendAnimPacket(UINT64 _targetId, wstring _animName, bool _repeat, bool _bRepeatBlend,  bool _bUseBlend, float _blentTime);
+    void SendAnimPacket(UINT64 _targetId, wstring _animName, bool _repeat, bool _bRepeatBlend,  bool _bUseBlend, float _blentTime, float _animSpeed = 1.f);
     void SendUseSkillPacket(UINT64 _ownerId, UINT64 _targetObjId, int _skillLevel
                             , SkillType _skillType, Vec3 _offsetPos, int _projectileCount
                             , bool _useMousePos, Vec3 _mousePos, bool _useMouseDir, Vec3 _mouseDir);
     void SendDespawnPacket(UINT64 _objId, float _lifeSpan);
     void SendKDACSPacket(UINT64 _killerId, UINT64 _victimId, UnitType _deadObjUnitType);
     void SendSoundPacket();
-    void SendMtrlPakcet(UINT64 _objId, int _mtrlIndex, TEX_PARAM _texParam, wstring _MtrlName);
+    //settexparam할때 보내는 패킷
+    void SendMtrlPacket(UINT64 _objId, int _mtrlIndex, TEX_PARAM _texParam, wstring _TexName);
 };
 

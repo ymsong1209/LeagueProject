@@ -7,9 +7,6 @@ public:
     CMalphiteE();
     ~CMalphiteE();
 
-private:
-    CGameObject*        m_MalphiteEProjectile;
-
 public:
     virtual void tick() override;
     virtual bool   Use() override;

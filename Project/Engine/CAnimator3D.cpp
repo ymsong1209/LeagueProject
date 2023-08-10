@@ -197,8 +197,9 @@ void CAnimator3D::ClearData()
 	}
 }
 
-void CAnimator3D::PlayRepeat(const wstring& _strName, bool _RepeatBlend, bool _blend, float _blendtime)
+void CAnimator3D::PlayRepeat(const wstring& _strName, bool _RepeatBlend, bool _blend, float _blendtime, float _animspeed)
 {
+	m_fAnimSpeed = _animspeed;
 
 	CAnim3D* pAnim = FindAnim(_strName);
 	assert(pAnim);
@@ -233,8 +234,10 @@ void CAnimator3D::PlayRepeat(const wstring& _strName, bool _RepeatBlend, bool _b
 	m_bRepeatBlend = _RepeatBlend;
 
 }
-void CAnimator3D::PlayOnce(const wstring& _strName, bool _blend, float _blendtime)
+void CAnimator3D::PlayOnce(const wstring& _strName, bool _blend, float _blendtime, float _animspeed)
 {
+	m_fAnimSpeed = _animspeed;
+
 	CAnim3D* pAnim = FindAnim(_strName);
 	assert(pAnim);
 

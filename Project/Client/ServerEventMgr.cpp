@@ -190,13 +190,14 @@ void ServerEventMgr::clienttick()
 			{
 				CGameObject* NewObject = (CGameObject*)m_vecEvent[i].wParam;
 
-				if (NewObject == nullptr) break;
+				if (NewObject == nullptr) continue;
+
 				AnimInfo* animInfo = (AnimInfo*)(m_vecEvent[i].lParam);
 
 				if (animInfo->bRepeat)
-					NewObject->Animator3D()->PlayRepeat(animInfo->animName, animInfo->bRepeatBlend, animInfo->blend, animInfo->blendTime);
+					NewObject->Animator3D()->PlayRepeat(animInfo->animName, animInfo->bRepeatBlend, animInfo->blend, animInfo->blendTime, animInfo->animSpeed);
 				else
-					NewObject->Animator3D()->PlayOnce(animInfo->animName, animInfo->blend, animInfo->blendTime);
+					NewObject->Animator3D()->PlayOnce(animInfo->animName, animInfo->blend, animInfo->blendTime, animInfo->animSpeed);
 
 				// 사용이 끝난 후에는 메모리를 해제
 				delete animInfo;
@@ -240,7 +241,7 @@ void ServerEventMgr::clienttick()
 					{
 						// 스킬 쏜애
 						CGameObject* skillOwnerObj = GameObjMgr::GetInst()->FindAllObject(skillInfo->OwnerId);
-
+						
 						// 스킬 맞은 애(타인)
 						CGameObject* skillTargetObj = GameObjMgr::GetInst()->FindAllObject(skillInfo->TargetId);
 
@@ -308,7 +309,20 @@ void ServerEventMgr::clienttick()
 				kdacsInfo = nullptr;
 			}
 			break;
+			case SERVER_EVENT_TYPE::MTRL_PACKET:
+			{
+				MtrlInfo*	mtrlInfo = (MtrlInfo*)m_vecEvent[i].wParam;
+				CGameObject* pObj = GameObjMgr::GetInst()->FindAllObject(mtrlInfo->targetId);
+				
+				if (pObj == nullptr || pObj->IsDead()) continue;
 
+				pObj->MeshRender()->GetMaterial(mtrlInfo->iMtrlIndex)->SetTexParam(mtrlInfo->tex_param, CResMgr::GetInst()->FindRes<CTexture>(mtrlInfo->wTexName));
+
+				// 사용이 끝난 후에는 메모리를 해제
+				delete mtrlInfo;
+				mtrlInfo = nullptr;
+			}
+			break;
 			}
 		}
 

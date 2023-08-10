@@ -270,6 +270,27 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 		cout << "S_GAME_START Success" << endl;
 		// 인게임 진입
 
+		/*RECT WindowPos;
+		HWND WindowHandle = CEngine::GetInst()->GetInst()->GetMainWnd();
+		GetWindowRect(WindowHandle, &WindowPos);
+
+		int topMenuBarHeight = GetSystemMetrics(SM_CYCAPTION);
+
+
+		Vec2 WindowResolution = CEngine::GetInst()->GetWindowResolution();
+
+		RECT rect;
+		long dx = 10;
+		rect.left = WindowPos.left + dx;
+		rect.top = WindowPos.top + topMenuBarHeight + dx;
+
+		rect.right = WindowPos.left + WindowResolution.x;
+		rect.bottom = WindowPos.top + WindowResolution.y + dx;
+
+		ClipCursor(&rect);*/
+
+
+
 		// 맵 불러옴
 		CreateTestLevel();
 
@@ -790,20 +811,20 @@ void ServerPacketHandler::Handle_S_OBJECT_MTRL(PacketSessionRef& session, BYTE* 
 	}
 
 	MtrlInfoPacket	 _mtrlInfoPacket = pkt->mtrlInfo;
-	PKT_S_OBJECT_MTRL::MtrlNameList mtrlNameBuffs = pkt->GetMtrlNameList();
+	PKT_S_OBJECT_MTRL::TexNameList mtrlNameBuffs = pkt->GetMtrlNameList();
 
 	// mtrl 이름
-	wstring _mtrlName = L"";
+	wstring _TexName = L"";
 	for (auto& mtrlNameBuff : mtrlNameBuffs)
 	{
-		_mtrlName.push_back(mtrlNameBuff.mtrlName);
+		_TexName.push_back(mtrlNameBuff.texName);
 	}
 	
 	MtrlInfo* mtrlInfo = new MtrlInfo();
 	mtrlInfo->targetId  = _mtrlInfoPacket.targetId;
 	mtrlInfo->iMtrlIndex = _mtrlInfoPacket.iMtrlIndex;
 	mtrlInfo->tex_param = _mtrlInfoPacket.tex_param;
-	mtrlInfo->wMtrlName = _mtrlName;
+	mtrlInfo->wTexName = _TexName;
 
 	tServerEvent evn = {};
 	evn.Type = SERVER_EVENT_TYPE::MTRL_PACKET;

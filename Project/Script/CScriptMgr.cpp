@@ -18,6 +18,7 @@
 #include "CInGameCameraScript.h"
 #include "CInhibitorScript.h"
 #include "CInventoryUIScript.h"
+#include "CJinxEScript.h"
 #include "CJinxScript.h"
 #include "CJinxWScript.h"
 #include "CJungleMINIHPScript.h"
@@ -27,7 +28,10 @@
 #include "CKrugScript.h"
 #include "CMalphiteEDecalScript.h"
 #include "CMalphiteEScript.h"
+#include "CMalphiteQDecalScript.h"
+#include "CMalphiteQModelScript.h"
 #include "CMalphiteQScript.h"
+#include "CMalphiteRDecalScript.h"
 #include "CMalphiteRScript.h"
 #include "CMalphiteScript.h"
 #include "CMinimapUIScript.h"
@@ -76,6 +80,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CInGameCameraScript");
 	_vec.push_back(L"CInhibitorScript");
 	_vec.push_back(L"CInventoryUIScript");
+	_vec.push_back(L"CJinxEScript");
 	_vec.push_back(L"CJinxScript");
 	_vec.push_back(L"CJinxWScript");
 	_vec.push_back(L"CJungleMINIHPScript");
@@ -85,7 +90,10 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CKrugScript");
 	_vec.push_back(L"CMalphiteEDecalScript");
 	_vec.push_back(L"CMalphiteEScript");
+	_vec.push_back(L"CMalphiteQDecalScript");
+	_vec.push_back(L"CMalphiteQModelScript");
 	_vec.push_back(L"CMalphiteQScript");
+	_vec.push_back(L"CMalphiteRDecalScript");
 	_vec.push_back(L"CMalphiteRScript");
 	_vec.push_back(L"CMalphiteScript");
 	_vec.push_back(L"CMinimapUIScript");
@@ -152,6 +160,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CInhibitorScript;
 	if (L"CInventoryUIScript" == _strScriptName)
 		return new CInventoryUIScript;
+	if (L"CJinxEScript" == _strScriptName)
+		return new CJinxEScript;
 	if (L"CJinxScript" == _strScriptName)
 		return new CJinxScript;
 	if (L"CJinxWScript" == _strScriptName)
@@ -170,8 +180,14 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CMalphiteEDecalScript;
 	if (L"CMalphiteEScript" == _strScriptName)
 		return new CMalphiteEScript;
+	if (L"CMalphiteQDecalScript" == _strScriptName)
+		return new CMalphiteQDecalScript;
+	if (L"CMalphiteQModelScript" == _strScriptName)
+		return new CMalphiteQModelScript;
 	if (L"CMalphiteQScript" == _strScriptName)
 		return new CMalphiteQScript;
+	if (L"CMalphiteRDecalScript" == _strScriptName)
+		return new CMalphiteRDecalScript;
 	if (L"CMalphiteRScript" == _strScriptName)
 		return new CMalphiteRScript;
 	if (L"CMalphiteScript" == _strScriptName)
@@ -286,6 +302,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::INVENTORYUISCRIPT:
 		return new CInventoryUIScript;
 		break;
+	case (UINT)SCRIPT_TYPE::JINXESCRIPT:
+		return new CJinxEScript;
+		break;
 	case (UINT)SCRIPT_TYPE::JINXSCRIPT:
 		return new CJinxScript;
 		break;
@@ -313,8 +332,17 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::MALPHITEESCRIPT:
 		return new CMalphiteEScript;
 		break;
+	case (UINT)SCRIPT_TYPE::MALPHITEQDECALSCRIPT:
+		return new CMalphiteQDecalScript;
+		break;
+	case (UINT)SCRIPT_TYPE::MALPHITEQMODELSCRIPT:
+		return new CMalphiteQModelScript;
+		break;
 	case (UINT)SCRIPT_TYPE::MALPHITEQSCRIPT:
 		return new CMalphiteQScript;
+		break;
+	case (UINT)SCRIPT_TYPE::MALPHITERDECALSCRIPT:
+		return new CMalphiteRDecalScript;
 		break;
 	case (UINT)SCRIPT_TYPE::MALPHITERSCRIPT:
 		return new CMalphiteRScript;
@@ -476,6 +504,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CInventoryUIScript";
 		break;
 
+	case SCRIPT_TYPE::JINXESCRIPT:
+		return L"CJinxEScript";
+		break;
+
 	case SCRIPT_TYPE::JINXSCRIPT:
 		return L"CJinxScript";
 		break;
@@ -512,8 +544,20 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CMalphiteEScript";
 		break;
 
+	case SCRIPT_TYPE::MALPHITEQDECALSCRIPT:
+		return L"CMalphiteQDecalScript";
+		break;
+
+	case SCRIPT_TYPE::MALPHITEQMODELSCRIPT:
+		return L"CMalphiteQModelScript";
+		break;
+
 	case SCRIPT_TYPE::MALPHITEQSCRIPT:
 		return L"CMalphiteQScript";
+		break;
+
+	case SCRIPT_TYPE::MALPHITERDECALSCRIPT:
+		return L"CMalphiteRDecalScript";
 		break;
 
 	case SCRIPT_TYPE::MALPHITERSCRIPT:

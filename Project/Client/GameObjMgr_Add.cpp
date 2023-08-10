@@ -13,6 +13,8 @@
 #include <Engine\CLayer.h>
 #include <Engine\CGameObject.h>
 #include <Engine\components.h>
+#include <Engine\CRenderMgr.h>
+
 
 #include <Engine\CResMgr.h>
 #include <Engine\CCollisionMgr.h>
@@ -60,6 +62,7 @@
 #include <Script\CJungleMINIHPScript.h>
 #include <Script/CJungleMobHPScript.h>
 #include <Script\CTurretHPUIScript.h>
+#include <Script/CInGameCameraScript.h>
 
 static bool MinionSpawn = false;
 // ===============================================
@@ -74,6 +77,8 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 
 		Ptr<CMeshData> pMeshData = nullptr;
 		CGameObject* pObj = nullptr;
+
+		
 
 		switch (_info.champion)
 		{
@@ -106,7 +111,7 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Malphite");
 			pObj->Animator3D()->PlayRepeat(L"Malphite\\Idle1", true, true, 0.1f);
-			pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+			pObj->Transform()->SetRelativeScale(Vec3(0.36f, 0.36f, 0.36f));
 
 		}break;
 		case ChampionType::AMUMU:
@@ -117,6 +122,9 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 		// 챔피언 타입과 관계없이 공통
 		if (myPlayer)
 		{
+			CCamera* MainCam = CRenderMgr::GetInst()->GetMainCam();
+			MainCam->GetOwner()->GetScript<CInGameCameraScript>()->SetTargetObject(pObj);
+
 			pObj->AddComponent(new CPathFinder);
 			pObj->AddComponent(new CFsm);
 			MyPlayerScript = pObj->GetScript<CUnitScript>();
@@ -130,13 +138,25 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 
 			pObj->SetName(L"MyPlayer");
 
-
 			// 사거리 자식 오브젝트 추가
 			CGameObject* AttackRange = new CGameObject;
 			AttackRange->AddComponent(new CTransform);
 			AttackRange->AddComponent(new CCollider2D);
+			AttackRange->Collider2D()->SetAbsolute(true);
 			AttackRange->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-			AttackRange->Collider2D()->SetOffsetScale(Vec2(2000.f, 2000.f));
+			
+			switch (_info.champion)
+			{
+			case ChampionType::JINX:
+			{
+				AttackRange->Collider2D()->SetOffsetScale(Vec2(200.f, 200.f));
+			}break;
+			case ChampionType::MALPHITE:
+			{
+				AttackRange->Collider2D()->SetOffsetScale(Vec2(60.f, 60.f));
+
+			}break;
+			}
 			AttackRange->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
 			AttackRange->AddComponent(new CAttackRangeScript);
 			AttackRange->SetName(L"AttackRange");
@@ -165,15 +185,17 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 		{
 			pObj->Transform()->SetIsShootingRay(true);
 			pObj->Transform()->SetRayRange(200.f);
+			pObj->Transform()->SetUseMouseOutline(false);
 		}
 		else
 		{
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetIsShootingRay(false);
 		}
 
 
 		pObj->AddComponent(new CCollider3D);
-		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::CUBE);
 		pObj->Collider3D()->SetAbsolute(true);
 		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
 		pObj->Collider3D()->SetDrawCollision(false);
@@ -182,10 +204,7 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 		pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
 		pObj->Collider2D()->SetOffsetScale(Vec2(100.f, 100.f));
 		pObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0, 0));
-
-
-		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		pObj->Transform()->SetUseMouseOutline(true);
+		
 		pObj->Transform()->SetRelativeRot(Vec3(_info.posInfo.moveDir.x, _info.posInfo.moveDir.y, _info.posInfo.moveDir.z));
 		Vec3 spawnPos = Vec3(_info.posInfo.pos.x, _info.posInfo.pos.y, _info.posInfo.pos.z);
 		SpawnGameObject(pObj, spawnPos, L"Player");
@@ -245,8 +264,21 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
-			pObj->Transform()->SetUseMouseOutline(true);
-			pObj->Transform()->SetOutlineThickness(0.072f);
+
+
+			if (_objectInfo.faction == MyPlayer.faction)
+			{
+				pObj->Transform()->SetIsShootingRay(true);
+				pObj->Transform()->SetRayRange(150.f);
+				pObj->Transform()->SetUseMouseOutline(false);
+			}
+			else
+			{
+				pObj->Transform()->SetUseMouseOutline(true);
+				pObj->Transform()->SetIsShootingRay(false);
+				pObj->Transform()->SetOutlineThickness(0.072f);
+			}
+			
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 
@@ -302,9 +334,22 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
-			pObj->Transform()->SetUseMouseOutline(true);
-			pObj->Transform()->SetOutlineThickness(0.072f);
+
+			if (_objectInfo.faction == MyPlayer.faction)
+			{
+				pObj->Transform()->SetIsShootingRay(true);
+				pObj->Transform()->SetRayRange(150.f);
+				pObj->Transform()->SetUseMouseOutline(false);
+			}
+			else
+			{
+				pObj->Transform()->SetUseMouseOutline(true);
+				pObj->Transform()->SetIsShootingRay(false);
+				pObj->Transform()->SetOutlineThickness(0.072f);
+			}
+
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
 
 			CGameObject* HPBar = new CGameObject;
 			HPBar->SetName(L"HPBar");
@@ -357,9 +402,23 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
-			pObj->Transform()->SetUseMouseOutline(true);
-			pObj->Transform()->SetOutlineThickness(0.072f);
+
+			if (_objectInfo.faction == MyPlayer.faction)
+			{
+				pObj->Transform()->SetIsShootingRay(true);
+				pObj->Transform()->SetRayRange(150.f);
+				pObj->Transform()->SetUseMouseOutline(false);
+			}
+			else
+			{
+				pObj->Transform()->SetUseMouseOutline(true);
+				pObj->Transform()->SetIsShootingRay(false);
+				pObj->Transform()->SetOutlineThickness(0.072f);
+			}
+
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+		
 
 			CGameObject* HPBar = new CGameObject;
 			HPBar->SetName(L"HPBar");
@@ -413,9 +472,23 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
-			pObj->Transform()->SetUseMouseOutline(true);
-			pObj->Transform()->SetOutlineThickness(0.072f);
+			
+
+			if (_objectInfo.faction == MyPlayer.faction)
+			{
+				pObj->Transform()->SetIsShootingRay(true);
+				pObj->Transform()->SetRayRange(150.f);
+				pObj->Transform()->SetUseMouseOutline(false);
+			}
+			else
+			{
+				pObj->Transform()->SetUseMouseOutline(true);
+				pObj->Transform()->SetIsShootingRay(false);
+				pObj->Transform()->SetOutlineThickness(0.072f);
+			}
+
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
 
 			CGameObject* HPBar = new CGameObject;
 			HPBar->SetName(L"HPBar");
@@ -2229,7 +2302,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj = pMeshData->Instantiate();
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
-			pObj->Animator3D()->PlayRepeat(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true, true, 0.1f);
+			pObj->Animator3D()->PlayRepeat(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true, true, 0.1f, 0.2f);
 			pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
 			pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
