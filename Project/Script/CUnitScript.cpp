@@ -133,7 +133,6 @@ void CUnitScript::tick()
 				}
 			}
 		}
-
 	}
 	
 
@@ -161,7 +160,6 @@ void CUnitScript::CheckTimedEffect()
 void CUnitScript::CheckCC()
 {
 	// 걸려있는 CC기에 따라 행동 제약 변경
-
 	if ((m_eCurCC & CC::SLOW) != 0)  // 천천히 움직임
 	{
 		// 이동속도 감소
@@ -181,6 +179,7 @@ void CUnitScript::CheckCC()
 	{
 		RestrictAction(RESTRAINT::CAN_MOVE);	// 움직임 불가
 	}
+
 
 	if ((m_eCurCC & CC::STUN) != 0) // 스턴 상태
 	{
@@ -296,6 +295,23 @@ void CUnitScript::ApplyCC(CC _ccType)
 void CUnitScript::RemoveCC(CC _ccType)
 {
 	m_eCurCC = static_cast<CC>(static_cast<int>(m_eCurCC) & ~static_cast<int>(_ccType));
+
+	// CC기에 따른 RESTRAINT 해제
+	switch (_ccType)
+	{
+	case CC::ROOT:
+		m_eRestraint = (RESTRAINT)(m_eRestraint | RESTRAINT::CAN_MOVE);
+		break;
+	case CC::SILENCE:
+		m_eRestraint = (RESTRAINT)(m_eRestraint | RESTRAINT::CAN_USE_SKILL);
+		break;
+	case CC::STUN:
+		m_eRestraint = (RESTRAINT)(m_eRestraint | RESTRAINT::BLOCK);
+		break;
+	case CC::AIRBORNE:
+		m_eRestraint = (RESTRAINT)(m_eRestraint | RESTRAINT::BLOCK);
+		break;
+	}
 }
 
 void CUnitScript::SaveToLevelFile(FILE* _File)
