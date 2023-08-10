@@ -1,25 +1,24 @@
 #include "pch.h"
-#include "CJinxWScript.h"
-#include "CProjectileScript.h"
+#include "CJinxRScript.h"
 
-CJinxWScript::CJinxWScript()
-	:CProjectileScript((UINT)SCRIPT_TYPE::JINXWSCRIPT)
+CJinxRScript::CJinxRScript()
+	:CProjectileScript((UINT)SCRIPT_TYPE::JINXRSCRIPT)
 {
 	m_fProjectileSpeed = 300.f;
-	m_fSkillRange = 150.f;
+	m_fSkillRange = 4000.f;
 }
 
-CJinxWScript::~CJinxWScript()
+CJinxRScript::~CJinxRScript()
 {
 }
 
-void CJinxWScript::begin()
+void CJinxRScript::begin()
 {
 	// 첫 생성 위치 기억
 	m_vSpawnPos = GetOwner()->Transform()->GetRelativePos();
 }
 
-void CJinxWScript::tick()
+void CJinxRScript::tick()
 {
 	if (m_bUnitDead) return;
 
@@ -37,34 +36,35 @@ void CJinxWScript::tick()
 	float distance = sqrt((pow(m_vSpawnPos.x - NewPos.x, 2) + pow(m_vSpawnPos.z - NewPos.z, 2)));
 	if (distance >= m_fSkillRange)
 	{
-		if(!m_bUnitDead) // 이후 사라짐
+		if (!m_bUnitDead) // 이후 사라짐
 			CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 0.2f);
 		m_fProjectileSpeed = 0.f;
 		m_bUnitDead = true;
 	}
 }
 
-void CJinxWScript::BeginOverlap(CCollider2D* _Other)
+void CJinxRScript::BeginOverlap(CCollider2D* _Other)
 {
-	if (m_bUnitDead) return;
-	
+	// 징크스 R은 플레이어만 충돌한다. 
+	if (m_bUnitDead || _Other->GetOwner()->GetLayerIndex() != 5) return;
 	if (_Other->GetOwner()->GetScript<CUnitScript>() == nullptr)
 		return;
-	
+
 	// 시전자와 다른 진영의 오브젝트가 부딪친다면
 	if (_Other->GetOwner()->GetScript<CUnitScript>()->GetFaction() != m_UserObj->GetScript<CUnitScript>()->GetFaction())
 	{
 		// 피격자의 서버 아이디
 		UINT64 TargetServerID = _Other->GetOwner()->GetScript<CUnitScript>()->GetServerID();
-		
+
 		// 방장컴이 서버에게 이 투사체가 피격자와 충돌했다고 전달
 		if (!m_bUnitDead)// 이후 사라짐
 		{
-			CSendServerEventMgr::GetInst()->SendHitPacket(GetServerID(), TargetServerID, m_iServerUserID, 1, SkillType::JINX_W);
+			CSendServerEventMgr::GetInst()->SendHitPacket(GetServerID(), TargetServerID, m_iServerUserID, 1, SkillType::JINX_R);
 			CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 0.5f);
-		
+
 			m_fProjectileSpeed = 0.f;
 			m_bUnitDead = true;
 		}
+
 	}
 }

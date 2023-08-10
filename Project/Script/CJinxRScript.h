@@ -1,14 +1,13 @@
 #pragma once
 #include "CProjectileScript.h"
-
-class CJinxWScript :
+class CJinxRScript :
     public CProjectileScript
 {
 public:
-    CJinxWScript();
-    ~CJinxWScript();
+    CJinxRScript();
+    ~CJinxRScript();
 
-    CLONE(CJinxWScript);
+    CLONE(CJinxRScript);
 
 private:
 

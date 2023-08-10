@@ -4,7 +4,6 @@
 #include "CChampionScript.h"
 #include "CJinxEScript.h"
 #include "CTimedEffect.h"
-
 CJinxE::CJinxE()
 {
 	m_strSkillName = L"Flame Chompers!";
