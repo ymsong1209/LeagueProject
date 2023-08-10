@@ -3,21 +3,25 @@
 
 #include "CDevice.h"
 #include "CConstBuffer.h"
+#include "CRenderMgr.h"
+#include "CCamera.h"
 
 CTransform::CTransform()
 	: CComponent(COMPONENT_TYPE::TRANSFORM)
 	, m_vRelativeScale(Vec3(1.f, 1.f, 1.f))
-	, m_bAbsolute(false)	
+	, m_bAbsolute(false)
 	, m_vRelativeDir{
 		  Vec3(1.f, 0.f, 0.f)
 		, Vec3(0.f, 1.f, 0.f)
-		, Vec3(0.f, 0.f, 1.f)}	
+		, Vec3(0.f, 0.f, 1.f) }
 	, m_fGizmoBounding_Radius(50.f)
 	, m_bGizmoObjExcept(false)
 	, m_bIsShootingRay(false)
 	, m_fRayRange(20)
 	, m_bUseMouseOutLine(false)
 	, m_fOutlinethickness(0.072f)
+	, m_bBillBoard(false)
+	, m_bCustomBillBoard(false)
 {
 	SetName(L"Transform");
 }
@@ -32,6 +36,8 @@ CTransform::CTransform(const CTransform& _other)
 	, m_bGizmoObjExcept(_other.m_bGizmoObjExcept)
 	, m_bIsShootingRay(_other.m_bIsShootingRay)
 	, m_fRayRange(_other.m_fRayRange)
+	, m_bBillBoard(_other.m_bBillBoard)
+	, m_bCustomBillBoard(_other.m_bCustomBillBoard)
 {
 	SetName(L"Transform");
 }
@@ -43,6 +49,23 @@ CTransform::~CTransform()
 
 void CTransform::finaltick()
 {
+	if (m_bBillBoard && GetOwner()->GetLayerIndex() != 31) //UI 레이어는 빌보드 처리할 필요없음
+	{
+		Vec3 CamRotated = CRenderMgr::GetInst()->GetMainCam()->Transform()->GetRelativeRot();
+
+		if (m_bCustomBillBoard)
+		{
+			//m_vCustomBillBoardAngle;
+			SetRelativeRot(CamRotated.x + m_vCustomBillBoardAngle.x, CamRotated.y + m_vCustomBillBoardAngle.y, CamRotated.z + m_vCustomBillBoardAngle.z);
+		}
+
+		else
+		{
+			SetRelativeRot(CamRotated.x, CamRotated.y, CamRotated.z);
+		}
+	}
+
+
 	m_matWorldScale = XMMatrixIdentity(); // 단위행렬 만들기
 	m_matWorldScale = XMMatrixScaling(m_vRelativeScale.x, m_vRelativeScale.y, m_vRelativeScale.z);
 
@@ -73,21 +96,24 @@ void CTransform::finaltick()
 	CGameObject* pParent = GetOwner()->GetParent();
 	if (pParent)
 	{
-		if (m_bAbsolute)
+		if (!m_bNoParentaffected) //부모의 영향을 받기로 했을경우만. (UI가 직교라 만든거니.. 다른분들은 건들일 없을겁니다.
 		{
-			Matrix matParentWorld = pParent->Transform()->m_matWorld;
-			Matrix matParentScale = pParent->Transform()->m_matWorldScale;
-			Matrix matParentScaleInv = XMMatrixInverse(nullptr, matParentScale); // 크기 역함수, nullptr: 판별식
+			if (m_bAbsolute)
+			{
+				Matrix matParentWorld = pParent->Transform()->m_matWorld;
+				Matrix matParentScale = pParent->Transform()->m_matWorldScale;
+				Matrix matParentScaleInv = XMMatrixInverse(nullptr, matParentScale); // 크기 역함수, nullptr: 판별식
 
-			// 월드 = 로컬월드 * 부모크기 역 * 부모 월드(크기/회전/이동)
-			m_matWorld = m_matWorld * matParentScaleInv * matParentWorld;
-		}
-		else
-		{
-			m_matWorldScale *= pParent->Transform()->m_matWorldScale;
-			m_matWorldRot *= pParent->Transform()->m_matWorldRot;
-			m_matWorldPos *= pParent->Transform()->m_matWorldPos;
-			m_matWorld *= pParent->Transform()->m_matWorld;
+				// 월드 = 로컬월드 * 부모크기 역 * 부모 월드(크기/회전/이동)
+				m_matWorld = m_matWorld * matParentScaleInv * matParentWorld;
+			}
+			else
+			{
+				m_matWorldScale *= pParent->Transform()->m_matWorldScale;
+				m_matWorldRot *= pParent->Transform()->m_matWorldRot;
+				m_matWorldPos *= pParent->Transform()->m_matWorldPos;
+				m_matWorld *= pParent->Transform()->m_matWorld;
+			}
 		}
 	}
 
@@ -118,9 +144,9 @@ void CTransform::UpdateData()
 
 void CTransform::SaveToLevelFile(FILE* _File)
 {
-	fwrite(&m_vRelativePos	, sizeof(Vec3), 1, _File);
+	fwrite(&m_vRelativePos, sizeof(Vec3), 1, _File);
 	fwrite(&m_vRelativeScale, sizeof(Vec3), 1, _File);
-	fwrite(&m_vRelativeRot	, sizeof(Vec3), 1, _File);
+	fwrite(&m_vRelativeRot, sizeof(Vec3), 1, _File);
 	fwrite(&m_bAbsolute, sizeof(bool), 1, _File);
 
 	fwrite(&m_bGizmoObjExcept, sizeof(bool), 1, _File);
@@ -136,12 +162,12 @@ void CTransform::SaveToLevelFile(FILE* _File)
 }
 
 void CTransform::LoadFromLevelFile(FILE* _FILE)
-{	
+{
 	fread(&m_vRelativePos, sizeof(Vec3), 1, _FILE);
 	fread(&m_vRelativeScale, sizeof(Vec3), 1, _FILE);
 	fread(&m_vRelativeRot, sizeof(Vec3), 1, _FILE);
 	fread(&m_bAbsolute, sizeof(bool), 1, _FILE);
-	
+
 	fread(&m_bGizmoObjExcept, sizeof(bool), 1, _FILE);
 	fread(&m_fGizmoBounding_Radius, sizeof(float), 1, _FILE);
 
@@ -167,6 +193,8 @@ void CTransform::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& 
 	_objValue.AddMember("RayRange", m_fRayRange, allocator);
 	_objValue.AddMember("UseMouseOutLine", m_bUseMouseOutLine, allocator);
 	_objValue.AddMember("Outlinethickness", m_fOutlinethickness, allocator);
+	
+
 }
 
 void CTransform::LoadFromLevelJsonFile(const Value& _componentValue)
@@ -183,4 +211,5 @@ void CTransform::LoadFromLevelJsonFile(const Value& _componentValue)
 	m_fRayRange = _componentValue["RayRange"].GetFloat();
 	m_bUseMouseOutLine = _componentValue["UseMouseOutLine"].GetBool();
 	m_fOutlinethickness = _componentValue["Outlinethickness"].GetFloat();
+
 }

@@ -12,6 +12,7 @@ CDecal::CDecal()
 	, m_bShowDebug(false)
 	, m_iLayerCheck(0)
 	, m_BSType(BS_TYPE::ALPHA_BLEND)
+	, m_fAlpha(1.f)
 {
 
 	SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
@@ -51,6 +52,7 @@ void CDecal::render()
 	GetMaterial(0)->SetScalarParam(INT_0, &m_Light);
 	GetMaterial(0)->SetScalarParam(INT_1, &m_iLayerCheck);
 	GetMaterial(0)->SetScalarParam(VEC4_0, &m_vLightDiffuse);
+	GetMaterial(0)->SetScalarParam(FLOAT_2, &m_fAlpha);
 	GetMaterial(0)->SetTexParam(TEX_0, m_DecalTex);
 	GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"PositionTargetTex"));
 	GetMaterial(0)->SetTexParam(TEX_2, CResMgr::GetInst()->FindRes<CTexture>(L"DataTargetTex"));

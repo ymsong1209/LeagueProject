@@ -15,6 +15,13 @@ CJungleChaseState::~CJungleChaseState()
 void CJungleChaseState::Enter()
 {
 	CUnitState::Enter();
+
+	CJungleMonsterScript* script = GetOwner()->GetScript<CJungleMonsterScript>();
+	//타겟이 설정 안되었는데 chasestate에 들어옴
+	if (script->GetTarget() == nullptr)
+		assert(nullptr);
+
+	m_vTargetPos = script->GetTarget()->Transform()->GetRelativePos();
 }
 
 void CJungleChaseState::tick()
@@ -36,12 +43,16 @@ void CJungleChaseState::tick()
 	else{
 		m_fTime += DT;
 		if (m_fTime > 0.01f) {
-			GetOwner()->PathFinder()->FindPath(targetpos);
+			float targetdist = sqrt(pow(targetpos.x - m_vTargetPos.x, 2.f) + pow(targetpos.z - m_vTargetPos.z, 2.f));
+			if (targetdist > 10.f) {
+				GetOwner()->PathFinder()->FindPath(targetpos);
+				m_vTargetPos = targetpos;
+			}
 			m_fTime = 0.f;
 		}
+		
 		script->PathFindMove(70.f, true);
 	}
-
 }
 
 void CJungleChaseState::Exit()

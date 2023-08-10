@@ -7,6 +7,7 @@
 #include "CResMgr.h"
 #include "CRenderMgr.h"
 #include "CTransform.h"
+#include "CLayer.h"
 
 #include <mutex>
 CEventMgr::CEventMgr()
@@ -170,6 +171,8 @@ void CEventMgr::GC_Clear()
 			if (m_vecGC[i]->GetParent())			
 				m_vecGC[i]->DisconnectFromParent();
 			
+			vector<CGameObject*>& vecobjects = CLevelMgr::GetInst()->GetCurLevel()->GetLayer(m_vecGC[i]->GetLayerIndex())->GetObjects();
+			vecobjects.erase(std::remove(vecobjects.begin(), vecobjects.end(), m_vecGC[i]), vecobjects.end());
 			delete m_vecGC[i];
 			m_vecGC[i] = nullptr;
 

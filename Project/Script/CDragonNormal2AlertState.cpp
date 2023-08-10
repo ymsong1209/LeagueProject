@@ -54,10 +54,12 @@ void CDragonNormal2AlertState::HandleEvent(CGameEvent& event)
 			int	skillLevel = HitEvent->GetSkillLevel();
 
 			GetOwnerFSM()->GetOwner()->GetScript<CUnitScript>()->GetHit(skilltype, SkillTarget, SkillUser, skillLevel);
+
+			CDragonScript* script = GetOwner()->GetScript<CDragonScript>();
+			script->GetHit(HitEvent->GetUserObj());
 		}
 
-		CDragonScript* script = GetOwner()->GetScript<CDragonScript>();
-		script->GetHit(HitEvent->GetUserObj());
+	
 	}
 
 }
