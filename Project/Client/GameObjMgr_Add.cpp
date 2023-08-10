@@ -2093,6 +2093,8 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetOutlineThickness(0.072f);
 			CGameObject* TurretBase = pObj->FindChildObjByName(L"TurretBase");
+			TurretBase->Transform()->SetUseMouseOutline(true);
+			TurretBase->Transform()->SetOutlineThickness(0.072f);
 			CGameObject* TurretBreak1 = pObj->FindChildObjByName(L"TurretBreak_1");
 			CGameObject* TurretBreak2 = pObj->FindChildObjByName(L"TurretBreak_2");
 			

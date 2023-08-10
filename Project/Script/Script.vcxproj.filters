@@ -600,7 +600,6 @@
     <ClCompile Include="CMalphiteRScript.cpp">
       <Filter>Scripts\SkillProjectile\Malphite</Filter>
     </ClCompile>
-    <ClCompile Include="CChampionScript.cpp" />
     <ClCompile Include="CDragonHPUIScript.cpp" />
     <ClCompile Include="CJungleMINIHPScript.cpp" />
     <ClCompile Include="CJungleMobHPScript.cpp" />
@@ -628,6 +627,9 @@
     </ClCompile>
     <ClCompile Include="CTurretBrokenState.cpp">
       <Filter>State\Unit\Structure\Turret</Filter>
+    </ClCompile>
+    <ClCompile Include="CChampionScript.cpp">
+      <Filter>Scripts\Unit\Champion</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
