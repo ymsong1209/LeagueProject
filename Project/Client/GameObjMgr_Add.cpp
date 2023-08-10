@@ -64,7 +64,7 @@
 #include <Script\CTurretHPUIScript.h>
 #include <Script/CInGameCameraScript.h>
 
-static bool MinionSpawn = false;
+static bool MinionSpawn = true;
 // ===============================================
 //   Add
 // ===============================================
@@ -374,12 +374,12 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			if (_objectInfo.faction == Faction::RED)
 			{
 				pObj->SetName(L"red_minion_siege");
-				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Minion_siege_Red.mtrl"), 0);
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Minion_Siege_Red.mtrl"), 0);
 			}
 			else if (_objectInfo.faction == Faction::BLUE)
 			{
 				pObj->SetName(L"blue_minion_siege");
-				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Minion_siege_Blue.mtrl"), 0);
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Minion_Siege_Blue.mtrl"), 0);
 			}
 
 			// 방장은 진짜 계산 오브젝트 생성,  방장이 아닐 경우 허상을 생성

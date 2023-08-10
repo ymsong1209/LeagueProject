@@ -33,6 +33,7 @@ void CProjectileScript::tick()
 	{
 		Despawn();
 		return;
+	}
 
 	if (m_TargetObj)
 	{
