@@ -5,7 +5,7 @@
 
 #include "CSendServerEventMgr.h"
 #include "CUnitScript.h"
-
+#include "CJinxScript.h"
 
 CJinxWalkState::CJinxWalkState()
 {
@@ -22,9 +22,15 @@ void CJinxWalkState::tick()
 }
 
 void CJinxWalkState::Enter()
-{
-	wstring animName = L"Jinx\\Run_Base";
-	GetOwner()->Animator3D()->PlayRepeat(L"Jinx\\Run_Base", true, true, 0.15f);
+{	
+	// 애니메이션
+	wstring animName = L"";
+	if (GetOwner()->GetScript<CJinxScript>()->GetWeaponMode() == JinxWeaponMode::MINIGUN)
+		animName = L"Jinx\\Run_Base";
+	else if (GetOwner()->GetScript<CJinxScript>()->GetWeaponMode() == JinxWeaponMode::ROCKET_LAUNCHER)
+		animName = L"Jinx\\jinx_rlauncher_run";
+
+	GetOwner()->Animator3D()->PlayRepeat(animName, true, true, 0.15f);
 
 
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
@@ -35,7 +41,6 @@ void CJinxWalkState::Enter()
 
 void CJinxWalkState::Exit()
 {
-	//GetOwner()->Animator3D()->FindAnim(L"Jinx\\Run_Base")->Reset();
 	CChampionWalkState::Exit();
 }
 

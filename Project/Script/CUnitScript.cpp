@@ -56,6 +56,7 @@ void CUnitScript::begin()
 	
 	// Ã¼·Â
 	m_fHP = m_fMaxHP;
+	m_fMP = m_fMaxMP;
 
 }
 

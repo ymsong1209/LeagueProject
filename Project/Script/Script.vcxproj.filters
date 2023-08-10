@@ -619,6 +619,18 @@
     <ClCompile Include="CMalphiteEDecalScript.cpp">
       <Filter>Scripts\SkillProjectile\Malphite</Filter>
     </ClCompile>
+    <ClCompile Include="CJinxEState.cpp">
+      <Filter>State\Unit\Champion\Jinx\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxRState.cpp">
+      <Filter>State\Unit\Champion\Jinx\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxE.cpp">
+      <Filter>Scripts\Skill\Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxR.cpp">
+      <Filter>Scripts\Skill\Jinx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -781,6 +793,18 @@
     <ClInclude Include="CTurretHPUIScript.h" />
     <ClInclude Include="CMalphiteEDecalScript.h">
       <Filter>Scripts\SkillProjectile\Malphite</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxEState.h">
+      <Filter>State\Unit\Champion\Jinx\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxRState.h">
+      <Filter>State\Unit\Champion\Jinx\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxR.h">
+      <Filter>Scripts\Skill\Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxE.h">
+      <Filter>Scripts\Skill\Jinx</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

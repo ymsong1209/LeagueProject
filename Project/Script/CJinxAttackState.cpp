@@ -6,7 +6,7 @@
 #include <Engine\CCollider2D.h>
 #include "CBasicAttackScript.h"
 #include "CUnitScript.h"
-
+#include "CJinxScript.h"
 
 
 CJinxAttackState::CJinxAttackState()
@@ -25,7 +25,12 @@ void CJinxAttackState::tick()
 void CJinxAttackState::Enter()
 {
 	// 애니메이션
-	wstring animName = L"Jinx\\Attack1";
+	wstring animName = L"";
+	if (GetOwner()->GetScript<CJinxScript>()->GetWeaponMode() == JinxWeaponMode::MINIGUN)
+		animName = L"Jinx\\Attack1";
+	else if (GetOwner()->GetScript<CJinxScript>()->GetWeaponMode() == JinxWeaponMode::ROCKET_LAUNCHER)
+		animName = L"Jinx\\jinx_rlauncher_attack1";
+
 	GetOwner()->Animator3D()->PlayOnce(animName, false);
 
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
