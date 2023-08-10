@@ -29,12 +29,12 @@ void CMalphiteAttackState::tick()
 void CMalphiteAttackState::Enter()
 {
 	// 애니메이션
-	wstring basename = L"malphite\\Attack";
+	wstring basename = L"Malphite\\Attack";
 
 	CMalphiteScript* chamscript = GetOwner()->GetScript<CMalphiteScript>();
 
 	if (chamscript->GetWActive()) {
-		basename = L"malphite_attack3";
+		basename = L"Malphite\\malphite_attack3";
 	}
 	else {
 		float time = chamscript->GetAttackAnimCoolTime();

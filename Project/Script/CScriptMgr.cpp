@@ -30,6 +30,7 @@
 #include "CMalphiteQDecalScript.h"
 #include "CMalphiteQModelScript.h"
 #include "CMalphiteQScript.h"
+#include "CMalphiteRDecalScript.h"
 #include "CMalphiteRScript.h"
 #include "CMalphiteScript.h"
 #include "CMinimapUIScript.h"
@@ -90,6 +91,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CMalphiteQDecalScript");
 	_vec.push_back(L"CMalphiteQModelScript");
 	_vec.push_back(L"CMalphiteQScript");
+	_vec.push_back(L"CMalphiteRDecalScript");
 	_vec.push_back(L"CMalphiteRScript");
 	_vec.push_back(L"CMalphiteScript");
 	_vec.push_back(L"CMinimapUIScript");
@@ -180,6 +182,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CMalphiteQModelScript;
 	if (L"CMalphiteQScript" == _strScriptName)
 		return new CMalphiteQScript;
+	if (L"CMalphiteRDecalScript" == _strScriptName)
+		return new CMalphiteRDecalScript;
 	if (L"CMalphiteRScript" == _strScriptName)
 		return new CMalphiteRScript;
 	if (L"CMalphiteScript" == _strScriptName)
@@ -329,6 +333,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::MALPHITEQSCRIPT:
 		return new CMalphiteQScript;
+		break;
+	case (UINT)SCRIPT_TYPE::MALPHITERDECALSCRIPT:
+		return new CMalphiteRDecalScript;
 		break;
 	case (UINT)SCRIPT_TYPE::MALPHITERSCRIPT:
 		return new CMalphiteRScript;
@@ -536,6 +543,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::MALPHITEQSCRIPT:
 		return L"CMalphiteQScript";
+		break;
+
+	case SCRIPT_TYPE::MALPHITERDECALSCRIPT:
+		return L"CMalphiteRDecalScript";
 		break;
 
 	case SCRIPT_TYPE::MALPHITERSCRIPT:

@@ -25,6 +25,7 @@ void CBlueDeathState::tick()
 
 void CBlueDeathState::Exit()
 {
+	CJungleDeathState::Exit();
 }
 
 

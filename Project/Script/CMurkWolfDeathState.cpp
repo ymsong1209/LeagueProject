@@ -26,6 +26,7 @@ void CMurkWolfDeathState::tick()
 
 void CMurkWolfDeathState::Exit()
 {
+	CJungleDeathState::Exit();
 }
 
 

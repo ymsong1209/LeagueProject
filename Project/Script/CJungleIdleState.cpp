@@ -60,8 +60,5 @@ void CJungleIdleState::HandleEvent(CGameEvent& event)
 			CJungleMonsterScript* script = GetOwner()->GetScript<CJungleMonsterScript>();
 			script->GetHit(HitEvent->GetUserObj());
 		}
-
-		
 	}
-
 }

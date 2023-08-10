@@ -16,6 +16,7 @@ void CGrompSpawnState::Enter()
 	GetOwner()->Animator3D()->PlayOnce(L"gromp\\_spawn");
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"gromp\\_spawn", false, false, false, 0.0f);
+	CJungleSpawnState::Enter();
 }
 
 void CGrompSpawnState::tick()

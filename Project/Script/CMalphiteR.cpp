@@ -52,8 +52,8 @@ bool CMalphiteR::Use()
 	CSendServerEventMgr::GetInst()->SendUseSkillPacket(
 		m_UserObj->GetScript<CUnitScript>()->GetServerID(),
 		UINT64_MAX,		// 稠鸥百泼老 版快 UINT64_MAX甫 结林技夸
-		m_UserObj->GetScript<CUnitScript>()->GetSkillLevel(2),
-		SkillType::JINX_W,
+		m_UserObj->GetScript<CUnitScript>()->GetSkillLevel(4),
+		SkillType::MALPHITE_R,
 		Vec3(0, 0, 0),
 		m_iProjectileCount,
 		false,

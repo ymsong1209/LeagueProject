@@ -27,6 +27,7 @@ CMalphiteEScript
 CMalphiteQDecalScript
 CMalphiteQModelScript
 CMalphiteQScript
+CMalphiteRDecalScript
 CMalphiteRScript
 CMalphiteScript
 CMinimapUIScript

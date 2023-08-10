@@ -25,6 +25,7 @@ void CKrugDeathState::tick()
 
 void CKrugDeathState::Exit()
 {
+	CJungleDeathState::Exit();
 }
 
 

@@ -16,6 +16,7 @@ void CKrugSpawnState::Enter()
 	GetOwner()->Animator3D()->PlayOnce(L"Krug\\krug_spawn");
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"Krug\\krug_spawn", false, false, false, 0.f);
+	CJungleSpawnState::Enter();
 }
 
 void CKrugSpawnState::tick()
