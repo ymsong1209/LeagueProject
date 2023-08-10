@@ -425,15 +425,6 @@
     <ClCompile Include="CMinionWalkState.cpp">
       <Filter>State\Unit\Minion</Filter>
     </ClCompile>
-    <ClCompile Include="CInhibitorBrokenState.cpp">
-      <Filter>State\Unit\Structure</Filter>
-    </ClCompile>
-    <ClCompile Include="CInhibitorIdleState.cpp">
-      <Filter>State\Unit\Structure</Filter>
-    </ClCompile>
-    <ClCompile Include="CInhibitorSpawnState.cpp">
-      <Filter>State\Unit\Structure</Filter>
-    </ClCompile>
     <ClCompile Include="CUnitState.cpp">
       <Filter>State\Unit</Filter>
     </ClCompile>
@@ -619,6 +610,25 @@
     <ClCompile Include="CMalphiteEDecalScript.cpp">
       <Filter>Scripts\SkillProjectile\Malphite</Filter>
     </ClCompile>
+    <ClCompile Include="CJinxE.cpp" />
+    <ClCompile Include="CJinxEState.cpp" />
+    <ClCompile Include="CJinxR.cpp" />
+    <ClCompile Include="CJinxRState.cpp" />
+    <ClCompile Include="CInhibitorBrokenState.cpp">
+      <Filter>State\Unit\Structure\Inhibitor</Filter>
+    </ClCompile>
+    <ClCompile Include="CInhibitorIdleState.cpp">
+      <Filter>State\Unit\Structure\Inhibitor</Filter>
+    </ClCompile>
+    <ClCompile Include="CInhibitorSpawnState.cpp">
+      <Filter>State\Unit\Structure\Inhibitor</Filter>
+    </ClCompile>
+    <ClCompile Include="CTurretIdleState.cpp">
+      <Filter>State\Unit\Structure\Turret</Filter>
+    </ClCompile>
+    <ClCompile Include="CTurretBrokenState.cpp">
+      <Filter>State\Unit\Structure\Turret</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -782,6 +792,25 @@
     <ClInclude Include="CMalphiteEDecalScript.h">
       <Filter>Scripts\SkillProjectile\Malphite</Filter>
     </ClInclude>
+    <ClInclude Include="CJinxE.h" />
+    <ClInclude Include="CJinxEState.h" />
+    <ClInclude Include="CJinxR.h" />
+    <ClInclude Include="CJinxRState.h" />
+    <ClInclude Include="CInhibitorBrokenState.h">
+      <Filter>State\Unit\Structure\Inhibitor</Filter>
+    </ClInclude>
+    <ClInclude Include="CInhibitorIdleState.h">
+      <Filter>State\Unit\Structure\Inhibitor</Filter>
+    </ClInclude>
+    <ClInclude Include="CInhibitorSpawnState.h">
+      <Filter>State\Unit\Structure\Inhibitor</Filter>
+    </ClInclude>
+    <ClInclude Include="CTurretIdleState.h">
+      <Filter>State\Unit\Structure\Turret</Filter>
+    </ClInclude>
+    <ClInclude Include="CTurretBrokenState.h">
+      <Filter>State\Unit\Structure\Turret</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">
@@ -819,10 +848,7 @@
     <ClInclude Include="CGameEvent.h" />
     <ClInclude Include="CGameEventMgr.h" />
     <ClInclude Include="CHeal.h" />
-    <ClInclude Include="CInhibitorBrokenState.h" />
-    <ClInclude Include="CInhibitorIdleState.h" />
     <ClInclude Include="CInhibitorScript.h" />
-    <ClInclude Include="CInhibitorSpawnState.h" />
     <ClInclude Include="CJinxDeathState.h" />
     <ClInclude Include="CJinxIdleState.h" />
     <ClInclude Include="CJinxQ.h" />
@@ -1426,6 +1452,12 @@
     </Filter>
     <Filter Include="Scripts\SkillProjectile\Malphite">
       <UniqueIdentifier>{5ec3d5a9-920c-48e5-81ee-7e69040ad680}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\Unit\Structure\Inhibitor">
+      <UniqueIdentifier>{d7b607e3-ae48-40c2-ab2d-798bc2112473}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\Unit\Structure\Turret">
+      <UniqueIdentifier>{0060d974-0756-42d4-8fe8-ef8fcd3ca3e5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

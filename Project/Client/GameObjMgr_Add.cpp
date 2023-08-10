@@ -2090,10 +2090,18 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\TurretRubble.prefab");
 			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
 			pObj = pPrefab->Instantiate();
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetOutlineThickness(0.072f);
 			CGameObject* TurretBase = pObj->FindChildObjByName(L"TurretBase");
 			CGameObject* TurretBreak1 = pObj->FindChildObjByName(L"TurretBreak_1");
 			CGameObject* TurretBreak2 = pObj->FindChildObjByName(L"TurretBreak_2");
-			Vec3 Scale = pObj->Transform()->GetRelativeScale();
+			
+			// 포탑 자식 오브젝트에 UnitScript 붙여주기
+			TurretBase->AddComponent(new CUnitScript);
+			TurretBreak1->AddComponent(new CUnitScript);
+			TurretBreak2->AddComponent(new CUnitScript);
+
+			// 포탑에게 
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
 
 
@@ -2162,14 +2170,15 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 			if (MyPlayer.host)
 			{
-				//pObj->AddComponent(new CTurretScript);
-				// script->setLane, _objectInfo.lane
-				pObj->AddComponent(new CUnitScript);  // 추후 주석처리
-				// 공격범위 시야 자식오브젝트도 추가해야할듯.
+				// 방장일 경우 TurretScript
+				pObj->AddComponent(new CTurretScript);
+				//CTurretScript* Script = pObj->GetScript<CTurretScript>();
+				//Script->SetLane(_objectInfo.lane);
 
 			}
 			else
 			{
+				// 클라이언트는 UnitScript
 				pObj->AddComponent(new CUnitScript);
 			}
 
@@ -2178,6 +2187,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetServerID(_objectId);
 			Script->SetFaction(_objectInfo.faction);
 			Script->SetUnitType(UnitType::TURRET);
+			Script->SetLane(_objectInfo.lane);
 			SpawnGameObject(pObj
 				, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z)
 				, L"Structure");

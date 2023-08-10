@@ -1,4 +1,4 @@
-
+#include "pch.h"
 #include "CProjectileScript.h"
 
 CProjectileScript::CProjectileScript(UINT ScriptType)
@@ -30,11 +30,21 @@ void CProjectileScript::tick()
 {
 	if (m_bUnitDead)
 		return;
-	if (m_TargetObj && m_TargetObj->IsDead()) {
-		DestroyObject(GetOwner());
-		return;
+
+	if (m_TargetObj)
+	{
+		if (m_TargetObj->IsDead() || m_TargetObj->GetScript<CUnitScript>()->IsUnitDead())
+		{
+			CSendServerEventMgr::GetInst()->SendDespawnPacket(this->GetServerID(), 0.f);
+			return;
+		}
 	}
-	
+
+	if (m_UserObj == nullptr || m_UserObj->IsDead() || m_UserObj->GetScript<CUnitScript>()->IsUnitDead())
+	{
+		CSendServerEventMgr::GetInst()->SendDespawnPacket(this->GetServerID(), 0.f);
+		return;
+	}	
 }
 
 void CProjectileScript::BeginOverlap(CCollider2D* _Other)

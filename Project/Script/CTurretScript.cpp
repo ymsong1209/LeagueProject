@@ -5,17 +5,20 @@
 #include "CChampionScript.h"
 #include "CTurretAttackScript.h"
 #include "CBasicAttack.h"
+#include "CGameEventMgr.h"
+#include "CTurretIdleState.h"
+#include "CTurretBrokenState.h"
 
 CTurretScript::CTurretScript()
 	:CStructureScript((UINT)SCRIPT_TYPE::TURRETSCRIPT)
 {
-	m_eFaction = Faction::RED;
-
+	m_fMaxHP = 50.f;
 	m_fAttackPower = 1;
 	m_fDefencePower = 0;
 	m_fAttackSpeed = 2.f;
-	m_fAttackRange = 300;
+	m_fAttackRange = 200;
 	m_fMoveSpeed = 0;
+
 }
 
 CTurretScript::~CTurretScript()
@@ -28,13 +31,35 @@ void CTurretScript::begin()
 	m_Skill[0] = new CBasicAttack;
 	m_Skill[0]->SetOwnerScript(this);
 	//m_Skill[0]->SetProjectileObj(); // 투사체 프리팹 설정
-	//m_Skill[0]->
 	m_SkillLevel[0] = 1;
 
 	// 오브젝트가 현재 챔피언의 사거리 내에 있는지 확인
-	CGameObject* AttackRange = GetOwner()->FindChildObjByName(L"AttackRange");
+	CGameObject* AttackRange = GetOwner()->FindChildObjByName(L"TurretAttackRange");
+	if (AttackRange == nullptr) 
+	{
+		AttackRange = new CGameObject;
+		AttackRange->AddComponent(new CTransform);
+		AttackRange->AddComponent(new CCollider2D);
+		AttackRange->AddComponent(new CAttackRangeScript);
+
+		AttackRange->SetName(L"TurretAttackRange");
+		AttackRange->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+		AttackRange->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+		AttackRange->Collider2D()->SetAbsolute(true);
+		AttackRange->Collider2D()->SetOffsetScale(Vec2(100.f, 100.f));
+		GetOwner()->AddChild(AttackRange);
+		AttackRange->ChangeLayer(L"AttackRange");
+	}
+	// 사거리 적용
+	AttackRange->Collider2D()->SetOffsetScale(Vec2(m_fAttackRange, m_fAttackRange));
 	CAttackRangeScript* AttackRangeScript = AttackRange->GetScript<CAttackRangeScript>();
 	m_AttackRangeScript = AttackRangeScript;
+
+	// FSM에 State 추가
+	if (GetOwner()->GetComponent(COMPONENT_TYPE::FSM) == nullptr) GetOwner()->AddComponent(new CFsm);
+	GetOwner()->Fsm()->AddState(L"Idle", new CTurretIdleState);
+	GetOwner()->Fsm()->AddState(L"Broken", new CTurretBrokenState);
+	GetOwner()->Fsm()->ChangeState(L"Idle");
 
 	CStructureScript::begin();
 }
@@ -109,6 +134,10 @@ void CTurretScript::ChangeAnim()
 		m_bUnitDead = true;
 		// 시야 제공 기능 삭제
 		GetOwner()->Transform()->SetIsShootingRay(false);
+
+		// 잔해 재질 켜기
+		GetOwner()->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Rubble_red.mtrl"), 0);
+		GetOwner()->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Break1_red.mtrl"), 1);
 		
 		// 자식 지우기
 		CGameObject* TurretBase = GetOwner()->FindChildObjByName(L"TurretBase");
@@ -119,8 +148,12 @@ void CTurretScript::ChangeAnim()
 		CGameObject* TurretBreak1 = GetOwner()->FindChildObjByName(L"TurretBreak_1");
 		if (TurretBreak1)
 		{
-			if(TurretBreak1->Animator3D()->GetCurAnim()->GetName() != L"turret_idlebreak\\Turret_Cloth_Break1")
-				TurretBreak1->Animator3D()->PlayOnce(L"turret_idlebreak\\Turret_Cloth_Break1", false);
+			// TurretBreak1 재질 켜기
+			TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Cloth1_red.mtrl"), 0);
+			TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Mage_red.mtrl"), 1);
+
+			if(TurretBreak1->Animator3D()->GetCurAnim()->GetName() != L"turret_break1\\turret_break1")
+				TurretBreak1->Animator3D()->PlayOnce(L"turret_break1\\turret_break1", false);
 			else
 			{
 				if (TurretBreak1->Animator3D()->GetCurAnim()->IsFinish())
@@ -129,10 +162,14 @@ void CTurretScript::ChangeAnim()
 		}
 
 		CGameObject* TurretBreak2 = GetOwner()->FindChildObjByName(L"TurretBreak_2");
-		if (TurretBreak1)
+		if (TurretBreak2)
 		{
-			if (TurretBreak1->Animator3D()->GetCurAnim()->GetName() != L"turret_idlebreak\\Turret_Cloth_Break2")
-				TurretBreak1->Animator3D()->PlayOnce(L"turret_idlebreak\\Turret_Cloth_Break2", false);
+			// TurretBreak2 재질 켜기
+			TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage1_red.mtrl"), 0);
+			TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage2_red.mtrl"), 1);
+
+			if (TurretBreak2->Animator3D()->GetCurAnim()->GetName() != L"turret_break2\\turret_break2")
+				TurretBreak2->Animator3D()->PlayOnce(L"turret_break2\\turret_break2", false);
 			else
 			{
 				if (TurretBreak2->Animator3D()->GetCurAnim()->IsFinish())
@@ -159,8 +196,7 @@ void CTurretScript::Attack()
 		CSkill* BasicAttack = GetSkill(0);
 		BasicAttack->SetUserObj(this->GetOwner());
 		BasicAttack->SetTargetObj(m_pAttackTarget);
-		BasicAttack->SetOwnerScript(this);
-
+		
 		BasicAttack->Use();
 	}
 }
@@ -173,6 +209,10 @@ void CTurretScript::CheckStatus()
 	if (m_bUnitDead)
 	{
 		m_bAttackable = false;
+		
+		if (GetOwner()->Fsm()->GetCurState()->GetName() != L"Broken")
+			GetOwner()->Fsm()->ChangeState(L"Broken");
+		
 		return;
 	}
 }
@@ -228,7 +268,7 @@ void CTurretScript::SelectTarget()
 
 bool CTurretScript::IsValidTarget(CGameObject* _obj)
 {
-	if (!(_obj->GetScript<CUnitScript>()->IsUnitDead()))
+	if (_obj->IsDead() || !(_obj->GetScript<CUnitScript>()->IsUnitDead()))
 		return false;
 
 	// 포탑 사거리 내의 오브젝트
