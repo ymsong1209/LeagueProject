@@ -212,9 +212,9 @@ void CreateTestLevel()
 		CGameObject* pObj2 = nullptr;
 		pMeshData2 = CResMgr::GetInst()->LoadFBX(L"fbx\\MalphiteQShard.fbx");
 		pObj2 = pMeshData2->Instantiate();
-		pObj2->AddComponent(new CCollider2D);
-		pObj2->Collider2D()->SetAbsolute(true);
-		pObj2->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
+		//pObj2->AddComponent(new CCollider2D);
+		//pObj2->Collider2D()->SetAbsolute(true);
+		//pObj2->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
 		pObj2->SetName(L"MalphiteQShard");
 		pObj2->Transform()->SetRelativeScale(Vec3(0.33f, 0.33f, 0.33f));
 		SpawnGameObject(pObj2, Vec3(0.f, 0.f, 0.f), L"SkillProjectile");

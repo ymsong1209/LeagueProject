@@ -13,7 +13,7 @@ CMalphiteQ::CMalphiteQ()
 	m_iMaxLevel = 5;
 	m_fCost = 50.f;
 
-	Ptr<CPrefab> NewPrefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MalphiteQShard.prefab");
+	Ptr<CPrefab> NewPrefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MalphiteQShardCollider.prefab");
 	
 	m_vecSkillObj.push_back(NewPrefab);
 

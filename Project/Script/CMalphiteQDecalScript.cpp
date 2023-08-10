@@ -32,6 +32,10 @@ void CMalphiteQDecalScript::tick()
 		float distance = sqrt( pow((m_vSpawnPos.x - m_vTargetPos.x), 2.f) + 
 								pow((m_vSpawnPos.z - m_vTargetPos.z), 2.f));
 		GetOwner()->Transform()->SetRelativeScale(Vec3(distance, 100.f, 40.f));
+		Vec3 m_vDiff = m_vTargetPos - m_vSpawnPos;  // 두 점 사이의 차이 계산
+		float rotation_angle = atan2(m_vDiff.z, m_vDiff.x);  // atan2 함수를 사용하여 회전 각도 계산
+
+		GetOwner()->Transform()->SetRelativeRot(0.f, -rotation_angle, 0.f);
 	}
 }
 

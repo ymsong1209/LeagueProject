@@ -7,6 +7,7 @@ class CMalphiteQScript :
 private:
     float           m_fTime;
     CGameObject*    m_pMalphiteQDecal;
+    CGameObject*    m_pMalphiteQModel;
 public:
     CMalphiteQScript();
     ~CMalphiteQScript();
