@@ -54,7 +54,7 @@ public:
 public:
     bool    CheckDeath();
     void    CheckStatus();  // 현재 상태 확인
-    void    GetInput();     // 입력 받기
+    virtual void    GetInput();     // 입력 받기
     void    CheckSkills();  // 스킬 체크
     void    Move();
     bool    IsAttackingChampion() { return m_bIsAttackingChampion; }

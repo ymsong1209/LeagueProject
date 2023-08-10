@@ -106,7 +106,7 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Malphite");
 			pObj->Animator3D()->PlayRepeat(L"Malphite\\Idle1", true, true, 0.1f);
-			pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+			pObj->Transform()->SetRelativeScale(Vec3(0.36f, 0.36f, 0.36f));
 
 		}break;
 		case ChampionType::AMUMU:
@@ -165,15 +165,17 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 		{
 			pObj->Transform()->SetIsShootingRay(true);
 			pObj->Transform()->SetRayRange(200.f);
+			pObj->Transform()->SetUseMouseOutline(false);
 		}
 		else
 		{
+			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetIsShootingRay(false);
 		}
 
 
 		pObj->AddComponent(new CCollider3D);
-		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
+		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::CUBE);
 		pObj->Collider3D()->SetAbsolute(true);
 		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
 		pObj->Collider3D()->SetDrawCollision(false);
@@ -185,7 +187,7 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 
 
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		pObj->Transform()->SetUseMouseOutline(true);
+		
 		pObj->Transform()->SetRelativeRot(Vec3(_info.posInfo.moveDir.x, _info.posInfo.moveDir.y, _info.posInfo.moveDir.z));
 		Vec3 spawnPos = Vec3(_info.posInfo.pos.x, _info.posInfo.pos.y, _info.posInfo.pos.z);
 		SpawnGameObject(pObj, spawnPos, L"Player");
@@ -244,8 +246,21 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
-			pObj->Transform()->SetUseMouseOutline(true);
-			pObj->Transform()->SetOutlineThickness(0.072f);
+
+
+			if (_objectInfo.faction == MyPlayer.faction)
+			{
+				pObj->Transform()->SetIsShootingRay(true);
+				pObj->Transform()->SetRayRange(150.f);
+				pObj->Transform()->SetUseMouseOutline(false);
+			}
+			else
+			{
+				pObj->Transform()->SetUseMouseOutline(true);
+				pObj->Transform()->SetIsShootingRay(false);
+				pObj->Transform()->SetOutlineThickness(0.072f);
+			}
+			
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
 			pObj->GetRenderComponent()->SetRaySightCulling(true);
 
@@ -300,9 +315,22 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
-			pObj->Transform()->SetUseMouseOutline(true);
-			pObj->Transform()->SetOutlineThickness(0.072f);
+
+			if (_objectInfo.faction == MyPlayer.faction)
+			{
+				pObj->Transform()->SetIsShootingRay(true);
+				pObj->Transform()->SetRayRange(150.f);
+				pObj->Transform()->SetUseMouseOutline(false);
+			}
+			else
+			{
+				pObj->Transform()->SetUseMouseOutline(true);
+				pObj->Transform()->SetIsShootingRay(false);
+				pObj->Transform()->SetOutlineThickness(0.072f);
+			}
+
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
 
 			CGameObject* HPBar = new CGameObject;
 			HPBar->SetName(L"HPBar");
@@ -354,9 +382,23 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
-			pObj->Transform()->SetUseMouseOutline(true);
-			pObj->Transform()->SetOutlineThickness(0.072f);
+
+			if (_objectInfo.faction == MyPlayer.faction)
+			{
+				pObj->Transform()->SetIsShootingRay(true);
+				pObj->Transform()->SetRayRange(150.f);
+				pObj->Transform()->SetUseMouseOutline(false);
+			}
+			else
+			{
+				pObj->Transform()->SetUseMouseOutline(true);
+				pObj->Transform()->SetIsShootingRay(false);
+				pObj->Transform()->SetOutlineThickness(0.072f);
+			}
+
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+		
 
 			CGameObject* HPBar = new CGameObject;
 			HPBar->SetName(L"HPBar");
@@ -409,9 +451,23 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
-			pObj->Transform()->SetUseMouseOutline(true);
-			pObj->Transform()->SetOutlineThickness(0.072f);
+			
+
+			if (_objectInfo.faction == MyPlayer.faction)
+			{
+				pObj->Transform()->SetIsShootingRay(true);
+				pObj->Transform()->SetRayRange(150.f);
+				pObj->Transform()->SetUseMouseOutline(false);
+			}
+			else
+			{
+				pObj->Transform()->SetUseMouseOutline(true);
+				pObj->Transform()->SetIsShootingRay(false);
+				pObj->Transform()->SetOutlineThickness(0.072f);
+			}
+
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
 
 			CGameObject* HPBar = new CGameObject;
 			HPBar->SetName(L"HPBar");

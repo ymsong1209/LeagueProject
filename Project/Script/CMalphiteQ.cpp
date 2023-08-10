@@ -3,34 +3,23 @@
 
 #include "CUnitScript.h"
 #include "CChampionScript.h"
-#include "CMalphiteRScript.h"
+#include "CMalphiteQScript.h"
 #include "CTimedEffect.h"
 
 CMalphiteQ::CMalphiteQ()
 {
-	m_strSkillName = L"UnstoppableForce";
+	m_strSkillName = L"Seismic Shard";
 	m_fCoolDown = 5.f;
 	m_iMaxLevel = 5;
 	m_fCost = 50.f;
 
-	CGameObject* Projectile = new CGameObject;
-	Projectile->AddComponent(new CTransform);
-	Projectile->AddComponent(new CCollider2D);
-	Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
-	Projectile->Collider2D()->SetOffsetScale(Vec2(5.f, 20.f));
-	Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
-	Projectile->Collider2D()->SetDrawCollision(true);
-	Projectile->SetName(L"UnstoppableForce");
-
-	Ptr<CPrefab> NewPrefab = new CPrefab;
-	CGameObject* PrefabObject = Projectile->Clone();
-	NewPrefab->RegisterProtoObject(Projectile);
-
+	Ptr<CPrefab> NewPrefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MalphiteQShard.prefab");
+	
 	m_vecSkillObj.push_back(NewPrefab);
 
 	// 투사체 스크립트
 	m_iProjectileCount = 1;
-	m_ProjectileScript = new CMalphiteRScript;
+	m_ProjectileScript = new CMalphiteQScript;
 }
 
 CMalphiteQ::~CMalphiteQ()
@@ -51,15 +40,15 @@ bool CMalphiteQ::Use()
 	// 서버에게 기본 공격 사용 신호를 전달
 	CSendServerEventMgr::GetInst()->SendUseSkillPacket(
 		m_UserObj->GetScript<CUnitScript>()->GetServerID(),
-		UINT64_MAX,		// 논타겟팅일 경우 UINT64_MAX를 써주세요
-		m_UserObj->GetScript<CUnitScript>()->GetSkillLevel(2),
-		SkillType::JINX_W,
+		m_TargetObj->GetScript<CUnitScript>()->GetServerID(),		// 논타겟팅일 경우 UINT64_MAX를 써주세요
+		m_UserObj->GetScript<CUnitScript>()->GetSkillLevel(1),
+		SkillType::MALPHITE_Q,
 		Vec3(0, 0, 0),
 		m_iProjectileCount,
 		false,
 		Vec3(0, 0, 0),
-		true,
-		GetMouseDir());
+		false,
+		Vec3(0.f, 0.f, 0.f));
 
 	// 쿨타임 초기화
 	m_fCurCoolDown = m_fCoolDown;
@@ -104,12 +93,9 @@ void CMalphiteQ::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, in
 	TargetUnitScript->SetCurHPVar(-Damage);
 
 	// 2초 동안 둔화시킵니다.
-	CTimedEffect* JinxWSlow = new CTimedEffect(TargetUnitScript, 2.f, 0, 0, CC::SLOW);
-	TargetUnitScript->AddTimedEffect(JinxWSlow);
+	CTimedEffect* MalphiteQSlow = new CTimedEffect(TargetUnitScript, 2.f, 0, 0, CC::SLOW);
+	TargetUnitScript->AddTimedEffect(MalphiteQSlow);
 
-	// 테스트용 도트딜
-	CTimedEffect* TestDot = new CTimedEffect(TargetUnitScript, 3.f, 5.f, 6, CC::CLEAR);
-	TargetUnitScript->AddTimedEffect(TestDot);
 
 	CSkill::GetHit(_UserScript, _TargetScript, _SkillLevel);
 

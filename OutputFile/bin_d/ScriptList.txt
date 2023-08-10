@@ -24,6 +24,7 @@ CKrugMiniScript
 CKrugScript
 CMalphiteEDecalScript
 CMalphiteEScript
+CMalphiteQDecalScript
 CMalphiteQScript
 CMalphiteRScript
 CMalphiteScript
@@ -32,7 +33,6 @@ CMinionHPBarPosScript
 CMinionHPRatioScript
 CMinionScript
 CMobScript
-CMonsterHPBarUIScript
 CMouseCursorUIScript
 CMoveCursorUIScript
 CMurkWolfMiniScript

@@ -111,22 +111,6 @@ void CreateTestLevel()
 	SpawnGameObject(pUICam, Vec3(0.f, 0.f, 0.f), 0);
 
 
-
-	//CGameObject* UIObj = new CGameObject; //각종 스크립트에서 처리할 것들
-	//UIObj->SetName(L"UIObj");
-	//UIObj->AddComponent(new CTransform);
-	//UIObj->AddComponent(new CCharacterUIScript);
-	//UIObj->AddComponent(new CWorldHPSpawnScript);
-	//UIObj->AddComponent(new CInventoryUIScript);
-	//UIObj->AddComponent(new CMinimapUIScript);
-	//UIObj->AddComponent(new CMouseCursorUIScript);
-	//UIObj->AddComponent(new CFontUIScript);
-	//UIObj->AddComponent(new CScorePanelScript);
-	//SpawnGameObject(UIObj, Vec3(0.f, 0.f, 0.f), 31);
-
-
-
-
 	// 광원 추가
 	CGameObject* pLightObj = new CGameObject;
 	pLightObj->SetName(L"Directional Light");
@@ -161,59 +145,6 @@ void CreateTestLevel()
 	pSkyBox->SkyBox()->SetRaySightCulling(false);
 
 	SpawnGameObject(pSkyBox, Vec3(0.f, 0.f, 0.f), 0);
-
-
-	//// Shadow Test Object
-	//CGameObject* pObject = new CGameObject;
-	//pObject->SetName(L"Sphere Object");
-	//
-	//pObject->AddComponent(new CTransform);
-	//pObject->AddComponent(new CMeshRender);
-	////pObject->AddComponent(new CAnimator2D);
-	//
-	//pObject->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 300.f));
-	//
-	//pObject->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
-	//pObject->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"),0);
-	//pObject->MeshRender()->SetDynamicShadow(true);
-	//pObject->MeshRender()->SetBounding(150.f);
-	//
-	//SpawnGameObject(pObject, Vec3(0.f, 200.f, 300.f), 0);
-
-	// Anim2d Test Object
-	//CGameObject* pObject3 = new CGameObject;
-	//pObject3->SetName(L"Sphere Object");
-	//
-	//pObject3->AddComponent(new CTransform);
-	//pObject3->AddComponent(new CMeshRender);
-	//pObject3->AddComponent(new CAnimator2D);
-	//pObject3->Transform()->SetRelativeScale(Vec3(300.f, 300.f, 300.f));
-	//
-	//pObject3->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	//pObject3->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DAnimMtrl"), 0);
-	//pObject3->MeshRender()->SetDynamicShadow(true);
-	//pObject3->MeshRender()->SetBounding(150.f);
-	//
-	//SpawnGameObject(pObject3, Vec3(0.f, 200.f, 300.f), 0);
-
-
-
-
-	// LandScape Object
-	//CGameObject* pLandScape = new CGameObject;
-	//pLandScape->SetName(L"LandScape");
-
-
-	//pLandScape->AddComponent(new CTransform);
-	//pLandScape->AddComponent(new CLandScape);
-
-	//pLandScape->Transform()->SetRelativeScale(Vec3(200.f, 1000.f, 200.f));
-
-	//pLandScape->LandScape()->SetFace(32, 32);
-	//pLandScape->LandScape()->SetFrustumCheck(false);
-
-	//SpawnGameObject(pLandScape, Vec3(0.f, 0.f, 0.f), 0);
-
 
 
 	CGameObject* LoLMapCollider = new CGameObject;
@@ -276,6 +207,19 @@ void CreateTestLevel()
 	pObj2->AddChild(DragonBar);
 	//======메모: 미니언,드래곤,정글몹 자식으로 붙일 체력바 부분=================================================
 
+	{
+		Ptr<CMeshData> pMeshData2 = nullptr;
+		CGameObject* pObj2 = nullptr;
+		pMeshData2 = CResMgr::GetInst()->LoadFBX(L"fbx\\MalphiteQShard.fbx");
+		pObj2 = pMeshData2->Instantiate();
+		pObj2->AddComponent(new CCollider2D);
+		pObj2->Collider2D()->SetAbsolute(true);
+		pObj2->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
+		pObj2->SetName(L"MalphiteQShard");
+		pObj2->Transform()->SetRelativeScale(Vec3(0.33f, 0.33f, 0.33f));
+		SpawnGameObject(pObj2, Vec3(0.f, 0.f, 0.f), L"SkillProjectile");
+	}
+	
 
 	// ============
 	// FBX Loading
