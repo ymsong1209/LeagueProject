@@ -311,9 +311,6 @@
     <ClCompile Include="CSkillMgr.cpp">
       <Filter>Manager\3. SkillMgr</Filter>
     </ClCompile>
-    <ClCompile Include="CScriptMgr.cpp">
-      <Filter>Manager\1. ScriptMgr</Filter>
-    </ClCompile>
     <ClCompile Include="CSendServerEventMgr.cpp">
       <Filter>Manager\2. SendServerEventMgr</Filter>
     </ClCompile>
@@ -609,7 +606,6 @@
     <ClCompile Include="CMalphiteRScript.cpp">
       <Filter>Scripts\SkillProjectile\Malphite</Filter>
     </ClCompile>
-    <ClCompile Include="CChampionScript.cpp" />
     <ClCompile Include="CDragonHPUIScript.cpp" />
     <ClCompile Include="CJungleMINIHPScript.cpp" />
     <ClCompile Include="CJungleMobHPScript.cpp" />
@@ -630,6 +626,12 @@
     </ClCompile>
     <ClCompile Include="CJinxR.cpp">
       <Filter>Scripts\Skill\Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CScriptMgr.cpp">
+      <Filter>Manager\1. ScriptMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CChampionScript.cpp">
+      <Filter>Scripts\Unit\Champion</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

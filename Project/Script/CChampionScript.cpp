@@ -227,76 +227,77 @@ void CChampionScript::GetInput()
 			PathFinder()->FindPath(TargetPos);
 		}
 	}
-		if (KEY_TAP(KEY::Q))
-		{
-			// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-			if ((m_eRestraint & RESTRAINT::CAN_USE_SKILL) == 0 || m_Skill[1]->GetCost() > m_fMP)
-				return;
 
-			if (m_Skill[1]->CSkill::Use())
+	if (KEY_TAP(KEY::Q))
+	{
+		// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
+		if ((m_eRestraint & RESTRAINT::CAN_USE_SKILL) == 0 || m_Skill[1]->GetCost() > m_fMP)
+			return;
+
+		if (m_Skill[1]->CSkill::Use())
+		{
+			// Q이벤트 발생
+			PlayerQEvent* evn = dynamic_cast<PlayerQEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_SKILL_Q));
+			if (evn != nullptr)
 			{
-				// Q이벤트 발생
-				PlayerQEvent* evn = dynamic_cast<PlayerQEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_SKILL_Q));
-				if (evn != nullptr)
-				{
-					evn->Clear();
-					evn->SetUserObj(GetOwner());
-					evn->SetTargetObj(nullptr);
-					CGameEventMgr::GetInst()->NotifyEvent(*evn);
-				}
+				evn->Clear();
+				evn->SetUserObj(GetOwner());
+				evn->SetTargetObj(nullptr);
+				CGameEventMgr::GetInst()->NotifyEvent(*evn);
 			}
 		}
-		if (KEY_TAP(KEY::W))
-		{
-			// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-			if ((m_eRestraint & RESTRAINT::CAN_USE_SKILL) == 0 || m_Skill[2]->GetCost() > m_fMP)
-				return;
+	}
+	if (KEY_TAP(KEY::W))
+	{
+		// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
+		if ((m_eRestraint & RESTRAINT::CAN_USE_SKILL) == 0 || m_Skill[2]->GetCost() > m_fMP)
+			return;
 
-			if (m_Skill[2]->CSkill::Use())
+		if (m_Skill[2]->CSkill::Use())
+		{
+			// W 이벤트 발생
+			PlayerWEvent* evn = dynamic_cast<PlayerWEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_SKILL_W));
+			if (evn != nullptr)
 			{
-				// W 이벤트 발생
-				PlayerWEvent* evn = dynamic_cast<PlayerWEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_SKILL_W));
-				if (evn != nullptr)
-				{
-					evn->Clear();
-					evn->SetUserObj(GetOwner());
-					evn->SetTargetObj(nullptr);
-					CGameEventMgr::GetInst()->NotifyEvent(*evn);
-				}
+				evn->Clear();
+				evn->SetUserObj(GetOwner());
+				evn->SetTargetObj(nullptr);
+				CGameEventMgr::GetInst()->NotifyEvent(*evn);
 			}
 		}
-		if (KEY_TAP(KEY::E))
-		{
-			// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-			if ((m_eRestraint & RESTRAINT::CAN_USE_SKILL) == 0 || m_Skill[3]->GetCost() > m_fMP)
-				return;
+	}
+	if (KEY_TAP(KEY::E))
+	{
+		// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
+		if ((m_eRestraint & RESTRAINT::CAN_USE_SKILL) == 0 || m_Skill[3]->GetCost() > m_fMP)
+			return;
 
-			if (m_Skill[3]->CSkill::Use())
+		if (m_Skill[3]->CSkill::Use())
+		{
+			// E 이벤트 발생
+			PlayerEEvent* evn = dynamic_cast<PlayerEEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_SKILL_E));
+			if (evn != nullptr)
 			{
-				// E 이벤트 발생
-				PlayerEEvent* evn = dynamic_cast<PlayerEEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_SKILL_E));
-				if (evn != nullptr)
-				{
-					evn->Clear();
-					evn->SetUserObj(GetOwner());
-					evn->SetTargetObj(nullptr);
-					CGameEventMgr::GetInst()->NotifyEvent(*evn);
-				}
+				evn->Clear();
+				evn->SetUserObj(GetOwner());
+				evn->SetTargetObj(nullptr);
+				CGameEventMgr::GetInst()->NotifyEvent(*evn);
 			}
 		}
-		if (KEY_TAP(KEY::R))
+	}
+	if (KEY_TAP(KEY::R))
+	{
+		// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
+		if ((m_eRestraint & RESTRAINT::CAN_USE_SKILL) == 0 || m_Skill[4]->GetCost() > m_fMP)
+			return;
+
+		if (m_Skill[4]->CSkill::Use())
 		{
-			// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-			if ((m_eRestraint & RESTRAINT::CAN_USE_SKILL) == 0 || m_Skill[4]->GetCost() > m_fMP)
-				return;
-
-			if (m_Skill[4]->CSkill::Use())
-			{
-				// 스킬 이벤트
-			}
+			// 스킬 이벤트
 		}
+	}
 
-		// 소환사 주문
+	// 소환사 주문
 
 
 
