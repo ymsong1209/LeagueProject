@@ -313,9 +313,6 @@
     <ClCompile Include="CSendServerEventMgr.cpp">
       <Filter>Manager\2. SendServerEventMgr</Filter>
     </ClCompile>
-    <ClCompile Include="CInGameCameraScript.cpp">
-      <Filter>Scripts\Camera</Filter>
-    </ClCompile>
     <ClCompile Include="CBasicAttackScript.cpp">
       <Filter>Scripts\SkillProjectile</Filter>
     </ClCompile>
@@ -649,6 +646,9 @@
     </ClCompile>
     <ClCompile Include="CMalphiteW.cpp">
       <Filter>Scripts\Skill\Malphite</Filter>
+    </ClCompile>
+    <ClCompile Include="CInGameCameraScript.cpp">
+      <Filter>Scripts\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

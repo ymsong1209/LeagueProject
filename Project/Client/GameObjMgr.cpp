@@ -512,7 +512,7 @@ void GameObjMgr::SendObjectAnim(AnimInfo* _animInfo, ClientServiceRef _service)
 		animInfoPacket.bRepeat = _animInfo->bRepeat;
 		animInfoPacket.blend = _animInfo->blend;
 		animInfoPacket.blendTime = _animInfo->blendTime;
-
+		animInfoPacket.animSpeed = _animInfo->animSpeed;
 
 		wstring _animName = _animInfo->animName;
 

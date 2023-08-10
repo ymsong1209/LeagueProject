@@ -270,6 +270,27 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 		cout << "S_GAME_START Success" << endl;
 		// 인게임 진입
 
+		/*RECT WindowPos;
+		HWND WindowHandle = CEngine::GetInst()->GetInst()->GetMainWnd();
+		GetWindowRect(WindowHandle, &WindowPos);
+
+		int topMenuBarHeight = GetSystemMetrics(SM_CYCAPTION);
+
+
+		Vec2 WindowResolution = CEngine::GetInst()->GetWindowResolution();
+
+		RECT rect;
+		long dx = 10;
+		rect.left = WindowPos.left + dx;
+		rect.top = WindowPos.top + topMenuBarHeight + dx;
+
+		rect.right = WindowPos.left + WindowResolution.x;
+		rect.bottom = WindowPos.top + WindowResolution.y + dx;
+
+		ClipCursor(&rect);*/
+
+
+
 		// 맵 불러옴
 		CreateTestLevel();
 
