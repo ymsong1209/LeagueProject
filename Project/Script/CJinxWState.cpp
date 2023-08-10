@@ -4,6 +4,8 @@
 #include "CSkill.h"
 #include "CJinxScript.h"
 
+#include <thread>
+
 CJinxWState::CJinxWState()
 {
 	SetName(L"W");
@@ -27,7 +29,13 @@ void CJinxWState::Enter()
 	JinxW->SetTargetObj(m_TargetObj);
 	JinxW->SetOwnerScript(GetOwner()->GetScript<CChampionScript>());
 
-	JinxW->Use();
+	
+	thread t([=]() {
+
+		Sleep(500);
+		JinxW->Use();
+		});
+	t.detach();
 
 	// 애니메이션
 	wstring animName = L"";
