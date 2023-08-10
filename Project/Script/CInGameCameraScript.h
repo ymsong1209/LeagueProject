@@ -11,8 +11,16 @@ private:
     UINT        m_iUpYLimit;
     UINT        m_iDownYLimit;
 
+private:
+    CGameObject* m_pTargetObject;
+
+
 public:
+    virtual void begin() override;
     virtual void tick() override;
+
+    void SetTargetObject(CGameObject* _Object) { m_pTargetObject = _Object; }
+    CGameObject* GetTargetObject() { return m_pTargetObject; }
 
 
     CLONE(CInGameCameraScript);

@@ -103,13 +103,9 @@ void CMalphiteR::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, in
 
 	TargetUnitScript->SetCurHPVar(-Damage);
 
-	// 2초 동안 둔화시킵니다.
-	CTimedEffect* JinxWSlow = new CTimedEffect(TargetUnitScript, 2.f, 0, 0, CC::SLOW);
-	TargetUnitScript->AddTimedEffect(JinxWSlow);
-
-	// 테스트용 도트딜
-	CTimedEffect* TestDot = new CTimedEffect(TargetUnitScript, 3.f, 5.f, 6, CC::CLEAR);
-	TargetUnitScript->AddTimedEffect(TestDot);
+	// 2초 동안 에어본시킵니다.
+	CTimedEffect* MalphAirborne = new CTimedEffect(TargetUnitScript, 1.5f, 0, 0, CC::AIRBORNE);
+	TargetUnitScript->AddTimedEffect(MalphAirborne);
 
 	CSkill::GetHit(_UserScript, _TargetScript, _SkillLevel);
 

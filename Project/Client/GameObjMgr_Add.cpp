@@ -13,6 +13,8 @@
 #include <Engine\CLayer.h>
 #include <Engine\CGameObject.h>
 #include <Engine\components.h>
+#include <Engine\CRenderMgr.h>
+
 
 #include <Engine\CResMgr.h>
 #include <Engine\CCollisionMgr.h>
@@ -59,6 +61,7 @@
 #include <Script\CJungleMINIHPScript.h>
 #include <Script/CJungleMobHPScript.h>
 #include <Script\CTurretHPUIScript.h>
+#include <Script/CInGameCameraScript.h>
 
 
 
@@ -119,6 +122,9 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 		// 챔피언 타입과 관계없이 공통
 		if (myPlayer)
 		{
+			CCamera* MainCam = CRenderMgr::GetInst()->GetMainCam();
+			MainCam->GetOwner()->GetScript<CInGameCameraScript>()->SetTargetObject(pObj);
+
 			pObj->AddComponent(new CPathFinder);
 			pObj->AddComponent(new CFsm);
 			MyPlayerScript = pObj->GetScript<CUnitScript>();
