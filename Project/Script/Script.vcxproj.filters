@@ -3,7 +3,6 @@
   <ItemGroup>
     <ClCompile Include="COtherPlayerScript.cpp" />
     <ClCompile Include="CPlayerScript.cpp" />
-    <ClCompile Include="CInGameCameraScript.cpp" />
     <ClCompile Include="CSkill.cpp" />
     <ClCompile Include="CStructureScript.cpp" />
     <ClCompile Include="CTurretScript.cpp" />
@@ -315,9 +314,6 @@
       <Filter>Manager\2. SendServerEventMgr</Filter>
     </ClCompile>
     <ClCompile Include="CInGameCameraScript.cpp">
-      <Filter>Scripts\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="CCameraMoveScript.cpp">
       <Filter>Scripts\Camera</Filter>
     </ClCompile>
     <ClCompile Include="CBasicAttackScript.cpp">
@@ -642,6 +638,15 @@
     <ClCompile Include="CMalphiteRDecalScript.cpp">
       <Filter>Scripts\SkillProjectile\Malphite</Filter>
     </ClCompile>
+    <ClCompile Include="CInGameCameraScript.cpp">
+      <Filter>Scripts\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CCameraMoveScript.cpp">
+      <Filter>Scripts\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxEScript.cpp">
+      <Filter>Scripts\SkillProjectile\Jinx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -825,6 +830,9 @@
     </ClInclude>
     <ClInclude Include="CMalphiteRDecalScript.h">
       <Filter>Scripts\SkillProjectile\Malphite</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxEScript.h">
+      <Filter>Scripts\SkillProjectile\Jinx</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
