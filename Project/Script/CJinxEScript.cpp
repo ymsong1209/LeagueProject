@@ -45,7 +45,7 @@ void CJinxEScript::BeginOverlap(CCollider2D* _Other)
 		return;
 	
 	// 시전자와 다른 진영의 오브젝트가 부딪친다면
-	if (_Other->GetOwner()->GetScript<CUnitScript>()->GetFaction() == m_UserObj->GetScript<CUnitScript>()->GetFaction())
+	if (_Other->GetOwner()->GetScript<CUnitScript>()->GetFaction() != m_UserObj->GetScript<CUnitScript>()->GetFaction())
 	{
 		// 피격자의 서버 아이디
 		UINT64 TargetServerID = _Other->GetOwner()->GetScript<CUnitScript>()->GetServerID();

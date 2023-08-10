@@ -195,9 +195,9 @@ void ServerEventMgr::clienttick()
 				AnimInfo* animInfo = (AnimInfo*)(m_vecEvent[i].lParam);
 
 				if (animInfo->bRepeat)
-					NewObject->Animator3D()->PlayRepeat(animInfo->animName, animInfo->bRepeatBlend, animInfo->blend, animInfo->blendTime);
+					NewObject->Animator3D()->PlayRepeat(animInfo->animName, animInfo->bRepeatBlend, animInfo->blend, animInfo->blendTime, animInfo->animSpeed);
 				else
-					NewObject->Animator3D()->PlayOnce(animInfo->animName, animInfo->blend, animInfo->blendTime);
+					NewObject->Animator3D()->PlayOnce(animInfo->animName, animInfo->blend, animInfo->blendTime, animInfo->animSpeed);
 
 				// 사용이 끝난 후에는 메모리를 해제
 				delete animInfo;

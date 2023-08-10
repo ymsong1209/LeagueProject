@@ -181,6 +181,7 @@ enum RESTRAINT
 	DEFAULT = CAN_MOVE | CAN_ATTACK | CAN_USE_SKILL,   // 8
 	BLOCK = 0,
 };
+
 struct AnimInfo
 {
 	wstring animName;		// 변경할 애니메이션 이름
@@ -189,6 +190,7 @@ struct AnimInfo
 	bool    bRepeatBlend;   // 블렌드 반복 여부 (PlayRepeat에서만 사용하는 함수)
 	bool    blend;			// 블렌드 사용여부
 	float   blendTime;
+	float   animSpeed;      // 애니메이션 속도
 };
 
 enum class DimensionType

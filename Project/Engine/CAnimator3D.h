@@ -83,10 +83,10 @@ public:
     //반복재생 사용하고 싶을 시
     //repeatblend : 현재 애니메이션 반복재생할때 마지막에 blend 옵션 줄 것인지
     //blend : 이전 애니메이션이 남아있을때 애니메이션 전환할때 blend옵션을 줄 것인지
-    void PlayRepeat(const wstring& _strName, bool _RepeatBlend, bool _blend = true, float _blendtime = 0.f);
+    void PlayRepeat(const wstring& _strName, bool _RepeatBlend, bool _blend = true, float _blendtime = 0.f, float _animspeed = 1.f);
     //단일재생 사용하고 싶을 시
     //blend : 이전 애니메이션이 남아있을때 애니메이션 전환할때 blend옵션을 줄 것인지
-    void PlayOnce(const wstring& _strName, bool _blend = false, float _blendtime = 0.f);
+    void PlayOnce(const wstring& _strName, bool _blend = false, float _blendtime = 0.f, float _animspeed = 1.f);
 
 
     void Pause();

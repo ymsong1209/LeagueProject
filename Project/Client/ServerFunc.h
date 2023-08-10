@@ -9,6 +9,7 @@ struct AnimInfoPacket {
     bool    bRepeatBlend;   // 블렌드 반복 여부
     bool    blend;          // 블렌드 사용여부
     float   blendTime;
+    float   animSpeed;      // 애니메이션 속도
 
     uint16  animNameOffset;
     uint16  animNameCount;
