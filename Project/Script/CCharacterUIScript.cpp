@@ -8,6 +8,7 @@
 #include <Engine\CRenderMgr.h>
 #include <Engine\CCamera.h>
 #include "CSkillLevelUIScript.h"
+#include "CSkillLevelUpUIScript.h"
 
 CCharacterUIScript::CCharacterUIScript()
 	:CUIScript(CHARACTERUISCRIPT)
@@ -144,8 +145,8 @@ void CCharacterUIScript::SkillUILoad()
 	}
 
 
-	//MALPHITE_CIRCLE
-	CGameObject* SkillLevel_UI = new CGameObject; //캐릭터 패널 배치
+	
+	CGameObject* SkillLevel_UI = new CGameObject; //아래 스킬 레벨 표시 바 (점점점으로 되어있는거)
 	SkillLevel_UI->SetName(L"SkillLevel_UI");
 	SkillLevel_UI->AddComponent(new CTransform);
 	SkillLevel_UI->AddComponent(new CMeshRender);
@@ -156,6 +157,65 @@ void CCharacterUIScript::SkillUILoad()
 	SkillLevel_UI->Transform()->SetAbsolute(true);
 	SkillLevel_UI->Transform()->SetRelativePos(Vec3(-52.f, -10.f, -10.f));
 	GetUIBackPanel()->AddChild(SkillLevel_UI);
+
+
+	//=============================================
+	//스킬 레벨업 버튼
+	CGameObject* Q_LvUpObj = new CGameObject;
+	Q_LvUpObj->SetName(L"Q_LvUpObj");
+	Q_LvUpObj->AddComponent(new CTransform);
+	Q_LvUpObj->AddComponent(new CMeshRender);
+	Q_LvUpObj->Transform()->SetRelativeScale(Vec3(40.f, 40.f, -10.f));
+	Q_LvUpObj->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	Q_LvUpObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\SkillLvUp.mtrl"), 0);
+	Q_LvUpObj->Transform()->SetAbsolute(true);
+	Q_LvUpObj->Transform()->SetRelativePos(Vec3(-131.f, 62.f, -10.f));
+	GetUIBackPanel()->AddChild(Q_LvUpObj);
+
+	CGameObject* W_LvUpObj = new CGameObject;
+	W_LvUpObj->SetName(L"W_LvUpObj");
+	W_LvUpObj->AddComponent(new CTransform);
+	W_LvUpObj->AddComponent(new CMeshRender);
+	W_LvUpObj->Transform()->SetRelativeScale(Vec3(40.f, 40.f, 1.f));
+	W_LvUpObj->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	W_LvUpObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\SkillLvUp.mtrl"), 0);
+	W_LvUpObj->Transform()->SetAbsolute(true);
+	W_LvUpObj->Transform()->SetRelativePos(Vec3(-78.f, 62.f, -10.f));
+	GetUIBackPanel()->AddChild(W_LvUpObj);
+
+	CGameObject* E_LvUpObj = new CGameObject;
+	E_LvUpObj->SetName(L"E_LvUpObj");
+	E_LvUpObj->AddComponent(new CTransform);
+	E_LvUpObj->AddComponent(new CMeshRender);
+	E_LvUpObj->Transform()->SetRelativeScale(Vec3(40.f, 40.f, 1.f));
+	E_LvUpObj->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	E_LvUpObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\SkillLvUp.mtrl"), 0);
+	E_LvUpObj->Transform()->SetAbsolute(true);
+	E_LvUpObj->Transform()->SetRelativePos(Vec3(-27.f, 62.f, -10.f));
+	GetUIBackPanel()->AddChild(E_LvUpObj);
+
+	CGameObject* R_LvUpObj = new CGameObject;
+	R_LvUpObj->SetName(L"R_LvUpObj");
+	R_LvUpObj->AddComponent(new CTransform);
+	R_LvUpObj->AddComponent(new CMeshRender);
+	R_LvUpObj->Transform()->SetRelativeScale(Vec3(40.f, 40.f, 1.f));
+	R_LvUpObj->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	R_LvUpObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\SkillLvUp.mtrl"), 0);
+	R_LvUpObj->Transform()->SetAbsolute(true);
+	R_LvUpObj->Transform()->SetRelativePos(Vec3(23.24f, 62.f, -10.f));
+	GetUIBackPanel()->AddChild(R_LvUpObj);
+
+	CGameObject* Skill_LevelUpObj = new CGameObject;
+	Skill_LevelUpObj->SetName(L"Skill_LevelUpObj");
+	Skill_LevelUpObj->AddComponent(new CTransform);
+	Skill_LevelUpObj->AddComponent(new CSkillLevelUpUIScript);
+	Skill_LevelUpObj->GetScript<CSkillLevelUpUIScript>()->SetBackPanel(GetUIBackPanel());
+	Skill_LevelUpObj->GetScript<CSkillLevelUpUIScript>()->Set_QWER_SkillLvUpObj(Q_LvUpObj, W_LvUpObj, E_LvUpObj, R_LvUpObj);
+	Skill_LevelUpObj->Transform()->SetRelativeScale(Vec3(1.f, 1.f, 1.f));
+	Skill_LevelUpObj->Transform()->SetAbsolute(true);
+	Skill_LevelUpObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
+	GetUIBackPanel()->AddChild(Skill_LevelUpObj);
+	
 }
 
 void CCharacterUIScript::SpellUILoad()
