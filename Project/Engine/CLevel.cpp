@@ -5,6 +5,9 @@
 #include "CGameObject.h"
 
 #include "CRenderMgr.h"
+#include "CKeyMgr.h"
+#include "CCollider2D.h"
+#include "CCollider3D.h"
 
 CLevel::CLevel()
 	: m_arrLayer{}
@@ -41,6 +44,23 @@ void CLevel::RegisterObject()
 
 void CLevel::tick()
 {
+	if (CKeyMgr::GetInst()->GetKeyState(KEY::F7) == KEY_STATE::TAP(KEY_STATE::TAP))
+	{
+		for (UINT i = 0; i < MAX_LAYER; ++i)
+		{
+			vector<CGameObject*> GameObjects = m_arrLayer[i]->GetObjects();
+
+			for (UINT j = 0; j < GameObjects.size(); ++j)
+			{
+				if (GameObjects[j]->Collider2D())
+					GameObjects[j]->Collider2D()->SetDrawCollision(false);
+				else if (GameObjects[j]->Collider3D())
+					GameObjects[j]->Collider3D()->SetDrawCollision(false);
+			}
+		}
+	}
+
+
 	for (UINT i = 0; i < MAX_LAYER; ++i)
 	{
 		m_arrLayer[i]->tick();
