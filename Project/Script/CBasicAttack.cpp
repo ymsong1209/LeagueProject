@@ -20,11 +20,11 @@ CBasicAttack::CBasicAttack()
 	Projectile->Collider2D()->SetOffsetScale(Vec2(5.f, 5.f));
 	Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
 	Projectile->SetName(L"Projectile");
-
+	
 	Ptr<CPrefab> NewPrefab = new CPrefab;
 	CGameObject* PrefabObject = Projectile->Clone(); 
 	NewPrefab->RegisterProtoObject(PrefabObject);
-
+	
 	m_vecSkillObj.push_back(NewPrefab);
 
 	// 투사체 스크립트

@@ -2194,10 +2194,10 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 				
 				// Rubble(잔해, 부모)
 				Ptr<CTexture> AlphaTex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png");
-				//pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
-				//pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, AlphaTex);
-				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Rubble_red.mtrl"), 0);
-				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Break1_red.mtrl"), 1);
+				pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
+				pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, AlphaTex);
+				//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Rubble_red.mtrl"), 0);
+				//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Break1_red.mtrl"), 1);
 				
 				// TurretBase(본체)
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Cloth1_red.mtrl"), 0);
@@ -2291,9 +2291,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(HPBar);
 
 			_placedObjects.insert(std::make_pair(_objectId, pObj));
-			_placedObjects.insert(std::make_pair(_objectId + 1, pObj));
-			_placedObjects.insert(std::make_pair(_objectId + 2, pObj));
-			_placedObjects.insert(std::make_pair(_objectId + 3, pObj));
+			_placedObjects.insert(std::make_pair(_objectId + 1, TurretBase));
+			_placedObjects.insert(std::make_pair(_objectId + 2, TurretBreak1));
+			_placedObjects.insert(std::make_pair(_objectId + 3, TurretBreak2));
 		}
 		break;
 

@@ -30,7 +30,8 @@ void CTurretScript::begin()
 {
 	m_Skill[0] = new CBasicAttack;
 	m_Skill[0]->SetOwnerScript(this);
-	//m_Skill[0]->SetProjectileObj(); // 투사체 프리팹 설정
+	//Ptr<CPrefab> TurretProjectile = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\TurretBlaze.prefab");
+	//m_Skill[0]->SetProjectileObj(TurretProjectile); // 투사체 프리팹 설정
 	m_SkillLevel[0] = 1;
 
 	// 오브젝트가 현재 챔피언의 사거리 내에 있는지 확인
@@ -69,10 +70,11 @@ void CTurretScript::tick()
 	CStructureScript::tick();
 
 	CheckStatus();
-	ChangeAnim();
 
 	if (m_bUnitDead)
 		return;
+	
+	ChangeAnim();
 
 	//포탑 공격 쿨타임
 	m_fAttackCoolTime += DT;
@@ -133,102 +135,6 @@ void CTurretScript::ChangeAnim()
 			, 1.f);
 		}
 	}
-	else
-	{
-		// 포탑 Dead 상태
-		m_bUnitDead = true;
-		// 시야 제공 기능 삭제
-		GetOwner()->Transform()->SetIsShootingRay(false);
-
-		// 잔해 재질 켜기
-		if (m_eFaction == Faction::RED)
-		{
-			Ptr<CTexture> RedTex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\sruap_turret_chaos1_rubble_tx_cm.dds");
-
-			GetOwner()->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Rubble_red.mtrl"), 0);
-			GetOwner()->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Break1_red.mtrl"), 1);
-			//GetOwner()->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, RedTex);
-			//GetOwner()->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, RedTex);
-		
-			//CSendServerEventMgr::GetInst()->SendMtrlPacket(TurretBaseScript->GetServerID(), 0, TEX_0, L"texture\\FBXTexture\\sruap_turret_chaos1_rubble_tx_cm.dds");
-			//CSendServerEventMgr::GetInst()->SendMtrlPacket(TurretBaseScript->GetServerID(), 1, TEX_0, L"texture\\FBXTexture\\sruap_turret_chaos1_rubble_tx_cm.dds");
-		}
-		else
-		{
-			Ptr<CTexture> BlueTex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\sruap_turret_chaos1_rubble_tx_cm_blue.dds");
-
-			GetOwner()->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, BlueTex);
-			GetOwner()->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, BlueTex);
-
-			CSendServerEventMgr::GetInst()->SendMtrlPacket(TurretBaseScript->GetServerID(), 0, TEX_0, L"texture\\FBXTexture\\sruap_turret_chaos1_rubble_tx_cm_blue.dds");
-			CSendServerEventMgr::GetInst()->SendMtrlPacket(TurretBaseScript->GetServerID(), 1, TEX_0, L"texture\\FBXTexture\\sruap_turret_chaos1_rubble_tx_cm_blue.dds");
-		}
-		// 자식 지우기
-		if (TurretBase != nullptr && !TurretBaseScript->IsUnitDead())
-		{
-			TurretBaseScript->SetUnitDead(true);
-			CSendServerEventMgr::GetInst()->SendDespawnPacket(TurretBaseScript->GetServerID(), 0.f);
-		}
-		
-		// 자식 애니메이션 재생 후 삭제
-		CGameObject* TurretBreak1 = GetOwner()->FindChildObjByName(L"TurretBreak_1");
-		CUnitScript* TurretBreak1Script = TurretBreak1->GetScript<CUnitScript>();
-		if (TurretBreak1)
-		{
-			// TurretBreak1 재질 켜기
-			TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Cloth1_red.mtrl"), 0);
-			TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Mage_red.mtrl"), 1);
-
-			if (TurretBreak1->Animator3D()->GetCurAnim()->IsPause())
-			{
-				TurretBreak1->Animator3D()->PlayOnce(L"turret_break1\\turret_break1", false);
-				
-				CSendServerEventMgr::GetInst()->SendAnimPacket(TurretBreak1Script->GetServerID(),
-					L"turret_break1\\turret_break1"
-					, false
-					, false
-					, false
-					, 0.f);
-			}
-			else
-			{
-				if (TurretBreak1 && !TurretBreak1Script->IsUnitDead() && TurretBreak1->Animator3D()->GetCurAnim()->IsFinish())
-				{
-					TurretBreak1Script->SetUnitDead(true);
-					CSendServerEventMgr::GetInst()->SendDespawnPacket(TurretBreak1Script->GetServerID(), 0.f);
-				}
-			}
-		}
-
-		CGameObject* TurretBreak2 = GetOwner()->FindChildObjByName(L"TurretBreak_2");
-		CUnitScript* TurretBreak2Script = TurretBreak2->GetScript<CUnitScript>();
-		if (TurretBreak2)
-		{
-			// TurretBreak2 재질 켜기
-			TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage1_red.mtrl"), 0);
-			TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage2_red.mtrl"), 1);
-
-			if (TurretBreak2->Animator3D()->GetCurAnim()->IsPause())
-			{
-				TurretBreak2->Animator3D()->PlayOnce(L"turret_break2\\turret_break2", false);
-
-				CSendServerEventMgr::GetInst()->SendAnimPacket(TurretBreak2Script->GetServerID(),
-					L"turret_break2\\turret_break2"
-					, false
-					, false
-					, false
-					, 0.f);
-			}
-			else
-			{
-				if (TurretBreak2 && !TurretBreak2Script->IsUnitDead() && TurretBreak2->Animator3D()->GetCurAnim()->IsFinish())
-				{
-					TurretBreak2Script->SetUnitDead(true);
-					CSendServerEventMgr::GetInst()->SendDespawnPacket(TurretBreak2Script->GetServerID(), 0.f);
-				}
-			}
-		}
-	de
 }
 
 void CTurretScript::Attack()
@@ -258,9 +164,9 @@ void CTurretScript::CheckStatus()
 	// 공격 가능한지 여부 체크
 
 	// 포탑이 파괴되었다면 무조건 공격 불가
-	if (m_bUnitDead)
+	if (m_fHP <=  0)
 	{
-		m_bAttackable = false;
+		m_bUnitDead = true;
 		
 		if (GetOwner()->Fsm()->GetCurState()->GetName() != L"Broken")
 			GetOwner()->Fsm()->ChangeState(L"Broken");
