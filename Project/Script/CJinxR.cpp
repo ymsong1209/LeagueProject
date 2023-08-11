@@ -8,7 +8,7 @@
 CJinxR::CJinxR()
 {
 	m_strSkillName = L"Super Mega Death Rocket!";
-	m_fCoolDown = 20.f;
+	m_fCoolDown = 5.f;
 	m_iMaxLevel = 5;
 	m_fCost = 50.f;
 

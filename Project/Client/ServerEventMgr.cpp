@@ -315,6 +315,7 @@ void ServerEventMgr::clienttick()
 				kdacsInfo = nullptr;
 			}
 			break;
+
 			case SERVER_EVENT_TYPE::MTRL_PACKET:
 			{
 				MtrlInfo*	mtrlInfo = (MtrlInfo*)m_vecEvent[i].wParam;

@@ -30,7 +30,7 @@ void CJinxRScript::tick()
 
 	// Åõ»çÃ¼ ÀÌµ¿ Pos
 	Vec3 NewPos = CurPos + m_vDir * m_fProjectileSpeed * DT;
-	NewPos = Vec3(NewPos.x, m_vSpawnPos.z +20, NewPos.z); // ³ôÀÌ¸¦ ¶ç¾îµÐ´Ù.
+	NewPos = Vec3(NewPos.x, m_vSpawnPos.z +4, NewPos.z); // ³ôÀÌ¸¦ ¶ç¾îµÐ´Ù.
 	GetOwner()->Transform()->SetRelativePos(NewPos);
 
 
