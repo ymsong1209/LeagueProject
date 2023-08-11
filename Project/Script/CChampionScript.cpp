@@ -50,8 +50,9 @@ void CChampionScript::begin()
 	// 스킬 레벨 초기화
 	m_SkillLevel[0] = 1;
 	m_SkillLevel[2] = 1;
-
-	
+	m_SkillLevel[3] = 1;
+	m_SkillLevel[4] = 1;
+	m_SkillLevel[5] = 1;
 	/// 소환사 주문 배열에 넣어주기
 }
 
@@ -294,7 +295,7 @@ void CChampionScript::GetInput()
 		if (m_Skill[4]->CSkill::Use())
 		{
 			// R 이벤트 발생
-			PlayerEEvent* evn = dynamic_cast<PlayerEEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_SKILL_R));
+			PlayerREvent* evn = dynamic_cast<PlayerREvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_SKILL_R));
 			if (evn != nullptr)
 			{
 				evn->Clear();

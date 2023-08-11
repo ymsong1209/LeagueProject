@@ -16,6 +16,7 @@ CInGameCameraScript
 CInhibitorScript
 CInventoryUIScript
 CJinxEScript
+CJinxRScript
 CJinxScript
 CJinxWScript
 CJungleMINIHPScript

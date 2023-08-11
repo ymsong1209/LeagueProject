@@ -18,6 +18,8 @@ public:
 	static FMOD::System* g_pFMOD;
 
 private:
+	//wstring					m_RelativePath;
+	
 	FMOD::Sound* m_pSound;
 	list<FMOD::Channel*>	m_listChannel;
 	bool					m_bIs3D;

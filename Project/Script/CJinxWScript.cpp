@@ -44,7 +44,7 @@ void CJinxWScript::tick()
 	}
 }
 
-void CJinxWScript::OnOverlap(CCollider2D* _Other)
+void CJinxWScript::BeginOverlap(CCollider2D* _Other)
 {
 	if (m_bUnitDead) return;
 	
@@ -63,11 +63,8 @@ void CJinxWScript::OnOverlap(CCollider2D* _Other)
 			CSendServerEventMgr::GetInst()->SendHitPacket(GetServerID(), TargetServerID, m_iServerUserID, 1, SkillType::JINX_W);
 			CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 0.5f);
 		
-			//this->GetOwner()->Transform()->SetRelativePos(-666.f, -666.f, -666.f);
 			m_fProjectileSpeed = 0.f;
 			m_bUnitDead = true;
 		}
-			
-
 	}
 }

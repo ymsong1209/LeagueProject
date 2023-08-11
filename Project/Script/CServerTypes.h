@@ -24,6 +24,10 @@ enum class SERVER_EVENT_TYPE
 	SEND_KDA_CS_PACKET,		  // wParam : KDACSInfo
 	SEND_SOUND_PACKET,
 	SEND_MTRL_PACKET,		  // wParam : MtrlInfo
+
+
+	// Client Send Packet
+	Kill_LOG_PACKET,          // wParam : killerGameObject, lParam : victimGameObject 
 };
 
 // Event

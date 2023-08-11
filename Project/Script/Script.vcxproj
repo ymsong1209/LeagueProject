@@ -241,6 +241,7 @@
     <ClInclude Include="CJinxEScript.h" />
     <ClInclude Include="CJinxEState.h" />
     <ClInclude Include="CJinxR.h" />
+    <ClInclude Include="CJinxRScript.h" />
     <ClInclude Include="CJinxRState.h" />
     <ClInclude Include="CJinxWScript.h" />
     <ClInclude Include="CJinxWState.h" />
@@ -420,7 +421,9 @@
     <ClInclude Include="CStructureScript.h" />
     <ClInclude Include="CTimedEffect.h" />
     <ClInclude Include="CTurretAttackScript.h" />
+    <ClInclude Include="CTurretBrokenState.h" />
     <ClInclude Include="CTurretHPUIScript.h" />
+    <ClInclude Include="CTurretIdleState.h" />
     <ClInclude Include="CTurretScript.h" />
     <ClInclude Include="CUIScript.h" />
     <ClInclude Include="CUnitScript.h" />
@@ -506,6 +509,7 @@
     <ClCompile Include="CJinxQState.cpp" />
     <ClCompile Include="CJinxR.cpp" />
     <ClCompile Include="CJinxRespawnState.cpp" />
+    <ClCompile Include="CJinxRScript.cpp" />
     <ClCompile Include="CJinxRState.cpp" />
     <ClCompile Include="CJinxScript.cpp" />
     <ClCompile Include="CJinxW.cpp" />
@@ -676,7 +680,9 @@
     <ClCompile Include="CStructureScript.cpp" />
     <ClCompile Include="CTimedEffect.cpp" />
     <ClCompile Include="CTurretAttackScript.cpp" />
+    <ClCompile Include="CTurretBrokenState.cpp" />
     <ClCompile Include="CTurretHPUIScript.cpp" />
+    <ClCompile Include="CTurretIdleState.cpp" />
     <ClCompile Include="CTurretScript.cpp" />
     <ClCompile Include="CUIScript.cpp" />
     <ClCompile Include="CUnitScript.cpp" />

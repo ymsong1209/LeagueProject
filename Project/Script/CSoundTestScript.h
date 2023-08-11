@@ -8,6 +8,7 @@ class CSoundTestScript :
 private:
 
     CSound* m_BGM;
+    CSound* m_BGM2;
 public:
     virtual void begin() override;
     virtual void tick() override;

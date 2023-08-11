@@ -14,12 +14,15 @@ CMinionWalkState::~CMinionWalkState()
 
 void CMinionWalkState::tick()
 {
-	// Waypoint를 향해 Move
-	GetOwner()->GetScript<CMinionScript>()->Move();
-
 	// 공격 타겟이 있다면
 	if (GetOwner()->GetScript<CMinionScript>()->GetTarget())
+	{
 		GetOwnerFSM()->ChangeState(L"Chase");
+		return;
+	}
+
+	// Waypoint를 향해 Move
+	GetOwner()->GetScript<CMinionScript>()->Move();
 }
 
 void CMinionWalkState::Enter()

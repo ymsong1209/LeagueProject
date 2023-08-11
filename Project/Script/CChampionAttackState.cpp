@@ -63,6 +63,35 @@ void CChampionAttackState::Enter()
 	//	false,
 	//	Vec3(0, 0, 0));
 
+	// 현재 위치
+	Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
+
+	// 가야할 방향 구하기
+	Vec3 Dir = (m_TargetObj->Transform()->GetRelativePos() - CurPos).Normalize();
+
+	float targetYaw = atan2f(-Dir.x, -Dir.z);
+	targetYaw = fmod(targetYaw + XM_PI, 2 * XM_PI) - XM_PI; // 범위를 -π ~ π 로 바꾸기
+	float currentYaw = GetOwner()->Transform()->GetRelativeRot().y;
+	currentYaw = fmod(currentYaw + XM_PI, 2 * XM_PI) - XM_PI; // 범위를 -π ~ π 로 바꾸기
+
+	// 각도 차이 계산
+	float diff = targetYaw - currentYaw;
+
+	// 차이가 π를 넘으면 각도를 반대 방향으로 보간
+	if (diff > XM_PI)
+		targetYaw -= 2 * XM_PI;
+	else if (diff < -XM_PI)
+		targetYaw += 2 * XM_PI;
+
+	float lerpFactor = EditorDT * 18.f;
+
+	// Lerp를 이용해 현재 회전 각도와 목표 회전 각도를 보간
+	float newYaw = currentYaw + (targetYaw - currentYaw) * lerpFactor;
+
+	// 새로운 회전 각도를 적용
+	GetOwner()->Transform()->SetRelativeRot(Vec3(0.f, newYaw, 0.f));
+
+
 	CUnitState::Enter();
 }
 

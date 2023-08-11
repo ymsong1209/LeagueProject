@@ -19,6 +19,7 @@
 #include "CInhibitorScript.h"
 #include "CInventoryUIScript.h"
 #include "CJinxEScript.h"
+#include "CJinxRScript.h"
 #include "CJinxScript.h"
 #include "CJinxWScript.h"
 #include "CJungleMINIHPScript.h"
@@ -85,6 +86,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CInhibitorScript");
 	_vec.push_back(L"CInventoryUIScript");
 	_vec.push_back(L"CJinxEScript");
+	_vec.push_back(L"CJinxRScript");
 	_vec.push_back(L"CJinxScript");
 	_vec.push_back(L"CJinxWScript");
 	_vec.push_back(L"CJungleMINIHPScript");
@@ -170,6 +172,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CInventoryUIScript;
 	if (L"CJinxEScript" == _strScriptName)
 		return new CJinxEScript;
+	if (L"CJinxRScript" == _strScriptName)
+		return new CJinxRScript;
 	if (L"CJinxScript" == _strScriptName)
 		return new CJinxScript;
 	if (L"CJinxWScript" == _strScriptName)
@@ -320,6 +324,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::JINXESCRIPT:
 		return new CJinxEScript;
+		break;
+	case (UINT)SCRIPT_TYPE::JINXRSCRIPT:
+		return new CJinxRScript;
 		break;
 	case (UINT)SCRIPT_TYPE::JINXSCRIPT:
 		return new CJinxScript;
@@ -534,6 +541,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::JINXESCRIPT:
 		return L"CJinxEScript";
+		break;
+
+	case SCRIPT_TYPE::JINXRSCRIPT:
+		return L"CJinxRScript";
 		break;
 
 	case SCRIPT_TYPE::JINXSCRIPT:
