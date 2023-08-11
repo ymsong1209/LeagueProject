@@ -54,8 +54,8 @@ void CUnitScript::begin()
 	m_fMP = m_fMaxMP;
 
 	// CC & Restraint
-	m_eCurCC = CC::NONE;
-	m_eRestraint = RESTRAINT::NONE;
+	m_eCurCC = CC::NO_CC;
+	m_eRestraint = RESTRAINT::NO_RESTRAINT;
 
 }
 

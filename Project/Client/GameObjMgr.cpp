@@ -190,7 +190,7 @@ void GameObjMgr::SendMyPlayerMove(ClientServiceRef _service)
 	float CurMP = obj->GetScript<CUnitScript>()->GetCurMP();
 	float MaxHP = obj->GetScript<CUnitScript>()->GetMaxHP();
 	float MaxMP = obj->GetScript<CUnitScript>()->GetMaxMP();
-	CC CurCC = obj->GetScript<CUnitScript>()->GetCC();
+	UINT CurCC = obj->GetScript<CUnitScript>()->GetCC();
 
 
 	// 이전과 변화가 없다면 move packet을 보내지 않는다. return
@@ -272,7 +272,7 @@ void GameObjMgr::SendObjectMove(uint64 _id, CGameObject* _obj, ClientServiceRef 
 				float CurDefencePower = _obj->GetScript<CUnitScript>()->GetDefencePower();
 				float MaxHP = _obj->GetScript<CUnitScript>()->GetMaxHP();
 				float MaxMP = _obj->GetScript<CUnitScript>()->GetMaxMP();
-				CC CurCC = _obj->GetScript<CUnitScript>()->GetCC();
+				UINT CurCC = _obj->GetScript<CUnitScript>()->GetCC();
 				bool bUnitDead = _obj->GetScript<CUnitScript>()->IsUnitDead();
 
 				move.HP = CurHP;

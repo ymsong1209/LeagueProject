@@ -23,12 +23,6 @@ CChampionScript::CChampionScript(UINT ScriptType)
 	, m_bIsAttackingChampion(false)
 {
 	m_eUnitType = UnitType::CHAMPION;
-
-	m_eCurCC = CC::NONE;
-	m_eRestraint = RESTRAINT::NONE;
-
-	// test	
-	//m_fMaxHP = 5;
 }
 
 CChampionScript::CChampionScript()
@@ -130,8 +124,8 @@ bool CChampionScript::CheckDeath()
 			m_fHP = m_fMaxHP;
 			m_bUnitDead = false;
 			m_fRespawnTime = 5;
-			m_eCurCC = CC::NONE;
-			m_eRestraint = RESTRAINT::NONE;
+			m_eCurCC = CC::NO_CC;
+			m_eRestraint = RESTRAINT::NO_RESTRAINT;
 
 			// 길찾기 컴포넌트에 남은 경로값이 있다면 Clear
 			PathFinder()->ClearPath();

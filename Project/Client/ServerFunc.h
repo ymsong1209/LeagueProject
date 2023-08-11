@@ -101,7 +101,7 @@ public:
     };
 public:
     ObjectMove() {}
-    ObjectMove(int _LV, float _HP, float _MP, float _AttackPower, float _DefencePower, float MaxHP, float MaxMP, bool bUnitDead, ObjectMove::MoveDir _moveDir, ObjectMove::Pos _pos, CC _CC)
+    ObjectMove(int _LV, float _HP, float _MP, float _AttackPower, float _DefencePower, float MaxHP, float MaxMP, bool bUnitDead, ObjectMove::MoveDir _moveDir, ObjectMove::Pos _pos, UINT _CC)
         : LV(_LV)
         , HP(_HP)
         , MP(_MP)
@@ -124,7 +124,7 @@ public:
 
     MoveDir moveDir;
     Pos pos;
-    CC  CC;
+    UINT  CC;
 };
 
 struct ObjectInfo {

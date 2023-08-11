@@ -16,7 +16,7 @@ CTimedEffect::CTimedEffect(CUnitScript* targetScript, float duration, float dama
 
 CTimedEffect::~CTimedEffect()
 {
-	if (m_eCCType != CC::CLEAR)
+	if (m_eCCType != CC::NO_CC)
 	{
 		m_TargetScript->RemoveCC(m_eCCType);
 	}
@@ -37,7 +37,7 @@ void CTimedEffect::tick()
 		}
 	}
 
-	if (m_eCCType != CC::CLEAR)
+	if (m_eCCType != CC::NO_CC)
 	{
 		applyCC(m_eCCType);
 	}

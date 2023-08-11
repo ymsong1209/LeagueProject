@@ -169,7 +169,7 @@ void ServerEventMgr::clienttick()
 
 					NewObject->GetScript<CUnitScript>()->SetAttackPower(objectMove->AttackPower);
 					NewObject->GetScript<CUnitScript>()->SetDefencePower(objectMove->DefencePower);
-					NewObject->GetScript<CUnitScript>()->SetCC(objectMove->CC);
+					NewObject->GetScript<CUnitScript>()->ApplyCC((CC)objectMove->CC);
 
 					NewObject->GetScript<CUnitScript>()->SetUnitDead(objectMove->bUnitDead);
 					NewObject->GetScript<CUnitScript>()->SetRcvMove(true);
