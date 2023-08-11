@@ -64,7 +64,6 @@
 #include <Script/CInGameCameraScript.h>
 
 
-
 // ===============================================
 //   Add
 // ===============================================
@@ -77,7 +76,6 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 
 		Ptr<CMeshData> pMeshData = nullptr;
 		CGameObject* pObj = nullptr;
-
 		
 
 		switch (_info.champion)
@@ -95,7 +93,7 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
 			pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true, true, 0.1f);
-			pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
 
 		}break;
 		case ChampionType::MALPHITE:
@@ -192,7 +190,6 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 			pObj->Transform()->SetUseMouseOutline(true);
 			pObj->Transform()->SetIsShootingRay(false);
 		}
-
 
 		pObj->AddComponent(new CCollider3D);
 		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::CUBE);

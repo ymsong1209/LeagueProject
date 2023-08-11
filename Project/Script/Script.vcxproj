@@ -269,6 +269,7 @@
     <ClInclude Include="CJungleN2AState.h" />
     <ClInclude Include="CJungleReturnState.h" />
     <ClInclude Include="CJungleSpawnState.h" />
+    <ClInclude Include="CKillLogUIScript.h" />
     <ClInclude Include="CKrugA2NState.h" />
     <ClInclude Include="CKrugAlertState.h" />
     <ClInclude Include="CKrugAttackState.h" />
@@ -523,6 +524,7 @@
     <ClCompile Include="CJungleN2AState.cpp" />
     <ClCompile Include="CJungleReturnState.cpp" />
     <ClCompile Include="CJungleSpawnState.cpp" />
+    <ClCompile Include="CKillLogUIScript.cpp" />
     <ClCompile Include="CKrugA2NState.cpp" />
     <ClCompile Include="CKrugAlertState.cpp" />
     <ClCompile Include="CKrugAttackState.cpp" />

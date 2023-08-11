@@ -21,6 +21,7 @@ CJinxWScript
 CJungleMINIHPScript
 CJungleMobHPScript
 CJungleMonsterScript
+CKillLogUIScript
 CKrugMiniScript
 CKrugScript
 CMalphiteEDecalScript

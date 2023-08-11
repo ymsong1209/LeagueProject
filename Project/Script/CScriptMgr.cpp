@@ -24,6 +24,7 @@
 #include "CJungleMINIHPScript.h"
 #include "CJungleMobHPScript.h"
 #include "CJungleMonsterScript.h"
+#include "CKillLogUIScript.h"
 #include "CKrugMiniScript.h"
 #include "CKrugScript.h"
 #include "CMalphiteEDecalScript.h"
@@ -52,6 +53,8 @@
 #include "CRedScript.h"
 #include "CScorePanelScript.h"
 #include "CSkillLevelUIScript.h"
+#include "CSkillLevelUpUIScript.h"
+#include "CSkillLvEffectUIScript.h"
 #include "CSoundTestScript.h"
 #include "CStructureScript.h"
 #include "CTurretAttackScript.h"
@@ -87,6 +90,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CJungleMINIHPScript");
 	_vec.push_back(L"CJungleMobHPScript");
 	_vec.push_back(L"CJungleMonsterScript");
+	_vec.push_back(L"CKillLogUIScript");
 	_vec.push_back(L"CKrugMiniScript");
 	_vec.push_back(L"CKrugScript");
 	_vec.push_back(L"CMalphiteEDecalScript");
@@ -115,6 +119,8 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CRedScript");
 	_vec.push_back(L"CScorePanelScript");
 	_vec.push_back(L"CSkillLevelUIScript");
+	_vec.push_back(L"CSkillLevelUpUIScript");
+	_vec.push_back(L"CSkillLvEffectUIScript");
 	_vec.push_back(L"CSoundTestScript");
 	_vec.push_back(L"CStructureScript");
 	_vec.push_back(L"CTurretAttackScript");
@@ -174,6 +180,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CJungleMobHPScript;
 	if (L"CJungleMonsterScript" == _strScriptName)
 		return new CJungleMonsterScript;
+	if (L"CKillLogUIScript" == _strScriptName)
+		return new CKillLogUIScript;
 	if (L"CKrugMiniScript" == _strScriptName)
 		return new CKrugMiniScript;
 	if (L"CKrugScript" == _strScriptName)
@@ -230,6 +238,10 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CScorePanelScript;
 	if (L"CSkillLevelUIScript" == _strScriptName)
 		return new CSkillLevelUIScript;
+	if (L"CSkillLevelUpUIScript" == _strScriptName)
+		return new CSkillLevelUpUIScript;
+	if (L"CSkillLvEffectUIScript" == _strScriptName)
+		return new CSkillLvEffectUIScript;
 	if (L"CSoundTestScript" == _strScriptName)
 		return new CSoundTestScript;
 	if (L"CStructureScript" == _strScriptName)
@@ -324,6 +336,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::JUNGLEMONSTERSCRIPT:
 		return new CJungleMonsterScript;
 		break;
+	case (UINT)SCRIPT_TYPE::KILLLOGUISCRIPT:
+		return new CKillLogUIScript;
+		break;
 	case (UINT)SCRIPT_TYPE::KRUGMINISCRIPT:
 		return new CKrugMiniScript;
 		break;
@@ -407,6 +422,12 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::SKILLLEVELUISCRIPT:
 		return new CSkillLevelUIScript;
+		break;
+	case (UINT)SCRIPT_TYPE::SKILLLEVELUPUISCRIPT:
+		return new CSkillLevelUpUIScript;
+		break;
+	case (UINT)SCRIPT_TYPE::SKILLLVEFFECTUISCRIPT:
+		return new CSkillLvEffectUIScript;
 		break;
 	case (UINT)SCRIPT_TYPE::SOUNDTESTSCRIPT:
 		return new CSoundTestScript;
@@ -535,6 +556,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CJungleMonsterScript";
 		break;
 
+	case SCRIPT_TYPE::KILLLOGUISCRIPT:
+		return L"CKillLogUIScript";
+		break;
+
 	case SCRIPT_TYPE::KRUGMINISCRIPT:
 		return L"CKrugMiniScript";
 		break;
@@ -645,6 +670,14 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::SKILLLEVELUISCRIPT:
 		return L"CSkillLevelUIScript";
+		break;
+
+	case SCRIPT_TYPE::SKILLLEVELUPUISCRIPT:
+		return L"CSkillLevelUpUIScript";
+		break;
+
+	case SCRIPT_TYPE::SKILLLVEFFECTUISCRIPT:
+		return L"CSkillLvEffectUIScript";
 		break;
 
 	case SCRIPT_TYPE::SOUNDTESTSCRIPT:
