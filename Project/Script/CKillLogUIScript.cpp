@@ -2,6 +2,8 @@
 #include "CKillLogUIScript.h"
 #include <Engine\CRenderMgr.h>
 #include <Engine\CCamera.h>
+#include "CUnitScript.h"
+
 
 CKillLogUIScript::CKillLogUIScript()
 	:CScript((UINT)SCRIPT_TYPE::KILLLOGUISCRIPT)
@@ -24,11 +26,26 @@ void CKillLogUIScript::tick()
 	killLogManager.shiftSpeed = 200.f;
 	killLogManager.lineHeight = 75.f;
 
-	if (KEY_TAP(KEY::U))
-		killLogManager.AddKillLog(ChampionType::MALPHITE, ChampionType::JINX, Faction::BLUE);
+	vector<tServerEvent> vServerEvent = CSendServerEventMgr::GetInst()->GetUIEvent();
+	for (size_t i = 0; i < vServerEvent.size(); ++i)
+	{
+		if (vServerEvent[i].Type == SERVER_EVENT_TYPE::Kill_LOG_PACKET)
+		{
+			CGameObject* KillerObj = (CGameObject*)vServerEvent[i].wParam;
+			CGameObject* VictimObj = (CGameObject*)vServerEvent[i].lParam;
 
-	if (KEY_TAP(KEY::I))
-		killLogManager.AddKillLog(ChampionType::MALPHITE, ChampionType::JINX, Faction::RED);
+			CUnitScript* KillerUnitScript = KillerObj->GetScript<CUnitScript>();
+
+			ChampionType KillerChamp = KillerUnitScript->GetChampType();
+			Faction KillerFaction = KillerUnitScript->GetFaction();
+			ChampionType VictimChamp = VictimObj->GetScript<CUnitScript>()->GetChampType();
+
+			killLogManager.AddKillLog(KillerChamp, VictimChamp, KillerFaction);
+		}
+	}
+
+	CSendServerEventMgr::GetInst()->ClearUISendEvent();
+
 
 	// 킬로그 업데이트
 	killLogManager.Update(DT);
@@ -38,6 +55,15 @@ void CKillLogUIScript::tick()
 	{
 		log.KillLogObj->Transform()->SetRelativePos(log.position);
 	}
+
+	//처리 완료 후 서버의 킬로그 벡터값 클리어
+	//CSendServerEventMgr::GetInst()->ClearUISendEvent();
+
+	/* 디버깅용==========================
+	if (KEY_TAP(KEY::I))
+		killLogManager.AddKillLog(ChampionType::MALPHITE, ChampionType::JINX, Faction::RED);
+		=================================*/
+
 }
 
 void CKillLogUIScript::BeginOverlap(CCollider2D* _Other)
