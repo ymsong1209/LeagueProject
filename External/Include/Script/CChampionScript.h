@@ -33,6 +33,13 @@ public:
 
 protected:
     float                   m_fExp;             // 경험치
+    float                   m_fMaxExp;          // 최대 경험치
+
+    int                     m_iKillCount;
+    int                     m_iDeathCount;
+    int                     m_iAssistCount;     // 안씀
+
+    int                     m_iSkillLevelUpPoint;   // 레벨 업 시 스킬 레벨을 올릴 수 있는 포인트
 
     float                   m_fRespawnTime;     // 부활 대기시간
    
@@ -59,20 +66,12 @@ public:
     void    Move();
     bool    IsAttackingChampion() { return m_bIsAttackingChampion; }
     bool    IsInsideEnemyTurretRange() { return m_bIsInsideEnemyTurretRange; }
-    float    GetExp() { return m_fExp; }
-
-
     
-    // =========== Skill     ==============
 public:
-    virtual void Skill1() {};
-    virtual void Skill2() {};
-    virtual void Skill3() {};
-    virtual void Skill4() {};
+    float   GetExp() { return m_fExp; }
+    float   GetMaxExp() { return m_fMaxExp; }
 
-
-public:
-    int     GetLevel() { return m_iLevel; }
+    int     GetSkillLevelUpPoint() { return m_iSkillLevelUpPoint; }
 
     void SetInsideEnemyTurretRange(bool _b) { m_bIsInsideEnemyTurretRange = _b; }
     void SetAttackingChampion(bool _b) { m_bIsAttackingChampion = _b; }

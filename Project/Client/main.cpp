@@ -130,7 +130,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         {
             if (KEY_TAP(KEY::LSHIFT) && service->GetCurrentSessionCount() > 0)
             {
-                Send_CLogin(service, L"Ymsong");
+                Send_CLogin(service, L"Rehpe");
             }
             else if (KEY_TAP(KEY::N))
             {

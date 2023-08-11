@@ -90,7 +90,6 @@ void CCollider2D::finaltick()
 }
 
 
-
 void CCollider2D::BeginOverlap(CCollider2D* _Other)
 {
 	m_iCollisionCount += 1;

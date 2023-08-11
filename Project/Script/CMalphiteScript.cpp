@@ -150,7 +150,7 @@ void CMalphiteScript::GetInput()
 			// 그 외(땅을 클릭한 경우)
 
 			// 움직일 수 없는 상황인 경우 return
-			if ((m_eRestraint & RESTRAINT::CAN_MOVE) == 0)
+			if ((m_eRestraint & RESTRAINT::CANNOT_MOVE) != 0)
 				return;
 
 			CGameObject* Map = CLevelMgr::GetInst()->GetCurLevel()->FindParentObjectByName(L"LoLMapCollider");
@@ -163,7 +163,7 @@ void CMalphiteScript::GetInput()
 	if (KEY_TAP(KEY::Q))
 	{
 		// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-		if ((m_eRestraint & RESTRAINT::CAN_USE_SKILL) == 0 || m_Skill[1]->GetCost() > m_fMP)
+		if ((m_eRestraint & RESTRAINT::CANNOT_SKILL) != 0 || m_Skill[1]->GetCost() > m_fMP)
 			return;
 
 
@@ -205,7 +205,7 @@ void CMalphiteScript::GetInput()
 	if (KEY_TAP(KEY::W))
 	{
 		// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-		if ((m_eRestraint & RESTRAINT::CAN_USE_SKILL) == 0 || m_Skill[2]->GetCost() > m_fMP)
+		if ((m_eRestraint & RESTRAINT::CANNOT_SKILL) != 0 || m_Skill[2]->GetCost() > m_fMP)
 			return;
 
 		if (m_Skill[2]->CSkill::Use())
@@ -224,7 +224,7 @@ void CMalphiteScript::GetInput()
 	if (KEY_TAP(KEY::E))
 	{
 		// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-		if ((m_eRestraint & RESTRAINT::CAN_USE_SKILL) == 0 || m_Skill[3]->GetCost() > m_fMP)
+		if ((m_eRestraint & RESTRAINT::CANNOT_SKILL) != 0 || m_Skill[3]->GetCost() > m_fMP)
 			return;
 
 		if (m_Skill[3]->CSkill::Use())
@@ -243,7 +243,7 @@ void CMalphiteScript::GetInput()
 	if (KEY_TAP(KEY::R))
 	{
 		// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-		if ((m_eRestraint & RESTRAINT::CAN_USE_SKILL) == 0 || m_Skill[4]->GetCost() > m_fMP)
+		if ((m_eRestraint & RESTRAINT::CANNOT_SKILL) != 0 || m_Skill[4]->GetCost() > m_fMP)
 			return;
 
 		if (m_Skill[4]->CSkill::Use())

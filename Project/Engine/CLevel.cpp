@@ -12,6 +12,7 @@
 CLevel::CLevel()
 	: m_arrLayer{}
 	, m_State(LEVEL_STATE::STOP)
+	, m_bIsDebugOutlineShouldShow(true)
 {
 	for (UINT i = 0; i < MAX_LAYER; ++i)
 	{
@@ -46,6 +47,8 @@ void CLevel::tick()
 {
 	if (CKeyMgr::GetInst()->GetKeyState(KEY::F7) == KEY_STATE::TAP(KEY_STATE::TAP))
 	{
+		m_bIsDebugOutlineShouldShow = false;
+
 		for (UINT i = 0; i < MAX_LAYER; ++i)
 		{
 			vector<CGameObject*> GameObjects = m_arrLayer[i]->GetObjects();
@@ -59,6 +62,9 @@ void CLevel::tick()
 			}
 		}
 	}
+
+	else if (CKeyMgr::GetInst()->GetKeyState(KEY::F6) == KEY_STATE::TAP(KEY_STATE::TAP))
+		m_bIsDebugOutlineShouldShow = true;
 
 
 	for (UINT i = 0; i < MAX_LAYER; ++i)

@@ -49,14 +49,13 @@ CUnitScript::~CUnitScript()
 
 void CUnitScript::begin()
 {
-	// FSM
-	//if (GetOwner()->Fsm() == nullptr)
-	//	return;
-	//GetOwner()->Fsm()->ChangeState(L"Idle");
-	
 	// 체력
 	m_fHP = m_fMaxHP;
 	m_fMP = m_fMaxMP;
+
+	// CC & Restraint
+	m_eCurCC = CC::NO_CC;
+	m_eRestraint = RESTRAINT::NO_RESTRAINT;
 
 }
 
@@ -134,8 +133,6 @@ void CUnitScript::tick()
 			}
 		}
 	}
-	
-
 }
 
 
@@ -160,35 +157,42 @@ void CUnitScript::CheckTimedEffect()
 void CUnitScript::CheckCC()
 {
 	// 걸려있는 CC기에 따라 행동 제약 변경
-	if ((m_eCurCC & CC::SLOW) != 0)  // 천천히 움직임
+	// 
+	// 초기화: 모든 제약 상태 제거
+	m_fMoveSpeedFactor = 1.f;
+	RemoveRestraint(RESTRAINT::CANNOT_SKILL);
+	RemoveRestraint(RESTRAINT::CANNOT_MOVE);
+	RemoveRestraint(RESTRAINT::BLOCK);
+
+	// SLOW
+	if ((m_eCurCC & CC::SLOW) != 0)
 	{
-		// 이동속도 감소
 		m_fMoveSpeedFactor = 0.5f;
 	}
-	else
+
+	// 침묵 상태
+	if ((m_eCurCC & CC::SILENCE) != 0)
 	{
-		m_fMoveSpeedFactor = 1.f;
+		ApplyRestraint(RESTRAINT::CANNOT_SKILL);
 	}
 
-	if ((m_eCurCC & CC::SILENCE) != 0) // 침묵 상태
+	// 속박 상태
+	if ((m_eCurCC & CC::ROOT) != 0)
 	{
-		RestrictAction(RESTRAINT::CAN_USE_SKILL);	// 스킬 사용 불가
+		ApplyRestraint(RESTRAINT::CANNOT_MOVE); 
 	}
 
-	if ((m_eCurCC & CC::ROOT) != 0) // 속박 상태
+	// 스턴 상태
+	if ((m_eCurCC & CC::STUN) != 0)
 	{
-		RestrictAction(RESTRAINT::CAN_MOVE);	// 움직임 불가
+		ApplyRestraint(RESTRAINT::BLOCK);
 	}
-
-
-	if ((m_eCurCC & CC::STUN) != 0) // 스턴 상태
+	
+	// 에어본 상태
+	if ((m_eCurCC & CC::AIRBORNE) != 0) 
 	{
-		m_eRestraint = RESTRAINT::BLOCK; // 모든 행동 제약
-	}
-
-	if ((m_eCurCC & CC::AIRBORNE) != 0) // 에어본 상태
-	{
-		if (m_bAirBorneActive == false) {
+		if (m_bAirBorneActive == false) 
+		{
 			GetOwner()->PathFinder()->ClearPath();
 			Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
 			m_vAirBorneStartPos = CurPos;
@@ -196,22 +200,46 @@ void CUnitScript::CheckCC()
 				
 			m_bAirBorneActive = true;
 		}
-		else {
+		else 
+		{
 			Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
 			m_fAirBorneVelocity -= 2.f * DT;
 			GetOwner()->Transform()->SetRelativePos(Vec3(CurPos.x, CurPos.y + m_fAirBorneVelocity, CurPos.z));
-			if (CurPos.y + m_fAirBorneVelocity < m_vAirBorneStartPos.y) {
+			if (CurPos.y + m_fAirBorneVelocity < m_vAirBorneStartPos.y)
+			{
 				GetOwner()->Transform()->SetRelativePos(Vec3(CurPos.x, m_vAirBorneStartPos.y, CurPos.z));
 			}
 		}
 		
-		m_eRestraint = RESTRAINT::BLOCK; // 모든 행동 제약
+		ApplyRestraint(RESTRAINT::BLOCK); // 모든 행동 제약
 	}
-	else {
+	else if(m_bAirBorneActive)
+	{
 		m_bAirBorneActive = false;
 		m_fAirBorneVelocity = 0.f;
 	}
 }
+
+void CUnitScript::ApplyCC(CC _ccType)
+{
+	m_eCurCC |= _ccType;
+}
+
+void CUnitScript::RemoveCC(CC _ccType)
+{
+	m_eCurCC &= ~_ccType;
+}
+
+void CUnitScript::ApplyRestraint(RESTRAINT restraint)
+{
+	m_eRestraint |= restraint;
+}
+
+void CUnitScript::RemoveRestraint(RESTRAINT restraint)
+{
+	m_eRestraint &= ~restraint;
+}
+
 
 bool CUnitScript::PathFindMove(float _fSpeed, bool _IsRotation)
 {
@@ -291,37 +319,6 @@ void CUnitScript::GetHit(SkillType _type, CGameObject* _SkillTarget, CGameObject
 	}
 }
 
-void CUnitScript::RestrictAction(RESTRAINT restriction)
-{
-	m_eRestraint = static_cast<RESTRAINT>(m_eRestraint & ~restriction);
-}
-
-void CUnitScript::ApplyCC(CC _ccType)
-{
-	m_eCurCC = static_cast<CC>(static_cast<int>(m_eCurCC) | static_cast<int>(_ccType));
-}
-
-void CUnitScript::RemoveCC(CC _ccType)
-{
-	m_eCurCC = static_cast<CC>(static_cast<int>(m_eCurCC) & ~static_cast<int>(_ccType));
-
-	// CC기에 따른 RESTRAINT 해제
-	switch (_ccType)
-	{
-	case CC::ROOT:
-		m_eRestraint = (RESTRAINT)(m_eRestraint | RESTRAINT::CAN_MOVE);
-		break;
-	case CC::SILENCE:
-		m_eRestraint = (RESTRAINT)(m_eRestraint | RESTRAINT::CAN_USE_SKILL);
-		break;
-	case CC::STUN:
-		m_eRestraint = (RESTRAINT)(m_eRestraint | RESTRAINT::BLOCK);
-		break;
-	case CC::AIRBORNE:
-		m_eRestraint = (RESTRAINT)(m_eRestraint | RESTRAINT::BLOCK);
-		break;
-	}
-}
 
 void CUnitScript::SaveToLevelFile(FILE* _File)
 {
@@ -344,7 +341,6 @@ void CUnitScript::SaveToLevelFile(FILE* _File)
 	fwrite(&m_fAttackRange, sizeof(float), 1, _File);
 	fwrite(&m_fMoveSpeed, sizeof(float), 1, _File);
 	fwrite(&m_fMoveSpeedFactor, sizeof(float), 1, _File);
-
 }
 
 void CUnitScript::LoadFromLevelFile(FILE* _File)
@@ -391,7 +387,6 @@ void CUnitScript::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType&
 	_objValue.AddMember("AttackRange", m_fAttackRange, allocator);
 	_objValue.AddMember("MoveSpeed", m_fMoveSpeed, allocator);
 	_objValue.AddMember("MoveSpeedFactor", m_fMoveSpeedFactor, allocator);
-
 }
 
 void CUnitScript::LoadFromLevelJsonFile(const Value& _componentValue)

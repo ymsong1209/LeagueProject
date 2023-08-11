@@ -474,7 +474,6 @@
     </ClCompile>
     <ClCompile Include="CSoundTestScript.cpp" />
     <ClCompile Include="CTurretAttackScript.cpp" />
-    <ClCompile Include="CTimedEffect.cpp" />
     <ClCompile Include="CJungleA2NState.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
     </ClCompile>
@@ -654,6 +653,12 @@
     <ClCompile Include="CSkillLevelUpUIScript.cpp" />
     <ClCompile Include="CSkillLvEffectUIScript.cpp" />
     <ClCompile Include="CKillLogUIScript.cpp" />
+    <ClCompile Include="CJinxRScript.cpp" />
+    <ClCompile Include="CTurretBrokenState.cpp" />
+    <ClCompile Include="CTurretIdleState.cpp" />
+    <ClCompile Include="CTimedEffect.cpp">
+      <Filter>Scripts\Skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -703,7 +708,6 @@
     <ClInclude Include="CWorldHPUIScript.h">
       <Filter>UIScript</Filter>
     </ClInclude>
-    <ClInclude Include="CTimedEffect.h" />
     <ClInclude Include="CDragonAlertState.h">
       <Filter>Scripts\Unit\Mob\Jungle\Dragon</Filter>
     </ClInclude>
@@ -848,6 +852,12 @@
     <ClInclude Include="CSkillLevelUpUIScript.h" />
     <ClInclude Include="CSkillLvEffectUIScript.h" />
     <ClInclude Include="CKillLogUIScript.h" />
+    <ClInclude Include="CJinxRScript.h" />
+    <ClInclude Include="CTurretBrokenState.h" />
+    <ClInclude Include="CTurretIdleState.h" />
+    <ClInclude Include="CTimedEffect.h">
+      <Filter>Scripts\Skill</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">

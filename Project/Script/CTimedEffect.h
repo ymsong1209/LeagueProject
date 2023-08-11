@@ -5,7 +5,7 @@ class CUnitScript;
 class CTimedEffect
 {
 public:
-	CTimedEffect(CUnitScript* targetScript, float duration, float damagePerTick, int numTicks, CC ccType = CC::CLEAR);
+	CTimedEffect(CUnitScript* targetScript, float duration, float damagePerTick, int numTicks, CC ccType = CC::NO_CC);
 	~CTimedEffect();
 
 private:
