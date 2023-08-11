@@ -862,4 +862,143 @@ float4 PS_InhibitorBarRatioShader(VS_OUT _in) : SV_Target
     return vOutColor;
 }
 
+
+
+// ============================
+// SkillLevelShader
+// RasterizerState      : None
+// BlendState           : Mask
+// DepthStencilState    : Less
+
+// g_tex_0              : Output Texture
+// g_int_0              :스킬Q 레벨
+// g_int_1              :스킬W 레벨
+// g_int_2              :스킬E 레벨
+// g_int_3              :스킬R 레벨
+
+#define Q_Level          g_int_0
+#define W_Level          g_int_1
+#define E_Level          g_int_2
+#define R_Level          g_int_3
+// ============================
+
+VS_OUT VS_SkillLevelShader(VS_IN _in)
+{
+    VS_OUT output = (VS_OUT) 0.f;
+
+    output.vPosition = mul(float4(_in.vLocalPos, 1.f), g_matWVP);
+    output.vUV = _in.vUV; // UV 조정은 삭제
+
+    return output;
+}
+
+float4 PS_SkillLevelShader(VS_OUT _in) : SV_Target
+{
+    float4 vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
+    float2 TexSize = float2(279.f, 9.f);
+    
+    float2 Skill_Q_discardRegionMin = float2(0.f, 0.f) / TexSize;
+    float2 Skill_Q_discardRegionMax = float2(56.f, 9.f) / TexSize;
+    
+    if (Q_Level == 0)
+       Skill_Q_discardRegionMin = float2(0.f, 0.f) / TexSize;
+    else if (Q_Level == 1)
+       Skill_Q_discardRegionMin = float2(10.f, 0.f) / TexSize;
+    else if (Q_Level == 2)
+       Skill_Q_discardRegionMin = float2(21.f, 0.f) / TexSize;
+    else if (Q_Level == 3)
+       Skill_Q_discardRegionMin = float2(32.f, 0.f) / TexSize;
+    else if (Q_Level == 4)
+       Skill_Q_discardRegionMin = float2(43.f, 0.f) / TexSize;
+    else if (Q_Level == 5)
+       Skill_Q_discardRegionMin = float2(56.f, 0.f) / TexSize;
+    
+    //==================W=======================================
+    
+    float2 Skill_W_discardRegionMin = float2(0.f, 0.f) / TexSize;
+    float2 Skill_W_discardRegionMax = float2(132.f, 9.f) / TexSize;
+    
+    if (W_Level == 0)
+        Skill_W_discardRegionMin = float2(74.f, 0.f) / TexSize;
+    else if (W_Level == 1)
+        Skill_W_discardRegionMin = float2(86.f, 0.f) / TexSize;
+    else if (W_Level == 2)
+        Skill_W_discardRegionMin = float2(97.f, 0.f) / TexSize;
+    else if (W_Level == 3)
+        Skill_W_discardRegionMin = float2(108.f, 0.f) / TexSize;
+    else if (W_Level == 4)
+        Skill_W_discardRegionMin = float2(119.f, 0.f) / TexSize;
+    else if (W_Level == 5)
+        Skill_W_discardRegionMin = float2(132.f, 0.f) / TexSize;
+
+    
+        // 텍스쳐의 특정 영역
+    float2 Skill_E_discardRegionMin = float2(0.f, 0.f) / TexSize;
+    float2 Skill_E_discardRegionMax = float2(207.f, 9.f) / TexSize;
+    
+    if (E_Level == 0)
+        Skill_E_discardRegionMin = float2(149.f, 0.f) / TexSize;
+    else if (E_Level == 1)
+        Skill_E_discardRegionMin = float2(161.f, 0.f) / TexSize;
+    else if (E_Level == 2)
+        Skill_E_discardRegionMin = float2(172.f, 0.f) / TexSize;
+    else if (E_Level == 3)
+        Skill_E_discardRegionMin = float2(183.f, 0.f) / TexSize;
+    else if (E_Level == 4)
+        Skill_E_discardRegionMin = float2(194.f, 0.f) / TexSize;
+    else if (E_Level == 5)
+        Skill_E_discardRegionMin = float2(207.f, 0.f) / TexSize;
+    
+    
+        // 텍스쳐의 특정 영역
+    float2 Skill_R_discardRegionMin = float2(0.f, 0.f) / TexSize;
+    float2 Skill_R_discardRegionMax = float2(279.f, 9.f) / TexSize;
+    
+    if (R_Level == 0)
+        Skill_R_discardRegionMin = float2(223.f, 0.f) / TexSize;
+    else if (R_Level == 1)
+        Skill_R_discardRegionMin = float2(236.f, 0.f) / TexSize;
+    else if (R_Level == 2)
+        Skill_R_discardRegionMin = float2(247.f, 0.f) / TexSize;
+    else if (R_Level == 3)
+        Skill_R_discardRegionMin = float2(258.f, 0.f) / TexSize;
+    else if (R_Level == 4)
+        Skill_R_discardRegionMin = float2(269.f, 0.f) / TexSize;
+    else if (R_Level == 5)
+        Skill_R_discardRegionMin = float2(279.f, 0.f) / TexSize;
+
+
+        // 현재 UV 좌표가 해당 영역에 속하는지 확인
+    if (_in.vUV.x >= Skill_Q_discardRegionMin.x && _in.vUV.x <= Skill_Q_discardRegionMax.x &&
+        _in.vUV.y >= Skill_Q_discardRegionMin.y && _in.vUV.y <= Skill_Q_discardRegionMax.y)
+    {
+        discard; // 해당 영역의 픽셀은 렌더링하지 않음
+    }
+    
+            // 현재 UV 좌표가 해당 영역에 속하는지 확인
+    if (_in.vUV.x >= Skill_W_discardRegionMin.x && _in.vUV.x <= Skill_W_discardRegionMax.x &&
+        _in.vUV.y >= Skill_W_discardRegionMin.y && _in.vUV.y <= Skill_W_discardRegionMax.y)
+    {
+        discard; // 해당 영역의 픽셀은 렌더링하지 않음
+    }
+
+    
+            // 현재 UV 좌표가 해당 영역에 속하는지 확인
+    if (_in.vUV.x >= Skill_E_discardRegionMin.x && _in.vUV.x <= Skill_E_discardRegionMax.x &&
+        _in.vUV.y >= Skill_E_discardRegionMin.y && _in.vUV.y <= Skill_E_discardRegionMax.y)
+    {
+        discard; // 해당 영역의 픽셀은 렌더링하지 않음
+    }
+
+    
+            // 현재 UV 좌표가 해당 영역에 속하는지 확인
+    if (_in.vUV.x >= Skill_R_discardRegionMin.x && _in.vUV.x <= Skill_R_discardRegionMax.x &&
+        _in.vUV.y >= Skill_R_discardRegionMin.y && _in.vUV.y <= Skill_R_discardRegionMax.y)
+    {
+        discard; // 해당 영역의 픽셀은 렌더링하지 않음
+    }
+
+    return vOutColor;
+}
+
 #endif

@@ -81,8 +81,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     //// 표준 출력을 콘솔 창으로 리디렉션
     freopen("CONOUT$", "w", stdout);
     
-    
-    
     this_thread::sleep_for(1s);
     
     ClientServiceRef service = MakeShared<ClientService>(

@@ -22,6 +22,7 @@ CJinxWScript
 CJungleMINIHPScript
 CJungleMobHPScript
 CJungleMonsterScript
+CKillLogUIScript
 CKrugMiniScript
 CKrugScript
 CMalphiteEDecalScript
@@ -49,6 +50,9 @@ CRazorBeakMiniScript
 CRazorBeakScript
 CRedScript
 CScorePanelScript
+CSkillLevelUIScript
+CSkillLevelUpUIScript
+CSkillLvEffectUIScript
 CSoundTestScript
 CStructureScript
 CTurretAttackScript

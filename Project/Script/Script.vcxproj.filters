@@ -650,6 +650,10 @@
     <ClCompile Include="CInGameCameraScript.cpp">
       <Filter>Scripts\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="CSkillLevelUIScript.cpp" />
+    <ClCompile Include="CSkillLevelUpUIScript.cpp" />
+    <ClCompile Include="CSkillLvEffectUIScript.cpp" />
+    <ClCompile Include="CKillLogUIScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -840,6 +844,10 @@
     <ClInclude Include="CMalphiteW.h">
       <Filter>Scripts\Skill\Malphite</Filter>
     </ClInclude>
+    <ClInclude Include="CSkillLevelUIScript.h" />
+    <ClInclude Include="CSkillLevelUpUIScript.h" />
+    <ClInclude Include="CSkillLvEffectUIScript.h" />
+    <ClInclude Include="CKillLogUIScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">

@@ -59,7 +59,7 @@ void CTurretHPUIScript::begin()
 
 void CTurretHPUIScript::tick()
 {
-	if (GetOwner()->GetParent() && !GetOwner()->GetParent()->IsDead())
+	if (GetOwner()->GetParent())
 	{
 		CGameObject* ParentObj = GetOwner()->GetParent();
 		bool IsCull = ParentObj->GetRenderComponent()->IsCulled();
@@ -76,8 +76,14 @@ void CTurretHPUIScript::tick()
 		m_fCurHP = ParentObj->GetScript<CUnitScript>()->GetCurHP();
 		m_fTotalHP = ParentObj->GetScript<CUnitScript>()->GetMaxHP();
 
-		Transform()->SetAbsolute(false);
+		if (m_fCurHP <= 0.f)
+		{
+			DestroyObject(GetOwner());
+			//MeshRender()->SetSortExcept(true);
+			return;
+		}
 
+		Transform()->SetAbsolute(false);
 		Vec3 Pos = ParentObj->Transform()->GetRelativePos();
 		Transform()->SetRelativeRot(Vec3(XMConvertToRadians(60.f), 0.f, 0.f));
 		Transform()->SetRelativePos(m_vOffsetBarPos);
