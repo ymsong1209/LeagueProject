@@ -7,6 +7,7 @@
 #include <Engine/CLevel.h>
 #include <Engine/CEngine.h>
 #include <Engine/CRenderMgr.h>
+#include <Engine/CSoundMgr.h>
 #include <Engine/CSound.h>
 #include <Engine/CResMgr.h>
 #include <Engine/CPathMgr.h>
@@ -19,12 +20,6 @@ CSoundTestScript::CSoundTestScript()
 
 CSoundTestScript::~CSoundTestScript()
 {
-	if (m_BGM) {
-		delete m_BGM;
-	}
-	if (m_BGM2) {
-		delete m_BGM2;
-	}
 }
 
 void CSoundTestScript::begin()
@@ -34,6 +29,8 @@ void CSoundTestScript::begin()
 	m_BGM2 = new CSound;
 	wstring filepath = CPathMgr::GetInst()->GetContentPath();
 	filepath += pSound.Get()->GetRelativePath();
+	CSoundMgr::GetInst()->AddSound(m_BGM);
+	CSoundMgr::GetInst()->AddSound(m_BGM2);
 	m_BGM->Load(filepath);
 	m_BGM2->Load(filepath);
 }
