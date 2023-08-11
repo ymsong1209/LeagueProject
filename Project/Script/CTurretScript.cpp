@@ -93,6 +93,8 @@ void CTurretScript::ChangeAnim()
 	{
 		if (TurretBase->Animator3D()->GetCurAnim()->GetName() != L"turret_idlebreak\\Turret_Idle")
 		{
+			TurretBase->Animator3D()->PlayRepeat(L"turret_idlebreak\\Turret_Idle", false);
+
 			CSendServerEventMgr::GetInst()->SendAnimPacket(TurretBaseScript->GetServerID()
 			, L"turret_idlebreak\\Turret_Idle"
 				, true
@@ -105,6 +107,8 @@ void CTurretScript::ChangeAnim()
 	{
 		if (TurretBase->Animator3D()->GetCurAnim()->GetName() != L"turret_idlebreak\\Turret_Cloth_Break1")
 		{
+			TurretBase->Animator3D()->PlayOnce(L"turret_idlebreak\\Turret_Cloth_Break1", false);
+
 			CSendServerEventMgr::GetInst()->SendAnimPacket(TurretBaseScript->GetServerID()
 				, L"turret_idlebreak\\Turret_Cloth_Break1"
 				, false
@@ -118,6 +122,8 @@ void CTurretScript::ChangeAnim()
 	{
 		if (TurretBase->Animator3D()->GetCurAnim()->GetName() != L"turret_idlebreak\\Turret_Cloth_Break2")
 		{
+			TurretBase->Animator3D()->PlayOnce(L"turret_idlebreak\\Turret_Cloth_Break2", false);
+
 			CSendServerEventMgr::GetInst()->SendAnimPacket(TurretBaseScript->GetServerID()
 				, L"turret_idlebreak\\Turret_Cloth_Break2"
 				, false
@@ -135,13 +141,32 @@ void CTurretScript::ChangeAnim()
 		GetOwner()->Transform()->SetIsShootingRay(false);
 
 		// 잔해 재질 켜기
-		GetOwner()->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Rubble_red.mtrl"), 0);
-		GetOwner()->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Break1_red.mtrl"), 1);
-		
-		// 자식 지우기
-		CGameObject* TurretBase = GetOwner()->FindChildObjByName(L"TurretBase");
-		if (TurretBase)
+		if (m_eFaction == Faction::RED)
 		{
+			Ptr<CTexture> RedTex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\sruap_turret_chaos1_rubble_tx_cm.dds");
+
+			GetOwner()->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Rubble_red.mtrl"), 0);
+			GetOwner()->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Break1_red.mtrl"), 1);
+			//GetOwner()->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, RedTex);
+			//GetOwner()->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, RedTex);
+		
+			//CSendServerEventMgr::GetInst()->SendMtrlPacket(TurretBaseScript->GetServerID(), 0, TEX_0, L"texture\\FBXTexture\\sruap_turret_chaos1_rubble_tx_cm.dds");
+			//CSendServerEventMgr::GetInst()->SendMtrlPacket(TurretBaseScript->GetServerID(), 1, TEX_0, L"texture\\FBXTexture\\sruap_turret_chaos1_rubble_tx_cm.dds");
+		}
+		else
+		{
+			Ptr<CTexture> BlueTex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\sruap_turret_chaos1_rubble_tx_cm_blue.dds");
+
+			GetOwner()->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, BlueTex);
+			GetOwner()->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, BlueTex);
+
+			CSendServerEventMgr::GetInst()->SendMtrlPacket(TurretBaseScript->GetServerID(), 0, TEX_0, L"texture\\FBXTexture\\sruap_turret_chaos1_rubble_tx_cm_blue.dds");
+			CSendServerEventMgr::GetInst()->SendMtrlPacket(TurretBaseScript->GetServerID(), 1, TEX_0, L"texture\\FBXTexture\\sruap_turret_chaos1_rubble_tx_cm_blue.dds");
+		}
+		// 자식 지우기
+		if (TurretBase != nullptr && !TurretBaseScript->IsUnitDead())
+		{
+			TurretBaseScript->SetUnitDead(true);
 			CSendServerEventMgr::GetInst()->SendDespawnPacket(TurretBaseScript->GetServerID(), 0.f);
 		}
 		
@@ -156,6 +181,8 @@ void CTurretScript::ChangeAnim()
 
 			if (TurretBreak1->Animator3D()->GetCurAnim()->IsPause())
 			{
+				TurretBreak1->Animator3D()->PlayOnce(L"turret_break1\\turret_break1", false);
+				
 				CSendServerEventMgr::GetInst()->SendAnimPacket(TurretBreak1Script->GetServerID(),
 					L"turret_break1\\turret_break1"
 					, false
@@ -165,8 +192,9 @@ void CTurretScript::ChangeAnim()
 			}
 			else
 			{
-				if (TurretBreak1->Animator3D()->GetCurAnim()->IsFinish())
+				if (TurretBreak1 && !TurretBreak1Script->IsUnitDead() && TurretBreak1->Animator3D()->GetCurAnim()->IsFinish())
 				{
+					TurretBreak1Script->SetUnitDead(true);
 					CSendServerEventMgr::GetInst()->SendDespawnPacket(TurretBreak1Script->GetServerID(), 0.f);
 				}
 			}
@@ -182,6 +210,8 @@ void CTurretScript::ChangeAnim()
 
 			if (TurretBreak2->Animator3D()->GetCurAnim()->IsPause())
 			{
+				TurretBreak2->Animator3D()->PlayOnce(L"turret_break2\\turret_break2", false);
+
 				CSendServerEventMgr::GetInst()->SendAnimPacket(TurretBreak2Script->GetServerID(),
 					L"turret_break2\\turret_break2"
 					, false
@@ -191,13 +221,14 @@ void CTurretScript::ChangeAnim()
 			}
 			else
 			{
-				if (TurretBreak2->Animator3D()->GetCurAnim()->IsFinish())
+				if (TurretBreak2 && !TurretBreak2Script->IsUnitDead() && TurretBreak2->Animator3D()->GetCurAnim()->IsFinish())
 				{
+					TurretBreak2Script->SetUnitDead(true);
 					CSendServerEventMgr::GetInst()->SendDespawnPacket(TurretBreak2Script->GetServerID(), 0.f);
 				}
 			}
 		}
-	}
+	de
 }
 
 void CTurretScript::Attack()
