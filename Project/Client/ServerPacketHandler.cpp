@@ -27,6 +27,8 @@
 #include <Script/CFontUIScript.h>
 #include <Script/CScorePanelScript.h>
 
+#include <Script/CUnitScript.h>
+
 
 void ServerPacketHandler::HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
@@ -558,7 +560,7 @@ void ServerPacketHandler::Handle_S_OBJECT_MOVE(PacketSessionRef& session, BYTE* 
 	{
 		ObjectMove _objectMove = pkt->objectMove;
 
-		CGameObject* obj = GameObjMgr::GetInst()->FindObject(_objectId);
+		CGameObject* obj = GameObjMgr::GetInst()->FindAllObject(_objectId);
 
 		tServerEvent evn = {};
 		evn.Type = SERVER_EVENT_TYPE::MOVE_PACKET;

@@ -130,6 +130,7 @@ CGameObject* GameObjMgr::FindAllObject(uint64 _targetId)
 	_allObjects.insert(_players.begin(), _players.end());
 	_allObjects.insert(_objects.begin(), _objects.end());
 	_allObjects.insert(_placedObjects.begin(), _placedObjects.end());
+	_allObjects.insert(_turretChild.begin(), _turretChild.end());
 
 	// find 함수를 사용하여 원하는 키 값을 가진 원소를 찾습니다.
 	std::map<uint64, CGameObject*>::iterator iter = _allObjects.find(_targetId);
@@ -163,6 +164,7 @@ CGameObject* GameObjMgr::DeleteObjectInMap(uint64 _id)
 	_players.erase(_id);
 	_objects.erase(_id);
 	_placedObjects.erase(_id);
+	_turretChild.erase(_id);
 
 	m.unlock();
 	return obj;
@@ -314,14 +316,13 @@ void GameObjMgr::SendObjectMove(uint64 _id, CGameObject* _obj, ClientServiceRef 
 void GameObjMgr::SendPlacedObjectUpdate(uint64 _id, CGameObject* _obj, ClientServiceRef _service)
 {
 	// 배치형 오브젝트의 업데이트를 서버에 보낸다. (HP 변경시에만)
-	CGameObject* obj = FindPlacedObject(_id);
 
-	if (_obj != obj || obj == nullptr || obj->GetLayerIndex() == -1)
+	if (_obj == nullptr || _obj->GetLayerIndex() == -1)
 		return;
 
 	if (_obj->GetScript<CUnitScript>() != nullptr)
 	{
-		float CurHP = obj->GetScript<CUnitScript>()->GetCurHP();
+		float CurHP = _obj->GetScript<CUnitScript>()->GetCurHP();
 		auto it = _placedObjectsPrevHP.find(_id);
 		if (it != _placedObjectsPrevHP.end()) // PrevHP가 있다. 	
 		{
@@ -333,12 +334,12 @@ void GameObjMgr::SendPlacedObjectUpdate(uint64 _id, CGameObject* _obj, ClientSer
 
 			ObjectMove updatePlacedObject = {};
 
-			float CurMP = obj->GetScript<CUnitScript>()->GetCurMP();
-			float CurAttackPower = obj->GetScript<CUnitScript>()->GetAttackPower();
-			float CurDefencePower = obj->GetScript<CUnitScript>()->GetDefencePower();
-			float MaxHP = obj->GetScript<CUnitScript>()->GetMaxHP();
-			float MaxMP = obj->GetScript<CUnitScript>()->GetMaxMP();
-			bool bUnitDead = obj->GetScript<CUnitScript>()->IsUnitDead();
+			float CurMP = _obj->GetScript<CUnitScript>()->GetCurMP();
+			float CurAttackPower = _obj->GetScript<CUnitScript>()->GetAttackPower();
+			float CurDefencePower = _obj->GetScript<CUnitScript>()->GetDefencePower();
+			float MaxHP = _obj->GetScript<CUnitScript>()->GetMaxHP();
+			float MaxMP = _obj->GetScript<CUnitScript>()->GetMaxMP();
+			bool bUnitDead = _obj->GetScript<CUnitScript>()->IsUnitDead();
 			updatePlacedObject.HP = CurHP;
 			updatePlacedObject.MP = CurMP;
 			updatePlacedObject.MaxHP = MaxHP;
@@ -348,8 +349,8 @@ void GameObjMgr::SendPlacedObjectUpdate(uint64 _id, CGameObject* _obj, ClientSer
 
 			updatePlacedObject.bUnitDead = bUnitDead;
 
-			Vec3 CurPos = obj->Transform()->GetRelativePos();
-			Vec3 CurRot = obj->Transform()->GetRelativeRot();
+			Vec3 CurPos = _obj->Transform()->GetRelativePos();
+			Vec3 CurRot = _obj->Transform()->GetRelativeRot();
 
 			updatePlacedObject.pos.x = CurPos.x;
 			updatePlacedObject.pos.y = CurPos.y;
