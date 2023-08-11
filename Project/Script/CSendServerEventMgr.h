@@ -9,7 +9,8 @@ class CSendServerEventMgr :
     SINGLE(CSendServerEventMgr);
 
 public:
-    vector<tServerEvent> m_vecServerSendEvent;
+    vector<tServerEvent> m_vecServerSendEvent;  // Server에게 보내는 이벤트
+    vector<tServerEvent> m_vecUISendEvent;      // UI에게 보내는 이벤트 (킬로그)
 
     // UI용
     CGameObject*         m_myPlayerObj;
@@ -43,11 +44,16 @@ public:
     int GetBlueScore() { return m_BlueScore; }
 
     
-    
+    // ServerSendEvent 용
     void AddServerSendEvent(tServerEvent _evn) { m_vecServerSendEvent.push_back(_evn); }
-
     vector<tServerEvent>& GetVecEvent() { return m_vecServerSendEvent; }
     void ClearServerSendEvent() { m_vecServerSendEvent.clear(); }
+
+
+    // UISendEvent 용
+    void AddUISendEvent(tServerEvent _evn) { m_vecUISendEvent.push_back(_evn); }
+    vector<tServerEvent>& GetUIEvent() { return m_vecUISendEvent; }
+    void ClearUISendEvent() { m_vecUISendEvent.clear(); }
 
 
     // Hit  : 맞았다.
