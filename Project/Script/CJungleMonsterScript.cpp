@@ -55,8 +55,8 @@ void CJungleMonsterScript::GetHit(CGameObject* _target)
 
 void CJungleMonsterScript::begin()
 {
-	m_eCurCC = CC::CLEAR;
-	m_eRestraint = RESTRAINT::DEFAULT;
+	m_eCurCC = CC::NO_CC;
+	m_eRestraint = RESTRAINT::NO_RESTRAINT;
 
 	GetOwner()->Transform()->SetUseMouseOutline(true);
 	m_Skill[0] = new CBasicAttack;

@@ -22,12 +22,7 @@ void CMinionScript::begin()
 {
 	GetOwner()->Transform()->SetUseMouseOutline(true);
 
-	m_eRestraint = RESTRAINT::DEFAULT;
-
-	// test
-	//SetFaction(Faction::BLUE);
-	//SetLane(Lane::TOP);
-	//SetMinionType(MinionType::RANGED);
+	m_eRestraint = RESTRAINT::NO_RESTRAINT;
 
 	// 미니언 타입 별 정보 세팅
 	switch (m_eUnitType)
@@ -221,7 +216,7 @@ void CMinionScript::OnOverlap(CCollider2D* _collider)
 void CMinionScript::Move()
 {
 	// 움직일 수 없는 상황인 경우 return
-	if ((m_eRestraint & RESTRAINT::CAN_MOVE) == 0)
+	if ((m_eRestraint & RESTRAINT::CANNOT_MOVE) != 0)
 		return;
 
 	// 이동
