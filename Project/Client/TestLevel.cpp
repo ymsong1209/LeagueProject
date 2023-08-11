@@ -167,64 +167,21 @@ void CreateTestLevel()
 	SpawnGameObject(pSkyBox, Vec3(0.f, 0.f, 0.f), 0);
 
 
-	//CGameObject* Mouse2 = new CGameObject;
-	//Mouse2->SetName(L"Parent");
-	//Mouse2->AddComponent(new CTransform);
-	//Mouse2->AddComponent(new CMeshRender);
-	//Mouse2->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	//Mouse2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MalphiteBasickAttackMtrl"), 0);
-	//Mouse2->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\malphite_base_z_hiteffect.dds"));
-
-
-	//Mouse2->MeshRender()->SetPunctureTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\malphite_base_z_hiteffect.dds"));
-	//Mouse2->MeshRender()->SetAdditiveTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\malphite_color-hurtbeam.dds"));
-	//Mouse2->MeshRender()->SetAdditiveTexColor(Vec4(255.f, 100.f, 0.f, 0.f));
-
-	//Mouse2->Transform()->SetRelativeScale(Vec3(250.f, 250.f, 1.f));
-	//SpawnGameObject(Mouse2, Vec3(100.f, 1.f, 100.f), 0);
-
-
-	//CGameObject* Mouse = new CGameObject;
-	//Mouse->SetName(L"Child");
-	//Mouse->AddComponent(new CTransform);
-	//Mouse->AddComponent(new CMeshRender);
-	//Mouse->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	//Mouse->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MalphiteBasickAttackOutlineMtrl"), 0);
-	//Mouse->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\caitlyn_skin06_radial_01.dds"));
-	//Mouse->Transform()->SetRelativeScale(Vec3(250.f, 250.f, 1.f));
-	//Mouse->Transform()->SetRelativePos(Vec3(100.f, 0.f, 0.f));
-	//Mouse->Transform()->SetAbsolute(true);
-	//Mouse2->AddChild(Mouse);
-
-
-	
 	// Malpthie Basic Attack
 	CGameObject* BasicAttack = new CGameObject;
 	BasicAttack->SetName(L"BasicAttack");
 	BasicAttack->AddComponent(new CTransform);
 	BasicAttack->AddComponent(new CMeshRender);
-
-	// 필요
 	BasicAttack->AddComponent(new CMalphiteBasicAttackScript);
 	BasicAttack->Transform()->SetUseMouseOutline(false);
-
-
 	BasicAttack->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
 	BasicAttack->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MalphiteBasickAttackMtrl"), 0);
-
-
-	//BasicAttack->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\caitlyn_skin06_radial_01"));
 	BasicAttack->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\malphite_base_z_hiteffect.dds"));
-
-
-	// 필요함
 	BasicAttack->MeshRender()->SetPunctureTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\malphite_base_z_hiteffect.dds"));
 	BasicAttack->MeshRender()->SetAdditiveTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\malphite_color-hurtbeam.dds"));
 	BasicAttack->MeshRender()->SetAdditiveTexColor(Vec4(255.f, 100.f, 0.f, 0.f));
-
 	BasicAttack->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 1.f));
 	SpawnGameObject(BasicAttack, Vec3(-950.f, 0.f, 0.f), 0);
-
 
 
 	// Malphite Basick Attack Outliner
@@ -232,33 +189,19 @@ void CreateTestLevel()
 	BasickAttackOutline->SetName(L"BasicAttackOutline");
 	BasickAttackOutline->AddComponent(new CTransform);
 	BasickAttackOutline->AddComponent(new CMeshRender);
-	//BasickAttackOutline->Transform()->SetUseMouseOutline(false);
-
-
-	BasickAttackOutline->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	BasickAttackOutline->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MalphiteBasickAttackOutlineMtrl"), 0);
-	BasickAttackOutline->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\caitlyn_skin06_radial_01.dds"));
+	BasickAttackOutline->Transform()->SetUseMouseOutline(false);
 	BasickAttackOutline->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 1.f));
 	BasickAttackOutline->Transform()->SetRelativePos(Vec3(0.f, 0.f, -2.f));
 	BasickAttackOutline->Transform()->SetAbsolute(true);
-	//BasickAttackOutline->MeshRender()->GetDynamicMaterial(0);
-
-	//BasicAttack->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\caitlyn_skin06_radial_01"));
-	//BasickAttackOutline->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\caitlyn_skin06_radial_01.dds"));
-
-	// 필요함
+	BasickAttackOutline->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	BasickAttackOutline->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MalphiteBasickAttackOutlineMtrl"), 0);
+	BasickAttackOutline->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\caitlyn_skin06_radial_01.dds"));
 	BasickAttackOutline->MeshRender()->SetAdditiveTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\malphite_base_p_glowing_fire.dds"));
 	BasickAttackOutline->MeshRender()->SetAdditiveTexColor(Vec4(255.f, 100.f, 0.f, 0.f));
 	BasicAttack->AddChild(BasickAttackOutline);
 
 
-
-
-
-	
-
-
-
+ 
 
 	//CGameObject* MapCollider = new CGameObject;
 	//MapCollider->SetName(L"MapCollider");
@@ -559,87 +502,35 @@ void CreateTestLevel()
 	SpawnJungleMob();
 
 
-	 // TestFastForward
-	 CGameObject* pRectFast = new CGameObject;
-	 pRectFast->SetName(L"ReftFast");
-	 pRectFast->AddComponent(new CMeshRender);
-	 pRectFast->AddComponent(new CTransform);
-	 pRectFast->AddComponent(new CCollider2D);
-	 pRectFast->AddComponent(new CGrowScaleScript);
-	 
+	 // TurretTrail
+	 CGameObject* TurretTrail = new CGameObject;
+	 TurretTrail->SetName(L"TurretTrail");
+	 TurretTrail->AddComponent(new CMeshRender);
+	 TurretTrail->AddComponent(new CTransform);
+	 TurretTrail->AddComponent(new CGrowScaleScript);
+	 TurretTrail->Transform()->SetRelativeScale(Vec3(0.f, 119.007f, 1.f));
+	 TurretTrail->Transform()->SetRelativePos(Vec3(1.f, 20.f, 0.f));
+	 TurretTrail->Transform()->SetRelativeRot(Vec3(0.f, 0.f, XM_PI/2.f));
+	 TurretTrail->Transform()->SetUseMouseOutline(false);
+	 TurretTrail->Transform()->SetAbsolute(true);
+	 TurretTrail->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"TrapezoidMeshLeft"));
+	 TurretTrail->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"TurretTrailMtrl"), 0);
+	 TurretTrail->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\turret\\trail.dds"));
 
-
-	 pRectFast->Transform()->SetRelativeScale(Vec3(311.996f, 119.007f, 0.f));
-	 //pRectFast->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 1.f));
-	 pRectFast->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
-	 pRectFast->Transform()->SetRelativePos(Vec3(1.f, 176.f, 0.f));
-	 pRectFast->Transform()->SetRelativeRot(Vec3(0.f, 0.f, XM_PI/2.f));
-	 pRectFast->Transform()->SetUseMouseOutline(false);
-	 pRectFast->Transform()->SetAbsolute(true);
-	 
-
-	 pRectFast->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"TrapezoidMesh"));
-	 pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"TurretTrailMtrl"), 0);
-	 //pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MiniMapMtrl"), 0);
-	 //pRectFast->MeshRender()->GetDynamicMaterial(0);
-	 pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\turret\\trail.dds"));
-	 //pRectFast->MeshRender()->GetDynamicMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Fighter.bmp"));
-	 //pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"FogFilterMap"));
-
-	 pRectFast->Collider2D()->SetAbsolute(true);
-	 pRectFast->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
-	 pRectFast->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f,0.f));
-	 pRectFast->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
-	 pRectFast->MeshRender()->SetFrustumCheck(false);
-
-	 //SpawnGameObject(pRectFast, Vec3(-794, 40, 504.f), 0);
-
-
-	 // TestFastForwardCircle
-	 CGameObject* pCircleFast = new CGameObject;
-	 pCircleFast->SetName(L"CircleFast");
-	 pCircleFast->AddComponent(new CMeshRender);
-	 pCircleFast->AddComponent(new CTransform);
-	 //pCircleFast->AddComponent(new CCollider2D);
-
-	 pCircleFast->Transform()->SetRelativeScale(Vec3(500.f, 500.f, 0.f));
-	 
-	 pCircleFast->Transform()->SetUseMouseOutline(false);
-	 pCircleFast->MeshRender()->SetFrustumCheck(false);
-
-	 pCircleFast->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CircleMesh"));
-	 pCircleFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"TurretBlazeMtrl"), 0);
-	 //pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MiniMapMtrl"), 0);
-	 //pRectFast->MeshRender()->GetDynamicMaterial(0);
-	 pCircleFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\turret\\sru_chaos_sparks.dds"));
-	 //pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"FogFilterMap"));
-
-	 pCircleFast->AddChild(pRectFast);
-
-	 pRectFast->Transform()->SetRelativeScale(Vec3(311.996f, 119.007f, 0.f));
-	 //pRectFast->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 1.f));
-	 pRectFast->Transform()->SetRelativeRot(Vec3(0.f, 0.f, 0.f));
-	 pRectFast->Transform()->SetRelativePos(Vec3(1.f, 176.f, 0.f));
-	 pRectFast->Transform()->SetRelativeRot(Vec3(0.f, 0.f, XM_PI / 2.f));
-	 pRectFast->Transform()->SetUseMouseOutline(false);
-	 pRectFast->Transform()->SetAbsolute(true);
-
-
-	 pRectFast->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"TrapezoidMeshLeft"));
-	 pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"TurretTrailMtrl"), 0);
-	 //pRectFast->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MiniMapMtrl"), 0);
-	 //pRectFast->MeshRender()->GetDynamicMaterial(0);
-	 pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\turret\\trail.dds"));
-	 //pRectFast->MeshRender()->GetDynamicMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Fighter.bmp"));
-	 //pRectFast->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"FogFilterMap"));
-
-	 pRectFast->Collider2D()->SetAbsolute(true);
-	 pRectFast->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
-	 pRectFast->Collider2D()->SetOffsetPos(Vec3(0.f, 0.f, 0.f));
-	 pRectFast->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
-	 pRectFast->GetRenderComponent()->SetFrustumCheck(true);
-
-	 SpawnGameObject(pCircleFast, Vec3(-744.664f, -83.502f, 349.207f), 0);
+ 
+	 // TurretBlaze
+	 CGameObject* TurretBlaze = new CGameObject;
+	 TurretBlaze->SetName(L"TurretBlaze");
+	 TurretBlaze->AddComponent(new CMeshRender);
+	 TurretBlaze->AddComponent(new CTransform);
+	 TurretBlaze->Transform()->SetRelativeScale(Vec3(500.f, 500.f, 1.f));
+	 TurretBlaze->Transform()->SetUseMouseOutline(false);
+	 TurretBlaze->MeshRender()->SetFrustumCheck(false);
+	 TurretBlaze->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CircleMesh"));
+	 TurretBlaze->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"TurretBlazeMtrl"), 0);
+	 TurretBlaze->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\turret\\sru_chaos_sparks.dds"));
+	 TurretBlaze->AddChild(TurretTrail);
+	 SpawnGameObject(TurretBlaze, Vec3(-744.664f, -83.502f, 349.207f), 0);
 
 
 	 // TestFastForward

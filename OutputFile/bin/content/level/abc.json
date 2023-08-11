@@ -257,6 +257,233 @@
                     "children": []
                 },
                 {
+                    "ObjName": "BasicAttack",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": -950.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vRelativeScale": {
+                                "x": 100.0,
+                                "y": 100.0,
+                                "z": 1.0
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
+                        },
+                        {
+                            "MESHRENDER": 10,
+                            "Mesh": {
+                                "IsNull": false,
+                                "Key": "RectMesh",
+                                "RelativePath": ""
+                            },
+                            "fBounding": 150.0,
+                            "bFrustumCheck": true,
+                            "bDynamicShadow": false,
+                            "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": false,
+                            "vBoundingBoxOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "iMtrlCount": 1,
+                            "vecMtrls[0]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "MalphiteBasickAttackMtrl",
+                                "RelativePath": ""
+                            },
+                            "DynamicMtrls": [
+                                {
+                                    "vecMtrls[0]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                }
+                            ],
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 255.0,
+                                    "y": 100.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": false,
+                                        "Key": "texture\\Malphite\\malphite_base_z_hiteffect.dds",
+                                        "RelativePath": "texture\\Malphite\\malphite_base_z_hiteffect.dds"
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": false,
+                                        "Key": "texture\\Malphite\\malphite_color-hurtbeam.dds",
+                                        "RelativePath": "texture\\Malphite\\malphite_color-hurtbeam.dds"
+                                    }
+                                }
+                            ]
+                        },
+                        16
+                    ],
+                    "scripts": [
+                        {
+                            "scriptName": "CMalphiteBasicAttackScript"
+                        }
+                    ],
+                    "children": [
+                        {
+                            "ObjName": "BasicAttackOutline",
+                            "components": [
+                                {
+                                    "TRANSFORM": 0,
+                                    "vRelativePos": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": -2.0
+                                    },
+                                    "vRelativeScale": {
+                                        "x": 100.0,
+                                        "y": 100.0,
+                                        "z": 1.0
+                                    },
+                                    "vRelativeRot": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "bAbsolute": true,
+                                    "IsNoGizmoObj": false,
+                                    "GizmoBounding_Radius": 50.0,
+                                    "IsShootingRay": false,
+                                    "RayRange": 20.0,
+                                    "UseMouseOutLine": false,
+                                    "Outlinethickness": 0.07199999690055847
+                                },
+                                {
+                                    "MESHRENDER": 10,
+                                    "Mesh": {
+                                        "IsNull": false,
+                                        "Key": "RectMesh",
+                                        "RelativePath": ""
+                                    },
+                                    "fBounding": 150.0,
+                                    "bFrustumCheck": true,
+                                    "bDynamicShadow": false,
+                                    "bShowDebugBoundShape": false,
+                                    "bRaySightCulling": false,
+                                    "bUseBoundingOffset": false,
+                                    "vBoundingBoxOffset": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "iMtrlCount": 1,
+                                    "vecMtrls[0]SharedMtrl": {
+                                        "IsNull": false,
+                                        "Key": "MalphiteBasickAttackOutlineMtrl",
+                                        "RelativePath": ""
+                                    },
+                                    "DynamicMtrls": [
+                                        {
+                                            "vecMtrls[0]DynamicMtrl": null,
+                                            "IsDynamicMtrlExist": false
+                                        }
+                                    ],
+                                    "MeshMoveDataInfo": {
+                                        "OutputTexFuncValue": {
+                                            "x": 0.0,
+                                            "y": 0.0,
+                                            "z": 0.0,
+                                            "w": 0.0
+                                        },
+                                        "OutputTePreviousPos": {
+                                            "x": 0.0,
+                                            "y": 0.0
+                                        },
+                                        "OutputTexMovingStyle": 0,
+                                        "isAdditiveTextureUsed": 0,
+                                        "AdditiveColor": {
+                                            "x": 255.0,
+                                            "y": 100.0,
+                                            "z": 0.0,
+                                            "w": 0.0
+                                        },
+                                        "PunctureTextureValue": {
+                                            "x": 0.0,
+                                            "y": 0.0,
+                                            "z": 0.0,
+                                            "w": 0.0
+                                        },
+                                        "PunctureTexPreviousPos": {
+                                            "x": 0.0,
+                                            "y": 0.0
+                                        },
+                                        "isPunctureTextureUsed": 0,
+                                        "PunctureTexMovingStyle": 0
+                                    },
+                                    "MeshTexArray": [
+                                        {
+                                            "Texture[0]": {
+                                                "IsNull": true
+                                            }
+                                        },
+                                        {
+                                            "Texture[1]": {
+                                                "IsNull": false,
+                                                "Key": "texture\\Malphite\\malphite_base_p_glowing_fire.dds",
+                                                "RelativePath": "texture\\Malphite\\malphite_base_p_glowing_fire.dds"
+                                            }
+                                        }
+                                    ]
+                                },
+                                16
+                            ],
+                            "scripts": [],
+                            "children": []
+                        }
+                    ]
+                },
+                {
                     "ObjName": "SOUTH_GrompAggroRadius",
                     "components": [
                         {
@@ -525,6 +752,227 @@
                     ],
                     "scripts": [],
                     "children": []
+                },
+                {
+                    "ObjName": "TurretBlaze",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": -744.6640014648438,
+                                "y": -83.50199890136719,
+                                "z": 349.2070007324219
+                            },
+                            "vRelativeScale": {
+                                "x": 500.0,
+                                "y": 500.0,
+                                "z": 1.0
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.07199999690055847
+                        },
+                        {
+                            "MESHRENDER": 10,
+                            "Mesh": {
+                                "IsNull": false,
+                                "Key": "CircleMesh",
+                                "RelativePath": ""
+                            },
+                            "fBounding": 150.0,
+                            "bFrustumCheck": false,
+                            "bDynamicShadow": false,
+                            "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": false,
+                            "vBoundingBoxOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "iMtrlCount": 1,
+                            "vecMtrls[0]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "TurretBlazeMtrl",
+                                "RelativePath": ""
+                            },
+                            "DynamicMtrls": [
+                                {
+                                    "vecMtrls[0]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                }
+                            ],
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 0,
+                                "AdditiveColor": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 0,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": true
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": true
+                                    }
+                                }
+                            ]
+                        },
+                        16
+                    ],
+                    "scripts": [],
+                    "children": [
+                        {
+                            "ObjName": "TurretTrail",
+                            "components": [
+                                {
+                                    "TRANSFORM": 0,
+                                    "vRelativePos": {
+                                        "x": 1.0,
+                                        "y": 20.0,
+                                        "z": 0.0
+                                    },
+                                    "vRelativeScale": {
+                                        "x": 0.0,
+                                        "y": 119.00700378417969,
+                                        "z": 1.0
+                                    },
+                                    "vRelativeRot": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 1.5707963705062866
+                                    },
+                                    "bAbsolute": true,
+                                    "IsNoGizmoObj": false,
+                                    "GizmoBounding_Radius": 50.0,
+                                    "IsShootingRay": false,
+                                    "RayRange": 20.0,
+                                    "UseMouseOutLine": false,
+                                    "Outlinethickness": 0.07199999690055847
+                                },
+                                {
+                                    "MESHRENDER": 10,
+                                    "Mesh": {
+                                        "IsNull": false,
+                                        "Key": "TrapezoidMeshLeft",
+                                        "RelativePath": ""
+                                    },
+                                    "fBounding": 150.0,
+                                    "bFrustumCheck": true,
+                                    "bDynamicShadow": false,
+                                    "bShowDebugBoundShape": false,
+                                    "bRaySightCulling": false,
+                                    "bUseBoundingOffset": false,
+                                    "vBoundingBoxOffset": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "iMtrlCount": 1,
+                                    "vecMtrls[0]SharedMtrl": {
+                                        "IsNull": false,
+                                        "Key": "TurretTrailMtrl",
+                                        "RelativePath": ""
+                                    },
+                                    "DynamicMtrls": [
+                                        {
+                                            "vecMtrls[0]DynamicMtrl": null,
+                                            "IsDynamicMtrlExist": false
+                                        }
+                                    ],
+                                    "MeshMoveDataInfo": {
+                                        "OutputTexFuncValue": {
+                                            "x": 0.0,
+                                            "y": 0.0,
+                                            "z": 0.0,
+                                            "w": 0.0
+                                        },
+                                        "OutputTePreviousPos": {
+                                            "x": 0.0,
+                                            "y": 0.0
+                                        },
+                                        "OutputTexMovingStyle": 0,
+                                        "isAdditiveTextureUsed": 0,
+                                        "AdditiveColor": {
+                                            "x": 0.0,
+                                            "y": 0.0,
+                                            "z": 0.0,
+                                            "w": 0.0
+                                        },
+                                        "PunctureTextureValue": {
+                                            "x": 0.0,
+                                            "y": 0.0,
+                                            "z": 0.0,
+                                            "w": 0.0
+                                        },
+                                        "PunctureTexPreviousPos": {
+                                            "x": 0.0,
+                                            "y": 0.0
+                                        },
+                                        "isPunctureTextureUsed": 0,
+                                        "PunctureTexMovingStyle": 0
+                                    },
+                                    "MeshTexArray": [
+                                        {
+                                            "Texture[0]": {
+                                                "IsNull": true
+                                            }
+                                        },
+                                        {
+                                            "Texture[1]": {
+                                                "IsNull": true
+                                            }
+                                        }
+                                    ]
+                                },
+                                16
+                            ],
+                            "scripts": [
+                                {
+                                    "scriptName": "CGrowScaleScript"
+                                }
+                            ],
+                            "children": []
+                        }
+                    ]
                 },
                 {
                     "ObjName": "DummyObject",
@@ -1203,562 +1651,6 @@
                                         ],
                                         "arrFloat[12]s": [
                                             {
-                                                "arrFloat[0]": 1.0
-                                            },
-                                            {
-                                                "arrFloat[1]": 0.0
-                                            },
-                                            {
-                                                "arrFloat[2]": 0.0
-                                            },
-                                            {
-                                                "arrFloat[3]": 0.0
-                                            },
-                                            {
-                                                "arrFloat[4]": 0.0
-                                            },
-                                            {
-                                                "arrFloat[5]": 0.0
-                                            },
-                                            {
-                                                "arrFloat[6]": 0.0
-                                            },
-                                            {
-                                                "arrFloat[7]": 0.0
-                                            },
-                                            {
-                                                "arrFloat[8]": 0.0
-                                            },
-                                            {
-                                                "arrFloat[9]": 0.0
-                                            },
-                                            {
-                                                "arrFloat[10]": 0.0
-                                            },
-                                            {
-                                                "arrFloat[11]": 0.0
-                                            }
-                                        ],
-                                        "arrV2[12]s": [
-                                            {
-                                                "arrV2[0]": {
-                                                    "x": 0.0,
-                                                    "y": 0.0
-                                                }
-                                            },
-                                            {
-                                                "arrV2[1]": {
-                                                    "x": 0.0,
-                                                    "y": 0.0
-                                                }
-                                            },
-                                            {
-                                                "arrV2[2]": {
-                                                    "x": 0.0,
-                                                    "y": 0.0
-                                                }
-                                            },
-                                            {
-                                                "arrV2[3]": {
-                                                    "x": 0.0,
-                                                    "y": 0.0
-                                                }
-                                            },
-                                            {
-                                                "arrV2[4]": {
-                                                    "x": 0.0,
-                                                    "y": 0.0
-                                                }
-                                            },
-                                            {
-                                                "arrV2[5]": {
-                                                    "x": 0.0,
-                                                    "y": 0.0
-                                                }
-                                            },
-                                            {
-                                                "arrV2[6]": {
-                                                    "x": 0.0,
-                                                    "y": 0.0
-                                                }
-                                            },
-                                            {
-                                                "arrV2[7]": {
-                                                    "x": 0.0,
-                                                    "y": 0.0
-                                                }
-                                            },
-                                            {
-                                                "arrV2[8]": {
-                                                    "x": 0.0,
-                                                    "y": 0.0
-                                                }
-                                            },
-                                            {
-                                                "arrV2[9]": {
-                                                    "x": 0.0,
-                                                    "y": 0.0
-                                                }
-                                            },
-                                            {
-                                                "arrV2[10]": {
-                                                    "x": 0.0,
-                                                    "y": 0.0
-                                                }
-                                            },
-                                            {
-                                                "arrV2[11]": {
-                                                    "x": 0.0,
-                                                    "y": 0.0
-                                                }
-                                            }
-                                        ],
-                                        "arrV4[12]s": [
-                                            {
-                                                "arrV4[0]": {
-                                                    "x": 0.0,
-                                                    "y": 0.0,
-                                                    "z": 0.0,
-                                                    "w": 0.0
-                                                }
-                                            },
-                                            {
-                                                "arrV4[1]": {
-                                                    "x": 0.0,
-                                                    "y": 0.0,
-                                                    "z": 0.0,
-                                                    "w": 0.0
-                                                }
-                                            },
-                                            {
-                                                "arrV4[2]": {
-                                                    "x": 0.0,
-                                                    "y": 0.0,
-                                                    "z": 0.0,
-                                                    "w": 0.0
-                                                }
-                                            },
-                                            {
-                                                "arrV4[3]": {
-                                                    "x": 0.0,
-                                                    "y": 0.0,
-                                                    "z": 0.0,
-                                                    "w": 0.0
-                                                }
-                                            },
-                                            {
-                                                "arrV4[4]": {
-                                                    "x": 0.0,
-                                                    "y": 0.0,
-                                                    "z": 0.0,
-                                                    "w": 0.0
-                                                }
-                                            },
-                                            {
-                                                "arrV4[5]": {
-                                                    "x": 0.0,
-                                                    "y": 0.0,
-                                                    "z": 0.0,
-                                                    "w": 0.0
-                                                }
-                                            },
-                                            {
-                                                "arrV4[6]": {
-                                                    "x": 0.0,
-                                                    "y": 0.0,
-                                                    "z": 0.0,
-                                                    "w": 0.0
-                                                }
-                                            },
-                                            {
-                                                "arrV4[7]": {
-                                                    "x": 0.0,
-                                                    "y": 0.0,
-                                                    "z": 0.0,
-                                                    "w": 0.0
-                                                }
-                                            },
-                                            {
-                                                "arrV4[8]": {
-                                                    "x": 0.0,
-                                                    "y": 0.0,
-                                                    "z": 0.0,
-                                                    "w": 0.0
-                                                }
-                                            },
-                                            {
-                                                "arrV4[9]": {
-                                                    "x": 0.0,
-                                                    "y": 0.0,
-                                                    "z": 0.0,
-                                                    "w": 0.0
-                                                }
-                                            },
-                                            {
-                                                "arrV4[10]": {
-                                                    "x": 0.0,
-                                                    "y": 0.0,
-                                                    "z": 0.0,
-                                                    "w": 0.0
-                                                }
-                                            },
-                                            {
-                                                "arrV4[11]": {
-                                                    "x": 0.0,
-                                                    "y": 0.0,
-                                                    "z": 0.0,
-                                                    "w": 0.0
-                                                }
-                                            }
-                                        ],
-                                        "arrMat[4]s": [
-                                            {
-                                                "arrMat[0]": {
-                                                    "m00": 1.0,
-                                                    "m01": 0.0,
-                                                    "m02": 0.0,
-                                                    "m03": 0.0,
-                                                    "m10": 0.0,
-                                                    "m11": 1.0,
-                                                    "m12": 0.0,
-                                                    "m13": 0.0,
-                                                    "m20": 0.0,
-                                                    "m21": 0.0,
-                                                    "m22": 1.0,
-                                                    "m23": 0.0,
-                                                    "m30": 0.0,
-                                                    "m31": 0.0,
-                                                    "m32": 0.0,
-                                                    "m33": 1.0
-                                                }
-                                            },
-                                            {
-                                                "arrMat[1]": {
-                                                    "m00": 1.0,
-                                                    "m01": 0.0,
-                                                    "m02": 0.0,
-                                                    "m03": 0.0,
-                                                    "m10": 0.0,
-                                                    "m11": 1.0,
-                                                    "m12": 0.0,
-                                                    "m13": 0.0,
-                                                    "m20": 0.0,
-                                                    "m21": 0.0,
-                                                    "m22": 1.0,
-                                                    "m23": 0.0,
-                                                    "m30": 0.0,
-                                                    "m31": 0.0,
-                                                    "m32": 0.0,
-                                                    "m33": 1.0
-                                                }
-                                            },
-                                            {
-                                                "arrMat[2]": {
-                                                    "m00": 1.0,
-                                                    "m01": 0.0,
-                                                    "m02": 0.0,
-                                                    "m03": 0.0,
-                                                    "m10": 0.0,
-                                                    "m11": 1.0,
-                                                    "m12": 0.0,
-                                                    "m13": 0.0,
-                                                    "m20": 0.0,
-                                                    "m21": 0.0,
-                                                    "m22": 1.0,
-                                                    "m23": 0.0,
-                                                    "m30": 0.0,
-                                                    "m31": 0.0,
-                                                    "m32": 0.0,
-                                                    "m33": 1.0
-                                                }
-                                            },
-                                            {
-                                                "arrMat[3]": {
-                                                    "m00": 1.0,
-                                                    "m01": 0.0,
-                                                    "m02": 0.0,
-                                                    "m03": 0.0,
-                                                    "m10": 0.0,
-                                                    "m11": 1.0,
-                                                    "m12": 0.0,
-                                                    "m13": 0.0,
-                                                    "m20": 0.0,
-                                                    "m21": 0.0,
-                                                    "m22": 1.0,
-                                                    "m23": 0.0,
-                                                    "m30": 0.0,
-                                                    "m31": 0.0,
-                                                    "m32": 0.0,
-                                                    "m33": 1.0
-                                                }
-                                            }
-                                        ],
-                                        "arrTex[(UINT)TEX_PARAM::TEX_END]s": [
-                                            {
-                                                "arrTex[0]": 1
-                                            },
-                                            {
-                                                "arrTex[1]": 0
-                                            },
-                                            {
-                                                "arrTex[2]": 0
-                                            },
-                                            {
-                                                "arrTex[3]": 0
-                                            },
-                                            {
-                                                "arrTex[4]": 0
-                                            },
-                                            {
-                                                "arrTex[5]": 0
-                                            },
-                                            {
-                                                "arrTex[6]": 0
-                                            },
-                                            {
-                                                "arrTex[7]": 0
-                                            },
-                                            {
-                                                "arrTex[8]": 0
-                                            },
-                                            {
-                                                "arrTex[9]": 0
-                                            },
-                                            {
-                                                "arrTex[10]": 0
-                                            },
-                                            {
-                                                "arrTex[11]": 0
-                                            }
-                                        ],
-                                        "arrAnimData[4]s": [
-                                            {
-                                                "arrAnimData[0]": 0
-                                            },
-                                            {
-                                                "arrAnimData[1]": 0
-                                            },
-                                            {
-                                                "arrAnimData[2]": 0
-                                            },
-                                            {
-                                                "arrAnimData[3]": 0
-                                            }
-                                        ]
-                                    },
-                                    "TEX_PARAM[0]": {
-                                        "IsNull": false,
-                                        "Key": "texture\\Dragon\\fb_explosion_smoke_mult.dds",
-                                        "RelativePath": "texture\\Dragon\\fb_explosion_smoke_mult.dds"
-                                    },
-                                    "TEX_PARAM[1]": {
-                                        "IsNull": true
-                                    },
-                                    "TEX_PARAM[2]": {
-                                        "IsNull": true
-                                    },
-                                    "TEX_PARAM[3]": {
-                                        "IsNull": true
-                                    },
-                                    "TEX_PARAM[4]": {
-                                        "IsNull": true
-                                    },
-                                    "TEX_PARAM[5]": {
-                                        "IsNull": true
-                                    },
-                                    "TEX_PARAM[6]": {
-                                        "IsNull": true
-                                    },
-                                    "TEX_PARAM[7]": {
-                                        "IsNull": true
-                                    },
-                                    "TEX_PARAM[8]": {
-                                        "IsNull": true
-                                    },
-                                    "TEX_PARAM[9]": {
-                                        "IsNull": true
-                                    },
-                                    "TEX_PARAM[10]": {
-                                        "IsNull": true
-                                    },
-                                    "TEX_PARAM[11]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
-                                "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 0,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": true
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": true
-                                    }
-                                }
-                            ]
-                        },
-                        16
-                    ],
-                    "scripts": [],
-                    "children": []
-                },
-                {
-                    "ObjName": "BasicAttack",
-                    "components": [
-                        {
-                            "TRANSFORM": 0,
-                            "vRelativePos": {
-                                "x": -950.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "vRelativeScale": {
-                                "x": 100.0,
-                                "y": 100.0,
-                                "z": 0.0
-                            },
-                            "vRelativeRot": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "bAbsolute": false,
-                            "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 50.0,
-                            "IsShootingRay": false,
-                            "RayRange": 20.0,
-                            "UseMouseOutLine": false,
-                            "Outlinethickness": 0.07199999690055847
-                        },
-                        {
-                            "MESHRENDER": 10,
-                            "Mesh": {
-                                "IsNull": false,
-                                "Key": "RectMesh",
-                                "RelativePath": ""
-                            },
-                            "fBounding": 150.0,
-                            "bFrustumCheck": true,
-                            "bDynamicShadow": false,
-                            "bShowDebugBoundShape": false,
-                            "bRaySightCulling": false,
-                            "bUseBoundingOffset": false,
-                            "vBoundingBoxOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "iMtrlCount": 1,
-                            "vecMtrls[0]SharedMtrl": {
-                                "IsNull": false,
-                                "Key": "MalphiteBasickAttackMtrl",
-                                "RelativePath": ""
-                            },
-                            "DynamicMtrls": [
-                                {
-                                    "vecMtrls[0]DynamicMtrl": null,
-                                    "IsDynamicMtrlExist": true,
-                                    "ConstMtrlData": {
-                                        "mtrl": {
-                                            "vDiff": {
-                                                "x": 0.0,
-                                                "y": 0.0,
-                                                "z": 0.0,
-                                                "w": 0.0
-                                            },
-                                            "vSpec": {
-                                                "x": 0.0,
-                                                "y": 0.0,
-                                                "z": 0.0,
-                                                "w": 0.0
-                                            },
-                                            "vAmb": {
-                                                "x": 0.0,
-                                                "y": 0.0,
-                                                "z": 0.0,
-                                                "w": 0.0
-                                            },
-                                            "vEmv": {
-                                                "x": 0.0,
-                                                "y": 0.0,
-                                                "z": 0.0,
-                                                "w": 0.0
-                                            }
-                                        },
-                                        "arrInt[12]s": [
-                                            {
-                                                "arrInt[0]": 0
-                                            },
-                                            {
-                                                "arrInt[1]": 0
-                                            },
-                                            {
-                                                "arrInt[2]": 0
-                                            },
-                                            {
-                                                "arrInt[3]": 0
-                                            },
-                                            {
-                                                "arrInt[4]": 0
-                                            },
-                                            {
-                                                "arrInt[5]": 0
-                                            },
-                                            {
-                                                "arrInt[6]": 0
-                                            },
-                                            {
-                                                "arrInt[7]": 0
-                                            },
-                                            {
-                                                "arrInt[8]": 0
-                                            },
-                                            {
-                                                "arrInt[9]": 0
-                                            },
-                                            {
-                                                "arrInt[10]": 0
-                                            },
-                                            {
-                                                "arrInt[11]": 0
-                                            }
-                                        ],
-                                        "arrFloat[12]s": [
-                                            {
                                                 "arrFloat[0]": 0.0
                                             },
                                             {
@@ -2051,7 +1943,7 @@
                                         ],
                                         "arrTex[(UINT)TEX_PARAM::TEX_END]s": [
                                             {
-                                                "arrTex[0]": 1
+                                                "arrTex[0]": 0
                                             },
                                             {
                                                 "arrTex[1]": 0
@@ -2104,8 +1996,8 @@
                                     },
                                     "TEX_PARAM[0]": {
                                         "IsNull": false,
-                                        "Key": "texture\\Malphite\\malphite_base_z_hiteffect.dds",
-                                        "RelativePath": "texture\\Malphite\\malphite_base_z_hiteffect.dds"
+                                        "Key": "texture\\Dragon\\fb_explosion_smoke_mult.dds",
+                                        "RelativePath": "texture\\Dragon\\fb_explosion_smoke_mult.dds"
                                     },
                                     "TEX_PARAM[1]": {
                                         "IsNull": true
@@ -2140,681 +2032,6 @@
                                     "TEX_PARAM[11]": {
                                         "IsNull": true
                                     }
-                                }
-                            ],
-                            "MeshMoveDataInfo": {
-                                "OutputTexFuncValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "OutputTePreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 1,
-                                "AdditiveColor": {
-                                    "x": 255.0,
-                                    "y": 100.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTextureValue": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
-                                    "w": 0.0
-                                },
-                                "PunctureTexPreviousPos": {
-                                    "x": 0.0,
-                                    "y": 0.0
-                                },
-                                "isPunctureTextureUsed": 1,
-                                "PunctureTexMovingStyle": 0
-                            },
-                            "MeshTexArray": [
-                                {
-                                    "Texture[0]": {
-                                        "IsNull": false,
-                                        "Key": "texture\\Malphite\\malphite_base_z_hiteffect.dds",
-                                        "RelativePath": "texture\\Malphite\\malphite_base_z_hiteffect.dds"
-                                    }
-                                },
-                                {
-                                    "Texture[1]": {
-                                        "IsNull": false,
-                                        "Key": "texture\\Malphite\\malphite_color-hurtbeam.dds",
-                                        "RelativePath": "texture\\Malphite\\malphite_color-hurtbeam.dds"
-                                    }
-                                }
-                            ]
-                        },
-                        16
-                    ],
-                    "scripts": [
-                        {
-                            "scriptName": "CMalphiteBasicAttackScript"
-                        }
-                    ],
-                    "children": [
-                        {
-                            "ObjName": "BasicAttackOutline",
-                            "components": [
-                                {
-                                    "TRANSFORM": 0,
-                                    "vRelativePos": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": -4.0
-                                    },
-                                    "vRelativeScale": {
-                                        "x": 100.0,
-                                        "y": 100.0,
-                                        "z": 0.0
-                                    },
-                                    "vRelativeRot": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0
-                                    },
-                                    "bAbsolute": true,
-                                    "IsNoGizmoObj": false,
-                                    "GizmoBounding_Radius": 50.0,
-                                    "IsShootingRay": false,
-                                    "RayRange": 20.0,
-                                    "UseMouseOutLine": false,
-                                    "Outlinethickness": 0.07199999690055847
-                                },
-                                {
-                                    "MESHRENDER": 10,
-                                    "Mesh": {
-                                        "IsNull": false,
-                                        "Key": "RectMesh",
-                                        "RelativePath": ""
-                                    },
-                                    "fBounding": 150.0,
-                                    "bFrustumCheck": true,
-                                    "bDynamicShadow": false,
-                                    "bShowDebugBoundShape": false,
-                                    "bRaySightCulling": false,
-                                    "bUseBoundingOffset": false,
-                                    "vBoundingBoxOffset": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0
-                                    },
-                                    "iMtrlCount": 1,
-                                    "vecMtrls[0]SharedMtrl": {
-                                        "IsNull": false,
-                                        "Key": "MalphiteBasickAttackOutlineMtrl",
-                                        "RelativePath": ""
-                                    },
-                                    "DynamicMtrls": [
-                                        {
-                                            "vecMtrls[0]DynamicMtrl": null,
-                                            "IsDynamicMtrlExist": true,
-                                            "ConstMtrlData": {
-                                                "mtrl": {
-                                                    "vDiff": {
-                                                        "x": 0.0,
-                                                        "y": 0.0,
-                                                        "z": 0.0,
-                                                        "w": 0.0
-                                                    },
-                                                    "vSpec": {
-                                                        "x": 0.0,
-                                                        "y": 0.0,
-                                                        "z": 0.0,
-                                                        "w": 0.0
-                                                    },
-                                                    "vAmb": {
-                                                        "x": 0.0,
-                                                        "y": 0.0,
-                                                        "z": 0.0,
-                                                        "w": 0.0
-                                                    },
-                                                    "vEmv": {
-                                                        "x": 0.0,
-                                                        "y": 0.0,
-                                                        "z": 0.0,
-                                                        "w": 0.0
-                                                    }
-                                                },
-                                                "arrInt[12]s": [
-                                                    {
-                                                        "arrInt[0]": 0
-                                                    },
-                                                    {
-                                                        "arrInt[1]": 0
-                                                    },
-                                                    {
-                                                        "arrInt[2]": 0
-                                                    },
-                                                    {
-                                                        "arrInt[3]": 0
-                                                    },
-                                                    {
-                                                        "arrInt[4]": 0
-                                                    },
-                                                    {
-                                                        "arrInt[5]": 0
-                                                    },
-                                                    {
-                                                        "arrInt[6]": 0
-                                                    },
-                                                    {
-                                                        "arrInt[7]": 0
-                                                    },
-                                                    {
-                                                        "arrInt[8]": 0
-                                                    },
-                                                    {
-                                                        "arrInt[9]": 0
-                                                    },
-                                                    {
-                                                        "arrInt[10]": 0
-                                                    },
-                                                    {
-                                                        "arrInt[11]": 0
-                                                    }
-                                                ],
-                                                "arrFloat[12]s": [
-                                                    {
-                                                        "arrFloat[0]": 0.0
-                                                    },
-                                                    {
-                                                        "arrFloat[1]": 0.0
-                                                    },
-                                                    {
-                                                        "arrFloat[2]": 0.0
-                                                    },
-                                                    {
-                                                        "arrFloat[3]": 0.0
-                                                    },
-                                                    {
-                                                        "arrFloat[4]": 0.0
-                                                    },
-                                                    {
-                                                        "arrFloat[5]": 0.0
-                                                    },
-                                                    {
-                                                        "arrFloat[6]": 0.0
-                                                    },
-                                                    {
-                                                        "arrFloat[7]": 0.0
-                                                    },
-                                                    {
-                                                        "arrFloat[8]": 0.0
-                                                    },
-                                                    {
-                                                        "arrFloat[9]": 0.0
-                                                    },
-                                                    {
-                                                        "arrFloat[10]": 0.0
-                                                    },
-                                                    {
-                                                        "arrFloat[11]": 0.0
-                                                    }
-                                                ],
-                                                "arrV2[12]s": [
-                                                    {
-                                                        "arrV2[0]": {
-                                                            "x": 0.0,
-                                                            "y": 0.0
-                                                        }
-                                                    },
-                                                    {
-                                                        "arrV2[1]": {
-                                                            "x": 0.0,
-                                                            "y": 0.0
-                                                        }
-                                                    },
-                                                    {
-                                                        "arrV2[2]": {
-                                                            "x": 0.0,
-                                                            "y": 0.0
-                                                        }
-                                                    },
-                                                    {
-                                                        "arrV2[3]": {
-                                                            "x": 0.0,
-                                                            "y": 0.0
-                                                        }
-                                                    },
-                                                    {
-                                                        "arrV2[4]": {
-                                                            "x": 0.0,
-                                                            "y": 0.0
-                                                        }
-                                                    },
-                                                    {
-                                                        "arrV2[5]": {
-                                                            "x": 0.0,
-                                                            "y": 0.0
-                                                        }
-                                                    },
-                                                    {
-                                                        "arrV2[6]": {
-                                                            "x": 0.0,
-                                                            "y": 0.0
-                                                        }
-                                                    },
-                                                    {
-                                                        "arrV2[7]": {
-                                                            "x": 0.0,
-                                                            "y": 0.0
-                                                        }
-                                                    },
-                                                    {
-                                                        "arrV2[8]": {
-                                                            "x": 0.0,
-                                                            "y": 0.0
-                                                        }
-                                                    },
-                                                    {
-                                                        "arrV2[9]": {
-                                                            "x": 0.0,
-                                                            "y": 0.0
-                                                        }
-                                                    },
-                                                    {
-                                                        "arrV2[10]": {
-                                                            "x": 0.0,
-                                                            "y": 0.0
-                                                        }
-                                                    },
-                                                    {
-                                                        "arrV2[11]": {
-                                                            "x": 0.0,
-                                                            "y": 0.0
-                                                        }
-                                                    }
-                                                ],
-                                                "arrV4[12]s": [
-                                                    {
-                                                        "arrV4[0]": {
-                                                            "x": 0.0,
-                                                            "y": 0.0,
-                                                            "z": 0.0,
-                                                            "w": 0.0
-                                                        }
-                                                    },
-                                                    {
-                                                        "arrV4[1]": {
-                                                            "x": 0.0,
-                                                            "y": 0.0,
-                                                            "z": 0.0,
-                                                            "w": 0.0
-                                                        }
-                                                    },
-                                                    {
-                                                        "arrV4[2]": {
-                                                            "x": 0.0,
-                                                            "y": 0.0,
-                                                            "z": 0.0,
-                                                            "w": 0.0
-                                                        }
-                                                    },
-                                                    {
-                                                        "arrV4[3]": {
-                                                            "x": 0.0,
-                                                            "y": 0.0,
-                                                            "z": 0.0,
-                                                            "w": 0.0
-                                                        }
-                                                    },
-                                                    {
-                                                        "arrV4[4]": {
-                                                            "x": 0.0,
-                                                            "y": 0.0,
-                                                            "z": 0.0,
-                                                            "w": 0.0
-                                                        }
-                                                    },
-                                                    {
-                                                        "arrV4[5]": {
-                                                            "x": 0.0,
-                                                            "y": 0.0,
-                                                            "z": 0.0,
-                                                            "w": 0.0
-                                                        }
-                                                    },
-                                                    {
-                                                        "arrV4[6]": {
-                                                            "x": 0.0,
-                                                            "y": 0.0,
-                                                            "z": 0.0,
-                                                            "w": 0.0
-                                                        }
-                                                    },
-                                                    {
-                                                        "arrV4[7]": {
-                                                            "x": 0.0,
-                                                            "y": 0.0,
-                                                            "z": 0.0,
-                                                            "w": 0.0
-                                                        }
-                                                    },
-                                                    {
-                                                        "arrV4[8]": {
-                                                            "x": 0.0,
-                                                            "y": 0.0,
-                                                            "z": 0.0,
-                                                            "w": 0.0
-                                                        }
-                                                    },
-                                                    {
-                                                        "arrV4[9]": {
-                                                            "x": 0.0,
-                                                            "y": 0.0,
-                                                            "z": 0.0,
-                                                            "w": 0.0
-                                                        }
-                                                    },
-                                                    {
-                                                        "arrV4[10]": {
-                                                            "x": 0.0,
-                                                            "y": 0.0,
-                                                            "z": 0.0,
-                                                            "w": 0.0
-                                                        }
-                                                    },
-                                                    {
-                                                        "arrV4[11]": {
-                                                            "x": 0.0,
-                                                            "y": 0.0,
-                                                            "z": 0.0,
-                                                            "w": 0.0
-                                                        }
-                                                    }
-                                                ],
-                                                "arrMat[4]s": [
-                                                    {
-                                                        "arrMat[0]": {
-                                                            "m00": 1.0,
-                                                            "m01": 0.0,
-                                                            "m02": 0.0,
-                                                            "m03": 0.0,
-                                                            "m10": 0.0,
-                                                            "m11": 1.0,
-                                                            "m12": 0.0,
-                                                            "m13": 0.0,
-                                                            "m20": 0.0,
-                                                            "m21": 0.0,
-                                                            "m22": 1.0,
-                                                            "m23": 0.0,
-                                                            "m30": 0.0,
-                                                            "m31": 0.0,
-                                                            "m32": 0.0,
-                                                            "m33": 1.0
-                                                        }
-                                                    },
-                                                    {
-                                                        "arrMat[1]": {
-                                                            "m00": 1.0,
-                                                            "m01": 0.0,
-                                                            "m02": 0.0,
-                                                            "m03": 0.0,
-                                                            "m10": 0.0,
-                                                            "m11": 1.0,
-                                                            "m12": 0.0,
-                                                            "m13": 0.0,
-                                                            "m20": 0.0,
-                                                            "m21": 0.0,
-                                                            "m22": 1.0,
-                                                            "m23": 0.0,
-                                                            "m30": 0.0,
-                                                            "m31": 0.0,
-                                                            "m32": 0.0,
-                                                            "m33": 1.0
-                                                        }
-                                                    },
-                                                    {
-                                                        "arrMat[2]": {
-                                                            "m00": 1.0,
-                                                            "m01": 0.0,
-                                                            "m02": 0.0,
-                                                            "m03": 0.0,
-                                                            "m10": 0.0,
-                                                            "m11": 1.0,
-                                                            "m12": 0.0,
-                                                            "m13": 0.0,
-                                                            "m20": 0.0,
-                                                            "m21": 0.0,
-                                                            "m22": 1.0,
-                                                            "m23": 0.0,
-                                                            "m30": 0.0,
-                                                            "m31": 0.0,
-                                                            "m32": 0.0,
-                                                            "m33": 1.0
-                                                        }
-                                                    },
-                                                    {
-                                                        "arrMat[3]": {
-                                                            "m00": 1.0,
-                                                            "m01": 0.0,
-                                                            "m02": 0.0,
-                                                            "m03": 0.0,
-                                                            "m10": 0.0,
-                                                            "m11": 1.0,
-                                                            "m12": 0.0,
-                                                            "m13": 0.0,
-                                                            "m20": 0.0,
-                                                            "m21": 0.0,
-                                                            "m22": 1.0,
-                                                            "m23": 0.0,
-                                                            "m30": 0.0,
-                                                            "m31": 0.0,
-                                                            "m32": 0.0,
-                                                            "m33": 1.0
-                                                        }
-                                                    }
-                                                ],
-                                                "arrTex[(UINT)TEX_PARAM::TEX_END]s": [
-                                                    {
-                                                        "arrTex[0]": 1
-                                                    },
-                                                    {
-                                                        "arrTex[1]": 0
-                                                    },
-                                                    {
-                                                        "arrTex[2]": 0
-                                                    },
-                                                    {
-                                                        "arrTex[3]": 0
-                                                    },
-                                                    {
-                                                        "arrTex[4]": 0
-                                                    },
-                                                    {
-                                                        "arrTex[5]": 0
-                                                    },
-                                                    {
-                                                        "arrTex[6]": 0
-                                                    },
-                                                    {
-                                                        "arrTex[7]": 0
-                                                    },
-                                                    {
-                                                        "arrTex[8]": 0
-                                                    },
-                                                    {
-                                                        "arrTex[9]": 0
-                                                    },
-                                                    {
-                                                        "arrTex[10]": 0
-                                                    },
-                                                    {
-                                                        "arrTex[11]": 0
-                                                    }
-                                                ],
-                                                "arrAnimData[4]s": [
-                                                    {
-                                                        "arrAnimData[0]": 0
-                                                    },
-                                                    {
-                                                        "arrAnimData[1]": 0
-                                                    },
-                                                    {
-                                                        "arrAnimData[2]": 0
-                                                    },
-                                                    {
-                                                        "arrAnimData[3]": 0
-                                                    }
-                                                ]
-                                            },
-                                            "TEX_PARAM[0]": {
-                                                "IsNull": false,
-                                                "Key": "texture\\Malphite\\caitlyn_skin06_radial_01.dds",
-                                                "RelativePath": "texture\\Malphite\\caitlyn_skin06_radial_01.dds"
-                                            },
-                                            "TEX_PARAM[1]": {
-                                                "IsNull": true
-                                            },
-                                            "TEX_PARAM[2]": {
-                                                "IsNull": true
-                                            },
-                                            "TEX_PARAM[3]": {
-                                                "IsNull": true
-                                            },
-                                            "TEX_PARAM[4]": {
-                                                "IsNull": true
-                                            },
-                                            "TEX_PARAM[5]": {
-                                                "IsNull": true
-                                            },
-                                            "TEX_PARAM[6]": {
-                                                "IsNull": true
-                                            },
-                                            "TEX_PARAM[7]": {
-                                                "IsNull": true
-                                            },
-                                            "TEX_PARAM[8]": {
-                                                "IsNull": true
-                                            },
-                                            "TEX_PARAM[9]": {
-                                                "IsNull": true
-                                            },
-                                            "TEX_PARAM[10]": {
-                                                "IsNull": true
-                                            },
-                                            "TEX_PARAM[11]": {
-                                                "IsNull": true
-                                            }
-                                        }
-                                    ],
-                                    "MeshMoveDataInfo": {
-                                        "OutputTexFuncValue": {
-                                            "x": 0.0,
-                                            "y": 0.0,
-                                            "z": 0.0,
-                                            "w": 0.0
-                                        },
-                                        "OutputTePreviousPos": {
-                                            "x": 0.0,
-                                            "y": 0.0
-                                        },
-                                        "OutputTexMovingStyle": 0,
-                                        "isAdditiveTextureUsed": 1,
-                                        "AdditiveColor": {
-                                            "x": 255.0,
-                                            "y": 100.0,
-                                            "z": 0.0,
-                                            "w": 0.0
-                                        },
-                                        "PunctureTextureValue": {
-                                            "x": 0.0,
-                                            "y": 0.0,
-                                            "z": 0.0,
-                                            "w": 0.0
-                                        },
-                                        "PunctureTexPreviousPos": {
-                                            "x": 0.0,
-                                            "y": 0.0
-                                        },
-                                        "isPunctureTextureUsed": 0,
-                                        "PunctureTexMovingStyle": 0
-                                    },
-                                    "MeshTexArray": [
-                                        {
-                                            "Texture[0]": {
-                                                "IsNull": true
-                                            }
-                                        },
-                                        {
-                                            "Texture[1]": {
-                                                "IsNull": false,
-                                                "Key": "texture\\Malphite\\malphite_base_p_glowing_fire.dds",
-                                                "RelativePath": "texture\\Malphite\\malphite_base_p_glowing_fire.dds"
-                                            }
-                                        }
-                                    ]
-                                },
-                                16
-                            ],
-                            "scripts": [],
-                            "children": []
-                        }
-                    ]
-                },
-                {
-                    "ObjName": "CircleFast",
-                    "components": [
-                        {
-                            "TRANSFORM": 0,
-                            "vRelativePos": {
-                                "x": -744.6640014648438,
-                                "y": -83.50199890136719,
-                                "z": 349.2070007324219
-                            },
-                            "vRelativeScale": {
-                                "x": 500.0,
-                                "y": 500.0,
-                                "z": 0.0
-                            },
-                            "vRelativeRot": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "bAbsolute": false,
-                            "IsNoGizmoObj": false,
-                            "GizmoBounding_Radius": 50.0,
-                            "IsShootingRay": false,
-                            "RayRange": 20.0,
-                            "UseMouseOutLine": false,
-                            "Outlinethickness": 0.07199999690055847
-                        },
-                        {
-                            "MESHRENDER": 10,
-                            "Mesh": {
-                                "IsNull": false,
-                                "Key": "CircleMesh",
-                                "RelativePath": ""
-                            },
-                            "fBounding": 150.0,
-                            "bFrustumCheck": false,
-                            "bDynamicShadow": false,
-                            "bShowDebugBoundShape": false,
-                            "bRaySightCulling": false,
-                            "bUseBoundingOffset": false,
-                            "vBoundingBoxOffset": {
-                                "x": 0.0,
-                                "y": 0.0,
-                                "z": 0.0
-                            },
-                            "iMtrlCount": 1,
-                            "vecMtrls[0]SharedMtrl": {
-                                "IsNull": false,
-                                "Key": "TurretBlazeMtrl",
-                                "RelativePath": ""
-                            },
-                            "DynamicMtrls": [
-                                {
-                                    "vecMtrls[0]DynamicMtrl": null,
-                                    "IsDynamicMtrlExist": false
                                 }
                             ],
                             "MeshMoveDataInfo": {
@@ -2865,141 +2082,7 @@
                         16
                     ],
                     "scripts": [],
-                    "children": [
-                        {
-                            "ObjName": "ReftFast",
-                            "components": [
-                                {
-                                    "TRANSFORM": 0,
-                                    "vRelativePos": {
-                                        "x": 1.0,
-                                        "y": 176.0,
-                                        "z": 0.0
-                                    },
-                                    "vRelativeScale": {
-                                        "x": 311.9960021972656,
-                                        "y": 119.00700378417969,
-                                        "z": 0.0
-                                    },
-                                    "vRelativeRot": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 1.5707963705062866
-                                    },
-                                    "bAbsolute": true,
-                                    "IsNoGizmoObj": false,
-                                    "GizmoBounding_Radius": 50.0,
-                                    "IsShootingRay": false,
-                                    "RayRange": 20.0,
-                                    "UseMouseOutLine": false,
-                                    "Outlinethickness": 0.07199999690055847
-                                },
-                                {
-                                    "COLLIDER2D": 1,
-                                    "vOffsetPos": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0
-                                    },
-                                    "vOffsetScale": {
-                                        "x": 1.0,
-                                        "y": 1.0,
-                                        "z": 1.0
-                                    },
-                                    "vOffsetRot": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0
-                                    },
-                                    "bAbsolute": true,
-                                    "Shape": 0,
-                                    "DrawCollision": true
-                                },
-                                {
-                                    "MESHRENDER": 10,
-                                    "Mesh": {
-                                        "IsNull": false,
-                                        "Key": "TrapezoidMeshLeft",
-                                        "RelativePath": ""
-                                    },
-                                    "fBounding": 150.0,
-                                    "bFrustumCheck": true,
-                                    "bDynamicShadow": false,
-                                    "bShowDebugBoundShape": false,
-                                    "bRaySightCulling": false,
-                                    "bUseBoundingOffset": false,
-                                    "vBoundingBoxOffset": {
-                                        "x": 0.0,
-                                        "y": 0.0,
-                                        "z": 0.0
-                                    },
-                                    "iMtrlCount": 1,
-                                    "vecMtrls[0]SharedMtrl": {
-                                        "IsNull": false,
-                                        "Key": "TurretTrailMtrl",
-                                        "RelativePath": ""
-                                    },
-                                    "DynamicMtrls": [
-                                        {
-                                            "vecMtrls[0]DynamicMtrl": null,
-                                            "IsDynamicMtrlExist": false
-                                        }
-                                    ],
-                                    "MeshMoveDataInfo": {
-                                        "OutputTexFuncValue": {
-                                            "x": 0.0,
-                                            "y": 0.0,
-                                            "z": 0.0,
-                                            "w": 0.0
-                                        },
-                                        "OutputTePreviousPos": {
-                                            "x": 0.0,
-                                            "y": 0.0
-                                        },
-                                        "OutputTexMovingStyle": 0,
-                                        "isAdditiveTextureUsed": 0,
-                                        "AdditiveColor": {
-                                            "x": 0.0,
-                                            "y": 0.0,
-                                            "z": 0.0,
-                                            "w": 0.0
-                                        },
-                                        "PunctureTextureValue": {
-                                            "x": 0.0,
-                                            "y": 0.0,
-                                            "z": 0.0,
-                                            "w": 0.0
-                                        },
-                                        "PunctureTexPreviousPos": {
-                                            "x": 0.0,
-                                            "y": 0.0
-                                        },
-                                        "isPunctureTextureUsed": 0,
-                                        "PunctureTexMovingStyle": 0
-                                    },
-                                    "MeshTexArray": [
-                                        {
-                                            "Texture[0]": {
-                                                "IsNull": true
-                                            }
-                                        },
-                                        {
-                                            "Texture[1]": {
-                                                "IsNull": true
-                                            }
-                                        }
-                                    ]
-                                },
-                                16
-                            ],
-                            "scripts": [
-                                {
-                                    "scriptName": "CGrowScaleScript"
-                                }
-                            ],
-                            "children": []
-                        }
-                    ]
+                    "children": []
                 },
                 {
                     "ObjName": "RaySphereTesObj1",
@@ -3141,7 +2224,7 @@
                                         ],
                                         "arrFloat[12]s": [
                                             {
-                                                "arrFloat[0]": 1.0
+                                                "arrFloat[0]": 0.0
                                             },
                                             {
                                                 "arrFloat[1]": 0.0
@@ -3712,7 +2795,7 @@
                                         ],
                                         "arrFloat[12]s": [
                                             {
-                                                "arrFloat[0]": 1.0
+                                                "arrFloat[0]": 0.0
                                             },
                                             {
                                                 "arrFloat[1]": 0.0
