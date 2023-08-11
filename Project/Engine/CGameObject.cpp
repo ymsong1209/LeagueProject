@@ -230,6 +230,7 @@ void CGameObject::AddChild(CGameObject* _Object)
 
 	// 부모 자식 연결
 	_Object->m_Parent = this;
+	if (_Object->GetLayerIndex() == -1) { _Object->m_iLayerIdx = m_iLayerIdx; }
 	m_vecChild.push_back(_Object);
 }
 

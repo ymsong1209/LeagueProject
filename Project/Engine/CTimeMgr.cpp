@@ -82,4 +82,7 @@ void CTimeMgr::render()
 	static wchar_t szBuff2[256] = {};
 	swprintf_s(szBuff2, L"Press F11 to progress IMGUI");
 	CFontMgr::GetInst()->DrawFont(szBuff2, 10, 36, 16, FONT_RGBA(255, 0, 0, 255));
+	static wchar_t szBuff3[256] = {};
+	swprintf_s(szBuff3, L"Press F7 to progress DebugShapes");
+	CFontMgr::GetInst()->DrawFont(szBuff3, 10, 52, 16, FONT_RGBA(255, 0, 0, 255));
 }

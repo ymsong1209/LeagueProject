@@ -125,11 +125,17 @@ int CSound::Load(const wstring& _strFilePath)
 	else if (path.find("sound3d") != string::npos)
 	{
 		m_bIs3D = true;
-		mode = FMOD_3D| FMOD_3D_LINEARROLLOFF|FMOD_3D_WORLDRELATIVE;
+		mode = FMOD_3D | FMOD_3D_LINEARROLLOFF | FMOD_3D_WORLDRELATIVE;
 	}
 	else
 	{
 		assert(false);  // 'sound2d' 또는 'sound3d'가 포함되어 있지 않으면 에러
+	}
+
+	FMOD_RESULT result = g_pFMOD->createSound(path.c_str(), mode, nullptr, &m_pSound);
+	if (result != FMOD_OK)
+	{
+		assert(nullptr);
 	}
 
 	if (FMOD_OK != g_pFMOD->createSound(path.c_str(), mode, nullptr, &m_pSound))
