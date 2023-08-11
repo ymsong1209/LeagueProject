@@ -129,9 +129,16 @@ enum class UnitType
 };
 
 // 군중 제어기
-enum CC
+enum CC : uint32_t
 {
+	NO_CC		= 0b00000000,
+	SLOW		= 0b00000001,
+	SILENCE		= 0b00000010,
+	ROOT		= 0b00000100,
+	STUN		= 0b00001000,
+	AIRBORNE	= 0b00010000,
 
+	/*
 	CLEAR = 0,													 // 0
 	SLOW = 1 << 0,												 // 1 
 	SILENCE = 1 << 1,											 // 2 
@@ -164,22 +171,17 @@ enum CC
 	ROOT_STUN_AIRBORNE = ROOT | STUN | AIRBORNE,				    // 28
 	SLOW_ROOT_STUN_AIRBORNE = SLOW | ROOT | STUN | AIRBORNE,	    // 29
 	SILENCE_ROOT_STUN_AIRBORNE = SILENCE | ROOT | STUN | AIRBORNE,  // 30
-
+	*/
 };
 
 // 행동 제약
-enum RESTRAINT
+enum RESTRAINT : uint32_t
 {
-	CAN_MOVE = 1 << 0,									// 1
-	CAN_ATTACK = 1 << 1,								// 2
-	CAN_USE_SKILL = 1 << 2,								// 4 
-
-	CAN_MOVE_CAN_ATTACK = CAN_MOVE | CAN_ATTACK,				  // 3
-	CAN_MOVE_CAN_USE_SKILL = CAN_MOVE | CAN_USE_SKILL,			  // 5
-	CAN_ATTACK_CAN_USE_SKILL = CAN_ATTACK | CAN_USE_SKILL,		  // 6
-
-	DEFAULT = CAN_MOVE | CAN_ATTACK | CAN_USE_SKILL,   // 8
-	BLOCK = 0,
+	NO_RESTRAINT	= 0b00000000,
+	CANNOT_MOVE		= 0b00000001,
+	CANNOT_ATTACK	= 0b00000010,
+	CANNOT_SKILL	= 0b00000100,
+	BLOCK			= 0b00000111,
 };
 
 struct AnimInfo

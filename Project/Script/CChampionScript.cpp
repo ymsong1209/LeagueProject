@@ -12,6 +12,9 @@
 #include "CAttackRangeScript.h"
 #include "CSendServerEventMgr.h"
 
+#define MAX_SKILL_LEVEL 5
+#define MAX_ULT_LEVEL 3
+
 CChampionScript::CChampionScript(UINT ScriptType)
 	: CUnitScript(ScriptType)
 	, m_fExp(0)
@@ -21,8 +24,8 @@ CChampionScript::CChampionScript(UINT ScriptType)
 {
 	m_eUnitType = UnitType::CHAMPION;
 
-	m_eCurCC = CC::CLEAR;
-	m_eRestraint = RESTRAINT::DEFAULT;
+	m_eCurCC = CC::NONE;
+	m_eRestraint = RESTRAINT::NONE;
 
 	// test	
 	//m_fMaxHP = 5;
@@ -118,7 +121,7 @@ bool CChampionScript::CheckDeath()
 		m_bUnitDead = true;
 
 		// 아무것도 못하는 상태
-		m_eRestraint = RESTRAINT::BLOCK;
+		m_eRestraint |= RESTRAINT::BLOCK;
 
 		m_fRespawnTime -= EditorDT;
 		// 부활 대기시간 끝나면
@@ -127,8 +130,8 @@ bool CChampionScript::CheckDeath()
 			m_fHP = m_fMaxHP;
 			m_bUnitDead = false;
 			m_fRespawnTime = 5;
-			m_eCurCC = CC::CLEAR;
-			m_eRestraint = RESTRAINT::DEFAULT;
+			m_eCurCC = CC::NONE;
+			m_eRestraint = RESTRAINT::NONE;
 
 			// 길찾기 컴포넌트에 남은 경로값이 있다면 Clear
 			PathFinder()->ClearPath();
@@ -219,7 +222,7 @@ void CChampionScript::GetInput()
 			// 그 외(땅을 클릭한 경우)
 
 			// 움직일 수 없는 상황인 경우 return
-			if ((m_eRestraint & RESTRAINT::CAN_MOVE) == 0)
+			if ((m_eRestraint & RESTRAINT::CANNOT_MOVE) != 0)
 				return;
 
 			CGameObject* Map = CLevelMgr::GetInst()->GetCurLevel()->FindParentObjectByName(L"LoLMapCollider");
@@ -232,7 +235,7 @@ void CChampionScript::GetInput()
 	if (KEY_TAP(KEY::Q))
 	{
 		// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-		if ((m_eRestraint & RESTRAINT::CAN_USE_SKILL) == 0 || m_Skill[1]->GetCost() > m_fMP)
+		if ((m_eRestraint & RESTRAINT::CANNOT_SKILL) != 0 || m_Skill[1]->GetCost() > m_fMP)
 			return;
 
 		if (m_Skill[1]->CSkill::Use())
@@ -251,7 +254,7 @@ void CChampionScript::GetInput()
 	if (KEY_TAP(KEY::W))
 	{
 		// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-		if ((m_eRestraint & RESTRAINT::CAN_USE_SKILL) == 0 || m_Skill[2]->GetCost() > m_fMP)
+		if ((m_eRestraint & RESTRAINT::CANNOT_SKILL) != 0 || m_Skill[2]->GetCost() > m_fMP)
 			return;
 
 		if (m_Skill[2]->CSkill::Use())
@@ -270,7 +273,7 @@ void CChampionScript::GetInput()
 	if (KEY_TAP(KEY::E))
 	{
 		// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-		if ((m_eRestraint & RESTRAINT::CAN_USE_SKILL) == 0 || m_Skill[3]->GetCost() > m_fMP)
+		if ((m_eRestraint & RESTRAINT::CANNOT_SKILL) != 0 || m_Skill[3]->GetCost() > m_fMP)
 			return;
 
 		if (m_Skill[3]->CSkill::Use())
@@ -289,7 +292,7 @@ void CChampionScript::GetInput()
 	if (KEY_TAP(KEY::R))
 	{
 		// 스킬을 사용할 수 없는 상황 혹은 마나가 부족한 경우 return
-		if ((m_eRestraint & RESTRAINT::CAN_USE_SKILL) == 0 || m_Skill[4]->GetCost() > m_fMP)
+		if ((m_eRestraint & RESTRAINT::CANNOT_SKILL) != 0 || m_Skill[4]->GetCost() > m_fMP)
 			return;
 
 		if (m_Skill[4]->CSkill::Use())
@@ -305,11 +308,45 @@ void CChampionScript::GetInput()
 			}
 		}
 	}
+	if (KEY_TAP(KEY::_1))
+	{
+		// 스킬 포인트가 없거나 이미 스킬 레벨이 Max인 경우 return
+		if (m_iSkillLevelUpPoint <= 0 || m_SkillLevel[1] >= MAX_SKILL_LEVEL)
+			return;
+		
+		m_SkillLevel[1] += 1;
+		m_iSkillLevelUpPoint -= 1;
+	}
+	if (KEY_TAP(KEY::_2))
+	{
+		// 스킬 포인트가 없거나 이미 스킬 레벨이 Max인 경우 return
+		if (m_iSkillLevelUpPoint <= 0 || m_SkillLevel[2] >= MAX_SKILL_LEVEL)
+			return;
+
+		m_SkillLevel[2] += 1;
+		m_iSkillLevelUpPoint -= 1;
+	}
+	if (KEY_TAP(KEY::_3))
+	{
+		// 스킬 포인트가 없거나 이미 스킬 레벨이 Max인 경우 return
+		if (m_iSkillLevelUpPoint <= 0 || m_SkillLevel[3] >= MAX_SKILL_LEVEL)
+			return;
+
+		m_SkillLevel[3] += 1;
+		m_iSkillLevelUpPoint -= 1;
+	}
+	if (KEY_TAP(KEY::_4))
+	{
+		// 스킬 포인트가 없거나 이미 스킬 레벨이 Max인 경우 return
+		if (m_iSkillLevelUpPoint <= 0 || m_SkillLevel[4] >= MAX_ULT_LEVEL)
+			return;
+
+		m_SkillLevel[4] += 1;
+		m_iSkillLevelUpPoint -= 1;
+	}
+
 
 	// 소환사 주문
-
-
-
 
 }
 void CChampionScript::CheckSkills()
@@ -327,7 +364,7 @@ void CChampionScript::CheckSkills()
 void CChampionScript::Move()
 {
 	// 움직일 수 없는 상황인 경우 return
-	if ((m_eRestraint & RESTRAINT::CAN_MOVE) == 0)
+	if ((m_eRestraint & RESTRAINT::CANNOT_MOVE) != 0)
 		return;
 
 	// 이동
