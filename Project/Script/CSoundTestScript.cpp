@@ -40,40 +40,35 @@ void CSoundTestScript::begin()
 
 void CSoundTestScript::tick()
 {
-	if (KEY_TAP(KEY::I)) {
-		/*Ptr<CSound> pSound = CResMgr::GetInst()->FindRes<CSound>(L"sound3d\\Season1Rift.mp3");
-		m_BGM->Load(pSound.Get()->GetRelativePath());*/
-		//bgm의 초기 위치를 1000.f로 설정 사거리는 1000(500~1000까지 급격하게 떨어짐)
-		int a = m_BGM->Play(0, 1, true, 500.f, Vec3(1000.f, 0.f, 0.f));
-		//m_BGM->Stop();
-		//m_BGM->Play(0, 1, true, 500.f, Vec3(1000.f, 0.f, 0.f));
-	}
-	if (m_BGM) {
-		// 소리 위치가 변경되었을 경우, 그 위치로 update
-		Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
-		m_BGM->Update3DAttributes(Vec3(1000.f, 0.f, 0.f));
-	}
+	//if (KEY_TAP(KEY::I)) {
+	//	//bgm의 초기 위치를 1000.f로 설정 사거리는 1000(500~1000까지 급격하게 떨어짐)
+	//	int a = m_BGM->Play(0, 1, true, 500.f, Vec3(1000.f, 0.f, 0.f));
+	//	m_BGM->Stop();
+	//	m_BGM->Play(0, 1, true, 500.f, Vec3(1000.f, 0.f, 0.f));
+	//}
+	//if (m_BGM) {
+	//	// 소리 위치가 변경되었을 경우, 그 위치로 update
+	//	Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
+	//	m_BGM->Update3DAttributes(Vec3(1000.f, 0.f, 0.f));
+	//}
 
-	if (KEY_TAP(KEY::O)) {
-		/*Ptr<CSound> pSound = CResMgr::GetInst()->FindRes<CSound>(L"sound3d\\Season1Rift.mp3");
-		m_BGM2 = pSound.Get();*/
-		//bgm의 초기 위치를 1000.f로 설정 사거리는 1000(500~1000까지 급격하게 떨어짐)
-		int a = m_BGM2->Play(0, 1, true, 500.f, Vec3(0.f, 0.f, 1000.f));
-		//m_BGM2->Stop();
-		//m_BGM2->Play(0, 1, true, 500.f, Vec3(0.f, 0.f, 1000.f));
-	}
-	if (m_BGM2) {
-		// 소리 위치가 변경되었을 경우, 그 위치로 update
-		Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
-		m_BGM2->Update3DAttributes(Vec3(0.f, 0.f, 1000.f));
-	}
+	//if (KEY_TAP(KEY::O)) {
+	//	int a = m_BGM2->Play(0, 1, true, 500.f, Vec3(0.f, 0.f, 1000.f));
+	//	m_BGM2->Stop();
+	//	m_BGM2->Play(0, 1, true, 500.f, Vec3(0.f, 0.f, 1000.f));
+	//}
+	//if (m_BGM2) {
+	//	// 소리 위치가 변경되었을 경우, 그 위치로 update
+	//	Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
+	//	m_BGM2->Update3DAttributes(Vec3(0.f, 0.f, 1000.f));
+	//}
 
-	if (KEY_TAP(KEY::K)) {
-		/*const map<wstring, Ptr<CRes>> SoundRes = CResMgr::GetInst()->GetResources(RES_TYPE::SOUND);
-		for (const auto& kv : SoundRes) {
-			Ptr<CRes> Res = kv.second;
-			((CSound*)Res.Get())->Stop();
-		}*/
-		m_BGM->Stop();
-	}
+	//if (KEY_TAP(KEY::K)) {
+	//	/*const map<wstring, Ptr<CRes>> SoundRes = CResMgr::GetInst()->GetResources(RES_TYPE::SOUND);
+	//	for (const auto& kv : SoundRes) {
+	//		Ptr<CRes> Res = kv.second;
+	//		((CSound*)Res.Get())->Stop();
+	//	}*/
+	//	m_BGM->Stop();
+	//}
 }
