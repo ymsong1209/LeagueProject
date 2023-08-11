@@ -16,6 +16,7 @@ void CJinxRScript::begin()
 {
 	// 첫 생성 위치 기억
 	m_vSpawnPos = GetOwner()->Transform()->GetRelativePos();
+
 }
 
 void CJinxRScript::tick()
@@ -29,8 +30,14 @@ void CJinxRScript::tick()
 
 	// 투사체 이동
 	Vec3 NewPos = ProjectilePos + m_vDir * m_fProjectileSpeed * DT;
-	NewPos = Vec3(NewPos.x, 0.f, NewPos.z);
+	NewPos = Vec3(NewPos.x, m_vSpawnPos.z +10, NewPos.z); // 높이를 띄어둔다.
 	GetOwner()->Transform()->SetRelativePos(NewPos);
+
+	// 투사체의 움직임 방향에 따른 회전 각도 계산
+	float angle = atan2(m_vDir.z, m_vDir.x);
+	Vec3 rotation = Vec3(0, angle, 0); // 예를 들어, y축을 중심으로 회전한다고 가정
+	GetOwner()->Transform()->SetRelativeRot(rotation);
+
 
 	// 시전 위치로부터 스킬 사거리까지 발사되었다면 사라짐
 	float distance = sqrt((pow(m_vSpawnPos.x - NewPos.x, 2) + pow(m_vSpawnPos.z - NewPos.z, 2)));

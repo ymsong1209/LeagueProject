@@ -12,23 +12,39 @@ CJinxR::CJinxR()
 	m_iMaxLevel = 5;
 	m_fCost = 50.f;
 
-	CGameObject* Projectile = new CGameObject;
-	Projectile->AddComponent(new CTransform);
-	Projectile->AddComponent(new CCollider2D);
-	Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-	Projectile->Collider2D()->SetOffsetScale(Vec2(12.f, 12.f));
-	Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
-	Projectile->Collider2D()->SetDrawCollision(true);
-	Projectile->SetName(L"JinxR");
-
-	Projectile->Transform()->SetIsShootingRay(true);
-	Projectile->Transform()->SetRayRange(100);
+	CGameObject* pObj = nullptr;
+	Ptr<CMeshData> pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx_R.fbx");
+	pObj = pMeshData->Instantiate();
+	pObj->AddComponent(new CCollider2D);
+	pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+	pObj->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
+	//pObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
+	pObj->Collider2D()->SetDrawCollision(true);
+	pObj->SetName(L"JinxR");
+	pObj->Transform()->SetIsShootingRay(true);
+	pObj->Transform()->SetRayRange(100);
 
 	Ptr<CPrefab> NewPrefab = new CPrefab;
-	CGameObject* PrefabObject = Projectile->Clone();
-	NewPrefab->RegisterProtoObject(Projectile);
-
+	NewPrefab->RegisterProtoObject(pObj);
 	m_vecSkillObj.push_back(NewPrefab);
+
+	//CGameObject* Projectile = new CGameObject;
+	//Projectile->AddComponent(new CTransform);
+	//Projectile->AddComponent(new CCollider2D);
+	//Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+	//Projectile->Collider2D()->SetOffsetScale(Vec2(12.f, 12.f));
+	//Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
+	//Projectile->Collider2D()->SetDrawCollision(true);
+	//Projectile->SetName(L"JinxR");
+	//
+	//Projectile->Transform()->SetIsShootingRay(true);
+	//Projectile->Transform()->SetRayRange(100);
+	//
+	//Ptr<CPrefab> NewPrefab = new CPrefab;
+	//CGameObject* PrefabObject = Projectile->Clone();
+	//NewPrefab->RegisterProtoObject(Projectile);
+	//
+	//m_vecSkillObj.push_back(NewPrefab);
 
 	// 투사체 스크립트
 	m_iProjectileCount = 1;
