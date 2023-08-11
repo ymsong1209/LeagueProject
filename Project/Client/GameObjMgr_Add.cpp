@@ -2226,8 +2226,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 				pObj->SetName(L"blue_turret");
 
 				// Rubble(ÀÜÇØ, ºÎ¸ð)
-				pObj->MeshRender()->SetMaterial(nullptr, 0);
-				pObj->MeshRender()->SetMaterial(nullptr, 1);
+				Ptr<CTexture> AlphaTex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png");
+				pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
+				pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, AlphaTex);
 				//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Rubble_blue.mtrl"), 0);
 				//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Break1_blue.mtrl"), 1);
 				
@@ -2240,14 +2241,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Rubble_blue.mtrl"), 5);
 				
 				// TurretBreak1(ºØ±« ¾Ö´Ï¸ÞÀÌ¼Ç1)
-				TurretBreak1->MeshRender()->SetMaterial(nullptr, 0);
-				TurretBreak1->MeshRender()->SetMaterial(nullptr, 1);
+				TurretBreak1->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
+				TurretBreak1->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, AlphaTex);
 				//TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Cloth1_blue.mtrl"), 0);
 				//TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Mage_blue.mtrl"), 1);
 				
 				// TurretBreak2(ºØ±« ¾Ö´Ï¸ÞÀÌ¼Ç2)
-				TurretBreak2->MeshRender()->SetMaterial(nullptr, 0);
-				TurretBreak2->MeshRender()->SetMaterial(nullptr, 1);
+				TurretBreak2->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
+				TurretBreak2->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, AlphaTex);
 				//TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage1_blue.mtrl"), 0);
 				//TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage2_blue.mtrl"), 1);
 			}
