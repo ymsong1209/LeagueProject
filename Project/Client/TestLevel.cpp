@@ -48,6 +48,7 @@
 
 void CreateTestLevel()
 {
+	// 리소스 잘되는 부적
 	//return;	
 
 	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
