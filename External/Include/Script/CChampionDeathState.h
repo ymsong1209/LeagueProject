@@ -4,6 +4,9 @@
 class CChampionDeathState :
     public CUnitState
 {
+private:
+    CGameObject* m_pTempGrayShaderObj;
+
 public:
     CChampionDeathState();
     ~CChampionDeathState();

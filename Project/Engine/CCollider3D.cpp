@@ -81,6 +81,8 @@ void CCollider3D::finaltick()
 	}
 }
 
+ 
+
 void CCollider3D::BeginOverlap(CCollider3D* _Other)
 {
 	m_iCollisionCount += 1;

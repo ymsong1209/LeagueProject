@@ -345,6 +345,14 @@ void CRenderMgr::SetRenderFunc(bool _IsPlay)
         RENDER_FUNC = &CRenderMgr::render_editor;
 }
 
+void CRenderMgr::AddDebugShapeInfo(const tDebugShapeInfo& _info)
+{
+    if (CLevelMgr::GetInst()->GetCurLevel()->GetIsDebugOutlineShouldShow() == false)
+        return;
+
+    m_vecShapeInfo.push_back(_info);
+}
+
 CCamera* CRenderMgr::GetMainCam()
 {
     if (CLevelMgr::GetInst()->GetCurLevel()->GetState() == LEVEL_STATE::PLAY)
