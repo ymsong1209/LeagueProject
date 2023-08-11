@@ -5,7 +5,7 @@
 CJinxEScript::CJinxEScript()
 	:CProjectileScript((UINT)SCRIPT_TYPE::JINXESCRIPT)
 	, m_fAccTime(0.f)
-	, m_fMaxTime(60.f)
+	, m_fMaxTime(5.f)
 {
 	//m_fProjectileSpeed = 100.f;
 	//m_fSkillRange = 50.f;
@@ -33,22 +33,22 @@ void CJinxEScript::begin()
 	else if (GetServerID() % 3 == 1)
 	{
 		GetOwner()->Transform()->SetRelativePos(m_vSpawnPos + m_vDir * distance); // 중간
-		animName = L"wazak\\Idle2";
+		animName = L"wazak\\Idle1";
 	}
 	else
 	{
 		GetOwner()->Transform()->SetRelativePos(m_vSpawnPos + Vec3(m_vDir.x * cos(-XM_PI / 6.0f) + m_vDir.z * sin(-XM_PI / 6.0f), m_vDir.y, -m_vDir.x * sin(-XM_PI / 6.0f) + m_vDir.z * cos(-XM_PI / 6.0f)) * distance); // 오른쪽 30도
-		animName = L"wazak\\Idle3";
+		animName = L"wazak\\Idle1";
 	}
 
-	GetOwner()->Animator3D()->PlayOnce(animName, true);
+	GetOwner()->Animator3D()->PlayRepeat(animName, true, true, 0.8);
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
-	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, false,false, 0.8f);
+	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, true, true,false, 0.8f, 1.f);
 
 	// 투사체 앞 방향 구하기
 	Vec3 projectileFront = (GetOwner()->Transform()->GetRelativePos() - m_vSpawnPos).Normalize();
-	float targetYaw = atan2f(-projectileFront.x, -projectileFront.z);
-	GetOwner()->Transform()->SetRelativeRot(Vec3(0.f, targetYaw, 0.f));
+	float targetYaw = atan2f(m_vDir.x, m_vDir.z);
+	GetOwner()->Transform()->SetRelativeRot(Vec3(0.f, targetYaw + XMConvertToRadians(30), 0.f));
 }
 
 void CJinxEScript::tick()
@@ -77,7 +77,7 @@ void CJinxEScript::BeginOverlap(CCollider2D* _Other)
 		return;
 	
 	// 시전자와 다른 진영의 오브젝트가 부딪친다면
-	if (_Other->GetOwner()->GetScript<CUnitScript>()->GetFaction() != m_UserObj->GetScript<CUnitScript>()->GetFaction())
+	if (_Other->GetOwner()->GetScript<CUnitScript>()->GetFaction() == m_UserObj->GetScript<CUnitScript>()->GetFaction())
 	{
 		wstring animName = L"wazak\\Attack1";
 		if (GetServerID() % 3 == 0)

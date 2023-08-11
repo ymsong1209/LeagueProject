@@ -17,7 +17,7 @@ CJinxE::CJinxE()
 	pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\wazak");
 	pObj->AddComponent(new CCollider2D);
 	pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-	pObj->Collider2D()->SetOffsetScale(Vec2(30.f, 30.f));
+	pObj->Collider2D()->SetOffsetScale(Vec2(50.f, 50.f));
 	pObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
 	pObj->Collider2D()->SetDrawCollision(true);
 	pObj->SetName(L"JinxE");
