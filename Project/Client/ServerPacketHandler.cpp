@@ -26,6 +26,9 @@
 #include <Script/CMouseCursorUIScript.h>
 #include <Script/CFontUIScript.h>
 #include <Script/CScorePanelScript.h>
+#include <Script\CKillLogUIScript.h>
+
+#include <Script/CUnitScript.h>
 
 
 void ServerPacketHandler::HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len)
@@ -95,6 +98,10 @@ void ServerPacketHandler::HandlePacket(PacketSessionRef& session, BYTE* buffer, 
 
 	case S_TIME:
 		Handle_S_TIME(session, buffer, len);
+		break;
+
+	case S_OBJECT_MTRL:
+		Handle_S_OBJECT_MTRL(session, buffer, len);
 		break;
 	}
 }
@@ -393,6 +400,7 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 	UIObj->AddComponent(new CMouseCursorUIScript);
 	UIObj->AddComponent(new CFontUIScript);
 	UIObj->AddComponent(new CScorePanelScript);
+	UIObj->AddComponent(new CKillLogUIScript);
 	SpawnGameObject(UIObj, Vec3(0.f, 0.f, 0.f), L"ViewPort UI");
 
 	std::cout << "===============================" << endl;
@@ -485,7 +493,6 @@ void ServerPacketHandler::Handle_S_OBJECT_ANIM(PacketSessionRef& session, BYTE* 
 		_AnimInfo.blend = _AnimInfoPacket.blend;
 		_AnimInfo.blendTime = _AnimInfoPacket.blendTime;
 
-
 		CGameObject* obj = GameObjMgr::GetInst()->FindAllObject(_AnimInfo.targetId);
 
 		tServerEvent evn = {};
@@ -558,7 +565,7 @@ void ServerPacketHandler::Handle_S_OBJECT_MOVE(PacketSessionRef& session, BYTE* 
 	{
 		ObjectMove _objectMove = pkt->objectMove;
 
-		CGameObject* obj = GameObjMgr::GetInst()->FindObject(_objectId);
+		CGameObject* obj = GameObjMgr::GetInst()->FindAllObject(_objectId);
 
 		tServerEvent evn = {};
 		evn.Type = SERVER_EVENT_TYPE::MOVE_PACKET;

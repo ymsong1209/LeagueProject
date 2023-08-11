@@ -113,10 +113,10 @@ public:
 
     void ClearCamera() { m_vecCam.clear(); }
 
-    void AddDebugShapeInfo(const tDebugShapeInfo& _info) { m_vecShapeInfo.push_back(_info); }
+    void AddDebugShapeInfo(const tDebugShapeInfo& _info);
     vector<tDebugShapeInfo>& GetDebugShapeInfo() { return m_vecShapeInfo; }
 
-    void AddDebugBoundingInfo(const tDebugBoundingInfo& _info) { m_vecBoundingInfo.push_back(_info); }
+    void AddDebugBoundingInfo(const tDebugBoundingInfo& _info) {m_vecBoundingInfo.push_back(_info); }
     vector<tDebugBoundingInfo>& GetDebugBoundingInfo() { return m_vecBoundingInfo; }
 
     CCamera* GetMainCam();      // 상태에 따라 MainCam을 가져온다

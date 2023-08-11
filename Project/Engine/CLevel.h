@@ -11,6 +11,9 @@ private:
     CLayer*         m_arrLayer[MAX_LAYER];
     LEVEL_STATE     m_State;
 
+
+    bool            m_bIsDebugOutlineShouldShow;
+
 public:
     void begin();
     void RegisterObject();
@@ -34,6 +37,9 @@ public:
     
     void ChangeState(LEVEL_STATE _State);
     LEVEL_STATE GetState() { return m_State; }
+
+
+    bool GetIsDebugOutlineShouldShow() { return m_bIsDebugOutlineShouldShow; }
 
 private:
     // 등록된 GameObject 제거

@@ -2,6 +2,11 @@
 #include "CSendServerEventMgr.h"
 #include <mutex>
 CSendServerEventMgr::CSendServerEventMgr()
+	:m_myKillCnt(0)
+	,m_myDeathCnt(0)
+	,m_myCSCnt(0)
+	,m_RedScore(0)
+	,m_BlueScore(0)
 {
 }
 

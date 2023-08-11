@@ -107,7 +107,7 @@ void CJinxW::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _S
 	TargetUnitScript->AddTimedEffect(JinxWSlow);
 
 	// 테스트용 도트딜
-	CTimedEffect* TestDot = new CTimedEffect(TargetUnitScript, 3.f, 5.f, 6, CC::CLEAR);
+	CTimedEffect* TestDot = new CTimedEffect(TargetUnitScript, 3.f, 5.f, 6, CC::NO_CC);
 	TargetUnitScript->AddTimedEffect(TestDot);
   
   CSkill::GetHit(_UserScript, _TargetScript, _SkillLevel);

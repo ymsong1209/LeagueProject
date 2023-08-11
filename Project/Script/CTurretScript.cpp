@@ -30,7 +30,8 @@ void CTurretScript::begin()
 {
 	m_Skill[0] = new CBasicAttack;
 	m_Skill[0]->SetOwnerScript(this);
-	//m_Skill[0]->SetProjectileObj(); // 투사체 프리팹 설정
+	//Ptr<CPrefab> TurretProjectile = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\TurretBlaze.prefab");
+	//m_Skill[0]->SetProjectileObj(TurretProjectile); // 투사체 프리팹 설정
 	m_SkillLevel[0] = 1;
 
 	// 오브젝트가 현재 챔피언의 사거리 내에 있는지 확인
@@ -69,112 +70,69 @@ void CTurretScript::tick()
 	CStructureScript::tick();
 
 	CheckStatus();
-	ChangeAnim();
 
 	if (m_bUnitDead)
 		return;
+	
+	ChangeAnim();
 
 	//포탑 공격 쿨타임
 	m_fAttackCoolTime += DT;
 	if (m_fAttackCoolTime >= m_fAttackSpeed)
 		Attack();
-
-	//타겟 확정나면 공격
-	//f (m_pTarget) 
-	//
-	//	//나중에는 prefab로 소환해야함
-	//	//CGameObject* TurretAttack = CResMgr::GetInst()->FindRes<CPrefab>(L"TurretAttack")->Instantiate();
-	//	CGameObject* TurretAttack = new CGameObject;
-	//	TurretAttack->SetName(L"TurretAttack");
-	//	TurretAttack->AddComponent(new CTransform);
-	//	TurretAttack->AddComponent(new CTurretAttackScript);
-	//	TurretAttack->AddComponent(new CMeshRender);
-	//	TurretAttack->Transform()->SetRelativeScale(Vec3(20.f, 20.f, 20.f));
-	//	TurretAttack->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
-	//	TurretAttack->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
-	//	Vec3 TowerPos = GetOwner()->Transform()->GetRelativePos();
-	//	CTurretAttackScript* script = TurretAttack->GetScript<CTurretAttackScript>();
-	//	//포탑 공격의 target설정
-	//	script->SetTarget(m_pTarget);
-	//	SpawnGameObject(TurretAttack, Vec3(TowerPos.x, TowerPos.y + 50.f, TowerPos.z), L"Projectile");
-	//	//공격 구체 소환하고 나서 포탑 쿨타임 초기화
-	//	m_fAttackCoolTime = 3.f;
-	//
 }
-
 
 
 
 void CTurretScript::ChangeAnim()
 {
 	// 남은 체력에 따라 애니메이션 바꿔줌
+	CGameObject* TurretBase = GetOwner()->FindChildObjByName(L"TurretBase");
+	CUnitScript* TurretBaseScript = TurretBase->GetScript<CUnitScript>();
 
 	float HealthRatio = m_fHP / m_fMaxHP;
 	if (HealthRatio >= 0.66f)
 	{
-		CGameObject* TurretBase = GetOwner()->FindChildObjByName(L"TurretBase");
 		if (TurretBase->Animator3D()->GetCurAnim()->GetName() != L"turret_idlebreak\\Turret_Idle")
+		{
 			TurretBase->Animator3D()->PlayRepeat(L"turret_idlebreak\\Turret_Idle", false);
+
+			CSendServerEventMgr::GetInst()->SendAnimPacket(TurretBaseScript->GetServerID()
+			, L"turret_idlebreak\\Turret_Idle"
+				, true
+				, true
+				, false
+				, 0.f);
+		}
 	}
 	else if (0.33f < HealthRatio && HealthRatio <= 0.66f)
 	{
-		CGameObject* TurretBase = GetOwner()->FindChildObjByName(L"TurretBase");
 		if (TurretBase->Animator3D()->GetCurAnim()->GetName() != L"turret_idlebreak\\Turret_Cloth_Break1")
+		{
 			TurretBase->Animator3D()->PlayOnce(L"turret_idlebreak\\Turret_Cloth_Break1", false);
+
+			CSendServerEventMgr::GetInst()->SendAnimPacket(TurretBaseScript->GetServerID()
+				, L"turret_idlebreak\\Turret_Cloth_Break1"
+				, false
+				, false
+				, false
+				, 0.f
+				, 1.f);
+		}
 	}
 	else if (0 < HealthRatio && HealthRatio <= 0.33f)
 	{
-		CGameObject* TurretBase = GetOwner()->FindChildObjByName(L"TurretBase");
 		if (TurretBase->Animator3D()->GetCurAnim()->GetName() != L"turret_idlebreak\\Turret_Cloth_Break2")
+		{
 			TurretBase->Animator3D()->PlayOnce(L"turret_idlebreak\\Turret_Cloth_Break2", false);
-	}
-	else
-	{
-		// 포탑 Dead 상태
-		m_bUnitDead = true;
-		// 시야 제공 기능 삭제
-		GetOwner()->Transform()->SetIsShootingRay(false);
 
-		// 잔해 재질 켜기
-		GetOwner()->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Rubble_red.mtrl"), 0);
-		GetOwner()->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Break1_red.mtrl"), 1);
-		
-		// 자식 지우기
-		CGameObject* TurretBase = GetOwner()->FindChildObjByName(L"TurretBase");
-		if (TurretBase)
-			DestroyObject(TurretBase);
-		
-		// 자식 애니메이션 재생 후 삭제
-		CGameObject* TurretBreak1 = GetOwner()->FindChildObjByName(L"TurretBreak_1");
-		if (TurretBreak1)
-		{
-			// TurretBreak1 재질 켜기
-			TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Cloth1_red.mtrl"), 0);
-			TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Mage_red.mtrl"), 1);
-
-			if(TurretBreak1->Animator3D()->GetCurAnim()->IsPause())
-				TurretBreak1->Animator3D()->PlayOnce(L"turret_break1\\turret_break1", false);
-			else
-			{
-				if (TurretBreak1->Animator3D()->GetCurAnim()->IsFinish())
-					DestroyObject(TurretBreak1);
-			}
-		}
-
-		CGameObject* TurretBreak2 = GetOwner()->FindChildObjByName(L"TurretBreak_2");
-		if (TurretBreak2)
-		{
-			// TurretBreak2 재질 켜기
-			TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage1_red.mtrl"), 0);
-			TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage2_red.mtrl"), 1);
-
-			if (TurretBreak2->Animator3D()->GetCurAnim()->IsPause())
-				TurretBreak2->Animator3D()->PlayOnce(L"turret_break2\\turret_break2", false);
-			else
-			{
-				if (TurretBreak2->Animator3D()->GetCurAnim()->IsFinish())
-					DestroyObject(TurretBreak2);
-			}
+			CSendServerEventMgr::GetInst()->SendAnimPacket(TurretBaseScript->GetServerID()
+				, L"turret_idlebreak\\Turret_Cloth_Break2"
+				, false
+				, false
+				, false
+				, 0.f
+			, 1.f);
 		}
 	}
 }
@@ -206,9 +164,9 @@ void CTurretScript::CheckStatus()
 	// 공격 가능한지 여부 체크
 
 	// 포탑이 파괴되었다면 무조건 공격 불가
-	if (m_bUnitDead)
+	if (m_fHP <=  0)
 	{
-		m_bAttackable = false;
+		m_bUnitDead = true;
 		
 		if (GetOwner()->Fsm()->GetCurState()->GetName() != L"Broken")
 			GetOwner()->Fsm()->ChangeState(L"Broken");

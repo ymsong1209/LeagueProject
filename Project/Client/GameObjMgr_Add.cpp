@@ -77,7 +77,6 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 
 		Ptr<CMeshData> pMeshData = nullptr;
 		CGameObject* pObj = nullptr;
-
 		
 
 		switch (_info.champion)
@@ -95,7 +94,7 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
 			pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true, true, 0.1f);
-			pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
 
 		}break;
 		case ChampionType::MALPHITE:
@@ -193,7 +192,6 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 			pObj->Transform()->SetIsShootingRay(false);
 		}
 
-
 		pObj->AddComponent(new CCollider3D);
 		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::CUBE);
 		pObj->Collider3D()->SetAbsolute(true);
@@ -208,6 +206,12 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 		pObj->Transform()->SetRelativeRot(Vec3(_info.posInfo.moveDir.x, _info.posInfo.moveDir.y, _info.posInfo.moveDir.z));
 		Vec3 spawnPos = Vec3(_info.posInfo.pos.x, _info.posInfo.pos.y, _info.posInfo.pos.z);
 		SpawnGameObject(pObj, spawnPos, L"Player");
+
+		int mtrlcount = pObj->MeshRender()->GetMtrlCount();
+		for (int i = 0; i < mtrlcount; ++i) {
+			pObj->MeshRender()->GetDynamicMaterial(i);
+		}
+		
 
 		_players.insert(std::make_pair(_info.id, pObj));
 	}
@@ -2195,7 +2199,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 				// Rubble(ÀÜÇØ, ºÎ¸ð)
 				Ptr<CTexture> AlphaTex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png");
 				pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
-				pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_1, AlphaTex);
+				pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, AlphaTex);
 				//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Rubble_red.mtrl"), 0);
 				//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Break1_red.mtrl"), 1);
 				
@@ -2209,13 +2213,13 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 				
 				// TurretBreak1(ºØ±« ¾Ö´Ï¸ÞÀÌ¼Ç1)
 				TurretBreak1->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
-				TurretBreak1->MeshRender()->GetMaterial(1)->SetTexParam(TEX_1, AlphaTex);
+				TurretBreak1->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, AlphaTex);
 				//TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Cloth1_red.mtrl"), 0);
 				//TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Mage_red.mtrl"), 1);
 				
 				// TurretBreak2(ºØ±« ¾Ö´Ï¸ÞÀÌ¼Ç2)
 				TurretBreak2->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
-				TurretBreak2->MeshRender()->GetMaterial(1)->SetTexParam(TEX_1, AlphaTex);
+				TurretBreak2->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, AlphaTex);
 				//TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage1_red.mtrl"), 0);
 				//TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage2_red.mtrl"), 1);
 
@@ -2226,8 +2230,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 				pObj->SetName(L"blue_turret");
 
 				// Rubble(ÀÜÇØ, ºÎ¸ð)
-				pObj->MeshRender()->SetMaterial(nullptr, 0);
-				pObj->MeshRender()->SetMaterial(nullptr, 1);
+				Ptr<CTexture> AlphaTex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png");
+				pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
+				pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, AlphaTex);
 				//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Rubble_blue.mtrl"), 0);
 				//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Break1_blue.mtrl"), 1);
 				
@@ -2240,14 +2245,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Rubble_blue.mtrl"), 5);
 				
 				// TurretBreak1(ºØ±« ¾Ö´Ï¸ÞÀÌ¼Ç1)
-				TurretBreak1->MeshRender()->SetMaterial(nullptr, 0);
-				TurretBreak1->MeshRender()->SetMaterial(nullptr, 1);
+				TurretBreak1->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
+				TurretBreak1->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, AlphaTex);
 				//TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Cloth1_blue.mtrl"), 0);
 				//TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Mage_blue.mtrl"), 1);
 				
 				// TurretBreak2(ºØ±« ¾Ö´Ï¸ÞÀÌ¼Ç2)
-				TurretBreak2->MeshRender()->SetMaterial(nullptr, 0);
-				TurretBreak2->MeshRender()->SetMaterial(nullptr, 1);
+				TurretBreak2->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
+				TurretBreak2->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, AlphaTex);
 				//TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage1_blue.mtrl"), 0);
 				//TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage2_blue.mtrl"), 1);
 			}
@@ -2291,6 +2296,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(HPBar);
 
 			_placedObjects.insert(std::make_pair(_objectId, pObj));
+			_turretChild.insert(std::make_pair(_objectId + 1, TurretBase));
+			_turretChild.insert(std::make_pair(_objectId + 2, TurretBreak1));
+			_turretChild.insert(std::make_pair(_objectId + 3, TurretBreak2));
 		}
 		break;
 

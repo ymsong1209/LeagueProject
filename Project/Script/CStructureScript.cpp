@@ -19,9 +19,6 @@ void CStructureScript::begin()
 {
 	// 체력
 	m_fHP = m_fMaxHP;
-
-	// 외곽선 기능
-	GetOwner()->Transform()->SetIsShootingRay(true);
 }
 
 void CStructureScript::tick()

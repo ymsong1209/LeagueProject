@@ -312,6 +312,9 @@
     </ClCompile>
     <ClCompile Include="CCopyBoneShader.cpp" />
     <ClCompile Include="CInstancingBuffer.cpp" />
+    <ClCompile Include="CSoundMgr.cpp">
+      <Filter>Source\03. Manager\12.SoundMgr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="components.h">
@@ -670,6 +673,9 @@
     </ClInclude>
     <ClInclude Include="CCopyBoneShader.h" />
     <ClInclude Include="CInstancingBuffer.h" />
+    <ClInclude Include="CSoundMgr.h">
+      <Filter>Source\03. Manager\12.SoundMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -884,6 +890,9 @@
     </Filter>
     <Filter Include="Source\03. Manager\06.RenderMgr">
       <UniqueIdentifier>{2cc2025a-b25d-46fc-a48d-54bad3cf267d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\03. Manager\12.SoundMgr">
+      <UniqueIdentifier>{cfc812fb-ebd0-4499-bb0c-87af8bda19c4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -16,8 +16,6 @@ public:
 
     CLONE(CUnitScript);
 
-
-
 protected:
     UINT64                  m_iServerID;        // 서버에게 부여받은 ID
     wstring                 m_strNickname;      // 닉네임
@@ -26,8 +24,8 @@ protected:
     UnitType                m_eUnitType;        // 유닛 종류
     Faction                 m_eFaction;         // 진영(레드, 블루, 중립)
 
-    CC                      m_eCurCC;
-    RESTRAINT               m_eRestraint;
+    UINT                    m_eCurCC;
+    UINT                    m_eRestraint;
         
     CSkill*                 m_Skill[5];         // 타워/몹은 오직 0번 스킬(평타)만 있음!
     int                     m_SkillLevel[5];    // 타워/몹은 오직 0번 스킬 1렙 고정
@@ -110,8 +108,8 @@ public:
     float GetCurMP() { return m_fMP; }
     float GetMaxMP() const { return m_fMaxMP; }
 
-    CC    GetCC() { return m_eCurCC; }
-    int   GetLevel() { return m_iLevel; }
+    uint32_t    GetCC()     { return m_eCurCC; }
+    int         GetLevel()  { return m_iLevel; }
 
     UINT64           GetServerID() { return m_iServerID; }
     wstring          GetNickname() const { return m_strNickname; }
@@ -139,9 +137,11 @@ public:
 
     // 비동기
     void GetHit(SkillType _type, CGameObject* _SkillTarget, CGameObject* _SkillUser, int _SkillLevel);
-    void RestrictAction(RESTRAINT restriction);
+
     void ApplyCC(CC _ccType);
     void RemoveCC(CC _ccType);
+    void ApplyRestraint(RESTRAINT restraint);
+    void RemoveRestraint(RESTRAINT restraint);
 
     void AddTimedEffect(CTimedEffect* _effect) { m_TimedEffectList.push_back(_effect); }
 

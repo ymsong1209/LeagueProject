@@ -77,6 +77,12 @@ void CInGameCameraScript::tick()
 	CCamera* TargetCamera = CRenderMgr::GetInst()->GetMainCam();
 
 
+	Vec3 CamPos = TargetCamera->Transform()->GetRelativePos();
+	Vec3 CamForward = TargetCamera->Transform()->GetWorldDir(DIR_TYPE::FRONT);
+	Vec3 CamUp = TargetCamera->Transform()->GetWorldDir(DIR_TYPE::UP);
+	CSound::UpdateListenerAttributes(CamPos, CamForward, CamUp);
+
+
 	// 스페이스를 누르면 케릭터의 중심으로 돌아가도록 한다
 	if (CKeyMgr::GetInst()->GetKeyState(KEY::SPACE) == KEY_STATE::TAP || CKeyMgr::GetInst()->GetKeyState(KEY::SPACE) == KEY_STATE::PRESSED)
 	{

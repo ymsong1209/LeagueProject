@@ -12,18 +12,12 @@
 // g_tex_1 : Normal Texture
 // g_float_0 : LayerNum
 // 
-// // Ray Tex용 숫자
-#define RayTest                     g_int_2
+// g_float_9 : alpha
+
 
 // MeshRender관련
-#define TexMove                     g_int_1
-#define OutputTexMoveOffset         g_vec2_4
-#define PunctureTexMoveOffset       g_vec2_5
+
 #define IsOutputTextureExist        g_btex_0
-#define IsAdditiveTextureExist      g_btex_2
-#define IsPunctureTextureExist      g_btex_3
-#define Additive_Texture            g_tex_2
-#define Puncture_Texture            g_tex_3
 #define Additive_Color              g_vec4_0
 // ========================
 
@@ -178,7 +172,12 @@ PS_OUT PS_Std3D_Deferred(VS_OUT _in) : SV_Target
         output.vData = float4(0.f, 0.f, 0.f, 1.f);
     }
     output.vEmissive = float4(0.f, 0.f, 0.f, 1.f);
-        
+    
+    if (g_float_9)
+    {
+        output.vColor.a *= g_float_9;
+    }
+    
     return output;
 }
 

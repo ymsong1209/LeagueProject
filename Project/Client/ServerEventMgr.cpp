@@ -157,9 +157,7 @@ void ServerEventMgr::clienttick()
 				CGameObject* NewObject = (CGameObject*)m_vecEvent[i].wParam;
 				ObjectMove* objectMove = (ObjectMove*)(m_vecEvent[i].lParam);
 
-
-				if (NewObject == nullptr
-					|| objectMove->LV <= 0) continue;
+				if (NewObject == nullptr) continue;
 
 				if (NewObject->GetScript<CUnitScript>() != nullptr)
 				{
@@ -171,7 +169,7 @@ void ServerEventMgr::clienttick()
 
 					NewObject->GetScript<CUnitScript>()->SetAttackPower(objectMove->AttackPower);
 					NewObject->GetScript<CUnitScript>()->SetDefencePower(objectMove->DefencePower);
-					NewObject->GetScript<CUnitScript>()->SetCC(objectMove->CC);
+					NewObject->GetScript<CUnitScript>()->ApplyCC((CC)objectMove->CC);
 
 					NewObject->GetScript<CUnitScript>()->SetUnitDead(objectMove->bUnitDead);
 					NewObject->GetScript<CUnitScript>()->SetRcvMove(true);
