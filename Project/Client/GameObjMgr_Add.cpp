@@ -209,6 +209,12 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 		Vec3 spawnPos = Vec3(_info.posInfo.pos.x, _info.posInfo.pos.y, _info.posInfo.pos.z);
 		SpawnGameObject(pObj, spawnPos, L"Player");
 
+		int mtrlcount = pObj->MeshRender()->GetMtrlCount();
+		for (int i = 0; i < mtrlcount; ++i) {
+			pObj->MeshRender()->GetDynamicMaterial(i);
+		}
+		
+
 		_players.insert(std::make_pair(_info.id, pObj));
 	}
 }
