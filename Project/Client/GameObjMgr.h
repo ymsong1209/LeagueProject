@@ -12,6 +12,7 @@ private:
 	map<uint64, CGameObject*> _players;
 	map<uint64, CGameObject*> _objects; // 미니언, 정글몹, 스킬 투사체, 이펙트
 	map<uint64, CGameObject*> _placedObjects; // 포탑, 억제기, 넥서스 (배치형 오브젝터, 맵 처음)
+	map<uint64, CGameObject*> _turretChild;  // 포탑 자식들
 
 	// My Player Prev
 	CUnitScript* MyPlayerScript;

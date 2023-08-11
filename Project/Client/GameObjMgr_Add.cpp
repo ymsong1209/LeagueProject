@@ -2292,9 +2292,9 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(HPBar);
 
 			_placedObjects.insert(std::make_pair(_objectId, pObj));
-			_placedObjects.insert(std::make_pair(_objectId + 1, TurretBase));
-			_placedObjects.insert(std::make_pair(_objectId + 2, TurretBreak1));
-			_placedObjects.insert(std::make_pair(_objectId + 3, TurretBreak2));
+			_turretChild.insert(std::make_pair(_objectId + 1, TurretBase));
+			_turretChild.insert(std::make_pair(_objectId + 2, TurretBreak1));
+			_turretChild.insert(std::make_pair(_objectId + 3, TurretBreak2));
 		}
 		break;
 
