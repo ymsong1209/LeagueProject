@@ -77,7 +77,6 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 
 		Ptr<CMeshData> pMeshData = nullptr;
 		CGameObject* pObj = nullptr;
-
 		
 
 		switch (_info.champion)
@@ -95,7 +94,7 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 
 			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Jinx");
 			pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true, true, 0.1f);
-			pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+			pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
 
 		}break;
 		case ChampionType::MALPHITE:
@@ -193,7 +192,6 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 			pObj->Transform()->SetIsShootingRay(false);
 		}
 
-
 		pObj->AddComponent(new CCollider3D);
 		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::CUBE);
 		pObj->Collider3D()->SetAbsolute(true);
@@ -208,6 +206,12 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 		pObj->Transform()->SetRelativeRot(Vec3(_info.posInfo.moveDir.x, _info.posInfo.moveDir.y, _info.posInfo.moveDir.z));
 		Vec3 spawnPos = Vec3(_info.posInfo.pos.x, _info.posInfo.pos.y, _info.posInfo.pos.z);
 		SpawnGameObject(pObj, spawnPos, L"Player");
+
+		int mtrlcount = pObj->MeshRender()->GetMtrlCount();
+		for (int i = 0; i < mtrlcount; ++i) {
+			pObj->MeshRender()->GetDynamicMaterial(i);
+		}
+		
 
 		_players.insert(std::make_pair(_info.id, pObj));
 	}

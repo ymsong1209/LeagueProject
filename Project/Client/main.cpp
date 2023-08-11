@@ -81,8 +81,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     //// 표준 출력을 콘솔 창으로 리디렉션
     freopen("CONOUT$", "w", stdout);
     
-    
-    
     this_thread::sleep_for(1s);
     
     ClientServiceRef service = MakeShared<ClientService>(
@@ -130,7 +128,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
         else
         {
-            if (KEY_TAP(KEY::SPACE) && service->GetCurrentSessionCount() > 0)
+            if (KEY_TAP(KEY::LSHIFT) && service->GetCurrentSessionCount() > 0)
             {
                 Send_CLogin(service, L"Ymsong");
             }
@@ -140,7 +138,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             }
             else if (KEY_TAP(KEY::M))
             { 
-                Send_CPickChampion(service,ChampionType::JINX);
+                Send_CPickChampion(service,ChampionType::MALPHITE);
+                //Send_CPickChampion(service, ChampionType::JINX);
             }
             else if (KEY_TAP(KEY::NUM_4))      
             {

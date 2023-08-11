@@ -26,6 +26,7 @@
 #include <Script/CMouseCursorUIScript.h>
 #include <Script/CFontUIScript.h>
 #include <Script/CScorePanelScript.h>
+#include <Script\CKillLogUIScript.h>
 
 #include <Script/CUnitScript.h>
 
@@ -399,6 +400,7 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 	UIObj->AddComponent(new CMouseCursorUIScript);
 	UIObj->AddComponent(new CFontUIScript);
 	UIObj->AddComponent(new CScorePanelScript);
+	UIObj->AddComponent(new CKillLogUIScript);
 	SpawnGameObject(UIObj, Vec3(0.f, 0.f, 0.f), L"ViewPort UI");
 
 	std::cout << "===============================" << endl;

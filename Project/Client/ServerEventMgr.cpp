@@ -284,12 +284,18 @@ void ServerEventMgr::clienttick()
 
 					// 2. 블루, 레드 스코어 업데이트  // 죽인게 플레이어가 아니면(Mob일경우) X
 					CGameObject* killerObj = GameObjMgr::GetInst()->FindPlayer(kdacsInfo->killerId);
+					CGameObject* vitimObj = GameObjMgr::GetInst()->FindPlayer(kdacsInfo->victimId);
 					if (killerObj != nullptr && Faction::RED == killerObj->GetScript<CUnitScript>()->GetFaction())
 						CSendServerEventMgr::GetInst()->AddRedScore(1);
 					else if (killerObj != nullptr && Faction::BLUE == killerObj->GetScript<CUnitScript>()->GetFaction())
 						CSendServerEventMgr::GetInst()->AddBlueScore(1);
 
-					// 이때 킬로그 UI 띄움 : killerId가 victimId를 처치했습니다
+					// 3. 이때 킬로그를 CSendServerEventMgr 에 UI가 사용할 수 있도록 이벤트 등록해둔다.
+					tServerEvent evn = {};
+					evn.Type = SERVER_EVENT_TYPE::Kill_LOG_PACKET;
+					evn.wParam = (DWORD_PTR)killerObj;
+					evn.lParam = (DWORD_PTR)vitimObj;
+					CSendServerEventMgr::GetInst()->AddUISendEvent(evn);
 				}
 				else if (kdacsInfo->deadObjUnitType == UnitType::MELEE_MINION
 					|| kdacsInfo->deadObjUnitType == UnitType::RANGED_MINION
