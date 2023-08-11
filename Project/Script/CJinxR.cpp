@@ -17,12 +17,13 @@ CJinxR::CJinxR()
 	pObj = pMeshData->Instantiate();
 	pObj->AddComponent(new CCollider2D);
 	pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-	pObj->Collider2D()->SetOffsetScale(Vec2(1.f, 1.f));
-	//pObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
+	pObj->Collider2D()->SetOffsetScale(Vec2(100.f, 100.f));
+	pObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
 	pObj->Collider2D()->SetDrawCollision(true);
 	pObj->SetName(L"JinxR");
 	pObj->Transform()->SetIsShootingRay(true);
 	pObj->Transform()->SetRayRange(100);
+	pObj->Transform()->SetRelativeScale(Vec3(0.7f, 0.7f, 0.7f));
 
 	Ptr<CPrefab> NewPrefab = new CPrefab;
 	NewPrefab->RegisterProtoObject(pObj);
