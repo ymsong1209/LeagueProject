@@ -98,6 +98,10 @@ void ServerPacketHandler::HandlePacket(PacketSessionRef& session, BYTE* buffer, 
 	case S_TIME:
 		Handle_S_TIME(session, buffer, len);
 		break;
+
+	case S_OBJECT_MTRL:
+		Handle_S_OBJECT_MTRL(session, buffer, len);
+		break;
 	}
 }
 
@@ -486,7 +490,6 @@ void ServerPacketHandler::Handle_S_OBJECT_ANIM(PacketSessionRef& session, BYTE* 
 		_AnimInfo.bRepeat = _AnimInfoPacket.bRepeat;
 		_AnimInfo.blend = _AnimInfoPacket.blend;
 		_AnimInfo.blendTime = _AnimInfoPacket.blendTime;
-
 
 		CGameObject* obj = GameObjMgr::GetInst()->FindAllObject(_AnimInfo.targetId);
 
