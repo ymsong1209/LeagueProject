@@ -131,32 +131,7 @@ PS_OUT PS_Std3D_Deferred(VS_OUT _in) : SV_Target
     
     float3 vViewNormal = _in.vViewNormal;
 
-    // Ray Test용 Code
-    if (RayTest == 30)
-    {
-
-        PS_OUT TempOut = (PS_OUT)0.f;
-
-        TempOut.vColor = float4(0.f, 1.f, 0.f, 1.f);
-        TempOut.vNormal = float4(vViewNormal.xyz, 1.f);
-        TempOut.vPosition = float4(_in.vViewPos.xyz, 1.f);
- 
-        return TempOut;
-    }
-
-    else if (RayTest == 20)
-    {
-        PS_OUT TempOut = (PS_OUT)0.f;
-
-        TempOut.vColor = float4(0.f, 0.f, 1.f, 1.f);
-        TempOut.vNormal = float4(vViewNormal.xyz, 1.f);
-        TempOut.vPosition = float4(_in.vViewPos.xyz, 1.f);
-
-        return TempOut;
- 
-    }
-
-     
+    
     // 텍스쳐가 있으면, 해당 색상을 사용한다.
     if (g_btex_0)
     {
