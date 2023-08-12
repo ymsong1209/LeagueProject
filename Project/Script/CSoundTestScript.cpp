@@ -51,7 +51,7 @@ void CSoundTestScript::tick()
 		// 소리 위치가 변경되었을 경우, 그 위치로 update
 		int bgmindex = m_BGM->GetSoundIndex();
 		Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
-		CSoundMgr::GetInst()->Update3DAttributes(bgmindex, Vec3(1000.f, 0.f, 0.f));
+		//CSoundMgr::GetInst()->Update3DAttributes(bgmindex, Vec3(1000.f, 0.f, 0.f));
 	}
 
 	if (KEY_TAP(KEY::O)) {
@@ -65,7 +65,7 @@ void CSoundTestScript::tick()
 
 		int bgmindex = m_BGM2->GetSoundIndex();
 		Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
-		CSoundMgr::GetInst()->Update3DAttributes(bgmindex, Vec3(0.f, 0.f, 1000.f));
+		//CSoundMgr::GetInst()->Update3DAttributes(bgmindex, Vec3(0.f, 0.f, 1000.f));
 	}
 
 	if (KEY_TAP(KEY::K)) {

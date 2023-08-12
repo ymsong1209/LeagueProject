@@ -327,7 +327,7 @@ void ServerEventMgr::clienttick()
 			break;
 			case SERVER_EVENT_TYPE::SOUND_PACKET:
 			{
-				uint64	soundId = (uint64)m_vecEvent[i].wParam;
+				
 				SoundInfo*  soundInfo = (SoundInfo*)m_vecEvent[i].lParam;
 				
 				// 사운드가 나와 같은 진영이거나, None(모두가 들음) 인경우
@@ -338,8 +338,8 @@ void ServerEventMgr::clienttick()
 					wstring filepath = CPathMgr::GetInst()->GetContentPath();
 					filepath += soundInfo->soundName;
 					newSound->Load(filepath);
-					newSound->SetSoundIndex(soundId); // 사운드에게 서버 아이디 부여
 					CSoundMgr::GetInst()->AddSound(newSound);
+					int soundId = newSound->GetSoundIndex();
 
 					//정체모를 버그로 인해 stop을 한번은 해줘야함
 					//서버에서 패킷을 받아 사운드를 생성하는 시점에서는 serversound*를 알고 있기 때문에 stop을 할 수가 있다.

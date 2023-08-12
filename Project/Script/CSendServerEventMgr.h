@@ -70,6 +70,7 @@ public:
                             , bool _useMousePos, Vec3 _mousePos, bool _useMouseDir, Vec3 _mouseDir);
     void SendDespawnPacket(UINT64 _objId, float _lifeSpan);
     void SendKDACSPacket(UINT64 _killerId, UINT64 _victimId, UnitType _deadObjUnitType);
+    //Faction None : 모두가 들어야하는 사운드
     void SendSoundPacket(wstring _soundName, int _loopCount, float _fVolume, bool _bOverlap, float _fRange, Vec3 _soundPos, Faction _faction = Faction::NONE);
     
     //settexparam할때 보내는 패킷
