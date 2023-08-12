@@ -138,6 +138,7 @@ public:
     // 비동기
     void GetHit(SkillType _type, CGameObject* _SkillTarget, CGameObject* _SkillUser, int _SkillLevel);
 
+    void SetCurCC(CC _cc); // 서버가 cc를 세팅해주기 위함.
     void ApplyCC(CC _ccType);
     void RemoveCC(CC _ccType);
     void ApplyRestraint(RESTRAINT restraint);
