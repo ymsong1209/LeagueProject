@@ -472,6 +472,41 @@ void GameObjMgr::SendKDACS(KDACSInfo* _kdacsInfo, ClientServiceRef _service)
 	}
 }
 
+void GameObjMgr::SendSound(SoundInfo* _soundInfo, ClientServiceRef _service)
+{
+
+	std::mutex m;
+	{
+		std::lock_guard<std::mutex> lock(m);
+
+		SoundInfoPacket soundInfoPacket = {};
+		soundInfoPacket.faction = _soundInfo->faction;
+		soundInfoPacket.iLoopCount = _soundInfo->iLoopCount;
+		soundInfoPacket.fVolume = _soundInfo->fVolume;
+		soundInfoPacket.bOverlap = _soundInfo->bOverlap;
+		soundInfoPacket.fRange= _soundInfo->fRange;
+		soundInfoPacket.soundPos.x = _soundInfo->soundPos.x;
+		soundInfoPacket.soundPos.y = _soundInfo->soundPos.y;
+		soundInfoPacket.soundPos.z = _soundInfo->soundPos.z;
+
+		wstring _soundName = _soundInfo->soundName;
+
+		PKT_C_SOUND_WRITE  pktWriter(soundInfoPacket);
+		PKT_C_SOUND_WRITE::SoundNameList soundNamePacket = pktWriter.ReserveAnimNameList(_soundName.size());
+		for (int i = 0; i < _soundName.size(); i++)
+		{
+			soundNamePacket[i] = { _soundName[i] };
+		}
+
+		// 서버에게 패킷 전송
+		std::cout << "Send C_SOUND Pakcet " << endl;
+		SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+		_service->Broadcast(sendBuffer);
+
+		std::cout << "===============================" << endl;
+	}
+}
+
 void GameObjMgr::SendObjectMtrl(MtrlInfo* _mtrlInfo, ClientServiceRef _service)
 {
 	std::mutex m;

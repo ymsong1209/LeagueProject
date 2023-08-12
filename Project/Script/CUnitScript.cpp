@@ -157,48 +157,42 @@ void CUnitScript::CheckTimedEffect()
 void CUnitScript::CheckCC()
 {
 	// 걸려있는 CC기에 따라 행동 제약 변경
+	// 
+	// 초기화: 모든 제약 상태 제거
+	m_fMoveSpeedFactor = 1.f;
+	RemoveRestraint(RESTRAINT::CANNOT_SKILL);
+	RemoveRestraint(RESTRAINT::CANNOT_MOVE);
+	RemoveRestraint(RESTRAINT::BLOCK);
 
 	// SLOW
-	if ((m_eCurCC & CC::SLOW) != 0) 
+	if ((m_eCurCC & CC::SLOW) != 0)
 	{
-		// 이동속도 감소
 		m_fMoveSpeedFactor = 0.5f;
 	}
-	else
-	{
-		m_fMoveSpeedFactor = 1.f;
-	}
+
 	// 침묵 상태
 	if ((m_eCurCC & CC::SILENCE) != 0)
 	{
-		ApplyRestraint(RESTRAINT::CANNOT_SKILL);	// 스킬 사용 불가
-	}
-	else
-	{
-		RemoveRestraint(RESTRAINT::CANNOT_SKILL);
-	}
-	// 속박 상태
-	if ((m_eCurCC & CC::ROOT) != 0) 
-	{
-		ApplyRestraint(RESTRAINT::CANNOT_MOVE);	// 움직임 불가
-	}
-	else
-	{
-		RemoveRestraint(RESTRAINT::CANNOT_MOVE);
+		ApplyRestraint(RESTRAINT::CANNOT_SKILL);
 	}
 
-	if ((m_eCurCC & CC::STUN) != 0) // 스턴 상태
+	// 속박 상태
+	if ((m_eCurCC & CC::ROOT) != 0)
+	{
+		ApplyRestraint(RESTRAINT::CANNOT_MOVE); 
+	}
+
+	// 스턴 상태
+	if ((m_eCurCC & CC::STUN) != 0)
 	{
 		ApplyRestraint(RESTRAINT::BLOCK);
 	}
-	else
+	
+	// 에어본 상태
+	if ((m_eCurCC & CC::AIRBORNE) != 0) 
 	{
-		RemoveRestraint(RESTRAINT::BLOCK);
-	}
-
-	if ((m_eCurCC & CC::AIRBORNE) != 0) // 에어본 상태
-	{
-		if (m_bAirBorneActive == false) {
+		if (m_bAirBorneActive == false) 
+		{
 			GetOwner()->PathFinder()->ClearPath();
 			Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
 			m_vAirBorneStartPos = CurPos;
@@ -206,23 +200,23 @@ void CUnitScript::CheckCC()
 				
 			m_bAirBorneActive = true;
 		}
-		else {
+		else 
+		{
 			Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
 			m_fAirBorneVelocity -= 2.f * DT;
 			GetOwner()->Transform()->SetRelativePos(Vec3(CurPos.x, CurPos.y + m_fAirBorneVelocity, CurPos.z));
-			if (CurPos.y + m_fAirBorneVelocity < m_vAirBorneStartPos.y) {
+			if (CurPos.y + m_fAirBorneVelocity < m_vAirBorneStartPos.y)
+			{
 				GetOwner()->Transform()->SetRelativePos(Vec3(CurPos.x, m_vAirBorneStartPos.y, CurPos.z));
 			}
 		}
 		
 		ApplyRestraint(RESTRAINT::BLOCK); // 모든 행동 제약
 	}
-	else 
+	else if(m_bAirBorneActive)
 	{
 		m_bAirBorneActive = false;
 		m_fAirBorneVelocity = 0.f;
-
-		RemoveRestraint(RESTRAINT::BLOCK);
 	}
 }
 

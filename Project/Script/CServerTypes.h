@@ -12,7 +12,7 @@ enum class SERVER_EVENT_TYPE
 	SKILL_HIT_PACKET,	// WParam : uin64 hitId,	   lParam : SkillInfo
 	DESPAWN_PACKET,		// wParam : uint64 despawnId,  lParam : float lifespan
 	KDA_CS_PACKET,		// wParam : KDACSInfo
-	SOUND_PACKET,
+	SOUND_PACKET,       // wParam : uint64 soundId,	   lParam : SoundInfo
 	TIME_PACKET,
 	MTRL_PACKET,		 // wParam : MtrlInfo
 
@@ -22,7 +22,7 @@ enum class SERVER_EVENT_TYPE
 	SEND_HIT_PACKET, 	      // wParam : HitInfo, 
 	SEND_DESPAWN_PACKET,      // wParam : objId,  lParam : lifeSpanTime
 	SEND_KDA_CS_PACKET,		  // wParam : KDACSInfo
-	SEND_SOUND_PACKET,
+	SEND_SOUND_PACKET,		  // wParam : SoundInfo
 	SEND_MTRL_PACKET,		  // wParam : MtrlInfo
 
 
@@ -101,8 +101,8 @@ enum class UnitType
 	SOUTH_RAZORBEAK_MINI_5,
 	SOUTH_KRUG,
 	SOUTH_KRUG_MINI,
-	SOUTH_RED,
-	SOUTH_BLUE,
+	SOUTH_RED,      // ºÓÀº µ¢±¼Á¤·É
+	SOUTH_BLUE,    // Çª¸¥ ÆÄ¼ö²Û
 
 	NORTH_GROMP,
 	NORTH_MURKWOLF,
@@ -116,8 +116,8 @@ enum class UnitType
 	NORTH_RAZORBEAK_MINI_5,
 	NORTH_KRUG,
 	NORTH_KRUG_MINI,
-	NORTH_RED,
-	NORTH_BLUE,
+	NORTH_RED,             // ºÓÀº µ¢±¼Á¤·É
+	NORTH_BLUE,            // Çª¸¥ ÆÄ¼ö²Û
 
 	DRAGON,
 	BARON,   // ·»´õ¸µ¸¸
@@ -128,6 +128,8 @@ enum class UnitType
 
 	PROJECTILE,
 	EFFECT,
+
+	SOUND,
 
 	END,
 };
@@ -272,8 +274,8 @@ struct SoundInfo
 
 	wstring			soundName;
 	DimensionType   dimensionType;
-	Faction         faction;
-	int             iRoopCount;
+	Faction         faction  = Faction::NONE;
+	int             iLoopCount;
 	float           fVolume;
 	bool            bOverlap;
 	float           fRange;

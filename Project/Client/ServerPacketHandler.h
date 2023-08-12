@@ -852,6 +852,7 @@ struct PKT_C_SOUND {
 struct PKT_S_SOUND {
 	uint16 packetSize;
 	uint16 packetId;
+	uint64 soundId;
 	SoundInfoPacket soundInfo;
 
 	bool Validate() {
@@ -958,8 +959,9 @@ struct PKT_C_OBJECT_MTRL {
 
 #pragma pack(1)
 struct PKT_S_OBJECT_MTRL {
-	uint16		packetSize;
-	uint16		packetId;
+	uint16      packetSize;
+	uint16      packetId;
+	uint64      ownerId;
 	MtrlInfoPacket mtrlInfo;
 
 	bool Validate() {
@@ -1317,7 +1319,6 @@ private:
 	BufferWriter _bw;
 };
 #pragma pack()
-
 #pragma pack(1)
 class PKT_C_SOUND_WRITE {
 public:
@@ -1358,7 +1359,6 @@ private:
 	BufferWriter _bw;
 };
 #pragma pack()
-
 
 #pragma pack(1)
 class PKT_C_TIME_WRITE {

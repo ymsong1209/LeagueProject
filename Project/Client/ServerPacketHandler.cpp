@@ -740,7 +740,7 @@ void ServerPacketHandler::Handle_S_SOUND(PacketSessionRef& session, BYTE* buffer
 		m.unlock();
 		return;
 	}
-
+	UINT64 soundId = pkt->soundId;
 	SoundInfoPacket	 _soundInfoPacket = pkt->soundInfo;
 	PKT_S_SOUND::SoundNameList soundNameBuffs = pkt->GetSoundNameList();
 	
@@ -755,7 +755,7 @@ void ServerPacketHandler::Handle_S_SOUND(PacketSessionRef& session, BYTE* buffer
 	soundInfo->soundName	 = _soundName;
 	soundInfo->dimensionType = _soundInfoPacket.dimensionType;
 	soundInfo->faction		 = _soundInfoPacket.faction;
-	soundInfo->iRoopCount	 = _soundInfoPacket.iRoopCount;
+	soundInfo->iLoopCount	 = _soundInfoPacket.iLoopCount;
 	soundInfo->fVolume		 = _soundInfoPacket.fVolume;
 	soundInfo->bOverlap		 = _soundInfoPacket.bOverlap;
 	soundInfo->fRange		 = _soundInfoPacket.fRange;
@@ -766,7 +766,9 @@ void ServerPacketHandler::Handle_S_SOUND(PacketSessionRef& session, BYTE* buffer
 
 	tServerEvent evn = {};
 	evn.Type = SERVER_EVENT_TYPE::SOUND_PACKET;
-	evn.wParam = (DWORD_PTR)soundInfo;
+	evn.wParam = (DWORD_PTR)soundId;
+	evn.lParam = (DWORD_PTR)soundInfo;
+
 
 	ServerEventMgr::GetInst()->AddEvent(evn);
 

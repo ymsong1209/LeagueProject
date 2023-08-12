@@ -135,12 +135,28 @@ void CSendServerEventMgr::SendKDACSPacket(UINT64 _killerId, UINT64 _victimId, Un
 }
 
 
-void CSendServerEventMgr::SendSoundPacket()
+void CSendServerEventMgr::SendSoundPacket(wstring _soundName, int _loopCount, float _fVolume, bool _bOverlap, float _fRange, Vec3 _soundPos, Faction _faction)
 {
 	std::mutex m;
 	{
 		std::lock_guard<std::mutex> lock(m);
 
+		SoundInfo* soundInfo = new SoundInfo();
+		soundInfo->soundName = _soundName;
+		soundInfo->faction = _faction;
+		soundInfo->iLoopCount = _loopCount;
+		soundInfo->fVolume = _fVolume;
+		soundInfo->bOverlap = _bOverlap;
+		soundInfo->fRange = _fRange;
+		soundInfo->soundPos.x = _soundPos.x;
+		soundInfo->soundPos.y = _soundPos.y;
+		soundInfo->soundPos.z = _soundPos.z;
+
+		tServerEvent serverEvn = {};
+		serverEvn.Type = SERVER_EVENT_TYPE::SEND_SOUND_PACKET;
+		serverEvn.wParam = (DWORD_PTR)soundInfo;
+		//serverEvn.lParam;
+		CSendServerEventMgr::GetInst()->AddServerSendEvent(serverEvn);
 	}
 }
 

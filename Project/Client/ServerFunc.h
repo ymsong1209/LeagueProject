@@ -38,7 +38,7 @@ struct SoundInfoPacket
 
     DimensionType   dimensionType;
     Faction         faction;
-    int             iRoopCount;
+    int             iLoopCount;
     float           fVolume;
     bool            bOverlap;
     float           fRange;
