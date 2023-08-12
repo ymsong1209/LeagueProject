@@ -171,35 +171,42 @@ void CreateTestLevel()
 	// Malpthie Basic Attack
 	CGameObject* BasicAttack = new CGameObject;
 	BasicAttack->SetName(L"BasicAttack");
-	BasicAttack->AddComponent(new CTransform);
-	BasicAttack->AddComponent(new CMeshRender);
-	BasicAttack->AddComponent(new CMalphiteBasicAttackScript);
-	BasicAttack->Transform()->SetUseMouseOutline(false);
-	BasicAttack->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	BasicAttack->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MalphiteBasickAttackMtrl"), 0);
-	BasicAttack->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\malphite_base_z_hiteffect.dds"));
-	BasicAttack->MeshRender()->SetPunctureTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\malphite_base_z_hiteffect.dds"));
-	BasicAttack->MeshRender()->SetAdditiveTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\malphite_color-hurtbeam.dds"));
-	BasicAttack->MeshRender()->SetAdditiveTexColor(Vec4(255.f, 100.f, 0.f, 0.f));
-	BasicAttack->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 1.f));
+	BasicAttack = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\BasicAttack.prefab").Get()->Instantiate();
 	SpawnGameObject(BasicAttack, Vec3(-950.f, 0.f, 0.f), 0);
 
+	//BasicAttack->AddComponent(new CTransform);
+	//BasicAttack->AddComponent(new CMeshRender);
+	//BasicAttack->AddComponent(new CMalphiteBasicAttackScript);
+	//BasicAttack->Transform()->SetUseMouseOutline(false);
+	//BasicAttack->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
 
-	// Malphite Basick Attack Outliner
-	CGameObject* BasickAttackOutline = new CGameObject;
-	BasickAttackOutline->SetName(L"BasicAttackOutline");
-	BasickAttackOutline->AddComponent(new CTransform);
-	BasickAttackOutline->AddComponent(new CMeshRender);
-	BasickAttackOutline->Transform()->SetUseMouseOutline(false);
-	BasickAttackOutline->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 1.f));
-	BasickAttackOutline->Transform()->SetRelativePos(Vec3(0.f, 0.f, -2.f));
-	BasickAttackOutline->Transform()->SetAbsolute(true);
-	BasickAttackOutline->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	BasickAttackOutline->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MalphiteBasickAttackOutlineMtrl"), 0);
-	BasickAttackOutline->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\caitlyn_skin06_radial_01.dds"));
-	BasickAttackOutline->MeshRender()->SetAdditiveTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\malphite_base_p_glowing_fire.dds"));
-	BasickAttackOutline->MeshRender()->SetAdditiveTexColor(Vec4(255.f, 100.f, 0.f, 0.f));
-	BasicAttack->AddChild(BasickAttackOutline);
+	//BasicAttack->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\MalphiteBasicAttack.mtrl"), 0);
+	////BasicAttack->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MalphiteBasickAttackMtrl"), 0);
+	////BasicAttack->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\malphite_base_z_hiteffect.dds"));
+	//BasicAttack->MeshRender()->SetPunctureTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\malphite_base_z_hiteffect.dds"));
+	//BasicAttack->MeshRender()->SetAdditiveTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\malphite_color-hurtbeam.dds"));
+	//BasicAttack->MeshRender()->SetAdditiveTexColor(Vec4(255.f, 100.f, 0.f, 0.f));
+	//BasicAttack->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 1.f));
+	//
+
+
+	//// Malphite Basick Attack Outliner
+	//CGameObject* BasickAttackOutline = new CGameObject;
+	//BasickAttackOutline->SetName(L"BasicAttackOutline");
+	//BasickAttackOutline->AddComponent(new CTransform);
+	//BasickAttackOutline->AddComponent(new CMeshRender);
+	//BasickAttackOutline->Transform()->SetUseMouseOutline(false);
+	//BasickAttackOutline->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 1.f));
+	//BasickAttackOutline->Transform()->SetRelativePos(Vec3(0.f, 0.f, -2.f));
+	//BasickAttackOutline->Transform()->SetAbsolute(true);
+	//BasickAttackOutline->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+
+	//BasickAttackOutline->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\MalphiteBasicAttackOutline.mtrl"), 0);
+	////BasickAttackOutline->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MalphiteBasickAttackOutlineMtrl"), 0);
+	////BasickAttackOutline->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\caitlyn_skin06_radial_01.dds"));
+	//BasickAttackOutline->MeshRender()->SetAdditiveTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\malphite_base_p_glowing_fire.dds"));
+	//BasickAttackOutline->MeshRender()->SetAdditiveTexColor(Vec4(255.f, 100.f, 0.f, 0.f));
+	//BasicAttack->AddChild(BasickAttackOutline);
 
 
  
@@ -504,6 +511,7 @@ void CreateTestLevel()
 
 
 	 // TurretTrail
+	/*
 	 CGameObject* TurretTrail = new CGameObject;
 	 TurretTrail->SetName(L"TurretTrail");
 	 TurretTrail->AddComponent(new CMeshRender);
@@ -515,22 +523,35 @@ void CreateTestLevel()
 	 TurretTrail->Transform()->SetUseMouseOutline(false);
 	 TurretTrail->Transform()->SetAbsolute(true);
 	 TurretTrail->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"TrapezoidMeshLeft"));
-	 TurretTrail->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"TurretTrailMtrl"), 0);
-	 TurretTrail->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\turret\\trail.dds"));
+	 TurretTrail->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\TurretTrailMtrl.mtrl"), 0);
+	 //TurretTrail->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\turret\\trail.dds"));
+
+	 */
 
  
 	 // TurretBlaze
 	 CGameObject* TurretBlaze = new CGameObject;
+	 Ptr<CPrefab> TurretPrefab  = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\TurretBlaze.prefab");
+	 TurretBlaze = TurretPrefab.Get()->Instantiate();
 	 TurretBlaze->SetName(L"TurretBlaze");
+
+	 /*
 	 TurretBlaze->AddComponent(new CMeshRender);
 	 TurretBlaze->AddComponent(new CTransform);
 	 TurretBlaze->Transform()->SetRelativeScale(Vec3(500.f, 500.f, 1.f));
 	 TurretBlaze->Transform()->SetUseMouseOutline(false);
 	 TurretBlaze->MeshRender()->SetFrustumCheck(false);
 	 TurretBlaze->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CircleMesh"));
-	 TurretBlaze->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"TurretBlazeMtrl"), 0);
-	 TurretBlaze->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\turret\\sru_chaos_sparks.dds"));
+
+	 Ptr<CMaterial> BlazeMtrl = CResMgr::GetInst()->FindRes<CMaterial>(L"material\\TurretBlazeMtrl.mtrl");
+
+
+	 TurretBlaze->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\TurretBlazeMtrl.mtrl"), 0);
+	 //TurretBlaze->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"TurretBlazeMtrl"), 0);
+	 //TurretBlaze->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\turret\\sru_chaos_sparks.dds"));
 	 TurretBlaze->AddChild(TurretTrail);
+
+	 */
 	 SpawnGameObject(TurretBlaze, Vec3(-744.664f, -83.502f, 349.207f), 0);
 
 
