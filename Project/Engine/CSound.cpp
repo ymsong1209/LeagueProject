@@ -13,6 +13,8 @@ CSound::CSound()
 	: CRes(RES_TYPE::SOUND)
 	, m_pSound(nullptr)
 	, m_bIs3D(false)
+	, m_iSoundIndex(-1)
+	, m_iChannelIndex(-1)
 {
 }
 
@@ -69,10 +71,31 @@ int CSound::Play(int _iRoopCount, float _fVolume, bool _bOverlap, float _fRange,
 	int iIdx = -1;
 	pChannel->getIndex(&iIdx);
 
+	m_iChannelIndex = iIdx;
 	return iIdx;
 }
 
-void CSound::Stop()
+void CSound::Stop(int _channelIndex)
+{
+
+	for (auto iter = m_listChannel.begin(); iter != m_listChannel.end();)
+	{
+		int currentChannelIndex;
+		(*iter)->getIndex(&currentChannelIndex);
+		if (currentChannelIndex == _channelIndex)
+		{
+			(*iter)->stop();
+			break;
+		}
+		else
+		{
+			++iter;
+		}
+	}
+
+}
+
+void CSound::StopAllSound()
 {
 	list<FMOD::Channel*>::iterator iter;
 
@@ -83,8 +106,10 @@ void CSound::Stop()
 	}
 }
 
-void CSound::SetVolume(float _f, int _iChannelIdx)
+void CSound::SetVolume(float _Volume, int _iChannelIdx)
 {
+	if (_iChannelIdx == -1) return;
+
 	list<FMOD::Channel*>::iterator iter = m_listChannel.begin();
 
 	int iIdx = -1;
@@ -93,7 +118,7 @@ void CSound::SetVolume(float _f, int _iChannelIdx)
 		(*iter)->getIndex(&iIdx);
 		if (_iChannelIdx == iIdx)
 		{
-			(*iter)->setVolume(_f);
+			(*iter)->setVolume(_Volume);
 			return;
 		}
 	}
