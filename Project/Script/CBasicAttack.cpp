@@ -95,6 +95,9 @@ void CBasicAttack::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, 
 
 	CSkill::GetHit(_UserScript,  _TargetScript, _Skilllevel);
 
+	// 맞을 시 피격 이펙트 패킷 전송
+	//CSendServerEventMgr::GetInst()->어쩌구 (유저, 타겟, 스킬타입 등)
+
 	// 피격자 사망시 KDACS 패킷 전송
 	if (_TargetScript->GetCurHP() <= 0)
 		CSendServerEventMgr::GetInst()->SendKDACSPacket(_UserScript->GetServerID()

@@ -1,18 +1,15 @@
 #pragma once
 #include "CUnitState.h"
-class CInhibitorIdleState :
+class CInhibitorRespawnState :
     public CUnitState
 {
 public:
-    CInhibitorIdleState();
-    ~CInhibitorIdleState();
+    CInhibitorRespawnState();
+    ~CInhibitorRespawnState();
 
 public:
     virtual void tick() override;
     virtual void Enter() override;
     virtual void Exit() override;
-
-public:
-    virtual void HandleEvent(CGameEvent& event);
 };
 

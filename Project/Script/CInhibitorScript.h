@@ -8,7 +8,8 @@ public:
     ~CInhibitorScript();
 
 private:
-    float       m_fRespawnTime;
+    vector<CGameObject*>    m_vecTurrets;
+    float                   m_fRespawnTime;
 
 public:
     virtual void begin() override;

@@ -236,6 +236,7 @@
     <ClInclude Include="CGrompSpawnState.h" />
     <ClInclude Include="CGrowScaleScript.h" />
     <ClInclude Include="CHpMpRatioUIScript.h" />
+    <ClInclude Include="CInhibitorRespawnState.h" />
     <ClInclude Include="CInventoryUIScript.h" />
     <ClInclude Include="CJinxAttackState.h" />
     <ClInclude Include="CJinxE.h" />
@@ -498,6 +499,7 @@
     <ClCompile Include="CHpMpRatioUIScript.cpp" />
     <ClCompile Include="CInhibitorBrokenState.cpp" />
     <ClCompile Include="CInhibitorIdleState.cpp" />
+    <ClCompile Include="CInhibitorRespawnState.cpp" />
     <ClCompile Include="CInhibitorScript.cpp" />
     <ClCompile Include="CInhibitorSpawnState.cpp" />
     <ClCompile Include="CInventoryUIScript.cpp" />

@@ -10,7 +10,6 @@
     <ClCompile Include="CUnitState.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Script.cpp" />
-    <ClCompile Include="CTurretAttackScript.cpp" />
     <ClCompile Include="CGrompScript.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
     </ClCompile>
@@ -541,9 +540,6 @@
     <ClCompile Include="CServerTypes.cpp">
       <Filter>Default</Filter>
     </ClCompile>
-    <ClCompile Include="CScriptMgr.cpp">
-      <Filter>Manager\1. ScriptMgr</Filter>
-    </ClCompile>
     <ClCompile Include="CMalphiteScript.cpp">
       <Filter>Scripts\Unit\Champion</Filter>
     </ClCompile>
@@ -661,6 +657,12 @@
     </ClCompile>
     <ClCompile Include="CGrowScaleScript.cpp" />
     <ClCompile Include="CMalphiteBasicAttackScript.cpp" />
+    <ClCompile Include="CScriptMgr.cpp">
+      <Filter>Manager\1. ScriptMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CInhibitorRespawnState.cpp">
+      <Filter>State\Unit\Structure</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -862,6 +864,9 @@
     </ClInclude>
     <ClInclude Include="CGrowScaleScript.h" />
     <ClInclude Include="CMalphiteBasicAttackScript.h" />
+    <ClInclude Include="CInhibitorRespawnState.h">
+      <Filter>State\Unit\Structure</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">
@@ -1220,7 +1225,6 @@
     <ClInclude Include="CRedSpawnState.h">
       <Filter>Scripts\Unit\Mob\Jungle\Red</Filter>
     </ClInclude>
-    <ClInclude Include="CTurretAttackScript.h" />
     <ClInclude Include="CServerTypes.h">
       <Filter>Default</Filter>
     </ClInclude>

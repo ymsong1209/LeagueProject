@@ -1,27 +1,26 @@
 #include "pch.h"
-#include "CInhibitorSpawnState.h"
+#include "CInhibitorRespawnState.h"
 #include "CInhibitorScript.h"
-
 #include <Engine/CAnim3D.h>
 #include <Engine/CAnimator3D.h>
 #include  <Engine/CFsm.h>
 
-CInhibitorSpawnState::CInhibitorSpawnState()
+CInhibitorRespawnState::CInhibitorRespawnState()
 {
 }
 
-CInhibitorSpawnState::~CInhibitorSpawnState()
+CInhibitorRespawnState::~CInhibitorRespawnState()
 {
 }
 
-void CInhibitorSpawnState::tick()
+void CInhibitorRespawnState::tick()
 {
 	// 스폰 애니메이션이 끝나면 Idle 상태로 전환
 	if (GetOwner()->Animator3D()->GetCurAnim()->IsFinish())
 		GetOwnerFSM()->ChangeState(L"Idle");
 }
 
-void CInhibitorSpawnState::Enter()
+void CInhibitorRespawnState::Enter()
 {
 	CUnitState::Enter();
 
@@ -52,11 +51,11 @@ void CInhibitorSpawnState::Enter()
 	}
 
 	// 애니메이션 재생
-	GetOwner()->Animator3D()->PlayOnce(L"Inhibitor\\inhibitor_spawn.anm_skinned_mesh.001", true, 0.1f, 0.2f);
+	GetOwner()->Animator3D()->PlayOnce(L"Inhibitor\\inhibitor_respawn.anm_skinned_mesh.001", true, 0.1f, 0.2f);
 
 	// 애니메이션 패킷 전송
 	CSendServerEventMgr::GetInst()->SendAnimPacket(InhibitorScript->GetServerID(),
-		L"Inhibitor\\inhibitor_spawn.anm_skinned_mesh.001"
+		L"Inhibitor\\inhibitor_respawn.anm_skinned_mesh.001"
 		, false
 		, false
 		, true
@@ -64,7 +63,7 @@ void CInhibitorSpawnState::Enter()
 		, 0.2f);
 }
 
-void CInhibitorSpawnState::Exit()
+void CInhibitorRespawnState::Exit()
 {
 	CUnitState::Exit();
 }
