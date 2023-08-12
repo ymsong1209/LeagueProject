@@ -492,6 +492,7 @@ void ServerPacketHandler::Handle_S_OBJECT_ANIM(PacketSessionRef& session, BYTE* 
 		_AnimInfo.bRepeat = _AnimInfoPacket.bRepeat;
 		_AnimInfo.blend = _AnimInfoPacket.blend;
 		_AnimInfo.blendTime = _AnimInfoPacket.blendTime;
+		_AnimInfo.animSpeed = _AnimInfoPacket.animSpeed;
 
 		CGameObject* obj = GameObjMgr::GetInst()->FindAllObject(_AnimInfo.targetId);
 
