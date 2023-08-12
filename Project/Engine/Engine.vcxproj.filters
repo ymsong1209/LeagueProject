@@ -80,6 +80,9 @@
       <Filter>Source\08. ShaderCode\02. Render\2D</Filter>
     </FxCompile>
     <FxCompile Include="copybone.fx" />
+    <FxCompile Include="bloom.fx">
+      <Filter>Source\08. ShaderCode\02. Render\2D</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CRes.cpp">

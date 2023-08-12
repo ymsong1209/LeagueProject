@@ -1573,6 +1573,23 @@ void CResMgr::CreateDefaultGraphicsShader()
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_POSTPROCESS);
 	AddRes(pShader->GetKey(), pShader);
 
+
+	// ============================
+	// BloomShader
+	// RS_TYPE : CULL_NONE
+	// DS_TYPE : NO_TEST_NO_WRITE
+	// BS_TYPE : DEFAULT
+	// Domain  : POSTPROCESS
+	// ============================
+	pShader = new CGraphicsShader;
+	pShader->SetKey(L"BloomShader");
+	pShader->CreateVertexShader(L"shader\\bloom.fx", "VS_BloomShader");
+	pShader->CreatePixelShader(L"shader\\bloom.fx", "PS_BloomShader");
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_POSTPROCESS);
+	AddRes(pShader->GetKey(), pShader);
+
 	// ============================
 	// Distortion Shader
 	// RS_TYPE : CULL_NONE
@@ -1967,6 +1984,11 @@ void CResMgr::CreateDefaultMaterial()
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindRes<CGraphicsShader>(L"GrayShader"));
 	AddRes(L"GrayMtrl", pMtrl);
+
+	// BloomShader(PostProcess
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindRes<CGraphicsShader>(L"BloomShader"));
+	AddRes(L"BloomMtrl", pMtrl);
 
 	// DistortionShader(PostProcess)
 	pMtrl = new CMaterial(true);
