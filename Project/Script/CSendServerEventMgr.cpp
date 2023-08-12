@@ -135,22 +135,39 @@ void CSendServerEventMgr::SendKDACSPacket(UINT64 _killerId, UINT64 _victimId, Un
 }
 
 
-void CSendServerEventMgr::SendSoundPacket()
+void CSendServerEventMgr::SendSoundPacket(wstring _soundName, int _loopCount, float _fVolume, bool _bOverlap, float _fRange, Vec3 _soundPos, Faction _faction)
 {
 	std::mutex m;
 	{
 		std::lock_guard<std::mutex> lock(m);
 
+		SoundInfo* soundInfo = new SoundInfo();
+		soundInfo->soundName = _soundName;
+		soundInfo->faction = _faction;
+		soundInfo->iLoopCount = _loopCount;
+		soundInfo->fVolume = _fVolume;
+		soundInfo->bOverlap = _bOverlap;
+		soundInfo->fRange = _fRange;
+		soundInfo->soundPos.x = _soundPos.x;
+		soundInfo->soundPos.y = _soundPos.y;
+		soundInfo->soundPos.z = _soundPos.z;
+
+		tServerEvent serverEvn = {};
+		serverEvn.Type = SERVER_EVENT_TYPE::SEND_SOUND_PACKET;
+		serverEvn.wParam = (DWORD_PTR)soundInfo;
+		//serverEvn.lParam;
+		CSendServerEventMgr::GetInst()->AddServerSendEvent(serverEvn);
 	}
 }
 
-void CSendServerEventMgr::SendMtrlPacket(UINT64 _objId, int _mtrlIndex, TEX_PARAM _texParam, wstring _TexName)
+void CSendServerEventMgr::SendSetTexParamPacket(UINT64 _objId, int _mtrlIndex, TEX_PARAM _texParam, wstring _TexName)
 {
 	std::mutex m;
 	{
 		std::lock_guard<std::mutex> lock(m);
 
 		MtrlInfo* mtrlInfo = new MtrlInfo();
+		mtrlInfo->IsSetTexParamUsage = true;
 		mtrlInfo->targetId = _objId;
 		mtrlInfo->iMtrlIndex = _mtrlIndex;
 		mtrlInfo->tex_param = _texParam;
@@ -163,3 +180,44 @@ void CSendServerEventMgr::SendMtrlPacket(UINT64 _objId, int _mtrlIndex, TEX_PARA
 		CSendServerEventMgr::GetInst()->AddServerSendEvent(serverEvn);
 	}
 }
+
+void CSendServerEventMgr::SendSetMtrlPacket(UINT64 _objId, int _mtrlIndex, wstring _mtrlName)
+{
+	std::mutex m;
+	{
+		std::lock_guard<std::mutex> lock(m);
+
+		MtrlInfo* mtrlInfo = new MtrlInfo();
+		mtrlInfo->IsSetTexParamUsage = false;
+		mtrlInfo->targetId = _objId;
+		mtrlInfo->iMtrlIndex = _mtrlIndex;
+		mtrlInfo->wMtrlName = _mtrlName;
+
+		tServerEvent serverEvn = {};
+		serverEvn.Type = SERVER_EVENT_TYPE::SEND_MTRL_PACKET;
+		serverEvn.wParam = (DWORD_PTR)mtrlInfo;
+		//serverEvn.lParam;
+		CSendServerEventMgr::GetInst()->AddServerSendEvent(serverEvn);
+	}
+
+}
+
+//void CSendServerEventMgr::SendMtrlPacket(UINT64 _objId, int _mtrlIndex, TEX_PARAM _texParam, wstring _TexName)
+//{
+//	std::mutex m;
+//	{
+//		std::lock_guard<std::mutex> lock(m);
+//
+//		MtrlInfo* mtrlInfo = new MtrlInfo();
+//		mtrlInfo->targetId = _objId;
+//		mtrlInfo->iMtrlIndex = _mtrlIndex;
+//		mtrlInfo->tex_param = _texParam;
+//		mtrlInfo->wTexName = _TexName;
+//
+//		tServerEvent serverEvn = {};
+//		serverEvn.Type = SERVER_EVENT_TYPE::SEND_MTRL_PACKET;
+//		serverEvn.wParam = (DWORD_PTR)mtrlInfo;
+//		//serverEvn.lParam;
+//		CSendServerEventMgr::GetInst()->AddServerSendEvent(serverEvn);
+//	}
+//}

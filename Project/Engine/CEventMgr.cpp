@@ -114,7 +114,7 @@ void CEventMgr::tick()
 			const map<wstring, Ptr<CRes>> SoundRes = CResMgr::GetInst()->GetResources(RES_TYPE::SOUND);
 			for (const auto& kv : SoundRes) {
 				Ptr<CRes> Res = kv.second;
-				((CSound*)Res.Get())->Stop();
+				((CSound*)Res.Get())->StopAllSound();
 			}
 
 			//이전 레벨이 play였으면 현재 레벨도 play로 바껴야함.

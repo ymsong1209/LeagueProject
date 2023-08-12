@@ -4,6 +4,8 @@
 #include "CSkill.h"
 #include "CJinxScript.h"
 #include <thread>
+#include <Engine/CRenderMgr.h>
+
 CJinxRState::CJinxRState()
 {
 	SetName(L"R");
@@ -11,11 +13,6 @@ CJinxRState::CJinxRState()
 
 CJinxRState::~CJinxRState()
 {
-}
-
-void CJinxRState::tick()
-{
-	CChampionSkillState::tick();
 }
 
 void CJinxRState::Enter()
@@ -45,7 +42,24 @@ void CJinxRState::Enter()
 
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, true, true, 0.1f);
+
+
+	// 현재 위치
+	Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
+	// 가야할 방향 구하기
+	Vec3 Dir = (JinxR->GetMousePos() - CurPos).Normalize();
+
+	float targetYaw = atan2f(-Dir.x, -Dir.z);
+	GetOwner()->Transform()->SetRelativeRot(Vec3(0.f, targetYaw, 0.f));
 }
+
+void CJinxRState::tick()
+{
+
+	CChampionSkillState::tick();
+}
+
+
 
 void CJinxRState::Exit()
 {

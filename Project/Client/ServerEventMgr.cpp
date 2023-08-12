@@ -10,6 +10,9 @@
 
 #include "GameObjMgr.h"
 #include <Engine/components.h>
+#include <Engine/CSound.h>
+#include <Engine/CSoundMgr.h>
+
 #include <Script/CSendServerEventMgr.h>
 #include <Script/CChampionScript.h>
 #include <Script/CGameEvent.h>
@@ -123,6 +126,15 @@ void ServerEventMgr::sendtick(ClientServiceRef _service)
 			GameObjMgr::GetInst()->SendKDACS(_kdacsInfo, _service);
 			delete _kdacsInfo; // 메모리 사용 해제
 			_kdacsInfo = nullptr;
+			break;
+		}
+
+		case SERVER_EVENT_TYPE::SEND_SOUND_PACKET:
+		{
+			SoundInfo* _soundInfo = (SoundInfo*)(_vecScriptEvent[i].wParam);
+			GameObjMgr::GetInst()->SendSound(_soundInfo, _service);
+			delete _soundInfo; // 메모리 사용 해제
+			_soundInfo = nullptr;
 			break;
 		}
 		case SERVER_EVENT_TYPE::SEND_MTRL_PACKET:
@@ -313,6 +325,34 @@ void ServerEventMgr::clienttick()
 				kdacsInfo = nullptr;
 			}
 			break;
+			case SERVER_EVENT_TYPE::SOUND_PACKET:
+			{
+				
+				SoundInfo*  soundInfo = (SoundInfo*)m_vecEvent[i].lParam;
+				
+				// 사운드가 나와 같은 진영이거나, None(모두가 들음) 인경우
+				if (soundInfo->faction == MyPlayer.faction || soundInfo->faction == Faction::NONE)
+				{
+					CSound* newSound = new CSound;
+
+					wstring filepath = CPathMgr::GetInst()->GetContentPath();
+					filepath += soundInfo->soundName;
+					newSound->Load(filepath);
+					CSoundMgr::GetInst()->AddSound(newSound);
+					int soundId = newSound->GetSoundIndex();
+
+					//정체모를 버그로 인해 stop을 한번은 해줘야함
+					//서버에서 패킷을 받아 사운드를 생성하는 시점에서는 serversound*를 알고 있기 때문에 stop을 할 수가 있다.
+					//대신 script에서는 이 포인터를 받아올 방법이 없어서 stop함수 실행못함
+					CSoundMgr::GetInst()->Play(soundId, soundInfo->iLoopCount, soundInfo->fVolume, soundInfo->bOverlap, soundInfo->fRange, Vec3(soundInfo->soundPos.x, soundInfo->soundPos.y, soundInfo->soundPos.z));
+					CSoundMgr::GetInst()->Stop(soundId);
+					CSoundMgr::GetInst()->Play(soundId, soundInfo->iLoopCount, soundInfo->fVolume, soundInfo->bOverlap, soundInfo->fRange, Vec3(soundInfo->soundPos.x, soundInfo->soundPos.y, soundInfo->soundPos.z));
+				}
+				// 사용이 끝난 후에는 메모리를 해제
+				delete soundInfo;
+				soundInfo = nullptr;
+			}
+			break;
 			case SERVER_EVENT_TYPE::MTRL_PACKET:
 			{
 				MtrlInfo*	mtrlInfo = (MtrlInfo*)m_vecEvent[i].wParam;
@@ -320,8 +360,11 @@ void ServerEventMgr::clienttick()
 				
 				if (pObj == nullptr || pObj->IsDead()) continue;
 
-				pObj->MeshRender()->GetMaterial(mtrlInfo->iMtrlIndex)->SetTexParam(mtrlInfo->tex_param, CResMgr::GetInst()->FindRes<CTexture>(mtrlInfo->wTexName));
-
+				if(mtrlInfo->IsSetTexParamUsage) // 용도에 따라 분기처리.
+					pObj->MeshRender()->GetMaterial(mtrlInfo->iMtrlIndex)->SetTexParam(mtrlInfo->tex_param, CResMgr::GetInst()->FindRes<CTexture>(mtrlInfo->wTexName));
+				else
+					pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(mtrlInfo->wMtrlName), mtrlInfo->iMtrlIndex);
+				
 				// 사용이 끝난 후에는 메모리를 해제
 				delete mtrlInfo;
 				mtrlInfo = nullptr;

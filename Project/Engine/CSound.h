@@ -18,19 +18,32 @@ public:
 	static FMOD::System* g_pFMOD;
 
 private:
-	//wstring					m_RelativePath;
+	int						m_iSoundIndex;//SoundMgr에게서 부여받은 Number;
+	int						m_iChannelIndex; //play로 돌려받은 channel index??
 	
 	FMOD::Sound* m_pSound;
 	list<FMOD::Channel*>	m_listChannel;
 	bool					m_bIs3D;
 
-public:
+private:
 	// 0 (무한반복) 0 ~ 1(Volume)
-	int Play(int _iRoopCount, float _fVolume = 1.f, bool _bOverlap = false, float _fRange = 0.f, const Vec3& _vPosition = Vec3());
-	void Stop();
+	int Play(int _iLoopCount, float _fVolume = 1.f, bool _bOverlap = false, float _fRange = 0.f, const Vec3& _vPosition = Vec3());
+	void Stop(int _channelIndex);
+
+	// 사운드의 위치가 옮겨질때마다 호출되어야함
+	void Update3DAttributes(Vec3 _SoundPosition);
+
+	void SetSoundIndex(int _index) { m_iSoundIndex = _index; }
+
+public:
+	void StopAllSound();
 
 	// 0 ~ 1
-	void SetVolume(float _f, int _iChannelIdx);
+	void SetVolume(float _Volume, int _iChannelIdx);
+
+	void AssignNum(int _num) { m_iSoundIndex = _num; }
+	int  GetSoundIndex() { return m_iSoundIndex; }
+	int  GetChannelIndex() { return m_iChannelIndex; }
 
 private:
 	void RemoveChannel(FMOD::Channel* _pTargetChannel);
@@ -47,8 +60,7 @@ public:
 	// 파일로부터 로딩
 	virtual int Load(const wstring& _strFilePath) override;
 
-	// 사운드의 위치가 옮겨질때마다 호출되어야함
-	void Update3DAttributes(Vec3 _SoundPosition);
+	
 
 	// 사운드를 듣는 listener의 위치를 옮김. 이건 script쪽에서 매 tick마다 호출해야함
 	static void UpdateListenerAttributes(Vec3 PlayerPos, Vec3 PlayerForward, Vec3 PlayerUp);
@@ -56,5 +68,7 @@ public:
 public:
 	CSound();
 	virtual ~CSound();
+
+	friend class CSoundMgr;
 };
 

@@ -60,8 +60,8 @@ void CTurretBrokenState::Enter()
 		//GetOwner()->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, RedTex);
 		//GetOwner()->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, RedTex);
 
-		CSendServerEventMgr::GetInst()->SendMtrlPacket(TurretScript->GetServerID(), 0, TEX_0, L"texture\\FBXTexture\\sruap_turret_chaos1_rubble_tx_cm.dds");
-		CSendServerEventMgr::GetInst()->SendMtrlPacket(TurretScript->GetServerID(), 1, TEX_0, L"texture\\FBXTexture\\sruap_turret_chaos1_rubble_tx_cm.dds");
+		CSendServerEventMgr::GetInst()->SendSetTexParamPacket(TurretScript->GetServerID(), 0, TEX_0, L"texture\\FBXTexture\\sruap_turret_chaos1_rubble_tx_cm.dds");
+		CSendServerEventMgr::GetInst()->SendSetTexParamPacket(TurretScript->GetServerID(), 1, TEX_0, L"texture\\FBXTexture\\sruap_turret_chaos1_rubble_tx_cm.dds");
 	}
 	else
 	{
@@ -73,8 +73,8 @@ void CTurretBrokenState::Enter()
 		//GetOwner()->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, BlueTex);
 		//GetOwner()->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, BlueTex);
 
-		CSendServerEventMgr::GetInst()->SendMtrlPacket(TurretScript->GetServerID(), 0, TEX_0, L"texture\\FBXTexture\\sruap_turret_chaos1_rubble_tx_cm_blue.dds");
-		CSendServerEventMgr::GetInst()->SendMtrlPacket(TurretScript->GetServerID(), 1, TEX_0, L"texture\\FBXTexture\\sruap_turret_chaos1_rubble_tx_cm_blue.dds");
+		CSendServerEventMgr::GetInst()->SendSetTexParamPacket(TurretScript->GetServerID(), 0, TEX_0, L"texture\\FBXTexture\\sruap_turret_chaos1_rubble_tx_cm_blue.dds");
+		CSendServerEventMgr::GetInst()->SendSetTexParamPacket(TurretScript->GetServerID(), 1, TEX_0, L"texture\\FBXTexture\\sruap_turret_chaos1_rubble_tx_cm_blue.dds");
 	}
 
 	// 자식1(TurretBase) 지우기
