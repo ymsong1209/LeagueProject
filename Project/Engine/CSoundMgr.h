@@ -16,8 +16,11 @@ public:
 	void AddSound(CSound* _sound);
 	
 	void Play(int SoundIndex, int _iLoopCount, float _fVolume = 1.f, bool _bOverlap = false, float _fRange = 0.f, const Vec3& _vPosition = Vec3());
-	void Stop(int SoundIndex);
 
+	void Stop(int SoundIndex);
+//현재 서버에서 사운드를 조절할 수 있는 방법이 없어서 private으로 막아뒀음
+//서버게임이 아니라 client게임을 사용할 경우, private을 풀고 맘껏 사용가능
+private:
 	// 0 ~ 1
 	void SetVolume(float _Volume, int _iSoundIndex);
 

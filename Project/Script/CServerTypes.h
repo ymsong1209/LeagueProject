@@ -273,7 +273,7 @@ struct SoundInfo
 	wstring			soundName;
 	DimensionType   dimensionType;
 	Faction         faction;
-	int             iRoopCount;
+	int             LoopCount;
 	float           fVolume;
 	bool            bOverlap;
 	float           fRange;
