@@ -76,6 +76,7 @@ void CWorldHPSpawnScript::tick()
 		{
 			CCamera* UICam = CRenderMgr::GetInst()->GetCamerafromIdx(1);
 			UISpawn(m_OtherPlayer[i], m_vOtherWorldBar[i]);
+
 		}
 	}
 }
@@ -138,15 +139,15 @@ void CWorldHPSpawnScript::UISpawn(CGameObject* _PlayerObj, CGameObject* _WorldBa
 	Vec2 FontDisPlayPos = Vec2(FontDefaultPos.x, FontDefaultPos.y - 150.f);
 
 
-	DisplayLastCCEffect(UnitScript->GetTimedEffect(), NickName, FontDisPlayPos);
 
-	//tFont Font2 = {};
-	//Font2.wInputText = NickName; // 원래 여기에 닉네임 가져와야함
-	//Font2.fontType = FONT_TYPE::RIX_KOR_L;
-	//Font2.fFontSize = 13.5;
-	//Font2.vDisplayPos = FontDisPlayPos;
-	//Font2.iFontColor = FONT_RGBA(252, 252, 250, 255);
-	//UICamera->AddText(FONT_DOMAIN::OPAQE, Font2);
+	//지금 이함수는 아더플레이어, 메인플레이어 모두에게 정보를 받아 시행됩니당~
+	// 
+	// 
+	// 
+	//===========다혜님 요기!============
+	DisplayLastCCEffect(_PlayerObj, NickName, FontDisPlayPos);
+	//==================================
+
 
 	tFont Font3 = {};
 	Font3.wInputText = to_wstring(UnitScript->GetLevel()); //레벨 폰트
@@ -157,63 +158,42 @@ void CWorldHPSpawnScript::UISpawn(CGameObject* _PlayerObj, CGameObject* _WorldBa
 	UICamera->AddText(FONT_DOMAIN::OPAQE, Font3);
 }
 
-void CWorldHPSpawnScript::CCFontPrint(CGameObject* _PlayerObj)
+
+void CWorldHPSpawnScript::DisplayLastCCEffect(CGameObject* _PlayerObj, const wstring& nickname, Vec2 _DisplayPos)
 {
-	//아무상태가 아닐때는 기존 닉네임 출력,
+	// 다른 함수에서
+	uint32_t m_eCurCC = _PlayerObj->GetScript<CUnitScript>()->GetCC();
+	wstring highestPriorityCC = GetHighestPriorityCC(m_eCurCC, nickname);
 
-
-
-
-
-}
-
-void CWorldHPSpawnScript::DisplayLastCCEffect(const vector<CTimedEffect*>& m_TimedEffectList, const wstring& nickname, Vec2 _DisplayPos)
-{
-	// 벡터의 끝에서부터 시작
-	for (int i = m_TimedEffectList.size() - 1; i >= 0; --i) 
-	{
-		bool NeedDisplayCC = false;
-		wstring CCName = {};
-
-		switch (m_TimedEffectList[i]->GetCCType())
-		{
-		case CC::SILENCE: //침묵
-			CCName = L"침묵";
-		case CC::ROOT: //속박
-			CCName = L"속박";
-		case CC::STUN: //기절
-			CCName = L"기절";
-		case CC::AIRBORNE: //공중에 뜸
-		{
-			CCName = L"공중에 뜸!";
-		}
-			NeedDisplayCC = true;
-			break;
-		default:
-			NeedDisplayCC = false;
-		}
-
-		if (NeedDisplayCC)
-		{
-			tFont Font2 = {};
-			Font2.wInputText = CCName; // 원래 여기에 닉네임 가져와야함
-			Font2.fontType = FONT_TYPE::RIX_KOR_L;
-			Font2.fFontSize = 13.5;
-			Font2.vDisplayPos = _DisplayPos;
-			Font2.iFontColor = FONT_RGBA(252, 252, 250, 255);
-			UICamera->AddText(FONT_DOMAIN::OPAQE, Font2);
-			return; // 출력이 완료되면 함수 종료
-		}
-	}
-
-	// 출력이 필요한 cc 타입을 찾지 못한 경우 닉네임을 출력
 	tFont Font2 = {};
-	Font2.wInputText = nickname; // 원래 여기에 닉네임 가져와야함
+	Font2.wInputText = highestPriorityCC; // 원래 여기에 닉네임 가져와야함
 	Font2.fontType = FONT_TYPE::RIX_KOR_L;
 	Font2.fFontSize = 13.5;
 	Font2.vDisplayPos = _DisplayPos;
 	Font2.iFontColor = FONT_RGBA(252, 252, 250, 255);
 	UICamera->AddText(FONT_DOMAIN::OPAQE, Font2);
+	return; // 출력이 완료되면 함수 종료
+}
+
+wstring CWorldHPSpawnScript::GetHighestPriorityCC(UINT m_eCurCC, wstring _NickName)
+{
+	// 우선순위 순서대로 CC 타입을 검사
+	if (m_eCurCC & CC::AIRBORNE) {
+		return L"공중에 뜸";
+	}
+	if (m_eCurCC & CC::STUN) {
+		return L"기절";
+	}
+	if (m_eCurCC & CC::ROOT) {
+		return L"속박";
+	}
+	if (m_eCurCC & CC::SILENCE) {
+		return L"침묵";
+	}
+	if (m_eCurCC & CC::SLOW) {
+		return _NickName;
+	}
+	return _NickName;
 }
 
 CWorldHPSpawnScript::CWorldHPSpawnScript()

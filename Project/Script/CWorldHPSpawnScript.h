@@ -14,16 +14,17 @@ private:
     CGameObject* m_MyPlayer;
     vector<CGameObject*> m_OtherPlayer;
 
-
 public:
     virtual void begin() override;
     virtual void tick() override;
     virtual void BeginOverlap(CCollider2D* _Other) override;
 
     void UISpawn(CGameObject* _PlayerObj,CGameObject* _WorldBarObj);
-    void CCFontPrint(CGameObject* _PlayerObj);
 
-    void DisplayLastCCEffect(const vector<CTimedEffect*>& m_TimedEffectList, const wstring& nickname, Vec2 _DisplayPos);
+    void DisplayLastCCEffect(CGameObject* _PlayerObj, const wstring& nickname, Vec2 _DisplayPos);
+	// 우선순위에 따라 CC 타입을 반환하는 함수
+    wstring GetHighestPriorityCC(UINT m_eCurCC, wstring _NickName);
+
 
 
 public:
