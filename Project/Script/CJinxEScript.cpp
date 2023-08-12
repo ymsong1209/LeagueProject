@@ -2,10 +2,13 @@
 #include "CJinxEScript.h"
 #include "CProjectileScript.h"
 #include <thread>
+
+#include <Engine/CAnim3D.h>
 CJinxEScript::CJinxEScript()
 	:CProjectileScript((UINT)SCRIPT_TYPE::JINXESCRIPT)
 	, m_fAccTime(0.f)
 	, m_fMaxTime(5.f)
+	, m_bUsed(false)
 {
 	//m_fProjectileSpeed = 100.f;
 	//m_fSkillRange = 50.f;
@@ -58,36 +61,43 @@ void CJinxEScript::tick()
 
 	CProjectileScript::tick();
 
+	// 5초가 지나면 공격 애니메이션
 	if (m_fAccTime >= m_fMaxTime)
 	{
-		CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 0.2f);
-		m_bUnitDead = true;
-		m_fProjectileSpeed = 0.f;
-
+		wstring animName = L"wazak\\Attack1";
+		GetOwner()->Animator3D()->PlayOnce(animName, true);
+		UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
+		CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, false, false, 1.f);
 		m_fAccTime = 0.f;
 	}
 	m_fAccTime += DT;
+
+
+	// 공격애니메이션이 끝날때 무조건 despawn
+	if(Animator3D()->GetCurAnim()->GetName() == L"wazak\\Attack1" && Animator3D()->GetCurAnim()->IsFinish())
+	{
+		CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 0.1f);
+
+		m_fProjectileSpeed = 0.f;
+		m_bUnitDead = true;
+	}
 }
 
 void CJinxEScript::BeginOverlap(CCollider2D* _Other)
 {
-	if (m_bUnitDead) return;
+	if (m_bUnitDead || m_bUsed) return;
 	
 	if (_Other->GetOwner()->GetScript<CUnitScript>() == nullptr)
 		return;
 	
 	// 시전자와 다른 진영의 오브젝트가 부딪친다면
-	if (_Other->GetOwner()->GetScript<CUnitScript>()->GetFaction() == m_UserObj->GetScript<CUnitScript>()->GetFaction())
+	if (_Other->GetOwner()->GetScript<CUnitScript>()->GetFaction() != m_UserObj->GetScript<CUnitScript>()->GetFaction())
 	{
 		wstring animName = L"wazak\\Attack1";
-		if (GetServerID() % 3 == 0)
-			animName = L"wazak\\Attack2";
-		else if (GetServerID() % 3 == 1)
-			animName = L"wazak\\Attack3";
 
 		GetOwner()->Animator3D()->PlayOnce(animName, true);
 		UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
-		CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, false, false, 0.8f);
+		CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, false, false, 1.f);
 		
 		// 피격자의 서버 아이디
 		UINT64 TargetServerID = _Other->GetOwner()->GetScript<CUnitScript>()->GetServerID();
@@ -96,11 +106,7 @@ void CJinxEScript::BeginOverlap(CCollider2D* _Other)
 		if (!m_bUnitDead)// 이후 사라짐
 		{
 			CSendServerEventMgr::GetInst()->SendHitPacket(GetServerID(), TargetServerID, m_iServerUserID, 1, SkillType::JINX_E);
-			CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 0.5f);
-	
-			m_fProjectileSpeed = 0.f;
-			m_bUnitDead = true;
 		}
-	
+		m_bUsed = true;
 	}
 }

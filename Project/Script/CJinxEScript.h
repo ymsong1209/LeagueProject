@@ -13,6 +13,7 @@ private:
     float m_fAccTime;
     float m_fMaxTime;
 
+    bool  m_bUsed;
 public:
     virtual void begin() override;
     virtual void tick() override;

@@ -255,10 +255,11 @@ void GameObjMgr::SendObjectMove(uint64 _id, CGameObject* _obj, ClientServiceRef 
 		auto it1 = _objectsPrevHP.find(_id);
 		if (it1 != _objectsPrevHP.end())  // PrevHP 가 있다.
 		{
-			
 			// 이전 좌표, 이전 HP 똑같다면 move packet을 보내지 않는다. return
 			if (_objectsPrevPos.at(_id) == CurPos
-				&& _objectsPrevHP.at(_id) == CurHP)
+				&& _objectsPrevHP.at(_id) == CurHP 
+				&& !(_obj->GetScript<CUnitScript>()->GetUnitType() == UnitType::PROJECTILE)
+				&& !(_obj->GetScript<CUnitScript>()->GetUnitType() == UnitType::EFFECT))
 				return;
 
 			_objectsPrevPos.at(_id) = CurPos; // 현재 좌표를 이전좌표로 저장

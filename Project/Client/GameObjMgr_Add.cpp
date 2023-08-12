@@ -2428,8 +2428,6 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			_placedObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
-
-
 		} // End Swich case
 
 
@@ -2473,6 +2471,8 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 						, OwnerPos + Vec3(_skillInfo.offsetPos.x, _skillInfo.offsetPos.y, _skillInfo.offsetPos.z)
 						, L"SkillProjectile");
 				}
+
+				vecProj[i]->GetScript<CUnitScript>()->SetUnitType(UnitType::PROJECTILE);
 				_objects.insert(std::make_pair(_projectileId + i, vecProj[i]));
 			}
 		}
@@ -2500,8 +2500,12 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 						, OwnerPos + Vec3(_skillInfo.offsetPos.x, _skillInfo.offsetPos.y, _skillInfo.offsetPos.z)
 						, L"SkillProjectile");
 				}
+
+				vecProj[i]->GetScript<CUnitScript>()->SetUnitType(UnitType::PROJECTILE);
 				_objects.insert(std::make_pair(_projectileId+i, vecProj[i]));
 			}
+
+
 		}
 	}
 }
