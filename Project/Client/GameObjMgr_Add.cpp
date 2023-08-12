@@ -2416,6 +2416,11 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 			CGameObject* UserObj = FindAllObject(_skillInfo.OwnerId);
 			CGameObject* TargetObj = FindAllObject(_skillInfo.TargetId);
 
+			if (_skillInfo.skillType == SkillType::BASIC_ATTACK)
+			{
+				skill = UserObj->GetScript<CUnitScript>()->GetSkill(0);
+			}
+
 			// Skill Projectile 오브젝트 가지고 와서, 해당 투사체 스크립트와 서버 아이디 붙여줌
 			vector<CGameObject*> vecProj = skill->GetProjectile();
 
@@ -2449,6 +2454,11 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 			CSkill* skill = CSkillMgr::GetInst()->FindSkill(_skillInfo.skillType);
 
 			CGameObject* UserObj = FindAllObject(_skillInfo.OwnerId);
+
+			if (_skillInfo.skillType == SkillType::BASIC_ATTACK)
+			{
+				skill = UserObj->GetScript<CUnitScript>()->GetSkill(0);
+			}
 
 			// Skill Projectile 오브젝트 가지고 와서, 빈 UnitScript 스크립트와 서버 아이디 붙여줌
 			vector<CGameObject*> vecProj = skill->GetProjectile();
