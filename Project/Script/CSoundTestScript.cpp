@@ -85,7 +85,7 @@ void CSoundTestScript::tick()
 		Ptr<CSound> pSound = CResMgr::GetInst()->FindRes<CSound>(L"sound3d\\Season1Rift.mp3");
 		SoundInfo sound;
 		sound.soundName = L"sound3d\\Season1Rift.mp3";
-		sound.LoopCount = 0;
+		sound.iLoopCount = 0;
 		sound.fVolume = 1.f;
 		sound.bOverlap = true;
 		sound.fRange = 500.f;
@@ -106,12 +106,12 @@ void CSoundTestScript::tick()
 			ServerSound->Load(filepath);
 			CSoundMgr::GetInst()->AddSound(ServerSound);
 			Vec3 SoundPos = Vec3(sound.soundPos.x, sound.soundPos.y, sound.soundPos.z);
-			CSoundMgr::GetInst()->Play(ServerSound->GetSoundIndex(), sound.LoopCount, sound.fVolume, sound.bOverlap, sound.fRange, SoundPos);
+			CSoundMgr::GetInst()->Play(ServerSound->GetSoundIndex(), sound.iLoopCount, sound.fVolume, sound.bOverlap, sound.fRange, SoundPos);
 			//정체모를 버그로 인해 stop을 한번은 해줘야함
 			//서버에서 패킷을 받아 사운드를 생성하는 시점에서는 serversound*를 알고 있기 때문에 stop을 할 수가 있다.
 			//대신 script에서는 이 포인터를 받아올 방법이 없어서 stop함수 실행못함
 			CSoundMgr::GetInst()->Stop(ServerSound->GetSoundIndex());
-			CSoundMgr::GetInst()->Play(ServerSound->GetSoundIndex(), sound.LoopCount, sound.fVolume, sound.bOverlap, sound.fRange, SoundPos);
+			CSoundMgr::GetInst()->Play(ServerSound->GetSoundIndex(), sound.iLoopCount, sound.fVolume, sound.bOverlap, sound.fRange, SoundPos);
 		}
 		
 

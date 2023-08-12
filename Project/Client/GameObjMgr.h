@@ -41,6 +41,7 @@ public:
 	void SendSkillHit(HitInfo* _hitInfo, ClientServiceRef _service);
 	void SendDespawn(UINT64 _despawnId, float lifespan, ClientServiceRef _service);
 	void SendKDACS(KDACSInfo* _kdacsInfo, ClientServiceRef _service);
+	void SendSound(SoundInfo* _soundInfo, ClientServiceRef _service);
 	void SendObjectMtrl(MtrlInfo* _mtrlInfo, ClientServiceRef _service);
 
 public:
