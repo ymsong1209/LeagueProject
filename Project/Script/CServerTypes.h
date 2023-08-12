@@ -307,10 +307,12 @@ extern const wchar_t* SUMMONERS_SPELL_WSTR[(UINT)SUMMONERS_SPELL::END];
 
 struct MtrlInfo
 {
+	bool  IsSetTexParamUsage;
 	UINT64 targetId;
 	int iMtrlIndex;
 	TEX_PARAM  tex_param;
 	wstring wTexName;   //¿¹½Ã L"texture\\FBXTexture\\alphaTex.png"
+	wstring wMtrlName;  // L"material\\turret_rubble_Rubble_red.mtrl"
 };
 
 enum JinxWeaponMode

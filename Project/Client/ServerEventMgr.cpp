@@ -360,8 +360,11 @@ void ServerEventMgr::clienttick()
 				
 				if (pObj == nullptr || pObj->IsDead()) continue;
 
-				pObj->MeshRender()->GetMaterial(mtrlInfo->iMtrlIndex)->SetTexParam(mtrlInfo->tex_param, CResMgr::GetInst()->FindRes<CTexture>(mtrlInfo->wTexName));
-
+				if(mtrlInfo->IsSetTexParamUsage) // 용도에 따라 분기처리.
+					pObj->MeshRender()->GetMaterial(mtrlInfo->iMtrlIndex)->SetTexParam(mtrlInfo->tex_param, CResMgr::GetInst()->FindRes<CTexture>(mtrlInfo->wTexName));
+				else
+					pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(mtrlInfo->wMtrlName), mtrlInfo->iMtrlIndex);
+				
 				// 사용이 끝난 후에는 메모리를 해제
 				delete mtrlInfo;
 				mtrlInfo = nullptr;

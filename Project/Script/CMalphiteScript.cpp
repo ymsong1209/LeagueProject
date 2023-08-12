@@ -88,7 +88,7 @@ void CMalphiteScript::tick()
 			Ptr<CTexture> normaltex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\malphite.dds");
 			if (normaltex == nullptr) assert(nullptr);
 			GetOwner()->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, normaltex);
-			CSendServerEventMgr::GetInst()->SendMtrlPacket(targetId, 0, TEX_0, L"texture\\FBXTexture\\malphite.dds");
+			CSendServerEventMgr::GetInst()->SendSetTexParamPacket(targetId, 0, TEX_0, L"texture\\FBXTexture\\malphite.dds");
 		}
 	}
 	

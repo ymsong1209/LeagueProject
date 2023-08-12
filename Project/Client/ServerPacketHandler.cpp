@@ -414,7 +414,7 @@ void ServerPacketHandler::Handle_S_PLAYER_MOVE(PacketSessionRef& session, BYTE* 
 	{
 		std::lock_guard<std::mutex> lock(m);
 
-		cout << "S_PLAYER_MOVE Packet" << endl;
+		//cout << "S_PLAYER_MOVE Packet" << endl;
 		BufferReader br(buffer, len);
 
 		PKT_S_PLAYER_MOVE* pkt = reinterpret_cast<PKT_S_PLAYER_MOVE*>(buffer);
@@ -452,7 +452,7 @@ void ServerPacketHandler::Handle_S_PLAYER_MOVE(PacketSessionRef& session, BYTE* 
 
 		ServerEventMgr::GetInst()->AddEvent(evn);
 
-		std::cout << "===============================" << endl;
+		//std::cout << "===============================" << endl;
 	}
 }
 
@@ -546,7 +546,7 @@ void ServerPacketHandler::Handle_S_OBJECT_MOVE(PacketSessionRef& session, BYTE* 
 	std::mutex m;
 	m.lock();
 
-	cout << "S_OBJECT_MOVE Packet" << endl;
+	//cout << "S_OBJECT_MOVE Packet" << endl;
 	BufferReader br(buffer, len);
 
 	PKT_S_OBJECT_MOVE* pkt = reinterpret_cast<PKT_S_OBJECT_MOVE*>(buffer);
@@ -593,7 +593,7 @@ void ServerPacketHandler::Handle_S_OBJECT_MOVE(PacketSessionRef& session, BYTE* 
 		ServerEventMgr::GetInst()->AddEvent(evn);
 	}
 
-	std::cout << "===============================" << endl;
+	//std::cout << "===============================" << endl;
 
 	m.unlock();
 }
@@ -821,20 +821,31 @@ void ServerPacketHandler::Handle_S_OBJECT_MTRL(PacketSessionRef& session, BYTE* 
 	}
 
 	MtrlInfoPacket	 _mtrlInfoPacket = pkt->mtrlInfo;
-	PKT_S_OBJECT_MTRL::TexNameList mtrlNameBuffs = pkt->GetMtrlNameList();
 
-	// mtrl 이름
+	PKT_S_OBJECT_MTRL::TexNameList texNameBuffs = pkt->GetTexNameList();
+	// tex 이름
 	wstring _TexName = L"";
-	for (auto& mtrlNameBuff : mtrlNameBuffs)
+	for (auto& texNameBuff : texNameBuffs)
 	{
-		_TexName.push_back(mtrlNameBuff.texName);
+		_TexName.push_back(texNameBuff.texName);
 	}
 	
+	PKT_S_OBJECT_MTRL::MtrlNameList mtrlNameBuffs = pkt->GetMtrlNameList();
+	// mtrl 이름
+	wstring _MtrlName = L"";
+	for (auto& mtrlNameBuff : mtrlNameBuffs)
+	{
+		_MtrlName.push_back(mtrlNameBuff.mtrlName);
+	}
+
+
 	MtrlInfo* mtrlInfo = new MtrlInfo();
+	mtrlInfo->IsSetTexParamUsage = _mtrlInfoPacket.IsSetTexParamUsage;
 	mtrlInfo->targetId  = _mtrlInfoPacket.targetId;
 	mtrlInfo->iMtrlIndex = _mtrlInfoPacket.iMtrlIndex;
 	mtrlInfo->tex_param = _mtrlInfoPacket.tex_param;
 	mtrlInfo->wTexName = _TexName;
+	mtrlInfo->wMtrlName = _MtrlName;
 
 	tServerEvent evn = {};
 	evn.Type = SERVER_EVENT_TYPE::MTRL_PACKET;

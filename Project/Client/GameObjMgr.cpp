@@ -515,6 +515,7 @@ void GameObjMgr::SendObjectMtrl(MtrlInfo* _mtrlInfo, ClientServiceRef _service)
 		std::lock_guard<std::mutex> lock(m);
 
 		MtrlInfoPacket mtrlInfoPacket = {};
+		mtrlInfoPacket.IsSetTexParamUsage = _mtrlInfo->IsSetTexParamUsage;
 		mtrlInfoPacket.targetId = _mtrlInfo->targetId;
 		mtrlInfoPacket.iMtrlIndex = _mtrlInfo->iMtrlIndex;
 		mtrlInfoPacket.tex_param = _mtrlInfo->tex_param;
@@ -526,6 +527,17 @@ void GameObjMgr::SendObjectMtrl(MtrlInfo* _mtrlInfo, ClientServiceRef _service)
 		for (int i = 0; i < _texName.size(); i++)
 		{
 			texNamePacket[i] = { _texName[i] };
+		}
+
+		//
+
+		wstring _mtrlName = _mtrlInfo->wMtrlName;
+
+
+		PKT_C_OBJECT_MTRL_WRITE::MtrlNameList mtrlNamePacket = pktWriter.ReserveMtrlNameList(_mtrlName.size());
+		for (int i = 0; i < _mtrlName.size(); i++)
+		{
+			mtrlNamePacket[i] = { _mtrlName[i] };
 		}
 
 		// 서버에게 패킷 전송

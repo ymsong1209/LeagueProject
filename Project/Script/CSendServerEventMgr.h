@@ -74,6 +74,11 @@ public:
     void SendSoundPacket(wstring _soundName, int _loopCount, float _fVolume, bool _bOverlap, float _fRange, Vec3 _soundPos, Faction _faction = Faction::NONE);
     
     //settexparam할때 보내는 패킷
-    void SendMtrlPacket(UINT64 _objId, int _mtrlIndex, TEX_PARAM _texParam, wstring _TexName);
+    ///안씀. 아래 참조 void SendMtrlPacket(UINT64 _objId, int _mtrlIndex, TEX_PARAM _texParam, wstring _TexName);
+
+    // TexParam 예시 : GetOwner()->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, normaltex);  Ptr<CTexture> normaltex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\malphite.dds");
+    // SetMtrl 예시  : GetOwner()->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Rubble_red.mtrl"), 0);
+    void SendSetTexParamPacket(UINT64 _objId, int _mtrlIndex, TEX_PARAM _texParam, wstring _TexName); 
+    void SendSetMtrlPacket(UINT64 _objId, int _mtrlIndex, wstring _mtrlName);
 };
 
