@@ -12,19 +12,17 @@ CJinxW::CJinxW()
 	m_iMaxLevel = 5;
 	m_fCost = 50.f;
 
-	CGameObject* Projectile = new CGameObject;
-	Projectile->AddComponent(new CTransform);
-	Projectile->AddComponent(new CCollider2D);
-	Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
-	Projectile->Collider2D()->SetOffsetScale(Vec2(5.f, 20.f));
-	Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
-	Projectile->Collider2D()->SetDrawCollision(true);
-	Projectile->SetName(L"JinxW");
-	
+	CGameObject* pObj = nullptr;
+	Ptr<CMeshData> pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx_W_Air.fbx");
+	pObj = pMeshData->Instantiate();
+	pObj->AddComponent(new CCollider2D);
+	pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+	pObj->Collider2D()->SetOffsetScale(Vec2(20.f, 20.f));
+	pObj->Collider2D()->SetDrawCollision(true);
+	pObj->SetName(L"JinxW");
 	Ptr<CPrefab> NewPrefab = new CPrefab;
-	CGameObject* PrefabObject = Projectile->Clone();
-	NewPrefab->RegisterProtoObject(Projectile);
-
+	NewPrefab->RegisterProtoObject(pObj);
+	pObj->Transform()->SetRelativeScale(Vec3(0.3f, 0.7f, 0.3f));
 	m_vecSkillObj.push_back(NewPrefab);
 
 	// 투사체 스크립트
