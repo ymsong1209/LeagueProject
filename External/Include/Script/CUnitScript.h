@@ -144,6 +144,7 @@ public:
     void RemoveRestraint(RESTRAINT restraint);
 
     void AddTimedEffect(CTimedEffect* _effect) { m_TimedEffectList.push_back(_effect); }
+    vector<CTimedEffect*> GetTimedEffect() { return m_TimedEffectList; }
 
     CSkill* GetSkill(int _i) { if (_i < 0 || _i >= 5) return nullptr; return m_Skill[_i]; }
     int     GetSkillLevel(int _i) { return m_SkillLevel[_i]; }
