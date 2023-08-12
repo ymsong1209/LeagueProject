@@ -1,0 +1,17 @@
+Attack1_model.002,0,14
+Attack2,15,29
+Channel,30,53
+Channel_Wndup,54,77
+Crit,78,92
+Dance,93,126
+Death,127,153
+Idle1,154,191
+Idle2,192,234
+Laugh,235,285
+Recall,286,336
+Run,337,352
+Spell1,353,380
+Spell2,381,408
+Spell3,409,436
+Spell4,437,459
+Taunt,460,503
