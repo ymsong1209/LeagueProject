@@ -234,6 +234,7 @@
     <ClInclude Include="CGrompReturnState.h" />
     <ClInclude Include="CGrompScript.h" />
     <ClInclude Include="CGrompSpawnState.h" />
+    <ClInclude Include="CGrowScaleScript.h" />
     <ClInclude Include="CHpMpRatioUIScript.h" />
     <ClInclude Include="CInventoryUIScript.h" />
     <ClInclude Include="CJinxAttackState.h" />
@@ -292,6 +293,7 @@
     <ClInclude Include="CKrugScript.h" />
     <ClInclude Include="CKrugSpawnState.h" />
     <ClInclude Include="CMalphiteAttackState.h" />
+    <ClInclude Include="CMalphiteBasicAttackScript.h" />
     <ClInclude Include="CMalphiteDeathState.h" />
     <ClInclude Include="CMalphiteE.h" />
     <ClInclude Include="CMalphiteEDecalScript.h" />
@@ -492,6 +494,7 @@
     <ClCompile Include="CGrompReturnState.cpp" />
     <ClCompile Include="CGrompScript.cpp" />
     <ClCompile Include="CGrompSpawnState.cpp" />
+    <ClCompile Include="CGrowScaleScript.cpp" />
     <ClCompile Include="CHeal.cpp" />
     <ClCompile Include="CHpMpRatioUIScript.cpp" />
     <ClCompile Include="CInhibitorBrokenState.cpp" />
@@ -550,6 +553,7 @@
     <ClCompile Include="CKrugScript.cpp" />
     <ClCompile Include="CKrugSpawnState.cpp" />
     <ClCompile Include="CMalphiteAttackState.cpp" />
+    <ClCompile Include="CMalphiteBasicAttackScript.cpp" />
     <ClCompile Include="CMalphiteDeathState.cpp" />
     <ClCompile Include="CMalphiteE.cpp" />
     <ClCompile Include="CMalphiteEDecalScript.cpp" />

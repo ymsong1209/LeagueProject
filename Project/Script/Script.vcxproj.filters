@@ -659,6 +659,8 @@
     <ClCompile Include="CTimedEffect.cpp">
       <Filter>Scripts\Skill</Filter>
     </ClCompile>
+    <ClCompile Include="CGrowScaleScript.cpp" />
+    <ClCompile Include="CMalphiteBasicAttackScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -858,6 +860,8 @@
     <ClInclude Include="CTimedEffect.h">
       <Filter>Scripts\Skill</Filter>
     </ClInclude>
+    <ClInclude Include="CGrowScaleScript.h" />
+    <ClInclude Include="CMalphiteBasicAttackScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">
