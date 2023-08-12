@@ -58,7 +58,6 @@
 #include "CSkillLvEffectUIScript.h"
 #include "CSoundTestScript.h"
 #include "CStructureScript.h"
-#include "CTurretAttackScript.h"
 #include "CTurretHPUIScript.h"
 #include "CTurretScript.h"
 #include "CUIScript.h"
@@ -250,8 +249,6 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CSoundTestScript;
 	if (L"CStructureScript" == _strScriptName)
 		return new CStructureScript;
-	if (L"CTurretAttackScript" == _strScriptName)
-		return new CTurretAttackScript;
 	if (L"CTurretHPUIScript" == _strScriptName)
 		return new CTurretHPUIScript;
 	if (L"CTurretScript" == _strScriptName)
@@ -441,9 +438,6 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::STRUCTURESCRIPT:
 		return new CStructureScript;
-		break;
-	case (UINT)SCRIPT_TYPE::TURRETATTACKSCRIPT:
-		return new CTurretAttackScript;
 		break;
 	case (UINT)SCRIPT_TYPE::TURRETHPUISCRIPT:
 		return new CTurretHPUIScript;
