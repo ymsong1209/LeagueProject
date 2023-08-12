@@ -11,18 +11,20 @@ CJinxE::CJinxE()
 	m_iMaxLevel = 5;
 	m_fCost = 50.f;
 
-	CGameObject* Projectile = new CGameObject;
-	Projectile->AddComponent(new CTransform);
-	Projectile->AddComponent(new CCollider2D);
-	Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-	Projectile->Collider2D()->SetOffsetScale(Vec2(10.f, 10.f));
-	Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
-	Projectile->Collider2D()->SetDrawCollision(true);
-	Projectile->SetName(L"JinxE");
+	CGameObject* pObj = nullptr;
+	Ptr<CMeshData> pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\wazak.fbx");
+	pObj = pMeshData->Instantiate();
+	pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\wazak");
+	pObj->AddComponent(new CCollider2D);
+	pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+	pObj->Collider2D()->SetOffsetScale(Vec2(50.f, 50.f));
+	pObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
+	pObj->Collider2D()->SetDrawCollision(true);
+	pObj->SetName(L"JinxE");
+	pObj->Transform()->SetRelativeScale(Vec3(0.2f, 0.2f, 0.2f));
 
 	Ptr<CPrefab> NewPrefab = new CPrefab;
-	CGameObject* PrefabObject = Projectile->Clone();
-	NewPrefab->RegisterProtoObject(Projectile);
+	NewPrefab->RegisterProtoObject(pObj);
 
 	m_vecSkillObj.push_back(NewPrefab);
 	m_vecSkillObj.push_back(NewPrefab);
