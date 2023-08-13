@@ -83,6 +83,13 @@ CProjectileScript* CSkillMgr::FindProjectileScript(SkillType _Type)
         BasicAttackScript->SetSkillType(SkillType::BASIC_ATTACK);
         return BasicAttackScript;
     }
+    {
+    case SkillType::BASIC_RANGED_ATTACK:
+    {
+        CBasicAttackScript* BasicAttackScript = new CBasicAttackScript;
+        BasicAttackScript->SetSkillType(SkillType::BASIC_RANGED_ATTACK);
+        return BasicAttackScript;
+    }
         break;
     case SkillType::MALPHITE_BASIC_ATTACK:
     {
@@ -91,6 +98,15 @@ CProjectileScript* CSkillMgr::FindProjectileScript(SkillType _Type)
         return BasicAttackScript;
     }
         break;
+    case SkillType::JINX_BASIC_ATTACK:
+    {
+        CBasicAttackScript* BasicAttackScript = new CBasicAttackScript;
+        BasicAttackScript->SetSkillType(SkillType::BASIC_ATTACK);
+        return BasicAttackScript;
+        //CBasicAttackScript* BasicAttackScript = new CBasicAttackScript;
+        //BasicAttackScript->SetSkillType(SkillType::JINX_BASIC_ATTACK);
+        //return BasicAttackScript;
+    }
     case SkillType::JINX_W:
         return new CJinxWScript;
         break;

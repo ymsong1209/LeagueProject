@@ -282,7 +282,7 @@ void ServerEventMgr::clienttick()
 				if (skill->GetSkillHitEffect() != nullptr)
 				{
 					SpawnGameObject(skill->GetSkillHitEffect(), skillTargetObj->Transform()->GetRelativePos(), L"Effect");
-					skill->GetSkillHitEffect()->SetLifeSpan(0.5f);
+					(skill->GetSkillHitEffect())->SetLifeSpan(0.5f);
 				}
 			}
 			break;
