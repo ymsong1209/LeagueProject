@@ -93,7 +93,11 @@ void CInhibitorIdleState::HandleEvent(CGameEvent& event)
 			int	skillLevel = HitEvent->GetSkillLevel();
 
 			// 기본 공격에만 HP 감소
-			if (skilltype == SkillType::BASIC_ATTACK)
+						// 기본 공격에만 HP 감소
+			if (skilltype == SkillType::BASIC_ATTACK
+				|| skilltype == SkillType::BASIC_RANGED_ATTACK
+				|| skilltype == SkillType::JINX_BASIC_ATTACK
+				|| skilltype == SkillType::MALPHITE_BASIC_ATTACK)
 				GetOwnerFSM()->GetOwner()->GetScript<CUnitScript>()->GetHit(skilltype, SkillTarget, SkillUser, skillLevel);
 		}
 	}
