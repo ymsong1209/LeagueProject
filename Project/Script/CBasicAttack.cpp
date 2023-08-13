@@ -12,7 +12,7 @@ CBasicAttack::CBasicAttack()
 	m_fCoolDown = 0.f;
 	m_iLevel = 1;
 
-	// 투사체 생성
+	 //투사체 생성
 	CGameObject* Projectile = new CGameObject;
 	Projectile->AddComponent(new CTransform);
 	Projectile->AddComponent(new CCollider2D);
