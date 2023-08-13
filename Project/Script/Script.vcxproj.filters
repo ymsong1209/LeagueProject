@@ -413,15 +413,6 @@
     <ClCompile Include="CMinionWalkState.cpp">
       <Filter>State\Unit\Minion</Filter>
     </ClCompile>
-    <ClCompile Include="CInhibitorBrokenState.cpp">
-      <Filter>State\Unit\Structure</Filter>
-    </ClCompile>
-    <ClCompile Include="CInhibitorIdleState.cpp">
-      <Filter>State\Unit\Structure</Filter>
-    </ClCompile>
-    <ClCompile Include="CInhibitorSpawnState.cpp">
-      <Filter>State\Unit\Structure</Filter>
-    </ClCompile>
     <ClCompile Include="CUnitState.cpp">
       <Filter>State\Unit</Filter>
     </ClCompile>
@@ -471,7 +462,6 @@
       <Filter>UIScript</Filter>
     </ClCompile>
     <ClCompile Include="CSoundTestScript.cpp" />
-    <ClCompile Include="CTurretAttackScript.cpp" />
     <ClCompile Include="CJungleA2NState.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\JungleMonster</Filter>
     </ClCompile>
@@ -614,9 +604,6 @@
     <ClCompile Include="CJinxR.cpp">
       <Filter>Scripts\Skill\Jinx</Filter>
     </ClCompile>
-    <ClCompile Include="CScriptMgr.cpp">
-      <Filter>Manager\1. ScriptMgr</Filter>
-    </ClCompile>
     <ClCompile Include="CChampionScript.cpp">
       <Filter>Scripts\Unit\Champion</Filter>
     </ClCompile>
@@ -628,12 +615,6 @@
     </ClCompile>
     <ClCompile Include="CMalphiteRDecalScript.cpp">
       <Filter>Scripts\SkillProjectile\Malphite</Filter>
-    </ClCompile>
-    <ClCompile Include="CInGameCameraScript.cpp">
-      <Filter>Scripts\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="CCameraMoveScript.cpp">
-      <Filter>Scripts\Camera</Filter>
     </ClCompile>
     <ClCompile Include="CJinxEScript.cpp">
       <Filter>Scripts\SkillProjectile\Jinx</Filter>
@@ -648,9 +629,6 @@
     <ClCompile Include="CSkillLevelUpUIScript.cpp" />
     <ClCompile Include="CSkillLvEffectUIScript.cpp" />
     <ClCompile Include="CKillLogUIScript.cpp" />
-    <ClCompile Include="CJinxRScript.cpp" />
-    <ClCompile Include="CTurretBrokenState.cpp" />
-    <ClCompile Include="CTurretIdleState.cpp" />
     <ClCompile Include="CTimedEffect.cpp">
       <Filter>Scripts\Skill</Filter>
     </ClCompile>
@@ -659,11 +637,38 @@
     <ClCompile Include="CScriptMgr.cpp">
       <Filter>Manager\1. ScriptMgr</Filter>
     </ClCompile>
-    <ClCompile Include="CInhibitorRespawnState.cpp">
-      <Filter>State\Unit\Structure</Filter>
-    </ClCompile>
     <ClCompile Include="CMalphiteBasicAttack.cpp">
       <Filter>Scripts\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxRScript.cpp">
+      <Filter>Scripts\SkillProjectile\Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CCameraMoveScript.cpp">
+      <Filter>Scripts\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CInGameCameraScript.cpp">
+      <Filter>Scripts\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CScriptMgr.cpp">
+      <Filter>Manager\1. ScriptMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CTurretBrokenState.cpp">
+      <Filter>State\Unit\Structure\Turret</Filter>
+    </ClCompile>
+    <ClCompile Include="CTurretIdleState.cpp">
+      <Filter>State\Unit\Structure\Turret</Filter>
+    </ClCompile>
+    <ClCompile Include="CInhibitorBrokenState.cpp">
+      <Filter>State\Unit\Structure\Inhibitor</Filter>
+    </ClCompile>
+    <ClCompile Include="CInhibitorIdleState.cpp">
+      <Filter>State\Unit\Structure\Inhibitor</Filter>
+    </ClCompile>
+    <ClCompile Include="CInhibitorRespawnState.cpp">
+      <Filter>State\Unit\Structure\Inhibitor</Filter>
+    </ClCompile>
+    <ClCompile Include="CInhibitorSpawnState.cpp">
+      <Filter>State\Unit\Structure\Inhibitor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -858,19 +863,31 @@
     <ClInclude Include="CSkillLevelUpUIScript.h" />
     <ClInclude Include="CSkillLvEffectUIScript.h" />
     <ClInclude Include="CKillLogUIScript.h" />
-    <ClInclude Include="CJinxRScript.h" />
-    <ClInclude Include="CTurretBrokenState.h" />
-    <ClInclude Include="CTurretIdleState.h" />
     <ClInclude Include="CTimedEffect.h">
       <Filter>Scripts\Skill</Filter>
     </ClInclude>
     <ClInclude Include="CGrowScaleScript.h" />
     <ClInclude Include="CMalphiteBasicAttackScript.h" />
-    <ClInclude Include="CInhibitorRespawnState.h">
-      <Filter>State\Unit\Structure</Filter>
-    </ClInclude>
     <ClInclude Include="CMalphiteBasicAttack.h">
       <Filter>Scripts\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxRScript.h">
+      <Filter>Scripts\SkillProjectile\Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CTurretIdleState.h">
+      <Filter>State\Unit\Structure\Turret</Filter>
+    </ClInclude>
+    <ClInclude Include="CTurretBrokenState.h">
+      <Filter>State\Unit\Structure\Turret</Filter>
+    </ClInclude>
+    <ClInclude Include="CInhibitorBrokenState.h">
+      <Filter>State\Unit\Structure\Inhibitor</Filter>
+    </ClInclude>
+    <ClInclude Include="CInhibitorIdleState.h">
+      <Filter>State\Unit\Structure\Inhibitor</Filter>
+    </ClInclude>
+    <ClInclude Include="CInhibitorRespawnState.h">
+      <Filter>State\Unit\Structure\Inhibitor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -909,8 +926,6 @@
     <ClInclude Include="CGameEvent.h" />
     <ClInclude Include="CGameEventMgr.h" />
     <ClInclude Include="CHeal.h" />
-    <ClInclude Include="CInhibitorBrokenState.h" />
-    <ClInclude Include="CInhibitorIdleState.h" />
     <ClInclude Include="CInhibitorScript.h" />
     <ClInclude Include="CInhibitorSpawnState.h" />
     <ClInclude Include="CJinxDeathState.h" />
@@ -1514,6 +1529,12 @@
     </Filter>
     <Filter Include="Scripts\SkillProjectile\Malphite">
       <UniqueIdentifier>{5ec3d5a9-920c-48e5-81ee-7e69040ad680}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\Unit\Structure\Turret">
+      <UniqueIdentifier>{2d44d50b-d950-46b4-9a62-aa5d6038b651}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\Unit\Structure\Inhibitor">
+      <UniqueIdentifier>{31e30ecf-5cb9-4383-a890-0bb6cdcc6965}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
