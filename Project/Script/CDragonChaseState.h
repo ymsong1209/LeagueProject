@@ -5,7 +5,6 @@ class CDragonChaseState :
 {
 private:
     float       m_fTime;
-    float       m_fSoundTime;
 public:
     virtual void Enter() override;
     virtual void tick() override;

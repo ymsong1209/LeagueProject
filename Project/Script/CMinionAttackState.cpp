@@ -35,22 +35,19 @@ void CMinionAttackState::Enter()
 	case UnitType::MELEE_MINION:
 	{
 		animName = L"minion_melee\\Attack1";
-		GetOwner()->Animator3D()->PlayOnce(animName, true, 0.1f, 1.f);
-
+		GetOwner()->Animator3D()->PlayOnce(animName, true, 0.1f);
 	}
 	break;
 	case UnitType::RANGED_MINION:
 	{
 		animName = L"minion_caster\\_attack";
 		GetOwner()->Animator3D()->PlayOnce(animName, true, 0.1f);
-
 	}
 	break;
 	case UnitType::SIEGE_MINION:
 	{
 		animName = L"minion_siege\\cannon_chaos_attack1";
 		GetOwner()->Animator3D()->PlayOnce(animName, true, 0.1f);
-
 	}
 	break;
 	case UnitType::SUPER_MINION:
@@ -66,14 +63,13 @@ void CMinionAttackState::Enter()
 
 	CGameObject* Target = MinionScript->GetTarget();
 
-	// 근거리 공격
+	// 공격
 	CSkill* BasicAttack = MinionScript->GetSkill(0);
 	BasicAttack->SetUserObj(GetOwner());
 	BasicAttack->SetTargetObj(Target);
+
 	BasicAttack->Use();
 	MinionScript->ResetAttackCoolTime();
-
-	// 원거리 공격
 }
 
 void CMinionAttackState::Exit()

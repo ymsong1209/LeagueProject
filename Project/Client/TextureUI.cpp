@@ -54,18 +54,17 @@ int TextureUI::render_update()
         ImVec4 tint_col = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);   // No tint
         ImVec4 border_col = ImVec4(1.0f, 1.0f, 1.0f, 0.5f); // 50% opaque white
         ImGui::Image((void*)Atlas, ImVec2(150 * MaterialUIzoom, 150 * MaterialUIzoom), uv_min, uv_max, tint_col, border_col);
-        
+        ImGui::EndChild();
     }
-    ImGui::EndChild();
 
-    if (ImGui::InputFloat("zoom##TexUI", &MaterialUIzoom, 0.5f, 1.0f))
+    if (ImGui::InputFloat("zoom", &MaterialUIzoom, 0.5f, 1.0f))
     {
         if (MaterialUIzoom < 0.1f)
             MaterialUIzoom = 0.1f;
 
     }
 
-    if (ImGui::SliderFloat("zoom2##TexUI", &MaterialUIzoom, 0.0f, 20.f)) {
+    if (ImGui::SliderFloat("zoom2", &MaterialUIzoom, 0.0f, 20.f)) {
 
     };
 
