@@ -690,7 +690,6 @@ void CreateTestLevel()
 	BloomTestObject->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
 	BloomTestObject->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
 	BloomTestObject->MeshRender()->GetDynamicMaterial(0);
-	BloomTestObject->MeshRender()->GetMaterial(0)->SetScalarParam(SCALAR_PARAM::FLOAT_1, &BloomTestNum);
 	BloomTestObject->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Red.png"));
 	BloomTestObject->Transform()->SetRelativeScale(100.f, 100.f, 100.f);
 	BloomTestObject->MeshRender()->SetBloomObject(true);

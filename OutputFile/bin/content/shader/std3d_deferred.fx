@@ -179,7 +179,7 @@ PS_OUT PS_Std3D_Deferred(VS_OUT _in) : SV_Target
     
     
     
-    if (g_float_1 == 100.f)
+    if (g_float_9 == 100.f)
     {
         output.vEmissive = float4(vObjectColor.xyz, 1.f);
 

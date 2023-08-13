@@ -331,6 +331,19 @@ void CMeshRender::render(UINT _iSubset)
 	// Transform 에 UpdateData 요청
 	Transform()->UpdateData();
 
+    // Bloom 효과를 줘야하는지 확인
+    if (m_bIsBloomObject)
+    {
+        float BloomTrigger = 100.f;
+        GetMaterial(0)->SetScalarParam(SCALAR_PARAM::FLOAT_9, &BloomTrigger);
+    }
+
+    else
+    {
+        float BloomTrigger = 0.f;
+        GetMaterial(0)->SetScalarParam(SCALAR_PARAM::FLOAT_9, &BloomTrigger);
+    }
+
 	// MeshMoveData Update
 	CConstBuffer* pMeshMoveBuffer = CDevice::GetInst()->GetConstBuffer(CB_TYPE::MESHRENDER);
 
