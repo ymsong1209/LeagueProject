@@ -26,7 +26,7 @@ CBasicAttack::CBasicAttack()
 	NewPrefab->RegisterProtoObject(PrefabObject);
 	
 	m_vecSkillObj.push_back(NewPrefab);
-
+	
 	// 투사체 스크립트
 	m_iProjectileCount = 1;
 	m_ProjectileScript = new CBasicAttackScript;
@@ -44,7 +44,6 @@ void CBasicAttack::tick()
 
 bool CBasicAttack::Use()
 {
-
 	// 서버에게 기본 공격 사용 신호를 전달
 	CSendServerEventMgr::GetInst()->SendUseSkillPacket(
 		m_UserObj->GetScript<CUnitScript>()->GetServerID(),

@@ -296,7 +296,6 @@
     <ClCompile Include="CRedSpawnState.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\Red</Filter>
     </ClCompile>
-    <ClCompile Include="CTurretAttackScript.cpp" />
     <ClCompile Include="pch.cpp">
       <Filter>Default</Filter>
     </ClCompile>
@@ -663,6 +662,9 @@
     <ClCompile Include="CInhibitorRespawnState.cpp">
       <Filter>State\Unit\Structure</Filter>
     </ClCompile>
+    <ClCompile Include="CMalphiteBasicAttack.cpp">
+      <Filter>Scripts\Skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -866,6 +868,9 @@
     <ClInclude Include="CMalphiteBasicAttackScript.h" />
     <ClInclude Include="CInhibitorRespawnState.h">
       <Filter>State\Unit\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="CMalphiteBasicAttack.h">
+      <Filter>Scripts\Skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1376,7 +1381,6 @@
       <Filter>State\Unit</Filter>
     </ClInclude>
     <ClInclude Include="CSoundTestScript.h" />
-    <ClInclude Include="CTurretAttackScript.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">

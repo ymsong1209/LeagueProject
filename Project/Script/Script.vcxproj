@@ -294,6 +294,7 @@
     <ClInclude Include="CKrugScript.h" />
     <ClInclude Include="CKrugSpawnState.h" />
     <ClInclude Include="CMalphiteAttackState.h" />
+    <ClInclude Include="CMalphiteBasicAttack.h" />
     <ClInclude Include="CMalphiteBasicAttackScript.h" />
     <ClInclude Include="CMalphiteDeathState.h" />
     <ClInclude Include="CMalphiteE.h" />
@@ -554,6 +555,7 @@
     <ClCompile Include="CKrugScript.cpp" />
     <ClCompile Include="CKrugSpawnState.cpp" />
     <ClCompile Include="CMalphiteAttackState.cpp" />
+    <ClCompile Include="CMalphiteBasicAttack.cpp" />
     <ClCompile Include="CMalphiteBasicAttackScript.cpp" />
     <ClCompile Include="CMalphiteDeathState.cpp" />
     <ClCompile Include="CMalphiteE.cpp" />

@@ -7,6 +7,7 @@
 #include "CJinxEScript.h"
 #include "CJinxRScript.h"
 
+#include "CMalphiteBasicAttackScript.h"
 #include "CMalphiteQScript.h"
 #include "CMalphiteEScript.h"
 #include "CMalphiteRScript.h"
@@ -15,6 +16,7 @@
 #include "CJinxE.h"
 #include "CJinxR.h"
 
+#include "CMalphiteBasicAttack.h"
 #include "CMalphiteQ.h"
 #include "CMalphiteW.h"
 #include "CMalphiteE.h"
@@ -24,6 +26,9 @@ CSkillMgr::CSkillMgr()
 {
     CBasicAttack* BasicAttack = new CBasicAttack;
     m_mapSkills.insert(make_pair(SkillType::BASIC_ATTACK, BasicAttack));
+
+    CMalphiteBasicAttack* MalphiteBasicAttack = new CMalphiteBasicAttack;
+    m_mapSkills.insert(make_pair(SkillType::MALPHITE_BASIC_ATTACK, MalphiteBasicAttack));
 
     CJinxW* JinxW = new CJinxW;
     m_mapSkills.insert(make_pair(SkillType::JINX_W, JinxW));
@@ -73,6 +78,9 @@ CProjectileScript* CSkillMgr::FindProjectileScript(SkillType _Type)
     switch (_Type)
     {
     case SkillType::BASIC_ATTACK:
+        return new CBasicAttackScript;
+        break;
+    case SkillType::MALPHITE_BASIC_ATTACK:
         return new CBasicAttackScript;
         break;
     case SkillType::JINX_W:
