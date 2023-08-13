@@ -39,9 +39,19 @@ CRenderMgr::CRenderMgr()
                                                     , DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE
                                                     , D3D11_USAGE_DEFAULT);
 
+    m_ETCopyTex = CResMgr::GetInst()->CreateTexture(L"ETCopyTex"
+                                                    , (UINT)vResolution.x, (UINT)vResolution.y
+                                                    , DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE
+                                                    , D3D11_USAGE_DEFAULT);
+
+
     CResMgr::GetInst()->FindRes<CMaterial>(L"GrayMtrl")->SetTexParam(TEX_0, m_RTCopyTex);
 
     CResMgr::GetInst()->FindRes<CMaterial>(L"DistortionMtrl")->SetTexParam(TEX_0, m_RTCopyTex);
+
+    CResMgr::GetInst()->FindRes<CMaterial>(L"BloomMtrl")->SetTexParam(TEX_0, m_RTCopyTex);
+    CResMgr::GetInst()->FindRes<CMaterial>(L"BloomMtrl")->SetTexParam(TEX_1, m_ETCopyTex);
+    CResMgr::GetInst()->FindRes<CMaterial>(L"BloomMtrl")->SetScalarParam(SCALAR_PARAM::VEC2_0, &vResolution);
 
     m_WallBuffer = new CStructuredBuffer;
     m_RayBuffer = new CStructuredBuffer;
@@ -373,6 +383,12 @@ void CRenderMgr::CopyRenderTarget()
 {
     Ptr<CTexture> pRTTex = CResMgr::GetInst()->FindRes<CTexture>(L"RenderTargetTex");
     CONTEXT->CopyResource(m_RTCopyTex->GetTex2D().Get(), pRTTex->GetTex2D().Get());
+}
+
+void CRenderMgr::CopyEmissiveTarget()
+{
+    Ptr<CTexture> pETTex = CResMgr::GetInst()->FindRes<CTexture>(L"EmissiveTargetTex");
+    CONTEXT->CopyResource(m_ETCopyTex->GetTex2D().Get(), pETTex->GetTex2D().Get());
 }
 
 void CRenderMgr::MRT_Clear()

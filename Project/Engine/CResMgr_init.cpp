@@ -1373,6 +1373,11 @@ void CResMgr::CreateDefaultGraphicsShader()
 	AddRes(pShader->GetKey(), pShader);
 
 
+	
+
+
+
+
 	// ============================
 	// Std3D_DeferredShader
 	// RasterizerState      : CULL_BACK

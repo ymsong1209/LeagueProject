@@ -33,6 +33,10 @@ private:
     bool                    m_UvInit;
     int                     m_iTurnNumber; // UV반복 횟수
 
+
+    // Bloom Shader 관련한 변수
+    bool                    m_bIsBloomObject;
+
 public:
     void SetOutputTexture(Ptr<CTexture> _Tex);
     void SetPunctureTexture(Ptr<CTexture> _Tex) { m_arrMeshTex[MESH_TEX_PARAM::PUNCTURE] = _Tex; }
@@ -53,6 +57,11 @@ public:
     Vec2 GetOffsetValue(MovTexType _TexType);
 
     int GetTurnNumber() { return m_iTurnNumber; }
+
+
+    void SetBloomObject(bool _State) { m_bIsBloomObject = _State; }
+    bool GetIsBloomObject() { return m_bIsBloomObject; }
+
 public:
     void CalculateNextOffset(int  _MoveStyle, Vec2& _PreviousPos, Vec4 _FunctionValue, float _DT);
 

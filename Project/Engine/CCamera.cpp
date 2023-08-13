@@ -1591,6 +1591,7 @@ void CCamera::render_postprocess()
 	for (size_t i = 0; i < m_vecPost.size(); ++i)
 	{
 		CRenderMgr::GetInst()->CopyRenderTarget();
+		CRenderMgr::GetInst()->CopyEmissiveTarget();
 		m_vecPost[i]->render();
 	}
 }

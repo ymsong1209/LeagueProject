@@ -679,6 +679,54 @@ void CreateTestLevel()
 
 	SpawnGameObject(ParticleTestObject, Vec3(100.f, 100.f, 100.f), 0);
 
+
+
+	CGameObject* BloomTestObject = new CGameObject;
+
+	float BloomTestNum = 100.f;
+	BloomTestObject->SetName(L"BloomTestObject");
+	BloomTestObject->AddComponent(new CTransform);
+	BloomTestObject->AddComponent(new CMeshRender);
+	BloomTestObject->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	BloomTestObject->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
+	BloomTestObject->MeshRender()->GetDynamicMaterial(0);
+	BloomTestObject->MeshRender()->GetMaterial(0)->SetScalarParam(SCALAR_PARAM::FLOAT_1, &BloomTestNum);
+	BloomTestObject->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Red.png"));
+	BloomTestObject->Transform()->SetRelativeScale(100.f, 100.f, 1.f);
+	BloomTestObject->MeshRender()->SetBloomObject(true);
+
+	SpawnGameObject(BloomTestObject, Vec3(-1700.f, 0.f, 0.f), 0);
+
+
+
+
+	//CGameObject* BloomFilter = new CGameObject;
+	//BloomFilter->SetName(L"BloomFilter");
+	//BloomFilter->AddComponent(new CTransform);
+	//BloomFilter->AddComponent(new CMeshRender);
+	//BloomFilter->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	//BloomFilter->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"BloomMtrl"), 0);
+
+	//BloomFilter->MeshRender()->SetFrustumCheck(false);
+	//
+
+	//SpawnGameObject(BloomFilter, Vec3(0.f, 0.f, 0.f), 0);
+
+
+
+	//CGameObject* GrayFilter = new CGameObject;
+	//GrayFilter->SetName(L"GrayFilter");
+	//GrayFilter->AddComponent(new CTransform);
+	//GrayFilter->AddComponent(new CMeshRender);
+	//GrayFilter->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	//GrayFilter->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"GrayMtrl"), 0);
+
+	//GrayFilter->MeshRender()->SetFrustumCheck(false);
+
+
+	//SpawnGameObject(GrayFilter, Vec3(0.f, 0.f, 0.f), 0);
+	
+
 	
 	
 

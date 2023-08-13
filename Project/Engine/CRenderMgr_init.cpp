@@ -24,8 +24,9 @@ void CRenderMgr::init()
 	// SwapChain MRT »ý¼º
 	// ==================
 	{
-		Ptr<CTexture> arrRTTex[8] = { CResMgr::GetInst()->FindRes<CTexture>(L"RenderTargetTex"), };
-		Vec4          arrClear[8] = { Vec4(0.2f, 0.2f, 0.2f, 1.f) , };
+		Ptr<CTexture> arrRTTex[8] = { CResMgr::GetInst()->FindRes<CTexture>(L"RenderTargetTex") };
+									  
+		Vec4          arrClear[8] = { Vec4(0.2f, 0.2f, 0.2f, 1.f) };
 		Ptr<CTexture> DSTex = CResMgr::GetInst()->FindRes<CTexture>(L"DepthStencilTex");
 
 		m_MRT[(UINT)MRT_TYPE::SWAPCHAIN] = new CMRT;

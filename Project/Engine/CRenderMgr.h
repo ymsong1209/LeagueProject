@@ -64,6 +64,7 @@ private:
     bool                        b_IsImGuiHovered; //Imgui와 상호작용중인 상태라면 특정 키를 안먹히도록 하는데 사용
    
     Ptr<CTexture>               m_RTCopyTex;
+    Ptr<CTexture>               m_ETCopyTex;
 
  
     // 전장의 안개
@@ -144,6 +145,7 @@ public:
     vector<ColliderStruct> GetWallObjectVec() { return m_vecWallObject; }
 
     void CopyRenderTarget();
+    void CopyEmissiveTarget();
 
     void MRT_Clear(MRT_TYPE _Type);
 
