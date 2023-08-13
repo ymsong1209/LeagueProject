@@ -57,6 +57,7 @@ CSkillLevelUpUIScript
 CSkillLvEffectUIScript
 CSoundTestScript
 CStructureScript
+CTurretAttackScript
 CTurretHPUIScript
 CTurretScript
 CUIScript
