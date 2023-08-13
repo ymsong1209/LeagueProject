@@ -629,12 +629,6 @@
     <ClCompile Include="CMalphiteRDecalScript.cpp">
       <Filter>Scripts\SkillProjectile\Malphite</Filter>
     </ClCompile>
-    <ClCompile Include="CInGameCameraScript.cpp">
-      <Filter>Scripts\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="CCameraMoveScript.cpp">
-      <Filter>Scripts\Camera</Filter>
-    </ClCompile>
     <ClCompile Include="CJinxEScript.cpp">
       <Filter>Scripts\SkillProjectile\Jinx</Filter>
     </ClCompile>
@@ -648,7 +642,6 @@
     <ClCompile Include="CSkillLevelUpUIScript.cpp" />
     <ClCompile Include="CSkillLvEffectUIScript.cpp" />
     <ClCompile Include="CKillLogUIScript.cpp" />
-    <ClCompile Include="CJinxRScript.cpp" />
     <ClCompile Include="CTurretBrokenState.cpp" />
     <ClCompile Include="CTurretIdleState.cpp" />
     <ClCompile Include="CTimedEffect.cpp">
@@ -656,6 +649,7 @@
     </ClCompile>
     <ClCompile Include="CGrowScaleScript.cpp" />
     <ClCompile Include="CMalphiteBasicAttackScript.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="CScriptMgr.cpp">
       <Filter>Manager\1. ScriptMgr</Filter>
     </ClCompile>
@@ -664,6 +658,16 @@
     </ClCompile>
     <ClCompile Include="CMalphiteBasicAttack.cpp">
       <Filter>Scripts\Skill</Filter>
+=======
+    <ClCompile Include="CJinxRScript.cpp">
+      <Filter>Scripts\SkillProjectile\Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CInGameCameraScript.cpp">
+      <Filter>Scripts\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CCameraMoveScript.cpp">
+      <Filter>Scripts\Camera</Filter>
+>>>>>>> dev
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -858,7 +862,6 @@
     <ClInclude Include="CSkillLevelUpUIScript.h" />
     <ClInclude Include="CSkillLvEffectUIScript.h" />
     <ClInclude Include="CKillLogUIScript.h" />
-    <ClInclude Include="CJinxRScript.h" />
     <ClInclude Include="CTurretBrokenState.h" />
     <ClInclude Include="CTurretIdleState.h" />
     <ClInclude Include="CTimedEffect.h">
@@ -866,11 +869,16 @@
     </ClInclude>
     <ClInclude Include="CGrowScaleScript.h" />
     <ClInclude Include="CMalphiteBasicAttackScript.h" />
+<<<<<<< HEAD
     <ClInclude Include="CInhibitorRespawnState.h">
       <Filter>State\Unit\Structure</Filter>
     </ClInclude>
     <ClInclude Include="CMalphiteBasicAttack.h">
       <Filter>Scripts\Skill</Filter>
+=======
+    <ClInclude Include="CJinxRScript.h">
+      <Filter>Scripts\SkillProjectile\Jinx</Filter>
+>>>>>>> dev
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -12,7 +12,6 @@ CBasicAttack::CBasicAttack()
 	m_fCoolDown = 0.f;
 	m_iLevel = 1;
 
-	// 투사체 생성
 	CGameObject* Projectile = new CGameObject;
 	Projectile->AddComponent(new CTransform);
 	Projectile->AddComponent(new CCollider2D);
@@ -26,7 +25,7 @@ CBasicAttack::CBasicAttack()
 	NewPrefab->RegisterProtoObject(PrefabObject);
 	
 	m_vecSkillObj.push_back(NewPrefab);
-	
+
 	// 투사체 스크립트
 	m_iProjectileCount = 1;
 	m_ProjectileScript = new CBasicAttackScript;

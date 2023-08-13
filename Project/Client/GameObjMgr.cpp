@@ -228,11 +228,11 @@ void GameObjMgr::SendMyPlayerMove(ClientServiceRef _service)
 
 	move.bUnitDead = bUnitDead;
 	// 서버에게 패킷 전송
-	std::cout << "C_PLAYER_MOVE Pakcet. id : "<< MyPlayer.id << endl;
+	//std::cout << "C_PLAYER_MOVE Pakcet. id : "<< MyPlayer.id << endl;
 	PKT_C_PLAYER_MOVE_WRITE pktWriter(move);
 	SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
 	_service->Broadcast(sendBuffer);
-	std::cout << "===============================" << endl;
+	//std::cout << "===============================" << endl;
 
 }
 
@@ -366,8 +366,8 @@ void GameObjMgr::SendPlacedObjectUpdate(uint64 _id, CGameObject* _obj, ClientSer
 				updatePlacedObject.moveDir.y = CurRot.y;
 				updatePlacedObject.moveDir.z = CurRot.z;
 
-				// 서버에게 패킷 전송
-				std::cout << "C_OBJECT_MOVE Pakcet.(placedObject) id : " << _id << endl;
+			// 서버에게 패킷 전송
+			std::cout << "C_OBJECT_MOVE Pakcet.(placedObject HP--) id : " << _id << endl;
 
 				PKT_C_OBJECT_MOVE_WRITE pktWriter(_id, updatePlacedObject);
 				SendBufferRef sendBuffer = pktWriter.CloseAndReturn();

@@ -239,6 +239,7 @@ RES_TYPE ContentUI::GetResTypeByExt(const wstring& _relativepath)
 		|| L".jpeg" == strExt || L".bmp" == strExt
 		|| L".tga" == strExt || L".dds" == strExt)
 		return RES_TYPE::TEXTURE;
+	//ogg 파일은 인식 못함
 	else if (L".mp3" == strExt || L".wav" == strExt || L".oga" == strExt)
 		return RES_TYPE::SOUND;
 	else
