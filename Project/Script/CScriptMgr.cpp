@@ -15,6 +15,7 @@
 #include "CExpRatioUIScript.h"
 #include "CFontUIScript.h"
 #include "CGrompScript.h"
+#include "CGrowScaleScript.h"
 #include "CHpMpRatioUIScript.h"
 #include "CInGameCameraScript.h"
 #include "CInhibitorScript.h"
@@ -29,6 +30,8 @@
 #include "CKillLogUIScript.h"
 #include "CKrugMiniScript.h"
 #include "CKrugScript.h"
+#include "CMalphiteBasicAttackHitEffectScript.h"
+#include "CMalphiteBasicAttack.h"
 #include "CMalphiteEDecalScript.h"
 #include "CMalphiteEScript.h"
 #include "CMalphiteQDecalScript.h"
@@ -59,7 +62,6 @@
 #include "CSkillLvEffectUIScript.h"
 #include "CSoundTestScript.h"
 #include "CStructureScript.h"
-#include "CTurretAttackScript.h"
 #include "CTurretHPUIScript.h"
 #include "CTurretScript.h"
 #include "CUIScript.h"
@@ -83,6 +85,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CExpRatioUIScript");
 	_vec.push_back(L"CFontUIScript");
 	_vec.push_back(L"CGrompScript");
+	_vec.push_back(L"CGrowScaleScript");
 	_vec.push_back(L"CHpMpRatioUIScript");
 	_vec.push_back(L"CInGameCameraScript");
 	_vec.push_back(L"CInhibitorScript");
@@ -97,6 +100,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CKillLogUIScript");
 	_vec.push_back(L"CKrugMiniScript");
 	_vec.push_back(L"CKrugScript");
+	_vec.push_back(L"CMalphiteBasicAttackHitEffectScript");
 	_vec.push_back(L"CMalphiteEDecalScript");
 	_vec.push_back(L"CMalphiteEScript");
 	_vec.push_back(L"CMalphiteQDecalScript");
@@ -127,7 +131,6 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CSkillLvEffectUIScript");
 	_vec.push_back(L"CSoundTestScript");
 	_vec.push_back(L"CStructureScript");
-	_vec.push_back(L"CTurretAttackScript");
 	_vec.push_back(L"CTurretHPUIScript");
 	_vec.push_back(L"CTurretScript");
 	_vec.push_back(L"CUIScript");
@@ -166,6 +169,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CFontUIScript;
 	if (L"CGrompScript" == _strScriptName)
 		return new CGrompScript;
+	if (L"CGrowScaleScript" == _strScriptName)
+		return new CGrowScaleScript;
 	if (L"CHpMpRatioUIScript" == _strScriptName)
 		return new CHpMpRatioUIScript;
 	if (L"CInGameCameraScript" == _strScriptName)
@@ -194,6 +199,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CKrugMiniScript;
 	if (L"CKrugScript" == _strScriptName)
 		return new CKrugScript;
+	if (L"CMalphiteBasicAttackHitEffectScript" == _strScriptName)
+		return new CMalphiteBasicAttackHitEffectScript;
 	if (L"CMalphiteEDecalScript" == _strScriptName)
 		return new CMalphiteEDecalScript;
 	if (L"CMalphiteEScript" == _strScriptName)
@@ -254,8 +261,6 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CSoundTestScript;
 	if (L"CStructureScript" == _strScriptName)
 		return new CStructureScript;
-	if (L"CTurretAttackScript" == _strScriptName)
-		return new CTurretAttackScript;
 	if (L"CTurretHPUIScript" == _strScriptName)
 		return new CTurretHPUIScript;
 	if (L"CTurretScript" == _strScriptName)
@@ -317,6 +322,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::GROMPSCRIPT:
 		return new CGrompScript;
 		break;
+	case (UINT)SCRIPT_TYPE::GROWSCALESCRIPT:
+		return new CGrowScaleScript;
+		break;
 	case (UINT)SCRIPT_TYPE::HPMPRATIOUISCRIPT:
 		return new CHpMpRatioUIScript;
 		break;
@@ -358,6 +366,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::KRUGSCRIPT:
 		return new CKrugScript;
+		break;
+	case (UINT)SCRIPT_TYPE::MALPHITEBASICATTACKHITEFFECTSCRIPT:
+		return new CMalphiteBasicAttackHitEffectScript;
 		break;
 	case (UINT)SCRIPT_TYPE::MALPHITEEDECALSCRIPT:
 		return new CMalphiteEDecalScript;
@@ -449,9 +460,6 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::STRUCTURESCRIPT:
 		return new CStructureScript;
 		break;
-	case (UINT)SCRIPT_TYPE::TURRETATTACKSCRIPT:
-		return new CTurretAttackScript;
-		break;
 	case (UINT)SCRIPT_TYPE::TURRETHPUISCRIPT:
 		return new CTurretHPUIScript;
 		break;
@@ -534,6 +542,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CGrompScript";
 		break;
 
+	case SCRIPT_TYPE::GROWSCALESCRIPT:
+		return L"CGrowScaleScript";
+		break;
+
 	case SCRIPT_TYPE::HPMPRATIOUISCRIPT:
 		return L"CHpMpRatioUIScript";
 		break;
@@ -588,6 +600,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::KRUGSCRIPT:
 		return L"CKrugScript";
+		break;
+
+	case SCRIPT_TYPE::MALPHITEBASICATTACKHITEFFECTSCRIPT:
+		return L"CMalphiteBasicAttackHitEffectScript";
 		break;
 
 	case SCRIPT_TYPE::MALPHITEEDECALSCRIPT:
@@ -708,10 +724,6 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::STRUCTURESCRIPT:
 		return L"CStructureScript";
-		break;
-
-	case SCRIPT_TYPE::TURRETATTACKSCRIPT:
-		return L"CTurretAttackScript";
 		break;
 
 	case SCRIPT_TYPE::TURRETHPUISCRIPT:

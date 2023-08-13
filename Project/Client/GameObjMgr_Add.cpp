@@ -47,6 +47,8 @@
 #include <Script/CGrompScript.h>
 
 #include <Script/CTurretScript.h>
+#include <Script/CInhibitorScript.h>
+#include <Script/CNexusScript.h>
 
 #include <Script/CMurkWolfScript.h>
 #include <Script/CMurkWolfMiniScript.h>
@@ -2188,6 +2190,15 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			TurretBreak1->AddComponent(new CUnitScript);
 			TurretBreak2->AddComponent(new CUnitScript);
 
+			// 잔해, Break1, Break2에 Alpha Mtrl 설정
+			pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Rubble_alpha.mtrl"), 0);
+			pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Break1_alpha.mtrl"), 1);
+
+			TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Cloth1_alpha.mtrl"), 0);
+			TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Mage_alpha.mtrl"), 1);
+			TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage1_alpha.mtrl"), 0);
+			TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage2_alpha.mtrl"), 1);
+
 			// 포탑에게 
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
 
@@ -2196,13 +2207,6 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			{				
 				pObj->SetName(L"red_turret");
 				
-				// Rubble(잔해, 부모)
-				Ptr<CTexture> AlphaTex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png");
-				pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
-				pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, AlphaTex);
-				//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Rubble_red.mtrl"), 0);
-				//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Break1_red.mtrl"), 1);
-				
 				// TurretBase(본체)
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Cloth1_red.mtrl"), 0);
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Cloth2_red.mtrl"), 1);
@@ -2210,32 +2214,11 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Stage1_red.mtrl"), 3);
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Stage2_red.mtrl"), 4);
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Rubble_red.mtrl"), 5);
-				
-				// TurretBreak1(붕괴 애니메이션1)
-				TurretBreak1->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
-				TurretBreak1->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, AlphaTex);
-				//TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Cloth1_red.mtrl"), 0);
-				//TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Mage_red.mtrl"), 1);
-				
-				// TurretBreak2(붕괴 애니메이션2)
-				TurretBreak2->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
-				TurretBreak2->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, AlphaTex);
-				//TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage1_red.mtrl"), 0);
-				//TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage2_red.mtrl"), 1);
-
-				
 			}
 			else if (_objectInfo.faction == Faction::BLUE)
 			{
 				pObj->SetName(L"blue_turret");
 
-				// Rubble(잔해, 부모)
-				Ptr<CTexture> AlphaTex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png");
-				pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
-				pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, AlphaTex);
-				//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Rubble_blue.mtrl"), 0);
-				//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Break1_blue.mtrl"), 1);
-				
 				// TurretBase(본체)
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Cloth1_blue.mtrl"), 0);
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Cloth2_blue.mtrl"), 1);
@@ -2244,26 +2227,12 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Stage2_blue.mtrl"), 4);
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Rubble_blue.mtrl"), 5);
 				
-				// TurretBreak1(붕괴 애니메이션1)
-				TurretBreak1->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
-				TurretBreak1->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, AlphaTex);
-				//TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Cloth1_blue.mtrl"), 0);
-				//TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Mage_blue.mtrl"), 1);
-				
-				// TurretBreak2(붕괴 애니메이션2)
-				TurretBreak2->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
-				TurretBreak2->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, AlphaTex);
-				//TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage1_blue.mtrl"), 0);
-				//TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage2_blue.mtrl"), 1);
 			}
 
 			if (MyPlayer.host)
 			{
 				// 방장일 경우 TurretScript
 				pObj->AddComponent(new CTurretScript);
-				//CTurretScript* Script = pObj->GetScript<CTurretScript>();
-				//Script->SetLane(_objectInfo.lane);
-
 			}
 			else
 			{
@@ -2304,16 +2273,27 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 		case UnitType::INHIBITOR:
 		{
-			pMeshData = nullptr;
-			pObj = nullptr;
-			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Inhibitor.fbx");
-			pObj = pMeshData->Instantiate();
-			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
-			pObj->GetRenderComponent()->SetFrustumCheck(true);
-			pObj->Animator3D()->PlayRepeat(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true, true, 0.1f, 0.2f);
-			pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
+			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\Inhibitor.prefab");
+			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
+			pObj = pPrefab->Instantiate();
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetOutlineThickness(0.072f);
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
-			pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\inhibitor_Destroyed_alpha.mtrl"), 1);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider3D()->SetAbsolute(true);
+			//pMeshData = nullptr;
+			//pObj = nullptr;
+			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Inhibitor.fbx");
+			//pObj = pMeshData->Instantiate();
+			//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
+			//pObj->GetRenderComponent()->SetFrustumCheck(true);
+			//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\inhibitor_Destroyed_alpha.mtrl"), 1);
+			//pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
+			//pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+			//pObj->Transform()->SetUseMouseOutline(true);
+			//pObj->Transform()->SetOutlineThickness(0.072f);
 
 			if (_objectInfo.faction == Faction::RED)
 			{
@@ -2323,6 +2303,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			else if (_objectInfo.faction == Faction::BLUE)
 			{
 				pObj->SetName(L"blue_Inhibitor");
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\inhibitor_blue_Mtrl.mtrl"), 0);
 
 			}
 			//억제기 평상시 애니메이션은 idle1 애니메이션임!! 
@@ -2330,11 +2311,8 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			//억제기가 폭발할때는 0번머터리얼에 alphaTex 이미지를 넣어주고, 1번머터리얼에 억제기 전용 destroy텍스쳐를 입혀주면됨 (따로 세팅해줘야함)
 			if (MyPlayer.host)
 			{
-				//pObj->AddComponent(new CInhibitorScript);
-				// script->setLane, _objectInfo.lane
-				pObj->AddComponent(new CUnitScript);  // 추후 주석처리
+				pObj->AddComponent(new CInhibitorScript);  // 추후 주석처리
 				// 공격범위 시야 자식오브젝트도 추가해야할듯.
-
 			}
 			else
 			{
@@ -2343,13 +2321,15 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 			// 공통
 			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetUnitDead(true);
 			Script->SetServerID(_objectId);
 			Script->SetFaction(_objectInfo.faction);
+			Script->SetLane(_objectInfo.lane);
 			Script->SetUnitType(UnitType::INHIBITOR);
 			SpawnGameObject(pObj
 				, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z)
 				, L"Structure");
-			pObj->GetRenderComponent()->SetFrustumCheck(true);
+	
 
 			CGameObject* HPBar = new CGameObject;
 			HPBar->SetName(L"TurretBar");

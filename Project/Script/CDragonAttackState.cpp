@@ -36,6 +36,9 @@ void CDragonAttackState::tick()
 
 			CGameEventMgr::GetInst()->NotifyEvent(*evn);
 		}
+
+		Vec3 DragonPos = GetOwner()->Transform()->GetRelativePos();
+		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\dragon\\attack1.mp3", 1, 0.5f, true, 200.f, DragonPos, Faction::NONE);
 		m_fAttackCoolTime = 3.f;
 	}
 

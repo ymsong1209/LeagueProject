@@ -235,7 +235,9 @@
     <ClInclude Include="CGrompReturnState.h" />
     <ClInclude Include="CGrompScript.h" />
     <ClInclude Include="CGrompSpawnState.h" />
+    <ClInclude Include="CGrowScaleScript.h" />
     <ClInclude Include="CHpMpRatioUIScript.h" />
+    <ClInclude Include="CInhibitorRespawnState.h" />
     <ClInclude Include="CInventoryUIScript.h" />
     <ClInclude Include="CJinxAttackState.h" />
     <ClInclude Include="CJinxE.h" />
@@ -293,6 +295,8 @@
     <ClInclude Include="CKrugScript.h" />
     <ClInclude Include="CKrugSpawnState.h" />
     <ClInclude Include="CMalphiteAttackState.h" />
+    <ClInclude Include="CMalphiteBasicAttack.h" />
+    <ClInclude Include="CMalphiteBasicAttackHitEffectScript.h" />
     <ClInclude Include="CMalphiteDeathState.h" />
     <ClInclude Include="CMalphiteE.h" />
     <ClInclude Include="CMalphiteEDecalScript.h" />
@@ -421,7 +425,6 @@
     <ClInclude Include="CSoundTestScript.h" />
     <ClInclude Include="CStructureScript.h" />
     <ClInclude Include="CTimedEffect.h" />
-    <ClInclude Include="CTurretAttackScript.h" />
     <ClInclude Include="CTurretBrokenState.h" />
     <ClInclude Include="CTurretHPUIScript.h" />
     <ClInclude Include="CTurretIdleState.h" />
@@ -494,10 +497,12 @@
     <ClCompile Include="CGrompReturnState.cpp" />
     <ClCompile Include="CGrompScript.cpp" />
     <ClCompile Include="CGrompSpawnState.cpp" />
+    <ClCompile Include="CGrowScaleScript.cpp" />
     <ClCompile Include="CHeal.cpp" />
     <ClCompile Include="CHpMpRatioUIScript.cpp" />
     <ClCompile Include="CInhibitorBrokenState.cpp" />
     <ClCompile Include="CInhibitorIdleState.cpp" />
+    <ClCompile Include="CInhibitorRespawnState.cpp" />
     <ClCompile Include="CInhibitorScript.cpp" />
     <ClCompile Include="CInhibitorSpawnState.cpp" />
     <ClCompile Include="CInventoryUIScript.cpp" />
@@ -552,6 +557,8 @@
     <ClCompile Include="CKrugScript.cpp" />
     <ClCompile Include="CKrugSpawnState.cpp" />
     <ClCompile Include="CMalphiteAttackState.cpp" />
+    <ClCompile Include="CMalphiteBasicAttack.cpp" />
+    <ClCompile Include="CMalphiteBasicAttackHitEffectScript.cpp" />
     <ClCompile Include="CMalphiteDeathState.cpp" />
     <ClCompile Include="CMalphiteE.cpp" />
     <ClCompile Include="CMalphiteEDecalScript.cpp" />
@@ -681,7 +688,6 @@
     <ClCompile Include="CSoundTestScript.cpp" />
     <ClCompile Include="CStructureScript.cpp" />
     <ClCompile Include="CTimedEffect.cpp" />
-    <ClCompile Include="CTurretAttackScript.cpp" />
     <ClCompile Include="CTurretBrokenState.cpp" />
     <ClCompile Include="CTurretHPUIScript.cpp" />
     <ClCompile Include="CTurretIdleState.cpp" />

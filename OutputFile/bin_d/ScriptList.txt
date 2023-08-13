@@ -27,6 +27,7 @@ CJungleMonsterScript
 CKillLogUIScript
 CKrugMiniScript
 CKrugScript
+CMalphiteBasicAttackHitEffectScript
 CMalphiteBasicAttackScript
 CMalphiteEDecalScript
 CMalphiteEScript

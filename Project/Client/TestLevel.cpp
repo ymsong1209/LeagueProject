@@ -322,7 +322,7 @@ void CreateTestLevel()
 
 
 
-	CGameObject* pSoundTestObj = new CGameObject;
+	/*CGameObject* pSoundTestObj = new CGameObject;
 	pSoundTestObj->SetName(L"pSoundTestObj");
 
 	pSoundTestObj->AddComponent(new CMeshRender);
@@ -333,7 +333,7 @@ void CreateTestLevel()
 	pSoundTestObj->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"SphereMesh"));
 	pSoundTestObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
 
-	SpawnGameObject(pSoundTestObj, Vec3(0.f, 0.f, 0.f), 0.f);
+	SpawnGameObject(pSoundTestObj, Vec3(0.f, 0.f, 0.f), 0.f);*/
 	// 
 	// 충돌 시킬 레이어 짝 지정
 	//CCollisionMgr::GetInst()->LayerCheck(L"Player", L"Monster");
