@@ -7,7 +7,6 @@
 #include "CJinxEScript.h"
 #include "CJinxRScript.h"
 
-#include "CMalphiteBasicAttackScript.h"
 #include "CMalphiteQScript.h"
 #include "CMalphiteEScript.h"
 #include "CMalphiteRScript.h"
@@ -16,7 +15,6 @@
 #include "CJinxE.h"
 #include "CJinxR.h"
 
-#include "CMalphiteBasicAttack.h"
 #include "CMalphiteQ.h"
 #include "CMalphiteW.h"
 #include "CMalphiteE.h"
@@ -26,9 +24,6 @@ CSkillMgr::CSkillMgr()
 {
     CBasicAttack* BasicAttack = new CBasicAttack;
     m_mapSkills.insert(make_pair(SkillType::BASIC_ATTACK, BasicAttack));
-
-    CMalphiteBasicAttack* MalphiteBasicAttack = new CMalphiteBasicAttack;
-    m_mapSkills.insert(make_pair(SkillType::MALPHITE_BASIC_ATTACK, MalphiteBasicAttack));
 
     CJinxW* JinxW = new CJinxW;
     m_mapSkills.insert(make_pair(SkillType::JINX_W, JinxW));
@@ -78,35 +73,8 @@ CProjectileScript* CSkillMgr::FindProjectileScript(SkillType _Type)
     switch (_Type)
     {
     case SkillType::BASIC_ATTACK:
-    {
-        CBasicAttackScript* BasicAttackScript = new CBasicAttackScript;
-        BasicAttackScript->SetSkillType(SkillType::BASIC_ATTACK);
-        return BasicAttackScript;
-    }
-    {
-    case SkillType::BASIC_RANGED_ATTACK:
-    {
-        CBasicAttackScript* BasicAttackScript = new CBasicAttackScript;
-        BasicAttackScript->SetSkillType(SkillType::BASIC_RANGED_ATTACK);
-        return BasicAttackScript;
-    }
+        return new CBasicAttackScript;
         break;
-    case SkillType::MALPHITE_BASIC_ATTACK:
-    {
-        CBasicAttackScript* BasicAttackScript = new CBasicAttackScript;
-        BasicAttackScript->SetSkillType(SkillType::MALPHITE_BASIC_ATTACK);
-        return BasicAttackScript;
-    }
-        break;
-    case SkillType::JINX_BASIC_ATTACK:
-    {
-        CBasicAttackScript* BasicAttackScript = new CBasicAttackScript;
-        BasicAttackScript->SetSkillType(SkillType::BASIC_ATTACK);
-        return BasicAttackScript;
-        //CBasicAttackScript* BasicAttackScript = new CBasicAttackScript;
-        //BasicAttackScript->SetSkillType(SkillType::JINX_BASIC_ATTACK);
-        //return BasicAttackScript;
-    }
     case SkillType::JINX_W:
         return new CJinxWScript;
         break;
