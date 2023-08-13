@@ -2188,6 +2188,15 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			TurretBreak1->AddComponent(new CUnitScript);
 			TurretBreak2->AddComponent(new CUnitScript);
 
+			// 잔해, Break1, Break2에 Alpha Mtrl 설정
+			pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Rubble_alpha.mtrl"), 0);
+			pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Break1_alpha.mtrl"), 1);
+
+			TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Cloth1_alpha.mtrl"), 0);
+			TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Mage_alpha.mtrl"), 1);
+			TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage1_alpha.mtrl"), 0);
+			TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage2_alpha.mtrl"), 1);
+
 			// 포탑에게 
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
 
@@ -2196,13 +2205,6 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			{				
 				pObj->SetName(L"red_turret");
 				
-				// Rubble(잔해, 부모)
-				Ptr<CTexture> AlphaTex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png");
-				pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
-				pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, AlphaTex);
-				//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Rubble_red.mtrl"), 0);
-				//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Break1_red.mtrl"), 1);
-				
 				// TurretBase(본체)
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Cloth1_red.mtrl"), 0);
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Cloth2_red.mtrl"), 1);
@@ -2210,32 +2212,11 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Stage1_red.mtrl"), 3);
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Stage2_red.mtrl"), 4);
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Rubble_red.mtrl"), 5);
-				
-				// TurretBreak1(붕괴 애니메이션1)
-				TurretBreak1->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
-				TurretBreak1->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, AlphaTex);
-				//TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Cloth1_red.mtrl"), 0);
-				//TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Mage_red.mtrl"), 1);
-				
-				// TurretBreak2(붕괴 애니메이션2)
-				TurretBreak2->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
-				TurretBreak2->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, AlphaTex);
-				//TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage1_red.mtrl"), 0);
-				//TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage2_red.mtrl"), 1);
-
-				
 			}
 			else if (_objectInfo.faction == Faction::BLUE)
 			{
 				pObj->SetName(L"blue_turret");
 
-				// Rubble(잔해, 부모)
-				Ptr<CTexture> AlphaTex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png");
-				pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
-				pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, AlphaTex);
-				//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Rubble_blue.mtrl"), 0);
-				//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Break1_blue.mtrl"), 1);
-				
 				// TurretBase(본체)
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Cloth1_blue.mtrl"), 0);
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Cloth2_blue.mtrl"), 1);
@@ -2244,26 +2225,12 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Stage2_blue.mtrl"), 4);
 				TurretBase->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_idlebreak_Rubble_blue.mtrl"), 5);
 				
-				// TurretBreak1(붕괴 애니메이션1)
-				TurretBreak1->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
-				TurretBreak1->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, AlphaTex);
-				//TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Cloth1_blue.mtrl"), 0);
-				//TurretBreak1->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break1_Mage_blue.mtrl"), 1);
-				
-				// TurretBreak2(붕괴 애니메이션2)
-				TurretBreak2->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, AlphaTex);
-				TurretBreak2->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, AlphaTex);
-				//TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage1_blue.mtrl"), 0);
-				//TurretBreak2->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_break2_Mage2_blue.mtrl"), 1);
 			}
 
 			if (MyPlayer.host)
 			{
 				// 방장일 경우 TurretScript
 				pObj->AddComponent(new CTurretScript);
-				//CTurretScript* Script = pObj->GetScript<CTurretScript>();
-				//Script->SetLane(_objectInfo.lane);
-
 			}
 			else
 			{
@@ -2449,6 +2416,11 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 			CGameObject* UserObj = FindAllObject(_skillInfo.OwnerId);
 			CGameObject* TargetObj = FindAllObject(_skillInfo.TargetId);
 
+			if (_skillInfo.skillType == SkillType::BASIC_ATTACK)
+			{
+				skill = UserObj->GetScript<CUnitScript>()->GetSkill(0);
+			}
+
 			// Skill Projectile 오브젝트 가지고 와서, 해당 투사체 스크립트와 서버 아이디 붙여줌
 			vector<CGameObject*> vecProj = skill->GetProjectile();
 
@@ -2483,6 +2455,11 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 			CSkill* skill = CSkillMgr::GetInst()->FindSkill(_skillInfo.skillType);
 
 			CGameObject* UserObj = FindAllObject(_skillInfo.OwnerId);
+
+			if (_skillInfo.skillType == SkillType::BASIC_ATTACK)
+			{
+				skill = UserObj->GetScript<CUnitScript>()->GetSkill(0);
+			}
 
 			// Skill Projectile 오브젝트 가지고 와서, 빈 UnitScript 스크립트와 서버 아이디 붙여줌
 			vector<CGameObject*> vecProj = skill->GetProjectile();
