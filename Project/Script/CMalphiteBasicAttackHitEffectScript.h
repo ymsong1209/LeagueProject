@@ -1,7 +1,7 @@
 #pragma once
 #include  <Engine/CScript.h>
 
-class CMalphiteBasicAttackScript :
+class CMalphiteBasicAttackHitEffectScript :
     public CScript
 {
 private:
@@ -11,11 +11,11 @@ private:
 public:
     virtual void begin() override;
     virtual void tick() override;
-    CLONE(CMalphiteBasicAttackScript);
+    CLONE(CMalphiteBasicAttackHitEffectScript);
 
 
 public:
-    CMalphiteBasicAttackScript();
-    ~CMalphiteBasicAttackScript();
+    CMalphiteBasicAttackHitEffectScript();
+    ~CMalphiteBasicAttackHitEffectScript();
 };
 

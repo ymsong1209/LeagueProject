@@ -1,19 +1,19 @@
 #include "pch.h"
-#include "CMalphiteBasicAttackScript.h"
+#include "CMalphiteBasicAttackHitEffectScript.h"
 
 #include <Engine/CKeyMgr.h>
 
-CMalphiteBasicAttackScript::CMalphiteBasicAttackScript()
-	: CScript((UINT)SCRIPT_TYPE::MALPHITEBASICATTACKSCRIPT)
+CMalphiteBasicAttackHitEffectScript::CMalphiteBasicAttackHitEffectScript()
+	: CScript((UINT)SCRIPT_TYPE::MALPHITEBASICATTACKHITEFFECTSCRIPT)
 	, m_bStartingPoint(false)
 {
 }
 
-CMalphiteBasicAttackScript::~CMalphiteBasicAttackScript()
+CMalphiteBasicAttackHitEffectScript::~CMalphiteBasicAttackHitEffectScript()
 {
 }
 
-void CMalphiteBasicAttackScript::begin()
+void CMalphiteBasicAttackHitEffectScript::begin()
 {
 	m_bStartingPoint = true;
 	GetOwner()->Transform()->SetRelativeScale(Vec3(0.f, 0.f, 0.f));
@@ -22,7 +22,7 @@ void CMalphiteBasicAttackScript::begin()
 	GetOwner()->MeshRender()->GetMaterial(0)->SetShader(CResMgr::GetInst()->FindRes<CGraphicsShader>(L"Std2DEffectShaderOneOne"));
 }
 
-void CMalphiteBasicAttackScript::tick()
+void CMalphiteBasicAttackHitEffectScript::tick()
 {
 	if (m_bStartingPoint == true)
 	{

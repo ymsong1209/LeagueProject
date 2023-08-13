@@ -26,7 +26,7 @@ CMalphiteBasicAttack::CMalphiteBasicAttack()
 	m_iProjectileCount = 1;
 
 	// ««∞› ¿Ã∆Â∆Æ
-	Ptr<CPrefab> MalphiteBasicAttackHitEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\BasicAttack.prefab");
+	Ptr<CPrefab> MalphiteBasicAttackHitEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MalphiteBasicAttackHitEffect.prefab");
 	m_SkillHitEffect = MalphiteBasicAttackHitEffect;
 }
 

@@ -29,7 +29,7 @@
 #include "CKillLogUIScript.h"
 #include "CKrugMiniScript.h"
 #include "CKrugScript.h"
-#include "CMalphiteBasicAttackScript.h"
+#include "CMalphiteBasicAttackHitEffectScript.h"
 #include "CMalphiteEDecalScript.h"
 #include "CMalphiteEScript.h"
 #include "CMalphiteQDecalScript.h"
@@ -97,7 +97,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CKillLogUIScript");
 	_vec.push_back(L"CKrugMiniScript");
 	_vec.push_back(L"CKrugScript");
-	_vec.push_back(L"CMalphiteBasicAttackScript");
+	_vec.push_back(L"CMalphiteBasicAttackHitEffectScript");
 	_vec.push_back(L"CMalphiteEDecalScript");
 	_vec.push_back(L"CMalphiteEScript");
 	_vec.push_back(L"CMalphiteQDecalScript");
@@ -194,8 +194,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CKrugMiniScript;
 	if (L"CKrugScript" == _strScriptName)
 		return new CKrugScript;
-	if (L"CMalphiteBasicAttackScript" == _strScriptName)
-		return new CMalphiteBasicAttackScript;
+	if (L"CMalphiteBasicAttackHitEffectScript" == _strScriptName)
+		return new CMalphiteBasicAttackHitEffectScript;
 	if (L"CMalphiteEDecalScript" == _strScriptName)
 		return new CMalphiteEDecalScript;
 	if (L"CMalphiteEScript" == _strScriptName)
@@ -359,8 +359,8 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::KRUGSCRIPT:
 		return new CKrugScript;
 		break;
-	case (UINT)SCRIPT_TYPE::MALPHITEBASICATTACKSCRIPT:
-		return new CMalphiteBasicAttackScript;
+	case (UINT)SCRIPT_TYPE::MALPHITEBASICATTACKHITEFFECTSCRIPT:
+		return new CMalphiteBasicAttackHitEffectScript;
 		break;
 	case (UINT)SCRIPT_TYPE::MALPHITEEDECALSCRIPT:
 		return new CMalphiteEDecalScript;
@@ -590,8 +590,8 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CKrugScript";
 		break;
 
-	case SCRIPT_TYPE::MALPHITEBASICATTACKSCRIPT:
-		return L"CMalphiteBasicAttackScript";
+	case SCRIPT_TYPE::MALPHITEBASICATTACKHITEFFECTSCRIPT:
+		return L"CMalphiteBasicAttackHitEffectScript";
 		break;
 
 	case SCRIPT_TYPE::MALPHITEEDECALSCRIPT:

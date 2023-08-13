@@ -7,7 +7,7 @@
 #include "CJinxEScript.h"
 #include "CJinxRScript.h"
 
-#include "CMalphiteBasicAttackScript.h"
+#include "CMalphiteBasicAttackHitEffectScript.h"
 #include "CMalphiteQScript.h"
 #include "CMalphiteEScript.h"
 #include "CMalphiteRScript.h"
