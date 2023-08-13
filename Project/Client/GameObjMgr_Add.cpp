@@ -47,6 +47,8 @@
 #include <Script/CGrompScript.h>
 
 #include <Script/CTurretScript.h>
+#include <Script/CInhibitorScript.h>
+#include <Script/CNexusScript.h>
 
 #include <Script/CMurkWolfScript.h>
 #include <Script/CMurkWolfMiniScript.h>
@@ -2271,16 +2273,27 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 		case UnitType::INHIBITOR:
 		{
-			pMeshData = nullptr;
-			pObj = nullptr;
-			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Inhibitor.fbx");
-			pObj = pMeshData->Instantiate();
-			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
-			pObj->GetRenderComponent()->SetFrustumCheck(true);
-			pObj->Animator3D()->PlayRepeat(L"Inhibitor\\inhibitor_idle1.anm_skinned_mesh.001", true, true, 0.1f, 0.2f);
-			pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
+			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\Inhibitor.prefab");
+			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
+			pObj = pPrefab->Instantiate();
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetOutlineThickness(0.072f);
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
-			pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\inhibitor_Destroyed_alpha.mtrl"), 1);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider3D()->SetAbsolute(true);
+			//pMeshData = nullptr;
+			//pObj = nullptr;
+			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Inhibitor.fbx");
+			//pObj = pMeshData->Instantiate();
+			//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
+			//pObj->GetRenderComponent()->SetFrustumCheck(true);
+			//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\inhibitor_Destroyed_alpha.mtrl"), 1);
+			//pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
+			//pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+			//pObj->Transform()->SetUseMouseOutline(true);
+			//pObj->Transform()->SetOutlineThickness(0.072f);
 
 			if (_objectInfo.faction == Faction::RED)
 			{
@@ -2290,6 +2303,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			else if (_objectInfo.faction == Faction::BLUE)
 			{
 				pObj->SetName(L"blue_Inhibitor");
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\inhibitor_blue_Mtrl.mtrl"), 0);
 
 			}
 			//억제기 평상시 애니메이션은 idle1 애니메이션임!! 
@@ -2297,11 +2311,8 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			//억제기가 폭발할때는 0번머터리얼에 alphaTex 이미지를 넣어주고, 1번머터리얼에 억제기 전용 destroy텍스쳐를 입혀주면됨 (따로 세팅해줘야함)
 			if (MyPlayer.host)
 			{
-				//pObj->AddComponent(new CInhibitorScript);
-				// script->setLane, _objectInfo.lane
-				pObj->AddComponent(new CUnitScript);  // 추후 주석처리
+				pObj->AddComponent(new CInhibitorScript);  // 추후 주석처리
 				// 공격범위 시야 자식오브젝트도 추가해야할듯.
-
 			}
 			else
 			{
@@ -2310,13 +2321,15 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 			// 공통
 			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetUnitDead(true);
 			Script->SetServerID(_objectId);
 			Script->SetFaction(_objectInfo.faction);
+			Script->SetLane(_objectInfo.lane);
 			Script->SetUnitType(UnitType::INHIBITOR);
 			SpawnGameObject(pObj
 				, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z)
 				, L"Structure");
-			pObj->GetRenderComponent()->SetFrustumCheck(true);
+	
 
 			CGameObject* HPBar = new CGameObject;
 			HPBar->SetName(L"TurretBar");
@@ -2416,11 +2429,6 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 			CGameObject* UserObj = FindAllObject(_skillInfo.OwnerId);
 			CGameObject* TargetObj = FindAllObject(_skillInfo.TargetId);
 
-			if (_skillInfo.skillType == SkillType::BASIC_ATTACK)
-			{
-				skill = UserObj->GetScript<CUnitScript>()->GetSkill(0);
-			}
-
 			// Skill Projectile 오브젝트 가지고 와서, 해당 투사체 스크립트와 서버 아이디 붙여줌
 			vector<CGameObject*> vecProj = skill->GetProjectile();
 
@@ -2455,11 +2463,6 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 			CSkill* skill = CSkillMgr::GetInst()->FindSkill(_skillInfo.skillType);
 
 			CGameObject* UserObj = FindAllObject(_skillInfo.OwnerId);
-
-			if (_skillInfo.skillType == SkillType::BASIC_ATTACK)
-			{
-				skill = UserObj->GetScript<CUnitScript>()->GetSkill(0);
-			}
 
 			// Skill Projectile 오브젝트 가지고 와서, 빈 UnitScript 스크립트와 서버 아이디 붙여줌
 			vector<CGameObject*> vecProj = skill->GetProjectile();

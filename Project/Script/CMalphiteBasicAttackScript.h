@@ -1,5 +1,6 @@
 #pragma once
 #include  <Engine/CScript.h>
+
 class CMalphiteBasicAttackScript :
     public CScript
 {

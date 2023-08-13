@@ -8,6 +8,7 @@ CBasicAttackScript::CBasicAttackScript()
 	m_fProjectileSpeed = 100.f;
 }
 
+
 CBasicAttackScript::~CBasicAttackScript()
 {
 }
@@ -54,7 +55,7 @@ void CBasicAttackScript::BeginOverlap(CCollider2D* _Other)
 	if (_Other == m_TargetObj->Collider2D())
 	{
 		// 방장컴이 서버에게 이 투사체가 피격자와 충돌했다고 전달
-		CSendServerEventMgr::GetInst()->SendHitPacket(GetServerID(), m_iServerTargetID, m_iServerUserID, 1, SkillType::BASIC_ATTACK);
+		CSendServerEventMgr::GetInst()->SendHitPacket(GetServerID(), m_iServerTargetID, m_iServerUserID, 1, m_skillType);
 	
 		// 이후 사라짐
 		m_fProjectileSpeed = 0.f;
