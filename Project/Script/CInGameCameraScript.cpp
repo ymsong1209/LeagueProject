@@ -78,6 +78,7 @@ void CInGameCameraScript::tick()
 
 
 	Vec3 CamPos = TargetCamera->Transform()->GetRelativePos();
+	CamPos.y = 0.f;
 	Vec3 CamForward = TargetCamera->Transform()->GetWorldDir(DIR_TYPE::FRONT);
 	Vec3 CamUp = TargetCamera->Transform()->GetWorldDir(DIR_TYPE::UP);
 	CSound::UpdateListenerAttributes(CamPos, CamForward, CamUp);

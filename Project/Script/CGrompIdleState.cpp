@@ -31,6 +31,12 @@ void CGrompIdleState::tick()
 		GetOwner()->Animator3D()->PlayOnce(basestring);
 		UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 		CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, basestring, false,false, false, 0.0f);
+
+		if (m_iIdleAnimNum == 2) {
+			Vec3 GrompPos = GetOwner()->Transform()->GetRelativePos();
+			CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\gromp\\idle2.mp3", 1, 0.5f, true, 200.f, GrompPos, Faction::NONE);
+		}
+		
 	}
 	CJungleIdleState::tick();
 }

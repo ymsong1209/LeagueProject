@@ -67,7 +67,6 @@ void CMinionAttackState::Enter()
 	CSkill* BasicAttack = MinionScript->GetSkill(0);
 	BasicAttack->SetUserObj(GetOwner());
 	BasicAttack->SetTargetObj(Target);
-
 	BasicAttack->Use();
 	MinionScript->ResetAttackCoolTime();
 }
