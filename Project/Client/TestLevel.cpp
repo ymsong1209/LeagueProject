@@ -687,12 +687,12 @@ void CreateTestLevel()
 	BloomTestObject->SetName(L"BloomTestObject");
 	BloomTestObject->AddComponent(new CTransform);
 	BloomTestObject->AddComponent(new CMeshRender);
-	BloomTestObject->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	BloomTestObject->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
 	BloomTestObject->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3D_DeferredMtrl"), 0);
 	BloomTestObject->MeshRender()->GetDynamicMaterial(0);
 	BloomTestObject->MeshRender()->GetMaterial(0)->SetScalarParam(SCALAR_PARAM::FLOAT_1, &BloomTestNum);
 	BloomTestObject->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Red.png"));
-	BloomTestObject->Transform()->SetRelativeScale(100.f, 100.f, 1.f);
+	BloomTestObject->Transform()->SetRelativeScale(100.f, 100.f, 100.f);
 	BloomTestObject->MeshRender()->SetBloomObject(true);
 
 	SpawnGameObject(BloomTestObject, Vec3(-1700.f, 0.f, 0.f), 0);
@@ -700,17 +700,18 @@ void CreateTestLevel()
 
 
 
-	//CGameObject* BloomFilter = new CGameObject;
-	//BloomFilter->SetName(L"BloomFilter");
-	//BloomFilter->AddComponent(new CTransform);
-	//BloomFilter->AddComponent(new CMeshRender);
-	//BloomFilter->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	//BloomFilter->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"BloomMtrl"), 0);
+	CGameObject* BloomFilter = new CGameObject;
+	BloomFilter->SetName(L"BloomFilter");
+	BloomFilter->AddComponent(new CTransform);
+	BloomFilter->AddComponent(new CMeshRender);
+	BloomFilter->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	BloomFilter->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"BloomMtrl"), 0);
+	BloomFilter->MeshRender()->GetMaterial(0)->SetTexParam(TEX_1, CResMgr::GetInst()->FindRes<CTexture>(L"EmissiveTargetTex"));
 
-	//BloomFilter->MeshRender()->SetFrustumCheck(false);
-	//
+	BloomFilter->MeshRender()->SetFrustumCheck(false);
+	
 
-	//SpawnGameObject(BloomFilter, Vec3(0.f, 0.f, 0.f), 0);
+	SpawnGameObject(BloomFilter, Vec3(0.f, 0.f, 0.f), 0);
 
 
 
