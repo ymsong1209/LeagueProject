@@ -17,9 +17,11 @@ private:
 	// My Player Prev
 	CUnitScript* MyPlayerScript;
 	Vec3 PrevPos = Vec3(0, 0, 0);  // playerScript의 prevPos는 매 틱마다 이전좌표고, 이건 1/10초전 좌표.
+	Vec3 PrevRot = Vec3(0, 0, 0);
 	float PrevHP = 55;
 	float PrevMP = 55;
 	UINT  PrevCC = CC::NO_CC;
+
 
 	// Objects, PlacedObjects Prev
 	map<uint64, Vec3> _objectsPrevPos;
