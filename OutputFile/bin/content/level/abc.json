@@ -770,7 +770,7 @@
                             },
                             "vRelativeRot": {
                                 "x": 0.0,
-                                "y": 0.0,
+                                "y": -0.0,
                                 "z": 0.0
                             },
                             "bAbsolute": false,
@@ -779,7 +779,7 @@
                             "IsShootingRay": false,
                             "RayRange": 20.0,
                             "UseMouseOutLine": false,
-                            "Outlinethickness": 0.07199999690055847
+                            "Outlinethickness": 0.0
                         },
                         {
                             "MESHRENDER": 10,
@@ -802,8 +802,8 @@
                             "iMtrlCount": 1,
                             "vecMtrls[0]SharedMtrl": {
                                 "IsNull": false,
-                                "Key": "TurretBlazeMtrl",
-                                "RelativePath": ""
+                                "Key": "material\\TurretBlazeMtrl.mtrl",
+                                "RelativePath": "material\\TurretBlazeMtrl.mtrl"
                             },
                             "DynamicMtrls": [
                                 {
@@ -823,11 +823,11 @@
                                     "y": 0.0
                                 },
                                 "OutputTexMovingStyle": 0,
-                                "isAdditiveTextureUsed": 0,
+                                "isAdditiveTextureUsed": 1,
                                 "AdditiveColor": {
-                                    "x": 0.0,
-                                    "y": 0.0,
-                                    "z": 0.0,
+                                    "x": 0.1568627506494522,
+                                    "y": 0.0784313753247261,
+                                    "z": 0.0784313753247261,
                                     "w": 0.0
                                 },
                                 "PunctureTextureValue": {
@@ -851,7 +851,9 @@
                                 },
                                 {
                                     "Texture[1]": {
-                                        "IsNull": true
+                                        "IsNull": false,
+                                        "Key": "texture\\Malphite\\malphite_base_z_hiteffect.dds",
+                                        "RelativePath": "texture\\Malphite\\malphite_base_z_hiteffect.dds"
                                     }
                                 }
                             ]
@@ -872,7 +874,7 @@
                                     },
                                     "vRelativeScale": {
                                         "x": 0.0,
-                                        "y": 119.00700378417969,
+                                        "y": 119.0,
                                         "z": 1.0
                                     },
                                     "vRelativeRot": {
@@ -886,7 +888,7 @@
                                     "IsShootingRay": false,
                                     "RayRange": 20.0,
                                     "UseMouseOutLine": false,
-                                    "Outlinethickness": 0.07199999690055847
+                                    "Outlinethickness": 0.0
                                 },
                                 {
                                     "MESHRENDER": 10,
@@ -909,8 +911,8 @@
                                     "iMtrlCount": 1,
                                     "vecMtrls[0]SharedMtrl": {
                                         "IsNull": false,
-                                        "Key": "TurretTrailMtrl",
-                                        "RelativePath": ""
+                                        "Key": "material\\TurretTrailMtrl.mtrl",
+                                        "RelativePath": "material\\TurretTrailMtrl.mtrl"
                                     },
                                     "DynamicMtrls": [
                                         {
@@ -920,45 +922,49 @@
                                     ],
                                     "MeshMoveDataInfo": {
                                         "OutputTexFuncValue": {
-                                            "x": 0.0,
+                                            "x": 1.0,
                                             "y": 0.0,
                                             "z": 0.0,
                                             "w": 0.0
                                         },
                                         "OutputTePreviousPos": {
-                                            "x": 0.0,
+                                            "x": 585.0404663085938,
                                             "y": 0.0
                                         },
-                                        "OutputTexMovingStyle": 0,
-                                        "isAdditiveTextureUsed": 0,
+                                        "OutputTexMovingStyle": 1,
+                                        "isAdditiveTextureUsed": 1,
                                         "AdditiveColor": {
-                                            "x": 0.0,
-                                            "y": 0.0,
-                                            "z": 0.0,
+                                            "x": 0.47058823704719543,
+                                            "y": 0.19607843458652496,
+                                            "z": 0.19607843458652496,
                                             "w": 0.0
                                         },
                                         "PunctureTextureValue": {
-                                            "x": 0.0,
+                                            "x": 0.4000000059604645,
                                             "y": 0.0,
                                             "z": 0.0,
                                             "w": 0.0
                                         },
                                         "PunctureTexPreviousPos": {
-                                            "x": 0.0,
-                                            "y": 0.0
+                                            "x": 11.4924898147583,
+                                            "y": 90.31194305419922
                                         },
-                                        "isPunctureTextureUsed": 0,
-                                        "PunctureTexMovingStyle": 0
+                                        "isPunctureTextureUsed": 1,
+                                        "PunctureTexMovingStyle": 2
                                     },
                                     "MeshTexArray": [
                                         {
                                             "Texture[0]": {
-                                                "IsNull": true
+                                                "IsNull": false,
+                                                "Key": "texture\\Morde_Test\\Base_e_Puncture.dds",
+                                                "RelativePath": "texture\\Morde_Test\\Base_e_Puncture.dds"
                                             }
                                         },
                                         {
                                             "Texture[1]": {
-                                                "IsNull": true
+                                                "IsNull": false,
+                                                "Key": "texture\\Malphite\\malphite_base_p_glowing_fire.dds",
+                                                "RelativePath": "texture\\Malphite\\malphite_base_p_glowing_fire.dds"
                                             }
                                         }
                                     ]
