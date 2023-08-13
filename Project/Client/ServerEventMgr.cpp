@@ -17,8 +17,7 @@
 #include <Script/CChampionScript.h>
 #include <Script/CGameEvent.h>
 #include <Script/CGameEventMgr.h>
-#include <Script/CSkillMgr.h>
-#include <Script/CSkill.h>
+
 
 ServerEventMgr::ServerEventMgr()
 {
@@ -270,20 +269,6 @@ void ServerEventMgr::clienttick()
 					}
 				}
 
-				// 피격 이펙트 생성
-				 
-				// 스킬 맞은 애
-				CGameObject* skillTargetObj = GameObjMgr::GetInst()->FindAllObject(skillInfo->TargetId);
-
-				// _SkillInfo를 까서, 어떤 Skill인지 가지고 옴
-				CSkill* skill = CSkillMgr::GetInst()->FindSkill(skillInfo->skillType);
-
-				// 스킬 타겟의 몸 주변에 이펙트를 생성
-				if (skill->GetSkillHitEffect() != nullptr)
-				{
-					SpawnGameObject(skill->GetSkillHitEffect(), skillTargetObj->Transform()->GetRelativePos(), L"Effect");
-					skill->GetSkillHitEffect()->SetLifeSpan(0.5f);
-				}
 			}
 			break;
 

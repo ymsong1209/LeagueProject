@@ -17,6 +17,9 @@ void CRazorBeakMiniN2AState::Enter()
 	GetOwner()->Animator3D()->PlayOnce(L"RazorBeak_Mini\\sru_razorbeakmini_n2a", true, 0.5f);
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"RazorBeak_Mini\\sru_razorbeakmini_n2a", false, false, true, 0.5f);
+
+	Vec3 RazorbeakPos = GetOwner()->Transform()->GetRelativePos();
+	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\razorbeak_mini\\n2a.mp3", 1, 0.5f, true, 200.f, RazorbeakPos, Faction::NONE);
 	CJungleN2AState::Enter();
 }
 

@@ -12,7 +12,7 @@ CBasicAttack::CBasicAttack()
 	m_fCoolDown = 0.f;
 	m_iLevel = 1;
 
-	// 투사체 생성
+	 //투사체 생성
 	CGameObject* Projectile = new CGameObject;
 	Projectile->AddComponent(new CTransform);
 	Projectile->AddComponent(new CCollider2D);
@@ -26,7 +26,7 @@ CBasicAttack::CBasicAttack()
 	NewPrefab->RegisterProtoObject(PrefabObject);
 	
 	m_vecSkillObj.push_back(NewPrefab);
-	
+
 	// 투사체 스크립트
 	m_iProjectileCount = 1;
 	m_ProjectileScript = new CBasicAttackScript;
@@ -44,6 +44,7 @@ void CBasicAttack::tick()
 
 bool CBasicAttack::Use()
 {
+
 	// 서버에게 기본 공격 사용 신호를 전달
 	CSendServerEventMgr::GetInst()->SendUseSkillPacket(
 		m_UserObj->GetScript<CUnitScript>()->GetServerID(),
@@ -93,9 +94,6 @@ void CBasicAttack::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, 
 
 
 	CSkill::GetHit(_UserScript,  _TargetScript, _Skilllevel);
-
-	// 맞을 시 피격 이펙트 패킷 전송
-	//CSendServerEventMgr::GetInst()->어쩌구 (유저, 타겟, 스킬타입 등)
 
 	// 피격자 사망시 KDACS 패킷 전송
 	if (_TargetScript->GetCurHP() <= 0)

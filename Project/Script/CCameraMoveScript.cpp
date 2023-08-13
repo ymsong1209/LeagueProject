@@ -36,6 +36,7 @@ void CCameraMoveScript::tick()
 	}
 
 	Vec3 CamPos = GetOwner()->Transform()->GetRelativePos();
+	CamPos.y = 0.f;
 	Vec3 CamForward = GetOwner()->Transform()->GetWorldDir(DIR_TYPE::FRONT);
 	Vec3 CamUp = GetOwner()->Transform()->GetWorldDir(DIR_TYPE::UP);
 	CSound::UpdateListenerAttributes(CamPos, CamForward, CamUp);
