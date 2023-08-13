@@ -17,8 +17,11 @@ CInhibitorIdleState::~CInhibitorIdleState()
 void CInhibitorIdleState::tick()
 {
 	// 죽으면 Broken상태로 전환
-	if (GetOwnerFSM()->GetOwner()->GetScript<CInhibitorScript>()->GetCurHP() <=0)
+	if (GetOwnerFSM()->GetOwner()->GetScript<CInhibitorScript>()->GetCurHP() <= 0)
+	{
 		GetOwnerFSM()->ChangeState(L"Broken");
+		GetOwnerFSM()->GetOwner()->GetScript<CInhibitorScript>()->SetUnitDead(true);
+	}
 }
 
 void CInhibitorIdleState::Enter()

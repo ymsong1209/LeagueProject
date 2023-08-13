@@ -8,7 +8,6 @@
 #include <Engine/CTimeMgr.h>
 
 CInhibitorBrokenState::CInhibitorBrokenState()
-	: m_fRespawnTime(0)
 {
 }
 
@@ -18,20 +17,17 @@ CInhibitorBrokenState::~CInhibitorBrokenState()
 
 void CInhibitorBrokenState::tick()
 {
-	// RespawnTime이 지나면 Respawn 상태로 전환
-	m_fRespawnTime -= DT;
-
-	if(m_fRespawnTime <=0)
+	// Broken 애니메이션이 끝나면 Respawn 상태로 전환
+	if (GetOwner()->Animator3D()->GetCurAnim()->IsFinish())
+	{
 		GetOwnerFSM()->ChangeState(L"Respawn");
+	}
 }
 
 void CInhibitorBrokenState::Enter()
 {
 	CUnitState::Enter();
 	CInhibitorScript* InhibitorScript = GetOwner()->GetScript<CInhibitorScript>();
-
-	// RespawnTime  지정
-	m_fRespawnTime = InhibitorScript->GetRespawnTime();
 
 	// 재질 설정
 	if (InhibitorScript->GetFaction() == Faction::RED)
@@ -56,15 +52,15 @@ void CInhibitorBrokenState::Enter()
 	}
 
 	// 애니메이션 재생
-	GetOwner()->Animator3D()->PlayOnce(L"Inhibitor\\inhibitor_death.anm_skinned_mesh.001", false);
+	GetOwner()->Animator3D()->PlayOnce(L"Inhibitor\\inhibitor_death.anm_skinned_mesh.001", true, 0.1f, 1.f);
 
 	// 애니메이션 패킷 전송
 	CSendServerEventMgr::GetInst()->SendAnimPacket(InhibitorScript->GetServerID(),
 		L"Inhibitor\\inhibitor_death.anm_skinned_mesh.001"
 		, false
 		, false
-		, false
-		, 0.f
+		, true
+		, 0.1f
 		, 1.f);
 }
 

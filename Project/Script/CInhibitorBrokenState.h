@@ -8,7 +8,6 @@ public:
     ~CInhibitorBrokenState();
 
 private:
-    float   m_fRespawnTime;
 
 public:
     virtual void tick() override;

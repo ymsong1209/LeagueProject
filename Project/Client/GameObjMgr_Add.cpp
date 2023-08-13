@@ -2281,6 +2281,8 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
 			pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\inhibitor_Destroyed_alpha.mtrl"), 1);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider3D()->SetAbsolute(true);
 			//pMeshData = nullptr;
 			//pObj = nullptr;
 			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Inhibitor.fbx");

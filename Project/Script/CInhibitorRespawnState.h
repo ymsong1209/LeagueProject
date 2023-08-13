@@ -7,6 +7,9 @@ public:
     CInhibitorRespawnState();
     ~CInhibitorRespawnState();
 
+private:
+    float   m_fRespawnTime;
+
 public:
     virtual void tick() override;
     virtual void Enter() override;

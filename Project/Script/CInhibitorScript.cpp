@@ -9,9 +9,9 @@
 CInhibitorScript::CInhibitorScript()
 	:CStructureScript((UINT)SCRIPT_TYPE::INHIBITORSCRIPT)
 	, m_vecTurrets{}
-	, m_fRespawnTime(0)
+	, m_fRespawnTime(5)
 {
-	m_fMaxHP = 50.f;
+	m_fMaxHP = 30.f;
 }
 
 CInhibitorScript::~CInhibitorScript()
@@ -83,31 +83,24 @@ void CInhibitorScript::CheckStatus()
 {
 	// 공격 가능한지 여부 체크
 	// 포탑이 파괴되었다면 무조건 공격 불가
-	if (m_fHP <= 0)
-	{
-		m_bUnitDead = true;
-	
-		if (GetOwner()->Fsm()->GetCurState()->GetName() != L"Broken")
-			GetOwner()->Fsm()->ChangeState(L"Broken");
-	
+
+	if (m_vecTurrets.size() < 3)
 		return;
-	}
-	else
+
+	if (GetOwner()->Fsm()->GetCurState()->GetName() == L"Broken"
+		|| GetOwner()->Fsm()->GetCurState()->GetName() == L"Respawn")
+		return;
+
+	// 포탑 레이어에서 모든 포탑 오브젝트를 가져와서
+	// 본인 Lane의 모든 포탑이 Dead 상태인지 확인
+	for (int i = 0; i < 3; i++)
 	{
-		if (m_vecTurrets.size() < 3)
-			return;
+		CUnitScript* TurretScript = m_vecTurrets[i]->GetScript<CUnitScript>();
+		if (!TurretScript->IsUnitDead())
+			break;
 
-		// 포탑 레이어에서 모든 포탑 오브젝트를 가져와서
-		// 본인 Lane의 모든 포탑이 Dead 상태인지 확인
-		for (int i = 0; i < 3; i++)
-		{
-			CUnitScript* TurretScript = m_vecTurrets[i]->GetScript<CUnitScript>();
-			if (!TurretScript->IsUnitDead())
-				break;
-
-			// 마지막 Turret까지 dead라면, dead상태 해제
-			if (i == 2)
-				m_bUnitDead = false;
-		}
+		// 마지막 Turret까지 dead라면, dead상태 해제
+		if (i == 2)
+			m_bUnitDead = false;
 	}
 }
