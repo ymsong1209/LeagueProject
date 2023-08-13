@@ -34,7 +34,6 @@ protected:
 	CProjectileScript*		m_ProjectileScript;
 
 	vector<Ptr<CPrefab>>	m_vecSkillObj;			// 스킬 사용 시 생성할 투사체 등
-	Ptr<CPrefab>			m_SkillHitEffect;
 	int						m_iProjectileCount;		// 투사체 개수
 
 
@@ -49,7 +48,6 @@ public:
 	virtual void tick() = 0;		// 쿨타임 계산해줌. 필수!
 	virtual bool Use() = 0;			// 각 스킬마다 다른 사용 효과 작성. 필수!
 	virtual vector<CGameObject*> GetProjectile();
-	virtual CGameObject* GetSkillHitEffect();
 
 	virtual	void GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _skillLevel);	// 투사체 등이 맞았을 때 호출되는 함수
 
