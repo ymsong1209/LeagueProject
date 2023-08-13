@@ -29,8 +29,8 @@ void CTurretScript::begin()
 {
 	m_Skill[0] = new CBasicAttack;
 	m_Skill[0]->SetOwnerScript(this);
-	Ptr<CPrefab> TurretProjectile = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\TurretBlaze.prefab");
-	m_Skill[0]->SetProjectileObj(TurretProjectile); // 투사체 프리팹 설정
+	//Ptr<CPrefab> TurretProjectile = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\TurretBlaze.prefab");
+	//m_Skill[0]->SetProjectileObj(TurretProjectile); // 투사체 프리팹 설정
 	m_SkillLevel[0] = 1;
 
 	// 오브젝트가 현재 챔피언의 사거리 내에 있는지 확인
