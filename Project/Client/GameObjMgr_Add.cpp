@@ -2444,6 +2444,7 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 						, L"SkillProjectile");
 				}
 
+				vecProj[i]->GetRenderComponent()->SetFrustumCheck(true);
 				vecProj[i]->GetScript<CUnitScript>()->SetUnitType(UnitType::PROJECTILE);
 				_objects.insert(std::make_pair(_projectileId + i, vecProj[i]));
 			}
@@ -2478,6 +2479,7 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 						, L"SkillProjectile");
 				}
 
+				vecProj[i]->GetRenderComponent()->SetFrustumCheck(true);
 				vecProj[i]->GetScript<CUnitScript>()->SetUnitType(UnitType::PROJECTILE);
 				_objects.insert(std::make_pair(_projectileId+i, vecProj[i]));
 			}
