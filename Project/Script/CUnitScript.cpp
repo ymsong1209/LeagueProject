@@ -230,11 +230,6 @@ void CUnitScript::CheckCC()
 	}
 }
 
-void CUnitScript::SetCurCC(CC _cc)
-{
-	m_eCurCC = (UINT)_cc;
-}
-
 void CUnitScript::ApplyCC(CC _ccType)
 {
 	m_eCurCC |= _ccType;

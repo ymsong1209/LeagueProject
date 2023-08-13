@@ -108,6 +108,7 @@ public:
     void  SetMaxMP(float _f) { m_fMaxMP = _f; }
 
     void  SetCC(CC _cc) { m_eCurCC = _cc; }
+    void  SetCurCC(UINT _cc) { m_eCurCC = _cc; } // 서버가 cc를 세팅해주기 위함.
     void  SetLevel(int _level) { m_iLevel = _level; }
 
     float GetCurHP() { return m_fHP; }
@@ -147,7 +148,6 @@ public:
     // 비동기
     void GetHit(SkillType _type, CGameObject* _SkillTarget, CGameObject* _SkillUser, int _SkillLevel);
 
-    void SetCurCC(CC _cc); // 서버가 cc를 세팅해주기 위함.
     void ApplyCC(CC _ccType);
     void RemoveCC(CC _ccType);
     void ApplyRestraint(RESTRAINT restraint);
