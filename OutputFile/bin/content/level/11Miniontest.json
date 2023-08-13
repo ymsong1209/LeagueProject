@@ -6704,6 +6704,233 @@
                     ],
                     "scripts": [],
                     "children": []
+                },
+                {
+                    "ObjName": "BasicAttack",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 320.6036376953125,
+                                "y": 66.00006866455078,
+                                "z": 561.0598754882813
+                            },
+                            "vRelativeScale": {
+                                "x": 100.0,
+                                "y": 100.0,
+                                "z": 1.0
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0,
+                                "y": -0.0,
+                                "z": 0.0
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.0
+                        },
+                        {
+                            "MESHRENDER": 10,
+                            "Mesh": {
+                                "IsNull": false,
+                                "Key": "RectMesh",
+                                "RelativePath": ""
+                            },
+                            "fBounding": 150.0,
+                            "bFrustumCheck": true,
+                            "bDynamicShadow": false,
+                            "bShowDebugBoundShape": false,
+                            "bRaySightCulling": false,
+                            "bUseBoundingOffset": false,
+                            "vBoundingBoxOffset": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "iMtrlCount": 1,
+                            "vecMtrls[0]SharedMtrl": {
+                                "IsNull": false,
+                                "Key": "material\\MalphiteBasicAttack.mtrl",
+                                "RelativePath": "material\\MalphiteBasicAttack.mtrl"
+                            },
+                            "DynamicMtrls": [
+                                {
+                                    "vecMtrls[0]DynamicMtrl": null,
+                                    "IsDynamicMtrlExist": false
+                                }
+                            ],
+                            "MeshMoveDataInfo": {
+                                "OutputTexFuncValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "OutputTePreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "OutputTexMovingStyle": 0,
+                                "isAdditiveTextureUsed": 1,
+                                "AdditiveColor": {
+                                    "x": 255.0,
+                                    "y": 100.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTextureValue": {
+                                    "x": 0.0,
+                                    "y": 0.0,
+                                    "z": 0.0,
+                                    "w": 0.0
+                                },
+                                "PunctureTexPreviousPos": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                },
+                                "isPunctureTextureUsed": 1,
+                                "PunctureTexMovingStyle": 0
+                            },
+                            "MeshTexArray": [
+                                {
+                                    "Texture[0]": {
+                                        "IsNull": false,
+                                        "Key": "texture\\Malphite\\malphite_base_z_hiteffect.dds",
+                                        "RelativePath": "texture\\Malphite\\malphite_base_z_hiteffect.dds"
+                                    }
+                                },
+                                {
+                                    "Texture[1]": {
+                                        "IsNull": false,
+                                        "Key": "texture\\Malphite\\malphite_color-hurtbeam.dds",
+                                        "RelativePath": "texture\\Malphite\\malphite_color-hurtbeam.dds"
+                                    }
+                                }
+                            ]
+                        },
+                        16
+                    ],
+                    "scripts": [
+                        {
+                            "scriptName": "CMalphiteBasicAttackScript"
+                        }
+                    ],
+                    "children": [
+                        {
+                            "ObjName": "BasicAttackOutline",
+                            "components": [
+                                {
+                                    "TRANSFORM": 0,
+                                    "vRelativePos": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": -2.0
+                                    },
+                                    "vRelativeScale": {
+                                        "x": 100.0,
+                                        "y": 100.0,
+                                        "z": 1.0
+                                    },
+                                    "vRelativeRot": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "bAbsolute": true,
+                                    "IsNoGizmoObj": false,
+                                    "GizmoBounding_Radius": 50.0,
+                                    "IsShootingRay": false,
+                                    "RayRange": 20.0,
+                                    "UseMouseOutLine": false,
+                                    "Outlinethickness": 0.0
+                                },
+                                {
+                                    "MESHRENDER": 10,
+                                    "Mesh": {
+                                        "IsNull": false,
+                                        "Key": "RectMesh",
+                                        "RelativePath": ""
+                                    },
+                                    "fBounding": 150.0,
+                                    "bFrustumCheck": true,
+                                    "bDynamicShadow": false,
+                                    "bShowDebugBoundShape": false,
+                                    "bRaySightCulling": false,
+                                    "bUseBoundingOffset": false,
+                                    "vBoundingBoxOffset": {
+                                        "x": 0.0,
+                                        "y": 0.0,
+                                        "z": 0.0
+                                    },
+                                    "iMtrlCount": 1,
+                                    "vecMtrls[0]SharedMtrl": {
+                                        "IsNull": false,
+                                        "Key": "material\\MalphiteBasicAttackOutline.mtrl",
+                                        "RelativePath": "material\\MalphiteBasicAttackOutline.mtrl"
+                                    },
+                                    "DynamicMtrls": [
+                                        {
+                                            "vecMtrls[0]DynamicMtrl": null,
+                                            "IsDynamicMtrlExist": false
+                                        }
+                                    ],
+                                    "MeshMoveDataInfo": {
+                                        "OutputTexFuncValue": {
+                                            "x": 0.0,
+                                            "y": 0.0,
+                                            "z": 0.0,
+                                            "w": 0.0
+                                        },
+                                        "OutputTePreviousPos": {
+                                            "x": 0.0,
+                                            "y": 0.0
+                                        },
+                                        "OutputTexMovingStyle": 0,
+                                        "isAdditiveTextureUsed": 1,
+                                        "AdditiveColor": {
+                                            "x": 255.0,
+                                            "y": 100.0,
+                                            "z": 0.0,
+                                            "w": 0.0
+                                        },
+                                        "PunctureTextureValue": {
+                                            "x": 0.0,
+                                            "y": 0.0,
+                                            "z": 0.0,
+                                            "w": 0.0
+                                        },
+                                        "PunctureTexPreviousPos": {
+                                            "x": 0.0,
+                                            "y": 0.0
+                                        },
+                                        "isPunctureTextureUsed": 0,
+                                        "PunctureTexMovingStyle": 0
+                                    },
+                                    "MeshTexArray": [
+                                        {
+                                            "Texture[0]": {
+                                                "IsNull": true
+                                            }
+                                        },
+                                        {
+                                            "Texture[1]": {
+                                                "IsNull": false,
+                                                "Key": "texture\\Malphite\\malphite_base_p_glowing_fire.dds",
+                                                "RelativePath": "texture\\Malphite\\malphite_base_p_glowing_fire.dds"
+                                            }
+                                        }
+                                    ]
+                                },
+                                16
+                            ],
+                            "scripts": [],
+                            "children": []
+                        }
+                    ]
                 }
             ]
         },

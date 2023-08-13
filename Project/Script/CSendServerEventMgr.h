@@ -71,8 +71,6 @@ public:
     void SendDespawnPacket(UINT64 _objId, float _lifeSpan);
     void SendKDACSPacket(UINT64 _killerId, UINT64 _victimId, UnitType _deadObjUnitType);
     //Faction None : 모두가 들어야하는 사운드
-    //LoopCount : 0 - 반복재생, 1 : 1번재생, 2 : 2번재생
-    //range : 사운드 범위, 추천범위 : 200
     void SendSoundPacket(wstring _soundName, int _loopCount, float _fVolume, bool _bOverlap, float _fRange, Vec3 _soundPos, Faction _faction = Faction::NONE);
     
     //settexparam할때 보내는 패킷

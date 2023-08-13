@@ -1,7 +1,6 @@
 #pragma once
 #include "CMobScript.h"
 
-
 class CJungleMonsterScript :
     public CMobScript
 {

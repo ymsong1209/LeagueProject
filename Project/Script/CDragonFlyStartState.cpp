@@ -18,8 +18,6 @@ void CDragonFlyStartState::Enter()
 	GetOwner()->Animator3D()->PlayOnce(basename, true, 0.5f);
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, basename, false, false, true, 0.5f);
-
-
 }
 
 
