@@ -29,24 +29,11 @@ void CAttackRangeScript::BeginOverlap(CCollider2D* _Other)
 	if (Unit == nullptr)
 		return;
 
-	// 챔피언 / 포탑은 반대 진영, 중립 몬스터 공격 가능
-	if (User->GetUnitType() == UnitType::CHAMPION || User->GetUnitType() == UnitType::TURRET)
+	// 본인과 타겟 유닛의 진영이 다르다면
+	if (User->GetFaction() != Unit->GetFaction())
 	{
-		// 본인과 타겟 유닛의 진영이 다르다면
-		if (User->GetFaction() != Unit->GetFaction())
-		{
-			// 사거리 내의 오브젝트로 등록
-			m_vecUnitsInRange.push_back(_Other->GetOwner());
-		}
-	}
-	else
-	{
-		// 미니언, 정글몹의 경우 다른 중립 진영은 공격하지 않음
-		if (User->GetFaction() != Unit->GetFaction() && Unit->GetFaction() != Faction::NONE)
-		{
-			// 사거리 내의 오브젝트로 등록
-			m_vecUnitsInRange.push_back(_Other->GetOwner());
-		}
+		// 사거리 내의 오브젝트로 등록
+		m_vecUnitsInRange.push_back(_Other->GetOwner());
 	}
 }
 

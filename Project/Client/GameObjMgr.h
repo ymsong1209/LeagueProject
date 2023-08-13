@@ -25,6 +25,7 @@ private:
 	map<uint64, Vec3> _objectsPrevPos;
 	map<uint64, float> _objectsPrevHP;
 	map<uint64, float> _placedObjectsPrevHP;
+	map<uint64, bool> _placedObjectsPrevUnitDead;
 
 public:
 	map<uint64, CGameObject*> GetPlayers() { return _players; }

@@ -210,7 +210,9 @@ enum class DimensionType
 enum class SkillType
 {
 	NONE,
-	BASIC_ATTACK,		// 모든 종류의 평타 (미니언/정글몹의 기본공격 포함)
+	BASIC_ATTACK,			// 몹의 근접 평타
+	BASIC_RANGED_ATTACK,	// 미니언 원거리 평타
+	JINX_BASIC_ATTACK,
 	JINX_Q,
 	JINX_W,
 	JINX_E,
@@ -219,6 +221,7 @@ enum class SkillType
 	DARIUS_W,
 	DARIUS_E,
 	DARIUS_R,
+	MALPHITE_BASIC_ATTACK,
 	MALPHITE_Q,
 	MALPHITE_W,
 	MALPHITE_E,

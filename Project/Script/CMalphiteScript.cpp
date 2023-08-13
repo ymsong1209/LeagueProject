@@ -12,6 +12,7 @@
 #include "CMalphiteRState.h"
 
 #include "CBasicAttack.h"
+#include "CMalphiteBasicAttack.h"
 #include "CMalphiteQ.h"
 #include "CMalphiteW.h"
 #include "CMalphiteE.h"
@@ -53,7 +54,7 @@ void CMalphiteScript::begin()
 	GetOwner()->Fsm()->AddState(L"R", new CMalphiteRState);
 
 	// Skill¿¡ Jinx Skill Ãß°¡
-	m_Skill[0] = new CBasicAttack;
+	m_Skill[0] = new CMalphiteBasicAttack;
 	m_Skill[0]->SetOwnerScript(this);
 	m_Skill[1] = new CMalphiteQ;
 	m_Skill[1]->SetOwnerScript(this);
