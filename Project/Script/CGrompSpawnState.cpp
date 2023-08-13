@@ -16,6 +16,9 @@ void CGrompSpawnState::Enter()
 	GetOwner()->Animator3D()->PlayOnce(L"gromp\\_spawn");
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"gromp\\_spawn", false, false, false, 0.0f);
+
+	Vec3 GrompPos = GetOwner()->Transform()->GetRelativePos();
+	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\gromp\\spawn.mp3", 1, 0.5f, true, 200.f, GrompPos, Faction::NONE);
 	CJungleSpawnState::Enter();
 }
 
