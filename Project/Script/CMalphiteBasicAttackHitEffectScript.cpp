@@ -1,19 +1,19 @@
 #include "pch.h"
-#include "CMalphiteBasicAttackScript.h"
+#include "CMalphiteBasicAttackHitEffectScript.h"
 
 #include <Engine/CKeyMgr.h>
 
-CMalphiteBasicAttackScript::CMalphiteBasicAttackScript()
-	: CScript((UINT)SCRIPT_TYPE::MALPHITEBASICATTACKSCRIPT)
+CMalphiteBasicAttackHitEffectScript::CMalphiteBasicAttackHitEffectScript()
+	: CScript((UINT)SCRIPT_TYPE::MALPHITEBASICATTACKHITEFFECTSCRIPT)
 	, m_bStartingPoint(false)
 {
 }
 
-CMalphiteBasicAttackScript::~CMalphiteBasicAttackScript()
+CMalphiteBasicAttackHitEffectScript::~CMalphiteBasicAttackHitEffectScript()
 {
 }
 
-void CMalphiteBasicAttackScript::tick()
+void CMalphiteBasicAttackHitEffectScript::tick()
 {
 	if (CKeyMgr::GetInst()->GetKeyState(KEY::X) == KEY_STATE::TAP)
 	{

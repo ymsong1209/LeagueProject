@@ -497,7 +497,7 @@
     <ClCompile Include="CTestTurretScript.cpp">
       <Filter>Test</Filter>
     </ClCompile>
-    <ClCompile Include="CMalphiteBasicAttackScript.cpp">
+    <ClCompile Include="CMalphiteBasicAttackHitEffectScript.cpp">
       <Filter>Malphite</Filter>
     </ClCompile>
     <ClCompile Include="CGrowScaleScript.cpp">
@@ -555,7 +555,7 @@
     <ClInclude Include="CTestTurretScript.h">
       <Filter>Test</Filter>
     </ClInclude>
-    <ClInclude Include="CMalphiteBasicAttackScript.h">
+    <ClInclude Include="CMalphiteBasicAttackHitEffectScript.h">
       <Filter>Malphite</Filter>
     </ClInclude>
     <ClInclude Include="CGrowScaleScript.h">

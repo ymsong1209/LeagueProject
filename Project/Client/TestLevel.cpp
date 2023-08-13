@@ -42,7 +42,7 @@
 #include <Script/CKrugMiniScript.h>
 #include <Script/CBlueScript.h>
 #include <Script/CTestTurretScript.h>
-#include <Script/CMalphiteBasicAttackScript.h>
+#include <Script/CMalphiteBasicAttackHitEffectScript.h>
 #include <Script/CGrowScaleScript.h>
 //#include <Script/CRedScript.h>
 
@@ -170,43 +170,45 @@ void CreateTestLevel()
 
 	// Malpthie Basic Attack
 	CGameObject* BasicAttack = new CGameObject;
-	BasicAttack->SetName(L"BasicAttack");
-	BasicAttack = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\BasicAttack.prefab").Get()->Instantiate();
+	BasicAttack->SetName(L"MalphiteBasicAttackHitEffect");
+	//BasicAttack = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\BasicAttack.prefab").Get()->Instantiate();
+	
+
+	BasicAttack->AddComponent(new CTransform);
+	BasicAttack->AddComponent(new CMeshRender);
+	BasicAttack->AddComponent(new CMalphiteBasicAttackHitEffectScript);
+	BasicAttack->Transform()->SetUseMouseOutline(false);
+	BasicAttack->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+
+	BasicAttack->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\MalphiteBasicAttack.mtrl"), 0);
+	//BasicAttack->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MalphiteBasickAttackMtrl"), 0);
+	//BasicAttack->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\malphite_base_z_hiteffect.dds"));
+	BasicAttack->MeshRender()->SetPunctureTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\malphite_base_z_hiteffect.dds"));
+	BasicAttack->MeshRender()->SetAdditiveTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\malphite_color-hurtbeam.dds"));
+	BasicAttack->MeshRender()->SetAdditiveTexColor(Vec4(255.f, 100.f, 0.f, 0.f));
+	BasicAttack->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 1.f));
+	
+
+
+	// Malphite Basick Attack Outliner
+	CGameObject* BasickAttackOutline = new CGameObject;
+	BasickAttackOutline->SetName(L"BasicAttackOutline");
+	BasickAttackOutline->AddComponent(new CTransform);
+	BasickAttackOutline->AddComponent(new CMeshRender);
+	BasickAttackOutline->Transform()->SetUseMouseOutline(false);
+	BasickAttackOutline->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 1.f));
+	BasickAttackOutline->Transform()->SetRelativePos(Vec3(0.f, 0.f, -2.f));
+	BasickAttackOutline->Transform()->SetAbsolute(true);
+	BasickAttackOutline->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+
+	BasickAttackOutline->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\MalphiteBasicAttackOutline.mtrl"), 0);
+	//BasickAttackOutline->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MalphiteBasickAttackOutlineMtrl"), 0);
+	//BasickAttackOutline->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\caitlyn_skin06_radial_01.dds"));
+	BasickAttackOutline->MeshRender()->SetAdditiveTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\malphite_base_p_glowing_fire.dds"));
+	BasickAttackOutline->MeshRender()->SetAdditiveTexColor(Vec4(255.f, 100.f, 0.f, 0.f));
+	BasicAttack->AddChild(BasickAttackOutline);
+
 	SpawnGameObject(BasicAttack, Vec3(-950.f, 0.f, 0.f), 0);
-
-	//BasicAttack->AddComponent(new CTransform);
-	//BasicAttack->AddComponent(new CMeshRender);
-	//BasicAttack->AddComponent(new CMalphiteBasicAttackScript);
-	//BasicAttack->Transform()->SetUseMouseOutline(false);
-	//BasicAttack->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-
-	//BasicAttack->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\MalphiteBasicAttack.mtrl"), 0);
-	////BasicAttack->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MalphiteBasickAttackMtrl"), 0);
-	////BasicAttack->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\malphite_base_z_hiteffect.dds"));
-	//BasicAttack->MeshRender()->SetPunctureTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\malphite_base_z_hiteffect.dds"));
-	//BasicAttack->MeshRender()->SetAdditiveTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\malphite_color-hurtbeam.dds"));
-	//BasicAttack->MeshRender()->SetAdditiveTexColor(Vec4(255.f, 100.f, 0.f, 0.f));
-	//BasicAttack->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 1.f));
-	//
-
-
-	//// Malphite Basick Attack Outliner
-	//CGameObject* BasickAttackOutline = new CGameObject;
-	//BasickAttackOutline->SetName(L"BasicAttackOutline");
-	//BasickAttackOutline->AddComponent(new CTransform);
-	//BasickAttackOutline->AddComponent(new CMeshRender);
-	//BasickAttackOutline->Transform()->SetUseMouseOutline(false);
-	//BasickAttackOutline->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 1.f));
-	//BasickAttackOutline->Transform()->SetRelativePos(Vec3(0.f, 0.f, -2.f));
-	//BasickAttackOutline->Transform()->SetAbsolute(true);
-	//BasickAttackOutline->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-
-	//BasickAttackOutline->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\MalphiteBasicAttackOutline.mtrl"), 0);
-	////BasickAttackOutline->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"MalphiteBasickAttackOutlineMtrl"), 0);
-	////BasickAttackOutline->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\caitlyn_skin06_radial_01.dds"));
-	//BasickAttackOutline->MeshRender()->SetAdditiveTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Malphite\\malphite_base_p_glowing_fire.dds"));
-	//BasickAttackOutline->MeshRender()->SetAdditiveTexColor(Vec4(255.f, 100.f, 0.f, 0.f));
-	//BasicAttack->AddChild(BasickAttackOutline);
 
 
  

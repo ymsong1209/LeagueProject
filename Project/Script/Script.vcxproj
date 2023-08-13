@@ -265,7 +265,7 @@
     <ClInclude Include="CKrugReturnState.h" />
     <ClInclude Include="CKrugScript.h" />
     <ClInclude Include="CKrugSpawnState.h" />
-    <ClInclude Include="CMalphiteBasicAttackScript.h" />
+    <ClInclude Include="CMalphiteBasicAttackHitEffectScript.h" />
     <ClInclude Include="CMinimapUIScript.h" />
     <ClInclude Include="CMinionAttackState.h" />
     <ClInclude Include="CMinionDeathState.h" />
@@ -467,7 +467,7 @@
     <ClCompile Include="CKrugReturnState.cpp" />
     <ClCompile Include="CKrugScript.cpp" />
     <ClCompile Include="CKrugSpawnState.cpp" />
-    <ClCompile Include="CMalphiteBasicAttackScript.cpp" />
+    <ClCompile Include="CMalphiteBasicAttackHitEffectScript.cpp" />
     <ClCompile Include="CMinimapUIScript.cpp" />
     <ClCompile Include="CMinionAttackState.cpp" />
     <ClCompile Include="CMinionDeathState.cpp" />
