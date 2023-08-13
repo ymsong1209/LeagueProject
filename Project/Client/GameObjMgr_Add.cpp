@@ -2321,6 +2321,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 			// °øÅë
 			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetUnitDead(true);
 			Script->SetServerID(_objectId);
 			Script->SetFaction(_objectInfo.faction);
 			Script->SetLane(_objectInfo.lane);
