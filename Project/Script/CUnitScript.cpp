@@ -69,35 +69,41 @@ void CUnitScript::tick()
 	// 이 Unit이 본인 플레이어면 안함. -> 즉 본인플레이어 아니면 다 해야함.
 	// 이 프로그램이 방장 클라인데, 이 Unit은 방장이 아니면 안함. -> 즉 방장컴 objects들은 안함.(진짜니까)
 
+
+
 	if (CSendServerEventMgr::GetInst()->GetMyPlayer() == nullptr) return;
 
 	if (CSendServerEventMgr::GetInst()->GetMyPlayer()->GetScript<CUnitScript>()->IsHost()) // 방장일 경우 // 방장 외 챔피언은 보간 (그외X)
 	{
 		if ((m_eUnitType == UnitType::CHAMPION) && !m_bHost)
 		{
-			// 허상 움직임 보간 
 			Vec3 vCurPos = Transform()->GetRelativePos();
-			float duration = 0.1f; // 1/10초
+			float duration = 0.08f; // 1/10초
+
 			if (m_bRcvMove && vCurPos != m_vMovePos)
 			{
-				if (m_fT == 0) // 이동이 처음 시작되면 t를 초기화
-				{
-					m_fT = DT / duration;
-				}
-				else // 그렇지 않으면 t를 업데이트
-				{
-					m_fT += DT / duration;
-				}
+				// 목적지까지의 거리와 방향을 계산
+				Vec3 direction = m_vMovePos - vCurPos;
+				float totalDistance = direction.Length();
+				direction.Normalize();
 
-				if (m_fT > 1) m_fT = 1;
+				// 이동해야 할 거리를 계산
+				float moveDistance = totalDistance * (DT / duration);
 
-				Vec3 NewPos = vCurPos + (m_vMovePos - vCurPos) * m_fT;
+				// 새 위치를 계산
+				Vec3 NewPos = vCurPos + direction * moveDistance;
 				Transform()->SetRelativePos(NewPos);
 
-				if (m_fT >= 1)
+				// 회전값을 계산 (간단한 예시로 회전 방향은 m_vMoveDir을 사용)
+				Vec3 currentRot = Transform()->GetRelativeRot(); // 현재 오일러 각
+				Vec3 targetRot = m_vMoveDir; // 목표 오일러 각 (예시로 사용)
+				Vec3 NewRot = currentRot + (targetRot - currentRot) * (DT / duration);
+				Transform()->SetRelativeRot(NewRot);
+
+				// 목적지에 도달했는지 확인
+				if ((NewPos - m_vMovePos).Length() <= moveDistance)
 				{
 					m_bRcvMove = false;
-					m_fT = 0; // 다음 이동을 위해 t를 0으로 초기화
 				}
 			}
 		}
@@ -106,29 +112,33 @@ void CUnitScript::tick()
 	{
 		if (CSendServerEventMgr::GetInst()->GetMyPlayer() != GetOwner())
 		{
-			// 허상 움직임 보간 
 			Vec3 vCurPos = Transform()->GetRelativePos();
-			float duration = 0.1f; // 1/10초
+			float duration = 0.08f; // 1/10초
+
 			if (m_bRcvMove && vCurPos != m_vMovePos)
 			{
-				if (m_fT == 0) // 이동이 처음 시작되면 t를 초기화
-				{
-					m_fT = DT / duration;
-				}
-				else // 그렇지 않으면 t를 업데이트
-				{
-					m_fT += DT / duration;
-				}
+				// 목적지까지의 거리와 방향을 계산
+				Vec3 direction = m_vMovePos - vCurPos;
+				float totalDistance = direction.Length();
+				direction.Normalize();
 
-				if (m_fT > 1) m_fT = 1;
+				// 이동해야 할 거리를 계산
+				float moveDistance = totalDistance * (DT / duration);
 
-				Vec3 NewPos = vCurPos + (m_vMovePos - vCurPos) * m_fT;
+				// 새 위치를 계산
+				Vec3 NewPos = vCurPos + direction * moveDistance;
 				Transform()->SetRelativePos(NewPos);
 
-				if (m_fT >= 1)
+				// 회전값을 계산 (간단한 예시로 회전 방향은 m_vMoveDir을 사용)
+				Vec3 currentRot = Transform()->GetRelativeRot(); // 현재 오일러 각
+				Vec3 targetRot = m_vMoveDir; // 목표 오일러 각 (예시로 사용)
+				Vec3 NewRot = currentRot + (targetRot - currentRot) * (DT / duration);
+				Transform()->SetRelativeRot(NewRot);
+
+				// 목적지에 도달했는지 확인
+				if ((NewPos - m_vMovePos).Length() <= moveDistance)
 				{
 					m_bRcvMove = false;
-					m_fT = 0; // 다음 이동을 위해 t를 0으로 초기화
 				}
 			}
 		}

@@ -138,16 +138,7 @@ void CWorldHPSpawnScript::UISpawn(CGameObject* _PlayerObj, CGameObject* _WorldBa
 	Vec2 FontDefaultPos = Vec2(worldVec.x + (Resolution.x / 2), worldVec.y + (Resolution.y / 2));
 	Vec2 FontDisPlayPos = Vec2(FontDefaultPos.x, FontDefaultPos.y - 150.f);
 
-
-
-	//지금 이함수는 아더플레이어, 메인플레이어 모두에게 정보를 받아 시행됩니당~
-	// 
-	// 
-	// 
-	//===========다혜님 요기!============
 	DisplayLastCCEffect(_PlayerObj, NickName, FontDisPlayPos);
-	//==================================
-
 
 	tFont Font3 = {};
 	Font3.wInputText = to_wstring(UnitScript->GetLevel()); //레벨 폰트

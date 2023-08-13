@@ -23,8 +23,10 @@ void CKillLogUIScript::begin()
 void CKillLogUIScript::tick()
 {
 	killLogManager.displayTime = 3.f;
-	killLogManager.shiftSpeed = 200.f;
+	killLogManager.shiftSpeed = 300.f;
 	killLogManager.lineHeight = 75.f;
+
+
 
 	vector<tServerEvent> vServerEvent = CSendServerEventMgr::GetInst()->GetUIEvent();
 	for (size_t i = 0; i < vServerEvent.size(); ++i)
@@ -33,14 +35,38 @@ void CKillLogUIScript::tick()
 		{
 			CGameObject* KillerObj = (CGameObject*)vServerEvent[i].wParam;
 			CGameObject* VictimObj = (CGameObject*)vServerEvent[i].lParam;
+			if (KillerObj && VictimObj)
+			{
+				CUnitScript* KillerUnitScript = KillerObj->GetScript<CUnitScript>();
+				CUnitScript* VictimUnitScript = VictimObj->GetScript<CUnitScript>();
+				UnitType KillerType = KillerUnitScript->GetType();
+				UnitType VictimType = VictimUnitScript->GetType();
 
-			CUnitScript* KillerUnitScript = KillerObj->GetScript<CUnitScript>();
+				//===큰범주 타입====
+				SpecificType KillerSpecificType = GetSpecificType(KillerType);
+				SpecificType VictimSpecificType = GetSpecificType(VictimType);
 
-			ChampionType KillerChamp = KillerUnitScript->GetChampType();
-			Faction KillerFaction = KillerUnitScript->GetFaction();
-			ChampionType VictimChamp = VictimObj->GetScript<CUnitScript>()->GetChampType();
 
-			killLogManager.AddKillLog(KillerChamp, VictimChamp, KillerFaction);
+				if (KillerSpecificType == SpecificType::CHAMPION && VictimSpecificType == SpecificType::CHAMPION)
+				{
+					ChampionType KillerChamp = KillerUnitScript->GetChampType();
+					Faction KillerFaction = KillerUnitScript->GetFaction();
+					ChampionType VictimChamp = VictimObj->GetScript<CUnitScript>()->GetChampType();
+					killLogManager.AddKillLog(KillerChamp, VictimChamp, KillerFaction);
+				}
+
+				else if (KillerSpecificType == SpecificType::CHAMPION && VictimSpecificType == SpecificType::AllTURRET)
+				{
+
+				}
+
+				else if (KillerSpecificType == SpecificType::MINION && VictimSpecificType == SpecificType::AllTURRET)
+				{
+
+				}
+
+
+			}
 		}
 	}
 
@@ -59,15 +85,28 @@ void CKillLogUIScript::tick()
 	//처리 완료 후 서버의 킬로그 벡터값 클리어
 	//CSendServerEventMgr::GetInst()->ClearUISendEvent();
 
-	/* 디버깅용==========================
+	 //디버깅용==========================
 	if (KEY_TAP(KEY::I))
 		killLogManager.AddKillLog(ChampionType::MALPHITE, ChampionType::JINX, Faction::RED);
-		=================================*/
+	//=================================
 
 }
 
 void CKillLogUIScript::BeginOverlap(CCollider2D* _Other)
 {
+}
+
+SpecificType CKillLogUIScript::GetSpecificType(UnitType type)
+{
+	if (type == UnitType::CHAMPION)
+		return SpecificType::CHAMPION;
+	if (type >= UnitType::SOUTH_GROMP && type <= UnitType::NORTH_BLUE)
+		return SpecificType::JUNGLE_MOB;
+	if (type == UnitType::TURRET || type == UnitType::INHIBITOR || type == UnitType::NEXUS)
+		return SpecificType::AllTURRET;
+	if (type >= UnitType::MELEE_MINION && type <= UnitType::SUPER_MINION)
+		return SpecificType::MINION;
+	return SpecificType::Other;
 }
 
 
@@ -124,8 +163,8 @@ void KillLogManager::AddKillLog(ChampionType _killer, ChampionType _victim, Fact
 		SpawnKillLogObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\RedKillLog.mtrl"), 0);
 	SpawnKillLogObj->Transform()->SetAbsolute(true);
 
-	SpawnChampRect(log.killer, SpawnKillLogObj,Vec3(-37.f,0.f,-20.f));
-	SpawnChampRect(log.victim, SpawnKillLogObj,Vec3(60.f,0.f, -14.f));
+	SpawnChampRect(log.killer, SpawnKillLogObj, Vec3(-37.f, 0.f, -20.f));
+	SpawnChampRect(log.victim, SpawnKillLogObj, Vec3(60.f, 0.f, -14.f));
 
 	log.KillLogObj = SpawnKillLogObj;
 

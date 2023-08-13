@@ -36,7 +36,7 @@ void ServerEventMgr::sendtick(ClientServiceRef _service)
 	// ========================================
 	// 규칙 패킷(MovePacket) : 100ms = 1/10 sec
     // ========================================
-	if (time_diff.count() >= 100)  // 나중에 40으로 고침
+	if (time_diff.count() >= 16.67)  // 나중에 40으로 고침
     {     
         // 1. 본인 플레이어 move 패킷을 서버에 보낸다. (ObjectMove)
 		// 문제점 : 안움직일땐 move 패킷을 안보내서 LV,HP,MP 등 업데이트가 안됌...그냥 움직여라는 뜻.(나중에는 안움직일때도 패킷보내게 변경예정)
@@ -186,9 +186,10 @@ void ServerEventMgr::clienttick()
 					NewObject->GetScript<CUnitScript>()->SetUnitDead(objectMove->bUnitDead);
 					NewObject->GetScript<CUnitScript>()->SetRcvMove(true);
 					NewObject->GetScript<CUnitScript>()->SetMovePos(Vec3(objectMove->pos.x, objectMove->pos.y, objectMove->pos.z));
+					NewObject->GetScript<CUnitScript>()->SetMoveDir(Vec3(objectMove->moveDir.x, objectMove->moveDir.y, objectMove->moveDir.z));
 				}
 				//NewObject->Transform()->SetRelativePos(Vec3(objectMove->pos.x, objectMove->pos.y, objectMove->pos.z));
-				NewObject->Transform()->SetRelativeRot(Vec3(objectMove->moveDir.x, objectMove->moveDir.y, objectMove->moveDir.z));
+				//NewObject->Transform()->SetRelativeRot(Vec3(objectMove->moveDir.x, objectMove->moveDir.y, objectMove->moveDir.z));
 
 				// 사용이 끝난 후에는 메모리를 해제
 				delete objectMove;

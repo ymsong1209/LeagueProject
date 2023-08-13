@@ -16,7 +16,7 @@ struct KillLog
     float remainingTime;
     float targetY; // 추가된 targetY 속성
     float initialX = 1.f; // 시작 X 좌표
-    float moveSpeed = 100.0f; // 움직임 속도 (필요에 따라 수정)
+    float moveSpeed = 370.0f; // 움직임 속도 (필요에 따라 수정)
 };
 
 class KillLogManager
@@ -64,7 +64,7 @@ private:
 
     void MoveKillLogsHorizontally(float deltaTime)
     {
-        float moveAmount = 200.f * deltaTime;
+        float moveAmount = 300.f * deltaTime;
         for (auto& log : killLogs)
         {
             log.position.x += moveAmount;
@@ -103,6 +103,16 @@ private:
 
 };
 
+enum class SpecificType 
+{
+    CHAMPION,
+    JUNGLE_MOB,
+    MINION,
+    AllTURRET,
+    Other
+};
+
+
 class CKillLogUIScript :
     public CScript
 {
@@ -114,6 +124,10 @@ public:
     virtual void begin() override;
     virtual void tick() override;
     virtual void BeginOverlap(CCollider2D* _Other) override;
+
+
+    SpecificType GetSpecificType(UnitType type);
+
 
 
 public:

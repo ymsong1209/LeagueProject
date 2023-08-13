@@ -56,16 +56,25 @@ protected:
 
     bool                    m_bRcvMove;
     Vec3                    m_vMovePos;
+    Vec3                    m_vMoveDir;
+
     float                   m_fT;                // 보간 파라미터
 
     bool                    m_bAirBorneActive;
     Vec3                    m_vAirBorneStartPos;
     float                   m_fAirBorneVelocity;
 
+    //=============수정중============
+    Vec3 currentPos; // 현재 위치
+    Vec3 destination; // 목적지
+    Vec3 direction; // 목적지로 향하는 방향
+    float timeToNextPacket = 0; // 다음 패킷까지의 남은 시간
+
 public:
     void    SetRcvMove(bool _bool) { m_bRcvMove = _bool; }
     void    SetMovePos(Vec3 _vec3) { m_vMovePos = _vec3; }
-   
+    void    SetMoveDir(Vec3 _vec3) { m_vMoveDir = _vec3; }
+
     virtual void begin() override;
     virtual void tick() override;
     virtual void BeginOverlap(CCollider2D* _collider) override {};
