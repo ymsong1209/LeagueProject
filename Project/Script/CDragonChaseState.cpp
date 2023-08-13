@@ -18,6 +18,9 @@ void CDragonChaseState::Enter()
 	GetOwner()->Animator3D()->PlayRepeat(L"Elder_Dragon\\sru_dragon_flying_run", false);
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"Elder_Dragon\\sru_dragon_flying_run", true, false, false, 0.f);
+
+	Vec3 DragonPos = GetOwner()->Transform()->GetRelativePos();
+	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\dragon\\run.mp3", 1, 0.5f, true, 200.f, DragonPos, Faction::NONE);
 }
 
 void CDragonChaseState::tick()
@@ -45,6 +48,13 @@ void CDragonChaseState::tick()
 		script->PathFindMove(70.f, true);
 	}
 
+	//Enter때 초기화 안해주는 이유는 공격을 하고 다시 chase로 돌아오기 때문
+	m_fSoundTime += DT;
+	if (m_fSoundTime > 1.f) {
+		m_fSoundTime = 0.f;
+		Vec3 DragonPos = GetOwner()->Transform()->GetRelativePos();
+		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\dragon\\run.mp3", 1, 0.5f, true, 200.f, DragonPos, Faction::NONE);
+	}
 }
 
 void CDragonChaseState::Exit()
