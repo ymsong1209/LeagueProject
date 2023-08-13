@@ -15,15 +15,30 @@ CJinxW::CJinxW()
 	CGameObject* pObj = nullptr;
 	Ptr<CMeshData> pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx_W_Air.fbx");
 	pObj = pMeshData->Instantiate();
+	//pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\particle\\jinx_base_w_blade_trail.dds"));
 	pObj->AddComponent(new CCollider2D);
 	pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
 	pObj->Collider2D()->SetOffsetScale(Vec2(20.f, 20.f));
+	pObj->Collider2D()->SetOffsetPos(Vec3(0.f, -20.f, 0.f));
 	pObj->Collider2D()->SetDrawCollision(true);
+	pObj->Transform()->SetRelativeScale(Vec3(0.5f, 0.8f, 0.5f));
 	pObj->SetName(L"JinxW");
+
+	// 빛나는 구
+	CGameObject* pLight = new CGameObject;
+	pLight->AddComponent(new CTransform);
+	pLight->AddComponent(new CMeshRender);
+	pLight->Transform()->SetRelativeScale(Vec3(5.f, 5.f, 5.f));
+	pLight->Transform()->SetAbsolute(true);
+	pLight->Transform()->SetRelativePos(Vec3(0.f, -20.f, 0.f));
+	pLight->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CircleMesh"));
+	pLight->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\JinxW_air.mtrl"), 0);
+	pLight->ChangeLayer(8);
+	pObj->AddChild(pLight);
+	
 
 	Ptr<CPrefab> NewPrefab = new CPrefab;
 	NewPrefab->RegisterProtoObject(pObj);
-	pObj->Transform()->SetRelativeScale(Vec3(0.5f, 1.2f, 0.4f));
 	m_vecSkillObj.push_back(NewPrefab);
 
 	// 투사체 스크립트

@@ -24,8 +24,8 @@ void CJinxWScript::begin()
 	targetAngle = fmod(targetAngle + XM_PI, 2 * XM_PI) - XM_PI; // 범위를 -π ~ π 로 바꾸기
 	targetAngle += XMConvertToRadians(90); // 모델이 회전된 상태라서 z축 90도 회전(이걸로 모든 축이 바뀜)
 	GetOwner()->Transform()->SetRelativeRot(Vec3(0.f, 0.f, targetAngle));
-}
 
+}
 void CJinxWScript::tick()
 {
 	if (m_bUnitDead) return;
