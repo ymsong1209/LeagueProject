@@ -279,8 +279,11 @@ void ServerEventMgr::clienttick()
 				CSkill* skill = CSkillMgr::GetInst()->FindSkill(skillInfo->skillType);
 
 				// ½ºÅ³ Å¸°ÙÀÇ ¸ö ÁÖº¯¿¡ ÀÌÆåÆ®¸¦ »ý¼º
-				SpawnGameObject(skill->GetSkillHitEffect(), skillTargetObj->Transform()->GetRelativePos(), L"Effect");
-				skill->GetSkillHitEffect()->SetLifeSpan(0.5f);
+				if (skill->GetSkillHitEffect() != nullptr)
+				{
+					SpawnGameObject(skill->GetSkillHitEffect(), skillTargetObj->Transform()->GetRelativePos(), L"Effect");
+					skill->GetSkillHitEffect()->SetLifeSpan(0.5f);
+				}
 			}
 			break;
 

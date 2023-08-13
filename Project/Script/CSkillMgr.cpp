@@ -78,10 +78,18 @@ CProjectileScript* CSkillMgr::FindProjectileScript(SkillType _Type)
     switch (_Type)
     {
     case SkillType::BASIC_ATTACK:
-        return new CBasicAttackScript;
+    {
+        CBasicAttackScript* BasicAttackScript = new CBasicAttackScript;
+        BasicAttackScript->SetSkillType(SkillType::BASIC_ATTACK);
+        return BasicAttackScript;
+    }
         break;
     case SkillType::MALPHITE_BASIC_ATTACK:
-        return new CBasicAttackScript;
+    {
+        CBasicAttackScript* BasicAttackScript = new CBasicAttackScript;
+        BasicAttackScript->SetSkillType(SkillType::MALPHITE_BASIC_ATTACK);
+        return BasicAttackScript;
+    }
         break;
     case SkillType::JINX_W:
         return new CJinxWScript;

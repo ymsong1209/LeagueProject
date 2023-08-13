@@ -76,6 +76,9 @@ vector<CGameObject*> CSkill::GetProjectile()
 
 CGameObject* CSkill::GetSkillHitEffect()
 {
+	if (m_SkillHitEffect == nullptr)
+		return nullptr;
+
 	return m_SkillHitEffect->Instantiate();
 }
 

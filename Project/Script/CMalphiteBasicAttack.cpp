@@ -3,7 +3,7 @@
 
 CMalphiteBasicAttack::CMalphiteBasicAttack()
 {
-	m_strSkillName = L"BaseAttack";
+	m_strSkillName = L"MalphiteAttack";
 	m_fCoolDown = 0.f;
 	m_iLevel = 1;
 
@@ -40,7 +40,20 @@ void CMalphiteBasicAttack::tick()
 
 bool CMalphiteBasicAttack::Use()
 {
-	CBasicAttack::Use();
+	// 서버에게 기본 공격 사용 신호를 전달
+	CSendServerEventMgr::GetInst()->SendUseSkillPacket(
+		m_UserObj->GetScript<CUnitScript>()->GetServerID(),
+		m_TargetObj->GetScript<CUnitScript>()->GetServerID(),
+		1,				// 기본 공격의 레벨은 언제나 1
+		SkillType::MALPHITE_BASIC_ATTACK,
+		Vec3(0, 0, 0),
+		m_iProjectileCount,
+		false,
+		Vec3(0, 0, 0),
+		false,
+		Vec3(0, 0, 0));
+
+	return true;
 }
 
 void CMalphiteBasicAttack::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _skillLevel)
