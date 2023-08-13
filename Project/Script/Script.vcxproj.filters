@@ -10,7 +10,6 @@
     <ClCompile Include="CUnitState.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Script.cpp" />
-    <ClCompile Include="CTurretAttackScript.cpp" />
     <ClCompile Include="CGrompScript.cpp">
       <Filter>Scripts\Unit\Mob\Jungle\Gromp</Filter>
     </ClCompile>
@@ -634,12 +633,6 @@
     <ClCompile Include="CMalphiteRDecalScript.cpp">
       <Filter>Scripts\SkillProjectile\Malphite</Filter>
     </ClCompile>
-    <ClCompile Include="CInGameCameraScript.cpp">
-      <Filter>Scripts\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="CCameraMoveScript.cpp">
-      <Filter>Scripts\Camera</Filter>
-    </ClCompile>
     <ClCompile Include="CJinxEScript.cpp">
       <Filter>Scripts\SkillProjectile\Jinx</Filter>
     </ClCompile>
@@ -653,7 +646,6 @@
     <ClCompile Include="CSkillLevelUpUIScript.cpp" />
     <ClCompile Include="CSkillLvEffectUIScript.cpp" />
     <ClCompile Include="CKillLogUIScript.cpp" />
-    <ClCompile Include="CJinxRScript.cpp" />
     <ClCompile Include="CTurretBrokenState.cpp" />
     <ClCompile Include="CTurretIdleState.cpp" />
     <ClCompile Include="CTimedEffect.cpp">
@@ -661,6 +653,15 @@
     </ClCompile>
     <ClCompile Include="CGrowScaleScript.cpp" />
     <ClCompile Include="CMalphiteBasicAttackScript.cpp" />
+    <ClCompile Include="CJinxRScript.cpp">
+      <Filter>Scripts\SkillProjectile\Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CInGameCameraScript.cpp">
+      <Filter>Scripts\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CCameraMoveScript.cpp">
+      <Filter>Scripts\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -854,7 +855,6 @@
     <ClInclude Include="CSkillLevelUpUIScript.h" />
     <ClInclude Include="CSkillLvEffectUIScript.h" />
     <ClInclude Include="CKillLogUIScript.h" />
-    <ClInclude Include="CJinxRScript.h" />
     <ClInclude Include="CTurretBrokenState.h" />
     <ClInclude Include="CTurretIdleState.h" />
     <ClInclude Include="CTimedEffect.h">
@@ -862,6 +862,9 @@
     </ClInclude>
     <ClInclude Include="CGrowScaleScript.h" />
     <ClInclude Include="CMalphiteBasicAttackScript.h" />
+    <ClInclude Include="CJinxRScript.h">
+      <Filter>Scripts\SkillProjectile\Jinx</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">
@@ -1220,7 +1223,6 @@
     <ClInclude Include="CRedSpawnState.h">
       <Filter>Scripts\Unit\Mob\Jungle\Red</Filter>
     </ClInclude>
-    <ClInclude Include="CTurretAttackScript.h" />
     <ClInclude Include="CServerTypes.h">
       <Filter>Default</Filter>
     </ClInclude>
