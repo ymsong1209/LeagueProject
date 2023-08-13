@@ -64,11 +64,6 @@ protected:
     Vec3                    m_vAirBorneStartPos;
     float                   m_fAirBorneVelocity;
 
-    //=============수정중============
-    Vec3 currentPos; // 현재 위치
-    Vec3 destination; // 목적지
-    Vec3 direction; // 목적지로 향하는 방향
-    float timeToNextPacket = 0; // 다음 패킷까지의 남은 시간
 
 public:
     void    SetRcvMove(bool _bool) { m_bRcvMove = _bool; }
@@ -108,6 +103,7 @@ public:
     void  SetMaxMP(float _f) { m_fMaxMP = _f; }
 
     void  SetCC(CC _cc) { m_eCurCC = _cc; }
+    void  SetCurCC(UINT _cc) { m_eCurCC = _cc; } // 서버가 cc를 세팅해주기 위함.
     void  SetLevel(int _level) { m_iLevel = _level; }
 
     float GetCurHP() { return m_fHP; }
@@ -147,7 +143,6 @@ public:
     // 비동기
     void GetHit(SkillType _type, CGameObject* _SkillTarget, CGameObject* _SkillUser, int _SkillLevel);
 
-    void SetCurCC(CC _cc); // 서버가 cc를 세팅해주기 위함.
     void ApplyCC(CC _ccType);
     void RemoveCC(CC _ccType);
     void ApplyRestraint(RESTRAINT restraint);

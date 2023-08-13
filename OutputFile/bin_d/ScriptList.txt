@@ -1,3 +1,4 @@
+CAnnounceTimerUIScript
 CAttackRangeScript
 CBasicAttackScript
 CBlueScript

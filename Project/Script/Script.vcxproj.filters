@@ -659,6 +659,7 @@
     <ClCompile Include="CTimedEffect.cpp">
       <Filter>Scripts\Skill</Filter>
     </ClCompile>
+    <ClCompile Include="CAnnounceTimerUIScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -858,6 +859,7 @@
     <ClInclude Include="CTimedEffect.h">
       <Filter>Scripts\Skill</Filter>
     </ClInclude>
+    <ClInclude Include="CAnnounceTimerUIScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">

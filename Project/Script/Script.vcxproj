@@ -178,6 +178,7 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CAnnounceTimerUIScript.h" />
     <ClInclude Include="CAttackRangeScript.h" />
     <ClInclude Include="CBasicAttack.h" />
     <ClInclude Include="CBasicAttackScript.h" />
@@ -437,6 +438,7 @@
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CAnnounceTimerUIScript.cpp" />
     <ClCompile Include="CAttackRangeScript.cpp" />
     <ClCompile Include="CBasicAttack.cpp" />
     <ClCompile Include="CBasicAttackScript.cpp" />

@@ -64,11 +64,6 @@ protected:
     Vec3                    m_vAirBorneStartPos;
     float                   m_fAirBorneVelocity;
 
-    //=============수정중============
-    Vec3 currentPos; // 현재 위치
-    Vec3 destination; // 목적지
-    Vec3 direction; // 목적지로 향하는 방향
-    float timeToNextPacket = 0; // 다음 패킷까지의 남은 시간
 
 public:
     void    SetRcvMove(bool _bool) { m_bRcvMove = _bool; }
