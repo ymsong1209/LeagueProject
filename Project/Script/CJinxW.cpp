@@ -20,9 +20,10 @@ CJinxW::CJinxW()
 	pObj->Collider2D()->SetOffsetScale(Vec2(20.f, 20.f));
 	pObj->Collider2D()->SetDrawCollision(true);
 	pObj->SetName(L"JinxW");
+
 	Ptr<CPrefab> NewPrefab = new CPrefab;
 	NewPrefab->RegisterProtoObject(pObj);
-	pObj->Transform()->SetRelativeScale(Vec3(0.3f, 0.7f, 0.3f));
+	pObj->Transform()->SetRelativeScale(Vec3(0.5f, 1.2f, 0.4f));
 	m_vecSkillObj.push_back(NewPrefab);
 
 	// 투사체 스크립트
