@@ -229,11 +229,11 @@ void CreateTestLevel()
 
 
 	// Let's Make Jinx Rocket Basic Attack
-	auto Res = CResMgr::GetInst()->LoadFBX(L"fbx\\JinxqRocket.fbx");
+	auto Res = CResMgr::GetInst()->LoadFBX(L"fbx\\JinxQRockets.fbx");
 
 
 	CGameObject* JinxBasicRocketAttackEffect =
-		CResMgr::GetInst()->LoadFBX(L"fbx\\JinxqRocket.fbx")->Instantiate();
+		CResMgr::GetInst()->LoadFBX(L"fbx\\JinxQRockets.fbx")->Instantiate();
 
 
 	JinxBasicRocketAttackEffect->SetName(L"JinxBasicRocketAttackEffect");
