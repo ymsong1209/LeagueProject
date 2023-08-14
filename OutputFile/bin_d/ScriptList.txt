@@ -9,11 +9,13 @@ CCharacterUIScript
 CCoolDownUIScript
 CDragonHPUIScript
 CDragonScript
+CEndOfGameUIScript
 CExpRatioUIScript
 CFontUIScript
 CGrompScript
 CGrowScaleScript
 CHpMpRatioUIScript
+CIconTimerUIScript
 CInGameCameraScript
 CInhibitorScript
 CInventoryUIScript
@@ -49,6 +51,7 @@ CMurkWolfMiniScript
 CMurkWolfScript
 CNexusScript
 COtherPlayerScript
+CPlayerCSUIScript
 CPlayerScript
 CProjectileScript
 CRazorBeakMiniScript

@@ -583,12 +583,8 @@
     <ClCompile Include="CMalphiteRScript.cpp">
       <Filter>Scripts\SkillProjectile\Malphite</Filter>
     </ClCompile>
-    <ClCompile Include="CDragonHPUIScript.cpp" />
     <ClCompile Include="CJungleMINIHPScript.cpp" />
     <ClCompile Include="CJungleMobHPScript.cpp" />
-    <ClCompile Include="CMinionHPBarPosScript.cpp" />
-    <ClCompile Include="CMinionHPRatioScript.cpp" />
-    <ClCompile Include="CTurretHPUIScript.cpp" />
     <ClCompile Include="CMalphiteEDecalScript.cpp">
       <Filter>Scripts\SkillProjectile\Malphite</Filter>
     </ClCompile>
@@ -625,10 +621,6 @@
     <ClCompile Include="CMalphiteW.cpp">
       <Filter>Scripts\Skill\Malphite</Filter>
     </ClCompile>
-    <ClCompile Include="CSkillLevelUIScript.cpp" />
-    <ClCompile Include="CSkillLevelUpUIScript.cpp" />
-    <ClCompile Include="CSkillLvEffectUIScript.cpp" />
-    <ClCompile Include="CKillLogUIScript.cpp" />
     <ClCompile Include="CTimedEffect.cpp">
       <Filter>Scripts\Skill</Filter>
     </ClCompile>
@@ -849,12 +841,8 @@
     <ClInclude Include="CMalphiteRScript.h">
       <Filter>Scripts\SkillProjectile\Malphite</Filter>
     </ClInclude>
-    <ClInclude Include="CDragonHPUIScript.h" />
     <ClInclude Include="CJungleMINIHPScript.h" />
     <ClInclude Include="CJungleMobHPScript.h" />
-    <ClInclude Include="CMinionHPBarPosScript.h" />
-    <ClInclude Include="CMinionHPRatioScript.h" />
-    <ClInclude Include="CTurretHPUIScript.h" />
     <ClInclude Include="CMalphiteEDecalScript.h">
       <Filter>Scripts\SkillProjectile\Malphite</Filter>
     </ClInclude>
@@ -885,10 +873,6 @@
     <ClInclude Include="CMalphiteW.h">
       <Filter>Scripts\Skill\Malphite</Filter>
     </ClInclude>
-    <ClInclude Include="CSkillLevelUIScript.h" />
-    <ClInclude Include="CSkillLevelUpUIScript.h" />
-    <ClInclude Include="CSkillLvEffectUIScript.h" />
-    <ClInclude Include="CKillLogUIScript.h" />
     <ClInclude Include="CTimedEffect.h">
       <Filter>Scripts\Skill</Filter>
     </ClInclude>

@@ -286,6 +286,7 @@ enum class EVENT_TYPE
 	//그래서 이벤트매니저에 ui 리로드 이벤트 추가
 	INSPECTOR_RELOAD,
 	LAYER_CHANGE,		// wParam : 바꿀 오브젝트 lParam : 바꿀 레이어 번호
+	EXCEPT_LAYER_UI,
 };
 
 

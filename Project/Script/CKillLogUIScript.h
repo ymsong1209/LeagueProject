@@ -22,9 +22,9 @@ struct KillLog
 class KillLogManager
 {
 public:
-    float displayTime; // e.g., 8.0f
-    float shiftSpeed;  // e.g., 50.0f
-    float lineHeight;  // e.g., 20.0f
+    float displayTime; //  8.0f
+    float shiftSpeed;  //  50.0f
+    float lineHeight;  //  20.0f
     vector<KillLog> killLogs;
     bool needToShift = false;
     Vec3 initialPosition = Vec3(700, 100, 327); // Default position
@@ -64,7 +64,7 @@ private:
 
     void MoveKillLogsHorizontally(float deltaTime)
     {
-        float moveAmount = 300.f * deltaTime;
+        float moveAmount = 400.f * deltaTime;
         for (auto& log : killLogs)
         {
             log.position.x += moveAmount;
@@ -150,17 +150,18 @@ private:
 
     float displayTimer = 0.0f;
     const float displayDuration = 3.0f; // 오브젝트가 화면에 표시되는 시간 (3초)
+
+    CGameObject* EndOfGameObj;
 public:
     virtual void begin() override;
     virtual void tick() override;
     virtual void BeginOverlap(CCollider2D* _Other) override;
 
+    void IconSetting(CGameObject* _Obj, ChampionType ChampType);
+    void DisplayAnnounce(ChampionType _Killer, ChampionType _Victim, AnnounceType _Type);
 
     SpecificType GetSpecificType(UnitType type);
-
-    void DisplayAnnounce(ChampionType _Killer, ChampionType _Victim , AnnounceType _Type);
-    void AnnouncePlayerIcon(CGameObject* _Parent,ChampionType _Killer, ChampionType _Victim, AnnounceType _Type);
-    void IconSetting(CGameObject* _Obj, ChampionType ChampType);
+    void AnnouncePlayerIcon(CGameObject* _Parent, ChampionType _Killer, ChampionType _Victim, AnnounceType _Type);
 
     void AddAnnouncement(AnnounceType type, Faction _KillerFaction , 
         ChampionType _KillerChamp = ChampionType::NONE , ChampionType _VictimChamp = ChampionType::NONE,
@@ -174,8 +175,13 @@ public:
     void DisplayAnnounceAll(AnnounceType type, Faction _KillerFaction, ChampionType _KillerChamp, ChampionType _VictimChamp, UnitType _KillerUnitType, UnitType _VictimUnitType);
     void DisplayAnnounceTurret(ChampionType _Killer, Faction _KillerFaction, AnnounceType _Type);
 
+    void DisplayCS(CGameObject* _KillerChamp, UnitType _UnitType);
+
     CGameObject* SpawnAnnouncePanel(Vec3 _Scale, wstring _Name);
     CGameObject* SpawnIconPanel(Vec3 _Scale, wstring _Name);
+
+
+    void Announce_EndofGame(Faction _VictimFaction);
 
 public:
     CLONE(CKillLogUIScript);

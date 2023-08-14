@@ -9,6 +9,7 @@
 #include <Engine\CCamera.h>
 #include "CSkillLevelUIScript.h"
 #include "CSkillLevelUpUIScript.h"
+#include "CUnitScript.h"
 
 CCharacterUIScript::CCharacterUIScript()
 	:CUIScript(CHARACTERUISCRIPT)
@@ -47,12 +48,12 @@ void CCharacterUIScript::tick()
 		Font3.iFontColor = FONT_RGBA(252, 252, 250, 255);
 		UICamera->AddText(FONT_DOMAIN::TRANS, Font3);
 		//=======================
-
+		int CurChampLevel = CSendServerEventMgr::GetInst()->GetMyPlayer()->GetScript<CUnitScript>()->GetLevel();
 		//======레벨 폰트======
-		wstring Level = to_wstring((int)m_iPlayerLevel);
+		wstring Level = to_wstring((int)CurChampLevel);
 
 		tFont Font = {};
-		Font.wInputText = Level; //골드 폰트
+		Font.wInputText = Level;
 		Font.fontType = FONT_TYPE::RIX_KOR_L;
 		Font.fFontSize = 13.5;
 		Font.vDisplayPos = Vec2(573.4f, 973.f);
