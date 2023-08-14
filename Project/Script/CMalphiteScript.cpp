@@ -86,10 +86,9 @@ void CMalphiteScript::tick()
 
 			//ÀçÁúÀ» ¹Ù²ãÁÜ
 			UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
-			Ptr<CTexture> normaltex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\malphite.dds");
-			if (normaltex == nullptr) assert(nullptr);
-			GetOwner()->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, normaltex);
-			CSendServerEventMgr::GetInst()->SendSetTexParamPacket(targetId, 0, TEX_0, L"texture\\FBXTexture\\malphite.dds");
+			
+			GetOwner()->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\MAT_malphite.mtrl"), 0);
+			CSendServerEventMgr::GetInst()->SendSetMtrlPacket(targetId, 0, L"material\\MAT_malphite.mtrl");
 		}
 	}
 	

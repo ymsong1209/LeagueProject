@@ -23,19 +23,18 @@ void CScorePanelScript::tick()
 	//==========킬스코어 패널 폰트 출력==============
 	// 필요한 정보:
 	float runTime = WorldInfo.runningTime;
-	int blueScore = WorldInfo.blueScore;
-	int redScore = WorldInfo.redScore;
-	int MyKill = MyInfo.mykill;
-	int MyDeath = MyInfo.mydeath;
-	int MyCS = MyInfo.myCS;
+	int blueScore = CSendServerEventMgr::GetInst()->GetBlueScore();
+	int redScore = CSendServerEventMgr::GetInst()->GetRedScore();
+	int MyKill = CSendServerEventMgr::GetInst()->GetMyKillCnt();
+	int MyDeath = CSendServerEventMgr::GetInst()->GetMyDeathCnt();
+	int MyCS = CSendServerEventMgr::GetInst()->GetMyCSCnt();
 	//=======디버깅용===============
-	blueScore = 5;
+	/*blueScore = 5;
 	redScore = 12;
 	MyKill = 12;
 	MyDeath = 4;
-	MyCS = 57;
+	MyCS = 57;*/
 	//===============블루팀/레드팀=====================
-
 
 	tFont Font2 = {};
 	Font2.wInputText = to_wstring(blueScore);

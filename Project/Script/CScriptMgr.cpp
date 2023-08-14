@@ -12,11 +12,13 @@
 #include "CCoolDownUIScript.h"
 #include "CDragonHPUIScript.h"
 #include "CDragonScript.h"
+#include "CEndOfGameUIScript.h"
 #include "CExpRatioUIScript.h"
 #include "CFontUIScript.h"
 #include "CGrompScript.h"
 #include "CGrowScaleScript.h"
 #include "CHpMpRatioUIScript.h"
+#include "CIconTimerUIScript.h"
 #include "CInGameCameraScript.h"
 #include "CInhibitorScript.h"
 #include "CInventoryUIScript.h"
@@ -51,6 +53,7 @@
 #include "CMurkWolfScript.h"
 #include "CNexusScript.h"
 #include "COtherPlayerScript.h"
+#include "CPlayerCSUIScript.h"
 #include "CPlayerScript.h"
 #include "CProjectileScript.h"
 #include "CRazorBeakMiniScript.h"
@@ -85,11 +88,13 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CCoolDownUIScript");
 	_vec.push_back(L"CDragonHPUIScript");
 	_vec.push_back(L"CDragonScript");
+	_vec.push_back(L"CEndOfGameUIScript");
 	_vec.push_back(L"CExpRatioUIScript");
 	_vec.push_back(L"CFontUIScript");
 	_vec.push_back(L"CGrompScript");
 	_vec.push_back(L"CGrowScaleScript");
 	_vec.push_back(L"CHpMpRatioUIScript");
+	_vec.push_back(L"CIconTimerUIScript");
 	_vec.push_back(L"CInGameCameraScript");
 	_vec.push_back(L"CInhibitorScript");
 	_vec.push_back(L"CInventoryUIScript");
@@ -105,6 +110,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CKrugMiniScript");
 	_vec.push_back(L"CKrugScript");
 	_vec.push_back(L"CMalphiteBasicAttackHitEffectScript");
+	_vec.push_back(L"CMalphiteBasicAttackScript");
 	_vec.push_back(L"CMalphiteEDecalScript");
 	_vec.push_back(L"CMalphiteEScript");
 	_vec.push_back(L"CMalphiteQDecalScript");
@@ -124,6 +130,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CMurkWolfScript");
 	_vec.push_back(L"CNexusScript");
 	_vec.push_back(L"COtherPlayerScript");
+	_vec.push_back(L"CPlayerCSUIScript");
 	_vec.push_back(L"CPlayerScript");
 	_vec.push_back(L"CProjectileScript");
 	_vec.push_back(L"CRazorBeakMiniScript");
@@ -137,6 +144,8 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CSkillLvEffectUIScript");
 	_vec.push_back(L"CSoundTestScript");
 	_vec.push_back(L"CStructureScript");
+	_vec.push_back(L"CTestTurretScript");
+	_vec.push_back(L"CTurretAttackScript");
 	_vec.push_back(L"CTurretBasicAttackScript");
 	_vec.push_back(L"CTurretHPUIScript");
 	_vec.push_back(L"CTurretScript");
@@ -170,6 +179,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CDragonHPUIScript;
 	if (L"CDragonScript" == _strScriptName)
 		return new CDragonScript;
+	if (L"CEndOfGameUIScript" == _strScriptName)
+		return new CEndOfGameUIScript;
 	if (L"CExpRatioUIScript" == _strScriptName)
 		return new CExpRatioUIScript;
 	if (L"CFontUIScript" == _strScriptName)
@@ -180,6 +191,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CGrowScaleScript;
 	if (L"CHpMpRatioUIScript" == _strScriptName)
 		return new CHpMpRatioUIScript;
+	if (L"CIconTimerUIScript" == _strScriptName)
+		return new CIconTimerUIScript;
 	if (L"CInGameCameraScript" == _strScriptName)
 		return new CInGameCameraScript;
 	if (L"CInhibitorScript" == _strScriptName)
@@ -248,6 +261,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CNexusScript;
 	if (L"COtherPlayerScript" == _strScriptName)
 		return new COtherPlayerScript;
+	if (L"CPlayerCSUIScript" == _strScriptName)
+		return new CPlayerCSUIScript;
 	if (L"CPlayerScript" == _strScriptName)
 		return new CPlayerScript;
 	if (L"CProjectileScript" == _strScriptName)
@@ -328,6 +343,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::DRAGONSCRIPT:
 		return new CDragonScript;
 		break;
+	case (UINT)SCRIPT_TYPE::ENDOFGAMEUISCRIPT:
+		return new CEndOfGameUIScript;
+		break;
 	case (UINT)SCRIPT_TYPE::EXPRATIOUISCRIPT:
 		return new CExpRatioUIScript;
 		break;
@@ -342,6 +360,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::HPMPRATIOUISCRIPT:
 		return new CHpMpRatioUIScript;
+		break;
+	case (UINT)SCRIPT_TYPE::ICONTIMERUISCRIPT:
+		return new CIconTimerUIScript;
 		break;
 	case (UINT)SCRIPT_TYPE::INGAMECAMERASCRIPT:
 		return new CInGameCameraScript;
@@ -444,6 +465,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::OTHERPLAYERSCRIPT:
 		return new COtherPlayerScript;
+		break;
+	case (UINT)SCRIPT_TYPE::PLAYERCSUISCRIPT:
+		return new CPlayerCSUIScript;
 		break;
 	case (UINT)SCRIPT_TYPE::PLAYERSCRIPT:
 		return new CPlayerScript;
@@ -557,6 +581,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CDragonScript";
 		break;
 
+	case SCRIPT_TYPE::ENDOFGAMEUISCRIPT:
+		return L"CEndOfGameUIScript";
+		break;
+
 	case SCRIPT_TYPE::EXPRATIOUISCRIPT:
 		return L"CExpRatioUIScript";
 		break;
@@ -575,6 +603,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::HPMPRATIOUISCRIPT:
 		return L"CHpMpRatioUIScript";
+		break;
+
+	case SCRIPT_TYPE::ICONTIMERUISCRIPT:
+		return L"CIconTimerUIScript";
 		break;
 
 	case SCRIPT_TYPE::INGAMECAMERASCRIPT:
@@ -635,6 +667,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::MALPHITEBASICATTACKHITEFFECTSCRIPT:
 		return L"CMalphiteBasicAttackHitEffectScript";
+		break;
+
+	case SCRIPT_TYPE::MALPHITEBASICATTACKSCRIPT:
+		return L"CMalphiteBasicAttackScript";
 		break;
 
 	case SCRIPT_TYPE::MALPHITEEDECALSCRIPT:
@@ -711,6 +747,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::OTHERPLAYERSCRIPT:
 		return L"COtherPlayerScript";
+		break;
+
+	case SCRIPT_TYPE::PLAYERCSUISCRIPT:
+		return L"CPlayerCSUIScript";
 		break;
 
 	case SCRIPT_TYPE::PLAYERSCRIPT:

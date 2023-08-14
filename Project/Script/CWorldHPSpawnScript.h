@@ -14,6 +14,7 @@ private:
     CGameObject* m_MyPlayer;
     vector<CGameObject*> m_OtherPlayer;
 
+    Vec3 m_vMainPlayerUIPos;
 public:
     virtual void begin() override;
     virtual void tick() override;
@@ -25,7 +26,7 @@ public:
 	// 우선순위에 따라 CC 타입을 반환하는 함수
     wstring GetHighestPriorityCC(UINT m_eCurCC, wstring _NickName);
 
-
+    
 
 public:
     CLONE(CWorldHPSpawnScript);

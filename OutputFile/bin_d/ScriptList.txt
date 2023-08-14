@@ -9,11 +9,13 @@ CCharacterUIScript
 CCoolDownUIScript
 CDragonHPUIScript
 CDragonScript
+CEndOfGameUIScript
 CExpRatioUIScript
 CFontUIScript
 CGrompScript
 CGrowScaleScript
 CHpMpRatioUIScript
+CIconTimerUIScript
 CInGameCameraScript
 CInhibitorScript
 CInventoryUIScript
@@ -29,6 +31,7 @@ CKillLogUIScript
 CKrugMiniScript
 CKrugScript
 CMalphiteBasicAttackHitEffectScript
+CMalphiteBasicAttackScript
 CMalphiteEDecalScript
 CMalphiteEScript
 CMalphiteQDecalScript
@@ -48,6 +51,7 @@ CMurkWolfMiniScript
 CMurkWolfScript
 CNexusScript
 COtherPlayerScript
+CPlayerCSUIScript
 CPlayerScript
 CProjectileScript
 CRazorBeakMiniScript
@@ -61,6 +65,8 @@ CSkillLevelUpUIScript
 CSkillLvEffectUIScript
 CSoundTestScript
 CStructureScript
+CTestTurretScript
+CTurretAttackScript
 CTurretBasicAttackScript
 CTurretHPUIScript
 CTurretScript
