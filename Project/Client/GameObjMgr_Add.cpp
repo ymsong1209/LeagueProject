@@ -214,7 +214,8 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 			pObj->MeshRender()->GetDynamicMaterial(i);
 		}
 		
-
+		pObj->GetRenderComponent()->SetDynamicShadow(true);
+		
 		_players.insert(std::make_pair(_info.id, pObj));
 	}
 }
@@ -2151,6 +2152,13 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 				SpawnGameObject(pObj, Vec3(1451, 0.f, 656.f), L"Mob");
 			}
 			
+			CGameObject* DragonBar = new CGameObject;
+			DragonBar->SetName(L"DragonBar");
+			DragonBar->AddComponent(new CTransform);
+			DragonBar->AddComponent(new CMeshRender);
+			DragonBar->AddComponent(new CDragonHPUIScript);
+			pObj->AddChild(DragonBar);
+
 			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
 			CUnitScript* Script = pObj->GetScript<CUnitScript>();
 			Script->SetServerID(_objectId);  // 서버 id
@@ -2161,6 +2169,8 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+
+			
 		}
 		break;
 		// =======================================================================================================================
@@ -2256,6 +2266,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 				, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z)
 				, L"Structure");
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+
+			if (Script->GetFaction() == MyPlayer.faction) {
+				pObj->Transform()->SetIsShootingRay(true);
+				pObj->Transform()->SetRayRange(200.f);
+			}
+			else {
+				pObj->Transform()->SetIsShootingRay(false);
+			}
 
 			CGameObject* HPBar = new CGameObject;
 			HPBar->SetName(L"TurretBar");
@@ -2466,9 +2484,25 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 				vecProj[i]->GetScript<CUnitScript>()->SetUnitType(UnitType::PROJECTILE);
 				_objects.insert(std::make_pair(_projectileId+i, vecProj[i]));
 			}
+		}
 
+		// 스킬 이펙트 생성
+		CGameObject* UserObj = FindAllObject(_skillInfo.OwnerId);
 
+		// 스킬 쓰는 애
+		CGameObject* skillTargetObj = UserObj;
+
+		// _SkillInfo를 까서, 어떤 Skill인지 가지고 옴
+		CSkill* skill = CSkillMgr::GetInst()->FindSkill(_skillInfo.skillType);
+
+		// 시전자 몸 주변에 이펙트를 생성
+		if (skill->GetSkillEffect() != nullptr)
+		{
+			SpawnGameObject(skill->GetSkillEffect(), UserObj->Transform()->GetRelativePos(), L"Effect");
+			skill->GetSkillHitEffect()->SetLifeSpan(0.5f);
 		}
 	}
 }
+
+
 

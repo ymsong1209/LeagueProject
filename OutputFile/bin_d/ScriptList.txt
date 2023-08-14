@@ -17,6 +17,7 @@ CHpMpRatioUIScript
 CInGameCameraScript
 CInhibitorScript
 CInventoryUIScript
+CJinxBasicAttackScript
 CJinxEScript
 CJinxRScript
 CJinxScript
@@ -28,6 +29,7 @@ CKillLogUIScript
 CKrugMiniScript
 CKrugScript
 CMalphiteBasicAttackHitEffectScript
+CMalphiteBasicAttackScript
 CMalphiteEDecalScript
 CMalphiteEScript
 CMalphiteQDecalScript
@@ -53,13 +55,14 @@ CRazorBeakMiniScript
 CRazorBeakScript
 CRedScript
 CScorePanelScript
+CShopKeeperNorthScript
+CShopKeeperSouthScript
 CSkillLevelUIScript
 CSkillLevelUpUIScript
 CSkillLvEffectUIScript
 CSoundTestScript
 CStructureScript
-CTestTurretScript
-CTurretAttackScript
+CTurretBasicAttackScript
 CTurretHPUIScript
 CTurretScript
 CUIScript

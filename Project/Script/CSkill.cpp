@@ -82,6 +82,14 @@ CGameObject* CSkill::GetSkillHitEffect()
 	return m_SkillHitEffect->Instantiate();
 }
 
+CGameObject* CSkill::GetSkillEffect()
+{
+	if (m_SkillEffect == nullptr)
+		return nullptr;
+
+	return m_SkillEffect->Instantiate();
+}
+
 void CSkill::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _skillLevel)
 {
 	// 스킬을 쏜 사람도 챔피언, 맞는 사람도 챔피언일 경우

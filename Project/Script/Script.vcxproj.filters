@@ -681,6 +681,21 @@
     <ClCompile Include="CNexusBrokenState.cpp">
       <Filter>State\Unit\Structure\Nexus</Filter>
     </ClCompile>
+    <ClCompile Include="CAnnounceTimerUIScript.cpp" />
+    <ClCompile Include="CShopKeeperNorthScript.cpp" />
+    <ClCompile Include="CShopKeeperSouthScript.cpp" />
+    <ClCompile Include="CJinxBasicAttack.cpp">
+      <Filter>Scripts\Skill\Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxBasicAttackScript.cpp">
+      <Filter>Scripts\SkillProjectile\Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CTurretBasicAttackScript.cpp">
+      <Filter>Scripts\SkillProjectile</Filter>
+    </ClCompile>
+    <ClCompile Include="CTurretBasicAttack.cpp">
+      <Filter>Scripts\Skill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -913,6 +928,21 @@
     </ClInclude>
     <ClInclude Include="CNexusBrokenState.h">
       <Filter>State\Unit\Structure\Nexus</Filter>
+    </ClInclude>
+    <ClInclude Include="CAnnounceTimerUIScript.h" />
+    <ClInclude Include="CShopKeeperNorthScript.h" />
+    <ClInclude Include="CShopKeeperSouthScript.h" />
+    <ClInclude Include="CJinxBasicAttack.h">
+      <Filter>Scripts\Skill\Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxBasicAttackScript.h">
+      <Filter>Scripts\SkillProjectile\Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CTurretBasicAttackScript.h">
+      <Filter>Scripts\SkillProjectile</Filter>
+    </ClInclude>
+    <ClInclude Include="CTurretBasicAttack.h">
+      <Filter>Scripts\Skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

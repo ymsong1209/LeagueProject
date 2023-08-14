@@ -17,9 +17,6 @@ void CMalphiteEScript::begin()
 {
 	// 첫 생성 위치 기억
 	m_vSpawnPos = GetOwner()->Transform()->GetRelativePos();
-
-	CGameObject* MalphiteEDecal = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MalphiteEDecal.prefab")->Instantiate();
-	SpawnGameObject(MalphiteEDecal, GetOwner()->Transform()->GetRelativePos(), L"Default");
 }
 
 void CMalphiteEScript::tick()

@@ -240,6 +240,8 @@
     <ClInclude Include="CInhibitorRespawnState.h" />
     <ClInclude Include="CInventoryUIScript.h" />
     <ClInclude Include="CJinxAttackState.h" />
+    <ClInclude Include="CJinxBasicAttack.h" />
+    <ClInclude Include="CJinxBasicAttackScript.h" />
     <ClInclude Include="CJinxE.h" />
     <ClInclude Include="CJinxEScript.h" />
     <ClInclude Include="CJinxEState.h" />
@@ -420,6 +422,8 @@
     <ClInclude Include="CScriptMgr.h" />
     <ClInclude Include="CSendServerEventMgr.h" />
     <ClInclude Include="CServerTypes.h" />
+    <ClInclude Include="CShopKeeperNorthScript.h" />
+    <ClInclude Include="CShopKeeperSouthScript.h" />
     <ClInclude Include="CSkill.h" />
     <ClInclude Include="CSkillLevelUIScript.h" />
     <ClInclude Include="CSkillLevelUpUIScript.h" />
@@ -428,6 +432,8 @@
     <ClInclude Include="CSoundTestScript.h" />
     <ClInclude Include="CStructureScript.h" />
     <ClInclude Include="CTimedEffect.h" />
+    <ClInclude Include="CTurretBasicAttack.h" />
+    <ClInclude Include="CTurretBasicAttackScript.h" />
     <ClInclude Include="CTurretBrokenState.h" />
     <ClInclude Include="CTurretHPUIScript.h" />
     <ClInclude Include="CTurretIdleState.h" />
@@ -510,6 +516,8 @@
     <ClCompile Include="CInhibitorSpawnState.cpp" />
     <ClCompile Include="CInventoryUIScript.cpp" />
     <ClCompile Include="CJinxAttackState.cpp" />
+    <ClCompile Include="CJinxBasicAttack.cpp" />
+    <ClCompile Include="CJinxBasicAttackScript.cpp" />
     <ClCompile Include="CJinxDeathState.cpp" />
     <ClCompile Include="CJinxE.cpp" />
     <ClCompile Include="CJinxEScript.cpp" />
@@ -686,6 +694,8 @@
     <ClCompile Include="CScriptMgr.cpp" />
     <ClCompile Include="CSendServerEventMgr.cpp" />
     <ClCompile Include="CServerTypes.cpp" />
+    <ClCompile Include="CShopKeeperNorthScript.cpp" />
+    <ClCompile Include="CShopKeeperSouthScript.cpp" />
     <ClCompile Include="CSkill.cpp" />
     <ClCompile Include="CSkillLevelUIScript.cpp" />
     <ClCompile Include="CSkillLevelUpUIScript.cpp" />
@@ -694,6 +704,8 @@
     <ClCompile Include="CSoundTestScript.cpp" />
     <ClCompile Include="CStructureScript.cpp" />
     <ClCompile Include="CTimedEffect.cpp" />
+    <ClCompile Include="CTurretBasicAttack.cpp" />
+    <ClCompile Include="CTurretBasicAttackScript.cpp" />
     <ClCompile Include="CTurretBrokenState.cpp" />
     <ClCompile Include="CTurretHPUIScript.cpp" />
     <ClCompile Include="CTurretIdleState.cpp" />
