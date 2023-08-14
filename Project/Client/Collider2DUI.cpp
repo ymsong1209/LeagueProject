@@ -30,13 +30,19 @@ int Collider2DUI::render_update()
 	Vec3					vOffsetRot = GetTarget()->Collider2D()->GetOffsetRot();
 	vOffsetRot = (vOffsetRot / XM_PI) * 180.f;
 	bool					bAbsolute = GetTarget()->Collider2D()->GetColliderAbsolute();
-
+	bool					bFixed = GetTarget()->Collider2D()->IsFixed();
 	int						iCollisionCount = GetTarget()->Collider2D()->GetCollisionCount();  // Ãæµ¹ È½¼ö
 
 	ImGui::Text("IsAbsolute");
 	ImGui::SameLine();
 	if (ImGui::Checkbox("##ColliderAbsolute", &bAbsolute)) {
 		GetTarget()->Collider2D()->SetAbsolute(bAbsolute);
+	}
+
+	ImGui::Text("IsFixed");
+	ImGui::SameLine();
+	if (ImGui::Checkbox("##ColliderFixed", &bFixed)) {
+		GetTarget()->Collider2D()->SetFixed(bFixed);
 	}
 
 	ImGui::Text("OffsetPos");

@@ -32,10 +32,11 @@ void CMalphiteWState::Enter()
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, false, true, 0.1f);
 
-	Ptr<CTexture> glowtex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\malphite_glow.dds");
-	if (glowtex == nullptr) assert(nullptr);
-	GetOwner()->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, glowtex);
-	CSendServerEventMgr::GetInst()->SendSetTexParamPacket(targetId, 0, TEX_0, L"texture\\FBXTexture\\malphite_glow.dds");
+	//Ptr<CTexture> glowtex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\malphite_glow.dds");
+	//if (glowtex == nullptr) assert(nullptr);
+	//GetOwner()->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, glowtex);
+	//CSendServerEventMgr::GetInst()->SendSetTexParamPacket(targetId, 0, TEX_0, L"texture\\FBXTexture\\malphite_glow.dds");
+	CSendServerEventMgr::GetInst()->SendSetMtrlPacket(targetId, 0, L"material\\MAT_malphite");
 
 	CMalphiteScript* malphscript = GetOwner()->GetScript<CMalphiteScript>();
 	malphscript->SetAttackPower(20.f);
