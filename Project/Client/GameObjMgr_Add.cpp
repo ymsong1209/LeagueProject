@@ -477,7 +477,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetFaction(_objectInfo.faction);
 			Script->SetUnitType(UnitType::SUPER_MINION);
 
-			pObj->Transform()->SetRelativeScale(Vec3(0.16f, 0.16f, 0.16f));
+			pObj->Transform()->SetRelativeScale(Vec3(0.25f, 0.25f, 0.25f));
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
 			
 
