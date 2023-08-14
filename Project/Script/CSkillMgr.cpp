@@ -17,6 +17,7 @@
 
 #include "CJinxBasicAttack.h"
 #include "CJinxBasicAttackScript.h"
+#include "CJinxRocketBasicAttackScript.h"
 #include "CJinxW.h"
 #include "CJinxE.h"
 #include "CJinxR.h"
@@ -124,6 +125,13 @@ CProjectileScript* CSkillMgr::FindProjectileScript(SkillType _Type)
 		//CBasicAttackScript* BasicAttackScript = new CBasicAttackScript;
 		//BasicAttackScript->SetSkillType(SkillType::JINX_BASIC_ATTACK);
 		//return BasicAttackScript;
+	}
+	break;
+	case SkillType::JINX_ROCKET_BASIC_ATTACK:
+	{		
+		CJinxRocketBasicAttackScript* JinxRocketBasicAttackScript = new CJinxRocketBasicAttackScript;
+		JinxRocketBasicAttackScript->SetSkillType(SkillType::JINX_ROCKET_BASIC_ATTACK);
+		return JinxRocketBasicAttackScript;
 	}
 	break;
 	case SkillType::JINX_W:

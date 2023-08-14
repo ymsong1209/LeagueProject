@@ -214,6 +214,7 @@ enum class SkillType
 	BASIC_RANGED_ATTACK,	// 미니언 원거리 평타
 	TURRET_BASIC_ATTACK,
 	JINX_BASIC_ATTACK,
+	JINX_ROCKET_BASIC_ATTACK,  // 징크스 Q 평타
 	JINX_Q,
 	JINX_W,
 	JINX_E,

@@ -8,6 +8,8 @@
 #include "CJinxAttackState.h"
 
 #include "CBasicAttack.h"
+#include "CJinxBasicAttack.h"
+#include "CJinxRocketBasicAttack.h"
 #include "CJinxQState.h"
 #include "CJinxWState.h"
 #include "CJinxEState.h"
@@ -17,6 +19,8 @@
 #include "CJinxw.h"
 #include "CJinxE.h"
 #include "CJinxR.h"
+
+
 
 CJinxScript::CJinxScript()
 	:CChampionScript((UINT)JINXSCRIPT)
@@ -46,24 +50,8 @@ void CJinxScript::begin()
 	GetOwner()->Fsm()->AddState(L"R", new CJinxRState);
 
 	// Skill에 Jinx Skill 추가
-	m_Skill[0] = new CBasicAttack;
+	m_Skill[0] = new CJinxBasicAttack;
 	m_Skill[0]->SetOwnerScript(this);
-
-	//임시코드
-	CGameObject* Projectile = new CGameObject;
-	Projectile->AddComponent(new CTransform);
-	Projectile->AddComponent(new CCollider2D);
-	Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-	Projectile->Collider2D()->SetOffsetScale(Vec2(5.f, 5.f));
-	Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
-	Projectile->SetName(L"Projectile");
-
-	Ptr<CPrefab> NewPrefab = new CPrefab;
-	CGameObject* PrefabObject = Projectile->Clone();
-	NewPrefab->RegisterProtoObject(PrefabObject);
-	m_Skill[0]->SetProjectileObj(NewPrefab);
-
-
 	m_Skill[1] = new CJinxQ;
 	m_Skill[1]->SetOwnerScript(this);
 	m_Skill[2] = new CJinxW;
@@ -82,6 +70,25 @@ void CJinxScript::tick()
 {
 	CChampionScript::tick();   
 
+	// 징크스 평타 모드에 따라 투사체 프리팹이 달라야한다.
+	if (m_eWeaponMode == JinxWeaponMode::ROCKET_LAUNCHER && m_Skill[0]->GetSkillType() == SkillType::JINX_BASIC_ATTACK)
+	{
+		if (m_Skill[0]) {
+			delete m_Skill[0];
+			m_Skill[0] = nullptr; // 선택적: 포인터를 nullptr로 설정
+		}
+		m_Skill[0] = new CJinxRocketBasicAttack;
+		m_Skill[0]->SetOwnerScript(this);
+	}
+	else if (m_eWeaponMode == JinxWeaponMode::MINIGUN && m_Skill[0]->GetSkillType() == SkillType::JINX_ROCKET_BASIC_ATTACK)
+	{
+		if (m_Skill[0]) {
+			delete m_Skill[0];
+			m_Skill[0] = nullptr; // 선택적: 포인터를 nullptr로 설정
+		}
+		m_Skill[0] = new CJinxBasicAttack;
+		m_Skill[0]->SetOwnerScript(this);
+	}
 	// 징크스의 공격력 / 사거리 / 공격속도는 Q스킬의 추가 공격력을 포함한다.
 
 
