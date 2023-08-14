@@ -2283,17 +2283,6 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\inhibitor_Destroyed_alpha.mtrl"), 1);
 			pObj->Collider2D()->SetAbsolute(true);
 			pObj->Collider3D()->SetAbsolute(true);
-			//pMeshData = nullptr;
-			//pObj = nullptr;
-			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Inhibitor.fbx");
-			//pObj = pMeshData->Instantiate();
-			//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
-			//pObj->GetRenderComponent()->SetFrustumCheck(true);
-			//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\inhibitor_Destroyed_alpha.mtrl"), 1);
-			//pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
-			//pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-			//pObj->Transform()->SetUseMouseOutline(true);
-			//pObj->Transform()->SetOutlineThickness(0.072f);
 
 			if (_objectInfo.faction == Faction::RED)
 			{
@@ -2353,17 +2342,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			//-----빙빙 도는 넥서스쪽 보기------ 
 			/*pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 			pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\nexus_red_clear.png"));*/
-			pMeshData = nullptr;
-			pObj = nullptr;
-			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\nexus.fbx");
-			pObj = pMeshData->Instantiate();
-			pObj->SetName(L"blue_nexus");
-			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\nexus");
+			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\Nexus.prefab");
+			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
+			pObj = pPrefab->Instantiate();
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetOutlineThickness(0.072f);
+			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
-			pObj->Animator3D()->PlayRepeat(L"nexus\\sruap_order_idle.anm_skinned_mesh.001", true, true, 0.1f);
-			pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
-			pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\sruap_ordernexus_tx_cm_clear.png"));
-			pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+			pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\nexus_Destroyed_alpha.mtrl"), 0);
 			
 			if (_objectInfo.faction == Faction::RED)
 			{
@@ -2373,17 +2359,13 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			else if (_objectInfo.faction == Faction::BLUE)
 			{
 				pObj->SetName(L"blue_nexus");
-
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\nexus_Mat_Blue.mtrl"), 1);
 			}
 
 
 			if (MyPlayer.host)
 			{
-				//pObj->AddComponent(new CInhibitorScript);
-				// script->setLane, _objectInfo.lane
-				pObj->AddComponent(new CUnitScript);  // 추후 주석처리
-				// 공격범위 시야 자식오브젝트도 추가해야할듯.
-
+				pObj->AddComponent(new CNexusScript);
 			}
 			else
 			{

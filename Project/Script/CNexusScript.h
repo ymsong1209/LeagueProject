@@ -9,6 +9,7 @@ public:
 	~CNexusScript();
 
 private:
+	vector<CGameObject*>    m_vecTurrets;
 
 public:
 	virtual void begin() override;

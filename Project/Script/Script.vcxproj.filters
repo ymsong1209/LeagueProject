@@ -672,6 +672,15 @@
     <ClCompile Include="CInhibitorRespawnState.cpp">
       <Filter>State\Unit\Structure\Inhibitor</Filter>
     </ClCompile>
+    <ClCompile Include="CNexusSpawnState.cpp">
+      <Filter>State\Unit\Structure\Nexus</Filter>
+    </ClCompile>
+    <ClCompile Include="CNexusIdleState.cpp">
+      <Filter>State\Unit\Structure\Nexus</Filter>
+    </ClCompile>
+    <ClCompile Include="CNexusBrokenState.cpp">
+      <Filter>State\Unit\Structure\Nexus</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -884,6 +893,9 @@
     <ClInclude Include="CMalphiteBasicAttackHitEffectScript.h">
       <Filter>Scripts\Skill\Malphite</Filter>
     </ClInclude>
+    <ClInclude Include="CInhibitorRespawnState.h">
+      <Filter>State\Unit\Structure\Inhibitor</Filter>
+    </ClInclude>
     <ClInclude Include="CInhibitorSpawnState.h">
       <Filter>State\Unit\Structure\Inhibitor</Filter>
     </ClInclude>
@@ -893,8 +905,14 @@
     <ClInclude Include="CInhibitorIdleState.h">
       <Filter>State\Unit\Structure\Inhibitor</Filter>
     </ClInclude>
-    <ClInclude Include="CInhibitorRespawnState.h">
-      <Filter>State\Unit\Structure\Inhibitor</Filter>
+    <ClInclude Include="CNexusSpawnState.h">
+      <Filter>State\Unit\Structure\Nexus</Filter>
+    </ClInclude>
+    <ClInclude Include="CNexusIdleState.h">
+      <Filter>State\Unit\Structure\Nexus</Filter>
+    </ClInclude>
+    <ClInclude Include="CNexusBrokenState.h">
+      <Filter>State\Unit\Structure\Nexus</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1541,6 +1559,9 @@
     </Filter>
     <Filter Include="State\Unit\Structure\Inhibitor">
       <UniqueIdentifier>{1e8fc1a5-caa2-4eca-ba92-e3ba8b78f009}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\Unit\Structure\Nexus">
+      <UniqueIdentifier>{d7088f8a-4fe2-41db-b2fc-1aa5b5d1f9c3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
