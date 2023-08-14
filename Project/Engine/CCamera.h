@@ -64,6 +64,7 @@ private:
     vector<tFont>           m_vecFontMaskState;
     vector<tFont>           m_vecFontTransState;
 
+    Vec3                    m_vMainPlayerUIPos;
 public:
     void SetProjType(PROJ_TYPE _Type) { m_ProjType = _Type; }
     PROJ_TYPE GetProjType() { return m_ProjType; }
@@ -113,6 +114,9 @@ public:
 
 
     void AddText(FONT_DOMAIN _Domain, tFont _tFont); //텍스트 호출할때는 해당 카메라 가져와서 호출
+
+    Vec3 GetMainPlayerUICamPos() { return m_vMainPlayerUIPos; }
+    void SetMainPlayerUICamPos(Vec3 _Pos) { m_vMainPlayerUIPos = _Pos; }
 
 public:
     void SortObject();

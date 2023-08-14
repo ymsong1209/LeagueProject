@@ -4,8 +4,10 @@
 #include <Engine\CCamera.h>
 #include "CUnitScript.h"
 #include "CAnnounceTimerUIScript.h"
-
-
+#include <Engine\CEventMgr.h>
+#include "CPlayerCSUIScript.h"
+#include "CIconTimerUIScript.h"
+#include "CEndOfGameUIScript.h"
 
 
 CKillLogUIScript::CKillLogUIScript()
@@ -30,17 +32,50 @@ void CKillLogUIScript::tick()
 	killLogManager.lineHeight = 75.f;
 
 	//==============디버깅용=========================
-	//if (KEY_TAP(KEY::_7))
-	//	AddAnnouncement(AnnounceType::INHIBITOR_DESTROY, Faction::RED,ChampionType::JINX,ChampionType::MALPHITE);
+	/*if (KEY_TAP(KEY::_7))
+	{
+		CEventMgr::GetInst()->SetIsGameOver(true);
+		Announce_EndofGame(Faction::BLUE);
+	}
 
-	////아군이 적한테 처치당한경우
-	//else if (KEY_TAP(KEY::_8))
-	//	AddAnnouncement(AnnounceType::INHIBITOR_DESTROY, Faction::BLUE, ChampionType::MALPHITE);
+	if (KEY_TAP(KEY::_8))
+	{
+		CEventMgr::GetInst()->SetIsGameOver(true);
+		Announce_EndofGame(Faction::RED);
+	}*/
 
-	////아군이나, 내가 적을 처치한경우
+
+	//===============================디버깅용====================================
+	//if (KEY_TAP(KEY::_8))
+	//	DisplayCS(CSendServerEventMgr::GetInst()->GetMyPlayer(), UnitType::MELEE_MINION);
+
+	//////아군이나, 내가 적을 처치한경우
 	//else if (KEY_TAP(KEY::_9))
 	//	AddAnnouncement(AnnounceType::KILLEDENEMY, Faction::BLUE, ChampionType::JINX, ChampionType::MALPHITE);
-	//===================================================
+
+	//else if (KEY_TAP(KEY::_7))
+	//	AddAnnouncement(AnnounceType::INHIBITOR_DESTROY, Faction::BLUE);
+
+	//else if (KEY_TAP(KEY::_6))
+	//	AddAnnouncement(AnnounceType::ALLY_HASBEENSLAIN, Faction::RED, ChampionType::MALPHITE, ChampionType::MALPHITE);
+
+	//else if (KEY_TAP(KEY::_5))
+	//	AddAnnouncement(AnnounceType::TURRET_DESTROY, Faction::BLUE,ChampionType::MALPHITE);
+
+	//else if (KEY_TAP(KEY::_4))
+	//	AddAnnouncement(AnnounceType::TURRET_DESTROY, Faction::RED);
+
+	//else if (KEY_TAP(KEY::_3))
+	//{
+	//	//오른쪽 킬로그 출력
+	//	killLogManager.AddKillLog(ChampionType::JINX, ChampionType::MALPHITE, Faction::RED);
+	//}
+
+	//else if (KEY_TAP(KEY::_2))
+	//{
+	//	Announce_EndofGame(Faction::RED);
+	//}
+	//================================================================================================
 
 	vector<tServerEvent> vServerEvent = CSendServerEventMgr::GetInst()->GetUIEvent();
 	for (size_t i = 0; i < vServerEvent.size(); ++i)
@@ -49,6 +84,23 @@ void CKillLogUIScript::tick()
 		{
 			CGameObject* KillerObj = (CGameObject*)vServerEvent[i].wParam;
 			CGameObject* VictimObj = (CGameObject*)vServerEvent[i].lParam;
+
+			if (VictimObj != nullptr)
+			{
+				CUnitScript* VictimUnitScript = VictimObj->GetScript<CUnitScript>();
+				UnitType VictimType = VictimUnitScript->GetType();
+				if (VictimType == UnitType::NEXUS)
+				{
+					Faction VictimFaction = VictimUnitScript->GetFaction();
+					if (CEventMgr::GetInst()->GetIsGameOver() == false) //게임이 끝난상태가 아니었을때 들어오도록
+					{
+						Announce_EndofGame(VictimFaction);
+					}
+				}
+			}
+
+			
+
 			if (KillerObj && VictimObj)
 			{
 				CUnitScript* KillerUnitScript = KillerObj->GetScript<CUnitScript>();
@@ -59,7 +111,6 @@ void CKillLogUIScript::tick()
 				//===큰범주 타입====
 				SpecificType KillerSpecificType = GetSpecificType(KillerType);
 				SpecificType VictimSpecificType = GetSpecificType(VictimType);
-
 
 				if (KillerSpecificType == SpecificType::CHAMPION && VictimSpecificType == SpecificType::CHAMPION)
 				{
@@ -87,9 +138,18 @@ void CKillLogUIScript::tick()
 
 					else
 					{
+
 					}
 
 				}
+
+				//cs 획득
+				else if (KillerSpecificType == SpecificType::CHAMPION && VictimSpecificType == SpecificType::MINION)
+				{
+					if(KillerObj == CSendServerEventMgr::GetInst()->GetMyPlayer())
+						DisplayCS(KillerObj, VictimType);
+				}
+
 
 				else if (KillerSpecificType == SpecificType::CHAMPION && VictimSpecificType == SpecificType::AllTURRET)
 				{
@@ -118,11 +178,22 @@ void CKillLogUIScript::tick()
 	}
 
 	CSendServerEventMgr::GetInst()->ClearUISendEvent();
-
-
 	// 킬로그 업데이트
 	killLogManager.Update(DT);
 	AnnounceLogUpdate(DT);
+
+	if (CEventMgr::GetInst()->GetIsGameOver() == true)
+	{
+		vector<CGameObject*> UIObj = CLevelMgr::GetInst()->GetCurLevel()->GetLayer(31)->GetObjects();
+		for (size_t i = 0; i < UIObj.size(); ++i)
+		{
+			if (UIObj[i]->GetRenderComponent())
+			{
+				if(UIObj[i] != EndOfGameObj) // 승리 패배 오브젝트는 보여줘야함
+					UIObj[i]->GetRenderComponent()->SetSortExcept(true);
+			}
+		}
+	}
 
 	// UI 렌더링을 위한 코드
 	for (const auto& log : killLogManager.GetKillLogs())
@@ -134,8 +205,8 @@ void CKillLogUIScript::tick()
 	//CSendServerEventMgr::GetInst()->ClearUISendEvent();
 
 	 //디버깅용==========================
-	if (KEY_TAP(KEY::I))
-		killLogManager.AddKillLog(ChampionType::MALPHITE, ChampionType::JINX, Faction::RED);
+	/*if (KEY_TAP(KEY::I))
+		killLogManager.AddKillLog(ChampionType::MALPHITE, ChampionType::JINX, Faction::RED);*/
 	//=================================
 
 }
@@ -222,10 +293,10 @@ void CKillLogUIScript::IconSetting(CGameObject* _Obj, ChampionType ChampType)
 	switch (ChampType)
 	{
 	case (ChampionType::JINX):
-		_Obj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\JINX_CIRCLE.mtrl"), 0);
+		_Obj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\announce_jinx_circle.mtrl"), 0);
 		break;
 	case (ChampionType::MALPHITE):
-		_Obj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\MALPHITE_CIRCLE.mtrl"), 0);
+		_Obj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\announce_malphite_circle.mtrl"), 0);
 		break;
 	}
 }
@@ -269,7 +340,7 @@ void KillLogManager::AddKillLog(ChampionType _killer, ChampionType _victim, Fact
 	log.killer = _killer;
 	log.victim = _victim;
 	log.remainingTime = displayTime;
-	log.initialX = initialPosition.x - 100; // 왼쪽에서 시작 (100은 원하는 거리에 따라 조절)
+	log.initialX = initialPosition.x - 70; // 왼쪽에서 시작 (100은 원하는 거리에 따라 조절)
 	log.position.x = log.initialX; // X 좌표 설정
 
 	CGameObject* SpawnKillLogObj = new CGameObject;
@@ -353,7 +424,7 @@ void CKillLogUIScript::DisplayAnnounceTurret(ChampionType _Killer, Faction _Kill
 
 		if (_Type == AnnounceType::TURRET_DESTROY)
 		{
-			Victim_AnnouncePanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_red_circle.mtrl"), 0);
+			Victim_AnnouncePanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\announce_turret_red_circle.mtrl"), 0);
 			AnnouncePanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\Redturretisdestroyed.mtrl"), 0);
 			Killer_AnnouncePanel->Transform()->SetRelativePos(Vec3(-216.f, 7.f, 200.f));
 			Victim_AnnouncePanel->Transform()->SetRelativePos(Vec3(219.f, 4.f, 200.f));
@@ -361,7 +432,7 @@ void CKillLogUIScript::DisplayAnnounceTurret(ChampionType _Killer, Faction _Kill
 		}
 		else if (_Type == AnnounceType::INHIBITOR_DESTROY)
 		{
-			Victim_AnnouncePanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\inhibitor_red_circle.mtrl"), 0);
+			Victim_AnnouncePanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\announce_inhibitor_red_circle.mtrl"), 0);
 
 			if (_KillerFaction == CSendServerEventMgr::GetInst()->GetMyPlayer()->GetScript<CUnitScript>()->GetFaction()) //억제기를 파괴했습니다
 			{
@@ -379,7 +450,7 @@ void CKillLogUIScript::DisplayAnnounceTurret(ChampionType _Killer, Faction _Kill
 		}
 
 		if (_Killer == ChampionType::NONE) // 미니언이 죽인경우
-			Killer_AnnouncePanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\bluemelee_circle.mtrl"), 0);
+			Killer_AnnouncePanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\announce_bluemelee_circle.mtrl"), 0);
 		else
 			IconSetting(Killer_AnnouncePanel, _Killer);
 	}
@@ -389,14 +460,14 @@ void CKillLogUIScript::DisplayAnnounceTurret(ChampionType _Killer, Faction _Kill
 	{
 		if (_Type == AnnounceType::TURRET_DESTROY)
 		{
-			Victim_AnnouncePanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_blue_circle.mtrl"), 0);
+			Victim_AnnouncePanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\announce_turret_blue_circle.mtrl"), 0);
 			AnnouncePanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turretisdestroyed.mtrl"), 0);
 			Killer_AnnouncePanel->Transform()->SetRelativePos(Vec3(-216.f, 7.f, 200.f));
 			Victim_AnnouncePanel->Transform()->SetRelativePos(Vec3(219.f, 4.f, 200.f));
 		}
 		else if (_Type == AnnounceType::INHIBITOR_DESTROY)
 		{
-			Victim_AnnouncePanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\inhibitor_blue_circle.mtrl"), 0);
+			Victim_AnnouncePanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\announce_inhibitor_blue_circle.mtrl"), 0);
 
 			if (_KillerFaction == CSendServerEventMgr::GetInst()->GetMyPlayer()->GetScript<CUnitScript>()->GetFaction())
 			{
@@ -413,7 +484,7 @@ void CKillLogUIScript::DisplayAnnounceTurret(ChampionType _Killer, Faction _Kill
 		}
 
 		if (_Killer == ChampionType::NONE) // 미니언이 죽인경우
-			Killer_AnnouncePanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\redmelee_circle.mtrl"), 0);
+			Killer_AnnouncePanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\announce_redmelee_circle.mtrl"), 0);
 		else
 			IconSetting(Killer_AnnouncePanel, _Killer);
 	}
@@ -421,7 +492,24 @@ void CKillLogUIScript::DisplayAnnounceTurret(ChampionType _Killer, Faction _Kill
 	SpawnGameObject(AnnouncePanel, Vec3(22.f, 315.f, 150.f), 31);
 }
 
+void CKillLogUIScript::DisplayCS(CGameObject* _KillerChamp, UnitType _UnitType)
+{
+	Vec3 Pos = UICamera->GetMainPlayerUICamPos();
+	Vec3 PlayerPos = Vec3(Pos.x, Pos.y, 1.f);
+	Vec2 OffsetPos = Vec2(0.f, 0.f);
 
+	CGameObject* CSImage = new CGameObject;
+	CSImage->SetName(L"CsImage");
+	CSImage->AddComponent(new CTransform);
+	CSImage->AddComponent(new CMeshRender);
+	CSImage->AddComponent(new CPlayerCSUIScript);
+	CSImage->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	CSImage->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\20CSGold.mtrl"), 0);
+	CSImage->Transform()->SetAbsolute(true);
+	CSImage->Transform()->SetRelativeScale(Vec3(66.f,29.f,1.f));
+	CSImage->Transform()->SetRelativePos(PlayerPos);
+	SpawnGameObject(CSImage, PlayerPos, 31);
+}
 
 
 
@@ -445,8 +533,36 @@ CGameObject* CKillLogUIScript::SpawnIconPanel(Vec3 _Scale, wstring _Name)
 	AnnouncePanel->SetName(_Name);
 	AnnouncePanel->AddComponent(new CTransform);
 	AnnouncePanel->AddComponent(new CMeshRender);
+	AnnouncePanel->AddComponent(new CIconTimerUIScript);
 	AnnouncePanel->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
 	AnnouncePanel->Transform()->SetAbsolute(true);
 	AnnouncePanel->Transform()->SetRelativeScale(_Scale);
 	return AnnouncePanel;
+}
+
+void CKillLogUIScript::Announce_EndofGame(Faction _VictimFaction)
+{
+	CEventMgr::GetInst()->SetIsGameOver(true);
+
+	CGameObject* EndOfGamePanel = new CGameObject;
+	EndOfGamePanel->SetName(L"EndOfGame");
+	EndOfGamePanel->AddComponent(new CTransform);
+	EndOfGamePanel->AddComponent(new CMeshRender);
+	EndOfGamePanel->AddComponent(new CEndOfGameUIScript);
+	EndOfGamePanel->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	EndOfGamePanel->Transform()->SetAbsolute(true);
+
+	if (_VictimFaction == CSendServerEventMgr::GetInst()->GetMyPlayer()->GetScript<CUnitScript>()->GetFaction())//파괴된 팀과 같은팀이라면 패배
+	{
+		EndOfGamePanel->Transform()->SetRelativeScale(Vec3(403.2f, 447.3f, 1.f));
+		EndOfGamePanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\EndOfDefeat.mtrl"), 0);
+	}
+	else
+	{
+		EndOfGamePanel->Transform()->SetRelativeScale(Vec3(402.f, 447.f, 1.f));
+		EndOfGamePanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\EndOfVictory.mtrl"), 0);
+	}
+
+	SpawnGameObject(EndOfGamePanel, Vec3(0.f, 0.f, 1.f), 31);
+	EndOfGameObj = EndOfGamePanel;
 }

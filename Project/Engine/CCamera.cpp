@@ -29,6 +29,7 @@
 #include "CStructuredBuffer.h"
 #include "CInstancingBuffer.h"
 #include "CFontMgr.h"
+#include "CEventMgr.h"
 
 
 
@@ -1708,64 +1709,77 @@ void CCamera::AddText(FONT_DOMAIN _Domain, tFont _tFont)
 
 void CCamera::render_font_MainCamState()
 {
-	for (size_t i = 0; i < m_vecFontMainCamState.size(); ++i)
+	if (!CEventMgr::GetInst()->GetIsGameOver())
 	{
-		DrawCallText
-		(
-			m_vecFontMainCamState[i].wInputText,
-			(UINT)m_vecFontMainCamState[i].fontType,
-			m_vecFontMainCamState[i].vDisplayPos,
-			m_vecFontMainCamState[i].fFontSize,
-			m_vecFontMainCamState[i].iFontColor
-		);
+		for (size_t i = 0; i < m_vecFontMainCamState.size(); ++i)
+		{
+			DrawCallText
+			(
+				m_vecFontMainCamState[i].wInputText,
+				(UINT)m_vecFontMainCamState[i].fontType,
+				m_vecFontMainCamState[i].vDisplayPos,
+				m_vecFontMainCamState[i].fFontSize,
+				m_vecFontMainCamState[i].iFontColor
+			);
+		}
 	}
 	m_vecFontMainCamState.clear();
 }
 
 void CCamera::render_font_OpaqueState()
 {
-	for (size_t i = 0; i < m_vecFontOpaqeState.size(); ++i)
+	if (!CEventMgr::GetInst()->GetIsGameOver())
 	{
-		DrawCallText
-		(
-			m_vecFontOpaqeState[i].wInputText,
-			(UINT)m_vecFontOpaqeState[i].fontType,
-			m_vecFontOpaqeState[i].vDisplayPos,
-			m_vecFontOpaqeState[i].fFontSize,
-			m_vecFontOpaqeState[i].iFontColor
-		);
+		for (size_t i = 0; i < m_vecFontOpaqeState.size(); ++i)
+		{
+			DrawCallText
+			(
+				m_vecFontOpaqeState[i].wInputText,
+				(UINT)m_vecFontOpaqeState[i].fontType,
+				m_vecFontOpaqeState[i].vDisplayPos,
+				m_vecFontOpaqeState[i].fFontSize,
+				m_vecFontOpaqeState[i].iFontColor
+			);
+		}
 	}
+
 	m_vecFontOpaqeState.clear();
 }
 
 void CCamera::render_font_MaskState()
 {
-	for (size_t i = 0; i < m_vecFontMaskState.size(); ++i)
+	if (!CEventMgr::GetInst()->GetIsGameOver())
 	{
-		DrawCallText
-		(
-			m_vecFontMaskState[i].wInputText,
-			(UINT)m_vecFontMaskState[i].fontType,
-			m_vecFontMaskState[i].vDisplayPos,
-			m_vecFontMaskState[i].fFontSize,
-			m_vecFontMaskState[i].iFontColor
-		);
+		for (size_t i = 0; i < m_vecFontMaskState.size(); ++i)
+		{
+			DrawCallText
+			(
+				m_vecFontMaskState[i].wInputText,
+				(UINT)m_vecFontMaskState[i].fontType,
+				m_vecFontMaskState[i].vDisplayPos,
+				m_vecFontMaskState[i].fFontSize,
+				m_vecFontMaskState[i].iFontColor
+			);
+		}
 	}
 	m_vecFontMaskState.clear();
 }
 
 void CCamera::render_font_TransState()
 {
-	for (size_t i = 0; i < m_vecFontTransState.size(); ++i)
+	if (!CEventMgr::GetInst()->GetIsGameOver())
 	{
-		DrawCallText
-		(
-			m_vecFontTransState[i].wInputText,
-			(UINT)m_vecFontTransState[i].fontType,
-			m_vecFontTransState[i].vDisplayPos,
-			m_vecFontTransState[i].fFontSize,
-			m_vecFontTransState[i].iFontColor
-		);
+		for (size_t i = 0; i < m_vecFontTransState.size(); ++i)
+		{
+			DrawCallText
+			(
+				m_vecFontTransState[i].wInputText,
+				(UINT)m_vecFontTransState[i].fontType,
+				m_vecFontTransState[i].vDisplayPos,
+				m_vecFontTransState[i].fFontSize,
+				m_vecFontTransState[i].iFontColor
+			);
+		}
 	}
 	m_vecFontTransState.clear();
 }

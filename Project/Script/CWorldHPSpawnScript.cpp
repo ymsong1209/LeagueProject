@@ -124,16 +124,18 @@ void CWorldHPSpawnScript::UISpawn(CGameObject* _PlayerObj, CGameObject* _WorldBa
 
 	// Transform to world coordinates
 	Vec3 worldVec = XMVector3TransformCoord(ndcVec, invViewProjMatrix);
+	if (m_MyPlayer == _PlayerObj) //마이 플레이어는 기록해두고 다른 스크립트에서도 쓸것임
+		UICamera->SetMainPlayerUICamPos(Vec3(worldVec.x, -worldVec.y, worldVec.z));
 
 	Vec3 OffsetPos = Vec3(-3.f, 117.f, 0.f);
 	Vec3 FinalPos = Vec3(worldVec.x + OffsetPos.x, -worldVec.y + OffsetPos.y, 700.f);
 	_WorldBarObj->Transform()->SetRelativePos(FinalPos);
 
 
+
 	//==========닉네임, 레벨 폰트 출력==============
 	CUnitScript* UnitScript = _PlayerObj->GetScript<CUnitScript>();
 	wstring NickName = UnitScript->GetNickname();
-
 
 	Vec2 FontDefaultPos = Vec2(worldVec.x + (Resolution.x / 2), worldVec.y + (Resolution.y / 2));
 	Vec2 FontDisPlayPos = Vec2(FontDefaultPos.x, FontDefaultPos.y - 150.f);

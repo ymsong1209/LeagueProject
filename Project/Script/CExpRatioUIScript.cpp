@@ -19,8 +19,10 @@ void CExpRatioUIScript::tick()
 	//	m_fCurrentExp -= DT * 50.f;
 	//--------------------------------
 	CChampionScript* ChampInfo = CSendServerEventMgr::GetInst()->GetMyPlayer()->GetScript<CChampionScript>();
-	float EXP = ChampInfo->GetExp(); 
-	m_fCurrentExpRatio = EXP / m_fLevelTotalExp;
+	m_fCurrentExp = ChampInfo->GetExp();
+	m_fLevelTotalExp = ChampInfo->GetMaxExp();
+
+	m_fCurrentExpRatio = m_fCurrentExp / m_fLevelTotalExp;
 
 	if (m_fCurrentExp >= m_fLevelTotalExp)
 		m_fCurrentExp = m_fLevelTotalExp;
@@ -37,7 +39,7 @@ void CExpRatioUIScript::BeginOverlap(CCollider2D* _Other)
 CExpRatioUIScript::CExpRatioUIScript()
 	:CScript((UINT)SCRIPT_TYPE::EXPRATIOUISCRIPT)
 	, m_fLevelTotalExp(10.f)
-	, m_fCurrentExp(100.f)
+	, m_fCurrentExp(0.f)
 {
 
 }

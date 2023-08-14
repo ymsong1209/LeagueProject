@@ -220,6 +220,7 @@
     <ClInclude Include="CDragonReturnState.h" />
     <ClInclude Include="CDragonScript.h" />
     <ClInclude Include="CDragonSpawnState.h" />
+    <ClInclude Include="CEndOfGameUIScript.h" />
     <ClInclude Include="CExpRatioUIScript.h" />
     <ClInclude Include="CFlash.h" />
     <ClInclude Include="CFontUIScript.h" />
@@ -237,6 +238,7 @@
     <ClInclude Include="CGrompSpawnState.h" />
     <ClInclude Include="CGrowScaleScript.h" />
     <ClInclude Include="CHpMpRatioUIScript.h" />
+    <ClInclude Include="CIconTimerUIScript.h" />
     <ClInclude Include="CInhibitorRespawnState.h" />
     <ClInclude Include="CInventoryUIScript.h" />
     <ClInclude Include="CJinxAttackState.h" />
@@ -351,6 +353,7 @@
     <ClInclude Include="CMurkWolfSpawnState.h" />
     <ClInclude Include="CNexusScript.h" />
     <ClInclude Include="COtherPlayerScript.h" />
+    <ClInclude Include="CPlayerCSUIScript.h" />
     <ClInclude Include="CPlayerScript.h" />
     <ClInclude Include="CProjectileScript.h" />
     <ClInclude Include="CRazorBeakA2NState.h" />
@@ -483,6 +486,7 @@
     <ClCompile Include="CDragonReturnState.cpp" />
     <ClCompile Include="CDragonScript.cpp" />
     <ClCompile Include="CDragonSpawnState.cpp" />
+    <ClCompile Include="CEndOfGameUIScript.cpp" />
     <ClCompile Include="CExpRatioUIScript.cpp" />
     <ClCompile Include="CFlash.cpp" />
     <ClCompile Include="CFontUIScript.cpp" />
@@ -500,6 +504,7 @@
     <ClCompile Include="CGrowScaleScript.cpp" />
     <ClCompile Include="CHeal.cpp" />
     <ClCompile Include="CHpMpRatioUIScript.cpp" />
+    <ClCompile Include="CIconTimerUIScript.cpp" />
     <ClCompile Include="CInhibitorBrokenState.cpp" />
     <ClCompile Include="CInhibitorIdleState.cpp" />
     <ClCompile Include="CInhibitorRespawnState.cpp" />
@@ -613,6 +618,7 @@
     <ClCompile Include="CMurkWolfSpawnState.cpp" />
     <ClCompile Include="CNexusScript.cpp" />
     <ClCompile Include="COtherPlayerScript.cpp" />
+    <ClCompile Include="CPlayerCSUIScript.cpp" />
     <ClCompile Include="CPlayerScript.cpp" />
     <ClCompile Include="CInGameCameraScript.cpp" />
     <ClCompile Include="CProjectileScript.cpp" />

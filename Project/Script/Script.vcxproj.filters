@@ -583,12 +583,8 @@
     <ClCompile Include="CMalphiteRScript.cpp">
       <Filter>Scripts\SkillProjectile\Malphite</Filter>
     </ClCompile>
-    <ClCompile Include="CDragonHPUIScript.cpp" />
     <ClCompile Include="CJungleMINIHPScript.cpp" />
     <ClCompile Include="CJungleMobHPScript.cpp" />
-    <ClCompile Include="CMinionHPBarPosScript.cpp" />
-    <ClCompile Include="CMinionHPRatioScript.cpp" />
-    <ClCompile Include="CTurretHPUIScript.cpp" />
     <ClCompile Include="CMalphiteEDecalScript.cpp">
       <Filter>Scripts\SkillProjectile\Malphite</Filter>
     </ClCompile>
@@ -625,10 +621,6 @@
     <ClCompile Include="CMalphiteW.cpp">
       <Filter>Scripts\Skill\Malphite</Filter>
     </ClCompile>
-    <ClCompile Include="CSkillLevelUIScript.cpp" />
-    <ClCompile Include="CSkillLevelUpUIScript.cpp" />
-    <ClCompile Include="CSkillLvEffectUIScript.cpp" />
-    <ClCompile Include="CKillLogUIScript.cpp" />
     <ClCompile Include="CTimedEffect.cpp">
       <Filter>Scripts\Skill</Filter>
     </ClCompile>
@@ -672,6 +664,45 @@
     <ClCompile Include="CInhibitorRespawnState.cpp">
       <Filter>State\Unit\Structure\Inhibitor</Filter>
     </ClCompile>
+    <ClCompile Include="CNexusSpawnState.cpp">
+      <Filter>State\Unit\Structure\Nexus</Filter>
+    </ClCompile>
+    <ClCompile Include="CNexusIdleState.cpp">
+      <Filter>State\Unit\Structure\Nexus</Filter>
+    </ClCompile>
+    <ClCompile Include="CNexusBrokenState.cpp">
+      <Filter>State\Unit\Structure\Nexus</Filter>
+    </ClCompile>
+    <ClCompile Include="CTurretHPUIScript.cpp">
+      <Filter>UIScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CSkillLvEffectUIScript.cpp">
+      <Filter>UIScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CSkillLevelUpUIScript.cpp">
+      <Filter>UIScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CSkillLevelUIScript.cpp">
+      <Filter>UIScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CMinionHPRatioScript.cpp">
+      <Filter>UIScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CMinionHPBarPosScript.cpp">
+      <Filter>UIScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CKillLogUIScript.cpp">
+      <Filter>UIScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CDragonHPUIScript.cpp">
+      <Filter>UIScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CAnnounceTimerUIScript.cpp">
+      <Filter>UIScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerCSUIScript.cpp" />
+    <ClCompile Include="CIconTimerUIScript.cpp" />
+    <ClCompile Include="CEndOfGameUIScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -825,12 +856,8 @@
     <ClInclude Include="CMalphiteRScript.h">
       <Filter>Scripts\SkillProjectile\Malphite</Filter>
     </ClInclude>
-    <ClInclude Include="CDragonHPUIScript.h" />
     <ClInclude Include="CJungleMINIHPScript.h" />
     <ClInclude Include="CJungleMobHPScript.h" />
-    <ClInclude Include="CMinionHPBarPosScript.h" />
-    <ClInclude Include="CMinionHPRatioScript.h" />
-    <ClInclude Include="CTurretHPUIScript.h" />
     <ClInclude Include="CMalphiteEDecalScript.h">
       <Filter>Scripts\SkillProjectile\Malphite</Filter>
     </ClInclude>
@@ -861,10 +888,6 @@
     <ClInclude Include="CMalphiteW.h">
       <Filter>Scripts\Skill\Malphite</Filter>
     </ClInclude>
-    <ClInclude Include="CSkillLevelUIScript.h" />
-    <ClInclude Include="CSkillLevelUpUIScript.h" />
-    <ClInclude Include="CSkillLvEffectUIScript.h" />
-    <ClInclude Include="CKillLogUIScript.h" />
     <ClInclude Include="CTimedEffect.h">
       <Filter>Scripts\Skill</Filter>
     </ClInclude>
@@ -896,6 +919,36 @@
     <ClInclude Include="CInhibitorRespawnState.h">
       <Filter>State\Unit\Structure\Inhibitor</Filter>
     </ClInclude>
+    <ClInclude Include="CTurretHPUIScript.h">
+      <Filter>UIScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CSkillLvEffectUIScript.h">
+      <Filter>UIScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CSkillLevelUpUIScript.h">
+      <Filter>UIScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CSkillLevelUIScript.h">
+      <Filter>UIScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CMinionHPRatioScript.h">
+      <Filter>UIScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CMinionHPBarPosScript.h">
+      <Filter>UIScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CKillLogUIScript.h">
+      <Filter>UIScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CDragonHPUIScript.h">
+      <Filter>UIScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CAnnounceTimerUIScript.h">
+      <Filter>UIScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerCSUIScript.h" />
+    <ClInclude Include="CIconTimerUIScript.h" />
+    <ClInclude Include="CEndOfGameUIScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">
