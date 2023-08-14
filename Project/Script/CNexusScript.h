@@ -9,10 +9,6 @@ public:
 	~CNexusScript();
 
 private:
-	float		m_fTime;				// 기준 시간
-	float		m_fMinionSpawnRate;		// 미니언 생성 주기
-
-	bool		m_bSuperMinionSpawnMode;
 
 public:
 	virtual void begin() override;
@@ -20,10 +16,6 @@ public:
 
 public:
 	void CheckStatus();
-	void SpawnMinions();
-
-	void SetSuperMinionSpawnMode(bool _b) { m_bSuperMinionSpawnMode = _b; }
-
 
 };
 
