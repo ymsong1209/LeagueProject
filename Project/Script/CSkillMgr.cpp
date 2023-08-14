@@ -3,6 +3,7 @@
 #include "CSkill.h"
 #include "CBasicAttack.h"
 #include "CBasicAttackScript.h"
+#include "CTurretBasicAttack.h"
 #include "CJinxWScript.h"
 #include "CJinxEScript.h"
 #include "CJinxRScript.h"
@@ -29,6 +30,9 @@ CSkillMgr::CSkillMgr()
 
 	CMalphiteBasicAttack* MalphiteBasicAttack = new CMalphiteBasicAttack;
 	m_mapSkills.insert(make_pair(SkillType::MALPHITE_BASIC_ATTACK, MalphiteBasicAttack));
+
+	CTurretBasicAttack* TurretBasicAttack = new CTurretBasicAttack;
+	m_mapSkills.insert(make_pair(SkillType::TURRET_BASIC_ATTACK, TurretBasicAttack));
 
 	CJinxW* JinxW = new CJinxW;
 	m_mapSkills.insert(make_pair(SkillType::JINX_W, JinxW));
@@ -88,6 +92,13 @@ CProjectileScript* CSkillMgr::FindProjectileScript(SkillType _Type)
 	{
 		CBasicAttackScript* BasicAttackScript = new CBasicAttackScript;
 		BasicAttackScript->SetSkillType(SkillType::BASIC_RANGED_ATTACK);
+		return BasicAttackScript;
+	}
+	break;
+	case SkillType::TURRET_BASIC_ATTACK:
+	{
+		CBasicAttackScript* BasicAttackScript = new CBasicAttackScript;
+		BasicAttackScript->SetSkillType(SkillType::TURRET_BASIC_ATTACK);
 		return BasicAttackScript;
 	}
 	break;

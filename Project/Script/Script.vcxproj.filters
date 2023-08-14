@@ -672,6 +672,7 @@
     <ClCompile Include="CInhibitorRespawnState.cpp">
       <Filter>State\Unit\Structure\Inhibitor</Filter>
     </ClCompile>
+    <ClCompile Include="CTurretBasicAttack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -896,6 +897,7 @@
     <ClInclude Include="CInhibitorRespawnState.h">
       <Filter>State\Unit\Structure\Inhibitor</Filter>
     </ClInclude>
+    <ClInclude Include="CTurretBasicAttack.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">

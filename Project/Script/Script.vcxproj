@@ -424,6 +424,7 @@
     <ClInclude Include="CSoundTestScript.h" />
     <ClInclude Include="CStructureScript.h" />
     <ClInclude Include="CTimedEffect.h" />
+    <ClInclude Include="CTurretBasicAttack.h" />
     <ClInclude Include="CTurretBrokenState.h" />
     <ClInclude Include="CTurretHPUIScript.h" />
     <ClInclude Include="CTurretIdleState.h" />
@@ -686,6 +687,7 @@
     <ClCompile Include="CSoundTestScript.cpp" />
     <ClCompile Include="CStructureScript.cpp" />
     <ClCompile Include="CTimedEffect.cpp" />
+    <ClCompile Include="CTurretBasicAttack.cpp" />
     <ClCompile Include="CTurretBrokenState.cpp" />
     <ClCompile Include="CTurretHPUIScript.cpp" />
     <ClCompile Include="CTurretIdleState.cpp" />
