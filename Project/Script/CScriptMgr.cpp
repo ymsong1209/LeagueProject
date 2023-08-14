@@ -22,6 +22,7 @@
 #include "CInGameCameraScript.h"
 #include "CInhibitorScript.h"
 #include "CInventoryUIScript.h"
+#include "CJinxBasicAttackScript.h"
 #include "CJinxEScript.h"
 #include "CJinxRScript.h"
 #include "CJinxScript.h"
@@ -33,7 +34,6 @@
 #include "CKrugMiniScript.h"
 #include "CKrugScript.h"
 #include "CMalphiteBasicAttackHitEffectScript.h"
-#include "CMalphiteBasicAttack.h"
 #include "CMalphiteEDecalScript.h"
 #include "CMalphiteEScript.h"
 #include "CMalphiteQDecalScript.h"
@@ -60,11 +60,14 @@
 #include "CRazorBeakScript.h"
 #include "CRedScript.h"
 #include "CScorePanelScript.h"
+#include "CShopKeeperNorthScript.h"
+#include "CShopKeeperSouthScript.h"
 #include "CSkillLevelUIScript.h"
 #include "CSkillLevelUpUIScript.h"
 #include "CSkillLvEffectUIScript.h"
 #include "CSoundTestScript.h"
 #include "CStructureScript.h"
+#include "CTurretBasicAttackScript.h"
 #include "CTurretHPUIScript.h"
 #include "CTurretScript.h"
 #include "CUIScript.h"
@@ -95,6 +98,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CInGameCameraScript");
 	_vec.push_back(L"CInhibitorScript");
 	_vec.push_back(L"CInventoryUIScript");
+	_vec.push_back(L"CJinxBasicAttackScript");
 	_vec.push_back(L"CJinxEScript");
 	_vec.push_back(L"CJinxRScript");
 	_vec.push_back(L"CJinxScript");
@@ -133,6 +137,8 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CRazorBeakScript");
 	_vec.push_back(L"CRedScript");
 	_vec.push_back(L"CScorePanelScript");
+	_vec.push_back(L"CShopKeeperNorthScript");
+	_vec.push_back(L"CShopKeeperSouthScript");
 	_vec.push_back(L"CSkillLevelUIScript");
 	_vec.push_back(L"CSkillLevelUpUIScript");
 	_vec.push_back(L"CSkillLvEffectUIScript");
@@ -140,6 +146,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CStructureScript");
 	_vec.push_back(L"CTestTurretScript");
 	_vec.push_back(L"CTurretAttackScript");
+	_vec.push_back(L"CTurretBasicAttackScript");
 	_vec.push_back(L"CTurretHPUIScript");
 	_vec.push_back(L"CTurretScript");
 	_vec.push_back(L"CUIScript");
@@ -192,6 +199,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CInhibitorScript;
 	if (L"CInventoryUIScript" == _strScriptName)
 		return new CInventoryUIScript;
+	if (L"CJinxBasicAttackScript" == _strScriptName)
+		return new CJinxBasicAttackScript;
 	if (L"CJinxEScript" == _strScriptName)
 		return new CJinxEScript;
 	if (L"CJinxRScript" == _strScriptName)
@@ -266,6 +275,10 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CRedScript;
 	if (L"CScorePanelScript" == _strScriptName)
 		return new CScorePanelScript;
+	if (L"CShopKeeperNorthScript" == _strScriptName)
+		return new CShopKeeperNorthScript;
+	if (L"CShopKeeperSouthScript" == _strScriptName)
+		return new CShopKeeperSouthScript;
 	if (L"CSkillLevelUIScript" == _strScriptName)
 		return new CSkillLevelUIScript;
 	if (L"CSkillLevelUpUIScript" == _strScriptName)
@@ -276,6 +289,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CSoundTestScript;
 	if (L"CStructureScript" == _strScriptName)
 		return new CStructureScript;
+	if (L"CTurretBasicAttackScript" == _strScriptName)
+		return new CTurretBasicAttackScript;
 	if (L"CTurretHPUIScript" == _strScriptName)
 		return new CTurretHPUIScript;
 	if (L"CTurretScript" == _strScriptName)
@@ -357,6 +372,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::INVENTORYUISCRIPT:
 		return new CInventoryUIScript;
+		break;
+	case (UINT)SCRIPT_TYPE::JINXBASICATTACKSCRIPT:
+		return new CJinxBasicAttackScript;
 		break;
 	case (UINT)SCRIPT_TYPE::JINXESCRIPT:
 		return new CJinxEScript;
@@ -469,6 +487,12 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::SCOREPANELSCRIPT:
 		return new CScorePanelScript;
 		break;
+	case (UINT)SCRIPT_TYPE::SHOPKEEPERNORTHSCRIPT:
+		return new CShopKeeperNorthScript;
+		break;
+	case (UINT)SCRIPT_TYPE::SHOPKEEPERSOUTHSCRIPT:
+		return new CShopKeeperSouthScript;
+		break;
 	case (UINT)SCRIPT_TYPE::SKILLLEVELUISCRIPT:
 		return new CSkillLevelUIScript;
 		break;
@@ -483,6 +507,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::STRUCTURESCRIPT:
 		return new CStructureScript;
+		break;
+	case (UINT)SCRIPT_TYPE::TURRETBASICATTACKSCRIPT:
+		return new CTurretBasicAttackScript;
 		break;
 	case (UINT)SCRIPT_TYPE::TURRETHPUISCRIPT:
 		return new CTurretHPUIScript;
@@ -592,6 +619,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::INVENTORYUISCRIPT:
 		return L"CInventoryUIScript";
+		break;
+
+	case SCRIPT_TYPE::JINXBASICATTACKSCRIPT:
+		return L"CJinxBasicAttackScript";
 		break;
 
 	case SCRIPT_TYPE::JINXESCRIPT:
@@ -746,6 +777,14 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CScorePanelScript";
 		break;
 
+	case SCRIPT_TYPE::SHOPKEEPERNORTHSCRIPT:
+		return L"CShopKeeperNorthScript";
+		break;
+
+	case SCRIPT_TYPE::SHOPKEEPERSOUTHSCRIPT:
+		return L"CShopKeeperSouthScript";
+		break;
+
 	case SCRIPT_TYPE::SKILLLEVELUISCRIPT:
 		return L"CSkillLevelUIScript";
 		break;
@@ -772,6 +811,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::TURRETATTACKSCRIPT:
 		return L"CTurretAttackScript";
+		break;
+		
+	case SCRIPT_TYPE::TURRETBASICATTACKSCRIPT:
+		return L"CTurretBasicAttackScript";
 		break;
 
 	case SCRIPT_TYPE::TURRETHPUISCRIPT:

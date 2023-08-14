@@ -18,7 +18,7 @@ void CRazorBeakDeathState::Enter()
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"RazorBeak\\Death_Base", false, false, false, 0.f);
 
 	Vec3 RazorbeakPos = GetOwner()->Transform()->GetRelativePos();
-	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\razorbeak\\death.mp3", 1, 0.5f, true, 200.f, RazorbeakPos, Faction::NONE);
+	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\razorbeak\\death.mp3", 1, 0.5f, true, 120.f, RazorbeakPos, Faction::NONE);
 	CJungleDeathState::Enter();
 }
 

@@ -19,6 +19,7 @@ CIconTimerUIScript
 CInGameCameraScript
 CInhibitorScript
 CInventoryUIScript
+CJinxBasicAttackScript
 CJinxEScript
 CJinxRScript
 CJinxScript
@@ -57,13 +58,14 @@ CRazorBeakMiniScript
 CRazorBeakScript
 CRedScript
 CScorePanelScript
+CShopKeeperNorthScript
+CShopKeeperSouthScript
 CSkillLevelUIScript
 CSkillLevelUpUIScript
 CSkillLvEffectUIScript
 CSoundTestScript
 CStructureScript
-CTestTurretScript
-CTurretAttackScript
+CTurretBasicAttackScript
 CTurretHPUIScript
 CTurretScript
 CUIScript

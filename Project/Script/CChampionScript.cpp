@@ -23,6 +23,11 @@ CChampionScript::CChampionScript(UINT ScriptType)
 	, m_bIsAttackingChampion(false)
 {
 	m_eUnitType = UnitType::CHAMPION;
+
+	m_iDropGold = 300;
+	m_fDropExp = 30.f;
+
+	m_fMaxExp = 50.f;
 }
 
 CChampionScript::CChampionScript()
@@ -46,10 +51,10 @@ void CChampionScript::begin()
 
 	// 스킬 레벨 초기화
 	m_SkillLevel[0] = 1;
+	m_SkillLevel[1] = 1;
 	m_SkillLevel[2] = 1;
 	m_SkillLevel[3] = 1;
 	m_SkillLevel[4] = 1;
-	m_SkillLevel[5] = 1;
 	/// 소환사 주문 배열에 넣어주기
 }
 
@@ -153,11 +158,18 @@ void CChampionScript::CheckStatus()
 	m_fHP += 2.0f * DT;
 	m_fMP += 5.0f * DT;
 
-	if (m_fHP > m_fMaxHP)
-		m_fHP = m_fMaxHP;
+	m_fHP = clamp(m_fHP, 0.f, m_fMaxHP);
+	m_fMP = clamp(m_fMP, 0.f, m_fMaxMP);
+	
+	if (m_fExp >= m_fMaxExp)
+	{
+		// 레벨업
+		// 레벨업 관련 이펙트?
 
-	if (m_fMP > m_fMaxMP)
-		m_fMP = m_fMaxMP;
+		// 초과된 만큼 exp를 남기고 스킬 포인트 추가
+		m_fExp = m_fExp - m_fMaxExp;
+		m_iSkillLevelUpPoint++;
+	}
 }
 
 void CChampionScript::GetInput()

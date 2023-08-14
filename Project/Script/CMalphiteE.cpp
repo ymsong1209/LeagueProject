@@ -13,20 +13,22 @@ CMalphiteE::CMalphiteE()
 	m_iMaxLevel = 5;
 	m_fCost = 50.f;
 
-	CGameObject* Projectile = new CGameObject;
-	Projectile->AddComponent(new CTransform);
-	Projectile->AddComponent(new CCollider2D);
-	Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-	Projectile->Collider2D()->SetOffsetScale(Vec2(80.f, 80.f));
-	Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
-	Projectile->Collider2D()->SetDrawCollision(true);
-	Projectile->SetName(L"GroundSlam");
+	CGameObject* MalphiteEDecal = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MalphiteEDecal.prefab")->Instantiate();
+	MalphiteEDecal->AddComponent(new CCollider2D);
+	MalphiteEDecal->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+	MalphiteEDecal->Collider2D()->SetOffsetScale(Vec2(80.f, 80.f));
+	MalphiteEDecal->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
+	MalphiteEDecal->Collider2D()->SetDrawCollision(true);
+	MalphiteEDecal->SetName(L"GroundSlam");
 
 	Ptr<CPrefab> NewPrefab = new CPrefab;
-	CGameObject* PrefabObject = Projectile->Clone();
-	NewPrefab->RegisterProtoObject(Projectile);
+	CGameObject* PrefabObject = MalphiteEDecal->Clone();
+	NewPrefab->RegisterProtoObject(PrefabObject);
 
 	m_vecSkillObj.push_back(NewPrefab);
+
+	//Ptr<CPrefab> MalphiteEEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MalphiteEDecal.prefab");
+	//m_SkillHitEffect = MalphiteEEffect;
 
 	// 투사체 스크립트
 	m_iProjectileCount = 1;

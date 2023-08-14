@@ -3,6 +3,9 @@
 #include "CSkill.h"
 #include "CBasicAttack.h"
 #include "CBasicAttackScript.h"
+
+#include "CTurretBasicAttack.h"
+#include "CTurretBasicAttackScript.h"
 #include "CJinxWScript.h"
 #include "CJinxEScript.h"
 #include "CJinxRScript.h"
@@ -12,6 +15,8 @@
 #include "CMalphiteEScript.h"
 #include "CMalphiteRScript.h"
 
+#include "CJinxBasicAttack.h"
+#include "CJinxBasicAttackScript.h"
 #include "CJinxW.h"
 #include "CJinxE.h"
 #include "CJinxR.h"
@@ -27,8 +32,14 @@ CSkillMgr::CSkillMgr()
 	CBasicAttack* BasicAttack = new CBasicAttack;
 	m_mapSkills.insert(make_pair(SkillType::BASIC_ATTACK, BasicAttack));
 
+	CTurretBasicAttack* TurretBasicAttack = new CTurretBasicAttack;
+	m_mapSkills.insert(make_pair(SkillType::TURRET_BASIC_ATTACK, TurretBasicAttack));
+
 	CMalphiteBasicAttack* MalphiteBasicAttack = new CMalphiteBasicAttack;
 	m_mapSkills.insert(make_pair(SkillType::MALPHITE_BASIC_ATTACK, MalphiteBasicAttack));
+
+	CJinxBasicAttack* JinxBasicAttack = new CJinxBasicAttack;
+	m_mapSkills.insert(make_pair(SkillType::JINX_BASIC_ATTACK, JinxBasicAttack));
 
 	CJinxW* JinxW = new CJinxW;
 	m_mapSkills.insert(make_pair(SkillType::JINX_W, JinxW));
@@ -91,6 +102,13 @@ CProjectileScript* CSkillMgr::FindProjectileScript(SkillType _Type)
 		return BasicAttackScript;
 	}
 	break;
+	case SkillType::TURRET_BASIC_ATTACK:
+	{
+		CTurretBasicAttackScript* TurretBasicAttackScript = new CTurretBasicAttackScript;
+		TurretBasicAttackScript->SetSkillType(SkillType::TURRET_BASIC_ATTACK);
+		return TurretBasicAttackScript;
+	}
+	break;
 	case SkillType::MALPHITE_BASIC_ATTACK:
 	{
 		CBasicAttackScript* BasicAttackScript = new CBasicAttackScript;
@@ -100,9 +118,9 @@ CProjectileScript* CSkillMgr::FindProjectileScript(SkillType _Type)
 	break;
 	case SkillType::JINX_BASIC_ATTACK:
 	{
-		CBasicAttackScript* BasicAttackScript = new CBasicAttackScript;
-		BasicAttackScript->SetSkillType(SkillType::BASIC_ATTACK);
-		return BasicAttackScript;
+		CJinxBasicAttackScript* JinxBasicAttackScript = new CJinxBasicAttackScript;
+		JinxBasicAttackScript->SetSkillType(SkillType::JINX_BASIC_ATTACK);
+		return JinxBasicAttackScript;
 		//CBasicAttackScript* BasicAttackScript = new CBasicAttackScript;
 		//BasicAttackScript->SetSkillType(SkillType::JINX_BASIC_ATTACK);
 		//return BasicAttackScript;

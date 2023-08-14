@@ -22,6 +22,10 @@ private:
 
     bool            m_bIsCollidedFromRay;
     bool            m_bDrawCollision; //콜리전을 보이게 할지 여부
+
+    // 하은님이 요청하신 변수 추가
+    bool            m_bFixed;
+
 public:
     virtual void finaltick() override;
 
@@ -39,6 +43,9 @@ public:
 
     bool GetColliderAbsolute() { return m_bAbsolute; }
     COLLIDER2D_TYPE GetColliderShape() { return m_Shape; }
+
+    bool IsFixed() { return m_bFixed; }
+    void SetFixed(bool _b) { m_bFixed = _b; }
 
     const Matrix& GetColliderPosMat() { return m_matColliderPos; }
     const Matrix& GetColliderScaleMat() { return m_matColliderScale; }

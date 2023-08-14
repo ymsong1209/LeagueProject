@@ -673,36 +673,21 @@
     <ClCompile Include="CNexusBrokenState.cpp">
       <Filter>State\Unit\Structure\Nexus</Filter>
     </ClCompile>
-    <ClCompile Include="CTurretHPUIScript.cpp">
-      <Filter>UIScript</Filter>
+    <ClCompile Include="CAnnounceTimerUIScript.cpp" />
+    <ClCompile Include="CShopKeeperNorthScript.cpp" />
+    <ClCompile Include="CShopKeeperSouthScript.cpp" />
+    <ClCompile Include="CJinxBasicAttack.cpp">
+      <Filter>Scripts\Skill\Jinx</Filter>
     </ClCompile>
-    <ClCompile Include="CSkillLvEffectUIScript.cpp">
-      <Filter>UIScript</Filter>
+    <ClCompile Include="CJinxBasicAttackScript.cpp">
+      <Filter>Scripts\SkillProjectile\Jinx</Filter>
     </ClCompile>
-    <ClCompile Include="CSkillLevelUpUIScript.cpp">
-      <Filter>UIScript</Filter>
+    <ClCompile Include="CTurretBasicAttackScript.cpp">
+      <Filter>Scripts\SkillProjectile</Filter>
     </ClCompile>
-    <ClCompile Include="CSkillLevelUIScript.cpp">
-      <Filter>UIScript</Filter>
+    <ClCompile Include="CTurretBasicAttack.cpp">
+      <Filter>Scripts\Skill</Filter>
     </ClCompile>
-    <ClCompile Include="CMinionHPRatioScript.cpp">
-      <Filter>UIScript</Filter>
-    </ClCompile>
-    <ClCompile Include="CMinionHPBarPosScript.cpp">
-      <Filter>UIScript</Filter>
-    </ClCompile>
-    <ClCompile Include="CKillLogUIScript.cpp">
-      <Filter>UIScript</Filter>
-    </ClCompile>
-    <ClCompile Include="CDragonHPUIScript.cpp">
-      <Filter>UIScript</Filter>
-    </ClCompile>
-    <ClCompile Include="CAnnounceTimerUIScript.cpp">
-      <Filter>UIScript</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayerCSUIScript.cpp" />
-    <ClCompile Include="CIconTimerUIScript.cpp" />
-    <ClCompile Include="CEndOfGameUIScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -907,6 +892,33 @@
     <ClInclude Include="CMalphiteBasicAttackHitEffectScript.h">
       <Filter>Scripts\Skill\Malphite</Filter>
     </ClInclude>
+    <ClInclude Include="CInhibitorRespawnState.h">
+      <Filter>State\Unit\Structure\Inhibitor</Filter>
+    </ClInclude>
+    <ClInclude Include="CNexusSpawnState.h">
+      <Filter>State\Unit\Structure\Nexus</Filter>
+    </ClInclude>
+    <ClInclude Include="CNexusIdleState.h">
+      <Filter>State\Unit\Structure\Nexus</Filter>
+    </ClInclude>
+    <ClInclude Include="CNexusBrokenState.h">
+      <Filter>State\Unit\Structure\Nexus</Filter>
+    </ClInclude>
+    <ClInclude Include="CAnnounceTimerUIScript.h" />
+    <ClInclude Include="CShopKeeperNorthScript.h" />
+    <ClInclude Include="CShopKeeperSouthScript.h" />
+    <ClInclude Include="CJinxBasicAttack.h">
+      <Filter>Scripts\Skill\Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxBasicAttackScript.h">
+      <Filter>Scripts\SkillProjectile\Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CTurretBasicAttackScript.h">
+      <Filter>Scripts\SkillProjectile</Filter>
+    </ClInclude>
+    <ClInclude Include="CTurretBasicAttack.h">
+      <Filter>Scripts\Skill</Filter>
+    </ClInclude>
     <ClInclude Include="CInhibitorSpawnState.h">
       <Filter>State\Unit\Structure\Inhibitor</Filter>
     </ClInclude>
@@ -916,39 +928,6 @@
     <ClInclude Include="CInhibitorIdleState.h">
       <Filter>State\Unit\Structure\Inhibitor</Filter>
     </ClInclude>
-    <ClInclude Include="CInhibitorRespawnState.h">
-      <Filter>State\Unit\Structure\Inhibitor</Filter>
-    </ClInclude>
-    <ClInclude Include="CTurretHPUIScript.h">
-      <Filter>UIScript</Filter>
-    </ClInclude>
-    <ClInclude Include="CSkillLvEffectUIScript.h">
-      <Filter>UIScript</Filter>
-    </ClInclude>
-    <ClInclude Include="CSkillLevelUpUIScript.h">
-      <Filter>UIScript</Filter>
-    </ClInclude>
-    <ClInclude Include="CSkillLevelUIScript.h">
-      <Filter>UIScript</Filter>
-    </ClInclude>
-    <ClInclude Include="CMinionHPRatioScript.h">
-      <Filter>UIScript</Filter>
-    </ClInclude>
-    <ClInclude Include="CMinionHPBarPosScript.h">
-      <Filter>UIScript</Filter>
-    </ClInclude>
-    <ClInclude Include="CKillLogUIScript.h">
-      <Filter>UIScript</Filter>
-    </ClInclude>
-    <ClInclude Include="CDragonHPUIScript.h">
-      <Filter>UIScript</Filter>
-    </ClInclude>
-    <ClInclude Include="CAnnounceTimerUIScript.h">
-      <Filter>UIScript</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayerCSUIScript.h" />
-    <ClInclude Include="CIconTimerUIScript.h" />
-    <ClInclude Include="CEndOfGameUIScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">
@@ -1594,6 +1573,9 @@
     </Filter>
     <Filter Include="State\Unit\Structure\Inhibitor">
       <UniqueIdentifier>{1e8fc1a5-caa2-4eca-ba92-e3ba8b78f009}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State\Unit\Structure\Nexus">
+      <UniqueIdentifier>{d7088f8a-4fe2-41db-b2fc-1aa5b5d1f9c3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

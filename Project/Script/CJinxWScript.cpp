@@ -15,9 +15,17 @@ CJinxWScript::~CJinxWScript()
 
 void CJinxWScript::begin()
 {
-	// Ã¹ »ý¼º À§Ä¡ ±â¾ï
+	// ì²« ìƒì„± ìœ„ì¹˜ ê¸°ì–µ
 	m_vSpawnPos = GetOwner()->Transform()->GetRelativePos();
+
+
+	// ë§ˆìš°ìŠ¤ë¥¼ í–¥í•œ ë°©í–¥ìœ¼ë¡œ íšŒì „í•˜ê¸° ìœ„í•¨.
+	float targetAngle = atan2f(m_vDir.z, m_vDir.x);
+	targetAngle = fmod(targetAngle + XM_PI, 2 * XM_PI) - XM_PI; // ë²”ìœ„ë¥¼ -Ï€ ~ Ï€ ë¡œ ë°”ê¾¸ê¸°
+	targetAngle += XMConvertToRadians(90); // ëª¨ë¸ì´ íšŒì „ëœ ìƒíƒœë¼ì„œ zì¶• 90ë„ íšŒì „(ì´ê±¸ë¡œ ëª¨ë“  ì¶•ì´ ë°”ë€œ)
+	GetOwner()->Transform()->SetRelativeRot(Vec3(0.f, 0.f, targetAngle));
 }
+
 
 void CJinxWScript::tick()
 {
@@ -25,19 +33,19 @@ void CJinxWScript::tick()
 
 	CProjectileScript::tick();
 
-	// Â¡Å©½º º»ÀÎÀÇ ¹æÇâÀ¸·Î ¹ß»ç
+	// ì§•í¬ìŠ¤ ë³¸ì¸ì˜ ë°©í–¥ìœ¼ë¡œ ë°œì‚¬
 	Vec3 ProjectilePos = GetOwner()->Transform()->GetRelativePos();
 
-	// Åõ»çÃ¼ ÀÌµ¿
+	// íˆ¬ì‚¬ì²´ ì´ë™
 	Vec3 NewPos = ProjectilePos + m_vDir * m_fProjectileSpeed * DT;
 	NewPos = Vec3(NewPos.x, 0.f, NewPos.z);
 	GetOwner()->Transform()->SetRelativePos(NewPos);
 
-	// ½ÃÀü À§Ä¡·ÎºÎÅÍ ½ºÅ³ »ç°Å¸®±îÁö ¹ß»çµÇ¾ú´Ù¸é »ç¶óÁü
+	// ì‹œì „ ìœ„ì¹˜ë¡œë¶€í„° ìŠ¤í‚¬ ì‚¬ê±°ë¦¬ê¹Œì§€ ë°œì‚¬ë˜ì—ˆë‹¤ë©´ ì‚¬ë¼ì§
 	float distance = sqrt((pow(m_vSpawnPos.x - NewPos.x, 2) + pow(m_vSpawnPos.z - NewPos.z, 2)));
 	if (distance >= m_fSkillRange)
 	{
-		if(!m_bUnitDead) // ÀÌÈÄ »ç¶óÁü
+		if(!m_bUnitDead) // ì´í›„ ì‚¬ë¼ì§
 			CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 0.2f);
 		m_fProjectileSpeed = 0.f;
 		m_bUnitDead = true;
@@ -51,14 +59,14 @@ void CJinxWScript::BeginOverlap(CCollider2D* _Other)
 	if (_Other->GetOwner()->GetScript<CUnitScript>() == nullptr)
 		return;
 	
-	// ½ÃÀüÀÚ¿Í ´Ù¸¥ Áø¿µÀÇ ¿ÀºêÁ§Æ®°¡ ºÎµúÄ£´Ù¸é
+	// ì‹œì „ìžì™€ ë‹¤ë¥¸ ì§„ì˜ì˜ ì˜¤ë¸Œì íŠ¸ê°€ ë¶€ë”ªì¹œë‹¤ë©´
 	if (_Other->GetOwner()->GetScript<CUnitScript>()->GetFaction() != m_UserObj->GetScript<CUnitScript>()->GetFaction())
 	{
-		// ÇÇ°ÝÀÚÀÇ ¼­¹ö ¾ÆÀÌµð
+		// í”¼ê²©ìžì˜ ì„œë²„ ì•„ì´ë””
 		UINT64 TargetServerID = _Other->GetOwner()->GetScript<CUnitScript>()->GetServerID();
 		
-		// ¹æÀåÄÄÀÌ ¼­¹ö¿¡°Ô ÀÌ Åõ»çÃ¼°¡ ÇÇ°ÝÀÚ¿Í Ãæµ¹Çß´Ù°í Àü´Þ
-		if (!m_bUnitDead)// ÀÌÈÄ »ç¶óÁü
+		// ë°©ìž¥ì»´ì´ ì„œë²„ì—ê²Œ ì´ íˆ¬ì‚¬ì²´ê°€ í”¼ê²©ìžì™€ ì¶©ëŒí–ˆë‹¤ê³  ì „ë‹¬
+		if (!m_bUnitDead)// ì´í›„ ì‚¬ë¼ì§
 		{
 			CSendServerEventMgr::GetInst()->SendHitPacket(GetServerID(), TargetServerID, m_iServerUserID, 1, SkillType::JINX_W);
 			CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 0.5f);

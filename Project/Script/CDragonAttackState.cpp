@@ -2,6 +2,7 @@
 #include "CDragonAttackState.h"
 #include <Engine/CAnim3D.h>
 #include "CDragonScript.h"
+#include "CSkill.h"
 CDragonAttackState::CDragonAttackState()
 {
 }
@@ -25,20 +26,15 @@ void CDragonAttackState::tick()
 
 	m_fAttackCoolTime -= EditorDT;
 	if (m_fAttackCoolTime < 0.f) {
-		// 공격 이벤트 발생
-		BasicAttackEvent* evn = dynamic_cast<BasicAttackEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_BASIC_ATTACK));
-		CDragonScript* script = GetOwner()->GetScript<CDragonScript>();
-		if (evn != nullptr)
-		{
-			evn->Clear();
-			evn->SetUserObj(GetOwner());
-			evn->SetTargetObj(script->GetTarget());
 
-			CGameEventMgr::GetInst()->NotifyEvent(*evn);
-		}
+		CDragonScript* script = GetOwner()->GetScript<CDragonScript>();
+		CSkill* skill = script->GetSkill(0);
+		skill->SetUserObj(GetOwner());
+		skill->SetTargetObj(script->GetTarget());
+		skill->Use();
 
 		Vec3 DragonPos = GetOwner()->Transform()->GetRelativePos();
-		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\dragon\\attack1.mp3", 1, 0.5f, true, 200.f, DragonPos, Faction::NONE);
+		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\dragon\\attack1.mp3", 1, 0.5f, true, 120.f, DragonPos, Faction::NONE);
 		m_fAttackCoolTime = 3.f;
 	}
 

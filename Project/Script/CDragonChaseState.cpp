@@ -20,7 +20,7 @@ void CDragonChaseState::Enter()
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"Elder_Dragon\\sru_dragon_flying_run", true, false, false, 0.f);
 
 	Vec3 DragonPos = GetOwner()->Transform()->GetRelativePos();
-	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\dragon\\run.mp3", 1, 0.5f, true, 200.f, DragonPos, Faction::NONE);
+	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\dragon\\run.mp3", 1, 0.5f, true, 120.f, DragonPos, Faction::NONE);
 }
 
 void CDragonChaseState::tick()
@@ -40,9 +40,14 @@ void CDragonChaseState::tick()
 		GetOwner()->Fsm()->ChangeState(L"Attack");
 	}
 	else {
+
 		m_fTime += DT;
 		if (m_fTime > 0.01f) {
-			GetOwner()->PathFinder()->FindPath(targetpos);
+			float targetdist = sqrt(pow(targetpos.x - m_vTargetPos.x, 2.f) + pow(targetpos.z - m_vTargetPos.z, 2.f));
+			if (targetdist > 10.f) {
+				GetOwner()->PathFinder()->FindPath(targetpos);
+				m_vTargetPos = targetpos;
+			}
 			m_fTime = 0.f;
 		}
 		script->PathFindMove(70.f, true);
@@ -53,7 +58,7 @@ void CDragonChaseState::tick()
 	if (m_fSoundTime > 1.f) {
 		m_fSoundTime = 0.f;
 		Vec3 DragonPos = GetOwner()->Transform()->GetRelativePos();
-		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\dragon\\run.mp3", 1, 0.5f, true, 200.f, DragonPos, Faction::NONE);
+		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\dragon\\run.mp3", 1, 0.5f, true, 120.f, DragonPos, Faction::NONE);
 	}
 }
 

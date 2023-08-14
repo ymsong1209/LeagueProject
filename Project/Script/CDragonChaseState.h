@@ -6,6 +6,7 @@ class CDragonChaseState :
 private:
     float       m_fTime;
     float       m_fSoundTime;
+    Vec3        m_vTargetPos;
 public:
     virtual void Enter() override;
     virtual void tick() override;

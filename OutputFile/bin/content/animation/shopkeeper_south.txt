@@ -1,0 +1,3 @@
+Idle1_Base_model.002,0,179
+Idle_Spawn_Hold,180,244
+Idle_Spawn,245,501

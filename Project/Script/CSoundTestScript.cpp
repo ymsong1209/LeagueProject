@@ -25,7 +25,7 @@ CSoundTestScript::~CSoundTestScript()
 
 void CSoundTestScript::begin()
 {
-	Ptr<CSound> pSound = CResMgr::GetInst()->FindRes<CSound>(L"sound3d\\gromp\\attack.mp3");
+	Ptr<CSound> pSound = CResMgr::GetInst()->FindRes<CSound>(L"sound2d\\Season1Rift.mp3");
 	//new로 생성된 m_bgm은 soundmgr에서 자동으로 삭제해줌
 	//아래는 클라에서 실행해보기 위한 예시 코드임. script작성할때 이거 쓰면 안됨.
 	m_BGM = new CSound;
@@ -56,9 +56,9 @@ void CSoundTestScript::tick()
 
 	if (KEY_TAP(KEY::O)) {
 		int bgmindex2 = m_BGM2->GetSoundIndex();
-		CSoundMgr::GetInst()->Play(bgmindex2, 0, 1, true, 500.f, Vec3(0.f, 0.f, 1000.f));
+		CSoundMgr::GetInst()->Play(bgmindex2, 0, 1, true, 0.f, Vec3(0.f, 0.f, 0.f));
 		CSoundMgr::GetInst()->Stop(bgmindex2);
-		CSoundMgr::GetInst()->Play(bgmindex2, 0, 1, true, 500.f, Vec3(0.f, 0.f, 1000.f));
+		CSoundMgr::GetInst()->Play(bgmindex2, 0, 1, true, 0.f, Vec3(0.f, 0.f, 0.f));
 	}
 	if (m_BGM2) {
 		// 소리 위치가 변경되었을 경우, 그 위치로 update

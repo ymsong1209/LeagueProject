@@ -18,7 +18,7 @@ void CRedSpawnState::Enter()
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"jungle_red\\sru_red_spawn", false, false, false, 0.f);
 
 	Vec3 RedPos = GetOwner()->Transform()->GetRelativePos();
-	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\red\\spawn.mp3", 1, 0.5f, true, 200.f, RedPos, Faction::NONE);
+	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\red\\spawn.mp3", 1, 0.3f, true, 120.f, RedPos, Faction::NONE);
 	CJungleSpawnState::Enter();
 }
 

@@ -55,8 +55,9 @@ void CInhibitorScript::begin()
 
 void CInhibitorScript::tick()
 {
-	CheckStatus();
+	CStructureScript::tick();
 
+	CheckStatus();
 
 	//임시 코드
 	m_vecTurrets.clear();

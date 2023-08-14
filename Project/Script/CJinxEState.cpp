@@ -54,6 +54,18 @@ void CJinxEState::Enter()
 	float targetYaw = atan2f(-Dir.x, -Dir.z);
 	GetOwner()->Transform()->SetRelativeRot(Vec3(0.f, targetYaw, 0.f));
 
+	if (m_iJinxSoundNum == 1) {
+		Vec3 JinxPos = GetOwner()->Transform()->GetRelativePos();
+		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\jinx\\jinx_champ_E1.wav", 1, 0.5f, true, 100.f, JinxPos, Faction::NONE);
+		m_iJinxSoundNum = 2;
+	}
+	else {
+		Vec3 JinxPos = GetOwner()->Transform()->GetRelativePos();
+		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\jinx\\jinx_champ_E2.wav", 1, 0.5f, true, 100.f, JinxPos, Faction::NONE);
+		m_iJinxSoundNum = 1;
+	}
+	
+
 }
 
 void CJinxEState::Exit()

@@ -61,6 +61,8 @@ void CUnitScript::begin()
 
 void CUnitScript::tick()
 {
+	m_fHP = clamp(m_fHP, 0.f, m_fMaxHP);
+
 	CheckTimedEffect();
 	CheckCC();
 
@@ -203,7 +205,8 @@ void CUnitScript::CheckCC()
 	{
 		if (m_bAirBorneActive == false) 
 		{
-			GetOwner()->PathFinder()->ClearPath();
+			if(GetOwner()->PathFinder())
+				GetOwner()->PathFinder()->ClearPath();
 			Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
 			m_vAirBorneStartPos = CurPos;
 			GetOwner()->Transform()->SetRelativePos(Vec3(CurPos.x, CurPos.y + 50.f, CurPos.z));

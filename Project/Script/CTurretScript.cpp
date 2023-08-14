@@ -7,6 +7,8 @@
 #include "CGameEventMgr.h"
 #include "CTurretIdleState.h"
 #include "CTurretBrokenState.h"
+#include "CTurretBasicAttack.h"
+
 
 CTurretScript::CTurretScript()
 	:CStructureScript((UINT)SCRIPT_TYPE::TURRETSCRIPT)
@@ -27,7 +29,7 @@ CTurretScript::~CTurretScript()
 
 void CTurretScript::begin()
 {
-	m_Skill[0] = new CBasicAttack;
+	m_Skill[0] = new CTurretBasicAttack;
 	m_Skill[0]->SetOwnerScript(this);
 	//Ptr<CPrefab> TurretProjectile = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\TurretBlaze.prefab");
 	//m_Skill[0]->SetProjectileObj(TurretProjectile); // 투사체 프리팹 설정

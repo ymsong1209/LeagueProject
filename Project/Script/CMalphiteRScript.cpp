@@ -15,8 +15,6 @@ CMalphiteRScript::~CMalphiteRScript()
 
 void CMalphiteRScript::begin()
 {
-	CGameObject* MalphiteRDecal = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MalphiteRDecal.prefab")->Instantiate();
-	SpawnGameObject(MalphiteRDecal, GetOwner()->Transform()->GetRelativePos(), L"Default");
 }
 
 void CMalphiteRScript::tick()

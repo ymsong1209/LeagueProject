@@ -214,7 +214,8 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 			pObj->MeshRender()->GetDynamicMaterial(i);
 		}
 		
-
+		pObj->GetRenderComponent()->SetDynamicShadow(true);
+		
 		_players.insert(std::make_pair(_info.id, pObj));
 	}
 }
@@ -1226,14 +1227,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 				CBlueScript* Script = pObj->GetScript<CBlueScript>();
 
-				Script->SetAggroPos(Vec3(563.f, 0.f, 1164.f));
-				SpawnGameObject(pObj, Vec3(563.f, 15.f, 1164.f), L"Mob");
+				Script->SetAggroPos(Vec3(559.f, 0.f, 1164.f));
+				SpawnGameObject(pObj, Vec3(559.f, 15.f, 1164.f), L"Mob");
 			}
 			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
 			{
 				pObj->AddComponent(new CUnitScript);
 				CUnitScript* Script = pObj->GetScript<CUnitScript>();
-				SpawnGameObject(pObj, Vec3(563.f, 15.f, 1164.f), L"Mob");
+				SpawnGameObject(pObj, Vec3(559.f, 15.f, 1164.f), L"Mob");
 			}
 
 			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
@@ -2115,52 +2116,61 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 		break;
 		case UnitType::DRAGON:// 드래곤
 		{
-			//pMeshData = nullptr;
-			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Elder_Dragon.fbx");
-			//pObj = nullptr;
-			//pObj = pMeshData->Instantiate();
-			//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Elder_Dragon");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
-			//pObj->SetName(L"Elder_Dragon");
-			//pObj->Transform()->SetUseMouseOutline(true);
-			//pObj->Transform()->SetRelativeScale(0.33f, 0.33f, 0.33f);
-			//pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(-44.f), XMConvertToRadians(-180.f)));
-			//pObj->AddComponent(new CCollider3D);
-			//pObj->Collider3D()->SetAbsolute(true);
-			//pObj->Collider3D()->SetDrawCollision(false);
-			//pObj->Collider3D()->SetOffsetScale(Vec3(125.f, 125.f, 125.f));
-			//
-			//pObj->AddComponent(new CCollider2D);
-			//pObj->Collider2D()->SetAbsolute(true);
-			//pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-			//pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-			//pObj->Collider2D()->SetOffsetScale(Vec2(200.f, 200.f));
-			//if (MyPlayer.host) // 방장인 경우에 진짜
-			//{
-			//	pObj->AddComponent(new CDragonScript);
-			//
-			//	CDragonScript* Script = pObj->GetScript<CDragonScript>();
-			//
-			//	Script->SetAggroPos(Vec3(1451, 15.f, 649.f));
-			//	Script->SetAlertPos(Vec3(1483, 15.f, 689.f));
-			//	SpawnGameObject(pObj, Vec3(1451, 0.f, 656.f), L"Mob");
-			//}
-			//else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
-			//{
-			//	pObj->AddComponent(new CUnitScript);
-			//	CUnitScript* Script = pObj->GetScript<CUnitScript>();
-			//	SpawnGameObject(pObj, Vec3(1451, 0.f, 656.f), L"Mob");
-			//}
-			//
-			//// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
-			//CUnitScript* Script = pObj->GetScript<CUnitScript>();
-			//Script->SetServerID(_objectId);  // 서버 id
-			//Script->SetUnitType(UnitType::DRAGON);  // UnitType
-			//Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
-			//pObj->GetRenderComponent()->SetFrustumCheck(true);
-			//pObj->GetRenderComponent()->SetRaySightCulling(true);
-			//pObj->Transform()->SetIsShootingRay(false);
-			//pObj->Transform()->SetRayRange(0.f);
-			//_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Elder_Dragon.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Elder_Dragon");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"Elder_Dragon");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.33f, 0.33f, 0.33f);
+			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(-44.f), XMConvertToRadians(-180.f)));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(125.f, 125.f, 125.f));
+			
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(200.f, 200.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CDragonScript);
+			
+				CDragonScript* Script = pObj->GetScript<CDragonScript>();
+			
+				Script->SetAggroPos(Vec3(1451, 15.f, 649.f));
+				Script->SetAlertPos(Vec3(1483, 15.f, 689.f));
+				SpawnGameObject(pObj, Vec3(1451, 0.f, 656.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(1451, 0.f, 656.f), L"Mob");
+			}
+			
+			CGameObject* DragonBar = new CGameObject;
+			DragonBar->SetName(L"DragonBar");
+			DragonBar->AddComponent(new CTransform);
+			DragonBar->AddComponent(new CMeshRender);
+			DragonBar->AddComponent(new CDragonHPUIScript);
+			pObj->AddChild(DragonBar);
+
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::DRAGON);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+
+			
 		}
 		break;
 		// =======================================================================================================================
@@ -2257,6 +2267,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 				, L"Structure");
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
 
+			if (Script->GetFaction() == MyPlayer.faction) {
+				pObj->Transform()->SetIsShootingRay(true);
+				pObj->Transform()->SetRayRange(200.f);
+			}
+			else {
+				pObj->Transform()->SetIsShootingRay(false);
+			}
+
 			CGameObject* HPBar = new CGameObject;
 			HPBar->SetName(L"TurretBar");
 			HPBar->AddComponent(new CTransform);
@@ -2283,17 +2301,6 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\inhibitor_Destroyed_alpha.mtrl"), 1);
 			pObj->Collider2D()->SetAbsolute(true);
 			pObj->Collider3D()->SetAbsolute(true);
-			//pMeshData = nullptr;
-			//pObj = nullptr;
-			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Inhibitor.fbx");
-			//pObj = pMeshData->Instantiate();
-			//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Inhibitor");
-			//pObj->GetRenderComponent()->SetFrustumCheck(true);
-			//pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\inhibitor_Destroyed_alpha.mtrl"), 1);
-			//pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
-			//pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-			//pObj->Transform()->SetUseMouseOutline(true);
-			//pObj->Transform()->SetOutlineThickness(0.072f);
 
 			if (_objectInfo.faction == Faction::RED)
 			{
@@ -2353,17 +2360,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			//-----빙빙 도는 넥서스쪽 보기------ 
 			/*pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
 			pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\nexus_red_clear.png"));*/
-			pMeshData = nullptr;
-			pObj = nullptr;
-			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\nexus.fbx");
-			pObj = pMeshData->Instantiate();
-			pObj->SetName(L"blue_nexus");
-			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\nexus");
+			Ptr<CPrefab> Prefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\Nexus.prefab");
+			CPrefab* pPrefab = (CPrefab*)Prefab.Get();
+			pObj = pPrefab->Instantiate();
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetOutlineThickness(0.072f);
+			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
-			pObj->Animator3D()->PlayRepeat(L"nexus\\sruap_order_idle.anm_skinned_mesh.001", true, true, 0.1f);
-			pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\alphaTex.png"));
-			pObj->MeshRender()->GetMaterial(1)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\FBXTexture\\sruap_ordernexus_tx_cm_clear.png"));
-			pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+			pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\nexus_Destroyed_alpha.mtrl"), 0);
 			
 			if (_objectInfo.faction == Faction::RED)
 			{
@@ -2373,17 +2377,13 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			else if (_objectInfo.faction == Faction::BLUE)
 			{
 				pObj->SetName(L"blue_nexus");
-
+				pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\nexus_Mat_Blue.mtrl"), 1);
 			}
 
 
 			if (MyPlayer.host)
 			{
-				//pObj->AddComponent(new CInhibitorScript);
-				// script->setLane, _objectInfo.lane
-				pObj->AddComponent(new CUnitScript);  // 추후 주석처리
-				// 공격범위 시야 자식오브젝트도 추가해야할듯.
-
+				pObj->AddComponent(new CNexusScript);
 			}
 			else
 			{
@@ -2484,9 +2484,25 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 				vecProj[i]->GetScript<CUnitScript>()->SetUnitType(UnitType::PROJECTILE);
 				_objects.insert(std::make_pair(_projectileId+i, vecProj[i]));
 			}
+		}
 
+		// 스킬 이펙트 생성
+		CGameObject* UserObj = FindAllObject(_skillInfo.OwnerId);
 
+		// 스킬 쓰는 애
+		CGameObject* skillTargetObj = UserObj;
+
+		// _SkillInfo를 까서, 어떤 Skill인지 가지고 옴
+		CSkill* skill = CSkillMgr::GetInst()->FindSkill(_skillInfo.skillType);
+
+		// 시전자 몸 주변에 이펙트를 생성
+		if (skill->GetSkillEffect() != nullptr)
+		{
+			SpawnGameObject(skill->GetSkillEffect(), UserObj->Transform()->GetRelativePos(), L"Effect");
+			skill->GetSkillHitEffect()->SetLifeSpan(0.5f);
 		}
 	}
 }
+
+
 

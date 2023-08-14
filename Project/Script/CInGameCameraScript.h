@@ -22,6 +22,8 @@ public:
     void SetTargetObject(CGameObject* _Object) { m_pTargetObject = _Object; }
     CGameObject* GetTargetObject() { return m_pTargetObject; }
 
+    tRay CalcRay();
+
 
     CLONE(CInGameCameraScript);
 
