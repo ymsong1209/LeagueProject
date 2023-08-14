@@ -21,7 +21,7 @@ void CRazorBeakAttackState::Enter()
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, basename, false, false, false, 0.f);
 
 	Vec3 RazorbeakPos = GetOwner()->Transform()->GetRelativePos();
-	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\razorbeak\\attack.mp3", 1, 0.5f, true, 200.f, RazorbeakPos, Faction::NONE);
+	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\razorbeak\\attack.mp3", 1, 0.5f, true, 120.f, RazorbeakPos, Faction::NONE);
 	CJungleAttackState::Enter();
 }
 

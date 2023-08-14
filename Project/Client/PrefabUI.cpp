@@ -44,8 +44,8 @@ int PrefabUI::render_update()
 	}
 
 
-	Vec2 pos = CKeyMgr::GetInst()->GetMousePos();
-	m_vMousePos = Vec4(pos.x, pos.y, 1.f, 0.f);
+	//Vec2 pos = CKeyMgr::GetInst()->GetMousePos();
+	//m_vMousePos = Vec4(pos.x, pos.y, 1.f, 0.f);
 
 	Vec3 RayPos = m_pEditorCam->GetRay().vDir;
 	Matrix CamWorld = m_pEditorCam->Transform()->GetWorldMat();

@@ -9,6 +9,7 @@
 #include <Engine/CRenderMgr.h>
 #include <Engine/CSound.h>
 #include <Engine/CResMgr.h>
+#include <Engine/CMRT.h>
 
 CCameraMoveScript::CCameraMoveScript()
 	: CScript((UINT)SCRIPT_TYPE::CAMERAMOVESCRIPT)
@@ -35,8 +36,34 @@ void CCameraMoveScript::tick()
 		return;
 	}
 
+
+	CCamera* MainCam = CRenderMgr::GetInst()->GetMainCam();
 	Vec3 CamPos = GetOwner()->Transform()->GetRelativePos();
-	CamPos.y = 0.f;
+
+
+	Matrix CamWorld = MainCam->Transform()->GetWorldMat();
+
+	//EditorCamera의 Position에 스폰됩니다.
+	CGameObject* LoLMap = CLevelMgr::GetInst()->GetCurLevel()->FindObjectByName(L"LoLMapCollider");
+	if (LoLMap != nullptr) {
+		tRay ray = CalcRay();
+		IntersectResult result = MainCam->IsCollidingBtwRayRect(ray, LoLMap);
+		Vec3 EndPos = result.vCrossPoint;
+		if (result.bResult) {
+			CamPos = Vec4(EndPos.x, EndPos.y, EndPos.z, 1.f);
+		}
+		else {
+			CamPos = GetOwner()->Transform()->GetRelativePos();
+			CamPos.y = 0.f;
+		}
+
+	}
+	else {
+		CamPos.y = 0.f;
+	}
+
+
+	
 	Vec3 CamForward = GetOwner()->Transform()->GetWorldDir(DIR_TYPE::FRONT);
 	Vec3 CamUp = GetOwner()->Transform()->GetWorldDir(DIR_TYPE::UP);
 	CSound::UpdateListenerAttributes(CamPos, CamForward, CamUp);
@@ -153,4 +180,49 @@ void CCameraMoveScript::Camera3DMove()
 
 	Transform()->SetRelativePos(vPos);
 	Transform()->SetRelativeRot(vRot);
+}
+
+tRay CCameraMoveScript::CalcRay()
+{
+	CCamera* MainCam = CRenderMgr::GetInst()->GetMainCam();
+	Matrix m_matProj = MainCam->GetProjMat();
+	Matrix m_matViewInv = MainCam->GetViewMatInv();
+	PROJ_TYPE m_ProjType = MainCam->GetProjType();
+	float m_fScale = MainCam->GetScale();
+
+	// SwapChain 타겟의 ViewPort 정보
+	CMRT* pMRT = CRenderMgr::GetInst()->GetMRT(MRT_TYPE::SWAPCHAIN);
+	D3D11_VIEWPORT tVP = pMRT->GetViewPort();
+
+	// 카메라의 중심 좌표
+	Vec2 vCenterPos = Vec2(tVP.Width / 2.0f, tVP.Height / 2.0f);
+	
+	tRay m_ray;
+	
+
+	if (m_ProjType == PROJ_TYPE::PERSPECTIVE)
+	{
+		// 직선은 카메라의 좌표를 반드시 지난다.
+		m_ray.vStart = Transform()->GetWorldPos();
+
+		// view space 에서의 방향
+		m_ray.vDir.x = ((((vCenterPos.x - tVP.TopLeftX) * 2.f / tVP.Width) - 1.f) - m_matProj._31) / m_matProj._11;
+		m_ray.vDir.y = (-(((vCenterPos.y - tVP.TopLeftY) * 2.f / tVP.Height) - 1.f) - m_matProj._32) / m_matProj._22;
+		m_ray.vDir.z = 1.f;
+
+		// world space 에서의 방향
+		m_ray.vDir = XMVector3TransformNormal(m_ray.vDir, m_matViewInv);
+		m_ray.vDir.Normalize();
+	}
+
+	else if (m_ProjType == PROJ_TYPE::ORTHOGRAPHIC)
+	{
+
+		// Add앞에 -를 붙여야 하는 이유는 DirectX의 y축과 화면에서의 y축의 증가 방향이
+		// 반대이기 때문이다.
+		m_ray.vStart = Transform()->GetWorldPos();
+		m_ray.vDir = Transform()->GetWorldDir(DIR_TYPE::FRONT);
+	}
+
+	return m_ray;
 }

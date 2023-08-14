@@ -15,6 +15,8 @@ private:
     void Camera2DMove();
     void Camera3DMove();
 
+    tRay CalcRay();
+
     void MainCam3DMove();
     void EditCam3DMove();
 

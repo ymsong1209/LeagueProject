@@ -24,7 +24,7 @@ void CBlueAttackState::Enter()
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, basename, false, false, false, 0.f);
 
 	Vec3 BluePos = GetOwner()->Transform()->GetRelativePos();
-	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\blue\\attack.mp3", 1, 0.5f, true, 200.f, BluePos, Faction::NONE);
+	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\blue\\attack.mp3", 1, 0.5f, true, 130.f, BluePos, Faction::NONE);
 	CJungleAttackState::Enter();
 }
 

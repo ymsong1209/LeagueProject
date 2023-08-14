@@ -187,27 +187,27 @@ void CreateTestLevel()
 
 	
 	//=======================================
-	Ptr<CMeshData> pMeshData2 = nullptr;
-	CGameObject* pObj2 = nullptr;
-	pMeshData2 = CResMgr::GetInst()->LoadFBX(L"fbx\\Elder_Dragon.fbx");
-	pObj2 = pMeshData2->Instantiate();
-	pObj2->SetName(L"Elder_Dragon");
-	pObj2->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Elder_Dragon");
-	pObj2->Animator3D()->PlayRepeat(L"Elder_Dragon\\sru_dragon_flying_run", true, true, 0.1f);
-	pObj2->Transform()->SetRelativeScale(Vec3(0.33f, 0.33f, 0.33f));
-	pObj2->AddComponent(new CUnitScript);
-	//pObj2->GetScript<CUnitScript>()->SetFaction(Faction::BLUE);
-	Vec3 spawnPos = Vec3(1454.188f, -24.114f, 650.603f);
-	SpawnGameObject(pObj2, spawnPos, L"Mob");
-
-	CGameObject* DragonBar = new CGameObject;
-	DragonBar->SetName(L"DragonBar");
-	DragonBar->AddComponent(new CTransform);
-	DragonBar->AddComponent(new CMeshRender);
-	DragonBar->AddComponent(new CDragonHPUIScript);
-	//SpawnGameObject(DragonBar, spawnPos, L"Mob");
-
-	pObj2->AddChild(DragonBar);
+	//Ptr<CMeshData> pMeshData2 = nullptr;
+	//CGameObject* pObj2 = nullptr;
+	//pMeshData2 = CResMgr::GetInst()->LoadFBX(L"fbx\\Elder_Dragon.fbx");
+	//pObj2 = pMeshData2->Instantiate();
+	//pObj2->SetName(L"Elder_Dragon");
+	//pObj2->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Elder_Dragon");
+	//pObj2->Animator3D()->PlayRepeat(L"Elder_Dragon\\sru_dragon_flying_run", true, true, 0.1f);
+	//pObj2->Transform()->SetRelativeScale(Vec3(0.33f, 0.33f, 0.33f));
+	//pObj2->AddComponent(new CUnitScript);
+	////pObj2->GetScript<CUnitScript>()->SetFaction(Faction::BLUE);
+	//Vec3 spawnPos = Vec3(1454.188f, -24.114f, 650.603f);
+	//SpawnGameObject(pObj2, spawnPos, L"Mob");
+	//
+	//CGameObject* DragonBar = new CGameObject;
+	//DragonBar->SetName(L"DragonBar");
+	//DragonBar->AddComponent(new CTransform);
+	//DragonBar->AddComponent(new CMeshRender);
+	//DragonBar->AddComponent(new CDragonHPUIScript);
+	////SpawnGameObject(DragonBar, spawnPos, L"Mob");
+	//
+	//pObj2->AddChild(DragonBar);
 	//======메모: 미니언,드래곤,정글몹 자식으로 붙일 체력바 부분=================================================
 
 	{

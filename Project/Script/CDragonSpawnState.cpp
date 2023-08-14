@@ -20,7 +20,7 @@ void CDragonSpawnState::Enter()
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"Elder_Dragon\\sru_dragon_elder_spawn", false, false, false, 0.f);
 
 	Vec3 DragonPos = GetOwner()->Transform()->GetRelativePos();
-	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\dragon\\spawn.mp3", 1, 0.5f, true, 200.f, DragonPos, Faction::NONE);
+	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\dragon\\spawn.mp3", 1, 0.5f, true, 120.f, DragonPos, Faction::NONE);
 }
 
 void CDragonSpawnState::tick()

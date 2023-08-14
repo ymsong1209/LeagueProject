@@ -1226,14 +1226,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 				CBlueScript* Script = pObj->GetScript<CBlueScript>();
 
-				Script->SetAggroPos(Vec3(563.f, 0.f, 1164.f));
-				SpawnGameObject(pObj, Vec3(563.f, 15.f, 1164.f), L"Mob");
+				Script->SetAggroPos(Vec3(559.f, 0.f, 1164.f));
+				SpawnGameObject(pObj, Vec3(559.f, 15.f, 1164.f), L"Mob");
 			}
 			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
 			{
 				pObj->AddComponent(new CUnitScript);
 				CUnitScript* Script = pObj->GetScript<CUnitScript>();
-				SpawnGameObject(pObj, Vec3(563.f, 15.f, 1164.f), L"Mob");
+				SpawnGameObject(pObj, Vec3(559.f, 15.f, 1164.f), L"Mob");
 			}
 
 			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
@@ -2115,52 +2115,52 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 		break;
 		case UnitType::DRAGON:// 드래곤
 		{
-			//pMeshData = nullptr;
-			//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Elder_Dragon.fbx");
-			//pObj = nullptr;
-			//pObj = pMeshData->Instantiate();
-			//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Elder_Dragon");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
-			//pObj->SetName(L"Elder_Dragon");
-			//pObj->Transform()->SetUseMouseOutline(true);
-			//pObj->Transform()->SetRelativeScale(0.33f, 0.33f, 0.33f);
-			//pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(-44.f), XMConvertToRadians(-180.f)));
-			//pObj->AddComponent(new CCollider3D);
-			//pObj->Collider3D()->SetAbsolute(true);
-			//pObj->Collider3D()->SetDrawCollision(false);
-			//pObj->Collider3D()->SetOffsetScale(Vec3(125.f, 125.f, 125.f));
-			//
-			//pObj->AddComponent(new CCollider2D);
-			//pObj->Collider2D()->SetAbsolute(true);
-			//pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-			//pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-			//pObj->Collider2D()->SetOffsetScale(Vec2(200.f, 200.f));
-			//if (MyPlayer.host) // 방장인 경우에 진짜
-			//{
-			//	pObj->AddComponent(new CDragonScript);
-			//
-			//	CDragonScript* Script = pObj->GetScript<CDragonScript>();
-			//
-			//	Script->SetAggroPos(Vec3(1451, 15.f, 649.f));
-			//	Script->SetAlertPos(Vec3(1483, 15.f, 689.f));
-			//	SpawnGameObject(pObj, Vec3(1451, 0.f, 656.f), L"Mob");
-			//}
-			//else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
-			//{
-			//	pObj->AddComponent(new CUnitScript);
-			//	CUnitScript* Script = pObj->GetScript<CUnitScript>();
-			//	SpawnGameObject(pObj, Vec3(1451, 0.f, 656.f), L"Mob");
-			//}
-			//
-			//// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
-			//CUnitScript* Script = pObj->GetScript<CUnitScript>();
-			//Script->SetServerID(_objectId);  // 서버 id
-			//Script->SetUnitType(UnitType::DRAGON);  // UnitType
-			//Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
-			//pObj->GetRenderComponent()->SetFrustumCheck(true);
-			//pObj->GetRenderComponent()->SetRaySightCulling(true);
-			//pObj->Transform()->SetIsShootingRay(false);
-			//pObj->Transform()->SetRayRange(0.f);
-			//_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			pMeshData = nullptr;
+			pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Elder_Dragon.fbx");
+			pObj = nullptr;
+			pObj = pMeshData->Instantiate();
+			pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Elder_Dragon");  // 내부말고 여기서 해줘야 빈껍데기 두꺼비도 애니메이션을 안다.
+			pObj->SetName(L"Elder_Dragon");
+			pObj->Transform()->SetUseMouseOutline(true);
+			pObj->Transform()->SetRelativeScale(0.33f, 0.33f, 0.33f);
+			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(180.f), XMConvertToRadians(-44.f), XMConvertToRadians(-180.f)));
+			pObj->AddComponent(new CCollider3D);
+			pObj->Collider3D()->SetAbsolute(true);
+			pObj->Collider3D()->SetDrawCollision(false);
+			pObj->Collider3D()->SetOffsetScale(Vec3(125.f, 125.f, 125.f));
+			
+			pObj->AddComponent(new CCollider2D);
+			pObj->Collider2D()->SetAbsolute(true);
+			pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+			pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
+			pObj->Collider2D()->SetOffsetScale(Vec2(200.f, 200.f));
+			if (MyPlayer.host) // 방장인 경우에 진짜
+			{
+				pObj->AddComponent(new CDragonScript);
+			
+				CDragonScript* Script = pObj->GetScript<CDragonScript>();
+			
+				Script->SetAggroPos(Vec3(1451, 15.f, 649.f));
+				Script->SetAlertPos(Vec3(1483, 15.f, 689.f));
+				SpawnGameObject(pObj, Vec3(1451, 0.f, 656.f), L"Mob");
+			}
+			else // 방장이 아닌 경우에는 가짜를 생성(빈껍데기)
+			{
+				pObj->AddComponent(new CUnitScript);
+				CUnitScript* Script = pObj->GetScript<CUnitScript>();
+				SpawnGameObject(pObj, Vec3(1451, 0.f, 656.f), L"Mob");
+			}
+			
+			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
+			CUnitScript* Script = pObj->GetScript<CUnitScript>();
+			Script->SetServerID(_objectId);  // 서버 id
+			Script->SetUnitType(UnitType::DRAGON);  // UnitType
+			Script->SetFaction(_objectInfo.faction);    // 진영 정글몹은: NONE
+			pObj->GetRenderComponent()->SetFrustumCheck(true);
+			pObj->GetRenderComponent()->SetRaySightCulling(true);
+			pObj->Transform()->SetIsShootingRay(false);
+			pObj->Transform()->SetRayRange(0.f);
+			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
 		}
 		break;
 		// =======================================================================================================================

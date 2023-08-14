@@ -17,7 +17,7 @@ void CKrugMiniDeathState::Enter()
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"Krug_Mini\\krug_death", false, false, false, 0.f);
 
 	Vec3 KrugPos = GetOwner()->Transform()->GetRelativePos();
-	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\krug\\death.mp3", 1, 0.5f, true, 200.f, KrugPos, Faction::NONE);
+	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\krug\\death.mp3", 1, 0.5f, true, 120.f, KrugPos, Faction::NONE);
 	CJungleDeathState::Enter();
 }
 
