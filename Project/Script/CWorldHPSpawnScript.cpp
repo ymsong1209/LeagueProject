@@ -7,6 +7,7 @@
 #include "CSendServerEventMgr.h"
 #include "CUnitScript.h"
 #include "CChampionScript.h"
+#include "CTimedEffect.h"
 
 void CWorldHPSpawnScript::begin()
 {
@@ -75,6 +76,7 @@ void CWorldHPSpawnScript::tick()
 		{
 			CCamera* UICam = CRenderMgr::GetInst()->GetCamerafromIdx(1);
 			UISpawn(m_OtherPlayer[i], m_vOtherWorldBar[i]);
+
 		}
 	}
 }
@@ -129,23 +131,60 @@ void CWorldHPSpawnScript::UISpawn(CGameObject* _PlayerObj, CGameObject* _WorldBa
 
 
 	//==========닉네임, 레벨 폰트 출력==============
-	Vec2 FontDefaultPos = Vec2(worldVec.x + (Resolution.x / 2), worldVec.y + (Resolution.y / 2));
+	CUnitScript* UnitScript = _PlayerObj->GetScript<CUnitScript>();
+	wstring NickName = UnitScript->GetNickname();
 
-	tFont Font2 = {};
-	Font2.wInputText = _PlayerObj->GetScript<CUnitScript>()->GetNickname(); // 원래 여기에 닉네임 가져와야함
-	Font2.fontType = FONT_TYPE::RIX_KOR_L;
-	Font2.fFontSize = 13.5;
-	Font2.vDisplayPos = Vec2(FontDefaultPos.x, FontDefaultPos.y - 150.f);
-	Font2.iFontColor = FONT_RGBA(252, 252, 250, 255);
-	UICamera->AddText(FONT_DOMAIN::OPAQE, Font2);
+
+	Vec2 FontDefaultPos = Vec2(worldVec.x + (Resolution.x / 2), worldVec.y + (Resolution.y / 2));
+	Vec2 FontDisPlayPos = Vec2(FontDefaultPos.x, FontDefaultPos.y - 150.f);
+
+	DisplayLastCCEffect(_PlayerObj, NickName, FontDisPlayPos);
 
 	tFont Font3 = {};
-	Font3.wInputText = L"11"; //레벨 폰트
+	Font3.wInputText = to_wstring(UnitScript->GetLevel()); //레벨 폰트
 	Font3.fontType = FONT_TYPE::RIX_KOR_L;
 	Font3.fFontSize = 13.2;
 	Font3.vDisplayPos = Vec2(FontDefaultPos.x - 56.f, FontDefaultPos.y - 127.5f);
 	Font3.iFontColor = FONT_RGBA(252, 252, 250, 255);
 	UICamera->AddText(FONT_DOMAIN::OPAQE, Font3);
+}
+
+
+void CWorldHPSpawnScript::DisplayLastCCEffect(CGameObject* _PlayerObj, const wstring& nickname, Vec2 _DisplayPos)
+{
+	// 다른 함수에서
+	uint32_t m_eCurCC = _PlayerObj->GetScript<CUnitScript>()->GetCC();
+	wstring highestPriorityCC = GetHighestPriorityCC(m_eCurCC, nickname);
+
+	tFont Font2 = {};
+	Font2.wInputText = highestPriorityCC; // 원래 여기에 닉네임 가져와야함
+	Font2.fontType = FONT_TYPE::RIX_KOR_L;
+	Font2.fFontSize = 13.5;
+	Font2.vDisplayPos = _DisplayPos;
+	Font2.iFontColor = FONT_RGBA(252, 252, 250, 255);
+	UICamera->AddText(FONT_DOMAIN::OPAQE, Font2);
+	return; // 출력이 완료되면 함수 종료
+}
+
+wstring CWorldHPSpawnScript::GetHighestPriorityCC(UINT m_eCurCC, wstring _NickName)
+{
+	// 우선순위 순서대로 CC 타입을 검사
+	if (m_eCurCC & CC::AIRBORNE) {
+		return L"공중에 뜸";
+	}
+	if (m_eCurCC & CC::STUN) {
+		return L"기절";
+	}
+	if (m_eCurCC & CC::ROOT) {
+		return L"속박";
+	}
+	if (m_eCurCC & CC::SILENCE) {
+		return L"침묵";
+	}
+	if (m_eCurCC & CC::SLOW) {
+		return _NickName;
+	}
+	return _NickName;
 }
 
 CWorldHPSpawnScript::CWorldHPSpawnScript()

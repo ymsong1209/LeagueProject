@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CScriptMgr.h"
 
+#include "CAnnounceTimerUIScript.h"
 #include "CAttackRangeScript.h"
 #include "CBasicAttackScript.h"
 #include "CBlueScript.h"
@@ -69,6 +70,7 @@
 
 void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 {
+	_vec.push_back(L"CAnnounceTimerUIScript");
 	_vec.push_back(L"CAttackRangeScript");
 	_vec.push_back(L"CBasicAttackScript");
 	_vec.push_back(L"CBlueScript");
@@ -138,6 +140,8 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 
 CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 {
+	if (L"CAnnounceTimerUIScript" == _strScriptName)
+		return new CAnnounceTimerUIScript;
 	if (L"CAttackRangeScript" == _strScriptName)
 		return new CAttackRangeScript;
 	if (L"CBasicAttackScript" == _strScriptName)
@@ -275,6 +279,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 {
 	switch (_iScriptType)
 	{
+	case (UINT)SCRIPT_TYPE::ANNOUNCETIMERUISCRIPT:
+		return new CAnnounceTimerUIScript;
+		break;
 	case (UINT)SCRIPT_TYPE::ATTACKRANGESCRIPT:
 		return new CAttackRangeScript;
 		break;
@@ -478,6 +485,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 {
 	switch ((SCRIPT_TYPE)_pScript->GetScriptType())
 	{
+	case SCRIPT_TYPE::ANNOUNCETIMERUISCRIPT:
+		return L"CAnnounceTimerUIScript";
+		break;
+
 	case SCRIPT_TYPE::ATTACKRANGESCRIPT:
 		return L"CAttackRangeScript";
 		break;

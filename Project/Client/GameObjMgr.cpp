@@ -197,13 +197,15 @@ void GameObjMgr::SendMyPlayerMove(ClientServiceRef _service)
 	if (PrevPos == CurPos
 		&& PrevHP == CurHP
 		&& PrevMP == CurMP
-		&& PrevCC == CurCC) 
+		&& PrevCC == CurCC
+		&& PrevRot == CurRot) 
 		return;
 
 	PrevPos = CurPos;
 	PrevHP = CurHP;
 	PrevMP = CurMP;
 	PrevCC = CurCC;
+	PrevRot = CurRot;
 
 	float CurAttackPower = obj->GetScript<CUnitScript>()->GetAttackPower();
 	float CurDefencePower = obj->GetScript<CUnitScript>()->GetDefencePower();

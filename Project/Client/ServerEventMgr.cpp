@@ -37,7 +37,7 @@ void ServerEventMgr::sendtick(ClientServiceRef _service)
 	// ========================================
 	// 규칙 패킷(MovePacket) : 100ms = 1/10 sec
     // ========================================
-	if (time_diff.count() >= 100)  // 나중에 40으로 고침
+	if (time_diff.count() >= 100) 
     {     
         // 1. 본인 플레이어 move 패킷을 서버에 보낸다. (ObjectMove)
 		// 문제점 : 안움직일땐 move 패킷을 안보내서 LV,HP,MP 등 업데이트가 안됌...그냥 움직여라는 뜻.(나중에는 안움직일때도 패킷보내게 변경예정)
@@ -182,14 +182,15 @@ void ServerEventMgr::clienttick()
 
 					NewObject->GetScript<CUnitScript>()->SetAttackPower(objectMove->AttackPower);
 					NewObject->GetScript<CUnitScript>()->SetDefencePower(objectMove->DefencePower);
-					NewObject->GetScript<CUnitScript>()->ApplyCC((CC)objectMove->CC);
+					NewObject->GetScript<CUnitScript>()->SetCurCC(objectMove->CC);
 
 					NewObject->GetScript<CUnitScript>()->SetUnitDead(objectMove->bUnitDead);
 					NewObject->GetScript<CUnitScript>()->SetRcvMove(true);
 					NewObject->GetScript<CUnitScript>()->SetMovePos(Vec3(objectMove->pos.x, objectMove->pos.y, objectMove->pos.z));
+					NewObject->GetScript<CUnitScript>()->SetMoveDir(Vec3(objectMove->moveDir.x, objectMove->moveDir.y, objectMove->moveDir.z));
 				}
 				//NewObject->Transform()->SetRelativePos(Vec3(objectMove->pos.x, objectMove->pos.y, objectMove->pos.z));
-				NewObject->Transform()->SetRelativeRot(Vec3(objectMove->moveDir.x, objectMove->moveDir.y, objectMove->moveDir.z));
+				//NewObject->Transform()->SetRelativeRot(Vec3(objectMove->moveDir.x, objectMove->moveDir.y, objectMove->moveDir.z));
 
 				// 사용이 끝난 후에는 메모리를 해제
 				delete objectMove;
@@ -302,7 +303,16 @@ void ServerEventMgr::clienttick()
 			{
 				KDACSInfo* kdacsInfo = (KDACSInfo*)m_vecEvent[i].wParam;
 				
-				
+				CGameObject* killerObj = GameObjMgr::GetInst()->FindAllObject(kdacsInfo->killerId);
+				CGameObject* vitimObj = GameObjMgr::GetInst()->FindAllObject(kdacsInfo->victimId);
+
+				// 킬로그를 CSendServerEventMgr 에 UI가 사용할 수 있도록 이벤트 등록해둔다.
+				tServerEvent evn = {};
+				evn.Type = SERVER_EVENT_TYPE::Kill_LOG_PACKET;
+				evn.wParam = (DWORD_PTR)killerObj;
+				evn.lParam = (DWORD_PTR)vitimObj;
+				CSendServerEventMgr::GetInst()->AddUISendEvent(evn);
+
 				if (kdacsInfo->deadObjUnitType == UnitType::CHAMPION)
 				{
 					// 1. 죽인게 나 && 죽은게 챔피언 -> 본인 K++
@@ -310,19 +320,10 @@ void ServerEventMgr::clienttick()
 						CSendServerEventMgr::GetInst()->AddMyKillCnt(1);
 
 					// 2. 블루, 레드 스코어 업데이트  // 죽인게 플레이어가 아니면(Mob일경우) X
-					CGameObject* killerObj = GameObjMgr::GetInst()->FindPlayer(kdacsInfo->killerId);
-					CGameObject* vitimObj = GameObjMgr::GetInst()->FindPlayer(kdacsInfo->victimId);
 					if (killerObj != nullptr && Faction::RED == killerObj->GetScript<CUnitScript>()->GetFaction())
 						CSendServerEventMgr::GetInst()->AddRedScore(1);
 					else if (killerObj != nullptr && Faction::BLUE == killerObj->GetScript<CUnitScript>()->GetFaction())
 						CSendServerEventMgr::GetInst()->AddBlueScore(1);
-
-					// 3. 이때 킬로그를 CSendServerEventMgr 에 UI가 사용할 수 있도록 이벤트 등록해둔다.
-					tServerEvent evn = {};
-					evn.Type = SERVER_EVENT_TYPE::Kill_LOG_PACKET;
-					evn.wParam = (DWORD_PTR)killerObj;
-					evn.lParam = (DWORD_PTR)vitimObj;
-					CSendServerEventMgr::GetInst()->AddUISendEvent(evn);
 				}
 				else if (kdacsInfo->deadObjUnitType == UnitType::MELEE_MINION
 					|| kdacsInfo->deadObjUnitType == UnitType::RANGED_MINION

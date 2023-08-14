@@ -1,3 +1,4 @@
+CAnnounceTimerUIScript
 CAttackRangeScript
 CBasicAttackScript
 CBlueScript
@@ -57,6 +58,8 @@ CSkillLevelUpUIScript
 CSkillLvEffectUIScript
 CSoundTestScript
 CStructureScript
+CTestTurretScript
+CTurretAttackScript
 CTurretHPUIScript
 CTurretScript
 CUIScript

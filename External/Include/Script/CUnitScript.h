@@ -56,16 +56,20 @@ protected:
 
     bool                    m_bRcvMove;
     Vec3                    m_vMovePos;
+    Vec3                    m_vMoveDir;
+
     float                   m_fT;                // 보간 파라미터
 
     bool                    m_bAirBorneActive;
     Vec3                    m_vAirBorneStartPos;
     float                   m_fAirBorneVelocity;
 
+
 public:
     void    SetRcvMove(bool _bool) { m_bRcvMove = _bool; }
     void    SetMovePos(Vec3 _vec3) { m_vMovePos = _vec3; }
-   
+    void    SetMoveDir(Vec3 _vec3) { m_vMoveDir = _vec3; }
+
     virtual void begin() override;
     virtual void tick() override;
     virtual void BeginOverlap(CCollider2D* _collider) override {};
@@ -99,6 +103,7 @@ public:
     void  SetMaxMP(float _f) { m_fMaxMP = _f; }
 
     void  SetCC(CC _cc) { m_eCurCC = _cc; }
+    void  SetCurCC(UINT _cc) { m_eCurCC = _cc; } // 서버가 cc를 세팅해주기 위함.
     void  SetLevel(int _level) { m_iLevel = _level; }
 
     float GetCurHP() { return m_fHP; }
@@ -144,6 +149,7 @@ public:
     void RemoveRestraint(RESTRAINT restraint);
 
     void AddTimedEffect(CTimedEffect* _effect) { m_TimedEffectList.push_back(_effect); }
+    vector<CTimedEffect*> GetTimedEffect() { return m_TimedEffectList; }
 
     CSkill* GetSkill(int _i) { if (_i < 0 || _i >= 5) return nullptr; return m_Skill[_i]; }
     int     GetSkillLevel(int _i) { return m_SkillLevel[_i]; }

@@ -47,11 +47,11 @@ void CCoolDownUIScript::tick()
 			CJinxScript* JinxScript = CSendServerEventMgr::GetInst()->GetMyPlayer()->GetScript<CJinxScript>();
 
 			//=====================µð¹ö±ë¿ë=====================
-			JinxWeaponMode JinxMode2 = JinxScript->GetWeaponMode();
+			/*JinxWeaponMode JinxMode2 = JinxScript->GetWeaponMode();
 			if (KEY_TAP(KEY::Q) && JinxMode2 == JinxWeaponMode::MINIGUN)
 				JinxScript->SetWeaponMode(JinxWeaponMode::ROCKET_LAUNCHER);
 			else if(KEY_TAP(KEY::Q) && JinxMode2 == JinxWeaponMode::ROCKET_LAUNCHER)
-				JinxScript->SetWeaponMode(JinxWeaponMode::MINIGUN);
+				JinxScript->SetWeaponMode(JinxWeaponMode::MINIGUN);*/
 			//==================================================
 
 			JinxWeaponMode JinxMode = JinxScript->GetWeaponMode();

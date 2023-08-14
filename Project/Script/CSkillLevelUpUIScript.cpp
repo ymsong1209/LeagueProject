@@ -4,9 +4,11 @@
 #include <Engine\CAnim2D.h>
 #include "CSkillLvEffectUIScript.h"
 #include "CUnitScript.h"
+#include "CChampionScript.h"
 
 CSkillLevelUpUIScript::CSkillLevelUpUIScript()
 	:CScript((UINT)SCRIPT_TYPE::SKILLLEVELUPUISCRIPT)
+	, m_iSkillPoint(0)
 {
 }
 
@@ -32,7 +34,9 @@ void CSkillLevelUpUIScript::tick()
 {
 
 	//여기서 메인 플레이어 스킬 포인트 가져오기
-	//예시 : int m_iSkillPoint = CUnitScript* pUnitScript = CSendServerEventMgr::GetInst()->GetMyPlayer()->GetSkillPoint();
+	// 
+	//예시 : 
+	m_iSkillPoint = CSendServerEventMgr::GetInst()->GetMyPlayer()->GetScript<CChampionScript>()->GetSkillLevelUpPoint();
 	if (m_iSkillPoint != 0)
 	{
 		CUnitScript* pUnitScript = CSendServerEventMgr::GetInst()->GetMyPlayer()->GetScript<CUnitScript>();
@@ -40,7 +44,6 @@ void CSkillLevelUpUIScript::tick()
 		m_iWLevel = pUnitScript->GetSkillLevel(2);
 		m_iELevel = pUnitScript->GetSkillLevel(3);
 		m_iRLevel = pUnitScript->GetSkillLevel(4);
-
 
 		if(m_iQLevel < 5) //5레벨 이 아닐때만 스킬 레벨업 표시가 떠야함
 			Q_LvUpObj->GetRenderComponent()->SetSortExcept(false);

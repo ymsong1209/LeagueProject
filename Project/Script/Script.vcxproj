@@ -178,6 +178,7 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CAnnounceTimerUIScript.h" />
     <ClInclude Include="CAttackRangeScript.h" />
     <ClInclude Include="CBasicAttack.h" />
     <ClInclude Include="CBasicAttackScript.h" />
@@ -348,7 +349,10 @@
     <ClInclude Include="CMurkWolfReturnState.h" />
     <ClInclude Include="CMurkWolfScript.h" />
     <ClInclude Include="CMurkWolfSpawnState.h" />
+    <ClInclude Include="CNexusBrokenState.h" />
+    <ClInclude Include="CNexusIdleState.h" />
     <ClInclude Include="CNexusScript.h" />
+    <ClInclude Include="CNexusSpawnState.h" />
     <ClInclude Include="COtherPlayerScript.h" />
     <ClInclude Include="CPlayerScript.h" />
     <ClInclude Include="CProjectileScript.h" />
@@ -440,6 +444,7 @@
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CAnnounceTimerUIScript.cpp" />
     <ClCompile Include="CAttackRangeScript.cpp" />
     <ClCompile Include="CBasicAttack.cpp" />
     <ClCompile Include="CBasicAttackScript.cpp" />
@@ -609,7 +614,10 @@
     <ClCompile Include="CMurkWolfReturnState.cpp" />
     <ClCompile Include="CMurkWolfScript.cpp" />
     <ClCompile Include="CMurkWolfSpawnState.cpp" />
+    <ClCompile Include="CNexusBrokenState.cpp" />
+    <ClCompile Include="CNexusIdleState.cpp" />
     <ClCompile Include="CNexusScript.cpp" />
+    <ClCompile Include="CNexusSpawnState.cpp" />
     <ClCompile Include="COtherPlayerScript.cpp" />
     <ClCompile Include="CPlayerScript.cpp" />
     <ClCompile Include="CInGameCameraScript.cpp" />
