@@ -214,7 +214,8 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 			pObj->MeshRender()->GetDynamicMaterial(i);
 		}
 		
-
+		pObj->GetRenderComponent()->SetDynamicShadow(true);
+		
 		_players.insert(std::make_pair(_info.id, pObj));
 	}
 }

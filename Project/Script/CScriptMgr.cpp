@@ -56,6 +56,8 @@
 #include "CRazorBeakScript.h"
 #include "CRedScript.h"
 #include "CScorePanelScript.h"
+#include "CShopKeeperNorthScript.h"
+#include "CShopKeeperSouthScript.h"
 #include "CSkillLevelUIScript.h"
 #include "CSkillLevelUpUIScript.h"
 #include "CSkillLvEffectUIScript.h"
@@ -126,6 +128,8 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CRazorBeakScript");
 	_vec.push_back(L"CRedScript");
 	_vec.push_back(L"CScorePanelScript");
+	_vec.push_back(L"CShopKeeperNorthScript");
+	_vec.push_back(L"CShopKeeperSouthScript");
 	_vec.push_back(L"CSkillLevelUIScript");
 	_vec.push_back(L"CSkillLevelUpUIScript");
 	_vec.push_back(L"CSkillLvEffectUIScript");
@@ -251,6 +255,10 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CRedScript;
 	if (L"CScorePanelScript" == _strScriptName)
 		return new CScorePanelScript;
+	if (L"CShopKeeperNorthScript" == _strScriptName)
+		return new CShopKeeperNorthScript;
+	if (L"CShopKeeperSouthScript" == _strScriptName)
+		return new CShopKeeperSouthScript;
 	if (L"CSkillLevelUIScript" == _strScriptName)
 		return new CSkillLevelUIScript;
 	if (L"CSkillLevelUpUIScript" == _strScriptName)
@@ -444,6 +452,12 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::SCOREPANELSCRIPT:
 		return new CScorePanelScript;
+		break;
+	case (UINT)SCRIPT_TYPE::SHOPKEEPERNORTHSCRIPT:
+		return new CShopKeeperNorthScript;
+		break;
+	case (UINT)SCRIPT_TYPE::SHOPKEEPERSOUTHSCRIPT:
+		return new CShopKeeperSouthScript;
 		break;
 	case (UINT)SCRIPT_TYPE::SKILLLEVELUISCRIPT:
 		return new CSkillLevelUIScript;
@@ -708,6 +722,14 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::SCOREPANELSCRIPT:
 		return L"CScorePanelScript";
+		break;
+
+	case SCRIPT_TYPE::SHOPKEEPERNORTHSCRIPT:
+		return L"CShopKeeperNorthScript";
+		break;
+
+	case SCRIPT_TYPE::SHOPKEEPERSOUTHSCRIPT:
+		return L"CShopKeeperSouthScript";
 		break;
 
 	case SCRIPT_TYPE::SKILLLEVELUISCRIPT:

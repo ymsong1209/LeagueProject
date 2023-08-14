@@ -46,8 +46,11 @@
 #include <Script\CJungleMINIHPScript.h>
 #include <Script/CInGameCameraScript.h>
 #include <Script/CDragonScript.h>
+#include <Script/CShopKeeperNorthScript.h>
+#include <Script/CShopKeeperSouthScript.h>
 
 #include <Script/CBushScript.h>
+
 
 void CreateTestLevel()
 {
@@ -159,69 +162,26 @@ void CreateTestLevel()
 	SpawnGameObject(LoLMapCollider, Vec3(0.f, 0.f, 0.f), L"Lolmap");
 
 
+	CGameObject* ShopKeeperSouth = new CGameObject;
+	ShopKeeperSouth->AddComponent(new CTransform);
+	ShopKeeperSouth->AddComponent(new CAnimator3D);
+	ShopKeeperSouth->AddComponent(new CMeshRender);
+	ShopKeeperSouth->AddComponent(new CShopKeeperSouthScript);
+	ShopKeeperSouth->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+	ShopKeeperSouth->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(-87.f), 0.f));
+	ShopKeeperSouth->SetName(L"ShopKeeperSouth");
+	SpawnGameObject(ShopKeeperSouth, Vec3(37.f, 30.f, 173.f), L"Default");
 
-	//======메모: 미니언,드래곤,정글몹 자식으로 붙일 체력바 부분=================================================
+	CGameObject* ShopKeeperNorth = new CGameObject;
+	ShopKeeperNorth->AddComponent(new CTransform);
+	ShopKeeperNorth->AddComponent(new CAnimator3D);
+	ShopKeeperNorth->AddComponent(new CMeshRender);
+	ShopKeeperNorth->AddComponent(new CShopKeeperNorthScript);
+	ShopKeeperNorth->Transform()->SetRelativeScale(Vec3(0.3f, 0.3f, 0.3f));
+	ShopKeeperNorth->Transform()->SetRelativeRot(Vec3(0.f, XMConvertToRadians(-39.f), 0.f));
+	ShopKeeperNorth->SetName(L"ShopKeeperNorth");
+	SpawnGameObject(ShopKeeperNorth, Vec3(2021, 30.f, 2154.f), L"Default");
 
-	// 1. 미니언
-	/*CGameObject* HPBar = new CGameObject;
-	HPBar->SetName(L"HPBar");
-	HPBar->AddComponent(new CTransform);
-	HPBar->AddComponent(new CMeshRender);
-	HPBar->AddComponent(new CMinionHPRatioScript);
-	pObj->AddChild(HPBar);
-	
-	2. 장로드래곤
-	CGameObject* DragonBar = new CGameObject;
-	DragonBar->SetName(L"DragonBar");
-	DragonBar->AddComponent(new CTransform);
-	DragonBar->AddComponent(new CMeshRender);
-	DragonBar->AddComponent(new CDragonHPUIScript);
-
-	3. 정글몬스터들
-
-	
-	*/
-
-
-
-
-	
-	//=======================================
-	//Ptr<CMeshData> pMeshData2 = nullptr;
-	//CGameObject* pObj2 = nullptr;
-	//pMeshData2 = CResMgr::GetInst()->LoadFBX(L"fbx\\Elder_Dragon.fbx");
-	//pObj2 = pMeshData2->Instantiate();
-	//pObj2->SetName(L"Elder_Dragon");
-	//pObj2->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Elder_Dragon");
-	//pObj2->Animator3D()->PlayRepeat(L"Elder_Dragon\\sru_dragon_flying_run", true, true, 0.1f);
-	//pObj2->Transform()->SetRelativeScale(Vec3(0.33f, 0.33f, 0.33f));
-	//pObj2->AddComponent(new CUnitScript);
-	////pObj2->GetScript<CUnitScript>()->SetFaction(Faction::BLUE);
-	//Vec3 spawnPos = Vec3(1454.188f, -24.114f, 650.603f);
-	//SpawnGameObject(pObj2, spawnPos, L"Mob");
-	//
-	//CGameObject* DragonBar = new CGameObject;
-	//DragonBar->SetName(L"DragonBar");
-	//DragonBar->AddComponent(new CTransform);
-	//DragonBar->AddComponent(new CMeshRender);
-	//DragonBar->AddComponent(new CDragonHPUIScript);
-	////SpawnGameObject(DragonBar, spawnPos, L"Mob");
-	//
-	//pObj2->AddChild(DragonBar);
-	//======메모: 미니언,드래곤,정글몹 자식으로 붙일 체력바 부분=================================================
-
-	{
-		Ptr<CMeshData> pMeshData2 = nullptr;
-		CGameObject* pObj2 = nullptr;
-		pMeshData2 = CResMgr::GetInst()->LoadFBX(L"fbx\\MalphiteQShard.fbx");
-		pObj2 = pMeshData2->Instantiate();
-		//pObj2->AddComponent(new CCollider2D);
-		//pObj2->Collider2D()->SetAbsolute(true);
-		//pObj2->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::RECT);
-		pObj2->SetName(L"MalphiteQShard");
-		pObj2->Transform()->SetRelativeScale(Vec3(0.33f, 0.33f, 0.33f));
-		SpawnGameObject(pObj2, Vec3(0.f, 0.f, 0.f), L"SkillProjectile");
-	}
 	
 
 	// ============
