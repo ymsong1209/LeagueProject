@@ -5,7 +5,7 @@
 CJinxWScript::CJinxWScript()
 	:CProjectileScript((UINT)SCRIPT_TYPE::JINXWSCRIPT)
 {
-	m_fProjectileSpeed = 100.f;//300.f;
+	m_fProjectileSpeed = 300.f;
 	m_fSkillRange = 150.f;
 }
 
@@ -17,13 +17,15 @@ void CJinxWScript::begin()
 {
 	// 첫 생성 위치 기억
 	m_vSpawnPos = GetOwner()->Transform()->GetRelativePos();
-	//GetOwner()->Transform()->SetRelativeRot(Vec3(0.f, 0.f, XMConvertToRadians(90)));
+
 
 	// 마우스를 향한 방향으로 회전하기 위함.
 	float targetAngle = atan2f(m_vDir.z, m_vDir.x);
 	targetAngle = fmod(targetAngle + XM_PI, 2 * XM_PI) - XM_PI; // 범위를 -π ~ π 로 바꾸기
 	targetAngle += XMConvertToRadians(90); // 모델이 회전된 상태라서 z축 90도 회전(이걸로 모든 축이 바뀜)
 	GetOwner()->Transform()->SetRelativeRot(Vec3(0.f, 0.f, targetAngle));
+}
+
 
 }
 void CJinxWScript::tick()
@@ -34,15 +36,11 @@ void CJinxWScript::tick()
 
 	// 징크스 본인의 방향으로 발사
 	Vec3 ProjectilePos = GetOwner()->Transform()->GetRelativePos();
-	Vec3 ProjectileRot = GetOwner()->Transform()->GetRelativeRot();
 
 	// 투사체 이동
 	Vec3 NewPos = ProjectilePos + m_vDir * m_fProjectileSpeed * DT;
-	NewPos = Vec3(NewPos.x, 30.f, NewPos.z);
+	NewPos = Vec3(NewPos.x, 0.f, NewPos.z);
 	GetOwner()->Transform()->SetRelativePos(NewPos);
-
-	// 매번 회전한다.
-	GetOwner()->Transform()->SetRelativeRot(ProjectileRot.x, ProjectileRot.y+ XMConvertToRadians(15), ProjectileRot.z);
 
 	// 시전 위치로부터 스킬 사거리까지 발사되었다면 사라짐
 	float distance = sqrt((pow(m_vSpawnPos.x - NewPos.x, 2) + pow(m_vSpawnPos.z - NewPos.z, 2)));

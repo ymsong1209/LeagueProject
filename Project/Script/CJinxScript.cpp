@@ -48,6 +48,22 @@ void CJinxScript::begin()
 	// Skill에 Jinx Skill 추가
 	m_Skill[0] = new CBasicAttack;
 	m_Skill[0]->SetOwnerScript(this);
+
+	//임시코드
+	CGameObject* Projectile = new CGameObject;
+	Projectile->AddComponent(new CTransform);
+	Projectile->AddComponent(new CCollider2D);
+	Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+	Projectile->Collider2D()->SetOffsetScale(Vec2(5.f, 5.f));
+	Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
+	Projectile->SetName(L"Projectile");
+
+	Ptr<CPrefab> NewPrefab = new CPrefab;
+	CGameObject* PrefabObject = Projectile->Clone();
+	NewPrefab->RegisterProtoObject(PrefabObject);
+	m_Skill[0]->SetProjectileObj(NewPrefab);
+
+
 	m_Skill[1] = new CJinxQ;
 	m_Skill[1]->SetOwnerScript(this);
 	m_Skill[2] = new CJinxW;
