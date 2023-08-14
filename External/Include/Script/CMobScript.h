@@ -13,8 +13,6 @@ public:
     CLONE(CMobScript);
 
 protected:
-    int                 m_iDropGold;
-
     float               m_fAggroRange;      // 
 
     CGameObject*        m_iAttackTargetObj;
