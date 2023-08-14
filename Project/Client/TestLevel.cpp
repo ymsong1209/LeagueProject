@@ -61,8 +61,8 @@ void CreateTestLevel()
 	// 
 	//return;	
 	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
-	pCurLevel->ChangeState(LEVEL_STATE::PLAY);
-	//pCurLevel->ChangeState(LEVEL_STATE::STOP);
+	//pCurLevel->ChangeState(LEVEL_STATE::PLAY);
+	pCurLevel->ChangeState(LEVEL_STATE::STOP);
 	CTimeMgr::GetInst()->SetTimeScale(1.f);    // TestLevel에서 강제로 PLAY모드로 전환해서 DT를 흐르게 하기 위함. 추후 삭제
 
 	//롤맵 레이어에는 롤맵만 넣을것!
@@ -228,6 +228,28 @@ void CreateTestLevel()
 
 
 
+	// Let's Make Jinx Rocket Basic Attack
+	auto Res = CResMgr::GetInst()->LoadFBX(L"fbx\\JinxqRocket.fbx");
+
+
+	CGameObject* JinxBasicRocketAttackEffect =
+		CResMgr::GetInst()->LoadFBX(L"fbx\\JinxqRocket.fbx")->Instantiate();
+
+
+	JinxBasicRocketAttackEffect->SetName(L"JinxBasicRocketAttackEffect");
+	//JinxBasicRocketAttackEffect->AddComponent(new CTransform);
+	
+	SpawnGameObject(JinxBasicRocketAttackEffect, Vec3(0.f, 100.f, 0.f), 0);
+	
+
+	//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\LoLMapRot19Size30.fbx");
+	//pObj = pMeshData->Instantiate();
+	//pObj->SetName(L"LoLMapRot19Size30");
+	//pObj->GetRenderComponent()->SetFrustumCheck(false);
+	//pObj->AddComponent(new CCollider2D);
+	//pObj->Collider2D()->SetAbsolute(true);
+	//pObj->Collider2D()->SetDrawCollision(false);
+	//pObj->GetRenderComponent()->SetRaySightCulling(false);
 
 
 
