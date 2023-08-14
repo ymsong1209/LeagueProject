@@ -96,9 +96,9 @@ void CMalphiteQScript::BeginOverlap(CCollider2D* _Other)
 		// ÀÌÈÄ »ç¶óÁü
 		m_fProjectileSpeed = 0.f;
 		m_bUnitDead = true;
-		//CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 0.f);
+		CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 0.f);
 
-		//Despawn();
+		Despawn();
 	}
 }
 
