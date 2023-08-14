@@ -318,26 +318,36 @@ void ServerEventMgr::clienttick()
 
 				if (kdacsInfo->deadObjUnitType == UnitType::CHAMPION)
 				{
-					// 1. 죽인게 나 && 죽은게 챔피언 -> 본인 K++
+					//  1. 죽인게 나 && 죽은게 챔피언 -> 본인 K++
 					if (kdacsInfo->killerId == MyPlayer.id)
 						CSendServerEventMgr::GetInst()->AddMyKillCnt(1);
 
-					// 2. 블루, 레드 스코어 업데이트  // 죽인게 플레이어가 아니면(Mob일경우) X
+					// 2. 죽은게 나 -> 본인 D++
+					if(kdacsInfo->victimId == MyPlayer.id)
+						CSendServerEventMgr::GetInst()->AddMyDeathCnt(1);
+
+					// 3. 블루, 레드 스코어 업데이트  // 죽인게 플레이어가 아니면(Mob일경우) X
 					if (killerObj != nullptr && Faction::RED == killerObj->GetScript<CUnitScript>()->GetFaction())
 						CSendServerEventMgr::GetInst()->AddRedScore(1);
 					else if (killerObj != nullptr && Faction::BLUE == killerObj->GetScript<CUnitScript>()->GetFaction())
 						CSendServerEventMgr::GetInst()->AddBlueScore(1);
 				}
-				else if (kdacsInfo->deadObjUnitType == UnitType::MELEE_MINION
-					|| kdacsInfo->deadObjUnitType == UnitType::RANGED_MINION
-					|| kdacsInfo->deadObjUnitType == UnitType::SIEGE_MINION
-					|| kdacsInfo->deadObjUnitType == UnitType::SUPER_MINION)
+				 
+				// 죽인게 나 && 죽은게 미니언or정글몹 -> 본인 CS++
+				else if (UnitType::MELEE_MINION <= kdacsInfo->deadObjUnitType 
+						&& kdacsInfo->deadObjUnitType <= UnitType::BARON)
 				{
-					// 1. 죽인게 나 && 죽은게 미니언 -> 본인 CS++
 					if (kdacsInfo->killerId == MyPlayer.id)
 						CSendServerEventMgr::GetInst()->AddMyCSCnt(1);
 				}
-				//else if(정글몹) //효과 UI // 죽인게 나 && 죽은게 정글몹 -> 본인CS AddMyCSCnt(4);
+
+				// 포탑이 죽으면 포탑 시야 끈다. 
+				if (kdacsInfo->deadObjUnitType == UnitType::TURRET)
+				{
+					vitimObj->Transform()->SetIsShootingRay(false);
+					vitimObj->Transform()->SetRayRange(0.f);
+					
+				}
 				
 				// 사용이 끝난 후에는 메모리를 해제
 				delete kdacsInfo;
