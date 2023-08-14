@@ -12,6 +12,10 @@ CJinxRocketBasicAttackScript::~CJinxRocketBasicAttackScript()
 
 void CJinxRocketBasicAttackScript::begin()
 {
+
+
+
+
 	// 첫 생성 위치 기억
 	m_vSpawnPos = GetOwner()->Transform()->GetRelativePos();
 
