@@ -23,6 +23,8 @@ public:
 
 	void applyCC(CC _ccType);
 	void applyDamage();
+
+	CC GetCCType() { return m_eCCType; }
 };
 
 

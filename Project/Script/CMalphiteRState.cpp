@@ -25,7 +25,6 @@ void CMalphiteRState::Enter()
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, true, true, true, 0.1f);
 
-
 	// 현재 위치
 	Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
 
@@ -46,20 +45,18 @@ void CMalphiteRState::Enter()
 	else if (diff < -XM_PI)
 		targetYaw += 2 * XM_PI;
 
-	float lerpFactor = EditorDT * 18.f;
+	float lerpFactor = EditorDT * 0.f;
 
 	// Lerp를 이용해 현재 회전 각도와 목표 회전 각도를 보간
-	float newYaw = currentYaw + (targetYaw - currentYaw) * lerpFactor;
+	float newYaw = targetYaw; //보간 적용 x
+	//float newYaw = currentYaw + (targetYaw - currentYaw);
 
 	// 새로운 회전 각도를 적용
 	GetOwner()->Transform()->SetRelativeRot(Vec3(0.f, newYaw, 0.f));
-
-	
 }
 
 void CMalphiteRState::tick()
 {
-
 	Vec3 MalphPos = GetOwner()->Transform()->GetRelativePos();
 
 	float length = sqrt(pow(MalphPos.x - m_vTargetPos.x, 2.f) + pow(MalphPos.z - m_vTargetPos.z, 2.f));
