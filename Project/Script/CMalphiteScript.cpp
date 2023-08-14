@@ -22,6 +22,8 @@
 #include <Engine\CRenderMgr.h>
 #include "CAttackRangeScript.h"
 
+#define MAX_SKILL_LEVEL 5
+#define MAX_ULT_LEVEL 3
 
 CMalphiteScript::CMalphiteScript()
 	:CChampionScript((UINT)MALPHITESCRIPT)
@@ -266,6 +268,43 @@ void CMalphiteScript::GetInput()
 				CGameEventMgr::GetInst()->NotifyEvent(*evn);
 			}
 		}
+	}
+
+	if (KEY_TAP(KEY::_1))
+	{
+		// 스킬 포인트가 없거나 이미 스킬 레벨이 Max인 경우 return
+		if (m_iSkillLevelUpPoint <= 0 || m_SkillLevel[1] >= MAX_SKILL_LEVEL)
+			return;
+
+		m_SkillLevel[1] += 1;
+		m_iSkillLevelUpPoint -= 1;
+	}
+	if (KEY_TAP(KEY::_2))
+	{
+		// 스킬 포인트가 없거나 이미 스킬 레벨이 Max인 경우 return
+		if (m_iSkillLevelUpPoint <= 0 || m_SkillLevel[2] >= MAX_SKILL_LEVEL)
+			return;
+
+		m_SkillLevel[2] += 1;
+		m_iSkillLevelUpPoint -= 1;
+	}
+	if (KEY_TAP(KEY::_3))
+	{
+		// 스킬 포인트가 없거나 이미 스킬 레벨이 Max인 경우 return
+		if (m_iSkillLevelUpPoint <= 0 || m_SkillLevel[3] >= MAX_SKILL_LEVEL)
+			return;
+
+		m_SkillLevel[3] += 1;
+		m_iSkillLevelUpPoint -= 1;
+	}
+	if (KEY_TAP(KEY::_4))
+	{
+		// 스킬 포인트가 없거나 이미 스킬 레벨이 Max인 경우 return
+		if (m_iSkillLevelUpPoint <= 0 || m_SkillLevel[4] >= MAX_ULT_LEVEL)
+			return;
+
+		m_SkillLevel[4] += 1;
+		m_iSkillLevelUpPoint -= 1;
 	}
 
 	// 소환사 주문

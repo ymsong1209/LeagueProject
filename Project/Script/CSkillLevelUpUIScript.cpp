@@ -60,7 +60,7 @@ void CSkillLevelUpUIScript::tick()
 		else
 			E_LvUpObj->GetRenderComponent()->SetSortExcept(true);
 
-		if(m_iRLevel < 5)
+		if(m_iRLevel < 3)
 			R_LvUpObj->GetRenderComponent()->SetSortExcept(false);
 		else
 			R_LvUpObj->GetRenderComponent()->SetSortExcept(true);
@@ -122,7 +122,7 @@ void CSkillLevelUpUIScript::tick()
 			SpawnGameObject(Up_Effect, Vec3(-26.f, -405.805f, 333.f), 31);
 		}
 
-		else if (KEY_TAP(KEY::_4) && m_iRLevel < 5)
+		else if (KEY_TAP(KEY::_4) && m_iRLevel < 3)
 		{
 			CGameObject* Up_Effect = new CGameObject; //캐릭터 패널 배치
 			Up_Effect->SetName(L"Up_Effect");

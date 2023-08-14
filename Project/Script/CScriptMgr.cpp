@@ -812,7 +812,7 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 	case SCRIPT_TYPE::TURRETATTACKSCRIPT:
 		return L"CTurretAttackScript";
 		break;
-		
+
 	case SCRIPT_TYPE::TURRETBASICATTACKSCRIPT:
 		return L"CTurretBasicAttackScript";
 		break;

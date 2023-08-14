@@ -11,6 +11,8 @@ private:
 
     Vec3 m_vOffsetBarPos;
     Vec2 m_vOffsetFontPos;
+
+    UnitType ParentUnitType;
 public:
     virtual void begin() override;
     virtual void tick() override;

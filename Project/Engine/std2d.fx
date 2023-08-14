@@ -954,18 +954,18 @@ float4 PS_SkillLevelShader(VS_OUT _in) : SV_Target
     float2 Skill_R_discardRegionMin = float2(0.f, 0.f) / TexSize;
     float2 Skill_R_discardRegionMax = float2(279.f, 9.f) / TexSize;
     
+    //if (R_Level == 0)
+    //    Skill_R_discardRegionMin = float2(223.f, 0.f) / TexSize;
     if (R_Level == 0)
-        Skill_R_discardRegionMin = float2(223.f, 0.f) / TexSize;
-    else if (R_Level == 1)
         Skill_R_discardRegionMin = float2(236.f, 0.f) / TexSize;
-    else if (R_Level == 2)
+    else if (R_Level == 1)
         Skill_R_discardRegionMin = float2(247.f, 0.f) / TexSize;
-    else if (R_Level == 3)
+    else if (R_Level == 2)
         Skill_R_discardRegionMin = float2(258.f, 0.f) / TexSize;
-    else if (R_Level == 4)
+    else if (R_Level == 3)
         Skill_R_discardRegionMin = float2(269.f, 0.f) / TexSize;
-    else if (R_Level == 5)
-        Skill_R_discardRegionMin = float2(279.f, 0.f) / TexSize;
+    //else if (R_Level == 5)
+    //    Skill_R_discardRegionMin = float2(279.f, 0.f) / TexSize;
 
 
         // 현재 UV 좌표가 해당 영역에 속하는지 확인
