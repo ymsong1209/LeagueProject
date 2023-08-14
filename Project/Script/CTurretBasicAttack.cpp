@@ -7,6 +7,8 @@ CTurretBasicAttack::CTurretBasicAttack()
 	m_fCoolDown = 0.f;
 	m_iLevel = 1;
 
+	m_vecSkillObj.clear();
+
 	// Åõ»çÃ¼
 	//CGameObject* Projectile = new CGameObject;
 	//Projectile->AddComponent(new CTransform);
