@@ -20,6 +20,7 @@ CInventoryUIScript
 CJinxBasicAttackMinigunHitEffectScript
 CJinxBasicAttackScript
 CJinxEScript
+CJinxRocketBasicAttackScript
 CJinxRScript
 CJinxScript
 CJinxWScript

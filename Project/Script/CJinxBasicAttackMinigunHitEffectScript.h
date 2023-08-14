@@ -5,7 +5,7 @@ class CJinxBasicAttackMinigunHitEffectScript :
 {
 private:
     CGameObject* SpawnObject;
-    float m_fStartTime;
+    float m_fPassedTime;
     bool  m_bSecontHitEffectSpawned;
     bool  m_bThirdHitEffectSpawned;
 

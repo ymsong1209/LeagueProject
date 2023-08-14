@@ -4,7 +4,7 @@
 
 CJinxBasicAttackMinigunHitEffectScript::CJinxBasicAttackMinigunHitEffectScript()
 	: CScript((UINT)SCRIPT_TYPE::JINXBASICATTACKMINIGUNHITEFFECTSCRIPT)
-	, m_fStartTime(0.f)
+	, m_fPassedTime(0.f)
 	, m_bSecontHitEffectSpawned(false)
 	, m_bThirdHitEffectSpawned(false)
 {
@@ -21,13 +21,21 @@ void CJinxBasicAttackMinigunHitEffectScript::begin()
 
 void CJinxBasicAttackMinigunHitEffectScript::tick()
 {
-	m_fStartTime += DT;
+	m_fPassedTime += DT;
 
-	if (m_fStartTime >= 2.f)
+	if (m_bSecontHitEffectSpawned == false && m_fPassedTime >= 1.f)
 	{
-
+		m_bSecontHitEffectSpawned = true;
 	}
 
+	if (m_bThirdHitEffectSpawned == false && m_fPassedTime >= 2.f)
+	{
+		m_bThirdHitEffectSpawned = true;
+	}
 
+	if (m_fPassedTime >= 3.f)
+	{
+		DeleteObject(GetOwner());
+	}
 }
 
