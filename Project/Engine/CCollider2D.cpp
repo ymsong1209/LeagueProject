@@ -24,7 +24,7 @@ CCollider2D::CCollider2D(const CCollider2D& _other)
 	, m_bAbsolute(_other.m_bAbsolute)
 	, m_Shape(_other.m_Shape)
 	, m_bDrawCollision(_other.m_bDrawCollision)
-
+	, m_bFixed(_other.m_bFixed)
 {
 
 }
@@ -54,9 +54,20 @@ void CCollider2D::finaltick()
 
 	if (m_bFixed)
 	{
-		// 위치만 물체의 위치를 따르게 합니다.
+		// 부모의 전방향 벡터 가져오기 (회전 행렬의 3번째 열)
+		Vec3 forward = Vec3(Transform()->GetWorldRotMat()._13, Transform()->GetWorldRotMat()._23, Transform()->GetWorldRotMat()._33);
+
+		// y축 회전 정보 추출
+		float yRotation = atan2(forward.x, forward.z);
+
+		// y축 회전 행렬 생성
+		Matrix matParentYRotation = XMMatrixRotationY(yRotation);
+
+		// 위치 행렬
 		Matrix matTranslateToObjPosition = XMMatrixTranslationFromVector(Transform()->GetWorldPos());
-		m_matCollider2D = m_matColliderScale * m_matColliderRot * matTranslateToObjPosition;
+
+		// 충돌체의 스케일, 본인의 회전, 부모의 y축 회전, 그리고 위치 행렬을 결합
+		m_matCollider2D = m_matColliderScale * m_matColliderRot * matParentYRotation * matTranslateToObjPosition;
 	}
 	else if (m_bAbsolute)
 	{

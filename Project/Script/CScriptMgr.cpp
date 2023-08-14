@@ -144,8 +144,6 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CSkillLvEffectUIScript");
 	_vec.push_back(L"CSoundTestScript");
 	_vec.push_back(L"CStructureScript");
-	_vec.push_back(L"CTestTurretScript");
-	_vec.push_back(L"CTurretAttackScript");
 	_vec.push_back(L"CTurretBasicAttackScript");
 	_vec.push_back(L"CTurretHPUIScript");
 	_vec.push_back(L"CTurretScript");

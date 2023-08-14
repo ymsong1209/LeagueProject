@@ -13,8 +13,17 @@ CMalphiteQ::CMalphiteQ()
 	m_iMaxLevel = 5;
 	m_fCost = 50.f;
 
-	Ptr<CPrefab> NewPrefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MalphiteQShardCollider.prefab");
-	
+	//Ptr<CPrefab> NewPrefab = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MalphiteQShardCollider.prefab");
+	CGameObject* MalphiteQ = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MalphiteQ.prefab")->Instantiate();
+	MalphiteQ->Collider2D()->SetFixed(true);
+	MalphiteQ->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
+	MalphiteQ->SetName(L"SeismicShard");
+
+	Ptr<CPrefab> NewPrefab = new CPrefab;
+	CGameObject* PrefabObject = MalphiteQ->Clone();
+	NewPrefab->RegisterProtoObject(PrefabObject);
+
+
 	m_vecSkillObj.push_back(NewPrefab);
 
 	// 투사체 스크립트
