@@ -78,6 +78,10 @@ void CCollider2D::finaltick()
 	else
 	{
 		m_matCollider2D *= matWorld;
+
+		// 충돌체 scale update
+		m_matColliderScale *= Transform()->GetWorldScaleMat();
+		m_matColliderPos *= Transform()->GetWorldPosMat();
 	}
 
 	// DebugShape 요청
