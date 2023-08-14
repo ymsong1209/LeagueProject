@@ -36,7 +36,8 @@ void CMalphiteWState::Enter()
 	//if (glowtex == nullptr) assert(nullptr);
 	//GetOwner()->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, glowtex);
 	//CSendServerEventMgr::GetInst()->SendSetTexParamPacket(targetId, 0, TEX_0, L"texture\\FBXTexture\\malphite_glow.dds");
-	CSendServerEventMgr::GetInst()->SendSetMtrlPacket(targetId, 0, L"material\\MAT_malphite");
+	GetOwner()->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\MAT_malphite_glow.mtrl"), 0);
+	CSendServerEventMgr::GetInst()->SendSetMtrlPacket(targetId, 0, L"material\\MAT_malphite_glow.mtrl");
 
 	CMalphiteScript* malphscript = GetOwner()->GetScript<CMalphiteScript>();
 	malphscript->SetAttackPower(20.f);

@@ -911,15 +911,6 @@
     <ClInclude Include="CInhibitorRespawnState.h">
       <Filter>State\Unit\Structure\Inhibitor</Filter>
     </ClInclude>
-    <ClInclude Include="CInhibitorSpawnState.h">
-      <Filter>State\Unit\Structure\Inhibitor</Filter>
-    </ClInclude>
-    <ClInclude Include="CInhibitorBrokenState.h">
-      <Filter>State\Unit\Structure\Inhibitor</Filter>
-    </ClInclude>
-    <ClInclude Include="CInhibitorIdleState.h">
-      <Filter>State\Unit\Structure\Inhibitor</Filter>
-    </ClInclude>
     <ClInclude Include="CNexusSpawnState.h">
       <Filter>State\Unit\Structure\Nexus</Filter>
     </ClInclude>
@@ -943,6 +934,15 @@
     </ClInclude>
     <ClInclude Include="CTurretBasicAttack.h">
       <Filter>Scripts\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="CInhibitorSpawnState.h">
+      <Filter>State\Unit\Structure\Inhibitor</Filter>
+    </ClInclude>
+    <ClInclude Include="CInhibitorBrokenState.h">
+      <Filter>State\Unit\Structure\Inhibitor</Filter>
+    </ClInclude>
+    <ClInclude Include="CInhibitorIdleState.h">
+      <Filter>State\Unit\Structure\Inhibitor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

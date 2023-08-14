@@ -75,11 +75,9 @@ public:
 
     int     GetGold() { return m_iGold; }
 
- 
     void    AddGold(int _gold) { m_iGold += _gold; };
     void    AddExp(float _exp) { m_fExp += _exp; }
 
- 
     int     GetSkillLevelUpPoint() { return m_iSkillLevelUpPoint; }
 
     void SetInsideEnemyTurretRange(bool _b) { m_bIsInsideEnemyTurretRange = _b; }

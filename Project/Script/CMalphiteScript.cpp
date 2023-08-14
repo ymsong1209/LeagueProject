@@ -86,7 +86,9 @@ void CMalphiteScript::tick()
 
 			//ÀçÁúÀ» ¹Ù²ãÁÜ
 			UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
-			CSendServerEventMgr::GetInst()->SendSetMtrlPacket(targetId, 0, L"material\\MAT_malphite");
+			
+			GetOwner()->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\MAT_malphite.mtrl"), 0);
+			CSendServerEventMgr::GetInst()->SendSetMtrlPacket(targetId, 0, L"material\\MAT_malphite.mtrl");
 		}
 	}
 	
