@@ -309,6 +309,8 @@ void ServerEventMgr::clienttick()
 				CGameObject* killerObj = GameObjMgr::GetInst()->FindAllObject(kdacsInfo->killerId);
 				CGameObject* vitimObj = GameObjMgr::GetInst()->FindAllObject(kdacsInfo->victimId);
 
+				CGameObject* MyPlayerObj = GameObjMgr::GetInst()->FindAllObject(MyPlayer.id);
+
 				// 킬로그를 CSendServerEventMgr 에 UI가 사용할 수 있도록 이벤트 등록해둔다.
 				tServerEvent evn = {};
 				evn.Type = SERVER_EVENT_TYPE::Kill_LOG_PACKET;
@@ -320,7 +322,11 @@ void ServerEventMgr::clienttick()
 				{
 					//  1. 죽인게 나 && 죽은게 챔피언 -> 본인 K++
 					if (kdacsInfo->killerId == MyPlayer.id)
+					{
 						CSendServerEventMgr::GetInst()->AddMyKillCnt(1);
+						MyPlayerObj->GetScript<CChampionScript>()->AddGold(vitimObj->GetScript<CUnitScript>()->GetDropGold());
+						MyPlayerObj->GetScript<CChampionScript>()->AddExp(vitimObj->GetScript<CUnitScript>()->GetDropExp());
+					}
 
 					// 2. 죽은게 나 -> 본인 D++
 					if(kdacsInfo->victimId == MyPlayer.id)
@@ -338,7 +344,11 @@ void ServerEventMgr::clienttick()
 						&& kdacsInfo->deadObjUnitType <= UnitType::BARON)
 				{
 					if (kdacsInfo->killerId == MyPlayer.id)
+					{
 						CSendServerEventMgr::GetInst()->AddMyCSCnt(1);
+						MyPlayerObj->GetScript<CChampionScript>()->AddGold(vitimObj->GetScript<CUnitScript>()->GetDropGold());
+						MyPlayerObj->GetScript<CChampionScript>()->AddExp(vitimObj->GetScript<CUnitScript>()->GetDropExp());
+					}
 				}
 
 				// 포탑이 죽으면 포탑 시야 끈다. 
