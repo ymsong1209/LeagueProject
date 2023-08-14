@@ -24,7 +24,7 @@ CCollider2D::CCollider2D(const CCollider2D& _other)
 	, m_bAbsolute(_other.m_bAbsolute)
 	, m_Shape(_other.m_Shape)
 	, m_bDrawCollision(_other.m_bDrawCollision)
-
+	, m_bFixed(_other.m_bFixed)
 {
 
 }
@@ -38,41 +38,51 @@ void CCollider2D::finaltick()
 {
 	// 충돌 회수가 음수인 경우
 	assert(0 <= m_iCollisionCount);
-	m_matColliderScale = XMMatrixIdentity();
+
+	// 크기, 회전, 이동 행렬 설정
 	m_matColliderScale = XMMatrixScaling(m_vOffsetScale.x, m_vOffsetScale.y, m_vOffsetScale.z);
-	
-	m_matColliderRot = XMMatrixIdentity();
-	m_matColliderRot = XMMatrixRotationX(m_vOffsetRot.x);
-	m_matColliderRot *= XMMatrixRotationY(m_vOffsetRot.y);
-	m_matColliderRot *= XMMatrixRotationZ(m_vOffsetRot.z);
-	
-	m_matColliderPos = XMMatrixIdentity();
+
+	m_matColliderRot = XMMatrixRotationX(m_vOffsetRot.x) * XMMatrixRotationY(m_vOffsetRot.y) * XMMatrixRotationZ(m_vOffsetRot.z);
+
 	m_matColliderPos = XMMatrixTranslation(m_vOffsetPos.x, m_vOffsetPos.y, m_vOffsetPos.z);
 
-	m_matCollider2D = XMMatrixScaling(m_vOffsetScale.x, m_vOffsetScale.y, m_vOffsetScale.z);
-	m_matCollider2D *= m_matColliderRot;
-	m_matCollider2D *= XMMatrixTranslation(m_vOffsetPos.x, m_vOffsetPos.y, m_vOffsetPos.z);
-	//크기 X 회전 X 이동 (회전은 안함)
-	const Matrix& matWorld = Transform()->GetWorldMat(); //최종 월드 행렬
+	// 크기 * 회전 * 이동
+	m_matCollider2D = m_matColliderScale * m_matColliderRot * m_matColliderPos;
 
-	if (m_bAbsolute)
+	// 부모 (월드) 행렬 적용
+	const Matrix& matWorld = Transform()->GetWorldMat();
+
+	if (m_bFixed)
 	{
-		//부모의 Scale없애기
-		Matrix matParentScaleInv = XMMatrixInverse(nullptr, Transform()->GetWorldScaleMat());
-		//Collider의 Offset * 부모 크기의 역행렬 * 부모
-		m_matCollider2D = m_matCollider2D * matParentScaleInv * matWorld;
+		// 부모의 전방향 벡터 가져오기 (회전 행렬의 3번째 열)
+		Vec3 forward = Vec3(Transform()->GetWorldRotMat()._13, Transform()->GetWorldRotMat()._23, Transform()->GetWorldRotMat()._33);
 
+		// y축 회전 정보 추출
+		float yRotation = atan2(forward.x, forward.z);
+
+		// y축 회전 행렬 생성
+		Matrix matParentYRotation = XMMatrixRotationY(yRotation);
+
+		// 위치 행렬
+		Matrix matTranslateToObjPosition = XMMatrixTranslationFromVector(Transform()->GetWorldPos());
+
+		// 충돌체의 스케일, 본인의 회전, 부모의 y축 회전, 그리고 위치 행렬을 결합
+		m_matCollider2D = m_matColliderScale * m_matColliderRot * matParentYRotation * matTranslateToObjPosition;
+	}
+	else if (m_bAbsolute)
+	{
+		// 부모의 Scale을 없애기
+		Matrix matParentScaleInv = XMMatrixInverse(nullptr, Transform()->GetWorldScaleMat());
+		m_matCollider2D = m_matCollider2D * matParentScaleInv * matWorld;
 	}
 	else
 	{
-		// 충돌체 월드 * 오브젝트 월드
 		m_matCollider2D *= matWorld;
 
 		// 충돌체 scale update
 		m_matColliderScale *= Transform()->GetWorldScaleMat();
 		m_matColliderPos *= Transform()->GetWorldPosMat();
 	}
-
 
 	// DebugShape 요청
 	Vec4 vColor = Vec4(0.f, 1.f, 0.f, 1.f);
