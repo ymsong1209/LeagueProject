@@ -24,6 +24,9 @@ CJungleMonsterScript::CJungleMonsterScript(UINT ScriptType)
 	m_fHP = 1;
 	m_fMaxHP = 1;
 	m_fAttackPower = 10;
+
+	m_iDropGold = 10.f;
+	m_fDropExp = 10.f;
 }
 
 CJungleMonsterScript::CJungleMonsterScript()

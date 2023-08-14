@@ -23,6 +23,9 @@ CChampionScript::CChampionScript(UINT ScriptType)
 	, m_bIsAttackingChampion(false)
 {
 	m_eUnitType = UnitType::CHAMPION;
+
+	m_iDropGold = 300;
+	m_fDropExp = 30.f;
 }
 
 CChampionScript::CChampionScript()
