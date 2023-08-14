@@ -12,10 +12,25 @@ CJinxRocketBasicAttackScript::~CJinxRocketBasicAttackScript()
 
 void CJinxRocketBasicAttackScript::begin()
 {
+	// 첫 생성 위치 기억
+	m_vSpawnPos = GetOwner()->Transform()->GetRelativePos();
+
+	Vec3 TargetPos = m_TargetObj->Transform()->GetRelativePos();
+	Vec3 ProjectilePos = GetOwner()->Transform()->GetRelativePos();
+
+	// Target을 향한 방향 계산
+	Vec3 Direction = Vec3(TargetPos.x - ProjectilePos.x, 0.f, TargetPos.z - ProjectilePos.z);
+	Direction.Normalize();
+	float targetAngle = atan2f(Direction.z, Direction.x);
+
+	// z축 회전(-90도)
+	GetOwner()->Transform()->SetRelativeRot(Vec3(0.f, 0.f, targetAngle - XMConvertToRadians(90)));
 }
 
 void CJinxRocketBasicAttackScript::tick()
 {
+	if (m_bUnitDead) return;
+
 	CProjectileScript::tick();
 
 	if (m_TargetObj == nullptr || m_TargetObj->IsDead())
@@ -25,7 +40,6 @@ void CJinxRocketBasicAttackScript::tick()
 	}
 
 	Vec3 TargetPos = m_TargetObj->Transform()->GetRelativePos();
-
 	Vec3 ProjectilePos = GetOwner()->Transform()->GetRelativePos();
 
 	// 방향 계산
@@ -33,8 +47,7 @@ void CJinxRocketBasicAttackScript::tick()
 	Direction.Normalize();
 
 	// 투사체 이동
-	Vec3 NewPos = ProjectilePos + Direction * m_fProjectileSpeed * EditorDT;
-
+	Vec3 NewPos = ProjectilePos + Direction * m_fProjectileSpeed * DT;
 	GetOwner()->Transform()->SetRelativePos(NewPos);
 }
 

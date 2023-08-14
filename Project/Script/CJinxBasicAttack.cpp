@@ -17,7 +17,7 @@ CJinxBasicAttack::CJinxBasicAttack()
 	JinxBasicAttackObj->Collider2D()->SetOffsetScale(Vec2(10.f, 10.f));
 	JinxBasicAttackObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
 	JinxBasicAttackObj->Collider2D()->SetDrawCollision(true);
-	JinxBasicAttackObj->Transform()->SetBillBoard(true);
+	JinxBasicAttackObj->Transform()->SetBillBoard(false);
 	JinxBasicAttackObj->MeshRender()->GetMaterial(0)->SetShader(CResMgr::GetInst()->FindRes<CGraphicsShader>(L"Std2DEffectShaderAlpha"));
 	JinxBasicAttackObj->SetName(L"JinxBasicAttackMinigun");
 
@@ -38,31 +38,6 @@ CJinxBasicAttack::CJinxBasicAttack()
 
 	// 투사체 스크립트
 	m_iProjectileCount = 1;
-
-
-
-
-	// 투사체 (예시입니다)
-	//CGameObject* Projectile = new CGameObject;
-	//Projectile->AddComponent(new CTransform);
-	//Projectile->AddComponent(new CCollider2D);
-	//Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-	//Projectile->Collider2D()->SetOffsetScale(Vec2(5.f, 5.f));
-	//Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
-	//Projectile->SetName(L"Projectile");
-	//
-	//Ptr<CPrefab> NewPrefab = new CPrefab;
-	//CGameObject* PrefabObject = Projectile->Clone();
-	//NewPrefab->RegisterProtoObject(PrefabObject);
-	//
-	//m_vecSkillObj.push_back(NewPrefab);
-	//
-	//// 투사체 스크립트
-	//m_iProjectileCount = 1;
-	//
-	//// 피격 이펙트
-	//Ptr<CPrefab> MalphiteBasicAttackHitEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MalphiteBasicAttackHitEffect.prefab");
-	//m_SkillHitEffect = MalphiteBasicAttackHitEffect;
 }
 
 CJinxBasicAttack::~CJinxBasicAttack()
