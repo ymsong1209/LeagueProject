@@ -48,8 +48,11 @@
 #include <Script/CDragonScript.h>
 #include <Script/CShopKeeperNorthScript.h>
 #include <Script/CShopKeeperSouthScript.h>
-
 #include <Script/CBushScript.h>
+
+
+// 나중에 지울 코드..?
+#include <Script/CJinxBasicAttackMinigunHitEffectScript.h>
 
 
 void CreateTestLevel()
@@ -58,8 +61,8 @@ void CreateTestLevel()
 	// 
 	//return;	
 	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
-	pCurLevel->ChangeState(LEVEL_STATE::PLAY);
-	//pCurLevel->ChangeState(LEVEL_STATE::STOP);
+	//pCurLevel->ChangeState(LEVEL_STATE::PLAY);
+	pCurLevel->ChangeState(LEVEL_STATE::STOP);
 	CTimeMgr::GetInst()->SetTimeScale(1.f);    // TestLevel에서 강제로 PLAY모드로 전환해서 DT를 흐르게 하기 위함. 추후 삭제
 
 	//롤맵 레이어에는 롤맵만 넣을것!
@@ -209,6 +212,21 @@ void CreateTestLevel()
 	JinxBasicAttackEffect->AddChild(JinxBasicAttackEffectRight);
 
 	SpawnGameObject(JinxBasicAttackEffect, Vec3(-300.f, 0.f, 0.f), 0);
+
+
+	// 징크스 피격 이펙트를 만들어보자
+	CGameObject* JinxBasicAttackGetHitEffect = new CGameObject;
+	JinxBasicAttackGetHitEffect->SetName(L"JinxBasicAttackGetHitEffect");
+	JinxBasicAttackGetHitEffect->AddComponent(new CTransform);
+	JinxBasicAttackGetHitEffect->AddComponent(new CMeshRender);
+	JinxBasicAttackGetHitEffect->AddComponent(new CJinxBasicAttackMinigunHitEffectScript);
+	JinxBasicAttackGetHitEffect->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	JinxBasicAttackGetHitEffect->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\JinxBasicAttackGetHitEffect.mtrl"), 0);
+	JinxBasicAttackGetHitEffect->MeshRender()->Transform()->SetRelativeScale(Vec3(50.f, 50.f, 1.f));
+
+	SpawnGameObject(JinxBasicAttackGetHitEffect, Vec3(-600.f, 0.f, 0.f), 0);
+
+
 
 
 

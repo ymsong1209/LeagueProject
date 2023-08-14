@@ -17,6 +17,7 @@ CHpMpRatioUIScript
 CInGameCameraScript
 CInhibitorScript
 CInventoryUIScript
+CJinxBasicAttackMinigunHitEffectScript
 CJinxBasicAttackScript
 CJinxEScript
 CJinxRScript

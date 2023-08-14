@@ -696,6 +696,7 @@
     <ClCompile Include="CTurretBasicAttack.cpp">
       <Filter>Scripts\Skill</Filter>
     </ClCompile>
+    <ClCompile Include="CJinxBasicAttackMinigunHitEffectScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -944,6 +945,7 @@
     <ClInclude Include="CTurretBasicAttack.h">
       <Filter>Scripts\Skill</Filter>
     </ClInclude>
+    <ClInclude Include="CJinxBasicAttackMinigunHitEffectScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">

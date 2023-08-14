@@ -20,6 +20,7 @@
 #include "CInGameCameraScript.h"
 #include "CInhibitorScript.h"
 #include "CInventoryUIScript.h"
+#include "CJinxBasicAttackMinigunHitEffectScript.h"
 #include "CJinxBasicAttackScript.h"
 #include "CJinxEScript.h"
 #include "CJinxRScript.h"
@@ -93,6 +94,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CInGameCameraScript");
 	_vec.push_back(L"CInhibitorScript");
 	_vec.push_back(L"CInventoryUIScript");
+	_vec.push_back(L"CJinxBasicAttackMinigunHitEffectScript");
 	_vec.push_back(L"CJinxBasicAttackScript");
 	_vec.push_back(L"CJinxEScript");
 	_vec.push_back(L"CJinxRScript");
@@ -186,6 +188,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CInhibitorScript;
 	if (L"CInventoryUIScript" == _strScriptName)
 		return new CInventoryUIScript;
+	if (L"CJinxBasicAttackMinigunHitEffectScript" == _strScriptName)
+		return new CJinxBasicAttackMinigunHitEffectScript;
 	if (L"CJinxBasicAttackScript" == _strScriptName)
 		return new CJinxBasicAttackScript;
 	if (L"CJinxEScript" == _strScriptName)
@@ -351,6 +355,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::INVENTORYUISCRIPT:
 		return new CInventoryUIScript;
+		break;
+	case (UINT)SCRIPT_TYPE::JINXBASICATTACKMINIGUNHITEFFECTSCRIPT:
+		return new CJinxBasicAttackMinigunHitEffectScript;
 		break;
 	case (UINT)SCRIPT_TYPE::JINXBASICATTACKSCRIPT:
 		return new CJinxBasicAttackScript;
@@ -587,6 +594,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::INVENTORYUISCRIPT:
 		return L"CInventoryUIScript";
+		break;
+
+	case SCRIPT_TYPE::JINXBASICATTACKMINIGUNHITEFFECTSCRIPT:
+		return L"CJinxBasicAttackMinigunHitEffectScript";
 		break;
 
 	case SCRIPT_TYPE::JINXBASICATTACKSCRIPT:
