@@ -32,7 +32,8 @@ void CKillLogUIScript::tick()
 	killLogManager.lineHeight = 75.f;
 
 	//==============µð¹ö±ë¿ë=========================
-	/*if (KEY_TAP(KEY::_7))
+	/*
+	if (KEY_TAP(KEY::_7))
 	{
 		CEventMgr::GetInst()->SetIsGameOver(true);
 		Announce_EndofGame(Faction::BLUE);
@@ -42,7 +43,8 @@ void CKillLogUIScript::tick()
 	{
 		CEventMgr::GetInst()->SetIsGameOver(true);
 		Announce_EndofGame(Faction::RED);
-	}*/
+	}
+	*/
 
 
 	//===============================µð¹ö±ë¿ë====================================
@@ -98,7 +100,6 @@ void CKillLogUIScript::tick()
 					}
 				}
 			}
-
 			
 
 			if (KillerObj && VictimObj)
