@@ -144,6 +144,14 @@ void CMalphiteScript::GetInput()
 			else
 			{
 				// 사거리 내에 들어올 때까지 이동
+				// 대신 공격은 사거리 내에 있을때 다시 눌러야함
+				if ((m_eRestraint & RESTRAINT::CANNOT_MOVE) != 0)
+					return;
+
+				CGameObject* Map = CLevelMgr::GetInst()->GetCurLevel()->FindParentObjectByName(L"LoLMapCollider");
+				IntersectResult result = MainCam->IsCollidingBtwRayRect(ray, Map);
+				Vec3 TargetPos = result.vCrossPoint;	// 클릭 좌표
+				PathFinder()->FindPath(TargetPos);
 			}
 		}
 		else
