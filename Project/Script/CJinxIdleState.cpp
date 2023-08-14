@@ -20,6 +20,7 @@ CJinxIdleState::~CJinxIdleState()
 void CJinxIdleState::tick()
 {
 	// SFX / Voice Àç»ý
+
 }
 
 void CJinxIdleState::Enter()

@@ -8,6 +8,7 @@ public:
     ~CJinxRState();
 
 private:
+    int         m_iSoundNum;
 
 public:
     virtual void tick() override;
