@@ -247,6 +247,8 @@
     <ClInclude Include="CJinxEScript.h" />
     <ClInclude Include="CJinxEState.h" />
     <ClInclude Include="CJinxR.h" />
+    <ClInclude Include="CJinxRocketBasicAttack.h" />
+    <ClInclude Include="CJinxRocketBasicAttackScript.h" />
     <ClInclude Include="CJinxRScript.h" />
     <ClInclude Include="CJinxRState.h" />
     <ClInclude Include="CJinxWScript.h" />
@@ -529,6 +531,8 @@
     <ClCompile Include="CJinxQState.cpp" />
     <ClCompile Include="CJinxR.cpp" />
     <ClCompile Include="CJinxRespawnState.cpp" />
+    <ClCompile Include="CJinxRocketBasicAttack.cpp" />
+    <ClCompile Include="CJinxRocketBasicAttackScript.cpp" />
     <ClCompile Include="CJinxRScript.cpp" />
     <ClCompile Include="CJinxRState.cpp" />
     <ClCompile Include="CJinxScript.cpp" />

@@ -697,6 +697,12 @@
       <Filter>Scripts\Skill</Filter>
     </ClCompile>
     <ClCompile Include="CJinxBasicAttackMinigunHitEffectScript.cpp" />
+    <ClCompile Include="CJinxRocketBasicAttack.cpp">
+      <Filter>Scripts\Skill\Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxRocketBasicAttackScript.cpp">
+      <Filter>Scripts\SkillProjectile\Jinx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -946,6 +952,12 @@
       <Filter>Scripts\Skill</Filter>
     </ClInclude>
     <ClInclude Include="CJinxBasicAttackMinigunHitEffectScript.h" />
+    <ClInclude Include="CJinxRocketBasicAttack.h">
+      <Filter>Scripts\Skill\Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxRocketBasicAttackScript.h">
+      <Filter>Scripts\SkillProjectile\Jinx</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">
