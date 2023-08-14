@@ -182,6 +182,40 @@ void CreateTestLevel()
 	ShopKeeperNorth->SetName(L"ShopKeeperNorth");
 	SpawnGameObject(ShopKeeperNorth, Vec3(2021, 30.f, 2154.f), L"Default");
 
+
+
+	// 징크스 이펙트를 만들어보자
+	CGameObject* JinxBasicAttackEffect = new CGameObject;
+	JinxBasicAttackEffect->SetName(L"JinxBasicAttackEffect");
+	JinxBasicAttackEffect->AddComponent(new CTransform);
+	JinxBasicAttackEffect->AddComponent(new CMeshRender);
+	JinxBasicAttackEffect->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	JinxBasicAttackEffect->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\JinxMinigunAttackEffect.mtrl"), 0);
+	JinxBasicAttackEffect->MeshRender()->SetPunctureTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\jinxtex\\Minigun.png"));
+	JinxBasicAttackEffect->MeshRender()->GetMaterial(0)->SetShader(CResMgr::GetInst()->FindRes<CGraphicsShader>(L"Std2DEffectShaderAlpha"));
+	JinxBasicAttackEffect->MeshRender()->Transform()->SetRelativeScale(Vec3(20.f, 400.f, 1.f));
+
+
+	CGameObject* JinxBasicAttackEffectLeft = JinxBasicAttackEffect->Clone();
+	JinxBasicAttackEffectLeft->Transform()->SetAbsolute(true);
+	JinxBasicAttackEffectLeft->Transform()->SetRelativePos(Vec3(-34.f, -60.f, 0.f));
+
+
+	CGameObject* JinxBasicAttackEffectRight = JinxBasicAttackEffect->Clone();
+	JinxBasicAttackEffectRight->Transform()->SetAbsolute(true);
+	JinxBasicAttackEffectRight->Transform()->SetRelativePos(Vec3(+34.f, -100.f, 0.f));
+	
+	JinxBasicAttackEffect->AddChild(JinxBasicAttackEffectLeft);
+	JinxBasicAttackEffect->AddChild(JinxBasicAttackEffectRight);
+
+	SpawnGameObject(JinxBasicAttackEffect, Vec3(-300.f, 0.f, 0.f), 0);
+
+
+
+
+
+
+
 	
 
 	// ============
