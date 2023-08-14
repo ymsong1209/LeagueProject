@@ -39,6 +39,8 @@ protected:
     int                     m_iDeathCount;
     int                     m_iAssistCount;     // 안씀
 
+    int                     m_iGold;        
+
     int                     m_iSkillLevelUpPoint;   // 레벨 업 시 스킬 레벨을 올릴 수 있는 포인트
 
     float                   m_fRespawnTime;     // 부활 대기시간
@@ -70,6 +72,8 @@ public:
 public:
     float   GetExp() { return m_fExp; }
     float   GetMaxExp() { return m_fMaxExp; }
+
+    int     GetGold() { return m_iGold; }
 
     int     GetSkillLevelUpPoint() { return m_iSkillLevelUpPoint; }
 
