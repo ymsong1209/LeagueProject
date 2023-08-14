@@ -28,6 +28,7 @@ CKillLogUIScript
 CKrugMiniScript
 CKrugScript
 CMalphiteBasicAttackHitEffectScript
+CMalphiteBasicAttackScript
 CMalphiteEDecalScript
 CMalphiteEScript
 CMalphiteQDecalScript
@@ -58,8 +59,6 @@ CSkillLevelUpUIScript
 CSkillLvEffectUIScript
 CSoundTestScript
 CStructureScript
-CTestTurretScript
-CTurretAttackScript
 CTurretHPUIScript
 CTurretScript
 CUIScript

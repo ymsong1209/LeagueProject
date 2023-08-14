@@ -28,6 +28,10 @@ CMalphiteR::CMalphiteR()
 
 	m_vecSkillObj.push_back(NewPrefab);
 
+	// 스킬 피격 이펙트
+	Ptr<CPrefab> MalphiteRDecal = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MalphiteRDecal.prefab");
+	m_SkillHitEffect = MalphiteRDecal;
+
 	// 투사체 스크립트
 	m_iProjectileCount = 1;
 	m_ProjectileScript = new CMalphiteRScript;

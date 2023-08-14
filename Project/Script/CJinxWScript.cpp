@@ -27,7 +27,6 @@ void CJinxWScript::begin()
 }
 
 
-}
 void CJinxWScript::tick()
 {
 	if (m_bUnitDead) return;

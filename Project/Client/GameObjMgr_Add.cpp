@@ -2466,9 +2466,25 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 				vecProj[i]->GetScript<CUnitScript>()->SetUnitType(UnitType::PROJECTILE);
 				_objects.insert(std::make_pair(_projectileId+i, vecProj[i]));
 			}
+		}
 
+		// 스킬 이펙트 생성
+		CGameObject* UserObj = FindAllObject(_skillInfo.OwnerId);
 
+		// 스킬 쓰는 애
+		CGameObject* skillTargetObj = UserObj;
+
+		// _SkillInfo를 까서, 어떤 Skill인지 가지고 옴
+		CSkill* skill = CSkillMgr::GetInst()->FindSkill(_skillInfo.skillType);
+
+		// 시전자 몸 주변에 이펙트를 생성
+		if (skill->GetSkillEffect() != nullptr)
+		{
+			SpawnGameObject(skill->GetSkillEffect(), UserObj->Transform()->GetRelativePos(), L"Effect");
+			skill->GetSkillHitEffect()->SetLifeSpan(0.5f);
 		}
 	}
 }
+
+
 
