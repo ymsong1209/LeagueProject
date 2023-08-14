@@ -791,6 +791,23 @@ void CreateTestLevel()
 
 	//SpawnGameObject(pAnimTestObj, Vec3(0.f, 0.f, 0.f), 0.f);
 
+
+	// Jinx Basic Attack
+	CGameObject* pJinxBasicAtk = new CGameObject;
+	pJinxBasicAtk->SetName(L"JinxBasicAtk");
+
+	pJinxBasicAtk->AddComponent(new CMeshRender);
+	pJinxBasicAtk->AddComponent(new CTransform);
+
+	pJinxBasicAtk->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	pJinxBasicAtk->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\JinxMinigunAttack.mtrl"), 0);
+
+	pJinxBasicAtk->Transform()->SetRelativeScale(Vec3(100.f, 50.f, 1.f));
+
+	
+	SpawnGameObject(pJinxBasicAtk, Vec3(0.f, 700.f, 0.f), 0.f);
+
+
 	
 
 	CGameObject* pSoundTestObj = new CGameObject;
