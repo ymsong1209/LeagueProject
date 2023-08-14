@@ -20,6 +20,8 @@ void CNexusScript::begin()
 
 void CNexusScript::tick()
 {
+	CStructureScript::tick();
+
 	// 미니언 생성 주기마다 미니언 생성
 	m_fTime += DT;
 

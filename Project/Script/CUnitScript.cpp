@@ -61,6 +61,8 @@ void CUnitScript::begin()
 
 void CUnitScript::tick()
 {
+	m_fHP = clamp(m_fHP, 0.f, m_fMaxHP);
+
 	CheckTimedEffect();
 	CheckCC();
 

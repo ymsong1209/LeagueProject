@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CStructureScript.h"
+#include <algorithm>
 
 CStructureScript::CStructureScript(UINT ScriptType)
 	:CUnitScript(ScriptType)
@@ -23,8 +24,6 @@ void CStructureScript::begin()
 
 void CStructureScript::tick()
 {
-	if (!m_bAttackable)
-	{
-		// 선택 불가 및 공격 불가
-	}
+	CUnitScript::tick();
+	//m_fHP = clamp(m_fHP, 0.f, m_fMaxHP);
 }
