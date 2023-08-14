@@ -64,6 +64,8 @@ protected:
     Vec3                    m_vAirBorneStartPos;
     float                   m_fAirBorneVelocity;
 
+    int                     m_iDropGold;
+    float                   m_fDropExp;
 
 public:
     void    SetRcvMove(bool _bool) { m_bRcvMove = _bool; }
@@ -112,6 +114,9 @@ public:
 
     float GetCurMP() { return m_fMP; }
     float GetMaxMP() const { return m_fMaxMP; }
+
+    int    GetDropGold() { return m_iDropGold; }
+    float  GetDropExp() { return m_fDropExp; }
 
     uint32_t    GetCC()     { return m_eCurCC; }
     int         GetLevel()  { return m_iLevel; }

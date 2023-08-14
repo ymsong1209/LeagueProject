@@ -12,6 +12,8 @@ CMinionScript::CMinionScript()
 	, m_vecWayPoint{}
 	, m_fAggroTime(2.f)
 {
+	m_iDropGold = 20.f;
+	m_fDropExp = 10.f;
 }
 
 CMinionScript::~CMinionScript()
