@@ -1,0 +1,8 @@
+sru_storekeepernorth_idle1,0,144
+sru_storekeepernorth_idle2,145,209
+sru_storekeepernorth_idle3,210,266
+sru_storekeepernorth_idle4,267,334
+sru_storekeepernorth_idle5,335,368
+sru_storekeepernorth_idle6,369,436
+sru_storekeepernorth_spawn2,437,659
+sru_storekeepernorth_spawn,660,1030

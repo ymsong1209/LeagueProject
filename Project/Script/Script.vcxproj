@@ -420,6 +420,8 @@
     <ClInclude Include="CScriptMgr.h" />
     <ClInclude Include="CSendServerEventMgr.h" />
     <ClInclude Include="CServerTypes.h" />
+    <ClInclude Include="CShopKeeperNorthScript.h" />
+    <ClInclude Include="CShopKeeperSouthScript.h" />
     <ClInclude Include="CSkill.h" />
     <ClInclude Include="CSkillLevelUIScript.h" />
     <ClInclude Include="CSkillLevelUpUIScript.h" />
@@ -686,6 +688,8 @@
     <ClCompile Include="CScriptMgr.cpp" />
     <ClCompile Include="CSendServerEventMgr.cpp" />
     <ClCompile Include="CServerTypes.cpp" />
+    <ClCompile Include="CShopKeeperNorthScript.cpp" />
+    <ClCompile Include="CShopKeeperSouthScript.cpp" />
     <ClCompile Include="CSkill.cpp" />
     <ClCompile Include="CSkillLevelUIScript.cpp" />
     <ClCompile Include="CSkillLevelUpUIScript.cpp" />

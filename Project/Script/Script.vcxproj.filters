@@ -681,6 +681,9 @@
     <ClCompile Include="CNexusBrokenState.cpp">
       <Filter>State\Unit\Structure\Nexus</Filter>
     </ClCompile>
+    <ClCompile Include="CAnnounceTimerUIScript.cpp" />
+    <ClCompile Include="CShopKeeperNorthScript.cpp" />
+    <ClCompile Include="CShopKeeperSouthScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -914,6 +917,9 @@
     <ClInclude Include="CNexusBrokenState.h">
       <Filter>State\Unit\Structure\Nexus</Filter>
     </ClInclude>
+    <ClInclude Include="CAnnounceTimerUIScript.h" />
+    <ClInclude Include="CShopKeeperNorthScript.h" />
+    <ClInclude Include="CShopKeeperSouthScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">

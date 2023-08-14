@@ -53,6 +53,8 @@ CRazorBeakMiniScript
 CRazorBeakScript
 CRedScript
 CScorePanelScript
+CShopKeeperNorthScript
+CShopKeeperSouthScript
 CSkillLevelUIScript
 CSkillLevelUpUIScript
 CSkillLvEffectUIScript
