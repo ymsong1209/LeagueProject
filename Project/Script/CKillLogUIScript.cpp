@@ -29,6 +29,7 @@ void CKillLogUIScript::tick()
 	killLogManager.shiftSpeed = 300.f;
 	killLogManager.lineHeight = 75.f;
 
+	//==============디버깅용=========================
 	//if (KEY_TAP(KEY::_7))
 	//	AddAnnouncement(AnnounceType::INHIBITOR_DESTROY, Faction::RED,ChampionType::JINX,ChampionType::MALPHITE);
 
@@ -39,7 +40,7 @@ void CKillLogUIScript::tick()
 	////아군이나, 내가 적을 처치한경우
 	//else if (KEY_TAP(KEY::_9))
 	//	AddAnnouncement(AnnounceType::KILLEDENEMY, Faction::BLUE, ChampionType::JINX, ChampionType::MALPHITE);
-
+	//===================================================
 
 	vector<tServerEvent> vServerEvent = CSendServerEventMgr::GetInst()->GetUIEvent();
 	for (size_t i = 0; i < vServerEvent.size(); ++i)
