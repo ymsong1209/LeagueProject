@@ -17,6 +17,7 @@ CHpMpRatioUIScript
 CInGameCameraScript
 CInhibitorScript
 CInventoryUIScript
+CJinxBasicAttackScript
 CJinxEScript
 CJinxRScript
 CJinxScript
@@ -61,6 +62,7 @@ CSkillLevelUpUIScript
 CSkillLvEffectUIScript
 CSoundTestScript
 CStructureScript
+CTurretBasicAttackScript
 CTurretHPUIScript
 CTurretScript
 CUIScript

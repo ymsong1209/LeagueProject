@@ -20,6 +20,7 @@
 #include "CInGameCameraScript.h"
 #include "CInhibitorScript.h"
 #include "CInventoryUIScript.h"
+#include "CJinxBasicAttackScript.h"
 #include "CJinxEScript.h"
 #include "CJinxRScript.h"
 #include "CJinxScript.h"
@@ -63,6 +64,7 @@
 #include "CSkillLvEffectUIScript.h"
 #include "CSoundTestScript.h"
 #include "CStructureScript.h"
+#include "CTurretBasicAttackScript.h"
 #include "CTurretHPUIScript.h"
 #include "CTurretScript.h"
 #include "CUIScript.h"
@@ -91,6 +93,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CInGameCameraScript");
 	_vec.push_back(L"CInhibitorScript");
 	_vec.push_back(L"CInventoryUIScript");
+	_vec.push_back(L"CJinxBasicAttackScript");
 	_vec.push_back(L"CJinxEScript");
 	_vec.push_back(L"CJinxRScript");
 	_vec.push_back(L"CJinxScript");
@@ -135,6 +138,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CSkillLvEffectUIScript");
 	_vec.push_back(L"CSoundTestScript");
 	_vec.push_back(L"CStructureScript");
+	_vec.push_back(L"CTurretBasicAttackScript");
 	_vec.push_back(L"CTurretHPUIScript");
 	_vec.push_back(L"CTurretScript");
 	_vec.push_back(L"CUIScript");
@@ -183,6 +187,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CInhibitorScript;
 	if (L"CInventoryUIScript" == _strScriptName)
 		return new CInventoryUIScript;
+	if (L"CJinxBasicAttackScript" == _strScriptName)
+		return new CJinxBasicAttackScript;
 	if (L"CJinxEScript" == _strScriptName)
 		return new CJinxEScript;
 	if (L"CJinxRScript" == _strScriptName)
@@ -269,6 +275,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CSoundTestScript;
 	if (L"CStructureScript" == _strScriptName)
 		return new CStructureScript;
+	if (L"CTurretBasicAttackScript" == _strScriptName)
+		return new CTurretBasicAttackScript;
 	if (L"CTurretHPUIScript" == _strScriptName)
 		return new CTurretHPUIScript;
 	if (L"CTurretScript" == _strScriptName)
@@ -344,6 +352,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::INVENTORYUISCRIPT:
 		return new CInventoryUIScript;
+		break;
+	case (UINT)SCRIPT_TYPE::JINXBASICATTACKSCRIPT:
+		return new CJinxBasicAttackScript;
 		break;
 	case (UINT)SCRIPT_TYPE::JINXESCRIPT:
 		return new CJinxEScript;
@@ -474,6 +485,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::STRUCTURESCRIPT:
 		return new CStructureScript;
 		break;
+	case (UINT)SCRIPT_TYPE::TURRETBASICATTACKSCRIPT:
+		return new CTurretBasicAttackScript;
+		break;
 	case (UINT)SCRIPT_TYPE::TURRETHPUISCRIPT:
 		return new CTurretHPUIScript;
 		break;
@@ -574,6 +588,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::INVENTORYUISCRIPT:
 		return L"CInventoryUIScript";
+		break;
+
+	case SCRIPT_TYPE::JINXBASICATTACKSCRIPT:
+		return L"CJinxBasicAttackScript";
 		break;
 
 	case SCRIPT_TYPE::JINXESCRIPT:
@@ -750,6 +768,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::STRUCTURESCRIPT:
 		return L"CStructureScript";
+		break;
+
+	case SCRIPT_TYPE::TURRETBASICATTACKSCRIPT:
+		return L"CTurretBasicAttackScript";
 		break;
 
 	case SCRIPT_TYPE::TURRETHPUISCRIPT:
