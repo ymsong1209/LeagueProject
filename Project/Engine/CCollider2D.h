@@ -22,6 +22,11 @@ private:
 
     bool            m_bIsCollidedFromRay;
     bool            m_bDrawCollision; //콜리전을 보이게 할지 여부
+
+
+    // 하은님이 요청하신 변수 추가
+    bool            m_bFixed;
+
 public:
     virtual void finaltick() override;
 

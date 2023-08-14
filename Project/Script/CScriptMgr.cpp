@@ -30,7 +30,6 @@
 #include "CKrugMiniScript.h"
 #include "CKrugScript.h"
 #include "CMalphiteBasicAttackHitEffectScript.h"
-#include "CMalphiteBasicAttack.h"
 #include "CMalphiteEDecalScript.h"
 #include "CMalphiteEScript.h"
 #include "CMalphiteQDecalScript.h"

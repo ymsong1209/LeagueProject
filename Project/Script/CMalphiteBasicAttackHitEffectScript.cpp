@@ -28,7 +28,7 @@ void CMalphiteBasicAttackHitEffectScript::tick()
 	{
 		Vec3 Scale = GetOwner()->Transform()->GetRelativeScale();
 
-		if (Scale.x > 35.f)
+		if (Scale.x > 30.f)
 			DestroyObject(GetOwner());
 
 		float NextScale = Scale.x + DT * 650.f;
