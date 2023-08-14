@@ -33,6 +33,9 @@ void CJinxDeathState::Enter()
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, false, false, 0.0f);
 
+	Vec3 JinxPos = GetOwner()->Transform()->GetRelativePos();
+	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\jinx\\jinx_champ_Death.wav", 1, 0.5f, true, 100.f, JinxPos, Faction::NONE);
+
 	CChampionDeathState::Enter();
 }  
 

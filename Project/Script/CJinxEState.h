@@ -8,7 +8,7 @@ public:
     ~CJinxEState();
 
 private:
-
+    int         m_iJinxSoundNum;
 public:
     virtual void tick() override;
     virtual void Enter() override;

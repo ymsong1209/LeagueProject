@@ -2151,6 +2151,13 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 				SpawnGameObject(pObj, Vec3(1451, 0.f, 656.f), L"Mob");
 			}
 			
+			CGameObject* DragonBar = new CGameObject;
+			DragonBar->SetName(L"DragonBar");
+			DragonBar->AddComponent(new CTransform);
+			DragonBar->AddComponent(new CMeshRender);
+			DragonBar->AddComponent(new CDragonHPUIScript);
+			pObj->AddChild(DragonBar);
+
 			// UnitScript 에 진짜도, 가짜도 공통적으로 들어가야 하는 값들.
 			CUnitScript* Script = pObj->GetScript<CUnitScript>();
 			Script->SetServerID(_objectId);  // 서버 id
@@ -2161,6 +2168,8 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+
+			
 		}
 		break;
 		// =======================================================================================================================
@@ -2256,6 +2265,14 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 				, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z)
 				, L"Structure");
 			pObj->GetRenderComponent()->SetFrustumCheck(true);
+
+			if (Script->GetFaction() == MyPlayer.faction) {
+				pObj->Transform()->SetIsShootingRay(true);
+				pObj->Transform()->SetRayRange(200.f);
+			}
+			else {
+				pObj->Transform()->SetIsShootingRay(false);
+			}
 
 			CGameObject* HPBar = new CGameObject;
 			HPBar->SetName(L"TurretBar");

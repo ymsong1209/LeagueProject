@@ -8,6 +8,8 @@ public:
     ~CJinxIdleState();
 
 private:
+    float        m_fSoundCoolTime;
+
 
 public:
     virtual void tick() override;
