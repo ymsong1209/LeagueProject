@@ -129,7 +129,7 @@ CGameObject* GameObjMgr::FindAllObject(uint64 _targetId)
 
 	_allObjects.insert(_players.begin(), _players.end());
 	_allObjects.insert(_objects.begin(), _objects.end());
-	_allObjects.insert(_placedObjects.begin(), _placedObjects.end());
+	//_allObjects.insert(_placedObjects.begin(), _placedObjects.end());
 	_allObjects.insert(_turretChild.begin(), _turretChild.end());
 
 	// find 함수를 사용하여 원하는 키 값을 가진 원소를 찾습니다.
@@ -207,10 +207,11 @@ void GameObjMgr::SendMyPlayerMove(ClientServiceRef _service)
 	PrevCC = CurCC;
 	PrevRot = CurRot;
 
-	float CurAttackPower = obj->GetScript<CUnitScript>()->GetAttackPower();
-	float CurDefencePower = obj->GetScript<CUnitScript>()->GetDefencePower();
-	bool bUnitDead = obj->GetScript<CUnitScript>()->IsUnitDead();
-
+	float	CurAttackPower = obj->GetScript<CUnitScript>()->GetAttackPower();
+	float	CurDefencePower = obj->GetScript<CUnitScript>()->GetDefencePower();
+	bool	bUnitDead = obj->GetScript<CUnitScript>()->IsUnitDead();
+	int		iDropGold = obj->GetScript<CUnitScript>()->GetDropGold();
+	float	fDropExp = obj->GetScript<CUnitScript>()->GetDropExp();
 
 	ObjectMove move = {};
 	move.LV = CurLV;
@@ -229,13 +230,16 @@ void GameObjMgr::SendMyPlayerMove(ClientServiceRef _service)
 	move.CC = CurCC;
 
 	move.bUnitDead = bUnitDead;
+	move.iDropGold = iDropGold;
+	move.fDropExp = fDropExp;
+
+
 	// 서버에게 패킷 전송
 	std::cout << "C_PLAYER_MOVE Pakcet. id : "<< MyPlayer.id << endl;
 	PKT_C_PLAYER_MOVE_WRITE pktWriter(move);
 	SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
 	_service->Broadcast(sendBuffer);
 	std::cout << "===============================" << endl;
-
 }
 
 void GameObjMgr::SendObjectMove(uint64 _id, CGameObject* _obj, ClientServiceRef _service)
@@ -277,6 +281,8 @@ void GameObjMgr::SendObjectMove(uint64 _id, CGameObject* _obj, ClientServiceRef 
 				float MaxMP = _obj->GetScript<CUnitScript>()->GetMaxMP();
 				UINT CurCC = _obj->GetScript<CUnitScript>()->GetCC();
 				bool bUnitDead = _obj->GetScript<CUnitScript>()->IsUnitDead();
+				int		iDropGold = _obj->GetScript<CUnitScript>()->GetDropGold();
+				float	fDropExp = _obj->GetScript<CUnitScript>()->GetDropExp();
 
 				move.HP = CurHP;
 				move.MP = CurMP;
@@ -288,6 +294,9 @@ void GameObjMgr::SendObjectMove(uint64 _id, CGameObject* _obj, ClientServiceRef 
 				move.CC = CurCC;
 				move.bUnitDead = bUnitDead;
 				move.LV = CurLevel;
+
+				move.iDropGold = iDropGold;
+				move.fDropExp = fDropExp;
 			}
 
 			move.pos.x = CurPos.x;

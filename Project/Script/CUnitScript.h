@@ -108,6 +108,9 @@ public:
     void  SetCurCC(UINT _cc) { m_eCurCC = _cc; } // 서버가 cc를 세팅해주기 위함.
     void  SetLevel(int _level) { m_iLevel = _level; }
 
+    void SetDropGold(int _dropGold) { m_iDropGold = _dropGold; }
+    void SetDropExp(int _dropExp) { m_fDropExp = _dropExp; }
+
     float GetCurHP() { return m_fHP; }
     float GetMaxHP() { return m_fMaxHP; }
     //float GetMaxHP() const { return m_fMaxHP; }

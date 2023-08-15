@@ -93,8 +93,6 @@ struct MtrlInfoPacket
         return true;
     }
 };
-
-
 struct ObjectMove
 {
 public:
@@ -113,12 +111,17 @@ public:
     };
 public:
     ObjectMove() {}
-    ObjectMove(int _LV, float _HP, float _MP, float _AttackPower, float _DefencePower, float MaxHP, float MaxMP, bool bUnitDead, ObjectMove::MoveDir _moveDir, ObjectMove::Pos _pos, UINT _CC)
+    ObjectMove(int _LV, float _HP, float _MP, float _AttackPower, float _DefencePower, float _MaxHP, float _MaxMP, bool _bUnitDead, int _iDropGold, float _fDropExp, ObjectMove::MoveDir _moveDir, ObjectMove::Pos _pos, UINT _CC)
         : LV(_LV)
         , HP(_HP)
         , MP(_MP)
         , AttackPower(_AttackPower)
         , DefencePower(_DefencePower)
+        , MaxHP(_MaxHP)
+        , MaxMP(_MaxMP)
+        , bUnitDead(_bUnitDead)
+        , iDropGold(_iDropGold)
+        , fDropExp(_fDropExp)
         , moveDir(_moveDir)
         , pos(_pos)
         , CC(_CC)
@@ -133,6 +136,9 @@ public:
     float MaxHP;
     float MaxMP;
     bool  bUnitDead;
+
+    int   iDropGold;
+    float fDropExp;
 
     MoveDir moveDir;
     Pos pos;
