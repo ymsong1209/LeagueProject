@@ -810,7 +810,7 @@ void ServerPacketHandler::Handle_S_TIME(PacketSessionRef& session, BYTE* buffer,
 	{
 		CSound* newSound = new CSound;
 		wstring filepath = CPathMgr::GetInst()->GetContentPath();
-		filepath += L"sound2d\\update_summoners_rift.mp3";
+		filepath += L"sound2d\\bgm_update_summoners_rift.mp3";
 		newSound->Load(filepath);
 		CSoundMgr::GetInst()->AddSound(newSound);
 		int soundId = newSound->GetSoundIndex();
@@ -825,7 +825,7 @@ void ServerPacketHandler::Handle_S_TIME(PacketSessionRef& session, BYTE* buffer,
 	{
 		CSound* newSound = new CSound;
 		wstring filepath = CPathMgr::GetInst()->GetContentPath();
-		filepath += L"sound2d\\welcome_rift.mp3";
+		filepath += L"sound2d\\announce_welcome_rift.mp3";
 		newSound->Load(filepath);
 		CSoundMgr::GetInst()->AddSound(newSound);
 		int soundId = newSound->GetSoundIndex();
@@ -840,7 +840,7 @@ void ServerPacketHandler::Handle_S_TIME(PacketSessionRef& session, BYTE* buffer,
 	{
 		CSound* newSound = new CSound;
 		wstring filepath = CPathMgr::GetInst()->GetContentPath();
-		filepath += L"sound2d\\minion_spawn_remain_30.mp3";
+		filepath += L"sound2d\\announce_minion_spawn_remain_30.mp3";
 		newSound->Load(filepath);
 		CSoundMgr::GetInst()->AddSound(newSound);
 		int soundId = newSound->GetSoundIndex();

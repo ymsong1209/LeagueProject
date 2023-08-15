@@ -566,13 +566,13 @@ void CKillLogUIScript::Announce_EndofGame(Faction _VictimFaction)
 		// sound
 		thread t([=]() {
 			Sleep(4000);
-		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\defeat.mp3", 1, 0.5f, true, 0.f, Vec3(0, 0, 0), _VictimFaction);
+		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\announce_defeat.mp3", 1, 0.5f, true, 0.f, Vec3(0, 0, 0), _VictimFaction);
 			});
 		t.detach();
 
 		thread t1([=]() {
 			Sleep(4000);
-		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\summoners_rift_defeat.mp3", 1, 0.15f, true, 0.f, Vec3(0, 0, 0), _VictimFaction);
+		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\bgm_ummoners_rift_defeat.mp3", 1, 0.15f, true, 0.f, Vec3(0, 0, 0), _VictimFaction);
 			});
 		t1.detach();
 	}
@@ -587,13 +587,13 @@ void CKillLogUIScript::Announce_EndofGame(Faction _VictimFaction)
 			// sound
 			thread t([=]() {
 				Sleep(4000);
-			CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\victory.mp3", 1, 0.5f, true, 0.f, Vec3(0, 0, 0), Faction::BLUE);
+			CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\announce_victory.mp3", 1, 0.5f, true, 0.f, Vec3(0, 0, 0), Faction::BLUE);
 				});
 			t.detach();
 
 			thread t1([=]() {
-				Sleep(2500);
-			CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\summoners_rift_victory.mp3", 1, 0.3f, true, 0.f, Vec3(0, 0, 0), Faction::BLUE);
+				Sleep(2000);
+			CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\bgm_summoners_rift_victory.mp3", 1, 0.3f, true, 0.f, Vec3(0, 0, 0), Faction::BLUE);
 				});
 			t1.detach();
 		}
@@ -602,13 +602,13 @@ void CKillLogUIScript::Announce_EndofGame(Faction _VictimFaction)
 			// sound
 			thread t([=]() {
 				Sleep(4000);
-			CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\victory.mp3", 1, 0.5f, true, 0.f, Vec3(0, 0, 0), Faction::RED);
+			CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\announce_victory.mp3", 1, 0.5f, true, 0.f, Vec3(0, 0, 0), Faction::RED);
 				});
 			t.detach();
 			
 			thread t1([=]() {
-				Sleep(2500);
-			CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\summoners_rift_victory.mp3", 1, 0.f, true, 0.f, Vec3(0, 0, 0), Faction::RED);
+				Sleep(2000);
+			CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\bgm_summoners_rift_victory.mp3", 1, 0.f, true, 0.f, Vec3(0, 0, 0), Faction::RED);
 				});
 			t1.detach();
 		}
