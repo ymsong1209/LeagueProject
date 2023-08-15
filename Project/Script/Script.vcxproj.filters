@@ -727,6 +727,7 @@
     <ClCompile Include="CInGameCameraScript.cpp">
       <Filter>Scripts\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="CMinionBasicAttackHitEffectScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -1006,6 +1007,7 @@
     <ClInclude Include="CAnnounceTimerUIScript.h">
       <Filter>UIScript</Filter>
     </ClInclude>
+    <ClInclude Include="CMinionBasicAttackHitEffectScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">

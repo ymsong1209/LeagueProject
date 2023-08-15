@@ -53,6 +53,7 @@
 
 // 나중에 지울 코드..?
 #include <Script/CJinxBasicAttackMinigunHitEffectScript.h>
+#include <Script/CMinionBasicAttackHitEffectScript.h>
 
 
 void CreateTestLevel()
@@ -241,15 +242,9 @@ void CreateTestLevel()
 
 
 	// 징크스 로켓 피격 이펙트를 만들어보자
-	//CGameObject* JinxGetHitByRocketAttack = nullptr;
-	//JinxGetHitByRocketAttack = new CGameObject;
-	//JinxGetHitByRocketAttack->SetName(L"JinxGetHitByRocketAttack");
-	//JinxGetHitByRocketAttack->AddComponent(new CParticleSystem);
-	//JinxGetHitByRocketAttack->AddComponent(new CTransform);
-
 	CGameObject* JinxGetHitByRocketAttack = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\JinxGetHitByRocketAttack.prefab")->Instantiate();
 	JinxGetHitByRocketAttack->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\jinxtex\\JinxGetHitByRocket.png"));
-	SpawnGameObject(JinxGetHitByRocketAttack, Vec3(-100.f, 100.f, 0.f), 0);
+	SpawnGameObject(JinxGetHitByRocketAttack, Vec3(-800.f, 0.f, 0.f), 0);
 	
 
 	// 미니언 평타 파티클 (Red) 
@@ -257,14 +252,37 @@ void CreateTestLevel()
 	MinionRedBasicAttack->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Minion\\MinionBlueAttack.dds"));
 	SpawnGameObject(MinionRedBasicAttack, Vec3(-670, 400.f, 0.f), 0);
 
+
 	// 미니언 평타 파티클 (Blue)
 	CGameObject* MinionBlueBasicAttack = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\BlueMinionBasicAttack.prefab")->Instantiate();
 	MinionBlueBasicAttack->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Minion\\MinionRedAttack.dds"));
 	SpawnGameObject(MinionBlueBasicAttack, Vec3(-510.f, 400.f, 0.f), 0);
 
 
+	//미니언 평타 피격 파티클 (Red)
+	CGameObject* MinionRedGetHitByBasicAttack = nullptr;
+	MinionRedGetHitByBasicAttack = new CGameObject;
+	MinionRedGetHitByBasicAttack->SetName(L"MinionRedGetHitByBasicAttack");
+	MinionRedGetHitByBasicAttack->AddComponent(new CMeshRender);
+	MinionRedGetHitByBasicAttack->AddComponent(new CTransform);
+	MinionRedGetHitByBasicAttack->AddComponent(new CMinionBasicAttackHitEffectScript);
+	MinionRedGetHitByBasicAttack->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CircleMesh"));
+	MinionRedGetHitByBasicAttack->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\RedMinionHitEffect.mtrl"), 0);
+	MinionRedGetHitByBasicAttack->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 0.f));
+	SpawnGameObject(MinionRedGetHitByBasicAttack, Vec3(-1000.f, 0.f, 0.f), 0);
 
 
+	//미니언 평타 피격 파티클 (Blue)
+	CGameObject* MinionBlueGetHitByBasicAttack = nullptr;
+	MinionBlueGetHitByBasicAttack = new CGameObject;
+	MinionBlueGetHitByBasicAttack->SetName(L"MinionBlueGetHitByBasicAttack");
+	MinionBlueGetHitByBasicAttack->AddComponent(new CMeshRender);
+	MinionBlueGetHitByBasicAttack->AddComponent(new CTransform);
+	MinionBlueGetHitByBasicAttack->AddComponent(new CMinionBasicAttackHitEffectScript);
+	MinionBlueGetHitByBasicAttack->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CircleMesh"));
+	MinionBlueGetHitByBasicAttack->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\BlueMinionHitEffect.mtrl"), 0);
+	MinionBlueGetHitByBasicAttack->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 0.f));
+	SpawnGameObject(MinionBlueGetHitByBasicAttack, Vec3(-1200.f, 0.f, 0.f), 0);
 
 
 	

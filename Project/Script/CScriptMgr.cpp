@@ -45,6 +45,7 @@
 #include "CMalphiteRScript.h"
 #include "CMalphiteScript.h"
 #include "CMinimapUIScript.h"
+#include "CMinionBasicAttackHitEffectScript.h"
 #include "CMinionHPBarPosScript.h"
 #include "CMinionHPRatioScript.h"
 #include "CMinionScript.h"
@@ -123,6 +124,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CMalphiteRScript");
 	_vec.push_back(L"CMalphiteScript");
 	_vec.push_back(L"CMinimapUIScript");
+	_vec.push_back(L"CMinionBasicAttackHitEffectScript");
 	_vec.push_back(L"CMinionHPBarPosScript");
 	_vec.push_back(L"CMinionHPRatioScript");
 	_vec.push_back(L"CMinionScript");
@@ -246,6 +248,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CMalphiteScript;
 	if (L"CMinimapUIScript" == _strScriptName)
 		return new CMinimapUIScript;
+	if (L"CMinionBasicAttackHitEffectScript" == _strScriptName)
+		return new CMinionBasicAttackHitEffectScript;
 	if (L"CMinionHPBarPosScript" == _strScriptName)
 		return new CMinionHPBarPosScript;
 	if (L"CMinionHPRatioScript" == _strScriptName)
@@ -446,6 +450,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::MINIMAPUISCRIPT:
 		return new CMinimapUIScript;
+		break;
+	case (UINT)SCRIPT_TYPE::MINIONBASICATTACKHITEFFECTSCRIPT:
+		return new CMinionBasicAttackHitEffectScript;
 		break;
 	case (UINT)SCRIPT_TYPE::MINIONHPBARPOSSCRIPT:
 		return new CMinionHPBarPosScript;
@@ -722,6 +729,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::MINIMAPUISCRIPT:
 		return L"CMinimapUIScript";
+		break;
+
+	case SCRIPT_TYPE::MINIONBASICATTACKHITEFFECTSCRIPT:
+		return L"CMinionBasicAttackHitEffectScript";
 		break;
 
 	case SCRIPT_TYPE::MINIONHPBARPOSSCRIPT:

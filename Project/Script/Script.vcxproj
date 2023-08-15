@@ -327,6 +327,7 @@
     <ClInclude Include="CMalphiteWState.h" />
     <ClInclude Include="CMinimapUIScript.h" />
     <ClInclude Include="CMinionAttackState.h" />
+    <ClInclude Include="CMinionBasicAttackHitEffectScript.h" />
     <ClInclude Include="CMinionChaseState.h" />
     <ClInclude Include="CMinionDeathState.h" />
     <ClInclude Include="CMinionHPBarPosScript.h" />
@@ -604,6 +605,7 @@
     <ClCompile Include="CMalphiteWState.cpp" />
     <ClCompile Include="CMinimapUIScript.cpp" />
     <ClCompile Include="CMinionAttackState.cpp" />
+    <ClCompile Include="CMinionBasicAttackHitEffectScript.cpp" />
     <ClCompile Include="CMinionChaseState.cpp" />
     <ClCompile Include="CMinionDeathState.cpp" />
     <ClCompile Include="CMinionHPBarPosScript.cpp" />

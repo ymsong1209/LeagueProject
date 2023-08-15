@@ -42,6 +42,7 @@ CMalphiteRDecalScript
 CMalphiteRScript
 CMalphiteScript
 CMinimapUIScript
+CMinionBasicAttackHitEffectScript
 CMinionHPBarPosScript
 CMinionHPRatioScript
 CMinionScript
