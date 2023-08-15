@@ -77,6 +77,21 @@ int TransformUI::render_update()
 
 		vRotation = (vRotation / 180.f) * XM_PI;
 		GetTarget()->Transform()->SetRelativeRot(vRotation);
+
+		bool b_ViewBound = CRenderMgr::GetInst()->GetMainCam()->GetViewGizmoBounding();
+
+		ImGui::Checkbox("View Gizmo Click Bounding", &b_ViewBound);
+		if (b_ViewBound)
+			CRenderMgr::GetInst()->GetMainCam()->SetViewGizmoBounding(true);
+		else
+			CRenderMgr::GetInst()->GetMainCam()->SetViewGizmoBounding(false);
+
+		float f_GizBound = GetTarget()->Transform()->GetGizmoBounding();
+		ImGui::Text("Gizmo Click Bound Size : ");
+		ImGui::SameLine();
+		ImGui::SetNextItemWidth(100.f);
+		ImGui::DragFloat("##ClickBound", &f_GizBound);
+		GetTarget()->Transform()->SetGizmoBounding(f_GizBound);
 	}
 
 	else
