@@ -17,6 +17,7 @@
 
 #include "CJinxBasicAttack.h"
 #include "CJinxBasicAttackScript.h"
+#include "CJinxRocketBasicAttack.h"
 #include "CJinxRocketBasicAttackScript.h"
 #include "CJinxW.h"
 #include "CJinxE.h"
@@ -41,6 +42,9 @@ CSkillMgr::CSkillMgr()
 
 	CJinxBasicAttack* JinxBasicAttack = new CJinxBasicAttack;
 	m_mapSkills.insert(make_pair(SkillType::JINX_BASIC_ATTACK, JinxBasicAttack));
+
+	CJinxRocketBasicAttack* JinxRocketBasicAttack = new CJinxRocketBasicAttack;
+	m_mapSkills.insert(make_pair(SkillType::JINX_ROCKET_BASIC_ATTACK, JinxRocketBasicAttack));
 
 	CJinxW* JinxW = new CJinxW;
 	m_mapSkills.insert(make_pair(SkillType::JINX_W, JinxW));

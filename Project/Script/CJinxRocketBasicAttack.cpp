@@ -39,6 +39,7 @@ CJinxRocketBasicAttack::CJinxRocketBasicAttack()
 	// 투사체 스크립트
 	m_iProjectileCount = 1;
 
+	m_eSkillType = SkillType::JINX_ROCKET_BASIC_ATTACK;
 }
 
 CJinxRocketBasicAttack::~CJinxRocketBasicAttack()
