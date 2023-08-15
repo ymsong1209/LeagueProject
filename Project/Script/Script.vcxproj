@@ -210,6 +210,8 @@
     <ClInclude Include="CDragonAlert2NormalState.h" />
     <ClInclude Include="CDragonAlertState.h" />
     <ClInclude Include="CDragonAttackState.h" />
+    <ClInclude Include="CDragonBasicAttack.h" />
+    <ClInclude Include="CDragonBasicAttackScript.h" />
     <ClInclude Include="CDragonChaseState.h" />
     <ClInclude Include="CDragonDeathState.h" />
     <ClInclude Include="CDragonFlyStartState.h" />
@@ -365,6 +367,8 @@
     <ClInclude Include="CPlayerCSUIScript.h" />
     <ClInclude Include="CPlayerScript.h" />
     <ClInclude Include="CProjectileScript.h" />
+    <ClInclude Include="CRangedMinionBasicAttack.h" />
+    <ClInclude Include="CRangedMinionBasicAttackScript.h" />
     <ClInclude Include="CRazorBeakA2NState.h" />
     <ClInclude Include="CRazorBeakAlertState.h" />
     <ClInclude Include="CRazorBeakAttackState.h" />
@@ -489,6 +493,8 @@
     <ClCompile Include="CDragonAlert2NormalState.cpp" />
     <ClCompile Include="CDragonAlertState.cpp" />
     <ClCompile Include="CDragonAttackState.cpp" />
+    <ClCompile Include="CDragonBasicAttack.cpp" />
+    <ClCompile Include="CDragonBasicAttackScript.cpp" />
     <ClCompile Include="CDragonChaseState.cpp" />
     <ClCompile Include="CDragonDeathState.cpp" />
     <ClCompile Include="CDragonFlyStartState.cpp" />
@@ -644,6 +650,8 @@
     <ClCompile Include="CPlayerScript.cpp" />
     <ClCompile Include="CInGameCameraScript.cpp" />
     <ClCompile Include="CProjectileScript.cpp" />
+    <ClCompile Include="CRangedMinionBasicAttack.cpp" />
+    <ClCompile Include="CRangedMinionBasicAttackScript.cpp" />
     <ClCompile Include="CRazorBeakA2NState.cpp" />
     <ClCompile Include="CRazorBeakAlertState.cpp" />
     <ClCompile Include="CRazorBeakAttackState.cpp" />

@@ -1,16 +1,16 @@
 #include "pch.h"
-#include "CJinxRocketBasicAttackScript.h"
+#include "CRangedMinionBasicAttackScript.h"
 
-CJinxRocketBasicAttackScript::CJinxRocketBasicAttackScript()
+CRangedMinionBasicAttackScript::CRangedMinionBasicAttackScript()
 {
 	m_fProjectileSpeed = 100.f;
 }
 
-CJinxRocketBasicAttackScript::~CJinxRocketBasicAttackScript()
+CRangedMinionBasicAttackScript::~CRangedMinionBasicAttackScript()
 {
 }
 
-void CJinxRocketBasicAttackScript::begin()
+void CRangedMinionBasicAttackScript::begin()
 {
 	// 첫 생성 위치 기억
 	m_vSpawnPos = GetOwner()->Transform()->GetRelativePos();
@@ -27,7 +27,7 @@ void CJinxRocketBasicAttackScript::begin()
 	GetOwner()->Transform()->SetRelativeRot(Vec3(0.f, 0.f, targetAngle - XMConvertToRadians(90)));
 }
 
-void CJinxRocketBasicAttackScript::tick()
+void CRangedMinionBasicAttackScript::tick()
 {
 	if (m_bUnitDead) return;
 
@@ -51,7 +51,7 @@ void CJinxRocketBasicAttackScript::tick()
 	GetOwner()->Transform()->SetRelativePos(NewPos);
 }
 
-void CJinxRocketBasicAttackScript::BeginOverlap(CCollider2D* _Other)
+void CRangedMinionBasicAttackScript::BeginOverlap(CCollider2D* _Other)
 {
 	if (m_TargetObj == nullptr || m_TargetObj->IsDead())
 	{

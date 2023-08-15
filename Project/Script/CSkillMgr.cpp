@@ -1,23 +1,25 @@
 #include "pch.h"
 #include "CSkillMgr.h"
 #include "CSkill.h"
+
 #include "CBasicAttack.h"
+#include "CRangedMinionBasicAttack.h"
 #include "CBasicAttackScript.h"
+#include "CRangedMinionBasicAttackScript.h"
+
+#include "CDragonBasicAttack.h"
+#include "CDragonBasicAttackScript.h"
 
 #include "CTurretBasicAttack.h"
 #include "CTurretBasicAttackScript.h"
+
+#include "CJinxBasicAttack.h"
+#include "CJinxRocketBasicAttack.h"
 #include "CJinxWScript.h"
 #include "CJinxEScript.h"
 #include "CJinxRScript.h"
 
-#include "CMalphiteBasicAttackHitEffectScript.h"
-#include "CMalphiteQScript.h"
-#include "CMalphiteEScript.h"
-#include "CMalphiteRScript.h"
-
-#include "CJinxBasicAttack.h"
 #include "CJinxBasicAttackScript.h"
-#include "CJinxRocketBasicAttack.h"
 #include "CJinxRocketBasicAttackScript.h"
 #include "CJinxW.h"
 #include "CJinxE.h"
@@ -28,11 +30,21 @@
 #include "CMalphiteW.h"
 #include "CMalphiteE.h"
 #include "CMalphiteR.h"
+#include "CMalphiteQScript.h"
+#include "CMalphiteEScript.h"
+#include "CMalphiteRScript.h"
+
 
 CSkillMgr::CSkillMgr()
 {
 	CBasicAttack* BasicAttack = new CBasicAttack;
 	m_mapSkills.insert(make_pair(SkillType::BASIC_ATTACK, BasicAttack));
+
+	CRangedMinionBasicAttack* RangedMinionBasicAttack = new CRangedMinionBasicAttack;
+	m_mapSkills.insert(make_pair(SkillType::BASIC_RANGED_ATTACK, RangedMinionBasicAttack));
+
+	CDragonBasicAttack* DragonBasicAttack = new CDragonBasicAttack;
+	m_mapSkills.insert(make_pair(SkillType::DRAGON_BASIC_ATTACK, DragonBasicAttack));
 
 	CTurretBasicAttack* TurretBasicAttack = new CTurretBasicAttack;
 	m_mapSkills.insert(make_pair(SkillType::TURRET_BASIC_ATTACK, TurretBasicAttack));
@@ -102,9 +114,16 @@ CProjectileScript* CSkillMgr::FindProjectileScript(SkillType _Type)
 	break;
 	case SkillType::BASIC_RANGED_ATTACK:
 	{
-		CBasicAttackScript* BasicAttackScript = new CBasicAttackScript;
-		BasicAttackScript->SetSkillType(SkillType::BASIC_RANGED_ATTACK);
-		return BasicAttackScript;
+		CRangedMinionBasicAttackScript* RangedMinionBasicAttackScript = new CRangedMinionBasicAttackScript;
+		RangedMinionBasicAttackScript->SetSkillType(SkillType::BASIC_RANGED_ATTACK);
+		return RangedMinionBasicAttackScript;
+	}
+	break;
+	case SkillType::DRAGON_BASIC_ATTACK:
+	{
+		CDragonBasicAttackScript* DragonBasicAttackScript = new CDragonBasicAttackScript;
+		DragonBasicAttackScript->SetSkillType(SkillType::DRAGON_BASIC_ATTACK);
+		return DragonBasicAttackScript;
 	}
 	break;
 	case SkillType::TURRET_BASIC_ATTACK:
@@ -126,9 +145,6 @@ CProjectileScript* CSkillMgr::FindProjectileScript(SkillType _Type)
 		CJinxBasicAttackScript* JinxBasicAttackScript = new CJinxBasicAttackScript;
 		JinxBasicAttackScript->SetSkillType(SkillType::JINX_BASIC_ATTACK);
 		return JinxBasicAttackScript;
-		//CBasicAttackScript* BasicAttackScript = new CBasicAttackScript;
-		//BasicAttackScript->SetSkillType(SkillType::JINX_BASIC_ATTACK);
-		//return BasicAttackScript;
 	}
 	break;
 	case SkillType::JINX_ROCKET_BASIC_ATTACK:
@@ -146,14 +162,6 @@ CProjectileScript* CSkillMgr::FindProjectileScript(SkillType _Type)
 		break;
 	case SkillType::JINX_R:
 		return new CJinxRScript;
-		break;
-	case SkillType::DARIUS_Q:
-		break;
-	case SkillType::DARIUS_W:
-		break;
-	case SkillType::DARIUS_E:
-		break;
-	case SkillType::DARIUS_R:
 		break;
 	case SkillType::MALPHITE_Q:
 		return new CMalphiteQScript;

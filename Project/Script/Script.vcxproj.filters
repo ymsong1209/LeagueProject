@@ -728,6 +728,13 @@
       <Filter>Scripts\Camera</Filter>
     </ClCompile>
     <ClCompile Include="CMinionBasicAttackHitEffectScript.cpp" />
+    <ClCompile Include="CJinxBasicAttackMinigunHitEffectScript.cpp" />
+    <ClCompile Include="CJinxRocketBasicAttack.cpp" />
+    <ClCompile Include="CJinxRocketBasicAttackScript.cpp" />
+    <ClCompile Include="CRangedMinionBasicAttack.cpp" />
+    <ClCompile Include="CDragonBasicAttack.cpp" />
+    <ClCompile Include="CRangedMinionBasicAttackScript.cpp" />
+    <ClCompile Include="CDragonBasicAttackScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -1008,6 +1015,13 @@
       <Filter>UIScript</Filter>
     </ClInclude>
     <ClInclude Include="CMinionBasicAttackHitEffectScript.h" />
+    <ClInclude Include="CJinxBasicAttackMinigunHitEffectScript.h" />
+    <ClInclude Include="CJinxRocketBasicAttack.h" />
+    <ClInclude Include="CJinxRocketBasicAttackScript.h" />
+    <ClInclude Include="CRangedMinionBasicAttack.h" />
+    <ClInclude Include="CDragonBasicAttack.h" />
+    <ClInclude Include="CRangedMinionBasicAttackScript.h" />
+    <ClInclude Include="CDragonBasicAttackScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">
