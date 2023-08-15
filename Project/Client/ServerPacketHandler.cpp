@@ -806,6 +806,20 @@ void ServerPacketHandler::Handle_S_TIME(PacketSessionRef& session, BYTE* buffer,
 
 	Vec3 _2dPos = Vec3(0.f, 0.f, 0.f);
 
+	if (1.f == fTime)
+	{
+		CSound* newSound = new CSound;
+		wstring filepath = CPathMgr::GetInst()->GetContentPath();
+		filepath += L"sound2d\\update_summoners_rift.mp3";
+		newSound->Load(filepath);
+		CSoundMgr::GetInst()->AddSound(newSound);
+		int soundId = newSound->GetSoundIndex();
+		CSoundMgr::GetInst()->Play(soundId, 5, 0.2f, true, 0.f, _2dPos);
+		CSoundMgr::GetInst()->Stop(soundId);
+		CSoundMgr::GetInst()->Play(soundId, 5, 0.2f, true, 0.f, _2dPos);
+		
+	}
+	
 	// 소환사의 협곡에 오신것을 환영합니다.
 	if (3.f == fTime)
 	{
