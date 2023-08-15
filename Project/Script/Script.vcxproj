@@ -204,6 +204,7 @@
     <ClInclude Include="CChampionWalkState.h" />
     <ClInclude Include="CCharacterUIScript.h" />
     <ClInclude Include="CCoolDownUIScript.h" />
+    <ClInclude Include="CDefaultGetHitEffectScript.h" />
     <ClInclude Include="CDragonAggro2AlertState.h" />
     <ClInclude Include="CDragonAggroState.h" />
     <ClInclude Include="CDragonAlert2AggroState.h" />
@@ -487,6 +488,7 @@
     <ClCompile Include="CChampionWalkState.cpp" />
     <ClCompile Include="CCharacterUIScript.cpp" />
     <ClCompile Include="CCoolDownUIScript.cpp" />
+    <ClCompile Include="CDefaultGetHitEffectScript.cpp" />
     <ClCompile Include="CDragonAggro2AlertState.cpp" />
     <ClCompile Include="CDragonAggroState.cpp" />
     <ClCompile Include="CDragonAlert2AggroState.cpp" />

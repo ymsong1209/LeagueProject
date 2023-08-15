@@ -751,6 +751,9 @@
     <ClCompile Include="CScriptMgr.cpp">
       <Filter>Manager\1. ScriptMgr</Filter>
     </ClCompile>
+    <ClCompile Include="CDefaultGetHitEffectScript.cpp">
+      <Filter>Effect\GetHitEffect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -1052,6 +1055,9 @@
       <Filter>Scripts\Skill\Etc</Filter>
     </ClInclude>
     <ClInclude Include="CMinionBasicAttackHitEffectScript.h">
+      <Filter>Effect\GetHitEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="CDefaultGetHitEffectScript.h">
       <Filter>Effect\GetHitEffect</Filter>
     </ClInclude>
   </ItemGroup>
