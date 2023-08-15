@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "CJinxEScript.h"
 #include "CProjectileScript.h"
-#include <thread>
 
 #include <Engine/CAnim3D.h>
 CJinxEScript::CJinxEScript()
