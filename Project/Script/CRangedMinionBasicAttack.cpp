@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CRangedMinionBasicAttack.h"
+#include "CDefaultGetHitEffectScript.h"
 
 CRangedMinionBasicAttack::CRangedMinionBasicAttack()
 {
@@ -17,6 +18,11 @@ CRangedMinionBasicAttack::CRangedMinionBasicAttack()
 
 	// ««∞› ¿Ã∆Â∆Æ
 	Ptr<CPrefab> MinionBasicAttackHitEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MinionRedGetHitByBasicAttack.prefab");
+	MinionBasicAttackHitEffect.Get()->GetProtoObject()->AddComponent(new CDefaultGetHitEffectScript);
+	MinionBasicAttackHitEffect.Get()->GetProtoObject()->Transform()->SetRelativeScale(Vec3(10.f, 10.f, 1.f));
+	MinionBasicAttackHitEffect.Get()->GetProtoObject()->GetScript<CDefaultGetHitEffectScript>()->SetExpandSpeed(20.f);
+	MinionBasicAttackHitEffect.Get()->GetProtoObject()->GetScript<CDefaultGetHitEffectScript>()->SetDeleteScale(1.f);
+
 	m_SkillHitEffect = MinionBasicAttackHitEffect;
 
 	Ptr<CPrefab> NewPrefab = new CPrefab;

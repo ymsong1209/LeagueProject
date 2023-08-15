@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CJinxRocketBasicAttack.h"
+#include "CImmediateGetHitScript.h"
 
 CJinxRocketBasicAttack::CJinxRocketBasicAttack()
 {
@@ -36,6 +37,8 @@ CJinxRocketBasicAttack::CJinxRocketBasicAttack()
 	// ÇÇ°Ý ÀÌÆåÆ®
 	CGameObject* JinxBasicAttackGetHitEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\JinxGetHitByRocketAttack.prefab")->Instantiate();
 	JinxBasicAttackGetHitEffect->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\jinxtex\\JinxGetHitByRocket.png"));
+	JinxBasicAttackGetHitEffect->AddComponent(new CImmediateGetHitScript);
+	JinxBasicAttackGetHitEffect->GetScript<CImmediateGetHitScript>()->SetTriggerTime(0.5f);
 	Ptr<CPrefab> NewHitPrefab = new CPrefab;
 	CGameObject* HitPrefabObject = JinxBasicAttackGetHitEffect->Clone();
 	NewHitPrefab->RegisterProtoObject(HitPrefabObject);

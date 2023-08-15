@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "CJinxBasicAttack.h"
 
+#include "CDefaultGetHitEffectScript.h"
+
 CJinxBasicAttack::CJinxBasicAttack()
 {
 	m_strSkillName = L"Jinx_Basic_Attack";
@@ -35,7 +37,19 @@ CJinxBasicAttack::CJinxBasicAttack()
 
 	// 피격 이펙트
 	Ptr<CPrefab> JinxBasicAttackGetHitEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\JinxBasicAttackGetHitEffect.prefab");
+	JinxBasicAttackGetHitEffect.Get()->GetProtoObject()->AddComponent(new CDefaultGetHitEffectScript);
+	JinxBasicAttackGetHitEffect.Get()->GetProtoObject()->Transform()->SetRelativeScale(Vec3(10.f, 10.f, 1.f));
+	JinxBasicAttackGetHitEffect.Get()->GetProtoObject()->GetScript<CDefaultGetHitEffectScript>()->SetExpandSpeed(20.f);
+	JinxBasicAttackGetHitEffect.Get()->GetProtoObject()->GetScript<CDefaultGetHitEffectScript>()->SetDeleteScale(1.f);
+
+
+
+
 	m_SkillHitEffect = JinxBasicAttackGetHitEffect;
+
+
+
+
 
 	// 투사체 스크립트
 	m_iProjectileCount = 1;

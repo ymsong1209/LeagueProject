@@ -21,6 +21,7 @@
 #include "CGrowScaleScript.h"
 #include "CHpMpRatioUIScript.h"
 #include "CIconTimerUIScript.h"
+#include "CImmediateGetHitScript.h"
 #include "CInGameCameraScript.h"
 #include "CInhibitorScript.h"
 #include "CInventoryUIScript.h"
@@ -103,6 +104,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CGrowScaleScript");
 	_vec.push_back(L"CHpMpRatioUIScript");
 	_vec.push_back(L"CIconTimerUIScript");
+	_vec.push_back(L"CImmediateGetHitScript");
 	_vec.push_back(L"CInGameCameraScript");
 	_vec.push_back(L"CInhibitorScript");
 	_vec.push_back(L"CInventoryUIScript");
@@ -206,6 +208,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CHpMpRatioUIScript;
 	if (L"CIconTimerUIScript" == _strScriptName)
 		return new CIconTimerUIScript;
+	if (L"CImmediateGetHitScript" == _strScriptName)
+		return new CImmediateGetHitScript;
 	if (L"CInGameCameraScript" == _strScriptName)
 		return new CInGameCameraScript;
 	if (L"CInhibitorScript" == _strScriptName)
@@ -390,6 +394,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::ICONTIMERUISCRIPT:
 		return new CIconTimerUIScript;
+		break;
+	case (UINT)SCRIPT_TYPE::IMMEDIATEGETHITSCRIPT:
+		return new CImmediateGetHitScript;
 		break;
 	case (UINT)SCRIPT_TYPE::INGAMECAMERASCRIPT:
 		return new CInGameCameraScript;
@@ -654,6 +661,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::ICONTIMERUISCRIPT:
 		return L"CIconTimerUIScript";
+		break;
+
+	case SCRIPT_TYPE::IMMEDIATEGETHITSCRIPT:
+		return L"CImmediateGetHitScript";
 		break;
 
 	case SCRIPT_TYPE::INGAMECAMERASCRIPT:
