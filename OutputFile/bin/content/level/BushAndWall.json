@@ -1,5 +1,5 @@
 {
-    "levelName": "level\\BushFinal.json",
+    "levelName": "level\\BushAndWall.json",
     "layers": [
         {
             "layerName": "Default",
@@ -24629,7 +24629,608 @@
         },
         {
             "layerName": "Map_Wall",
-            "gameObjects": []
+            "gameObjects": [
+                {
+                    "ObjName": "Wall",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 401.2720031738281,
+                                "y": 0.9999735355377197,
+                                "z": 5.398338794708252
+                            },
+                            "vRelativeScale": {
+                                "x": 500.0,
+                                "y": 50.0,
+                                "z": 50.0
+                            },
+                            "vRelativeRot": {
+                                "x": -3.1415908336639404,
+                                "y": -0.0,
+                                "z": -3.1415908336639404
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.0
+                        },
+                        {
+                            "COLLIDER3D": 2,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "bAbsolute": false,
+                            "Shape": 1,
+                            "bWall": true,
+                            "DrawCollision": true
+                        },
+                        16
+                    ],
+                    "scripts": [],
+                    "children": []
+                },
+                {
+                    "ObjName": "Wall",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": -2.3377609252929688,
+                                "y": 1.0247139248242831e-10,
+                                "z": 435.0068054199219
+                            },
+                            "vRelativeScale": {
+                                "x": 504.9989929199219,
+                                "y": 49.99991226196289,
+                                "z": 49.999916076660156
+                            },
+                            "vRelativeRot": {
+                                "x": 0.00000181992481884663,
+                                "y": 1.5707954168319702,
+                                "z": 0.0000018199190208179061
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.0
+                        },
+                        {
+                            "COLLIDER3D": 2,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "bAbsolute": false,
+                            "Shape": 1,
+                            "bWall": true,
+                            "DrawCollision": true
+                        },
+                        16
+                    ],
+                    "scripts": [],
+                    "children": []
+                },
+                {
+                    "ObjName": "Wall",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 28.94278335571289,
+                                "y": 0.0,
+                                "z": 1055.4481201171875
+                            },
+                            "vRelativeScale": {
+                                "x": 699.9989624023438,
+                                "y": 49.99993896484375,
+                                "z": 49.99993896484375
+                            },
+                            "vRelativeRot": {
+                                "x": -3.1415908336639404,
+                                "y": 1.5707954168319702,
+                                "z": -3.1415908336639404
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.0
+                        },
+                        {
+                            "COLLIDER3D": 2,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "bAbsolute": false,
+                            "Shape": 1,
+                            "bWall": true,
+                            "DrawCollision": true
+                        },
+                        16
+                    ],
+                    "scripts": [],
+                    "children": []
+                },
+                {
+                    "ObjName": "Wall",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 49.155975341796875,
+                                "y": 0.000008910181350074708,
+                                "z": 1603.5185546875
+                            },
+                            "vRelativeScale": {
+                                "x": 416.0,
+                                "y": 49.999961853027344,
+                                "z": 49.99996566772461
+                            },
+                            "vRelativeRot": {
+                                "x": -3.1415908336639404,
+                                "y": 1.4137163162231445,
+                                "z": -3.1415908336639404
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.0
+                        },
+                        {
+                            "COLLIDER3D": 2,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "bAbsolute": false,
+                            "Shape": 1,
+                            "bWall": true,
+                            "DrawCollision": true
+                        },
+                        16
+                    ],
+                    "scripts": [],
+                    "children": []
+                },
+                {
+                    "ObjName": "Wall",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 174.15199279785156,
+                                "y": 0.0,
+                                "z": 1930.31298828125
+                            },
+                            "vRelativeScale": {
+                                "x": 313.0,
+                                "y": 49.99999237060547,
+                                "z": 49.9999885559082
+                            },
+                            "vRelativeRot": {
+                                "x": -3.1415908336639404,
+                                "y": 0.8377581238746643,
+                                "z": -3.1415908336639404
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.0
+                        },
+                        {
+                            "COLLIDER3D": 2,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "bAbsolute": false,
+                            "Shape": 1,
+                            "bWall": true,
+                            "DrawCollision": true
+                        },
+                        16
+                    ],
+                    "scripts": [],
+                    "children": []
+                },
+                {
+                    "ObjName": "Wall",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 441.8648681640625,
+                                "y": 40.999847412109375,
+                                "z": 2106.54638671875
+                            },
+                            "vRelativeScale": {
+                                "x": 306.9998474121094,
+                                "y": 50.0,
+                                "z": 50.000003814697266
+                            },
+                            "vRelativeRot": {
+                                "x": -3.1415908336639404,
+                                "y": 0.40142571926116943,
+                                "z": -3.1415908336639404
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.0
+                        },
+                        {
+                            "COLLIDER3D": 2,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "bAbsolute": false,
+                            "Shape": 1,
+                            "bWall": true,
+                            "DrawCollision": true
+                        },
+                        16
+                    ],
+                    "scripts": [],
+                    "children": []
+                },
+                {
+                    "ObjName": "Wall",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 889.3668823242188,
+                                "y": 0.00011668175284285098,
+                                "z": 2146.350830078125
+                            },
+                            "vRelativeScale": {
+                                "x": 716.9999389648438,
+                                "y": 50.0,
+                                "z": 49.9999885559082
+                            },
+                            "vRelativeRot": {
+                                "x": -3.1415908336639404,
+                                "y": 0.017452353611588478,
+                                "z": -3.1415908336639404
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.0
+                        },
+                        {
+                            "COLLIDER3D": 2,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "bAbsolute": false,
+                            "Shape": 1,
+                            "bWall": true,
+                            "DrawCollision": true
+                        },
+                        16
+                    ],
+                    "scripts": [],
+                    "children": []
+                },
+                {
+                    "ObjName": "Wall",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 1416.3790283203125,
+                                "y": 1.0001524686813354,
+                                "z": 2163.158935546875
+                            },
+                            "vRelativeScale": {
+                                "x": 398.0,
+                                "y": 50.0,
+                                "z": 50.0
+                            },
+                            "vRelativeRot": {
+                                "x": -3.1415908336639404,
+                                "y": -0.0,
+                                "z": -3.1415908336639404
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.0
+                        },
+                        {
+                            "COLLIDER3D": 2,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "bAbsolute": false,
+                            "Shape": 1,
+                            "bWall": true,
+                            "DrawCollision": true
+                        },
+                        16
+                    ],
+                    "scripts": [],
+                    "children": []
+                },
+                {
+                    "ObjName": "Wall",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 1779.9644775390625,
+                                "y": 1.0002840757369995,
+                                "z": 2164.414306640625
+                            },
+                            "vRelativeScale": {
+                                "x": 351.0,
+                                "y": 50.0,
+                                "z": 50.0
+                            },
+                            "vRelativeRot": {
+                                "x": -3.1415908336639404,
+                                "y": -0.0,
+                                "z": -3.1415908336639404
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.0
+                        },
+                        {
+                            "COLLIDER3D": 2,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "bAbsolute": false,
+                            "Shape": 1,
+                            "bWall": true,
+                            "DrawCollision": true
+                        },
+                        16
+                    ],
+                    "scripts": [],
+                    "children": []
+                },
+                {
+                    "ObjName": "Wall",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 2177.322998046875,
+                                "y": -1.9168161502491898e-10,
+                                "z": 1777.0797119140625
+                            },
+                            "vRelativeScale": {
+                                "x": 532.9987182617188,
+                                "y": 49.99991989135742,
+                                "z": 49.99991989135742
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0000018199239093519282,
+                                "y": 1.5707954168319702,
+                                "z": 0.0000018199233409177396
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.0
+                        },
+                        {
+                            "COLLIDER3D": 2,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "bAbsolute": false,
+                            "Shape": 1,
+                            "bWall": true,
+                            "DrawCollision": true
+                        },
+                        16
+                    ],
+                    "scripts": [],
+                    "children": []
+                },
+                {
+                    "ObjName": "Wall",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 2159.27978515625,
+                                "y": 1.842318658740183e-10,
+                                "z": 1070.962158203125
+                            },
+                            "vRelativeScale": {
+                                "x": 874.9990234375,
+                                "y": 49.999942779541016,
+                                "z": 49.99992752075195
+                            },
+                            "vRelativeRot": {
+                                "x": 0.0000018199257283413317,
+                                "y": 1.5707954168319702,
+                                "z": 0.0000018199168607679894
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.0
+                        },
+                        {
+                            "COLLIDER3D": 2,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "bAbsolute": false,
+                            "Shape": 1,
+                            "bWall": true,
+                            "DrawCollision": true
+                        },
+                        16
+                    ],
+                    "scripts": [],
+                    "children": []
+                },
+                {
+                    "ObjName": "Wall",
+                    "components": [
+                        {
+                            "TRANSFORM": 0,
+                            "vRelativePos": {
+                                "x": 2077.85693359375,
+                                "y": 1.0000067949295044,
+                                "z": 443.5620422363281
+                            },
+                            "vRelativeScale": {
+                                "x": 449.9992980957031,
+                                "y": 49.9999885559082,
+                                "z": 50.0
+                            },
+                            "vRelativeRot": {
+                                "x": -3.1415908336639404,
+                                "y": 1.1170103549957275,
+                                "z": -3.1415908336639404
+                            },
+                            "bAbsolute": false,
+                            "IsNoGizmoObj": false,
+                            "GizmoBounding_Radius": 50.0,
+                            "IsShootingRay": false,
+                            "RayRange": 20.0,
+                            "UseMouseOutLine": false,
+                            "Outlinethickness": 0.0
+                        },
+                        {
+                            "COLLIDER3D": 2,
+                            "vOffsetPos": {
+                                "x": 0.0,
+                                "y": 0.0,
+                                "z": 0.0
+                            },
+                            "vOffsetScale": {
+                                "x": 1.0,
+                                "y": 1.0,
+                                "z": 1.0
+                            },
+                            "bAbsolute": false,
+                            "Shape": 1,
+                            "bWall": true,
+                            "DrawCollision": true
+                        },
+                        16
+                    ],
+                    "scripts": [],
+                    "children": []
+                }
+            ]
         },
         {
             "layerName": "Structure",
