@@ -2459,7 +2459,7 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 		// 방장만 진짜를 생성한다. 나머지는 가짜를 생성한다.
 		if (MyPlayer.host)
 		{
-			// _SkillInfo를 까서, 어떤 Skill인지 가지고 옴
+			// _SkillInfo를 까서, 어떤 Skill인지 가지고 옴		
 			CSkill* skill = CSkillMgr::GetInst()->FindSkill(_skillInfo.skillType);
 
 			CGameObject* UserObj = FindAllObject(_skillInfo.OwnerId);

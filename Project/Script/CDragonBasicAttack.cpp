@@ -12,7 +12,7 @@ CDragonBasicAttack::CDragonBasicAttack()
 	// 투사체 생성
 	CGameObject* DragonBasicAttackObj = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\DragonBreathEffect.prefab")->Instantiate();
 	DragonBasicAttackObj->Transform()->SetRelativeScale(100.f, 150.f, 1.f);
-	DragonBasicAttackObj->Animator2D()->Play(L"DragonBasicAttack", true);
+	//DragonBasicAttackObj->Animator2D()->Play(L"DragonBasicAttack", true);
 	DragonBasicAttackObj->SetName(L"DragonBasicAttackProjectile");
 
 	Ptr<CPrefab> NewPrefab = new CPrefab;

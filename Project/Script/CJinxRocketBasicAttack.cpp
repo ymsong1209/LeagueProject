@@ -34,8 +34,13 @@ CJinxRocketBasicAttack::CJinxRocketBasicAttack()
 	m_vecSkillObj.push_back(NewPrefab);
 
 	// 피격 이펙트
-	Ptr<CPrefab> JinxBasicAttackGetHitEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\JinxGetHitByRocketAttack.prefab");
-	m_SkillHitEffect = JinxBasicAttackGetHitEffect;
+	CGameObject* JinxBasicAttackGetHitEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\JinxGetHitByRocketAttack.prefab")->Instantiate();
+	JinxBasicAttackGetHitEffect->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\jinxtex\\JinxGetHitByRocket.png"));
+	Ptr<CPrefab> NewPrefab = new CPrefab;
+	CGameObject* PrefabObject = JinxBasicAttackGetHitEffect->Clone();
+	NewPrefab->RegisterProtoObject(PrefabObject);
+	
+	m_SkillHitEffect = NewPrefab;
 
 	// 투사체 스크립트
 	m_iProjectileCount = 1;
