@@ -32,7 +32,7 @@
 #include <Script\CKillLogUIScript.h>
 
 #include <Script/CUnitScript.h>
-
+#include <Engine/CCollisionMgr.h>
 
 void ServerPacketHandler::HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
@@ -278,6 +278,7 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 	if (_Success)
 	{
 		cout << "S_GAME_START Success" << endl;
+
 		// 인게임 진입
 
 		/*RECT WindowPos;
@@ -306,11 +307,9 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 
 
 		//////=========json level load===========================================
-		//CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevelFromJson(L"level\\InGameLevel.json");
-		//tEvent evn = {};
-		//evn.Type = EVENT_TYPE::LEVEL_CHANGE;
-		//evn.wParam = (DWORD_PTR)pLoadedLevel;
-		//CEventMgr::GetInst()->AddEvent(evn);
+		//CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevelFromJson(L"level\\BushFinal.json");
+		//CLevelMgr::GetInst()->SetCurLevel(pLoadedLevel);
+		//
 		//// inspector  UI update
 		//InspectorUI* inspector = (InspectorUI*)ImGuiMgr::GetInst()->FindUI("##Inspector");
 		//inspector->SetTargetObject(nullptr);
@@ -806,12 +805,26 @@ void ServerPacketHandler::Handle_S_TIME(PacketSessionRef& session, BYTE* buffer,
 
 	Vec3 _2dPos = Vec3(0.f, 0.f, 0.f);
 
+	if (1.f == fTime)
+	{
+		CSound* newSound = new CSound;
+		wstring filepath = CPathMgr::GetInst()->GetContentPath();
+		filepath += L"sound2d\\bgm_update_summoners_rift.mp3";
+		newSound->Load(filepath);
+		CSoundMgr::GetInst()->AddSound(newSound);
+		int soundId = newSound->GetSoundIndex();
+		CSoundMgr::GetInst()->Play(soundId, 5, 0.2f, true, 0.f, _2dPos);
+		CSoundMgr::GetInst()->Stop(soundId);
+		CSoundMgr::GetInst()->Play(soundId, 5, 0.2f, true, 0.f, _2dPos);
+		
+	}
+	
 	// 소환사의 협곡에 오신것을 환영합니다.
 	if (3.f == fTime)
 	{
 		CSound* newSound = new CSound;
 		wstring filepath = CPathMgr::GetInst()->GetContentPath();
-		filepath += L"sound2d\\welcome_rift.mp3";
+		filepath += L"sound2d\\announce_welcome_rift.mp3";
 		newSound->Load(filepath);
 		CSoundMgr::GetInst()->AddSound(newSound);
 		int soundId = newSound->GetSoundIndex();
@@ -826,7 +839,7 @@ void ServerPacketHandler::Handle_S_TIME(PacketSessionRef& session, BYTE* buffer,
 	{
 		CSound* newSound = new CSound;
 		wstring filepath = CPathMgr::GetInst()->GetContentPath();
-		filepath += L"sound2d\\minion_spawn_remain_30.mp3";
+		filepath += L"sound2d\\announce_minion_spawn_remain_30.mp3";
 		newSound->Load(filepath);
 		CSoundMgr::GetInst()->AddSound(newSound);
 		int soundId = newSound->GetSoundIndex();

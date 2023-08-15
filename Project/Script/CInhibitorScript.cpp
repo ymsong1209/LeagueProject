@@ -9,7 +9,7 @@
 CInhibitorScript::CInhibitorScript()
 	:CStructureScript((UINT)SCRIPT_TYPE::INHIBITORSCRIPT)
 	, m_vecTurrets{}
-	, m_fRespawnTime(5)
+	, m_fRespawnTime(150)
 {
 	m_fMaxHP = 100.f;
 }

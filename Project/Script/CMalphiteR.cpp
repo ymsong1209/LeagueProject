@@ -118,4 +118,5 @@ void CMalphiteR::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, in
 		CSendServerEventMgr::GetInst()->SendKDACSPacket(_UserScript->GetServerID()
 			, _TargetScript->GetServerID()
 			, _TargetScript->GetUnitType());
+
 }

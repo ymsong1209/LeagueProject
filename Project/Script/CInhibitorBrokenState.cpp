@@ -62,6 +62,8 @@ void CInhibitorBrokenState::Enter()
 		, true
 		, 0.1f
 		, 1.f);
+
+	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\sfx_TurretBroken.mp3", 1, 0.4f, true, 200.f, GetOwner()->Transform()->GetRelativePos(), Faction::NONE);
 }
 
 void CInhibitorBrokenState::Exit()

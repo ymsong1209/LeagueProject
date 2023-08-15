@@ -8,7 +8,7 @@
 #include "CPlayerCSUIScript.h"
 #include "CIconTimerUIScript.h"
 #include "CEndOfGameUIScript.h"
-
+#include <thread>
 
 CKillLogUIScript::CKillLogUIScript()
 	:CScript((UINT)SCRIPT_TYPE::KILLLOGUISCRIPT)
@@ -124,17 +124,36 @@ void CKillLogUIScript::tick()
 					CGameObject* MyPlayer = CSendServerEventMgr::GetInst()->GetMyPlayer();
 					CUnitScript* MyPlayerUnitScript = MyPlayer->GetScript<CUnitScript>();
 
-					//내가 아군한테 처치당한경우
+					//내가 적한테 처치당한경우  announce_I_dead_from_enemy
 					if (VictimObj == MyPlayer)
+					{
+						// 나만 듣는 소리
 						AddAnnouncement(AnnounceType::GOTKILLED, KillerFaction, KillerChamp, VictimChamp);
-
+						CSound* newSound = new CSound;
+						wstring filepath = CPathMgr::GetInst()->GetContentPath();
+						filepath += L"sound2d\\announce_I_dead_from_enemy.mp3";
+						newSound->Load(filepath);
+						CSoundMgr::GetInst()->AddSound(newSound);
+						int soundId = newSound->GetSoundIndex();
+						CSoundMgr::GetInst()->Play(soundId, 1, 0.5f, true, 0.f, Vec3(0,0,0));
+						CSoundMgr::GetInst()->Stop(soundId);
+						CSoundMgr::GetInst()->Play(soundId, 1, 0.5f, true, 0.f, Vec3(0, 0, 0));
+					}
 					//아군이 적한테 처치당한경우
 					else if (VictimUnitScript->GetFaction() == MyPlayerUnitScript->GetFaction())
+					{
 						AddAnnouncement(AnnounceType::ALLY_HASBEENSLAIN, KillerFaction, KillerChamp, VictimChamp);
+						CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\announce_ally_dead.mp3", 1, 0.3f, true, 0.f, Vec3(0, 0, 0), MyPlayerUnitScript->GetFaction());
+					}
+						
 
 					//아군이나, 내가 적을 처치한경우
 					else if (KillerUnitScript->GetFaction() == MyPlayerUnitScript->GetFaction())
+					{
 						AddAnnouncement(AnnounceType::KILLEDENEMY, KillerFaction, KillerChamp, VictimChamp);
+						CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\enemy_dead.mp3", 1, 0.3f, true, 0.f, Vec3(0, 0, 0), MyPlayerUnitScript->GetFaction());
+					}
+						
 
 					else
 					{
@@ -401,7 +420,6 @@ void CKillLogUIScript::AnnounceLogUpdate(float deltaTime)
 }
 
 
-
 void CKillLogUIScript::DisplayAnnounceAll(AnnounceType type, Faction _KillerFaction, ChampionType _KillerChamp, ChampionType _VictimChamp, UnitType _KillerUnitType, UnitType _VictimUnitType)
 {
 	if (type <= AnnounceType::ALLY_HASBEENSLAIN)
@@ -411,8 +429,6 @@ void CKillLogUIScript::DisplayAnnounceAll(AnnounceType type, Faction _KillerFact
 		DisplayAnnounceTurret(_KillerChamp, _KillerFaction, type);
 	}
 }
-
-
 
 
 void CKillLogUIScript::DisplayAnnounceTurret(ChampionType _Killer, Faction _KillerFaction, AnnounceType _Type) //미니언이 처치했다면 ChampionType 은 NONE으로 들어옴
@@ -435,6 +451,9 @@ void CKillLogUIScript::DisplayAnnounceTurret(ChampionType _Killer, Faction _Kill
 			Killer_AnnouncePanel->Transform()->SetRelativePos(Vec3(-216.f, 7.f, 200.f));
 			Victim_AnnouncePanel->Transform()->SetRelativePos(Vec3(219.f, 4.f, 200.f));
 
+			// BLUE : 포탑을 파괴했습니다. RED : 포탑이 파괴되었습니다.
+			CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\announce_turret_breaking.mp3", 1, 0.5f, true, 0.f, Vec3(0, 0, 0), Faction::BLUE);
+			CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\announce_turret_broken.mp3", 1, 0.5f, true, 0.f, Vec3(0, 0, 0), Faction::RED);
 		}
 		else if (_Type == AnnounceType::INHIBITOR_DESTROY)
 		{
@@ -445,14 +464,18 @@ void CKillLogUIScript::DisplayAnnounceTurret(ChampionType _Killer, Faction _Kill
 				AnnouncePanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\InhibitorKill.mtrl"), 0);
 				Killer_AnnouncePanel->Transform()->SetRelativePos(Vec3(-171.f, 6.f, 200.f));
 				Victim_AnnouncePanel->Transform()->SetRelativePos(Vec3(172.f, 5.72f, 200.f));
-
 			}
 			else // 억제기가 파괴되었습니다
 			{
 				AnnouncePanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\InhibitorDeath.mtrl"), 0);
 				Killer_AnnouncePanel->Transform()->SetRelativePos(Vec3(-178.f, 4.f, 200.f));
 				Victim_AnnouncePanel->Transform()->SetRelativePos(Vec3(180.f, 6.f, 200.f));
+
 			}
+
+			// BLUE : 적의 억제기를 파괴했습니다. RED : 억제기가 파괴되었습니다.
+			CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\announce_enemy_inhibitor_broken.mp3", 1, 0.5f, true, 0.f, Vec3(0, 0, 0), Faction::BLUE);
+			CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\announce_my_inhibitor_broken.mp3", 1, 0.5f, true, 0.f, Vec3(0, 0, 0), Faction::RED);
 		}
 
 		if (_Killer == ChampionType::NONE) // 미니언이 죽인경우
@@ -470,6 +493,10 @@ void CKillLogUIScript::DisplayAnnounceTurret(ChampionType _Killer, Faction _Kill
 			AnnouncePanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turretisdestroyed.mtrl"), 0);
 			Killer_AnnouncePanel->Transform()->SetRelativePos(Vec3(-216.f, 7.f, 200.f));
 			Victim_AnnouncePanel->Transform()->SetRelativePos(Vec3(219.f, 4.f, 200.f));
+		
+			// BLUE : 포탑이 파괴되었습니다. RED : 포탑을 파괴했습니다.
+			CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\announce_turret_breaking.mp3", 1, 0.5f, true, 0.f, Vec3(0, 0, 0), Faction::RED);
+			CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\announce_turret_broken.mp3", 1, 0.5f, true, 0.f, Vec3(0, 0, 0), Faction::BLUE);
 		}
 		else if (_Type == AnnounceType::INHIBITOR_DESTROY)
 		{
@@ -487,6 +514,10 @@ void CKillLogUIScript::DisplayAnnounceTurret(ChampionType _Killer, Faction _Kill
 				Killer_AnnouncePanel->Transform()->SetRelativePos(Vec3(-178.f, 4.f, 200.f));
 				Victim_AnnouncePanel->Transform()->SetRelativePos(Vec3(180.f, 6.f, 200.f));
 			}
+
+		    // BLUE: 억제기가 파괴되었습니다.  RED : 적의 억제기를 파괴했습니다.
+			CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\announce_enemy_inhibitor_broken.mp3", 1, 0.5f, true, 0.f, Vec3(0, 0, 0), Faction::RED);
+			CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\announce_my_inhibitor_broken.mp3", 1, 0.5f, true, 0.f, Vec3(0, 0, 0), Faction::BLUE);
 		}
 
 		if (_Killer == ChampionType::NONE) // 미니언이 죽인경우
@@ -515,6 +546,17 @@ void CKillLogUIScript::DisplayCS(CGameObject* _KillerChamp, UnitType _UnitType)
 	CSImage->Transform()->SetRelativeScale(Vec3(66.f,29.f,1.f));
 	CSImage->Transform()->SetRelativePos(PlayerPos);
 	SpawnGameObject(CSImage, PlayerPos, 31);
+
+	// 나만 듣는 소리
+	CSound* newSound = new CSound;
+	wstring filepath = CPathMgr::GetInst()->GetContentPath();
+	filepath += L"sound2d\\sfx_CSCoin.mp3";
+	newSound->Load(filepath);
+	CSoundMgr::GetInst()->AddSound(newSound);
+	int soundId = newSound->GetSoundIndex();
+	CSoundMgr::GetInst()->Play(soundId, 1, 1.f, true, 0.f, Vec3(0, 0, 0));
+	CSoundMgr::GetInst()->Stop(soundId);
+	CSoundMgr::GetInst()->Play(soundId, 1, 1.f, true, 0.f, Vec3(0, 0, 0));
 }
 
 
@@ -562,11 +604,56 @@ void CKillLogUIScript::Announce_EndofGame(Faction _VictimFaction)
 	{
 		EndOfGamePanel->Transform()->SetRelativeScale(Vec3(403.2f, 447.3f, 1.f));
 		EndOfGamePanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\EndOfDefeat.mtrl"), 0);
+		
+		// sound
+		thread t([=]() {
+			Sleep(4000);
+		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\announce_defeat.mp3", 1, 0.5f, true, 0.f, Vec3(0, 0, 0), _VictimFaction);
+			});
+		t.detach();
+
+		thread t1([=]() {
+			Sleep(4000);
+		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\bgm_summoners_rift_defeat.mp3", 1, 0.15f, true, 0.f, Vec3(0, 0, 0), _VictimFaction);
+			});
+		t1.detach();
 	}
 	else
 	{
 		EndOfGamePanel->Transform()->SetRelativeScale(Vec3(402.f, 447.f, 1.f));
 		EndOfGamePanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\EndOfVictory.mtrl"), 0);
+
+		// sound
+		if (_VictimFaction == Faction::RED) {
+
+			// sound
+			thread t([=]() {
+				Sleep(4000);
+			CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\announce_victory.mp3", 1, 0.5f, true, 0.f, Vec3(0, 0, 0), Faction::BLUE);
+				});
+			t.detach();
+
+			thread t1([=]() {
+				Sleep(2000);
+			CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\bgm_summoners_rift_victory.mp3", 1, 0.3f, true, 0.f, Vec3(0, 0, 0), Faction::BLUE);
+				});
+			t1.detach();
+		}
+		else
+		{
+			// sound
+			thread t([=]() {
+				Sleep(4000);
+			CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\announce_victory.mp3", 1, 0.5f, true, 0.f, Vec3(0, 0, 0), Faction::RED);
+				});
+			t.detach();
+			
+			thread t1([=]() {
+				Sleep(2000);
+			CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\bgm_summoners_rift_victory.mp3", 1, 0.f, true, 0.f, Vec3(0, 0, 0), Faction::RED);
+				});
+			t1.detach();
+		}
 	}
 
 	SpawnGameObject(EndOfGamePanel, Vec3(0.f, 0.f, 1.f), 31);

@@ -26,6 +26,9 @@ void CMalphiteDeathState::Enter()
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, false, false, 0.0f);
 
+	Vec3 vPos = GetOwner()->Transform()->GetRelativePos();
+	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\malphite\\Malph_Death.wav", 1, 0.4f, true, 100.f, vPos, Faction::NONE);
+
 	CChampionDeathState::Enter();
 }
 

@@ -9,6 +9,8 @@ public:
 
 private:
     float   m_fRespawnTime;
+    float   m_fDeadTime;
+    bool    m_bSounded;
 
 public:
     virtual void tick() override;

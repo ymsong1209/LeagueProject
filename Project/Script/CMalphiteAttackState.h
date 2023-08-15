@@ -6,6 +6,7 @@ class CMalphiteAttackState :
 {
 private:
     int         m_iAttackAnimNum;
+    int         m_iMalphiteSoundNum;
 public:
     CMalphiteAttackState();
     ~CMalphiteAttackState();

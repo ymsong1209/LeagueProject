@@ -2,9 +2,17 @@
 #include "CEndOfGameUIScript.h"
 #include <Engine\CRenderMgr.h>
 #include <Engine\CCamera.h>
+#include "CSendServerEventMgr.h"
+#include <thread>
 
 void CEndOfGameUIScript::begin()
 {
+	// 7ÃÊµÚ ´Ù²û.
+	thread t1([=]() {
+		Sleep(7000);
+	CSendServerEventMgr::GetInst()->SetIsGameStop(true);
+		});
+	t1.detach();
 }
 
 void CEndOfGameUIScript::tick()
