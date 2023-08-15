@@ -15,10 +15,13 @@ private:
     bool    m_bUseBillBoard;
 
 public:
-    v//oid SetDeleteTime(float _Time) { m_fDeleteTime = _Time; }
+    //void SetDeleteTime(float _Time) { m_fDeleteTime = _Time; }
     void SetDeleteScale(float _Scale) { m_fDeleteScale = _Scale; }
     void SetExpandSpeed(float _Speed) { m_fExpandSpeed = _Speed; }
     void SetUseBillBoard(bool _State) { m_bUseBillBoard = _State; }
+
+    CLONE(CDefaultGetHitEffectScript)
+
 
     virtual void begin() override;
     virtual void tick() override;

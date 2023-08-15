@@ -10,6 +10,7 @@
 #include "CChampionScript.h"
 #include "CCharacterUIScript.h"
 #include "CCoolDownUIScript.h"
+#include "CDefaultGetHitEffectScript.h"
 #include "CDragonBasicAttackScript.h"
 #include "CDragonHPUIScript.h"
 #include "CDragonScript.h"
@@ -91,6 +92,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CChampionScript");
 	_vec.push_back(L"CCharacterUIScript");
 	_vec.push_back(L"CCoolDownUIScript");
+	_vec.push_back(L"CDefaultGetHitEffectScript");
 	_vec.push_back(L"CDragonBasicAttackScript");
 	_vec.push_back(L"CDragonHPUIScript");
 	_vec.push_back(L"CDragonScript");
@@ -182,6 +184,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CCharacterUIScript;
 	if (L"CCoolDownUIScript" == _strScriptName)
 		return new CCoolDownUIScript;
+	if (L"CDefaultGetHitEffectScript" == _strScriptName)
+		return new CDefaultGetHitEffectScript;
 	if (L"CDragonBasicAttackScript" == _strScriptName)
 		return new CDragonBasicAttackScript;
 	if (L"CDragonHPUIScript" == _strScriptName)
@@ -353,6 +357,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::COOLDOWNUISCRIPT:
 		return new CCoolDownUIScript;
+		break;
+	case (UINT)SCRIPT_TYPE::DEFAULTGETHITEFFECTSCRIPT:
+		return new CDefaultGetHitEffectScript;
 		break;
 	case (UINT)SCRIPT_TYPE::DRAGONBASICATTACKSCRIPT:
 		return new CDragonBasicAttackScript;
@@ -603,6 +610,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::COOLDOWNUISCRIPT:
 		return L"CCoolDownUIScript";
+		break;
+
+	case SCRIPT_TYPE::DEFAULTGETHITEFFECTSCRIPT:
+		return L"CDefaultGetHitEffectScript";
 		break;
 
 	case SCRIPT_TYPE::DRAGONBASICATTACKSCRIPT:
