@@ -1,16 +1,16 @@
 #include "pch.h"
-#include "CJinxRocketBasicAttackScript.h"
+#include "CDragonBasicAttackScript.h"
 
-CJinxRocketBasicAttackScript::CJinxRocketBasicAttackScript()
+CDragonBasicAttackScript::CDragonBasicAttackScript()
 {
-	m_fProjectileSpeed = 300.f;
+	m_fProjectileSpeed = 100.f;
 }
 
-CJinxRocketBasicAttackScript::~CJinxRocketBasicAttackScript()
+CDragonBasicAttackScript::~CDragonBasicAttackScript()
 {
 }
 
-void CJinxRocketBasicAttackScript::begin()
+void CDragonBasicAttackScript::begin()
 {
 	// 첫 생성 위치 기억
 	m_vSpawnPos = GetOwner()->Transform()->GetRelativePos();
@@ -27,7 +27,7 @@ void CJinxRocketBasicAttackScript::begin()
 	GetOwner()->Transform()->SetRelativeRot(Vec3(0.f, 0.f, targetAngle - XMConvertToRadians(90)));
 }
 
-void CJinxRocketBasicAttackScript::tick()
+void CDragonBasicAttackScript::tick()
 {
 	if (m_bUnitDead) return;
 
@@ -51,7 +51,7 @@ void CJinxRocketBasicAttackScript::tick()
 	GetOwner()->Transform()->SetRelativePos(NewPos);
 }
 
-void CJinxRocketBasicAttackScript::BeginOverlap(CCollider2D* _Other)
+void CDragonBasicAttackScript::BeginOverlap(CCollider2D* _Other)
 {
 	if (m_TargetObj == nullptr || m_TargetObj->IsDead())
 	{

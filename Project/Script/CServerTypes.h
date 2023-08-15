@@ -213,6 +213,7 @@ enum class SkillType
 	NONE,
 	BASIC_ATTACK,         // 몹의 근접 평타
 	BASIC_RANGED_ATTACK,   // 미니언 원거리 평타
+	DRAGON_BASIC_ATTACK,
 	TURRET_BASIC_ATTACK,
 	JINX_BASIC_ATTACK,		   // 징크스 미니건 평타
 	JINX_ROCKET_BASIC_ATTACK,  // 징크스 Q 로켓 평타

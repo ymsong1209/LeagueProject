@@ -7,6 +7,8 @@ CCameraMoveScript
 CChampionScript
 CCharacterUIScript
 CCoolDownUIScript
+CDefaultGetHitEffectScript
+CDragonBasicAttackScript
 CDragonHPUIScript
 CDragonScript
 CEndOfGameUIScript
@@ -43,6 +45,7 @@ CMalphiteRDecalScript
 CMalphiteRScript
 CMalphiteScript
 CMinimapUIScript
+CMinionBasicAttackHitEffectScript
 CMinionHPBarPosScript
 CMinionHPRatioScript
 CMinionScript
@@ -56,6 +59,7 @@ COtherPlayerScript
 CPlayerCSUIScript
 CPlayerScript
 CProjectileScript
+CRangedMinionBasicAttackScript
 CRazorBeakMiniScript
 CRazorBeakScript
 CRedScript
