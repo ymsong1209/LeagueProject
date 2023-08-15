@@ -46,7 +46,6 @@ void CKillLogUIScript::tick()
 	}
 	*/
 
-
 	//===============================µð¹ö±ë¿ë====================================
 	//if (KEY_TAP(KEY::_8))
 	//	DisplayCS(CSendServerEventMgr::GetInst()->GetMyPlayer(), UnitType::MELEE_MINION);
@@ -148,6 +147,12 @@ void CKillLogUIScript::tick()
 				else if (KillerSpecificType == SpecificType::CHAMPION && VictimSpecificType == SpecificType::MINION)
 				{
 					if(KillerObj == CSendServerEventMgr::GetInst()->GetMyPlayer())
+						DisplayCS(KillerObj, VictimType);
+				}
+
+				else if (KillerSpecificType == SpecificType::CHAMPION && VictimSpecificType == SpecificType::JUNGLE_MOB)
+				{
+					if (KillerObj == CSendServerEventMgr::GetInst()->GetMyPlayer())
 						DisplayCS(KillerObj, VictimType);
 				}
 

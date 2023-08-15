@@ -29,7 +29,13 @@ private:
 
     int         m_iGold; // 가지고 있는 돈.(골드 폰트UI)
     int         m_iPlayerLevel;
+    int         m_iPrevChampLevel;
 
+    bool        m_bAnimating;
+    float       m_fTimer;
+
+    float animationDuration;
+    float animationDistance;
 public:
     virtual void begin() override;
     virtual void tick() override;
@@ -39,6 +45,7 @@ public:
     void SpellUILoad();
     void BarUILoad();
 
+    void LevelUpFont();
 public:
     void UISetting();
 

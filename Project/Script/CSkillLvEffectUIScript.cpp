@@ -8,6 +8,7 @@ void CSkillLvEffectUIScript::begin()
 
 void CSkillLvEffectUIScript::tick()
 {
+	GetOwner()->GetRenderComponent()->SetSortExcept(false);
 	if (Animator2D()->GetCurAnim()->IsFinish() == true)
 	{
 		DestroyObject(GetOwner());
