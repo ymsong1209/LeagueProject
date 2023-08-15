@@ -69,6 +69,7 @@ void CNexusIdleState::Enter()
 
 void CNexusIdleState::Exit()
 {
+	CUnitState::Exit();
 }
 
 void CNexusIdleState::HandleEvent(CGameEvent& event)
