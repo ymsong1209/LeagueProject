@@ -285,6 +285,56 @@ void CreateTestLevel()
 	SpawnGameObject(MinionBlueGetHitByBasicAttack, Vec3(-1200.f, 0.f, 0.f), 0);
 
 
+	// 드래곤 브레스 이펙트
+	//CGameObject* DragonBreathEffect = nullptr;
+	//DragonBreathEffect = new CGameObject;
+	//DragonBreathEffect->SetName(L"DragonBreathEffect");
+	//DragonBreathEffect->AddComponent(new CMeshRender);
+	//DragonBreathEffect->AddComponent(new CTransform);
+	//DragonBreathEffect->AddComponent(new CAnimator2D);
+	////DragonBreathEffect->Animator2D()->SetCurAnim(CResMgr::GetInst()->FindRes<CAnim2D>(L"anim2d\\DragonBasicAttack.anim2d").Get());
+	//DragonBreathEffect->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 1.f));
+	//DragonBreathEffect->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	//DragonBreathEffect->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
+	//SpawnGameObject(DragonBreathEffect, Vec3(-810.f, 395.f, 0.f), 0);
+	CGameObject* DragonBreathEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\DragonBreathEffect.prefab")->Instantiate();
+	DragonBreathEffect->Transform()->SetRelativeScale(100.f, 150.f, 1.f);
+	DragonBreathEffect->Animator2D()->Play(L"DragonBasicAttack", true);
+	SpawnGameObject(DragonBreathEffect, Vec3(-810.f, 420.f, 0.f), 0);
+
+	
+	// 징크스 W 이펙트
+	/*CGameObject* JinxWEffect = nullptr;
+	JinxWEffect = new CGameObject;
+	JinxWEffect->SetName(L"JinxWEffect");
+	JinxWEffect->AddComponent(new CMeshRender);
+	JinxWEffect->AddComponent(new CTransform);
+	JinxWEffect->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
+	JinxWEffect->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\JinxWEffect.mtrl"), 0);
+	JinxWEffect->Transform()->SetRelativeScale(Vec3(200.f, 100.f, 1.f));*/
+
+	CGameObject* JinxWEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\JinxWEffect.prefab")->Instantiate();
+	
+
+	/*CGameObject* JinxWEffectChild = new CGameObject;
+	JinxWEffectChild->SetName(L"JinxWChild");
+	JinxWEffectChild->AddComponent(new CMeshRender);
+	JinxWEffectChild->AddComponent(new CTransform);
+	JinxWEffectChild->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CircleMesh"));
+	JinxWEffectChild->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\JinxWEffectChild.mtrl"), 0);
+	JinxWEffectChild->Transform()->SetRelativeScale(50.f, 200.f, 1.f);
+	JinxWEffectChild->Transform()->SetAbsolute(true);
+
+	JinxWEffect->AddChild(JinxWEffectChild);*/
+
+
+	SpawnGameObject(JinxWEffect, Vec3(-1020.f, 390.f, 0.f), 0);
+
+
+ 
+
+
+
 	
 
 	// ============
