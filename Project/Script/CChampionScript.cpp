@@ -136,7 +136,10 @@ bool CChampionScript::CheckDeath()
 			PathFinder()->ClearPath();
 
 			// 우물로 리스폰
-			GetOwner()->Transform()->SetRelativePos(100.f, 30.f, 100.f);
+			if(m_eFaction == Faction::BLUE)
+				GetOwner()->Transform()->SetRelativePos(100.f, 30.f, 100.f);
+			else if(m_eFaction == Faction::RED)
+				GetOwner()->Transform()->SetRelativePos(2083.0f, 30.0f, 2137.0f);
 
 			// 부활 이벤트
 			RespawnEvent* evn = dynamic_cast<RespawnEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_RESPAWN));

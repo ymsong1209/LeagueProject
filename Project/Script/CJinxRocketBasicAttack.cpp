@@ -1,17 +1,17 @@
 #include "pch.h"
-#include "CJinxBasicAttack.h"
+#include "CJinxRocketBasicAttack.h"
 
-CJinxBasicAttack::CJinxBasicAttack()
+CJinxRocketBasicAttack::CJinxRocketBasicAttack()
 {
-	m_strSkillName = L"Jinx_Basic_Attack";
-	m_fCoolDown = 0.f;
-	m_iLevel = 1;
+    m_strSkillName = L"Jinx_Rocket_Basic_Attack";
+    m_fCoolDown = 0.f;
+    m_iLevel = 1;
 
 	m_vecSkillObj.clear();
 
-	CGameObject* JinxBasicAttackObj = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\JinxBasicAttackEffect.prefab")->Instantiate();
+	CGameObject* JinxBasicAttackObj = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\JinxBasicRocketAttackEffect.prefab")->Instantiate();
 	JinxBasicAttackObj->AddComponent(new CCollider2D);
-	JinxBasicAttackObj->Transform()->SetRelativeScale(Vec3(20.f, 100.f, 1.f));
+	//JinxBasicAttackObj->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 1.f));
 	JinxBasicAttackObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
 	JinxBasicAttackObj->Collider2D()->SetAbsolute(true);
 	JinxBasicAttackObj->Collider2D()->SetOffsetScale(Vec2(10.f, 10.f));
@@ -19,7 +19,7 @@ CJinxBasicAttack::CJinxBasicAttack()
 	JinxBasicAttackObj->Collider2D()->SetDrawCollision(true);
 	JinxBasicAttackObj->Transform()->SetBillBoard(false);
 	JinxBasicAttackObj->MeshRender()->GetMaterial(0)->SetShader(CResMgr::GetInst()->FindRes<CGraphicsShader>(L"Std2DEffectShaderAlpha"));
-	JinxBasicAttackObj->SetName(L"JinxBasicAttackMinigun");
+	JinxBasicAttackObj->SetName(L"JinxBasicAttackRocket");
 
 	vector<CGameObject*> Childs = JinxBasicAttackObj->GetChild();
 	for (int i = 0; i < Childs.size(); ++i)
@@ -39,25 +39,25 @@ CJinxBasicAttack::CJinxBasicAttack()
 	// 투사체 스크립트
 	m_iProjectileCount = 1;
 
-	m_eSkillType = SkillType::JINX_BASIC_ATTACK;
+	m_eSkillType = SkillType::JINX_ROCKET_BASIC_ATTACK;
 }
 
-CJinxBasicAttack::~CJinxBasicAttack()
+CJinxRocketBasicAttack::~CJinxRocketBasicAttack()
 {
 }
 
-void CJinxBasicAttack::tick()
+void CJinxRocketBasicAttack::tick()
 {
 }
 
-bool CJinxBasicAttack::Use()
+bool CJinxRocketBasicAttack::Use()
 {
 	// 서버에게 기본 공격 사용 신호를 전달
 	CSendServerEventMgr::GetInst()->SendUseSkillPacket(
 		m_UserObj->GetScript<CUnitScript>()->GetServerID(),
 		m_TargetObj->GetScript<CUnitScript>()->GetServerID(),
 		1,				// 기본 공격의 레벨은 언제나 1
-		SkillType::JINX_BASIC_ATTACK,
+		SkillType::JINX_ROCKET_BASIC_ATTACK,
 		Vec3(0, 0, 0),
 		m_iProjectileCount,
 		false,
@@ -65,10 +65,10 @@ bool CJinxBasicAttack::Use()
 		false,
 		Vec3(0, 0, 0));
 
-	return true;
+    return false;
 }
 
-void CJinxBasicAttack::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _skillLevel)
+void CJinxRocketBasicAttack::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _skillLevel)
 {
 	CBasicAttack::GetHit(_UserScript, _TargetScript, _skillLevel);
 }

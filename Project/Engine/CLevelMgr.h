@@ -13,6 +13,7 @@ private:
 
 public:
     CLevel* GetCurLevel() { return m_pCurLevel; }
+    void SetCurLevel(CLevel* _level) { m_pCurLevel = _level; }
     CGameObject* FindObjectByName(const wstring& _strName);
     void FindObjectByName(const wstring& _strName, vector<CGameObject*>& _Out);
 

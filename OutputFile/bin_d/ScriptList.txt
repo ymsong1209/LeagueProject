@@ -19,8 +19,10 @@ CIconTimerUIScript
 CInGameCameraScript
 CInhibitorScript
 CInventoryUIScript
+CJinxBasicAttackMinigunHitEffectScript
 CJinxBasicAttackScript
 CJinxEScript
+CJinxRocketBasicAttackScript
 CJinxRScript
 CJinxScript
 CJinxWScript
@@ -65,8 +67,6 @@ CSkillLevelUpUIScript
 CSkillLvEffectUIScript
 CSoundTestScript
 CStructureScript
-CTestTurretScript
-CTurretAttackScript
 CTurretBasicAttackScript
 CTurretHPUIScript
 CTurretScript

@@ -47,7 +47,7 @@ public:
 public:
     CJungleMonsterScript(UINT ScriptType);
     CJungleMonsterScript();
-    ~CJungleMonsterScript();
+    virtual ~CJungleMonsterScript();
 
 public:
     virtual void SaveToLevelFile(FILE* _File) override;
