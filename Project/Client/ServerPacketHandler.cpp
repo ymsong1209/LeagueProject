@@ -32,7 +32,7 @@
 #include <Script\CKillLogUIScript.h>
 
 #include <Script/CUnitScript.h>
-
+#include <Engine/CCollisionMgr.h>
 
 void ServerPacketHandler::HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
@@ -278,6 +278,7 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 	if (_Success)
 	{
 		cout << "S_GAME_START Success" << endl;
+
 		// 인게임 진입
 
 		/*RECT WindowPos;
@@ -306,11 +307,9 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 
 
 		//////=========json level load===========================================
-		//CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevelFromJson(L"level\\InGameLevel.json");
-		//tEvent evn = {};
-		//evn.Type = EVENT_TYPE::LEVEL_CHANGE;
-		//evn.wParam = (DWORD_PTR)pLoadedLevel;
-		//CEventMgr::GetInst()->AddEvent(evn);
+		//CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevelFromJson(L"level\\BushFinal.json");
+		//CLevelMgr::GetInst()->SetCurLevel(pLoadedLevel);
+		//
 		//// inspector  UI update
 		//InspectorUI* inspector = (InspectorUI*)ImGuiMgr::GetInst()->FindUI("##Inspector");
 		//inspector->SetTargetObject(nullptr);
