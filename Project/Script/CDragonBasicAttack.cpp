@@ -10,19 +10,20 @@ CDragonBasicAttack::CDragonBasicAttack()
 	m_vecSkillObj.clear();
 
 	// 투사체 생성
-	CGameObject* Projectile = new CGameObject;
-	Projectile->AddComponent(new CTransform);
-	Projectile->AddComponent(new CCollider2D);
-	Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-	Projectile->Collider2D()->SetOffsetScale(Vec2(5.f, 5.f));
-	Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
-	Projectile->SetName(L"DragonBasicAttackProjectile");
+	CGameObject* DragonBasicAttackObj = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\DragonBreathEffect.prefab")->Instantiate();
+	DragonBasicAttackObj->Transform()->SetRelativeScale(100.f, 150.f, 1.f);
+	DragonBasicAttackObj->Animator2D()->Play(L"DragonBasicAttack", true);
+	DragonBasicAttackObj->SetName(L"DragonBasicAttackProjectile");
 
 	Ptr<CPrefab> NewPrefab = new CPrefab;
-	CGameObject* PrefabObject = Projectile->Clone();
+	CGameObject* PrefabObject = DragonBasicAttackObj->Clone();
 	NewPrefab->RegisterProtoObject(PrefabObject);
 
 	m_vecSkillObj.push_back(NewPrefab);
+
+	// 피격 이펙트
+	Ptr<CPrefab> DragonBasicAttackHitEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MalphiteBasicAttackHitEffect.prefab");
+	m_SkillHitEffect = DragonBasicAttackHitEffect;
 
 	// 투사체 스크립트
 	m_iProjectileCount = 1;

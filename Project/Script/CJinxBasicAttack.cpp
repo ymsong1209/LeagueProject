@@ -33,7 +33,6 @@ CJinxBasicAttack::CJinxBasicAttack()
 
 	m_vecSkillObj.push_back(NewPrefab);
 
-
 	// ««∞› ¿Ã∆Â∆Æ
 	Ptr<CPrefab> JinxBasicAttackGetHitEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\JinxBasicAttackGetHitEffect.prefab");
 	m_SkillHitEffect = JinxBasicAttackGetHitEffect;

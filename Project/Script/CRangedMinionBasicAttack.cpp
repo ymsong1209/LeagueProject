@@ -9,17 +9,32 @@ CRangedMinionBasicAttack::CRangedMinionBasicAttack()
 
 	m_vecSkillObj.clear();
 
+	CGameObject* RangedMinionBasicAttackObj = nullptr;
+
 	// 투사체 생성
-	CGameObject* Projectile = new CGameObject;
-	Projectile->AddComponent(new CTransform);
-	Projectile->AddComponent(new CCollider2D);
-	Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-	Projectile->Collider2D()->SetOffsetScale(Vec2(5.f, 5.f));
-	Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
-	Projectile->SetName(L"RangedMinionBasicAttackProjectile");
+	if (m_OwnerScript->GetFaction() == Faction::RED)
+	{
+		CGameObject* RangedMinionBasicAttackObj = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\RedMinionBasicAttack.prefab")->Instantiate();
+		RangedMinionBasicAttackObj->SetName(L"RedRangedMinionBasicAttackProjectile");
+		RangedMinionBasicAttackObj->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Minion\\MinionRedAttack.dds"));
+	
+		// 피격 이펙트
+		Ptr<CPrefab> MinionBasicAttackHitEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MinionRedGetHitByBasicAttack.prefab");
+		m_SkillHitEffect = MinionBasicAttackHitEffect;
+	}
+	else
+	{
+		CGameObject* RangedMinionBasicAttackObj = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\BlueMinionBasicAttack.prefab")->Instantiate();
+		RangedMinionBasicAttackObj->SetName(L"BlueRangedMinionBasicAttackProjectile");
+		RangedMinionBasicAttackObj->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Minion\\MinionBlueAttack.dds"));
+	
+		// 피격 이펙트
+		Ptr<CPrefab> MinionBasicAttackHitEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MinionBlueGetHitByBasicAttack.prefab");
+		m_SkillHitEffect = MinionBasicAttackHitEffect;
+	}
 
 	Ptr<CPrefab> NewPrefab = new CPrefab;
-	CGameObject* PrefabObject = Projectile->Clone();
+	CGameObject* PrefabObject = RangedMinionBasicAttackObj->Clone();
 	NewPrefab->RegisterProtoObject(PrefabObject);
 
 	m_vecSkillObj.push_back(NewPrefab);
