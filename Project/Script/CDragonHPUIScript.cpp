@@ -18,6 +18,14 @@ void CDragonHPUIScript::tick()
 	if (GetOwner()->GetParent() && !GetOwner()->GetParent()->IsDead())
 	{
 		CGameObject* ParentObj = GetOwner()->GetParent();
+		bool IsCull = ParentObj->GetRenderComponent()->IsCulled();
+		bool UseRaySight = ParentObj->GetRenderComponent()->IsUsingRaySightCulling();
+		if (IsCull && UseRaySight)
+		{
+			GetOwner()->GetRenderComponent()->SetSortExcept(true);
+			return;
+		}
+
 		m_fCurHP = ParentObj->GetScript<CUnitScript>()->GetCurHP();
 		m_fTotalHP = ParentObj->GetScript<CUnitScript>()->GetMaxHP();
 

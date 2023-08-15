@@ -11,6 +11,7 @@ CNexusScript::CNexusScript()
 	:CStructureScript((UINT)SCRIPT_TYPE::NEXUSSCRIPT)
 	, m_vecTurrets{}
 {
+	m_fMaxHP = 500.f;
 }
 
 CNexusScript::~CNexusScript()

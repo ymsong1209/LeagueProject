@@ -35,6 +35,7 @@ CKillLogUIScript
 CKrugMiniScript
 CKrugScript
 CMalphiteBasicAttackHitEffectScript
+CMalphiteBasicAttackScript
 CMalphiteEDecalScript
 CMalphiteEScript
 CMalphiteQDecalScript

@@ -276,7 +276,7 @@ void CMalphiteScript::GetInput()
 			return;
 
 		m_SkillLevel[1] += 1;
-		m_iSkillLevelUpPoint -= 1;
+		//m_iSkillLevelUpPoint -= 1;
 	}
 	if (KEY_TAP(KEY::_2))
 	{
@@ -285,7 +285,7 @@ void CMalphiteScript::GetInput()
 			return;
 
 		m_SkillLevel[2] += 1;
-		m_iSkillLevelUpPoint -= 1;
+		//m_iSkillLevelUpPoint -= 1;
 	}
 	if (KEY_TAP(KEY::_3))
 	{
@@ -294,7 +294,7 @@ void CMalphiteScript::GetInput()
 			return;
 
 		m_SkillLevel[3] += 1;
-		m_iSkillLevelUpPoint -= 1;
+		//m_iSkillLevelUpPoint -= 1;
 	}
 	if (KEY_TAP(KEY::_4))
 	{
@@ -303,7 +303,7 @@ void CMalphiteScript::GetInput()
 			return;
 
 		m_SkillLevel[4] += 1;
-		m_iSkillLevelUpPoint -= 1;
+		//m_iSkillLevelUpPoint -= 1;
 	}
 
 	// 소환사 주문

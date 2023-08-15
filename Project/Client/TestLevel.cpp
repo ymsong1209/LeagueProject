@@ -48,12 +48,8 @@
 #include <Script/CDragonScript.h>
 #include <Script/CShopKeeperNorthScript.h>
 #include <Script/CShopKeeperSouthScript.h>
+
 #include <Script/CBushScript.h>
-
-
-// 나중에 지울 코드..?
-#include <Script/CJinxBasicAttackMinigunHitEffectScript.h>
-#include <Script/CMinionBasicAttackHitEffectScript.h>
 
 
 void CreateTestLevel()
@@ -187,155 +183,6 @@ void CreateTestLevel()
 	SpawnGameObject(ShopKeeperNorth, Vec3(2021, 30.f, 2154.f), L"Default");
 
 
-	// 징크스 미니건 이펙트를 만들어보자
-	CGameObject* JinxBasicAttackEffect = new CGameObject;
-	JinxBasicAttackEffect->SetName(L"JinxBasicAttackEffect");
-	JinxBasicAttackEffect->AddComponent(new CTransform);
-	JinxBasicAttackEffect->AddComponent(new CMeshRender);
-	JinxBasicAttackEffect->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	JinxBasicAttackEffect->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\JinxMinigunAttackEffect.mtrl"), 0);
-	JinxBasicAttackEffect->MeshRender()->SetPunctureTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\jinxtex\\Minigun.png"));
-	JinxBasicAttackEffect->MeshRender()->GetMaterial(0)->SetShader(CResMgr::GetInst()->FindRes<CGraphicsShader>(L"Std2DEffectShaderAlpha"));
-	JinxBasicAttackEffect->MeshRender()->Transform()->SetRelativeScale(Vec3(20.f, 400.f, 1.f));
-	CGameObject* JinxBasicAttackEffectLeft = JinxBasicAttackEffect->Clone();
-	JinxBasicAttackEffectLeft->Transform()->SetAbsolute(true);
-	JinxBasicAttackEffectLeft->Transform()->SetRelativePos(Vec3(-34.f, -60.f, 0.f));
-	CGameObject* JinxBasicAttackEffectRight = JinxBasicAttackEffect->Clone();
-	JinxBasicAttackEffectRight->Transform()->SetAbsolute(true);
-	JinxBasicAttackEffectRight->Transform()->SetRelativePos(Vec3(+34.f, -100.f, 0.f));
-	JinxBasicAttackEffect->AddChild(JinxBasicAttackEffectLeft);
-	JinxBasicAttackEffect->AddChild(JinxBasicAttackEffectRight);
-	SpawnGameObject(JinxBasicAttackEffect, Vec3(-300.f, 0.f, 0.f), 0);
-
-
-	// 징크스 피격 이펙트를 만들어보자
-	CGameObject* JinxBasicAttackGetHitEffect = new CGameObject;
-	JinxBasicAttackGetHitEffect->SetName(L"JinxBasicAttackGetHitEffect");
-	JinxBasicAttackGetHitEffect->AddComponent(new CTransform);
-	JinxBasicAttackGetHitEffect->AddComponent(new CMeshRender);
-	JinxBasicAttackGetHitEffect->AddComponent(new CJinxBasicAttackMinigunHitEffectScript);
-	JinxBasicAttackGetHitEffect->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	JinxBasicAttackGetHitEffect->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\JinxBasicAttackGetHitEffect.mtrl"), 0);
-	JinxBasicAttackGetHitEffect->MeshRender()->Transform()->SetRelativeScale(Vec3(50.f, 50.f, 1.f));
-	SpawnGameObject(JinxBasicAttackGetHitEffect, Vec3(-600.f, 0.f, 0.f), 0);
-
-
-	// 징크스 로켓 평타를 만들어보자
-	CGameObject* JinxBasicRocketAttackEffect =
-		CResMgr::GetInst()->LoadFBX(L"fbx\\JinxQRockets.fbx")->Instantiate();
-	JinxBasicRocketAttackEffect->SetName(L"JinxBasicRocketAttackEffect");
-	JinxBasicRocketAttackEffect->Transform()->SetRelativeRot(Vec3(0.f, 0.f, XM_PI / 2.f));
-	CGameObject* JinxBasicRocketAttackEffectChild = new CGameObject;
-	JinxBasicRocketAttackEffectChild->SetName(L"JinxBasicRocketAttackEffectChild");
-	JinxBasicRocketAttackEffectChild->AddComponent(new CTransform);
-	JinxBasicRocketAttackEffectChild->AddComponent(new CMeshRender);
-	JinxBasicRocketAttackEffectChild->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	JinxBasicRocketAttackEffectChild->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\JinxBasicRocketEffectChild.mtrl"), 0);
-	JinxBasicRocketAttackEffectChild->MeshRender()->SetAdditiveTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\Malphite\malphite_base_p_glowing_fire.dds"));
-	JinxBasicRocketAttackEffectChild->MeshRender()->SetAdditiveTexColor(Vec4(255.f, 0.f, 0.f, 1.f));
-	JinxBasicRocketAttackEffectChild->Transform()->SetRelativePos(Vec3(-90.f, 0.f, 0.f));
-	JinxBasicRocketAttackEffectChild->Transform()->SetRelativeRot(Vec3(0.f, 0.f, XM_PI / 2.f * 3));
-	JinxBasicRocketAttackEffectChild->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 1.f));
-	JinxBasicRocketAttackEffectChild->Transform()->SetAbsolute(true);
-	JinxBasicRocketAttackEffect->AddChild(JinxBasicRocketAttackEffectChild);
-	SpawnGameObject(JinxBasicRocketAttackEffect, Vec3(-300.f, 450.f, 0.f), 0);
-
-
-	// 징크스 로켓 피격 이펙트를 만들어보자
-	CGameObject* JinxGetHitByRocketAttack = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\JinxGetHitByRocketAttack.prefab")->Instantiate();
-	JinxGetHitByRocketAttack->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\jinxtex\\JinxGetHitByRocket.png"));
-	SpawnGameObject(JinxGetHitByRocketAttack, Vec3(-800.f, 0.f, 0.f), 0);
-	
-
-	// 미니언 평타 파티클 (Red) 
-	CGameObject* MinionRedBasicAttack = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\RedMinionBasicAttack.prefab")->Instantiate();
-	MinionRedBasicAttack->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Minion\\MinionBlueAttack.dds"));
-	SpawnGameObject(MinionRedBasicAttack, Vec3(-670, 400.f, 0.f), 0);
-
-
-	// 미니언 평타 파티클 (Blue)
-	CGameObject* MinionBlueBasicAttack = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\BlueMinionBasicAttack.prefab")->Instantiate();
-	MinionBlueBasicAttack->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Minion\\MinionRedAttack.dds"));
-	SpawnGameObject(MinionBlueBasicAttack, Vec3(-510.f, 400.f, 0.f), 0);
-
-
-	//미니언 평타 피격 파티클 (Red)
-	CGameObject* MinionRedGetHitByBasicAttack = nullptr;
-	MinionRedGetHitByBasicAttack = new CGameObject;
-	MinionRedGetHitByBasicAttack->SetName(L"MinionRedGetHitByBasicAttack");
-	MinionRedGetHitByBasicAttack->AddComponent(new CMeshRender);
-	MinionRedGetHitByBasicAttack->AddComponent(new CTransform);
-	MinionRedGetHitByBasicAttack->AddComponent(new CMinionBasicAttackHitEffectScript);
-	MinionRedGetHitByBasicAttack->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CircleMesh"));
-	MinionRedGetHitByBasicAttack->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\RedMinionHitEffect.mtrl"), 0);
-	MinionRedGetHitByBasicAttack->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 0.f));
-	SpawnGameObject(MinionRedGetHitByBasicAttack, Vec3(-1000.f, 0.f, 0.f), 0);
-
-
-	//미니언 평타 피격 파티클 (Blue)
-	CGameObject* MinionBlueGetHitByBasicAttack = nullptr;
-	MinionBlueGetHitByBasicAttack = new CGameObject;
-	MinionBlueGetHitByBasicAttack->SetName(L"MinionBlueGetHitByBasicAttack");
-	MinionBlueGetHitByBasicAttack->AddComponent(new CMeshRender);
-	MinionBlueGetHitByBasicAttack->AddComponent(new CTransform);
-	MinionBlueGetHitByBasicAttack->AddComponent(new CMinionBasicAttackHitEffectScript);
-	MinionBlueGetHitByBasicAttack->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CircleMesh"));
-	MinionBlueGetHitByBasicAttack->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\BlueMinionHitEffect.mtrl"), 0);
-	MinionBlueGetHitByBasicAttack->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 0.f));
-	SpawnGameObject(MinionBlueGetHitByBasicAttack, Vec3(-1200.f, 0.f, 0.f), 0);
-
-
-	// 드래곤 브레스 이펙트
-	//CGameObject* DragonBreathEffect = nullptr;
-	//DragonBreathEffect = new CGameObject;
-	//DragonBreathEffect->SetName(L"DragonBreathEffect");
-	//DragonBreathEffect->AddComponent(new CMeshRender);
-	//DragonBreathEffect->AddComponent(new CTransform);
-	//DragonBreathEffect->AddComponent(new CAnimator2D);
-	////DragonBreathEffect->Animator2D()->SetCurAnim(CResMgr::GetInst()->FindRes<CAnim2D>(L"anim2d\\DragonBasicAttack.anim2d").Get());
-	//DragonBreathEffect->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 1.f));
-	//DragonBreathEffect->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	//DragonBreathEffect->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std2DMtrl"), 0);
-	//SpawnGameObject(DragonBreathEffect, Vec3(-810.f, 395.f, 0.f), 0);
-	CGameObject* DragonBreathEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\DragonBreathEffect.prefab")->Instantiate();
-	DragonBreathEffect->Transform()->SetRelativeScale(100.f, 150.f, 1.f);
-	DragonBreathEffect->Animator2D()->Play(L"DragonBasicAttack", true);
-	SpawnGameObject(DragonBreathEffect, Vec3(-810.f, 420.f, 0.f), 0);
-
-	
-	// 징크스 W 이펙트
-	/*CGameObject* JinxWEffect = nullptr;
-	JinxWEffect = new CGameObject;
-	JinxWEffect->SetName(L"JinxWEffect");
-	JinxWEffect->AddComponent(new CMeshRender);
-	JinxWEffect->AddComponent(new CTransform);
-	JinxWEffect->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	JinxWEffect->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\JinxWEffect.mtrl"), 0);
-	JinxWEffect->Transform()->SetRelativeScale(Vec3(200.f, 100.f, 1.f));*/
-
-	CGameObject* JinxWEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\JinxWEffect.prefab")->Instantiate();
-	
-
-	/*CGameObject* JinxWEffectChild = new CGameObject;
-	JinxWEffectChild->SetName(L"JinxWChild");
-	JinxWEffectChild->AddComponent(new CMeshRender);
-	JinxWEffectChild->AddComponent(new CTransform);
-	JinxWEffectChild->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CircleMesh"));
-	JinxWEffectChild->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\JinxWEffectChild.mtrl"), 0);
-	JinxWEffectChild->Transform()->SetRelativeScale(50.f, 200.f, 1.f);
-	JinxWEffectChild->Transform()->SetAbsolute(true);
-
-	JinxWEffect->AddChild(JinxWEffectChild);*/
-
-
-	SpawnGameObject(JinxWEffect, Vec3(-1020.f, 390.f, 0.f), 0);
-
-
- 
-
-
-
-	
 
 	// ============
 	// FBX Loading
@@ -375,23 +222,23 @@ void CreateTestLevel()
 		pObj->AddComponent(new CCollider3D);
 		pObj->AddComponent(new CCollider2D);
 		pObj->AddComponent(new CFsm);
-		
+
 		pObj->Collider2D()->SetAbsolute(false);
 		pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
 		pObj->Collider2D()->SetOffsetScale(Vec2(20.f, 20.f));
 		pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-		
+
 		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
 		pObj->Collider3D()->SetAbsolute(true);
 		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
 		pObj->Collider3D()->SetDrawCollision(false);
 		pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true,true,0.1f);
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		
+
 		pObj->Transform()->SetUseMouseOutline(true);
 		CJinxScript* jinxscript = pObj->GetScript<CJinxScript>();
 		jinxscript->SetFaction(Faction::BLUE);
-		
+
 		SpawnGameObject(pObj, Vec3(0, 0, 0), L"Player");
 
 		CGameObject* JinxAttackRange = new CGameObject;
@@ -406,6 +253,59 @@ void CreateTestLevel()
 		pObj->AddChild(JinxAttackRange);
 		JinxAttackRange->ChangeLayer(L"AttackRange");*/
 
+		
+
+		//==============================================================
+		//CGameObject* pBushObj = new CGameObject;
+		//pBushObj->SetName(L"TestBush");
+		//pBushObj->AddComponent(new CTransform);
+		//pBushObj->AddComponent(new CCollider3D);
+		//pBushObj->AddComponent(new CBushScript);
+		//pBushObj->Transform()->SetRelativeScale(Vec3(50.f, 50.f, 100.f));
+		//pBushObj->Transform()->SetRelativeRot(Vec3(0.f, -13.f, 0.f));
+		//pBushObj->Transform()->SetRelativePos(Vec3(701.f, 0.f, 469.f));
+		//pBushObj->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
+		//pBushObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::CUBE);
+		//SpawnGameObject(pBushObj, Vec3(701.f, 0.f, 469.f), L"Bush");
+
+		//pMeshData = nullptr;
+		//pObj = nullptr;
+		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Bush_A.fbx");
+		//pObj = pMeshData->Instantiate();
+		//pObj->SetName(L"Bush_A");
+		//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Bush_A");
+		//pObj->GetRenderComponent()->SetFrustumCheck(false);
+		//pObj->Animator3D()->PlayRepeat(L"Bush_A\\Idle1_model.001", true, true, 0.1f);
+		////pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(45.f), XMConvertToRadians(-180.f)));
+		//pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+		//SpawnGameObject(pObj, Vec3(1711.f, 14.8f, 1721.f), L"Bush");
+
+		//pMeshData = nullptr;
+		//pObj = nullptr;
+		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Bush_B.fbx");
+		//pObj = pMeshData->Instantiate();
+		//pObj->SetName(L"Bush_B");
+		//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Bush_B");
+		//pObj->GetRenderComponent()->SetFrustumCheck(false);
+		//pObj->Animator3D()->PlayRepeat(L"Bush_B\\Idle1_model.001", true, true, 0.1f);
+		////pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(45.f), XMConvertToRadians(-180.f)));
+		//pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+		//SpawnGameObject(pObj, Vec3(1711.f, 14.8f, 1721.f), L"Bush");
+
+		//pMeshData = nullptr;
+		//pObj = nullptr;
+		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Bush_C.fbx");
+		//pObj = pMeshData->Instantiate();
+		//pObj->SetName(L"Bush_C");
+		//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Bush_C");
+		//pObj->GetRenderComponent()->SetFrustumCheck(false);
+		//pObj->Animator3D()->PlayRepeat(L"Bush_C\\Idle1_model.001", true, true, 0.1f);
+		//pObj->AddComponent(new CCollider3D);
+		//pObj->AddComponent(new CBushScript);
+
+		////pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(45.f), XMConvertToRadians(-180.f)));
+		//pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+		//SpawnGameObject(pObj, Vec3(1711.f, 14.8f, 1721.f), L"Bush");
 
 
 	}
@@ -415,7 +315,7 @@ void CreateTestLevel()
 	//SpawnJungleMob();
 	//PlaceStructure();
 
-	CGameObject* pBushObj = new CGameObject;
+	/*CGameObject* pBushObj = new CGameObject;
 	pBushObj->SetName(L"TestBush");
 
 	pBushObj->AddComponent(new CTransform);
@@ -429,7 +329,7 @@ void CreateTestLevel()
 	pBushObj->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
 	pBushObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::CUBE);
 
-	SpawnGameObject(pBushObj, Vec3(701.f, 0.f, 469.f), L"Bush");
+	SpawnGameObject(pBushObj, Vec3(701.f, 0.f, 469.f), L"Bush");*/
 
 
 
