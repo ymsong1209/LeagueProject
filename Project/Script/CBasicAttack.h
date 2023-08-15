@@ -5,7 +5,7 @@ class CBasicAttack :
 {
 public:
     CBasicAttack();
-    ~CBasicAttack();
+    virtual ~CBasicAttack();
 
 private:
 

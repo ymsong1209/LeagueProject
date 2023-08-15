@@ -5,7 +5,9 @@
 #include "CMinionWalkState.h"
 #include "CMinionChaseState.h"
 #include "CBasicAttack.h"
+#include "CRangedMinionBasicAttack.h"
 #include "CAttackRangeScript.h"
+
 
 CMinionScript::CMinionScript()
 	:CMobScript((UINT)SCRIPT_TYPE::MINIONSCRIPT)
@@ -152,8 +154,16 @@ void CMinionScript::begin()
 	GetOwner()->Fsm()->ChangeState(L"Walk");
 
 	// Skill에 BasicAttack 추가
-	m_Skill[0] = new CBasicAttack;
-	m_Skill[0]->SetOwnerScript(this);
+	if (m_eUnitType == UnitType::MELEE_MINION || m_eUnitType == UnitType::SUPER_MINION)
+	{
+		m_Skill[0] = new CBasicAttack;
+		m_Skill[0]->SetOwnerScript(this);
+	}
+	else
+	{
+		m_Skill[0] = new CRangedMinionBasicAttack;
+		m_Skill[0]->SetOwnerScript(this);
+	}
 
 	// 사거리 적용
 	CGameObject* AttackRange = GetOwner()->FindChildObjByName(L"AttackRange");

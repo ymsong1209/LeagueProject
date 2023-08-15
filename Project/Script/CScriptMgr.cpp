@@ -10,6 +10,8 @@
 #include "CChampionScript.h"
 #include "CCharacterUIScript.h"
 #include "CCoolDownUIScript.h"
+#include "CDefaultGetHitEffectScript.h"
+#include "CDragonBasicAttackScript.h"
 #include "CDragonHPUIScript.h"
 #include "CDragonScript.h"
 #include "CEndOfGameUIScript.h"
@@ -45,6 +47,7 @@
 #include "CMalphiteRScript.h"
 #include "CMalphiteScript.h"
 #include "CMinimapUIScript.h"
+#include "CMinionBasicAttackHitEffectScript.h"
 #include "CMinionHPBarPosScript.h"
 #include "CMinionHPRatioScript.h"
 #include "CMinionScript.h"
@@ -58,6 +61,7 @@
 #include "CPlayerCSUIScript.h"
 #include "CPlayerScript.h"
 #include "CProjectileScript.h"
+#include "CRangedMinionBasicAttackScript.h"
 #include "CRazorBeakMiniScript.h"
 #include "CRazorBeakScript.h"
 #include "CRedScript.h"
@@ -88,6 +92,8 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CChampionScript");
 	_vec.push_back(L"CCharacterUIScript");
 	_vec.push_back(L"CCoolDownUIScript");
+	_vec.push_back(L"CDefaultGetHitEffectScript");
+	_vec.push_back(L"CDragonBasicAttackScript");
 	_vec.push_back(L"CDragonHPUIScript");
 	_vec.push_back(L"CDragonScript");
 	_vec.push_back(L"CEndOfGameUIScript");
@@ -123,6 +129,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CMalphiteRScript");
 	_vec.push_back(L"CMalphiteScript");
 	_vec.push_back(L"CMinimapUIScript");
+	_vec.push_back(L"CMinionBasicAttackHitEffectScript");
 	_vec.push_back(L"CMinionHPBarPosScript");
 	_vec.push_back(L"CMinionHPRatioScript");
 	_vec.push_back(L"CMinionScript");
@@ -136,6 +143,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CPlayerCSUIScript");
 	_vec.push_back(L"CPlayerScript");
 	_vec.push_back(L"CProjectileScript");
+	_vec.push_back(L"CRangedMinionBasicAttackScript");
 	_vec.push_back(L"CRazorBeakMiniScript");
 	_vec.push_back(L"CRazorBeakScript");
 	_vec.push_back(L"CRedScript");
@@ -176,6 +184,10 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CCharacterUIScript;
 	if (L"CCoolDownUIScript" == _strScriptName)
 		return new CCoolDownUIScript;
+	if (L"CDefaultGetHitEffectScript" == _strScriptName)
+		return new CDefaultGetHitEffectScript;
+	if (L"CDragonBasicAttackScript" == _strScriptName)
+		return new CDragonBasicAttackScript;
 	if (L"CDragonHPUIScript" == _strScriptName)
 		return new CDragonHPUIScript;
 	if (L"CDragonScript" == _strScriptName)
@@ -246,6 +258,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CMalphiteScript;
 	if (L"CMinimapUIScript" == _strScriptName)
 		return new CMinimapUIScript;
+	if (L"CMinionBasicAttackHitEffectScript" == _strScriptName)
+		return new CMinionBasicAttackHitEffectScript;
 	if (L"CMinionHPBarPosScript" == _strScriptName)
 		return new CMinionHPBarPosScript;
 	if (L"CMinionHPRatioScript" == _strScriptName)
@@ -272,6 +286,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CPlayerScript;
 	if (L"CProjectileScript" == _strScriptName)
 		return new CProjectileScript;
+	if (L"CRangedMinionBasicAttackScript" == _strScriptName)
+		return new CRangedMinionBasicAttackScript;
 	if (L"CRazorBeakMiniScript" == _strScriptName)
 		return new CRazorBeakMiniScript;
 	if (L"CRazorBeakScript" == _strScriptName)
@@ -341,6 +357,12 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::COOLDOWNUISCRIPT:
 		return new CCoolDownUIScript;
+		break;
+	case (UINT)SCRIPT_TYPE::DEFAULTGETHITEFFECTSCRIPT:
+		return new CDefaultGetHitEffectScript;
+		break;
+	case (UINT)SCRIPT_TYPE::DRAGONBASICATTACKSCRIPT:
+		return new CDragonBasicAttackScript;
 		break;
 	case (UINT)SCRIPT_TYPE::DRAGONHPUISCRIPT:
 		return new CDragonHPUIScript;
@@ -447,6 +469,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::MINIMAPUISCRIPT:
 		return new CMinimapUIScript;
 		break;
+	case (UINT)SCRIPT_TYPE::MINIONBASICATTACKHITEFFECTSCRIPT:
+		return new CMinionBasicAttackHitEffectScript;
+		break;
 	case (UINT)SCRIPT_TYPE::MINIONHPBARPOSSCRIPT:
 		return new CMinionHPBarPosScript;
 		break;
@@ -485,6 +510,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::PROJECTILESCRIPT:
 		return new CProjectileScript;
+		break;
+	case (UINT)SCRIPT_TYPE::RANGEDMINIONBASICATTACKSCRIPT:
+		return new CRangedMinionBasicAttackScript;
 		break;
 	case (UINT)SCRIPT_TYPE::RAZORBEAKMINISCRIPT:
 		return new CRazorBeakMiniScript;
@@ -582,6 +610,14 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::COOLDOWNUISCRIPT:
 		return L"CCoolDownUIScript";
+		break;
+
+	case SCRIPT_TYPE::DEFAULTGETHITEFFECTSCRIPT:
+		return L"CDefaultGetHitEffectScript";
+		break;
+
+	case SCRIPT_TYPE::DRAGONBASICATTACKSCRIPT:
+		return L"CDragonBasicAttackScript";
 		break;
 
 	case SCRIPT_TYPE::DRAGONHPUISCRIPT:
@@ -724,6 +760,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CMinimapUIScript";
 		break;
 
+	case SCRIPT_TYPE::MINIONBASICATTACKHITEFFECTSCRIPT:
+		return L"CMinionBasicAttackHitEffectScript";
+		break;
+
 	case SCRIPT_TYPE::MINIONHPBARPOSSCRIPT:
 		return L"CMinionHPBarPosScript";
 		break;
@@ -774,6 +814,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::PROJECTILESCRIPT:
 		return L"CProjectileScript";
+		break;
+
+	case SCRIPT_TYPE::RANGEDMINIONBASICATTACKSCRIPT:
+		return L"CRangedMinionBasicAttackScript";
 		break;
 
 	case SCRIPT_TYPE::RAZORBEAKMINISCRIPT:

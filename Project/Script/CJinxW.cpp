@@ -12,38 +12,25 @@ CJinxW::CJinxW()
 	m_iMaxLevel = 5;
 	m_fCost = 50.f;
 
-	CGameObject* pObj = nullptr;
-	Ptr<CMeshData> pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx_W_Air.fbx");
-	pObj = pMeshData->Instantiate();
-	//pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\particle\\jinx_base_w_blade_trail.dds"));
-	pObj->AddComponent(new CCollider2D);
-	pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-	pObj->Collider2D()->SetOffsetScale(Vec2(20.f, 20.f));
-	pObj->Collider2D()->SetOffsetPos(Vec3(0.f, -20.f, 0.f));
-	pObj->Collider2D()->SetDrawCollision(true);
-	pObj->Transform()->SetRelativeScale(Vec3(0.5f, 0.8f, 0.5f));
-	pObj->SetName(L"JinxW");
+	CGameObject* JinxWAttackObj = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\JinxWEffect.prefab")->Instantiate();
+	JinxWAttackObj->SetName(L"JinxWAttack");
+	JinxWAttackObj->AddComponent(new CCollider2D);
+	JinxWAttackObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+	JinxWAttackObj->Collider2D()->SetAbsolute(true);
+	JinxWAttackObj->Collider2D()->SetOffsetScale(Vec2(5.f, 5.f));
+	JinxWAttackObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
+	JinxWAttackObj->Transform()->SetRelativeScale(Vec3(40.f, 260.f, 1.f));
 
-	// 빛나는 구
-	CGameObject* pLight = new CGameObject;
-	pLight->AddComponent(new CTransform);
-	pLight->AddComponent(new CMeshRender);
-	pLight->Transform()->SetRelativeScale(Vec3(5.f, 5.f, 5.f));
-	pLight->Transform()->SetAbsolute(true);
-	pLight->Transform()->SetRelativePos(Vec3(0.f, -20.f, 0.f));
-	pLight->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CircleMesh"));
-	pLight->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\JinxW_air.mtrl"), 0);
-	pLight->ChangeLayer(8);
-	pObj->AddChild(pLight);
-	
 
 	Ptr<CPrefab> NewPrefab = new CPrefab;
-	NewPrefab->RegisterProtoObject(pObj);
+	CGameObject* PrefabObject = JinxWAttackObj->Clone();
+	NewPrefab->RegisterProtoObject(JinxWAttackObj);
+
 	m_vecSkillObj.push_back(NewPrefab);
 
 	// 투사체 스크립트
 	m_iProjectileCount = 1;
-	m_ProjectileScript = new CJinxWScript;
+	//m_ProjectileScript = new CJinxWScript;
 }
 
 CJinxW::~CJinxW()

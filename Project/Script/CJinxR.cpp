@@ -29,23 +29,9 @@ CJinxR::CJinxR()
 	NewPrefab->RegisterProtoObject(pObj);
 	m_vecSkillObj.push_back(NewPrefab);
 
-	//CGameObject* Projectile = new CGameObject;
-	//Projectile->AddComponent(new CTransform);
-	//Projectile->AddComponent(new CCollider2D);
-	//Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-	//Projectile->Collider2D()->SetOffsetScale(Vec2(12.f, 12.f));
-	//Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
-	//Projectile->Collider2D()->SetDrawCollision(true);
-	//Projectile->SetName(L"JinxR");
-	//
-	//Projectile->Transform()->SetIsShootingRay(true);
-	//Projectile->Transform()->SetRayRange(100);
-	//
-	//Ptr<CPrefab> NewPrefab = new CPrefab;
-	//CGameObject* PrefabObject = Projectile->Clone();
-	//NewPrefab->RegisterProtoObject(Projectile);
-	//
-	//m_vecSkillObj.push_back(NewPrefab);
+	// 피격 이펙트
+	Ptr<CPrefab> JinxBasicAttackGetHitEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\JinxGetHitByRocketAttack.prefab");
+	m_SkillHitEffect = JinxBasicAttackGetHitEffect;
 
 	// 투사체 스크립트
 	m_iProjectileCount = 1;

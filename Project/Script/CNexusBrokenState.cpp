@@ -70,5 +70,6 @@ void CNexusBrokenState::Enter()
 
 void CNexusBrokenState::Exit()
 {
+	CUnitState::Exit();
 }
 
