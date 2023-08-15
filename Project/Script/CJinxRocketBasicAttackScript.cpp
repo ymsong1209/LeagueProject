@@ -3,7 +3,7 @@
 
 CJinxRocketBasicAttackScript::CJinxRocketBasicAttackScript()
 {
-	m_fProjectileSpeed = 100.f;
+	m_fProjectileSpeed = 300.f;
 }
 
 CJinxRocketBasicAttackScript::~CJinxRocketBasicAttackScript()

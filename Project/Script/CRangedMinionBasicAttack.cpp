@@ -11,7 +11,9 @@ CRangedMinionBasicAttack::CRangedMinionBasicAttack()
 
 	CGameObject* RangedMinionBasicAttackObj = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\RedMinionBasicAttack.prefab")->Instantiate();
 	RangedMinionBasicAttackObj->SetName(L"RedRangedMinionBasicAttackProjectile");
-	RangedMinionBasicAttackObj->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Minion\\MinionRedAttack.dds"));
+	//RangedMinionBasicAttackObj->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Minion\\MinionRedAttack.dds"));
+
+
 
 	// 피격 이펙트
 	Ptr<CPrefab> MinionBasicAttackHitEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MinionRedGetHitByBasicAttack.prefab");
@@ -34,38 +36,7 @@ CRangedMinionBasicAttack::~CRangedMinionBasicAttack()
 
 void CRangedMinionBasicAttack::tick()
 {
-	//m_vecSkillObj.clear();
-	//
-	//// 쿨타임 계산 필요 없음
-	//CGameObject* RangedMinionBasicAttackObj = nullptr;
-	//
-	//// 투사체 생성
-	//if (m_OwnerScript->GetFaction() == Faction::RED)
-	//{
-	//	CGameObject* RangedMinionBasicAttackObj = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\RedMinionBasicAttack.prefab")->Instantiate();
-	//	RangedMinionBasicAttackObj->SetName(L"RedRangedMinionBasicAttackProjectile");
-	//	RangedMinionBasicAttackObj->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Minion\\MinionRedAttack.dds"));
-	//
-	//	// 피격 이펙트
-	//	Ptr<CPrefab> MinionBasicAttackHitEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MinionRedGetHitByBasicAttack.prefab");
-	//	m_SkillHitEffect = MinionBasicAttackHitEffect;
-	//}
-	//else
-	//{
-	//	CGameObject* RangedMinionBasicAttackObj = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\BlueMinionBasicAttack.prefab")->Instantiate();
-	//	RangedMinionBasicAttackObj->SetName(L"BlueRangedMinionBasicAttackProjectile");
-	//	RangedMinionBasicAttackObj->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Minion\\MinionBlueAttack.dds"));
-	//
-	//	// 피격 이펙트
-	//	Ptr<CPrefab> MinionBasicAttackHitEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MinionBlueGetHitByBasicAttack.prefab");
-	//	m_SkillHitEffect = MinionBasicAttackHitEffect;
-	//}
-	//
-	//Ptr<CPrefab> NewPrefab = new CPrefab;
-	//CGameObject* PrefabObject = RangedMinionBasicAttackObj->Clone();
-	//NewPrefab->RegisterProtoObject(PrefabObject);
-	//
-	//m_vecSkillObj.push_back(NewPrefab);
+	
 }
 
 bool CRangedMinionBasicAttack::Use()

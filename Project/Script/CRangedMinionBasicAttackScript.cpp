@@ -25,6 +25,17 @@ void CRangedMinionBasicAttackScript::begin()
 
 	// z축 회전(-90도)
 	GetOwner()->Transform()->SetRelativeRot(Vec3(0.f, 0.f, targetAngle - XMConvertToRadians(90)));
+
+
+	if (m_UserObj->GetScript<CUnitScript>()->GetFaction() == Faction::BLUE)
+	{
+		// 재질 블루
+		GetOwner()->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Minion\\MinionBlueAttack.dds"));
+	}
+	else
+	{
+		GetOwner()->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Minion\\MinionRedAttack.dds"));
+	}
 }
 
 void CRangedMinionBasicAttackScript::tick()

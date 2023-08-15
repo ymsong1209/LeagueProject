@@ -14,6 +14,13 @@ CJinxW::CJinxW()
 
 	CGameObject* JinxWAttackObj = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\JinxWEffect.prefab")->Instantiate();
 	JinxWAttackObj->SetName(L"JinxWAttack");
+	JinxWAttackObj->AddComponent(new CCollider2D);
+	JinxWAttackObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+	JinxWAttackObj->Collider2D()->SetAbsolute(true);
+	JinxWAttackObj->Collider2D()->SetOffsetScale(Vec2(5.f, 5.f));
+	JinxWAttackObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
+	JinxWAttackObj->Transform()->SetRelativeScale(Vec3(40.f, 260.f, 1.f));
+
 
 	Ptr<CPrefab> NewPrefab = new CPrefab;
 	CGameObject* PrefabObject = JinxWAttackObj->Clone();
