@@ -33,8 +33,9 @@ CJinxRocketBasicAttack::CJinxRocketBasicAttack()
 
 	m_vecSkillObj.push_back(NewPrefab);
 
-	//Ptr<CPrefab> MalphiteEEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MalphiteEDecal.prefab");
-	//m_SkillHitEffect = MalphiteEEffect;
+	// 피격 이펙트
+	Ptr<CPrefab> JinxBasicAttackGetHitEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\JinxGetHitByRocketAttack.prefab");
+	m_SkillHitEffect = JinxBasicAttackGetHitEffect;
 
 	// 투사체 스크립트
 	m_iProjectileCount = 1;
