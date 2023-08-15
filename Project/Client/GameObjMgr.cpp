@@ -127,10 +127,10 @@ CGameObject* GameObjMgr::FindAllObject(uint64 _targetId)
 		return nullptr;
 	}
 
-	_allObjects.insert(_players.begin(), _players.end());
-	_allObjects.insert(_objects.begin(), _objects.end());
+	//_allObjects.insert(_players.begin(), _players.end());
+	//_allObjects.insert(_objects.begin(), _objects.end());
 	//_allObjects.insert(_placedObjects.begin(), _placedObjects.end());
-	_allObjects.insert(_turretChild.begin(), _turretChild.end());
+	//_allObjects.insert(_turretChild.begin(), _turretChild.end());
 
 	// find 함수를 사용하여 원하는 키 값을 가진 원소를 찾습니다.
 	std::map<uint64, CGameObject*>::iterator iter = _allObjects.find(_targetId);
