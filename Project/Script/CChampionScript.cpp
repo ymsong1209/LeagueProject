@@ -163,14 +163,9 @@ void CChampionScript::CheckStatus()
 	
 	if (m_fExp >= m_fMaxExp)
 	{
-		// 레벨업
-		// 레벨업 관련 이펙트?
-
-		// 초과된 만큼 exp를 남기고 스킬 포인트 추가
-		m_iLevel += 1;
-		m_fExp = m_fExp - m_fMaxExp;
-		m_iSkillLevelUpPoint++;
+		LevelUp();
 	}
+
 }
 
 void CChampionScript::GetInput()
@@ -393,6 +388,17 @@ void CChampionScript::Move()
 			CGameEventMgr::GetInst()->NotifyEvent(*evn);
 		}
 	}
+}
+
+void CChampionScript::LevelUp()
+{
+	m_iLevel++;
+
+	//레벨업 이펙트 및 파티클
+
+	// 초과된 만큼 exp를 남기고 스킬 포인트 추가
+	m_fExp = m_fExp - m_fMaxExp;
+	m_iSkillLevelUpPoint++;
 }
 
 

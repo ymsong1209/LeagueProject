@@ -68,6 +68,7 @@ public:
     void    Move();
     bool    IsAttackingChampion() { return m_bIsAttackingChampion; }
     bool    IsInsideEnemyTurretRange() { return m_bIsInsideEnemyTurretRange; }
+    void    LevelUp();
     
 public:
     float   GetExp() { return m_fExp; }
