@@ -19,8 +19,10 @@ CIconTimerUIScript
 CInGameCameraScript
 CInhibitorScript
 CInventoryUIScript
+CJinxBasicAttackMinigunHitEffectScript
 CJinxBasicAttackScript
 CJinxEScript
+CJinxRocketBasicAttackScript
 CJinxRScript
 CJinxScript
 CJinxWScript

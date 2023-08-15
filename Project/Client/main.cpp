@@ -67,7 +67,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     ImGuiMgr::GetInst()->init(g_hWnd);
 
     // 테스트 용 레벨 생성
-    //CreateTestLevel();
+    CreateTestLevel();
     //CreateLoginLevel();
 
     // 메세지 루프
@@ -138,8 +138,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             }
             else if (KEY_TAP(KEY::M))
             { 
-                Send_CPickChampion(service,ChampionType::MALPHITE);
-                //Send_CPickChampion(service, ChampionType::JINX);
+                //Send_CPickChampion(service,ChampionType::MALPHITE);
+                Send_CPickChampion(service, ChampionType::JINX);
             }
             else if (KEY_TAP(KEY::NUM_4))      
             {
