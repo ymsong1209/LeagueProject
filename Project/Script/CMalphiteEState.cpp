@@ -35,6 +35,8 @@ void CMalphiteEState::Enter()
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, true, true, 0.1f);
 
+	Vec3 vPos = GetOwner()->Transform()->GetRelativePos();
+	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\malphite\\Malph_E.mp3", 1, 0.5f, true, 100.f, vPos, Faction::NONE);
 
 }
 

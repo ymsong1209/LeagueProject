@@ -57,6 +57,18 @@ void CMalphiteAttackState::Enter()
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, basename, false, true, false, 0.0f);
 
 
+	if (m_iMalphiteSoundNum == 1) {
+		Vec3 vPos = GetOwner()->Transform()->GetRelativePos();
+		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\malphite\\Malph_BasicAttack1.mp3", 1, 0.5f, true, 100.f, vPos, Faction::NONE);
+		m_iMalphiteSoundNum = 2;
+	}
+	else {
+		Vec3 vPos = GetOwner()->Transform()->GetRelativePos();
+		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\malphite\\Malph_BasicAttack2.mp3", 1, 0.5f, true, 100.f, vPos, Faction::NONE);
+		m_iMalphiteSoundNum = 1;
+	}
+
+
 
 	CChampionAttackState::Enter();
 }

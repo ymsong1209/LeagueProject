@@ -53,6 +53,10 @@ void CMalphiteRState::Enter()
 
 	// 새로운 회전 각도를 적용
 	GetOwner()->Transform()->SetRelativeRot(Vec3(0.f, newYaw, 0.f));
+
+	Vec3 vPos = GetOwner()->Transform()->GetRelativePos();
+	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\malphite\\Malph_R.mp3", 1, 0.5f, true, 100.f, vPos, Faction::NONE);
+
 }
 
 void CMalphiteRState::tick()

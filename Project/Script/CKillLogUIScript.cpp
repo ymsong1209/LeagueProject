@@ -557,11 +557,18 @@ void CKillLogUIScript::Announce_EndofGame(Faction _VictimFaction)
 	{
 		EndOfGamePanel->Transform()->SetRelativeScale(Vec3(403.2f, 447.3f, 1.f));
 		EndOfGamePanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\EndOfDefeat.mtrl"), 0);
+
+		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\defeat.mp3", 1, 0.5f, true, 0.f, Vec3(0,0,0), _VictimFaction);
 	}
 	else
 	{
 		EndOfGamePanel->Transform()->SetRelativeScale(Vec3(402.f, 447.f, 1.f));
 		EndOfGamePanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\EndOfVictory.mtrl"), 0);
+		
+		if(_VictimFaction == Faction::RED)
+			CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\victory.mp3", 1, 0.5f, true, 0.f, Vec3(0, 0, 0), Faction::BLUE);
+		else
+			CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\victory.mp3", 1, 0.5f, true, 0.f, Vec3(0, 0, 0), Faction::RED);
 	}
 
 	SpawnGameObject(EndOfGamePanel, Vec3(0.f, 0.f, 1.f), 31);
