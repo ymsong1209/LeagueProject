@@ -27,8 +27,8 @@ void CDragonHPUIScript::tick()
 
 		//----------HP------------
 		//======µð¹ö±ë¿ë=========
-		m_fCurHP = 1000.f;
-		m_fTotalHP = 1000.f;
+		/*m_fCurHP = 1000.f;
+		m_fTotalHP = 1000.f;*/
 		//====================
 		m_fRatio = m_fCurHP / m_fTotalHP;
 		if (m_fCurHP >= m_fTotalHP)
