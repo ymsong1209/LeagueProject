@@ -110,7 +110,6 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CKrugMiniScript");
 	_vec.push_back(L"CKrugScript");
 	_vec.push_back(L"CMalphiteBasicAttackHitEffectScript");
-	_vec.push_back(L"CMalphiteBasicAttackScript");
 	_vec.push_back(L"CMalphiteEDecalScript");
 	_vec.push_back(L"CMalphiteEScript");
 	_vec.push_back(L"CMalphiteQDecalScript");
@@ -144,8 +143,6 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CSkillLvEffectUIScript");
 	_vec.push_back(L"CSoundTestScript");
 	_vec.push_back(L"CStructureScript");
-	_vec.push_back(L"CTestTurretScript");
-	_vec.push_back(L"CTurretAttackScript");
 	_vec.push_back(L"CTurretBasicAttackScript");
 	_vec.push_back(L"CTurretHPUIScript");
 	_vec.push_back(L"CTurretScript");
@@ -667,10 +664,6 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::MALPHITEBASICATTACKHITEFFECTSCRIPT:
 		return L"CMalphiteBasicAttackHitEffectScript";
-		break;
-
-	case SCRIPT_TYPE::MALPHITEBASICATTACKSCRIPT:
-		return L"CMalphiteBasicAttackScript";
 		break;
 
 	case SCRIPT_TYPE::MALPHITEEDECALSCRIPT:

@@ -11,17 +11,17 @@ void CTurretHPUIScript::begin()
 	Transform()->SetNoParentaffected(true);
 	MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
 
-	UnitType Type = GetOwner()->GetParent()->GetScript<CUnitScript>()->GetUnitType();
+	ParentUnitType = GetOwner()->GetParent()->GetScript<CUnitScript>()->GetUnitType();
 	Faction FactionType = GetOwner()->GetParent()->GetScript<CUnitScript>()->GetFaction();
 	Vec3 Pos = GetOwner()->GetParent()->Transform()->GetRelativePos();
 
-	switch (Type)
+	switch (ParentUnitType)
 	{
 	case UnitType::TURRET:
 	{
 		if (FactionType == Faction::BLUE)
 			MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\BlueTurretHPBar.mtrl"), 0);
-		else if(FactionType == Faction::RED)
+		else if (FactionType == Faction::RED)
 			MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\RedTurretHPBar.mtrl"), 0);
 
 		Transform()->SetRelativeScale(Vec3(71.6f, 10.5f, 1.f));
@@ -78,9 +78,10 @@ void CTurretHPUIScript::tick()
 
 		if (m_fCurHP <= 0.f)
 		{
-			DestroyObject(GetOwner());
-			//MeshRender()->SetSortExcept(true);
-			return;
+			if (ParentUnitType == UnitType::INHIBITOR)
+				MeshRender()->SetSortExcept(true);
+			else
+				DestroyObject(GetOwner());
 		}
 
 		Transform()->SetAbsolute(false);
@@ -100,7 +101,6 @@ void CTurretHPUIScript::tick()
 		if (m_fCurHP <= 0.f)
 			m_fCurHP = 0.f;
 		//-------------------------
-
 		MeshRender()->GetDynamicMaterial(0)->SetScalarParam(FLOAT_0, &m_fRatio);
 	}
 }
