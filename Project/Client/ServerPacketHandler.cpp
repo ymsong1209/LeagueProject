@@ -794,9 +794,20 @@ void ServerPacketHandler::Handle_S_TIME(PacketSessionRef& session, BYTE* buffer,
 		return;
 	}
 
-	float	  _killerId = pkt->second;
-
 	// 모두가 본인의 시간을 업데이트 하는 코드 추가 필요
+	float	fTime = pkt->second;
+
+	Vec3 _2dPos = Vec3(0.f, 0.f, 0.f);
+
+	// 소환사의 협곡에 오신것을 환영합니다.
+	if(3.f == fTime)
+		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\welcome_rift.mp3", 1, 0.5f, true, 0.f, _2dPos, Faction::NONE);
+
+	// 30초뒤 미니언이 생성됩니다.
+	if(30.f == fTime)
+		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\minion_spawn_remain_30.mp3", 1, 0.5f, true, 0.f, _2dPos, Faction::NONE);
+
+	CSendServerEventMgr::GetInst()->SetPlayTime(fTime);
 
 	std::cout << "===============================" << endl;
 	m.unlock();
