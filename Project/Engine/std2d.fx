@@ -954,18 +954,18 @@ float4 PS_SkillLevelShader(VS_OUT _in) : SV_Target
     float2 Skill_R_discardRegionMin = float2(0.f, 0.f) / TexSize;
     float2 Skill_R_discardRegionMax = float2(279.f, 9.f) / TexSize;
     
+    //if (R_Level == 0)
+    //    Skill_R_discardRegionMin = float2(223.f, 0.f) / TexSize;
     if (R_Level == 0)
-        Skill_R_discardRegionMin = float2(223.f, 0.f) / TexSize;
-    else if (R_Level == 1)
         Skill_R_discardRegionMin = float2(236.f, 0.f) / TexSize;
-    else if (R_Level == 2)
+    else if (R_Level == 1)
         Skill_R_discardRegionMin = float2(247.f, 0.f) / TexSize;
-    else if (R_Level == 3)
+    else if (R_Level == 2)
         Skill_R_discardRegionMin = float2(258.f, 0.f) / TexSize;
-    else if (R_Level == 4)
+    else if (R_Level == 3)
         Skill_R_discardRegionMin = float2(269.f, 0.f) / TexSize;
-    else if (R_Level == 5)
-        Skill_R_discardRegionMin = float2(279.f, 0.f) / TexSize;
+    //else if (R_Level == 5)
+    //    Skill_R_discardRegionMin = float2(279.f, 0.f) / TexSize;
 
 
         // 현재 UV 좌표가 해당 영역에 속하는지 확인
@@ -1000,5 +1000,44 @@ float4 PS_SkillLevelShader(VS_OUT _in) : SV_Target
 
     return vOutColor;
 }
+
+
+
+
+
+
+
+
+// ============================
+// AlphaDurationShader
+// RasterizerState      : None
+// BlendState           : Mask
+// DepthStencilState    : Less
+
+// g_tex_0              : Output Texture
+// g_int_0              : 알파 라티오 사용여부
+// g_float_0            : 알파 비율
+// ============================
+
+VS_OUT VS_AlphaDurationShader(VS_IN _in)
+{
+    VS_OUT output = (VS_OUT) 0.f;
+
+    output.vPosition = mul(float4(_in.vLocalPos, 1.f), g_matWVP);
+    output.vUV = _in.vUV; // UV 조정은 삭제
+
+    return output;
+}
+
+float4 PS_AlphaDurationShader(VS_OUT _in) : SV_Target
+{
+    float4 vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
+    if (g_int_0 == 1) // 알파 라티오 사용할경우
+    {
+        vOutColor.a *= g_float_0;
+    }
+    return vOutColor;
+}
+
 
 #endif

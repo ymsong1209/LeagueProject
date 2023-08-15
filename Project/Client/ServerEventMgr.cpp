@@ -188,6 +188,9 @@ void ServerEventMgr::clienttick()
 					NewObject->GetScript<CUnitScript>()->SetRcvMove(true);
 					NewObject->GetScript<CUnitScript>()->SetMovePos(Vec3(objectMove->pos.x, objectMove->pos.y, objectMove->pos.z));
 					NewObject->GetScript<CUnitScript>()->SetMoveDir(Vec3(objectMove->moveDir.x, objectMove->moveDir.y, objectMove->moveDir.z));
+				
+					NewObject->GetScript<CUnitScript>()->SetDropGold(objectMove->iDropGold);
+					NewObject->GetScript<CUnitScript>()->SetDropExp(objectMove->fDropExp);
 				}
 				//NewObject->Transform()->SetRelativePos(Vec3(objectMove->pos.x, objectMove->pos.y, objectMove->pos.z));
 				//NewObject->Transform()->SetRelativeRot(Vec3(objectMove->moveDir.x, objectMove->moveDir.y, objectMove->moveDir.z));

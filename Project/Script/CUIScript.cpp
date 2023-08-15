@@ -33,26 +33,6 @@ void CUIScript::tick()
 {
 }
 
-void CUIScript::BeginOverlap(CCollider2D* _Other)
-{
-}
-
-void CUIScript::SaveToLevelFile(FILE* _File)
-{
-}
-
-void CUIScript::LoadFromLevelFile(FILE* _FILE)
-{
-}
-
-void CUIScript::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
-{
-}
-
-void CUIScript::LoadFromLevelJsonFile(const Value& _componentValue)
-{
-}
-
 CUIScript::CUIScript(SCRIPT_TYPE _Type)
 	:CScript((UINT)_Type)
 	, m_UIBackPanel(nullptr)

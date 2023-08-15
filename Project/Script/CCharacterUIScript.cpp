@@ -9,11 +9,13 @@
 #include <Engine\CCamera.h>
 #include "CSkillLevelUIScript.h"
 #include "CSkillLevelUpUIScript.h"
+#include "CUnitScript.h"
+#include "CChampionScript.h"
 
 CCharacterUIScript::CCharacterUIScript()
 	:CUIScript(CHARACTERUISCRIPT)
-	, m_iGold(14300)
-	, m_iPlayerLevel(18)
+	, m_iGold(0)
+	, m_iPlayerLevel(0)
 {
 }
 
@@ -36,8 +38,9 @@ void CCharacterUIScript::tick()
 {
 	if (UICamera)
 	{
+		int CurChampGold = CSendServerEventMgr::GetInst()->GetMyPlayer()->GetScript<CChampionScript>()->GetGold();
 		//======골드 폰트======
-		wstring Gold = to_wstring((int)m_iGold);
+		wstring Gold = to_wstring((int)CurChampGold);
 
 		tFont Font3 = {};
 		Font3.wInputText = Gold; //골드 폰트
@@ -47,12 +50,12 @@ void CCharacterUIScript::tick()
 		Font3.iFontColor = FONT_RGBA(252, 252, 250, 255);
 		UICamera->AddText(FONT_DOMAIN::TRANS, Font3);
 		//=======================
-
+		int CurChampLevel = CSendServerEventMgr::GetInst()->GetMyPlayer()->GetScript<CChampionScript>()->GetLevel();
 		//======레벨 폰트======
-		wstring Level = to_wstring((int)m_iPlayerLevel);
+		wstring Level = to_wstring((int)CurChampLevel);
 
 		tFont Font = {};
-		Font.wInputText = Level; //골드 폰트
+		Font.wInputText = Level;
 		Font.fontType = FONT_TYPE::RIX_KOR_L;
 		Font.fFontSize = 13.5;
 		Font.vDisplayPos = Vec2(573.4f, 973.f);

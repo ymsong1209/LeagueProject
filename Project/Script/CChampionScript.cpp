@@ -136,7 +136,10 @@ bool CChampionScript::CheckDeath()
 			PathFinder()->ClearPath();
 
 			// 우물로 리스폰
-			GetOwner()->Transform()->SetRelativePos(100.f, 30.f, 100.f);
+			if(m_eFaction == Faction::BLUE)
+				GetOwner()->Transform()->SetRelativePos(100.f, 30.f, 100.f);
+			else if(m_eFaction == Faction::RED)
+				GetOwner()->Transform()->SetRelativePos(2083.0f, 30.0f, 2137.0f);
 
 			// 부활 이벤트
 			RespawnEvent* evn = dynamic_cast<RespawnEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_RESPAWN));
@@ -163,13 +166,9 @@ void CChampionScript::CheckStatus()
 	
 	if (m_fExp >= m_fMaxExp)
 	{
-		// 레벨업
-		// 레벨업 관련 이펙트?
-
-		// 초과된 만큼 exp를 남기고 스킬 포인트 추가
-		m_fExp = m_fExp - m_fMaxExp;
-		m_iSkillLevelUpPoint++;
+		LevelUp();
 	}
+
 }
 
 void CChampionScript::GetInput()
@@ -392,6 +391,17 @@ void CChampionScript::Move()
 			CGameEventMgr::GetInst()->NotifyEvent(*evn);
 		}
 	}
+}
+
+void CChampionScript::LevelUp()
+{
+	m_iLevel++;
+
+	//레벨업 이펙트 및 파티클
+
+	// 초과된 만큼 exp를 남기고 스킬 포인트 추가
+	m_fExp = m_fExp - m_fMaxExp;
+	m_iSkillLevelUpPoint++;
 }
 
 

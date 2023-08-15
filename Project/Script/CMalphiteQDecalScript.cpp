@@ -17,7 +17,7 @@ CMalphiteQDecalScript::~CMalphiteQDecalScript()
 
 void CMalphiteQDecalScript::begin()
 {
-	
+	GetOwner()->Transform()->SetAbsolute(true);
 }
 
 void CMalphiteQDecalScript::tick()

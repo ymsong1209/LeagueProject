@@ -16,6 +16,7 @@ CMalphiteE::CMalphiteE()
 	CGameObject* MalphiteEDecal = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MalphiteEDecal.prefab")->Instantiate();
 	MalphiteEDecal->AddComponent(new CCollider2D);
 	MalphiteEDecal->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+	MalphiteEDecal->Collider2D()->SetAbsolute(true);
 	MalphiteEDecal->Collider2D()->SetOffsetScale(Vec2(80.f, 80.f));
 	MalphiteEDecal->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
 	MalphiteEDecal->Collider2D()->SetDrawCollision(true);
