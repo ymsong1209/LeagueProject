@@ -70,7 +70,7 @@ void CInhibitorRespawnState::Enter()
 		, false
 		, true
 		, 0.2f
-		, 0.5f);
+		, 11.f); // 11.f는 대충 5분 // 1.f 는 30초
 }
 
 void CInhibitorRespawnState::Exit()

@@ -81,7 +81,7 @@ void CScorePanelScript::tick()
 	//========================================
 
 	//================진행시간========================
-	PlayTime += DT; //<=== 원래는 서버에서 받아와야하나? 아니면 그냥 내가 해줘도되나?
+	PlayTime = CSendServerEventMgr::GetInst()->GetPlayTime(); //서버가 준 시간
 	//float로 들어오는 시간 분/초 로 변환
 
 	int minutes = static_cast<int>(PlayTime) / 60;
@@ -100,6 +100,7 @@ void CScorePanelScript::tick()
 	Font6.iFontColor = FONT_RGBA(242, 241, 237, 255);
 	UICamera->AddText(FONT_DOMAIN::MASK, Font6);
 	//========================================
+
 }
 
 void CScorePanelScript::BeginOverlap(CCollider2D* _Other)

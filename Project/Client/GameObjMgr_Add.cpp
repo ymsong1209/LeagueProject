@@ -217,6 +217,7 @@ void GameObjMgr::AddPlayer(PlayerInfo _info, bool myPlayer)
 		pObj->GetRenderComponent()->SetDynamicShadow(true);
 		
 		_players.insert(std::make_pair(_info.id, pObj));
+		_allObjects.insert(std::make_pair(_info.id, pObj));
 	}
 }
 
@@ -299,6 +300,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			SpawnGameObject(pObj,Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z), L"Mob");
 
 			_objects.insert(std::make_pair(_objectId, pObj));
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 
 		}
 		break;
@@ -368,7 +370,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			SpawnGameObject(pObj, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z), L"Mob");
 
 			_objects.insert(std::make_pair(_objectId, pObj));
-
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::SIEGE_MINION:
@@ -437,7 +439,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			SpawnGameObject(pObj, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z), L"Mob");
 
 			_objects.insert(std::make_pair(_objectId, pObj));
-
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::SUPER_MINION:
@@ -477,7 +479,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			Script->SetFaction(_objectInfo.faction);
 			Script->SetUnitType(UnitType::SUPER_MINION);
 
-			pObj->Transform()->SetRelativeScale(Vec3(0.16f, 0.16f, 0.16f));
+			pObj->Transform()->SetRelativeScale(Vec3(0.25f, 0.25f, 0.25f));
 			pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(_objectInfo.objectMove.moveDir.x), XMConvertToRadians(_objectInfo.objectMove.moveDir.y), XMConvertToRadians(_objectInfo.objectMove.moveDir.z)));
 			
 
@@ -507,7 +509,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			SpawnGameObject(pObj, Vec3(_objectInfo.objectMove.pos.x, _objectInfo.objectMove.pos.y, _objectInfo.objectMove.pos.z), L"Mob");
 
 			_objects.insert(std::make_pair(_objectId, pObj));
-
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		// =======================================================================================================================
@@ -570,6 +572,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(GrompHP);
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::SOUTH_MURKWOLF://블루팀 늑대
@@ -628,6 +631,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(MurkWolfHP);
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::SOUTH_MURKWOLF_MINI_L://블루팀 늑대 째깐이(좌)
@@ -685,6 +689,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(MurkWolf_MiniHP);
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::SOUTH_MURKWOLF_MINI_R://블루팀 늑대 째깐이(우)
@@ -742,6 +747,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(MurkWolf_MiniHP);
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::SOUTH_KRUG://블루팀 돌거북
@@ -799,6 +805,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(KrugHP);
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::SOUTH_KRUG_MINI://블루팀 돌거북 째깐이
@@ -856,6 +863,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(Krug_MiniHP);
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::SOUTH_RAZORBEAK://블루팀 칼날부리
@@ -913,6 +921,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(RazorBeakHP);
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::SOUTH_RAZORBEAK_MINI_1://블루팀 칼날부리 째깐이 1
@@ -970,6 +979,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(RazorBeakHP);
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::SOUTH_RAZORBEAK_MINI_2://블루팀 칼날부리 째깐이 2
@@ -1027,6 +1037,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(RazorBeakHP);
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::SOUTH_RAZORBEAK_MINI_3://블루팀 칼날부리 째깐이 3
@@ -1084,6 +1095,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(RazorBeakHP);
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::SOUTH_RAZORBEAK_MINI_4://블루팀 칼날부리 째깐이 4
@@ -1141,6 +1153,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(RazorBeakHP);
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::SOUTH_RAZORBEAK_MINI_5://블루팀 칼날부리 째깐이 5
@@ -1198,6 +1211,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(RazorBeakHP);
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::SOUTH_BLUE://블루팀 블루
@@ -1255,6 +1269,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(BlueHP);
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::SOUTH_RED://블루팀 레드
@@ -1312,6 +1327,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(RedHP);
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::NORTH_GROMP://레드팀 두꺼비
@@ -1369,6 +1385,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(GrompHP);
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::NORTH_MURKWOLF://레드팀 늑대
@@ -1427,6 +1444,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(MurkWolfHP);
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::NORTH_MURKWOLF_MINI_L://레드팀 늑대 째깐이(좌)
@@ -1484,6 +1502,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(MurkWolf_MiniHP);
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::NORTH_MURKWOLF_MINI_R://레드팀 늑대 째깐이(우)
@@ -1541,6 +1560,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(MurkWolf_MiniHP);
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::NORTH_KRUG://레드팀 돌거북
@@ -1599,6 +1619,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::NORTH_KRUG_MINI://레드팀 돌거북 째깐이
@@ -1656,6 +1677,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(Krug_MiniHP);
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::NORTH_RAZORBEAK://레드팀 칼날부리
@@ -1713,6 +1735,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(RazorBeakHP);
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::NORTH_RAZORBEAK_MINI_1://레드팀 칼날부리 째깐이 1
@@ -1770,6 +1793,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(RazorBeakHP);
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::NORTH_RAZORBEAK_MINI_2://레드팀 칼날부리 째깐이 2
@@ -1827,6 +1851,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(RazorBeakHP);
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::NORTH_RAZORBEAK_MINI_3://레드팀 칼날부리 째깐이 3
@@ -1884,6 +1909,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(RazorBeakHP);
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::NORTH_RAZORBEAK_MINI_4://레드팀 칼날부리 째깐이 4
@@ -1941,6 +1967,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(RazorBeakHP);
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::NORTH_RAZORBEAK_MINI_5://블루팀 칼날부리 째깐이 5
@@ -1998,6 +2025,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(RazorBeakHP);
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::NORTH_BLUE://레드팀 블루
@@ -2055,6 +2083,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(BlueHP);
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::NORTH_RED://레드팀 레드
@@ -2112,6 +2141,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(RedHP);
 
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		case UnitType::DRAGON:// 드래곤
@@ -2169,8 +2199,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->Transform()->SetIsShootingRay(false);
 			pObj->Transform()->SetRayRange(0.f);
 			_objects.insert(std::make_pair(_objectId, pObj));   // 서버가 관리하도록 꼭 넣어야함!! make_pair(서버id, GameObject*)
-
-			
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		// =======================================================================================================================
@@ -2286,6 +2315,11 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			_turretChild.insert(std::make_pair(_objectId + 1, TurretBase));
 			_turretChild.insert(std::make_pair(_objectId + 2, TurretBreak1));
 			_turretChild.insert(std::make_pair(_objectId + 3, TurretBreak2));
+
+			_allObjects.insert(std::make_pair(_objectId, pObj));
+			_allObjects.insert(std::make_pair(_objectId + 1, TurretBase));
+			_allObjects.insert(std::make_pair(_objectId + 2, TurretBreak1));
+			_allObjects.insert(std::make_pair(_objectId + 3, TurretBreak2));
 		}
 		break;
 
@@ -2346,6 +2380,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(HPBar);
 
 			_placedObjects.insert(std::make_pair(_objectId, pObj));
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 
@@ -2406,6 +2441,7 @@ void GameObjMgr::AddObject(uint64 _objectId, ObjectInfo _objectInfo)
 			pObj->AddChild(HPBar);
 
 			_placedObjects.insert(std::make_pair(_objectId, pObj));
+			_allObjects.insert(std::make_pair(_objectId, pObj));
 		}
 		break;
 		} // End Swich case
@@ -2454,6 +2490,7 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 
 				vecProj[i]->GetScript<CUnitScript>()->SetUnitType(UnitType::PROJECTILE);
 				_objects.insert(std::make_pair(_projectileId + i, vecProj[i]));
+				_allObjects.insert(std::make_pair(_projectileId + i, vecProj[i]));
 			}
 		}
 		else
@@ -2483,6 +2520,7 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 
 				vecProj[i]->GetScript<CUnitScript>()->SetUnitType(UnitType::PROJECTILE);
 				_objects.insert(std::make_pair(_projectileId+i, vecProj[i]));
+				_allObjects.insert(std::make_pair(_projectileId + i, vecProj[i]));
 			}
 		}
 

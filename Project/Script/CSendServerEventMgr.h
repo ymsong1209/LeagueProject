@@ -21,6 +21,7 @@ public:
     int                  m_RedScore;
     int                  m_BlueScore;
 
+    float                m_fPlayTime;
     vector<CGameObject*>     m_vecAllPlayer;
 
 
@@ -33,6 +34,8 @@ public:
     void AddMyCSCnt(int _cnt) { m_myCSCnt += _cnt; }
     void AddRedScore(int _cnt) { m_RedScore += _cnt; }
     void AddBlueScore(int _cnt) { m_BlueScore += _cnt; }
+    
+    void SetPlayTime(float _time) { m_fPlayTime = _time; }
 
     vector<CGameObject*> GetVecAllPlayer() { return m_vecAllPlayer; }
     CGameObject* GetMyPlayer() { return m_myPlayerObj; }
@@ -42,6 +45,8 @@ public:
     int GetMyCSCnt() { return m_myCSCnt; }
     int GetRedScore() { return m_RedScore; }
     int GetBlueScore() { return m_BlueScore; }
+
+    float GetPlayTime() { return m_fPlayTime; }
 
     
     // ServerSendEvent ¿ë
