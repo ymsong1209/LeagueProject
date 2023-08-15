@@ -48,11 +48,8 @@
 #include <Script/CDragonScript.h>
 #include <Script/CShopKeeperNorthScript.h>
 #include <Script/CShopKeeperSouthScript.h>
+
 #include <Script/CBushScript.h>
-
-
-// 나중에 지울 코드..?
-#include <Script/CJinxBasicAttackMinigunHitEffectScript.h>
 
 
 void CreateTestLevel()
@@ -61,8 +58,8 @@ void CreateTestLevel()
 	// 
 	//return;	
 	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
-	//pCurLevel->ChangeState(LEVEL_STATE::PLAY);
-	pCurLevel->ChangeState(LEVEL_STATE::STOP);
+	pCurLevel->ChangeState(LEVEL_STATE::PLAY);
+	//pCurLevel->ChangeState(LEVEL_STATE::STOP);
 	CTimeMgr::GetInst()->SetTimeScale(1.f);    // TestLevel에서 강제로 PLAY모드로 전환해서 DT를 흐르게 하기 위함. 추후 삭제
 
 	//롤맵 레이어에는 롤맵만 넣을것!
@@ -186,88 +183,6 @@ void CreateTestLevel()
 	SpawnGameObject(ShopKeeperNorth, Vec3(2021, 30.f, 2154.f), L"Default");
 
 
-	// 징크스 미니건 이펙트를 만들어보자
-	CGameObject* JinxBasicAttackEffect = new CGameObject;
-	JinxBasicAttackEffect->SetName(L"JinxBasicAttackEffect");
-	JinxBasicAttackEffect->AddComponent(new CTransform);
-	JinxBasicAttackEffect->AddComponent(new CMeshRender);
-	JinxBasicAttackEffect->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	JinxBasicAttackEffect->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\JinxMinigunAttackEffect.mtrl"), 0);
-	JinxBasicAttackEffect->MeshRender()->SetPunctureTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\jinxtex\\Minigun.png"));
-	JinxBasicAttackEffect->MeshRender()->GetMaterial(0)->SetShader(CResMgr::GetInst()->FindRes<CGraphicsShader>(L"Std2DEffectShaderAlpha"));
-	JinxBasicAttackEffect->MeshRender()->Transform()->SetRelativeScale(Vec3(20.f, 400.f, 1.f));
-	CGameObject* JinxBasicAttackEffectLeft = JinxBasicAttackEffect->Clone();
-	JinxBasicAttackEffectLeft->Transform()->SetAbsolute(true);
-	JinxBasicAttackEffectLeft->Transform()->SetRelativePos(Vec3(-34.f, -60.f, 0.f));
-	CGameObject* JinxBasicAttackEffectRight = JinxBasicAttackEffect->Clone();
-	JinxBasicAttackEffectRight->Transform()->SetAbsolute(true);
-	JinxBasicAttackEffectRight->Transform()->SetRelativePos(Vec3(+34.f, -100.f, 0.f));
-	JinxBasicAttackEffect->AddChild(JinxBasicAttackEffectLeft);
-	JinxBasicAttackEffect->AddChild(JinxBasicAttackEffectRight);
-	SpawnGameObject(JinxBasicAttackEffect, Vec3(-300.f, 0.f, 0.f), 0);
-
-
-	// 징크스 피격 이펙트를 만들어보자
-	CGameObject* JinxBasicAttackGetHitEffect = new CGameObject;
-	JinxBasicAttackGetHitEffect->SetName(L"JinxBasicAttackGetHitEffect");
-	JinxBasicAttackGetHitEffect->AddComponent(new CTransform);
-	JinxBasicAttackGetHitEffect->AddComponent(new CMeshRender);
-	JinxBasicAttackGetHitEffect->AddComponent(new CJinxBasicAttackMinigunHitEffectScript);
-	JinxBasicAttackGetHitEffect->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	JinxBasicAttackGetHitEffect->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\JinxBasicAttackGetHitEffect.mtrl"), 0);
-	JinxBasicAttackGetHitEffect->MeshRender()->Transform()->SetRelativeScale(Vec3(50.f, 50.f, 1.f));
-	SpawnGameObject(JinxBasicAttackGetHitEffect, Vec3(-600.f, 0.f, 0.f), 0);
-
-
-	// 징크스 로켓 평타를 만들어보자
-	CGameObject* JinxBasicRocketAttackEffect =
-		CResMgr::GetInst()->LoadFBX(L"fbx\\JinxQRockets.fbx")->Instantiate();
-	JinxBasicRocketAttackEffect->SetName(L"JinxBasicRocketAttackEffect");
-	JinxBasicRocketAttackEffect->Transform()->SetRelativeRot(Vec3(0.f, 0.f, XM_PI / 2.f));
-	CGameObject* JinxBasicRocketAttackEffectChild = new CGameObject;
-	JinxBasicRocketAttackEffectChild->SetName(L"JinxBasicRocketAttackEffectChild");
-	JinxBasicRocketAttackEffectChild->AddComponent(new CTransform);
-	JinxBasicRocketAttackEffectChild->AddComponent(new CMeshRender);
-	JinxBasicRocketAttackEffectChild->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
-	JinxBasicRocketAttackEffectChild->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\JinxBasicRocketEffectChild.mtrl"), 0);
-	JinxBasicRocketAttackEffectChild->MeshRender()->SetAdditiveTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\Malphite\malphite_base_p_glowing_fire.dds"));
-	JinxBasicRocketAttackEffectChild->MeshRender()->SetAdditiveTexColor(Vec4(255.f, 0.f, 0.f, 1.f));
-	JinxBasicRocketAttackEffectChild->Transform()->SetRelativePos(Vec3(-90.f, 0.f, 0.f));
-	JinxBasicRocketAttackEffectChild->Transform()->SetRelativeRot(Vec3(0.f, 0.f, XM_PI / 2.f * 3));
-	JinxBasicRocketAttackEffectChild->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 1.f));
-	JinxBasicRocketAttackEffectChild->Transform()->SetAbsolute(true);
-	JinxBasicRocketAttackEffect->AddChild(JinxBasicRocketAttackEffectChild);
-	SpawnGameObject(JinxBasicRocketAttackEffect, Vec3(-300.f, 450.f, 0.f), 0);
-
-
-	// 징크스 로켓 피격 이펙트를 만들어보자
-	//CGameObject* JinxGetHitByRocketAttack = nullptr;
-	//JinxGetHitByRocketAttack = new CGameObject;
-	//JinxGetHitByRocketAttack->SetName(L"JinxGetHitByRocketAttack");
-	//JinxGetHitByRocketAttack->AddComponent(new CParticleSystem);
-	//JinxGetHitByRocketAttack->AddComponent(new CTransform);
-
-	CGameObject* JinxGetHitByRocketAttack = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\JinxGetHitByRocketAttack.prefab")->Instantiate();
-	JinxGetHitByRocketAttack->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\jinxtex\\JinxGetHitByRocket.png"));
-	SpawnGameObject(JinxGetHitByRocketAttack, Vec3(-100.f, 100.f, 0.f), 0);
-	
-
-	// 미니언 평타 파티클 (Red) 
-	CGameObject* MinionRedBasicAttack = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\RedMinionBasicAttack.prefab")->Instantiate();
-	MinionRedBasicAttack->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Minion\\MinionBlueAttack.dds"));
-	SpawnGameObject(MinionRedBasicAttack, Vec3(-670, 400.f, 0.f), 0);
-
-	// 미니언 평타 파티클 (Blue)
-	CGameObject* MinionBlueBasicAttack = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\BlueMinionBasicAttack.prefab")->Instantiate();
-	MinionBlueBasicAttack->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Minion\\MinionRedAttack.dds"));
-	SpawnGameObject(MinionBlueBasicAttack, Vec3(-510.f, 400.f, 0.f), 0);
-
-
-
-
-
-
-	
 
 	// ============
 	// FBX Loading
@@ -307,23 +222,23 @@ void CreateTestLevel()
 		pObj->AddComponent(new CCollider3D);
 		pObj->AddComponent(new CCollider2D);
 		pObj->AddComponent(new CFsm);
-		
+
 		pObj->Collider2D()->SetAbsolute(false);
 		pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
 		pObj->Collider2D()->SetOffsetScale(Vec2(20.f, 20.f));
 		pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-		
+
 		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
 		pObj->Collider3D()->SetAbsolute(true);
 		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
 		pObj->Collider3D()->SetDrawCollision(false);
 		pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true,true,0.1f);
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		
+
 		pObj->Transform()->SetUseMouseOutline(true);
 		CJinxScript* jinxscript = pObj->GetScript<CJinxScript>();
 		jinxscript->SetFaction(Faction::BLUE);
-		
+
 		SpawnGameObject(pObj, Vec3(0, 0, 0), L"Player");
 
 		CGameObject* JinxAttackRange = new CGameObject;
