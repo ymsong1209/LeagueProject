@@ -316,7 +316,7 @@ void GameObjMgr::SendObjectMove(uint64 _id, CGameObject* _obj, ClientServiceRef 
 		}
 		else
 		{
-			_objectsPrevHP.insert(pair(_id, CurHP));
+			_objectsPrevHP.insert(pair(_id, 0));
 		}
 	}
 	else

@@ -11,7 +11,7 @@ CInhibitorScript::CInhibitorScript()
 	, m_vecTurrets{}
 	, m_fRespawnTime(5)
 {
-	m_fMaxHP = 30.f;
+	m_fMaxHP = 100.f;
 }
 
 CInhibitorScript::~CInhibitorScript()
