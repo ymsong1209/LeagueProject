@@ -13,6 +13,7 @@
 #include <Engine\global.h>
 #include "CServerTypes.h"
 #include "CSendServerEventMgr.h"
+#include <Engine\CSoundMgr.h>
 
 #include "CScriptMgr.h"
 
