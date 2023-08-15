@@ -7,6 +7,7 @@ CSendServerEventMgr::CSendServerEventMgr()
 	,m_myCSCnt(0)
 	,m_RedScore(0)
 	,m_BlueScore(0)
+	,m_bIsGameStop(false)
 {
 }
 
