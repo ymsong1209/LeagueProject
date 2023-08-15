@@ -4,7 +4,7 @@
 CJinxBasicAttackScript::CJinxBasicAttackScript()
 	:CProjectileScript((UINT)SCRIPT_TYPE::JINXBASICATTACKSCRIPT)
 {
-	m_fProjectileSpeed = 100.f;
+	m_fProjectileSpeed = 500.f;
 }
 
 
@@ -32,7 +32,6 @@ void CJinxBasicAttackScript::begin()
 void CJinxBasicAttackScript::tick()
 {
 	if (m_bUnitDead) return;
-
 	CProjectileScript::tick();
 
 	if (m_TargetObj == nullptr || m_TargetObj->IsDead())
