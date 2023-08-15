@@ -554,9 +554,9 @@ void CKillLogUIScript::DisplayCS(CGameObject* _KillerChamp, UnitType _UnitType)
 	newSound->Load(filepath);
 	CSoundMgr::GetInst()->AddSound(newSound);
 	int soundId = newSound->GetSoundIndex();
-	CSoundMgr::GetInst()->Play(soundId, 1, 1.f, true, 0.f, Vec3(0, 0, 0));
+	CSoundMgr::GetInst()->Play(soundId, 1, 0.6f, true, 0.f, Vec3(0, 0, 0));
 	CSoundMgr::GetInst()->Stop(soundId);
-	CSoundMgr::GetInst()->Play(soundId, 1, 1.f, true, 0.f, Vec3(0, 0, 0));
+	CSoundMgr::GetInst()->Play(soundId, 1, 0.6f, true, 0.f, Vec3(0, 0, 0));
 }
 
 

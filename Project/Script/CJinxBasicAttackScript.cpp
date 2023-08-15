@@ -27,6 +27,10 @@ void CJinxBasicAttackScript::begin()
 
 	// zÃà È¸Àü(-90µµ)
 	GetOwner()->Transform()->SetRelativeRot(Vec3(0.f, 0.f, targetAngle -XMConvertToRadians(90)));
+
+	// Â¡Å©½º ÃÑ ¼Ò¸®
+	Vec3 JinxPos = GetOwner()->Transform()->GetRelativePos();
+	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\jinx\\JINX_MINIGUN_Shoot1.mp3", 1, 0.5f, true, 100.f, JinxPos, Faction::NONE);
 }
 
 void CJinxBasicAttackScript::tick()

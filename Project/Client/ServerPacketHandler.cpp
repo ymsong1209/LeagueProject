@@ -813,9 +813,9 @@ void ServerPacketHandler::Handle_S_TIME(PacketSessionRef& session, BYTE* buffer,
 		newSound->Load(filepath);
 		CSoundMgr::GetInst()->AddSound(newSound);
 		int soundId = newSound->GetSoundIndex();
-		CSoundMgr::GetInst()->Play(soundId, 5, 0.2f, true, 0.f, _2dPos);
+		CSoundMgr::GetInst()->Play(soundId, 5, 0.18f, true, 0.f, _2dPos);
 		CSoundMgr::GetInst()->Stop(soundId);
-		CSoundMgr::GetInst()->Play(soundId, 5, 0.2f, true, 0.f, _2dPos);
+		CSoundMgr::GetInst()->Play(soundId, 5, 0.18f, true, 0.f, _2dPos);
 		
 	}
 	

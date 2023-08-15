@@ -61,8 +61,9 @@ void CJinxEScript::tick()
 	CProjectileScript::tick();
 
 	// 5초가 지나면 공격 애니메이션
-	if (m_fAccTime >= m_fMaxTime)
+	if (m_fAccTime >= m_fMaxTime && !m_bUsed)
 	{
+		m_bUsed = true;
 		wstring animName = L"wazak\\Attack1";
 		GetOwner()->Animator3D()->PlayOnce(animName, true);
 		UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
@@ -75,7 +76,7 @@ void CJinxEScript::tick()
 	// 공격애니메이션이 끝날때 무조건 despawn
 	if(Animator3D()->GetCurAnim()->GetName() == L"wazak\\Attack1" && Animator3D()->GetCurAnim()->IsFinish())
 	{
-		CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 0.1f);
+		CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 0.f);
 
 		m_fProjectileSpeed = 0.f;
 		m_bUnitDead = true;
