@@ -138,8 +138,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             }
             else if (KEY_TAP(KEY::M))
             { 
-                Send_CPickChampion(service,ChampionType::MALPHITE);
-                //Send_CPickChampion(service, ChampionType::JINX);
+                //Send_CPickChampion(service,ChampionType::MALPHITE);
+                Send_CPickChampion(service, ChampionType::JINX);
             }
             else if (KEY_TAP(KEY::NUM_4))      
             {

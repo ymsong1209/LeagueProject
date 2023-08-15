@@ -19,8 +19,10 @@ CIconTimerUIScript
 CInGameCameraScript
 CInhibitorScript
 CInventoryUIScript
+CJinxBasicAttackMinigunHitEffectScript
 CJinxBasicAttackScript
 CJinxEScript
+CJinxRocketBasicAttackScript
 CJinxRScript
 CJinxScript
 CJinxWScript
@@ -31,6 +33,7 @@ CKillLogUIScript
 CKrugMiniScript
 CKrugScript
 CMalphiteBasicAttackHitEffectScript
+CMalphiteBasicAttackScript
 CMalphiteEDecalScript
 CMalphiteEScript
 CMalphiteQDecalScript

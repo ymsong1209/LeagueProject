@@ -22,8 +22,10 @@
 #include "CInGameCameraScript.h"
 #include "CInhibitorScript.h"
 #include "CInventoryUIScript.h"
+#include "CJinxBasicAttackMinigunHitEffectScript.h"
 #include "CJinxBasicAttackScript.h"
 #include "CJinxEScript.h"
+#include "CJinxRocketBasicAttackScript.h"
 #include "CJinxRScript.h"
 #include "CJinxScript.h"
 #include "CJinxWScript.h"
@@ -98,8 +100,10 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CInGameCameraScript");
 	_vec.push_back(L"CInhibitorScript");
 	_vec.push_back(L"CInventoryUIScript");
+	_vec.push_back(L"CJinxBasicAttackMinigunHitEffectScript");
 	_vec.push_back(L"CJinxBasicAttackScript");
 	_vec.push_back(L"CJinxEScript");
+	_vec.push_back(L"CJinxRocketBasicAttackScript");
 	_vec.push_back(L"CJinxRScript");
 	_vec.push_back(L"CJinxScript");
 	_vec.push_back(L"CJinxWScript");
@@ -196,10 +200,14 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CInhibitorScript;
 	if (L"CInventoryUIScript" == _strScriptName)
 		return new CInventoryUIScript;
+	if (L"CJinxBasicAttackMinigunHitEffectScript" == _strScriptName)
+		return new CJinxBasicAttackMinigunHitEffectScript;
 	if (L"CJinxBasicAttackScript" == _strScriptName)
 		return new CJinxBasicAttackScript;
 	if (L"CJinxEScript" == _strScriptName)
 		return new CJinxEScript;
+	if (L"CJinxRocketBasicAttackScript" == _strScriptName)
+		return new CJinxRocketBasicAttackScript;
 	if (L"CJinxRScript" == _strScriptName)
 		return new CJinxRScript;
 	if (L"CJinxScript" == _strScriptName)
@@ -370,11 +378,17 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::INVENTORYUISCRIPT:
 		return new CInventoryUIScript;
 		break;
+	case (UINT)SCRIPT_TYPE::JINXBASICATTACKMINIGUNHITEFFECTSCRIPT:
+		return new CJinxBasicAttackMinigunHitEffectScript;
+		break;
 	case (UINT)SCRIPT_TYPE::JINXBASICATTACKSCRIPT:
 		return new CJinxBasicAttackScript;
 		break;
 	case (UINT)SCRIPT_TYPE::JINXESCRIPT:
 		return new CJinxEScript;
+		break;
+	case (UINT)SCRIPT_TYPE::JINXROCKETBASICATTACKSCRIPT:
+		return new CJinxRocketBasicAttackScript;
 		break;
 	case (UINT)SCRIPT_TYPE::JINXRSCRIPT:
 		return new CJinxRScript;
@@ -618,12 +632,20 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CInventoryUIScript";
 		break;
 
+	case SCRIPT_TYPE::JINXBASICATTACKMINIGUNHITEFFECTSCRIPT:
+		return L"CJinxBasicAttackMinigunHitEffectScript";
+		break;
+
 	case SCRIPT_TYPE::JINXBASICATTACKSCRIPT:
 		return L"CJinxBasicAttackScript";
 		break;
 
 	case SCRIPT_TYPE::JINXESCRIPT:
 		return L"CJinxEScript";
+		break;
+
+	case SCRIPT_TYPE::JINXROCKETBASICATTACKSCRIPT:
+		return L"CJinxRocketBasicAttackScript";
 		break;
 
 	case SCRIPT_TYPE::JINXRSCRIPT:

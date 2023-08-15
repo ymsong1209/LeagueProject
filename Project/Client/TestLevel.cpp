@@ -182,7 +182,7 @@ void CreateTestLevel()
 	ShopKeeperNorth->SetName(L"ShopKeeperNorth");
 	SpawnGameObject(ShopKeeperNorth, Vec3(2021, 30.f, 2154.f), L"Default");
 
-	
+
 
 	// ============
 	// FBX Loading
@@ -222,23 +222,23 @@ void CreateTestLevel()
 		pObj->AddComponent(new CCollider3D);
 		pObj->AddComponent(new CCollider2D);
 		pObj->AddComponent(new CFsm);
-		
+
 		pObj->Collider2D()->SetAbsolute(false);
 		pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
 		pObj->Collider2D()->SetOffsetScale(Vec2(20.f, 20.f));
 		pObj->Collider2D()->SetOffsetRot(Vec3(XMConvertToRadians(90.f), 0.f, 0.f));
-		
+
 		pObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::SPHERE);
 		pObj->Collider3D()->SetAbsolute(true);
 		pObj->Collider3D()->SetOffsetScale(Vec3(30.f, 30.f, 30.f));
 		pObj->Collider3D()->SetDrawCollision(false);
 		pObj->Animator3D()->PlayRepeat(L"Jinx\\Idle1_Base", true,true,0.1f);
 		pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		
+
 		pObj->Transform()->SetUseMouseOutline(true);
 		CJinxScript* jinxscript = pObj->GetScript<CJinxScript>();
 		jinxscript->SetFaction(Faction::BLUE);
-		
+
 		SpawnGameObject(pObj, Vec3(0, 0, 0), L"Player");
 
 		CGameObject* JinxAttackRange = new CGameObject;
@@ -253,6 +253,59 @@ void CreateTestLevel()
 		pObj->AddChild(JinxAttackRange);
 		JinxAttackRange->ChangeLayer(L"AttackRange");*/
 
+		
+
+		//==============================================================
+		//CGameObject* pBushObj = new CGameObject;
+		//pBushObj->SetName(L"TestBush");
+		//pBushObj->AddComponent(new CTransform);
+		//pBushObj->AddComponent(new CCollider3D);
+		//pBushObj->AddComponent(new CBushScript);
+		//pBushObj->Transform()->SetRelativeScale(Vec3(50.f, 50.f, 100.f));
+		//pBushObj->Transform()->SetRelativeRot(Vec3(0.f, -13.f, 0.f));
+		//pBushObj->Transform()->SetRelativePos(Vec3(701.f, 0.f, 469.f));
+		//pBushObj->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
+		//pBushObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::CUBE);
+		//SpawnGameObject(pBushObj, Vec3(701.f, 0.f, 469.f), L"Bush");
+
+		//pMeshData = nullptr;
+		//pObj = nullptr;
+		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Bush_A.fbx");
+		//pObj = pMeshData->Instantiate();
+		//pObj->SetName(L"Bush_A");
+		//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Bush_A");
+		//pObj->GetRenderComponent()->SetFrustumCheck(false);
+		//pObj->Animator3D()->PlayRepeat(L"Bush_A\\Idle1_model.001", true, true, 0.1f);
+		////pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(45.f), XMConvertToRadians(-180.f)));
+		//pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+		//SpawnGameObject(pObj, Vec3(1711.f, 14.8f, 1721.f), L"Bush");
+
+		//pMeshData = nullptr;
+		//pObj = nullptr;
+		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Bush_B.fbx");
+		//pObj = pMeshData->Instantiate();
+		//pObj->SetName(L"Bush_B");
+		//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Bush_B");
+		//pObj->GetRenderComponent()->SetFrustumCheck(false);
+		//pObj->Animator3D()->PlayRepeat(L"Bush_B\\Idle1_model.001", true, true, 0.1f);
+		////pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(45.f), XMConvertToRadians(-180.f)));
+		//pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+		//SpawnGameObject(pObj, Vec3(1711.f, 14.8f, 1721.f), L"Bush");
+
+		//pMeshData = nullptr;
+		//pObj = nullptr;
+		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Bush_C.fbx");
+		//pObj = pMeshData->Instantiate();
+		//pObj->SetName(L"Bush_C");
+		//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Bush_C");
+		//pObj->GetRenderComponent()->SetFrustumCheck(false);
+		//pObj->Animator3D()->PlayRepeat(L"Bush_C\\Idle1_model.001", true, true, 0.1f);
+		//pObj->AddComponent(new CCollider3D);
+		//pObj->AddComponent(new CBushScript);
+
+		////pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(45.f), XMConvertToRadians(-180.f)));
+		//pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
+		//SpawnGameObject(pObj, Vec3(1711.f, 14.8f, 1721.f), L"Bush");
 
 
 	}
@@ -262,7 +315,7 @@ void CreateTestLevel()
 	//SpawnJungleMob();
 	//PlaceStructure();
 
-	CGameObject* pBushObj = new CGameObject;
+	/*CGameObject* pBushObj = new CGameObject;
 	pBushObj->SetName(L"TestBush");
 
 	pBushObj->AddComponent(new CTransform);
@@ -276,7 +329,7 @@ void CreateTestLevel()
 	pBushObj->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
 	pBushObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::CUBE);
 
-	SpawnGameObject(pBushObj, Vec3(701.f, 0.f, 469.f), L"Bush");
+	SpawnGameObject(pBushObj, Vec3(701.f, 0.f, 469.f), L"Bush");*/
 
 
 

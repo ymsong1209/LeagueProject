@@ -243,11 +243,14 @@
     <ClInclude Include="CInventoryUIScript.h" />
     <ClInclude Include="CJinxAttackState.h" />
     <ClInclude Include="CJinxBasicAttack.h" />
+    <ClInclude Include="CJinxBasicAttackMinigunHitEffectScript.h" />
     <ClInclude Include="CJinxBasicAttackScript.h" />
     <ClInclude Include="CJinxE.h" />
     <ClInclude Include="CJinxEScript.h" />
     <ClInclude Include="CJinxEState.h" />
     <ClInclude Include="CJinxR.h" />
+    <ClInclude Include="CJinxRocketBasicAttack.h" />
+    <ClInclude Include="CJinxRocketBasicAttackScript.h" />
     <ClInclude Include="CJinxRScript.h" />
     <ClInclude Include="CJinxRState.h" />
     <ClInclude Include="CJinxWScript.h" />
@@ -522,6 +525,7 @@
     <ClCompile Include="CInventoryUIScript.cpp" />
     <ClCompile Include="CJinxAttackState.cpp" />
     <ClCompile Include="CJinxBasicAttack.cpp" />
+    <ClCompile Include="CJinxBasicAttackMinigunHitEffectScript.cpp" />
     <ClCompile Include="CJinxBasicAttackScript.cpp" />
     <ClCompile Include="CJinxDeathState.cpp" />
     <ClCompile Include="CJinxE.cpp" />
@@ -532,6 +536,8 @@
     <ClCompile Include="CJinxQState.cpp" />
     <ClCompile Include="CJinxR.cpp" />
     <ClCompile Include="CJinxRespawnState.cpp" />
+    <ClCompile Include="CJinxRocketBasicAttack.cpp" />
+    <ClCompile Include="CJinxRocketBasicAttackScript.cpp" />
     <ClCompile Include="CJinxRScript.cpp" />
     <ClCompile Include="CJinxRState.cpp" />
     <ClCompile Include="CJinxScript.cpp" />

@@ -17,6 +17,8 @@
 
 #include "CJinxBasicAttack.h"
 #include "CJinxBasicAttackScript.h"
+#include "CJinxRocketBasicAttack.h"
+#include "CJinxRocketBasicAttackScript.h"
 #include "CJinxW.h"
 #include "CJinxE.h"
 #include "CJinxR.h"
@@ -40,6 +42,9 @@ CSkillMgr::CSkillMgr()
 
 	CJinxBasicAttack* JinxBasicAttack = new CJinxBasicAttack;
 	m_mapSkills.insert(make_pair(SkillType::JINX_BASIC_ATTACK, JinxBasicAttack));
+
+	CJinxRocketBasicAttack* JinxRocketBasicAttack = new CJinxRocketBasicAttack;
+	m_mapSkills.insert(make_pair(SkillType::JINX_ROCKET_BASIC_ATTACK, JinxRocketBasicAttack));
 
 	CJinxW* JinxW = new CJinxW;
 	m_mapSkills.insert(make_pair(SkillType::JINX_W, JinxW));
@@ -124,6 +129,13 @@ CProjectileScript* CSkillMgr::FindProjectileScript(SkillType _Type)
 		//CBasicAttackScript* BasicAttackScript = new CBasicAttackScript;
 		//BasicAttackScript->SetSkillType(SkillType::JINX_BASIC_ATTACK);
 		//return BasicAttackScript;
+	}
+	break;
+	case SkillType::JINX_ROCKET_BASIC_ATTACK:
+	{		
+		CJinxRocketBasicAttackScript* JinxRocketBasicAttackScript = new CJinxRocketBasicAttackScript;
+		JinxRocketBasicAttackScript->SetSkillType(SkillType::JINX_ROCKET_BASIC_ATTACK);
+		return JinxRocketBasicAttackScript;
 	}
 	break;
 	case SkillType::JINX_W:

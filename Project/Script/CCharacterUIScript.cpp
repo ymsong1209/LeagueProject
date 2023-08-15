@@ -11,11 +11,15 @@
 #include "CSkillLevelUpUIScript.h"
 #include "CUnitScript.h"
 #include "CChampionScript.h"
+#include <Engine\CEngine.h>
 
 CCharacterUIScript::CCharacterUIScript()
 	:CUIScript(CHARACTERUISCRIPT)
 	, m_iGold(0)
 	, m_iPlayerLevel(0)
+	, animationDuration(2.f)
+	, animationDistance(30.f)
+	, m_iPrevChampLevel(1)
 {
 }
 
@@ -63,6 +67,53 @@ void CCharacterUIScript::tick()
 		UICamera->AddText(FONT_DOMAIN::TRANS, Font);
 		//=======================
 	}
+
+	//======레벨업 폰트======
+	int CurChampLevel = CSendServerEventMgr::GetInst()->GetMyPlayer()->GetScript<CChampionScript>()->GetLevel();
+	if (m_iPrevChampLevel != CurChampLevel)
+		m_bAnimating = true;
+
+	wstring Level = to_wstring((int)CurChampLevel);
+
+	if (m_bAnimating)
+	{
+		m_fTimer += DT;
+
+		float progress = min(m_fTimer / animationDuration, 1.f); // 0.0 ~ 1.0 사이의 진행도
+		float easeOutProgress = 1 - pow(1 - progress, 2); // ease-out 효과 (시작은 빠르고 점점 느려짐)
+		Vec2 Resolution = CEngine::GetInst()->GetWindowResolution();
+		Vec3 Pos = UICamera->GetMainPlayerUICamPos();
+		Vec2 FontDefaultPos = Vec2(Pos.x + (Resolution.x / 2), -Pos.y + (Resolution.y / 2));
+		Vec2 FontDisPlayPos = Vec2(FontDefaultPos.x, FontDefaultPos.y - 50.f);
+
+		Vec3 PlayerPos = Vec3(FontDisPlayPos.x, FontDisPlayPos.y, 1.f);
+		Vec3 YOffsetPos = Vec3(0.f, animationDistance * easeOutProgress, 0.f);
+		Vec3 FinalPos = PlayerPos - YOffsetPos;
+		Vec3 ShadowPos = Vec3(FinalPos.x + 2.f, FinalPos.y + 2.f, FinalPos.z);
+
+		tFont Font2 = {};
+		Font2.wInputText = L"레벨 업!";
+		Font2.fontType = FONT_TYPE::RIX_KOR_L;
+		Font2.fFontSize = 17;
+		Font2.vDisplayPos = ShadowPos;
+		Font2.iFontColor = FONT_RGBA(0, 0, 0, 255);
+		UICamera->AddText(FONT_DOMAIN::TRANS, Font2);
+
+		tFont Font = {};
+		Font.wInputText = L"레벨 업!";
+		Font.fontType = FONT_TYPE::RIX_KOR_L;
+		Font.fFontSize = 17;
+		Font.vDisplayPos = FinalPos;
+		Font.iFontColor = FONT_RGBA(7, 176, 227, 255);
+		UICamera->AddText(FONT_DOMAIN::TRANS, Font);
+
+		if (m_fTimer >= animationDuration) {
+			m_bAnimating = false;
+			m_fTimer = 0.f;
+		}
+	}
+
+	m_iPrevChampLevel = CurChampLevel;
 }
 
 void CCharacterUIScript::BeginOverlap(CCollider2D* _Other)
@@ -300,6 +351,23 @@ void CCharacterUIScript::BarUILoad()
 		}
 		GetUIBackPanel()->AddChild(BarUI);
 	}
+}
+
+void CCharacterUIScript::LevelUpFont()
+{
+	
+
+	/*if (m_iPrevChampLevel != CurChampLevel)
+	{
+		tFont Font = {};
+		Font.wInputText = Level;
+		Font.fontType = FONT_TYPE::RIX_KOR_L;
+		Font.fFontSize = 13.5;
+		Font.vDisplayPos = Vec2(573.4f, 973.f);
+		Font.iFontColor = FONT_RGBA(252, 252, 250, 255);
+		UICamera->AddText(FONT_DOMAIN::TRANS, Font);
+	}*/
+
 }
 
 

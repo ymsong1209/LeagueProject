@@ -1,19 +1,21 @@
 #include "pch.h"
-#include "CJinxBasicAttackScript.h"
+#include "CJinxRocketBasicAttackScript.h"
 
-CJinxBasicAttackScript::CJinxBasicAttackScript()
-	:CProjectileScript((UINT)SCRIPT_TYPE::JINXBASICATTACKSCRIPT)
+CJinxRocketBasicAttackScript::CJinxRocketBasicAttackScript()
 {
 	m_fProjectileSpeed = 100.f;
 }
 
-
-CJinxBasicAttackScript::~CJinxBasicAttackScript()
+CJinxRocketBasicAttackScript::~CJinxRocketBasicAttackScript()
 {
 }
 
-void CJinxBasicAttackScript::begin()
+void CJinxRocketBasicAttackScript::begin()
 {
+
+
+
+
 	// 첫 생성 위치 기억
 	m_vSpawnPos = GetOwner()->Transform()->GetRelativePos();
 
@@ -26,10 +28,10 @@ void CJinxBasicAttackScript::begin()
 	float targetAngle = atan2f(Direction.z, Direction.x);
 
 	// z축 회전(-90도)
-	GetOwner()->Transform()->SetRelativeRot(Vec3(0.f, 0.f, targetAngle -XMConvertToRadians(90)));
+	GetOwner()->Transform()->SetRelativeRot(Vec3(0.f, 0.f, targetAngle - XMConvertToRadians(90)));
 }
 
-void CJinxBasicAttackScript::tick()
+void CJinxRocketBasicAttackScript::tick()
 {
 	if (m_bUnitDead) return;
 
@@ -53,8 +55,7 @@ void CJinxBasicAttackScript::tick()
 	GetOwner()->Transform()->SetRelativePos(NewPos);
 }
 
-
-void CJinxBasicAttackScript::BeginOverlap(CCollider2D* _Other)
+void CJinxRocketBasicAttackScript::BeginOverlap(CCollider2D* _Other)
 {
 	if (m_TargetObj == nullptr || m_TargetObj->IsDead())
 	{

@@ -80,6 +80,7 @@ public:
     void    AddExp(float _exp) { m_fExp += _exp; }
 
     int     GetSkillLevelUpPoint() { return m_iSkillLevelUpPoint; }
+    void    SetSkillLevelUpPoint(int _iPoint) { m_iSkillLevelUpPoint = _iPoint; }
 
     void SetInsideEnemyTurretRange(bool _b) { m_bIsInsideEnemyTurretRange = _b; }
     void SetAttackingChampion(bool _b) { m_bIsAttackingChampion = _b; }
