@@ -20,6 +20,12 @@ CRangedMinionBasicAttack::CRangedMinionBasicAttack()
 	RangedMinionBasicAttackObj->Collider2D()->SetDrawCollision(true);
 	RangedMinionBasicAttackObj->Transform()->SetBillBoard(true);
 	
+	Ptr<CPrefab> NewPrefab = new CPrefab;
+	CGameObject* PrefabObject = RangedMinionBasicAttackObj->Clone();
+	NewPrefab->RegisterProtoObject(PrefabObject);
+
+	m_vecSkillObj.push_back(NewPrefab);
+
 
 	// 피격 이펙트
 	Ptr<CPrefab> MinionBasicAttackHitEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MinionRedGetHitByBasicAttack.prefab");
@@ -29,12 +35,6 @@ CRangedMinionBasicAttack::CRangedMinionBasicAttack()
 	MinionBasicAttackHitEffect.Get()->GetProtoObject()->GetScript<CDefaultGetHitEffectScript>()->SetDeleteScale(1.f);
 
 	m_SkillHitEffect = MinionBasicAttackHitEffect;
-
-	Ptr<CPrefab> NewPrefab = new CPrefab;
-	CGameObject* PrefabObject = RangedMinionBasicAttackObj->Clone();
-	NewPrefab->RegisterProtoObject(PrefabObject);
-
-	m_vecSkillObj.push_back(NewPrefab);
 
 	// 투사체 스크립트
 	m_iProjectileCount = 1;

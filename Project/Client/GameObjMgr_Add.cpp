@@ -2510,11 +2510,31 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 			{
 				if (MinionScript->GetFaction() == Faction::RED)
 				{
-					vecProj[0]->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Minion\\MinionRedAttack.dds"));
+					//vecProj[0]->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Minion\\MinionBlueAttack.dds"));
+					CGameObject* RangedMinionBasicAttackObj = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\RedMinionBasicAttack.prefab")->Instantiate();
+					RangedMinionBasicAttackObj->SetName(L"RedRangedMinionBasicAttackProjectile");
+					RangedMinionBasicAttackObj->AddComponent(new CCollider2D);
+					RangedMinionBasicAttackObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+					RangedMinionBasicAttackObj->Collider2D()->SetAbsolute(true);
+					RangedMinionBasicAttackObj->Collider2D()->SetOffsetScale(Vec2(10.f, 10.f));
+					RangedMinionBasicAttackObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
+					RangedMinionBasicAttackObj->Collider2D()->SetDrawCollision(true);
+					RangedMinionBasicAttackObj->Transform()->SetBillBoard(true);
+					vecProj[0] = RangedMinionBasicAttackObj;
 				}
-				else
+				else if(MinionScript->GetFaction() == Faction::BLUE)
 				{
-					vecProj[0]->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Minion\\MinionBlueAttack.dds"));
+					//vecProj[0]->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Minion\\MinionRedAttack.dds"));
+					CGameObject* RangedMinionBasicAttackObj = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\BlueMinionBasicAttack.prefab")->Instantiate();
+					RangedMinionBasicAttackObj->SetName(L"BlueRangedMinionBasicAttackProjectile");
+					RangedMinionBasicAttackObj->AddComponent(new CCollider2D);
+					RangedMinionBasicAttackObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+					RangedMinionBasicAttackObj->Collider2D()->SetAbsolute(true);
+					RangedMinionBasicAttackObj->Collider2D()->SetOffsetScale(Vec2(10.f, 10.f));
+					RangedMinionBasicAttackObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
+					RangedMinionBasicAttackObj->Collider2D()->SetDrawCollision(true);
+					RangedMinionBasicAttackObj->Transform()->SetBillBoard(true);
+					vecProj[0] = RangedMinionBasicAttackObj;
 				}
 			}
 
