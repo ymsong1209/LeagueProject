@@ -5,7 +5,7 @@ CDefaultGetHitEffectScript::CDefaultGetHitEffectScript()
 	: CScript((UINT)SCRIPT_TYPE::DEFAULTGETHITEFFECTSCRIPT)
 	, m_bUseBillBoard(false)
 	, m_fDeleteScale(10.f)
-	, m_fExpandSpeed(650.f)
+	, m_fExpandSpeed(400.f)
 	, m_bIsmaxScale(false)
 {
 }
