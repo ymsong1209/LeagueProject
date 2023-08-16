@@ -67,8 +67,8 @@ void CDragonScript::GetHit(CGameObject* _target)
 
 void CDragonScript::begin()
 {
-	m_fHP = 200;
-	m_fMaxHP = 200;
+	m_fHP = 2000;
+	m_fMaxHP = 2000;
 	m_fAttackRange = 30.f;
 	GetOwner()->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Elder_Dragon");
 	if (GetOwner()->GetComponent(COMPONENT_TYPE::FSM) == nullptr) GetOwner()->AddComponent(new CFsm);

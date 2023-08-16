@@ -13,8 +13,8 @@
 CTurretScript::CTurretScript()
 	:CStructureScript((UINT)SCRIPT_TYPE::TURRETSCRIPT)
 {
-	m_fMaxHP = 100.f;
-	m_fAttackPower = 1;
+	m_fMaxHP = 1000.f;
+	m_fAttackPower = 50;
 	m_fDefencePower = 0;
 	m_fAttackSpeed = 2.f;
 	m_fAttackRange = 200;

@@ -255,6 +255,8 @@ void CChampionScript::GetInput()
 				evn->SetTargetObj(nullptr);
 				CGameEventMgr::GetInst()->NotifyEvent(*evn);
 			}
+
+			m_fMP -= m_Skill[1]->GetCost();
 		}
 	}
 	if (KEY_TAP(KEY::W))
@@ -274,6 +276,8 @@ void CChampionScript::GetInput()
 				evn->SetTargetObj(nullptr);
 				CGameEventMgr::GetInst()->NotifyEvent(*evn);
 			}
+
+			m_fMP -= m_Skill[2]->GetCost();
 		}
 	}
 	if (KEY_TAP(KEY::E))
@@ -293,6 +297,8 @@ void CChampionScript::GetInput()
 				evn->SetTargetObj(nullptr);
 				CGameEventMgr::GetInst()->NotifyEvent(*evn);
 			}
+
+			m_fMP -= m_Skill[3]->GetCost();
 		}
 	}
 	if (KEY_TAP(KEY::R))
@@ -312,6 +318,7 @@ void CChampionScript::GetInput()
 				evn->SetTargetObj(nullptr);
 				CGameEventMgr::GetInst()->NotifyEvent(*evn);
 			}
+			m_fMP -= m_Skill[4]->GetCost();
 		}
 	}
 	if (KEY_TAP(KEY::_1))
