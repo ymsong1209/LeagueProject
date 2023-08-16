@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CDragonBasicAttack.h"
+#include "CImmediateGetHitScript.h"
 
 CDragonBasicAttack::CDragonBasicAttack()
 {
@@ -23,6 +24,9 @@ CDragonBasicAttack::CDragonBasicAttack()
 
 	// 피격 이펙트
 	Ptr<CPrefab> DragonBasicAttackHitEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MalphiteBasicAttackHitEffect.prefab");
+	DragonBasicAttackHitEffect.Get()->GetProtoObject()->AddComponent(new CImmediateGetHitScript);
+ 
+
 	m_SkillHitEffect = DragonBasicAttackHitEffect;
 
 	// 투사체 스크립트

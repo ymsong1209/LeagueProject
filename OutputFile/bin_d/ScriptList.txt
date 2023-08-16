@@ -18,6 +18,7 @@ CGrompScript
 CGrowScaleScript
 CHpMpRatioUIScript
 CIconTimerUIScript
+CImmediateGetHitScript
 CInGameCameraScript
 CInhibitorScript
 CInventoryUIScript
@@ -70,6 +71,8 @@ CSkillLevelUpUIScript
 CSkillLvEffectUIScript
 CSoundTestScript
 CStructureScript
+CTestTurretScript
+CTurretAttackScript
 CTurretBasicAttackScript
 CTurretHPUIScript
 CTurretScript
