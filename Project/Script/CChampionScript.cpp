@@ -202,6 +202,8 @@ void CChampionScript::GetInput()
 				if (UnitScript->IsUnitDead())
 					return;
 
+				PathFinder()->ClearPath();
+
 				// 공격 이벤트 발생
 				BasicAttackEvent* evn = dynamic_cast<BasicAttackEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_BASIC_ATTACK));
 				if (evn != nullptr)
@@ -212,7 +214,6 @@ void CChampionScript::GetInput()
 
 					CGameEventMgr::GetInst()->NotifyEvent(*evn);
 				}
-
 
 			}
 
