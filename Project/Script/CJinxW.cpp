@@ -81,11 +81,12 @@ void CJinxW::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _S
 	CUnitScript* UnitScript = dynamic_cast<CUnitScript*>(_UserScript);
 	if (UnitScript != nullptr)
 	{
-		float BaseDamage = 0.f;
-		float AttackPow = UnitScript->GetAttackPower();
+		float BaseDamage = 50.f;
+		int   level = ChamScript->GetLevel();
+		float AttackPow = ChamScript->GetAttackPower();
 
 		// 예시입니다
-		Damage = AttackPow;
+		Damage = BaseDamage + (level * 2) + (AttackPow * 0.3f);
 	}
 
 	// 데미지에서 타겟의 방어력만큼을 제한 뒤 실제 반영할 데미지 계산

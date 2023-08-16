@@ -28,11 +28,11 @@
 CMalphiteScript::CMalphiteScript()
 	:CChampionScript((UINT)MALPHITESCRIPT)
 {
-	m_fMaxHP = 550;
+	m_fMaxHP = 1500;
 	m_fMaxMP = 50;
 
 	//m_fAttackPower = 5.f;
-	m_fAttackPower = 150.f;
+	m_fAttackPower = 50.f;
 	m_fMoveSpeed = 100.f;
 }
 
