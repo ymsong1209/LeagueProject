@@ -14,6 +14,7 @@ private:
     float   m_fExpandSpeed;
     bool    m_bUseBillBoard;
 
+    bool    m_bIsmaxScale;
 public:
     //void SetDeleteTime(float _Time) { m_fDeleteTime = _Time; }
     void SetDeleteScale(float _Scale) { m_fDeleteScale = _Scale; }

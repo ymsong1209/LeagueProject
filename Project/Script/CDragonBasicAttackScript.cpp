@@ -25,6 +25,9 @@ void CDragonBasicAttackScript::begin()
 
 	// z축 회전(-90도)
 	GetOwner()->Transform()->SetRelativeRot(Vec3(0.f, 0.f, targetAngle - XMConvertToRadians(90)));
+
+
+	GetOwner()->Animator2D()->Play(L"DragonBasicAttack", true);
 }
 
 void CDragonBasicAttackScript::tick()

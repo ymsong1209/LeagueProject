@@ -21,7 +21,9 @@ CDragonBasicAttack::CDragonBasicAttack()
 	DragonBasicAttackObj->Collider2D()->SetDrawCollision(true);
 	DragonBasicAttackObj->Transform()->SetBillBoard(false);
 	DragonBasicAttackObj->SetName(L"DragonBasicAttackProjectile");
-
+	DragonBasicAttackObj->Transform()->SetBillBoard(true);
+	//DragonBasicAttackObj->Animator2D()->Play(L"DragonBasicAttack", true);
+		
 	Ptr<CPrefab> NewPrefab = new CPrefab;
 	CGameObject* PrefabObject = DragonBasicAttackObj->Clone();
 	NewPrefab->RegisterProtoObject(PrefabObject);

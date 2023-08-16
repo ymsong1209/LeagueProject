@@ -6,6 +6,7 @@ CDefaultGetHitEffectScript::CDefaultGetHitEffectScript()
 	, m_bUseBillBoard(false)
 	, m_fDeleteScale(30.f)
 	, m_fExpandSpeed(650.f)
+	, m_bIsmaxScale(false)
 {
 }
 
@@ -25,11 +26,16 @@ void CDefaultGetHitEffectScript::begin()
 
 void CDefaultGetHitEffectScript::tick()
 {
+	if (m_bIsmaxScale) return;
+
 	Vec3 Scale = GetOwner()->Transform()->GetRelativeScale();
 
 	if (Scale.x > m_fDeleteScale)
+	{
+		m_bIsmaxScale = true;
 		DestroyObject(GetOwner());
-
+	}
+		
 	float NextScale = Scale.x + DT * m_fExpandSpeed;
 
 	GetOwner()->Transform()->SetRelativeScale(NextScale, NextScale, 1.f);
