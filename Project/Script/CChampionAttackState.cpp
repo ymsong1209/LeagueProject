@@ -23,6 +23,8 @@ void CChampionAttackState::tick()
 	// 애니메이션이 끝날 경우, Idle로 전환
 	if(GetOwnerFSM()->GetOwner()->Animator3D()->GetCurAnim()->IsFinish())
 		GetOwnerFSM()->ChangeState(L"Idle");
+
+	GetOwner()->PathFinder()->ClearPath();
 }
 
 void CChampionAttackState::Enter()
