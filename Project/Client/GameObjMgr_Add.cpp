@@ -2559,7 +2559,7 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 			if ((UINT)UnitType::MELEE_MINION <= (UINT)MinionScript->GetUnitType() &&
 				(UINT)MinionScript->GetUnitType() <= (UINT)UnitType::SUPER_MINION)
 			{
-				if (MinionScript->GetFaction() == Faction::RED)
+				if (MinionScript->GetFaction() == Faction::BLUE)
 				{
 					skill->GetSkillEffect()->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\BlueMinionHitEffect.mtrl"), 0);
 				}
