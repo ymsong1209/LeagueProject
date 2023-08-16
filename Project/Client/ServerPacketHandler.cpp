@@ -303,11 +303,9 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 		//CreateTestLevel();
 
 		//////=========json level load===========================================
-		CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevelFromJson(L"level\\BushFinal.json");
-		tEvent evn = {};
-		evn.Type = EVENT_TYPE::LEVEL_CHANGE;
-		evn.wParam = (DWORD_PTR)pLoadedLevel;
-		CEventMgr::GetInst()->AddEvent(evn);
+		CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevelFromJson(L"level\\BushAndWall.json");
+		CLevelMgr::GetInst()->SetCurLevel(pLoadedLevel);
+
 		// inspector  UI update
 		InspectorUI* inspector = (InspectorUI*)ImGuiMgr::GetInst()->FindUI("##Inspector");
 		inspector->SetTargetObject(nullptr);
