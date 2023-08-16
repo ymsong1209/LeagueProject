@@ -40,6 +40,10 @@ void CJinxQState::Enter()
 
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, true, true, 0.1f);
+
+	// Â¡Å©½º ÃÑ ¹Ù²Ù´Â ¼Ò¸®
+	Vec3 JinxPos = GetOwner()->Transform()->GetRelativePos();
+	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\jinx\\JINX_Change_Gun.mp3", 1, 0.5f, true, 100.f, JinxPos, Faction::NONE);
 }
 
 void CJinxQState::Exit()

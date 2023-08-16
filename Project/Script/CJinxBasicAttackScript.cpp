@@ -4,7 +4,7 @@
 CJinxBasicAttackScript::CJinxBasicAttackScript()
 	:CProjectileScript((UINT)SCRIPT_TYPE::JINXBASICATTACKSCRIPT)
 {
-	m_fProjectileSpeed = 100.f;
+	m_fProjectileSpeed = 500.f;
 }
 
 
@@ -27,12 +27,15 @@ void CJinxBasicAttackScript::begin()
 
 	// z축 회전(-90도)
 	GetOwner()->Transform()->SetRelativeRot(Vec3(0.f, 0.f, targetAngle -XMConvertToRadians(90)));
+
+	// 징크스 총 소리
+	Vec3 JinxPos = GetOwner()->Transform()->GetRelativePos();
+	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\jinx\\JINX_MINIGUN_Shoot1.mp3", 1, 0.5f, true, 100.f, JinxPos, Faction::NONE);
 }
 
 void CJinxBasicAttackScript::tick()
 {
 	if (m_bUnitDead) return;
-
 	CProjectileScript::tick();
 
 	if (m_TargetObj == nullptr || m_TargetObj->IsDead())
@@ -66,7 +69,7 @@ void CJinxBasicAttackScript::BeginOverlap(CCollider2D* _Other)
 	if (_Other == m_TargetObj->Collider2D())
 	{
 		// 방장컴이 서버에게 이 투사체가 피격자와 충돌했다고 전달
-		CSendServerEventMgr::GetInst()->SendHitPacket(GetServerID(), m_iServerTargetID, m_iServerUserID, 1, m_skillType);
+		CSendServerEventMgr::GetInst()->SendHitPacket(GetServerID(), m_iServerTargetID, m_iServerUserID, 1, SkillType::JINX_BASIC_ATTACK);
 
 		// 이후 사라짐
 		m_fProjectileSpeed = 0.f;

@@ -13,8 +13,8 @@
 CTurretScript::CTurretScript()
 	:CStructureScript((UINT)SCRIPT_TYPE::TURRETSCRIPT)
 {
-	m_fMaxHP = 10.f;
-	m_fAttackPower = 1;
+	m_fMaxHP = 500.f;
+	m_fAttackPower = 50;
 	m_fDefencePower = 0;
 	m_fAttackSpeed = 2.f;
 	m_fAttackRange = 200;
@@ -149,11 +149,27 @@ void CTurretScript::Attack()
 
 	if (m_pAttackTarget)
 	{
+		if (CSendServerEventMgr::GetInst()->GetMyPlayer() == m_pAttackTarget)
+		{
+			CSound* newSound = new CSound;
+			wstring filepath = CPathMgr::GetInst()->GetContentPath();
+			filepath += L"sound2d\\sfx_TurretTargeting.mp3";
+			newSound->Load(filepath);
+			CSoundMgr::GetInst()->AddSound(newSound);
+			int soundId = newSound->GetSoundIndex();
+			CSoundMgr::GetInst()->Play(soundId, 1, 0.5f, true, 0.f, GetOwner()->Transform()->GetRelativePos());
+			CSoundMgr::GetInst()->Stop(soundId);
+			CSoundMgr::GetInst()->Play(soundId, 1, 0.5f, true, 0.f, GetOwner()->Transform()->GetRelativePos());
+		}
+
 		CSkill* BasicAttack = GetSkill(0);
 		BasicAttack->SetUserObj(this->GetOwner());
 		BasicAttack->SetTargetObj(m_pAttackTarget);
 		
 		BasicAttack->Use();
+
+		// 타워 공격 사운드
+		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\sfx_TurretBasicAttack.mp3", 1, 0.6f, true, 200.f, GetOwner()->Transform()->GetRelativePos(), Faction::NONE);
 
 		// 공격 쿨타임 초기화
 		m_fAttackCoolTime = 0;

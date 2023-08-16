@@ -41,6 +41,7 @@ void CSkillLevelUpUIScript::tick()
 	{
 		if (m_iSkillPoint != 0)
 		{
+
 			CUnitScript* pUnitScript = CSendServerEventMgr::GetInst()->GetMyPlayer()->GetScript<CUnitScript>();
 			CChampionScript* pChampionScript = CSendServerEventMgr::GetInst()->GetMyPlayer()->GetScript<CChampionScript>();
 			
@@ -88,6 +89,18 @@ void CSkillLevelUpUIScript::tick()
 				SpawnGameObject(Up_Effect, Vec3(-130.f, -405.805f, 333.f), 31);
 
 				pChampionScript->SetSkillLevelUpPoint(m_iSkillPoint - 1);
+
+
+				// 사운드
+				CSound* newSound = new CSound;
+				wstring filepath = CPathMgr::GetInst()->GetContentPath();
+				filepath += L"sound2d\\sfx_Champ_Skill_LevelUp.mp3";
+				newSound->Load(filepath);
+				CSoundMgr::GetInst()->AddSound(newSound);
+				int soundId = newSound->GetSoundIndex();
+				CSoundMgr::GetInst()->Play(soundId, 5, 0.5f, true, 0.f, Vec3(0.f,0.f,0.f));
+				CSoundMgr::GetInst()->Stop(soundId);
+				CSoundMgr::GetInst()->Play(soundId, 5, 0.5f, true, 0.f, Vec3(0.f, 0.f, 0.f));
 			}
 
 			else if (KEY_TAP(KEY::_2) && m_iWLevel < 5)
@@ -109,6 +122,17 @@ void CSkillLevelUpUIScript::tick()
 				SpawnGameObject(Up_Effect, Vec3(-77.f, -405.805f, 333.f), 31);
 
 				pChampionScript->SetSkillLevelUpPoint(m_iSkillPoint - 1);
+
+				// 사운드
+				CSound* newSound = new CSound;
+				wstring filepath = CPathMgr::GetInst()->GetContentPath();
+				filepath += L"sound2d\\sfx_Champ_Skill_LevelUp.mp3";
+				newSound->Load(filepath);
+				CSoundMgr::GetInst()->AddSound(newSound);
+				int soundId = newSound->GetSoundIndex();
+				CSoundMgr::GetInst()->Play(soundId, 5, 0.5f, true, 0.f, Vec3(0.f, 0.f, 0.f));
+				CSoundMgr::GetInst()->Stop(soundId);
+				CSoundMgr::GetInst()->Play(soundId, 5, 0.5f, true, 0.f, Vec3(0.f, 0.f, 0.f));
 
 			}
 
@@ -132,6 +156,17 @@ void CSkillLevelUpUIScript::tick()
 
 				pChampionScript->SetSkillLevelUpPoint(m_iSkillPoint - 1);
 
+				// 사운드
+				CSound* newSound = new CSound;
+				wstring filepath = CPathMgr::GetInst()->GetContentPath();
+				filepath += L"sound2d\\sfx_Champ_Skill_LevelUp.mp3";
+				newSound->Load(filepath);
+				CSoundMgr::GetInst()->AddSound(newSound);
+				int soundId = newSound->GetSoundIndex();
+				CSoundMgr::GetInst()->Play(soundId, 5, 0.5f, true, 0.f, Vec3(0.f, 0.f, 0.f));
+				CSoundMgr::GetInst()->Stop(soundId);
+				CSoundMgr::GetInst()->Play(soundId, 5, 0.5f, true, 0.f, Vec3(0.f, 0.f, 0.f));
+
 			}
 
 			else if (KEY_TAP(KEY::_4) && m_iRLevel < 3)
@@ -153,6 +188,17 @@ void CSkillLevelUpUIScript::tick()
 				SpawnGameObject(Up_Effect, Vec3(25.f, -405.805f, 333.f), 31);
 
 				pChampionScript->SetSkillLevelUpPoint(m_iSkillPoint - 1);
+
+				// 사운드
+				CSound* newSound = new CSound;
+				wstring filepath = CPathMgr::GetInst()->GetContentPath();
+				filepath += L"sound2d\\sfx_Champ_Skill_LevelUp.mp3";
+				newSound->Load(filepath);
+				CSoundMgr::GetInst()->AddSound(newSound);
+				int soundId = newSound->GetSoundIndex();
+				CSoundMgr::GetInst()->Play(soundId, 5, 0.5f, true, 0.f, Vec3(0.f, 0.f, 0.f));
+				CSoundMgr::GetInst()->Stop(soundId);
+				CSoundMgr::GetInst()->Play(soundId, 5, 0.5f, true, 0.f, Vec3(0.f, 0.f, 0.f));
 			}
 		}
 		else

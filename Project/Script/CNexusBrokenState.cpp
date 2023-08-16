@@ -5,7 +5,7 @@
 #include <Engine/CAnim3D.h>
 #include <Engine/CAnimator3D.h>
 #include  <Engine/CFsm.h>
-
+#include <thread>
 
 CNexusBrokenState::CNexusBrokenState()
 {
@@ -58,9 +58,18 @@ void CNexusBrokenState::Enter()
 		, true
 		, 0.1f
 		, 0.8f);
+
+
+	// 4초뒤 터지는 소리
+	thread t1([=]() {
+		Sleep(4000);
+	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound2d\\sfx_nexus_boom.mp3", 1, 0.5f, true, 0.f, Vec3(0, 0, 0), Faction::NONE);
+		});
+	t1.detach();
 }
 
 void CNexusBrokenState::Exit()
 {
+	CUnitState::Exit();
 }
 

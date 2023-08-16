@@ -29,6 +29,7 @@
 #include <Engine/CAnim3D.h>
 #include <Script/CChampionScript.h>
 
+#include <Script/CSendServerEventMgr.h>
 // 전역 변수:
 HINSTANCE   hInst;    // 현재 인스턴스입니다.
 HWND        g_hWnd;
@@ -150,30 +151,32 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                //std::cout << "===============================" << endl;
             }
 
+            if (CSendServerEventMgr::GetInst()->GetIsGameStop() == false)
+            {
+                CEngine::GetInst()->progress();
 
-           CEngine::GetInst()->progress();
-           
-           if (IsInGame) // C->S 패킷 전송
-               ServerEventMgr::GetInst()->sendtick(service);
-
-
-           // 랜덤으로 온 서버패킷을 핸들러에서 서버 이벤트 매니저에 등록해둠.
-          
-           // Event 처리
-           CEventMgr::GetInst()->tick();
-
-           // Server에서 온 패킷 정보를 클라이언트에 반영.
-           ServerEventMgr::GetInst()->clienttick();
+                if (IsInGame) // C->S 패킷 전송
+                    ServerEventMgr::GetInst()->sendtick(service);
 
 
-           CEditorObjMgr::GetInst()->progress();
+                // 랜덤으로 온 서버패킷을 핸들러에서 서버 이벤트 매니저에 등록해둠.
 
-           if (CEngine::GetInst()->GetImguiActive()) {
-               ImGuiMgr::GetInst()->progress();
-           }
+                // Event 처리
+                CEventMgr::GetInst()->tick();
 
-           // 렌더 종료
-           CDevice::GetInst()->Present();
+                // Server에서 온 패킷 정보를 클라이언트에 반영.
+                ServerEventMgr::GetInst()->clienttick();
+
+
+                CEditorObjMgr::GetInst()->progress();
+
+                if (CEngine::GetInst()->GetImguiActive()) {
+                    ImGuiMgr::GetInst()->progress();
+                }
+
+                // 렌더 종료
+                CDevice::GetInst()->Present();
+            }
 
         }       
 

@@ -204,12 +204,15 @@
     <ClInclude Include="CChampionWalkState.h" />
     <ClInclude Include="CCharacterUIScript.h" />
     <ClInclude Include="CCoolDownUIScript.h" />
+    <ClInclude Include="CDefaultGetHitEffectScript.h" />
     <ClInclude Include="CDragonAggro2AlertState.h" />
     <ClInclude Include="CDragonAggroState.h" />
     <ClInclude Include="CDragonAlert2AggroState.h" />
     <ClInclude Include="CDragonAlert2NormalState.h" />
     <ClInclude Include="CDragonAlertState.h" />
     <ClInclude Include="CDragonAttackState.h" />
+    <ClInclude Include="CDragonBasicAttack.h" />
+    <ClInclude Include="CDragonBasicAttackScript.h" />
     <ClInclude Include="CDragonChaseState.h" />
     <ClInclude Include="CDragonDeathState.h" />
     <ClInclude Include="CDragonFlyStartState.h" />
@@ -239,6 +242,7 @@
     <ClInclude Include="CGrowScaleScript.h" />
     <ClInclude Include="CHpMpRatioUIScript.h" />
     <ClInclude Include="CIconTimerUIScript.h" />
+    <ClInclude Include="CImmediateGetHitScript.h" />
     <ClInclude Include="CInhibitorRespawnState.h" />
     <ClInclude Include="CInventoryUIScript.h" />
     <ClInclude Include="CJinxAttackState.h" />
@@ -327,6 +331,7 @@
     <ClInclude Include="CMalphiteWState.h" />
     <ClInclude Include="CMinimapUIScript.h" />
     <ClInclude Include="CMinionAttackState.h" />
+    <ClInclude Include="CMinionBasicAttackHitEffectScript.h" />
     <ClInclude Include="CMinionChaseState.h" />
     <ClInclude Include="CMinionDeathState.h" />
     <ClInclude Include="CMinionHPBarPosScript.h" />
@@ -364,6 +369,8 @@
     <ClInclude Include="CPlayerCSUIScript.h" />
     <ClInclude Include="CPlayerScript.h" />
     <ClInclude Include="CProjectileScript.h" />
+    <ClInclude Include="CRangedMinionBasicAttack.h" />
+    <ClInclude Include="CRangedMinionBasicAttackScript.h" />
     <ClInclude Include="CRazorBeakA2NState.h" />
     <ClInclude Include="CRazorBeakAlertState.h" />
     <ClInclude Include="CRazorBeakAttackState.h" />
@@ -482,12 +489,15 @@
     <ClCompile Include="CChampionWalkState.cpp" />
     <ClCompile Include="CCharacterUIScript.cpp" />
     <ClCompile Include="CCoolDownUIScript.cpp" />
+    <ClCompile Include="CDefaultGetHitEffectScript.cpp" />
     <ClCompile Include="CDragonAggro2AlertState.cpp" />
     <ClCompile Include="CDragonAggroState.cpp" />
     <ClCompile Include="CDragonAlert2AggroState.cpp" />
     <ClCompile Include="CDragonAlert2NormalState.cpp" />
     <ClCompile Include="CDragonAlertState.cpp" />
     <ClCompile Include="CDragonAttackState.cpp" />
+    <ClCompile Include="CDragonBasicAttack.cpp" />
+    <ClCompile Include="CDragonBasicAttackScript.cpp" />
     <ClCompile Include="CDragonChaseState.cpp" />
     <ClCompile Include="CDragonDeathState.cpp" />
     <ClCompile Include="CDragonFlyStartState.cpp" />
@@ -517,6 +527,7 @@
     <ClCompile Include="CHeal.cpp" />
     <ClCompile Include="CHpMpRatioUIScript.cpp" />
     <ClCompile Include="CIconTimerUIScript.cpp" />
+    <ClCompile Include="CImmediateGetHitScript.cpp" />
     <ClCompile Include="CInhibitorBrokenState.cpp" />
     <ClCompile Include="CInhibitorIdleState.cpp" />
     <ClCompile Include="CInhibitorRespawnState.cpp" />
@@ -604,6 +615,7 @@
     <ClCompile Include="CMalphiteWState.cpp" />
     <ClCompile Include="CMinimapUIScript.cpp" />
     <ClCompile Include="CMinionAttackState.cpp" />
+    <ClCompile Include="CMinionBasicAttackHitEffectScript.cpp" />
     <ClCompile Include="CMinionChaseState.cpp" />
     <ClCompile Include="CMinionDeathState.cpp" />
     <ClCompile Include="CMinionHPBarPosScript.cpp" />
@@ -642,6 +654,8 @@
     <ClCompile Include="CPlayerScript.cpp" />
     <ClCompile Include="CInGameCameraScript.cpp" />
     <ClCompile Include="CProjectileScript.cpp" />
+    <ClCompile Include="CRangedMinionBasicAttack.cpp" />
+    <ClCompile Include="CRangedMinionBasicAttackScript.cpp" />
     <ClCompile Include="CRazorBeakA2NState.cpp" />
     <ClCompile Include="CRazorBeakAlertState.cpp" />
     <ClCompile Include="CRazorBeakAttackState.cpp" />

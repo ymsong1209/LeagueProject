@@ -623,9 +623,6 @@
     <ClCompile Include="CJinxRScript.cpp">
       <Filter>Scripts\SkillProjectile\Jinx</Filter>
     </ClCompile>
-    <ClCompile Include="CInGameCameraScript.cpp">
-      <Filter>Scripts\Camera</Filter>
-    </ClCompile>
     <ClCompile Include="CInhibitorBrokenState.cpp">
       <Filter>State\Unit\Structure\Inhibitor</Filter>
     </ClCompile>
@@ -640,9 +637,6 @@
     </ClCompile>
     <ClCompile Include="CTurretIdleState.cpp">
       <Filter>State\Unit\Structure\Turret</Filter>
-    </ClCompile>
-    <ClCompile Include="CScriptMgr.cpp">
-      <Filter>Manager\1. ScriptMgr</Filter>
     </ClCompile>
     <ClCompile Include="CMalphiteBasicAttack.cpp">
       <Filter>Scripts\Skill\Malphite</Filter>
@@ -672,9 +666,6 @@
     </ClCompile>
     <ClCompile Include="CTurretBasicAttackScript.cpp">
       <Filter>Scripts\SkillProjectile</Filter>
-    </ClCompile>
-    <ClCompile Include="CTurretBasicAttack.cpp">
-      <Filter>Scripts\Skill</Filter>
     </ClCompile>
     <ClCompile Include="CSkillLvEffectUIScript.cpp">
       <Filter>UIScript</Filter>
@@ -721,12 +712,49 @@
     <ClCompile Include="CScriptMgr.cpp">
       <Filter>Manager\1. ScriptMgr</Filter>
     </ClCompile>
+    <ClCompile Include="CInGameCameraScript.cpp">
+      <Filter>Scripts\Camera</Filter>
+    </ClCompile>
     <ClCompile Include="CCameraMoveScript.cpp">
       <Filter>Scripts\Camera</Filter>
     </ClCompile>
     <ClCompile Include="CInGameCameraScript.cpp">
       <Filter>Scripts\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="CJinxBasicAttackMinigunHitEffectScript.cpp">
+      <Filter>Effect\GetHitEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxRocketBasicAttack.cpp">
+      <Filter>Scripts\Skill\Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CJinxRocketBasicAttackScript.cpp">
+      <Filter>Scripts\SkillProjectile\Jinx</Filter>
+    </ClCompile>
+    <ClCompile Include="CDragonBasicAttack.cpp">
+      <Filter>Scripts\Skill\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="CDragonBasicAttackScript.cpp">
+      <Filter>Scripts\Skill\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="CRangedMinionBasicAttack.cpp">
+      <Filter>Scripts\Skill\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="CRangedMinionBasicAttackScript.cpp">
+      <Filter>Scripts\Skill\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="CTurretBasicAttack.cpp">
+      <Filter>Scripts\Skill\Etc</Filter>
+    </ClCompile>
+    <ClCompile Include="CMinionBasicAttackHitEffectScript.cpp">
+      <Filter>Effect\GetHitEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="CScriptMgr.cpp">
+      <Filter>Manager\1. ScriptMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CDefaultGetHitEffectScript.cpp">
+      <Filter>Effect\GetHitEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="CImmediateGetHitScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -952,9 +980,6 @@
     <ClInclude Include="CTurretBasicAttackScript.h">
       <Filter>Scripts\SkillProjectile</Filter>
     </ClInclude>
-    <ClInclude Include="CTurretBasicAttack.h">
-      <Filter>Scripts\Skill</Filter>
-    </ClInclude>
     <ClInclude Include="CInhibitorSpawnState.h">
       <Filter>State\Unit\Structure\Inhibitor</Filter>
     </ClInclude>
@@ -1006,6 +1031,37 @@
     <ClInclude Include="CAnnounceTimerUIScript.h">
       <Filter>UIScript</Filter>
     </ClInclude>
+    <ClInclude Include="CJinxBasicAttackMinigunHitEffectScript.h">
+      <Filter>Effect\GetHitEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxRocketBasicAttack.h">
+      <Filter>Scripts\Skill\Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CJinxRocketBasicAttackScript.h">
+      <Filter>Scripts\SkillProjectile\Jinx</Filter>
+    </ClInclude>
+    <ClInclude Include="CDragonBasicAttack.h">
+      <Filter>Scripts\Skill\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="CDragonBasicAttackScript.h">
+      <Filter>Scripts\Skill\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="CRangedMinionBasicAttack.h">
+      <Filter>Scripts\Skill\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="CRangedMinionBasicAttackScript.h">
+      <Filter>Scripts\Skill\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="CTurretBasicAttack.h">
+      <Filter>Scripts\Skill\Etc</Filter>
+    </ClInclude>
+    <ClInclude Include="CMinionBasicAttackHitEffectScript.h">
+      <Filter>Effect\GetHitEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="CDefaultGetHitEffectScript.h">
+      <Filter>Effect\GetHitEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="CImmediateGetHitScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">
@@ -1654,6 +1710,15 @@
     </Filter>
     <Filter Include="State\Unit\Structure\Nexus">
       <UniqueIdentifier>{d7088f8a-4fe2-41db-b2fc-1aa5b5d1f9c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effect">
+      <UniqueIdentifier>{f578b1c2-92cc-4ab9-864e-e6524124b782}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effect\GetHitEffect">
+      <UniqueIdentifier>{6a65ed02-9a00-4745-be86-ee39c683ff6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Skill\Etc">
+      <UniqueIdentifier>{eddbb99a-898b-4618-9836-1c723c7f746d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -66,4 +66,5 @@ void CNexusSpawnState::Enter()
 
 void CNexusSpawnState::Exit()
 {
+	CUnitState::Exit();
 }

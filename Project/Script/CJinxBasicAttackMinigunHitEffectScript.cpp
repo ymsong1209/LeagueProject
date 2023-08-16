@@ -35,7 +35,7 @@ void CJinxBasicAttackMinigunHitEffectScript::tick()
 
 	if (m_fPassedTime >= 3.f)
 	{
-		DeleteObject(GetOwner());
+		DestroyObject(GetOwner());
 	}
 }
 

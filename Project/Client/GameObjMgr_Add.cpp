@@ -2459,7 +2459,7 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 		// 방장만 진짜를 생성한다. 나머지는 가짜를 생성한다.
 		if (MyPlayer.host)
 		{
-			// _SkillInfo를 까서, 어떤 Skill인지 가지고 옴
+			// _SkillInfo를 까서, 어떤 Skill인지 가지고 옴		
 			CSkill* skill = CSkillMgr::GetInst()->FindSkill(_skillInfo.skillType);
 
 			CGameObject* UserObj = FindAllObject(_skillInfo.OwnerId);
@@ -2503,6 +2503,41 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 			// Skill Projectile 오브젝트 가지고 와서, 빈 UnitScript 스크립트와 서버 아이디 붙여줌
 			vector<CGameObject*> vecProj = skill->GetProjectile();
 
+			CUnitScript* MinionScript = UserObj->GetScript<CUnitScript>();
+
+			// 원거리 평타 쓰는 미니언만 예외처리
+			if (MinionScript->GetUnitType() == UnitType::RANGED_MINION || MinionScript->GetUnitType() == UnitType::SIEGE_MINION)
+			{
+				if (MinionScript->GetFaction() == Faction::RED)
+				{
+					//vecProj[0]->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Minion\\MinionBlueAttack.dds"));
+					CGameObject* RangedMinionBasicAttackObj = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\RedMinionBasicAttack.prefab")->Instantiate();
+					RangedMinionBasicAttackObj->SetName(L"RedRangedMinionBasicAttackProjectile");
+					RangedMinionBasicAttackObj->AddComponent(new CCollider2D);
+					RangedMinionBasicAttackObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+					RangedMinionBasicAttackObj->Collider2D()->SetAbsolute(true);
+					RangedMinionBasicAttackObj->Collider2D()->SetOffsetScale(Vec2(10.f, 10.f));
+					RangedMinionBasicAttackObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
+					RangedMinionBasicAttackObj->Collider2D()->SetDrawCollision(true);
+					RangedMinionBasicAttackObj->Transform()->SetBillBoard(true);
+					vecProj[0] = RangedMinionBasicAttackObj;
+				}
+				else if(MinionScript->GetFaction() == Faction::BLUE)
+				{
+					//vecProj[0]->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Minion\\MinionRedAttack.dds"));
+					CGameObject* RangedMinionBasicAttackObj = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\BlueMinionBasicAttack.prefab")->Instantiate();
+					RangedMinionBasicAttackObj->SetName(L"BlueRangedMinionBasicAttackProjectile");
+					RangedMinionBasicAttackObj->AddComponent(new CCollider2D);
+					RangedMinionBasicAttackObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+					RangedMinionBasicAttackObj->Collider2D()->SetAbsolute(true);
+					RangedMinionBasicAttackObj->Collider2D()->SetOffsetScale(Vec2(10.f, 10.f));
+					RangedMinionBasicAttackObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
+					RangedMinionBasicAttackObj->Collider2D()->SetDrawCollision(true);
+					RangedMinionBasicAttackObj->Transform()->SetBillBoard(true);
+					vecProj[0] = RangedMinionBasicAttackObj;
+				}
+			}
+
 			for (int i = 0; i < vecProj.size(); i++)
 			{
 				vecProj[i]->AddComponent(new CUnitScript);
@@ -2537,7 +2572,20 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 		if (skill->GetSkillEffect() != nullptr)
 		{
 			SpawnGameObject(skill->GetSkillEffect(), UserObj->Transform()->GetRelativePos(), L"Effect");
-			skill->GetSkillHitEffect()->SetLifeSpan(0.5f);
+
+			CUnitScript* MinionScript = UserObj->GetScript<CUnitScript>();
+
+			// 미니언만 예외처리
+			if ((UINT)UnitType::MELEE_MINION <= (UINT)MinionScript->GetUnitType() &&
+				(UINT)MinionScript->GetUnitType() <= (UINT)UnitType::SUPER_MINION)
+			{
+				if (MinionScript->GetFaction() == Faction::BLUE)
+				{
+					skill->GetSkillEffect()->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\BlueMinionHitEffect.mtrl"), 0);
+				}
+			}
+
+			skill->GetSkillHitEffect()->SetLifeSpan(0.3f);
 		}
 	}
 }

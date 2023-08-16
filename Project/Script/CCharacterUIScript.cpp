@@ -71,8 +71,21 @@ void CCharacterUIScript::tick()
 	//======레벨업 폰트======
 	int CurChampLevel = CSendServerEventMgr::GetInst()->GetMyPlayer()->GetScript<CChampionScript>()->GetLevel();
 	if (m_iPrevChampLevel != CurChampLevel)
+	{
 		m_bAnimating = true;
 
+		//
+		CSound* newSound = new CSound;
+		wstring filepath = CPathMgr::GetInst()->GetContentPath();
+		filepath += L"sound2d\\sfx_Champ_LevelUp.mp3";
+		newSound->Load(filepath);
+		CSoundMgr::GetInst()->AddSound(newSound);
+		int soundId = newSound->GetSoundIndex();
+		CSoundMgr::GetInst()->Play(soundId, 5, 0.5f, true, 0.f, Vec3(0.f,0.f,0.f));
+		CSoundMgr::GetInst()->Stop(soundId);
+		CSoundMgr::GetInst()->Play(soundId, 5, 0.5f, true, 0.f, Vec3(0.f, 0.f, 0.f));
+	}
+		
 	wstring Level = to_wstring((int)CurChampLevel);
 
 	if (m_bAnimating)

@@ -45,6 +45,10 @@ void CMalphiteWState::Enter()
 
 	//재질을 바꿉니다.
 
+	// 사운드
+	Vec3 vPos = GetOwner()->Transform()->GetRelativePos();
+	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\malphite\\Malph_W_Active.mp3", 1, 0.5f, true, 100.f, vPos, Faction::NONE);
+
 }
 
 void CMalphiteWState::Exit()

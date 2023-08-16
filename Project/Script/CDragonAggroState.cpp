@@ -23,7 +23,7 @@ void CDragonAggroState::Enter()
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, basename, false, false, false, 0.0f);
 
 	Vec3 DragonPos = GetOwner()->Transform()->GetRelativePos();
-	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\dragon\\aggro.mp3", 1, 0.5f, true, 120.f, DragonPos, Faction::NONE);
+	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\dragon\\aggro.mp3", 1, 0.3f, true, 120.f, DragonPos, Faction::NONE);
 
 	m_bDetectChampion = true;
 }

@@ -12,38 +12,29 @@ CJinxW::CJinxW()
 	m_iMaxLevel = 5;
 	m_fCost = 50.f;
 
-	CGameObject* pObj = nullptr;
-	Ptr<CMeshData> pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Jinx_W_Air.fbx");
-	pObj = pMeshData->Instantiate();
-	//pObj->MeshRender()->GetMaterial(0)->SetTexParam(TEX_0, CResMgr::GetInst()->FindRes<CTexture>(L"texture\\particle\\jinx_base_w_blade_trail.dds"));
-	pObj->AddComponent(new CCollider2D);
-	pObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-	pObj->Collider2D()->SetOffsetScale(Vec2(20.f, 20.f));
-	pObj->Collider2D()->SetOffsetPos(Vec3(0.f, -20.f, 0.f));
-	pObj->Collider2D()->SetDrawCollision(true);
-	pObj->Transform()->SetRelativeScale(Vec3(0.5f, 0.8f, 0.5f));
-	pObj->SetName(L"JinxW");
-
-	// 빛나는 구
-	CGameObject* pLight = new CGameObject;
-	pLight->AddComponent(new CTransform);
-	pLight->AddComponent(new CMeshRender);
-	pLight->Transform()->SetRelativeScale(Vec3(5.f, 5.f, 5.f));
-	pLight->Transform()->SetAbsolute(true);
-	pLight->Transform()->SetRelativePos(Vec3(0.f, -20.f, 0.f));
-	pLight->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CircleMesh"));
-	pLight->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\JinxW_air.mtrl"), 0);
-	pLight->ChangeLayer(8);
-	pObj->AddChild(pLight);
-	
+	CGameObject* JinxWAttackObj = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\JinxWEffect.prefab")->Instantiate();
+	JinxWAttackObj->SetName(L"JinxWAttack");
+	JinxWAttackObj->AddComponent(new CCollider2D);
+	JinxWAttackObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+	JinxWAttackObj->Collider2D()->SetAbsolute(true);
+	JinxWAttackObj->Collider2D()->SetOffsetScale(Vec2(5.f, 5.f));
+	JinxWAttackObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
+	JinxWAttackObj->Transform()->SetRelativeScale(Vec3(15.99f, 70.f, 1.f));
 
 	Ptr<CPrefab> NewPrefab = new CPrefab;
-	NewPrefab->RegisterProtoObject(pObj);
+	CGameObject* PrefabObject = JinxWAttackObj->Clone();
+	NewPrefab->RegisterProtoObject(JinxWAttackObj);
+
+	vector<CGameObject*> Childs = JinxWAttackObj->GetChild();
+
+	Childs[0]->Transform()->SetAbsolute(false);
+	Childs[0]->Transform()->SetRelativeScale(Vec3(5.f, 6.f, 1.f));
+
 	m_vecSkillObj.push_back(NewPrefab);
 
 	// 투사체 스크립트
 	m_iProjectileCount = 1;
-	m_ProjectileScript = new CJinxWScript;
+	//m_ProjectileScript = new CJinxWScript;
 }
 
 CJinxW::~CJinxW()
@@ -91,38 +82,35 @@ void CJinxW::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _S
 	if (ChamScript != nullptr)
 	{
 		float BaseDamage = 50.f;
-		int   level		 = ChamScript->GetLevel();
-		float AttackPow  = ChamScript->GetAttackPower();
+		int   level = ChamScript->GetLevel();
+		float AttackPow = ChamScript->GetAttackPower();
 
 		// 예시입니다
 		Damage = BaseDamage + (level * 2) + (AttackPow * 0.3f);
 	}
-	
-	CUnitScript* TargetUnitScript = dynamic_cast<CUnitScript*>(_TargetScript);
-	if (TargetUnitScript != nullptr)
+
+	// 데미지에서 타겟의 방어력만큼을 제한 뒤 실제 반영할 데미지 계산
+	float DefencePow = _TargetScript->GetDefencePower();
+
+	Damage -= DefencePow;
+
+	float minDam = 10.f;
+	if (Damage < minDam)
 	{
-		float DefencePow = TargetUnitScript->GetDefencePower();
-
-		Damage -= DefencePow;
-
-		float minDam = 20.f;
-
-		if (Damage < minDam)
-		{
-			// 데미지 최소값
-			Damage = minDam;
-		}
+		// 데미지 최소값
+		Damage = minDam;
 	}
 
-	TargetUnitScript->SetCurHPVar(-Damage);
+
+	_TargetScript->SetCurHPVar(-Damage);
 
 	// 2초 동안 둔화시킵니다.
-	CTimedEffect* JinxWSlow = new CTimedEffect(TargetUnitScript, 2.f, 0, 0, CC::SLOW);
-	TargetUnitScript->AddTimedEffect(JinxWSlow);
+	CTimedEffect* JinxWSlow = new CTimedEffect(_TargetScript, 2.f, 0, 0, CC::SLOW);
+	_TargetScript->AddTimedEffect(JinxWSlow);
 
 	// 테스트용 도트딜
-	CTimedEffect* TestDot = new CTimedEffect(TargetUnitScript, 3.f, 5.f, 6, CC::NO_CC);
-	TargetUnitScript->AddTimedEffect(TestDot);
+	CTimedEffect* TestDot = new CTimedEffect(_TargetScript, 3.f, 5.f, 6, CC::NO_CC);
+	_TargetScript->AddTimedEffect(TestDot);
   
   CSkill::GetHit(_UserScript, _TargetScript, _SkillLevel);
 

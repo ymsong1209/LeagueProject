@@ -202,6 +202,8 @@ void CChampionScript::GetInput()
 				if (UnitScript->IsUnitDead())
 					return;
 
+				PathFinder()->ClearPath();
+
 				// 공격 이벤트 발생
 				BasicAttackEvent* evn = dynamic_cast<BasicAttackEvent*>(CGameEventMgr::GetInst()->GetEvent((UINT)GAME_EVENT_TYPE::PLAYER_BASIC_ATTACK));
 				if (evn != nullptr)
@@ -212,7 +214,6 @@ void CChampionScript::GetInput()
 
 					CGameEventMgr::GetInst()->NotifyEvent(*evn);
 				}
-
 
 			}
 
@@ -254,6 +255,8 @@ void CChampionScript::GetInput()
 				evn->SetTargetObj(nullptr);
 				CGameEventMgr::GetInst()->NotifyEvent(*evn);
 			}
+
+			m_fMP -= m_Skill[1]->GetCost();
 		}
 	}
 	if (KEY_TAP(KEY::W))
@@ -273,6 +276,8 @@ void CChampionScript::GetInput()
 				evn->SetTargetObj(nullptr);
 				CGameEventMgr::GetInst()->NotifyEvent(*evn);
 			}
+
+			m_fMP -= m_Skill[2]->GetCost();
 		}
 	}
 	if (KEY_TAP(KEY::E))
@@ -292,6 +297,8 @@ void CChampionScript::GetInput()
 				evn->SetTargetObj(nullptr);
 				CGameEventMgr::GetInst()->NotifyEvent(*evn);
 			}
+
+			m_fMP -= m_Skill[3]->GetCost();
 		}
 	}
 	if (KEY_TAP(KEY::R))
@@ -311,6 +318,7 @@ void CChampionScript::GetInput()
 				evn->SetTargetObj(nullptr);
 				CGameEventMgr::GetInst()->NotifyEvent(*evn);
 			}
+			m_fMP -= m_Skill[4]->GetCost();
 		}
 	}
 	if (KEY_TAP(KEY::_1))

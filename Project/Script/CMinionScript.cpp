@@ -5,7 +5,9 @@
 #include "CMinionWalkState.h"
 #include "CMinionChaseState.h"
 #include "CBasicAttack.h"
+#include "CRangedMinionBasicAttack.h"
 #include "CAttackRangeScript.h"
+
 
 CMinionScript::CMinionScript()
 	:CMobScript((UINT)SCRIPT_TYPE::MINIONSCRIPT)
@@ -31,8 +33,8 @@ void CMinionScript::begin()
 	{
 	case UnitType::MELEE_MINION:
 	{
-		m_fAttackPower = 1.f;
-		m_fAttackRange = 30.f;
+		m_fAttackPower = 30.f;
+		m_fAttackRange = 40.f;
 		m_fAttackSpeed = 1.5f;
 		m_fMoveSpeed = 35.f;
 		m_fMaxHP = 150.f;
@@ -40,29 +42,29 @@ void CMinionScript::begin()
 	break;
 	case UnitType::RANGED_MINION:
 	{
-		m_fAttackPower = 2.f;
-		m_fAttackRange = 100.f;
+		m_fAttackPower = 50.f;
+		m_fAttackRange = 130.f;
 		m_fAttackSpeed = 2.5f;
 		m_fMoveSpeed = 35.f;
-		m_fMaxHP = 80.f;
+		m_fMaxHP = 100.f;
 	}
 	break;
 	case UnitType::SIEGE_MINION:
 	{
-		m_fAttackPower = 3.f;
-		m_fAttackRange = 80.f;
-		m_fAttackSpeed = 2.5f;
+		m_fAttackPower = 50.f;
+		m_fAttackRange = 130.f;
+		m_fAttackSpeed = 2.f;
 		m_fMoveSpeed = 35.f;
-		m_fMaxHP = 150.f;
+		m_fMaxHP = 200.f;
 	}
 	break;
 	case UnitType::SUPER_MINION:
 	{
-		m_fAttackPower = 5.f;
-		m_fAttackRange = 50.f;
+		m_fAttackPower = 70.f;
+		m_fAttackRange = 40.f;
 		m_fAttackSpeed = 2.f;
 		m_fMoveSpeed = 35.f;
-		m_fMaxHP = 150.f;
+		m_fMaxHP = 200.f;
 	}
 	break;
 	}
@@ -152,8 +154,16 @@ void CMinionScript::begin()
 	GetOwner()->Fsm()->ChangeState(L"Walk");
 
 	// Skill에 BasicAttack 추가
-	m_Skill[0] = new CBasicAttack;
-	m_Skill[0]->SetOwnerScript(this);
+	if (m_eUnitType == UnitType::MELEE_MINION || m_eUnitType == UnitType::SUPER_MINION)
+	{
+		m_Skill[0] = new CBasicAttack;
+		m_Skill[0]->SetOwnerScript(this);
+	}
+	else
+	{
+		m_Skill[0] = new CRangedMinionBasicAttack;
+		m_Skill[0]->SetOwnerScript(this);
+	}
 
 	// 사거리 적용
 	CGameObject* AttackRange = GetOwner()->FindChildObjByName(L"AttackRange");

@@ -23,7 +23,7 @@ public:
 
     float                m_fPlayTime;
     vector<CGameObject*>     m_vecAllPlayer;
-
+    bool                 m_bIsGameStop;
 
 public:
     void SetMyPlayer(CGameObject* _myPlayerObj) { m_myPlayerObj = _myPlayerObj; }
@@ -36,6 +36,7 @@ public:
     void AddBlueScore(int _cnt) { m_BlueScore += _cnt; }
     
     void SetPlayTime(float _time) { m_fPlayTime = _time; }
+    void SetIsGameStop(bool _bool) { m_bIsGameStop = _bool; }
 
     vector<CGameObject*> GetVecAllPlayer() { return m_vecAllPlayer; }
     CGameObject* GetMyPlayer() { return m_myPlayerObj; }
@@ -47,7 +48,7 @@ public:
     int GetBlueScore() { return m_BlueScore; }
 
     float GetPlayTime() { return m_fPlayTime; }
-
+    float GetIsGameStop() { return m_bIsGameStop; }
     
     // ServerSendEvent ¿ë
     void AddServerSendEvent(tServerEvent _evn) { m_vecServerSendEvent.push_back(_evn); }

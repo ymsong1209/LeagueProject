@@ -27,6 +27,7 @@ void CMalphiteRScript::tick()
 	if (m_fTime > 0.1f) {
 
 		CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 0.f);
+		m_bUnitDead = true;
 	}
 
 }
@@ -46,4 +47,18 @@ void CMalphiteRScript::BeginOverlap(CCollider2D* _Other)
 		// 방장컴이 서버에게 이 투사체가 피격자와 충돌했다고 전달
 		CSendServerEventMgr::GetInst()->SendHitPacket(GetServerID(), TargetServerID, m_iServerUserID, 1, SkillType::MALPHITE_R);
 	}
+
+	// sound
+	Vec3 _2dPos = Vec3(0.f, 0.f, 0.f);
+	CSound* newSound = new CSound;
+	wstring filepath = CPathMgr::GetInst()->GetContentPath();
+	filepath += L"sound3d\\malphite\\Malph_R.mp3";
+	newSound->Load(filepath);
+	CSoundMgr::GetInst()->AddSound(newSound);
+	int soundId = newSound->GetSoundIndex();
+	CSoundMgr::GetInst()->Play(soundId, 1, 0.5f, true, 0.f, _2dPos);
+	CSoundMgr::GetInst()->Stop(soundId);
+	CSoundMgr::GetInst()->Play(soundId, 1, 0.5f, true, 0.f, _2dPos);
+	//CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\malphite\\Malph_R.mp3", 1, 0.5f, true, 100.f, TargetUnitScript->GetOwner()->Transform()->GetRelativePos(), Faction::END);
+	
 }

@@ -4,6 +4,7 @@
 #include <Engine\CRenderMgr.h>
 #include <Engine\CCamera.h>
 #include <Engine\CEngine.h>
+#include <Engine\CRenderComponent.h>
 
 void CTurretHPUIScript::begin()
 {
@@ -81,7 +82,7 @@ void CTurretHPUIScript::tick()
 			if (ParentUnitType == UnitType::INHIBITOR)
 				MeshRender()->SetSortExcept(true);
 			else
-				DestroyObject(GetOwner());
+				GetOwner()->GetRenderComponent()->SetSortExcept(true);
 		}
 
 		Transform()->SetAbsolute(false);

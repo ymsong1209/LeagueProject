@@ -4,6 +4,7 @@
 #include "CChampionScript.h"
 #include "CJinxRScript.h"
 #include "CTimedEffect.h"
+#include "CImmediateGetHitScript.h"
 
 CJinxR::CJinxR()
 {
@@ -29,23 +30,16 @@ CJinxR::CJinxR()
 	NewPrefab->RegisterProtoObject(pObj);
 	m_vecSkillObj.push_back(NewPrefab);
 
-	//CGameObject* Projectile = new CGameObject;
-	//Projectile->AddComponent(new CTransform);
-	//Projectile->AddComponent(new CCollider2D);
-	//Projectile->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
-	//Projectile->Collider2D()->SetOffsetScale(Vec2(12.f, 12.f));
-	//Projectile->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
-	//Projectile->Collider2D()->SetDrawCollision(true);
-	//Projectile->SetName(L"JinxR");
-	//
-	//Projectile->Transform()->SetIsShootingRay(true);
-	//Projectile->Transform()->SetRayRange(100);
-	//
-	//Ptr<CPrefab> NewPrefab = new CPrefab;
-	//CGameObject* PrefabObject = Projectile->Clone();
-	//NewPrefab->RegisterProtoObject(Projectile);
-	//
-	//m_vecSkillObj.push_back(NewPrefab);
+	// 피격 이펙트
+	CGameObject* JinxBasicAttackGetHitEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\JinxGetHitByRocketAttack.prefab")->Instantiate();
+	JinxBasicAttackGetHitEffect->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\jinxtex\\JinxGetHitByRocket.png"));
+	JinxBasicAttackGetHitEffect->AddComponent(new CImmediateGetHitScript);
+	JinxBasicAttackGetHitEffect->GetScript<CImmediateGetHitScript>()->SetTriggerTime(0.5f);
+	Ptr<CPrefab> NewHitPrefab = new CPrefab;
+	CGameObject* HitPrefabObject = JinxBasicAttackGetHitEffect->Clone();
+	NewHitPrefab->RegisterProtoObject(HitPrefabObject);
+
+	m_SkillHitEffect = NewHitPrefab;
 
 	// 투사체 스크립트
 	m_iProjectileCount = 1;
@@ -97,7 +91,7 @@ void CJinxR::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _S
 	CChampionScript* ChamScript = dynamic_cast<CChampionScript*>(_UserScript);
 	if (ChamScript != nullptr)
 	{
-		float BaseDamage = 70.f;
+		float BaseDamage = 50.f;
 		int   level = ChamScript->GetLevel();
 		float AttackPow = ChamScript->GetAttackPower();
 
@@ -105,22 +99,21 @@ void CJinxR::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _S
 		Damage = BaseDamage + (level * 2) + (AttackPow * 0.3f);
 	}
 
-	CUnitScript* TargetUnitScript = dynamic_cast<CUnitScript*>(_TargetScript);
-	if (TargetUnitScript != nullptr)
+	// 데미지에서 타겟의 방어력만큼을 제한 뒤 실제 반영할 데미지 계산
+	float DefencePow = _TargetScript->GetDefencePower();
+
+	Damage -= DefencePow;
+
+	float minDam = 10.f;
+	if (Damage < minDam)
 	{
-		float DefencePow = TargetUnitScript->GetDefencePower();
-
-		Damage -= DefencePow;
-
-		float minDam = 20.f;
-
-		if (Damage < minDam)
-		{
-			// 데미지 최소값
-			Damage = minDam;
-		}
+		// 데미지 최소값
+		Damage = minDam;
 	}
-	TargetUnitScript->SetCurHPVar(-Damage);
+
+	_TargetScript->SetCurHPVar(-Damage);
+
+	CSkill::GetHit(_UserScript, _TargetScript, _SkillLevel);
 
 	// 피격자 사망시 KDACS 패킷 전송
 	if (_TargetScript->GetCurHP() <= 0)

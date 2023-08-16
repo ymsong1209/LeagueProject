@@ -9,6 +9,7 @@
 #include "CChampionScript.h"
 #include "CBasicAttack.h"
 
+#include "CDragonBasicAttack.h"
 
 #include "CDragonSpawnState.h"
 #include "CDragonIdleState.h"
@@ -66,8 +67,8 @@ void CDragonScript::GetHit(CGameObject* _target)
 
 void CDragonScript::begin()
 {
-	m_fHP = 100;
-	m_fMaxHP = 100;
+	m_fHP = 2000;
+	m_fMaxHP = 2000;
 	m_fAttackRange = 30.f;
 	GetOwner()->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Elder_Dragon");
 	if (GetOwner()->GetComponent(COMPONENT_TYPE::FSM) == nullptr) GetOwner()->AddComponent(new CFsm);
@@ -76,7 +77,7 @@ void CDragonScript::begin()
 	AddState();
 
 	GetOwner()->Transform()->SetUseMouseOutline(true);
-	m_Skill[0] = new CBasicAttack;
+	m_Skill[0] = new CDragonBasicAttack;
 	m_Skill[0]->SetOwnerScript(this);
 	GetOwner()->Fsm()->ChangeState(L"Spawn");
 }

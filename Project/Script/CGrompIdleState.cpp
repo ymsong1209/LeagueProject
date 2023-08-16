@@ -34,7 +34,7 @@ void CGrompIdleState::tick()
 
 		if (m_iIdleAnimNum == 3) {
 			Vec3 GrompPos = GetOwner()->Transform()->GetRelativePos();
-			CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\gromp\\idle2.mp3", 1, 0.5f, true, 130.f, GrompPos, Faction::NONE);
+			CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\gromp\\idle2.mp3", 1, 0.3f, true, 130.f, GrompPos, Faction::NONE);
 		}
 		
 	}

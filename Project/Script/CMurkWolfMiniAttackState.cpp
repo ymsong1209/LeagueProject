@@ -21,12 +21,12 @@ void CMurkWolfMiniAttackState::Enter()
 	if (m_iAttackAnimNum == 1) {
 		basename += std::to_wstring(2);
 		Vec3 MurkWolfMiniPos = GetOwner()->Transform()->GetRelativePos();
-		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\murkwolf_mini\\attack.mp3", 1, 0.5f, true, 120.f, MurkWolfMiniPos, Faction::NONE);
+		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\murkwolf_mini\\attack.mp3", 1, 0.3f, true, 120.f, MurkWolfMiniPos, Faction::NONE);
 	}
 	else if (m_iAttackAnimNum == 2) {
 		basename += L"3.002";
 		Vec3 MurkWolfMiniPos = GetOwner()->Transform()->GetRelativePos();
-		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\murkwolf_mini\\attack2.mp3", 1, 0.5f, true, 120.f, MurkWolfMiniPos, Faction::NONE);
+		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\murkwolf_mini\\attack2.mp3", 1, 0.3f, true, 120.f, MurkWolfMiniPos, Faction::NONE);
 	}
 
 	GetOwner()->Animator3D()->GetCurAnim()->Reset();
