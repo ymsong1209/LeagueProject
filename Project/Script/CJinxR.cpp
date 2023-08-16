@@ -88,8 +88,8 @@ void CJinxR::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _S
 	float Damage = 0;
 
 	// 시전자의 레벨, 기본 공격력 등에 따라 데미지 계산
-	CUnitScript* UnitScript = dynamic_cast<CUnitScript*>(_UserScript);
-	if (UnitScript != nullptr)
+	CChampionScript* ChamScript = dynamic_cast<CChampionScript*>(_UserScript);
+	if (ChamScript != nullptr)
 	{
 		float BaseDamage = 50.f;
 		int   level = ChamScript->GetLevel();
