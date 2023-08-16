@@ -24,7 +24,12 @@ void CJinxRocketBasicAttackScript::begin()
 	float targetAngle = atan2f(Direction.z, Direction.x);
 
 	// z축 회전(-90도)
-	GetOwner()->Transform()->SetRelativeRot(Vec3(0.f, 0.f, targetAngle - XMConvertToRadians(90)));
+	//GetOwner()->Transform()->SetRelativeRot(Vec3(0.f, 0.f, targetAngle - XMConvertToRadians(90)));
+	GetOwner()->Transform()->SetRelativeRot(Vec3(0.f, 0.f, targetAngle));
+
+	// 징크스 로켓런처 총 소리
+	Vec3 JinxPos = GetOwner()->Transform()->GetRelativePos();
+	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\jinx\\JINX_Rocket_Gun_Start.mp3", 1, 0.4f, true, 100.f, JinxPos, Faction::NONE);
 }
 
 void CJinxRocketBasicAttackScript::tick()
@@ -60,7 +65,7 @@ void CJinxRocketBasicAttackScript::BeginOverlap(CCollider2D* _Other)
 	}
 
 	// 타겟과 부딪치면
-	if (_Other == m_TargetObj->Collider2D())
+	if (_Other == m_TargetObj->Collider2D() && !m_bUnitDead)
 	{
 		// 방장컴이 서버에게 이 투사체가 피격자와 충돌했다고 전달
 		CSendServerEventMgr::GetInst()->SendHitPacket(GetServerID(), m_iServerTargetID, m_iServerUserID, 1, m_skillType);
@@ -69,5 +74,11 @@ void CJinxRocketBasicAttackScript::BeginOverlap(CCollider2D* _Other)
 		m_fProjectileSpeed = 0.f;
 		m_bUnitDead = true;
 		CSendServerEventMgr::GetInst()->SendDespawnPacket(GetServerID(), 0.f);
+
+
+		// 징크스 총 로켓 평타 히트 소리
+		Vec3 JinxPos = GetOwner()->Transform()->GetRelativePos();
+		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\jinx\\JINX_Rocket_Gun_Hit1.mp3", 1, 0.4f, true, 100.f, JinxPos, Faction::NONE);
+		
 	}
 }

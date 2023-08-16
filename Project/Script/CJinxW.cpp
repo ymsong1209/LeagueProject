@@ -78,42 +78,38 @@ void CJinxW::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _S
 	float Damage = 0;
 
 	// 시전자의 레벨, 기본 공격력 등에 따라 데미지 계산
-	CChampionScript* ChamScript = dynamic_cast<CChampionScript*>(_UserScript);
-	if (ChamScript != nullptr)
+	CUnitScript* UnitScript = dynamic_cast<CUnitScript*>(_UserScript);
+	if (UnitScript != nullptr)
 	{
-		float BaseDamage = 50.f;
-		int   level		 = ChamScript->GetLevel();
-		float AttackPow  = ChamScript->GetAttackPower();
+		float BaseDamage = 0.f;
+		float AttackPow = UnitScript->GetAttackPower();
 
 		// 예시입니다
-		Damage = BaseDamage + (level * 2) + (AttackPow * 0.3f);
+		Damage = AttackPow;
 	}
-	
-	CUnitScript* TargetUnitScript = dynamic_cast<CUnitScript*>(_TargetScript);
-	if (TargetUnitScript != nullptr)
+
+	// 데미지에서 타겟의 방어력만큼을 제한 뒤 실제 반영할 데미지 계산
+	float DefencePow = _TargetScript->GetDefencePower();
+
+	Damage -= DefencePow;
+
+	float minDam = 10.f;
+	if (Damage < minDam)
 	{
-		float DefencePow = TargetUnitScript->GetDefencePower();
-
-		Damage -= DefencePow;
-
-		float minDam = 20.f;
-
-		if (Damage < minDam)
-		{
-			// 데미지 최소값
-			Damage = minDam;
-		}
+		// 데미지 최소값
+		Damage = minDam;
 	}
 
-	TargetUnitScript->SetCurHPVar(-Damage);
+
+	_TargetScript->SetCurHPVar(-Damage);
 
 	// 2초 동안 둔화시킵니다.
-	CTimedEffect* JinxWSlow = new CTimedEffect(TargetUnitScript, 2.f, 0, 0, CC::SLOW);
-	TargetUnitScript->AddTimedEffect(JinxWSlow);
+	CTimedEffect* JinxWSlow = new CTimedEffect(_TargetScript, 2.f, 0, 0, CC::SLOW);
+	_TargetScript->AddTimedEffect(JinxWSlow);
 
 	// 테스트용 도트딜
-	CTimedEffect* TestDot = new CTimedEffect(TargetUnitScript, 3.f, 5.f, 6, CC::NO_CC);
-	TargetUnitScript->AddTimedEffect(TestDot);
+	CTimedEffect* TestDot = new CTimedEffect(_TargetScript, 3.f, 5.f, 6, CC::NO_CC);
+	_TargetScript->AddTimedEffect(TestDot);
   
   CSkill::GetHit(_UserScript, _TargetScript, _SkillLevel);
 

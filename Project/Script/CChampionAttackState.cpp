@@ -23,6 +23,10 @@ void CChampionAttackState::tick()
 	// 애니메이션이 끝날 경우, Idle로 전환
 	if(GetOwnerFSM()->GetOwner()->Animator3D()->GetCurAnim()->IsFinish())
 		GetOwnerFSM()->ChangeState(L"Idle");
+
+	// 챔피언이 평타후 이동 방지 
+	GetOwner()->PathFinder()->ClearPath();
+	GetOwner()->Transform()->SetRelativeRot(m_EnterRot);
 }
 
 void CChampionAttackState::Enter()
@@ -65,6 +69,7 @@ void CChampionAttackState::Enter()
 
 	// 현재 위치
 	Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
+	m_EnterRot = GetOwner()->Transform()->GetRelativeRot();
 
 	// 가야할 방향 구하기
 	Vec3 Dir = (m_TargetObj->Transform()->GetRelativePos() - CurPos).Normalize();

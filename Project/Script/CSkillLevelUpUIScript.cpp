@@ -98,9 +98,9 @@ void CSkillLevelUpUIScript::tick()
 				newSound->Load(filepath);
 				CSoundMgr::GetInst()->AddSound(newSound);
 				int soundId = newSound->GetSoundIndex();
-				CSoundMgr::GetInst()->Play(soundId, 5, 0.2f, true, 0.f, Vec3(0.f,0.f,0.f));
+				CSoundMgr::GetInst()->Play(soundId, 5, 0.5f, true, 0.f, Vec3(0.f,0.f,0.f));
 				CSoundMgr::GetInst()->Stop(soundId);
-				CSoundMgr::GetInst()->Play(soundId, 5, 0.2f, true, 0.f, Vec3(0.f, 0.f, 0.f));
+				CSoundMgr::GetInst()->Play(soundId, 5, 0.5f, true, 0.f, Vec3(0.f, 0.f, 0.f));
 			}
 
 			else if (KEY_TAP(KEY::_2) && m_iWLevel < 5)
@@ -130,9 +130,9 @@ void CSkillLevelUpUIScript::tick()
 				newSound->Load(filepath);
 				CSoundMgr::GetInst()->AddSound(newSound);
 				int soundId = newSound->GetSoundIndex();
-				CSoundMgr::GetInst()->Play(soundId, 5, 0.2f, true, 0.f, Vec3(0.f, 0.f, 0.f));
+				CSoundMgr::GetInst()->Play(soundId, 5, 0.5f, true, 0.f, Vec3(0.f, 0.f, 0.f));
 				CSoundMgr::GetInst()->Stop(soundId);
-				CSoundMgr::GetInst()->Play(soundId, 5, 0.2f, true, 0.f, Vec3(0.f, 0.f, 0.f));
+				CSoundMgr::GetInst()->Play(soundId, 5, 0.5f, true, 0.f, Vec3(0.f, 0.f, 0.f));
 
 			}
 
@@ -163,9 +163,9 @@ void CSkillLevelUpUIScript::tick()
 				newSound->Load(filepath);
 				CSoundMgr::GetInst()->AddSound(newSound);
 				int soundId = newSound->GetSoundIndex();
-				CSoundMgr::GetInst()->Play(soundId, 5, 0.2f, true, 0.f, Vec3(0.f, 0.f, 0.f));
+				CSoundMgr::GetInst()->Play(soundId, 5, 0.5f, true, 0.f, Vec3(0.f, 0.f, 0.f));
 				CSoundMgr::GetInst()->Stop(soundId);
-				CSoundMgr::GetInst()->Play(soundId, 5, 0.2f, true, 0.f, Vec3(0.f, 0.f, 0.f));
+				CSoundMgr::GetInst()->Play(soundId, 5, 0.5f, true, 0.f, Vec3(0.f, 0.f, 0.f));
 
 			}
 
@@ -196,9 +196,9 @@ void CSkillLevelUpUIScript::tick()
 				newSound->Load(filepath);
 				CSoundMgr::GetInst()->AddSound(newSound);
 				int soundId = newSound->GetSoundIndex();
-				CSoundMgr::GetInst()->Play(soundId, 5, 0.2f, true, 0.f, Vec3(0.f, 0.f, 0.f));
+				CSoundMgr::GetInst()->Play(soundId, 5, 0.5f, true, 0.f, Vec3(0.f, 0.f, 0.f));
 				CSoundMgr::GetInst()->Stop(soundId);
-				CSoundMgr::GetInst()->Play(soundId, 5, 0.2f, true, 0.f, Vec3(0.f, 0.f, 0.f));
+				CSoundMgr::GetInst()->Play(soundId, 5, 0.5f, true, 0.f, Vec3(0.f, 0.f, 0.f));
 			}
 		}
 		else
