@@ -16,7 +16,25 @@ void CJinxRScript::begin()
 {
 	// 첫 생성 위치 기억
 	m_vSpawnPos = GetOwner()->Transform()->GetRelativePos();
+	// 투사체가 가야할 방향 구하기  Rot
+	Vec3 Dir = -m_vDir.Normalize();
 
+	float targetYaw = atan2f(-Dir.x, -Dir.z);
+	targetYaw = fmod(targetYaw + XM_PI, 2 * XM_PI) - XM_PI; // 범위를 -π ~ π 로 바꾸기
+	float currentYaw = GetOwner()->Transform()->GetRelativeRot().y;
+	currentYaw = fmod(currentYaw + XM_PI, 2 * XM_PI) - XM_PI; // 범위를 -π ~ π 로 바꾸기
+	// 각도 차이 계산
+	float diff = targetYaw - currentYaw;
+	// 차이가 π를 넘으면 각도를 반대 방향으로
+	if (diff > XM_PI)
+		targetYaw -= 2 * XM_PI;
+	else if (diff < -XM_PI)
+		targetYaw += 2 * XM_PI;
+
+	float newYaw = currentYaw + (targetYaw - currentYaw);
+
+	// 새로운 회전 각도를 적용
+	GetOwner()->Transform()->SetRelativeRot(Vec3(0.f, newYaw, 0.f));
 }
 
 void CJinxRScript::tick()
@@ -30,34 +48,8 @@ void CJinxRScript::tick()
 
 	// 투사체 이동 Pos
 	Vec3 NewPos = CurPos + m_vDir * m_fProjectileSpeed * DT;
-	NewPos = Vec3(NewPos.x, m_vSpawnPos.y +4, NewPos.z); // 높이를 띄어둔다.
+	NewPos = Vec3(NewPos.x, m_vSpawnPos.y + 4.f, NewPos.z); // 높이를 띄어둔다.
 	GetOwner()->Transform()->SetRelativePos(NewPos);
-
-
-	// 투사체가 가야할 방향 구하기  Rot
-	Vec3 Dir = - m_vDir.Normalize();
-
-	float targetYaw = atan2f(-Dir.x, -Dir.z);
-	targetYaw = fmod(targetYaw + XM_PI, 2 * XM_PI) - XM_PI; // 범위를 -π ~ π 로 바꾸기
-	float currentYaw = GetOwner()->Transform()->GetRelativeRot().y;
-	currentYaw = fmod(currentYaw + XM_PI, 2 * XM_PI) - XM_PI; // 범위를 -π ~ π 로 바꾸기
-
-	// 각도 차이 계산
-	float diff = targetYaw - currentYaw;
-
-	// 차이가 π를 넘으면 각도를 반대 방향으로 보간
-	if (diff > XM_PI)
-		targetYaw -= 2 * XM_PI;
-	else if (diff < -XM_PI)
-		targetYaw += 2 * XM_PI;
-
-	float lerpFactor = DT * 18.f;
-
-	// Lerp를 이용해 현재 회전 각도와 목표 회전 각도를 보간
-	float newYaw = currentYaw + (targetYaw - currentYaw) * lerpFactor;
-
-	// 새로운 회전 각도를 적용
-	GetOwner()->Transform()->SetRelativeRot(Vec3(0.f, newYaw, 0.f));
 
 
 	// 시전 위치로부터 스킬 사거리까지 발사되었다면 사라짐

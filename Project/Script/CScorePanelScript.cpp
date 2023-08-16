@@ -15,7 +15,7 @@ void CScorePanelScript::begin()
 	ScorePanel->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"RectMesh"));
 	ScorePanel->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\ScorePanel2.mtrl"), 0);
 	ScorePanel->Transform()->SetAbsolute(true);
-	SpawnGameObject(ScorePanel, Vec3(533.f, 466.f, 2.f), 31);
+	SpawnGameObject(ScorePanel, Vec3(533.f, 486.f, 2.f), 31);
 }
 
 void CScorePanelScript::tick()
@@ -40,7 +40,7 @@ void CScorePanelScript::tick()
 	Font2.wInputText = to_wstring(blueScore);
 	Font2.fontType = FONT_TYPE::RIX_KOR_L;
 	Font2.fFontSize = 16.7;
-	Font2.vDisplayPos = Vec2(1263, 20);
+	Font2.vDisplayPos = Vec2(1263, 0);
 	Font2.iFontColor = FONT_RGBA(0, 198, 237, 255);
 	UICamera->AddText(FONT_DOMAIN::MASK, Font2);
 
@@ -48,7 +48,7 @@ void CScorePanelScript::tick()
 	Font3.wInputText = to_wstring(redScore);
 	Font3.fontType = FONT_TYPE::RIX_KOR_L;
 	Font3.fFontSize = 16.7;
-	Font3.vDisplayPos = Vec2(1307, 21);
+	Font3.vDisplayPos = Vec2(1307, 0);
 	Font3.iFontColor = FONT_RGBA(255, 54, 54, 255);
 	UICamera->AddText(FONT_DOMAIN::MASK, Font3);
 	//========================================
@@ -65,7 +65,7 @@ void CScorePanelScript::tick()
 	Font4.wInputText = KillDeath;
 	Font4.fontType = FONT_TYPE::RIX_KOR_L;
 	Font4.fFontSize = 15;
-	Font4.vDisplayPos = Vec2(1412,22);
+	Font4.vDisplayPos = Vec2(1412,2);
 	Font4.iFontColor = FONT_RGBA(242, 241, 237, 255);
 	UICamera->AddText(FONT_DOMAIN::MASK, Font4);
 	//========================================
@@ -75,7 +75,7 @@ void CScorePanelScript::tick()
 	Font5.wInputText = to_wstring(MyCS);
 	Font5.fontType = FONT_TYPE::RIX_KOR_L;
 	Font5.fFontSize = 15;
-	Font5.vDisplayPos = Vec2(1490,22);
+	Font5.vDisplayPos = Vec2(1490,2);
 	Font5.iFontColor = FONT_RGBA(252, 230, 139, 255);
 	UICamera->AddText(FONT_DOMAIN::MASK, Font5);
 	//========================================
@@ -96,7 +96,7 @@ void CScorePanelScript::tick()
 	Font6.wInputText = time;
 	Font6.fontType = FONT_TYPE::RIX_KOR_L;
 	Font6.fFontSize = 15;
-	Font6.vDisplayPos = Vec2(1570,22);
+	Font6.vDisplayPos = Vec2(1570,2);
 	Font6.iFontColor = FONT_RGBA(242, 241, 237, 255);
 	UICamera->AddText(FONT_DOMAIN::MASK, Font6);
 	//========================================
