@@ -65,7 +65,7 @@ void CJinxRocketBasicAttackScript::BeginOverlap(CCollider2D* _Other)
 	}
 
 	// 타겟과 부딪치면
-	if (_Other == m_TargetObj->Collider2D())
+	if (_Other->GetOwner()->GetScript<CUnitScript>()->GetServerID() == m_TargetObj->GetScript<CUnitScript>()->GetServerID())
 	{
 		// 방장컴이 서버에게 이 투사체가 피격자와 충돌했다고 전달
 		CSendServerEventMgr::GetInst()->SendHitPacket(GetServerID(), m_iServerTargetID, m_iServerUserID, 1, SkillType::JINX_ROCKET_BASIC_ATTACK);

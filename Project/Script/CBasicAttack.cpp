@@ -82,7 +82,7 @@ void CBasicAttack::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, 
 	
 	Damage -= DefencePow;
 
-	float minDam = 10.f;
+	float minDam = 20.f;
 	if (Damage < minDam)
 	{
 		// 데미지 최소값
