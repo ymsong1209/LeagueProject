@@ -125,17 +125,17 @@ void CChampionWalkState::HandleEvent(CGameEvent& event)
 	case GAME_EVENT_TYPE::PLAYER_SKILL_R:
 	{
 		if (GetOwnerFSM()->FindState(L"R") != nullptr)
-			GetOwnerFSM()->ChangeState(L"R");
-
-		PlayerREvent* REvent = dynamic_cast<PlayerREvent*>(&event);
-		
-		CChampionSkillState* SkillState = dynamic_cast<CChampionSkillState*>(GetOwnerFSM()->FindState(L"R"));
-		if (SkillState != nullptr)
 		{
-			SkillState->SetUserObj(REvent->GetUserObj());
-			SkillState->SetTargetObj(REvent->GetTargetObj());
+			PlayerREvent* REvent = dynamic_cast<PlayerREvent*>(&event);
+
+			CChampionSkillState* SkillState = dynamic_cast<CChampionSkillState*>(GetOwnerFSM()->FindState(L"R"));
+			if (SkillState != nullptr)
+			{
+				SkillState->SetUserObj(REvent->GetUserObj());
+				SkillState->SetTargetObj(REvent->GetTargetObj());
+			}
+			GetOwnerFSM()->ChangeState(L"R");
 		}
-		GetOwnerFSM()->ChangeState(L"R");
 		break;
 	}
 	}
