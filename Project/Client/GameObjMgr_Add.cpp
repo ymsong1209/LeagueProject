@@ -2504,6 +2504,7 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 
 					vecProj[0] = RangedMinionBasicAttackObj;
 				}
+			}
 
 			for (int i = 0; i < vecProj.size(); i++)
 			{
