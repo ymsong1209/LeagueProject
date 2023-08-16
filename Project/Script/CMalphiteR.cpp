@@ -96,7 +96,7 @@ void CMalphiteR::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, in
 
 		Damage -= DefencePow;
 
-		float minDam = 20.f;
+		float minDam = 300.f;
 
 		if (Damage < minDam)
 		{

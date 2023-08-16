@@ -104,7 +104,7 @@ void CJinxR::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetScript, int _S
 
 	Damage -= DefencePow;
 
-	float minDam = 10.f;
+	float minDam = 300.f;
 	if (Damage < minDam)
 	{
 		// 데미지 최소값
