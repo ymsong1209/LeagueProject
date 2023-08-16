@@ -30,7 +30,7 @@ void CKillLogUIScript::tick()
 	killLogManager.displayTime = 3.f;
 	killLogManager.shiftSpeed = 300.f;
 	killLogManager.lineHeight = 75.f;
-
+	 
 	//==============µð¹ö±ë¿ë=========================
 	/*
 	if (KEY_TAP(KEY::_7))

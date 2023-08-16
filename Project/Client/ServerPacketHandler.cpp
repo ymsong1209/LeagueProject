@@ -300,26 +300,23 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 
 		ClipCursor(&rect);*/
 
-
-
 		// 맵 불러옴
-		CreateTestLevel();
-
+		//CreateTestLevel();
 
 		//////=========json level load===========================================
-		//CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevelFromJson(L"level\\BushFinal.json");
-		//CLevelMgr::GetInst()->SetCurLevel(pLoadedLevel);
-		//
-		//// inspector  UI update
-		//InspectorUI* inspector = (InspectorUI*)ImGuiMgr::GetInst()->FindUI("##Inspector");
-		//inspector->SetTargetObject(nullptr);
-		//
-		//// if curState is stop,  next level state is also stop
-		//CLevel* level = CUR_LEVEL;
-		//if (level->GetState() == LEVEL_STATE::STOP) {
-		//    CTimeMgr::GetInst()->SetTimeScale(0.f);
-		//}
-		//level->ChangeState(LEVEL_STATE::PLAY);
+		CLevel* pLoadedLevel = CLevelSaveLoad::LoadLevelFromJson(L"level\\BushAndWall.json");
+		CLevelMgr::GetInst()->SetCurLevel(pLoadedLevel);
+
+		// inspector  UI update
+		InspectorUI* inspector = (InspectorUI*)ImGuiMgr::GetInst()->FindUI("##Inspector");
+		inspector->SetTargetObject(nullptr);
+		
+		// if curState is stop,  next level state is also stop
+		CLevel* level = CUR_LEVEL;
+		if (level->GetState() == LEVEL_STATE::STOP) {
+		    CTimeMgr::GetInst()->SetTimeScale(0.f);
+		}
+		level->ChangeState(LEVEL_STATE::PLAY);
 		////===================================================================
 
 

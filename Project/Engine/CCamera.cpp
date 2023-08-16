@@ -807,7 +807,9 @@ void CCamera::render_depthmap()
 IntersectResult CCamera::IsCollidingBtwRayRect(tRay& _ray, CGameObject* _Object)
 {
 	// 만약에 Collider2D가 없거나 Rect모양이 아닌 경우 return
-	if (_Object->Collider2D() == nullptr || _Object->Collider2D()->GetColliderShape() != COLLIDER2D_TYPE::RECT)
+	if (_Object->Collider2D() == nullptr)
+		return IntersectResult{ Vec3(0.f, 0.f, 0.f), 0.f, false };
+	if (_Object->Collider2D()->GetColliderShape() != COLLIDER2D_TYPE::RECT)
 		return IntersectResult{ Vec3(0.f, 0.f, 0.f), 0.f, false };
 
 	Matrix ColliderWorldMat = _Object->Collider2D()->GetColliderWorldMat();

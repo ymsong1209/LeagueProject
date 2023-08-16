@@ -58,8 +58,8 @@ void CreateTestLevel()
 	// 
 	//return;	
 	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
-	pCurLevel->ChangeState(LEVEL_STATE::PLAY);
-	//pCurLevel->ChangeState(LEVEL_STATE::STOP);
+	//pCurLevel->ChangeState(LEVEL_STATE::PLAY);
+	pCurLevel->ChangeState(LEVEL_STATE::STOP);
 	CTimeMgr::GetInst()->SetTimeScale(1.f);    // TestLevel에서 강제로 PLAY모드로 전환해서 DT를 흐르게 하기 위함. 추후 삭제
 
 	//롤맵 레이어에는 롤맵만 넣을것!
@@ -256,52 +256,65 @@ void CreateTestLevel()
 		
 
 		//==============================================================
-		//CGameObject* pBushObj = new CGameObject;
-		//pBushObj->SetName(L"TestBush");
-		//pBushObj->AddComponent(new CTransform);
-		//pBushObj->AddComponent(new CCollider3D);
-		//pBushObj->AddComponent(new CBushScript);
-		//pBushObj->Transform()->SetRelativeScale(Vec3(50.f, 50.f, 100.f));
-		//pBushObj->Transform()->SetRelativeRot(Vec3(0.f, -13.f, 0.f));
-		//pBushObj->Transform()->SetRelativePos(Vec3(701.f, 0.f, 469.f));
-		//pBushObj->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
-		//pBushObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::CUBE);
-		//SpawnGameObject(pBushObj, Vec3(701.f, 0.f, 469.f), L"Bush");
+		/*CGameObject* pBushObj = new CGameObject;
+		pBushObj->SetName(L"TestBush");
+		pBushObj->AddComponent(new CTransform);
+		pBushObj->AddComponent(new CCollider3D);
+		pBushObj->AddComponent(new CBushScript);
+		pBushObj->Transform()->SetRelativeScale(Vec3(50.f, 50.f, 100.f));
+		pBushObj->Transform()->SetRelativeRot(Vec3(0.f, -13.f, 0.f));
+		pBushObj->Transform()->SetRelativePos(Vec3(701.f, 0.f, 469.f));
+		pBushObj->Collider3D()->SetOffsetScale(Vec3(1.f, 1.f, 1.f));
+		pBushObj->Collider3D()->SetCollider3DType(COLLIDER3D_TYPE::CUBE);
+		SpawnGameObject(pBushObj, Vec3(701.f, 0.f, 469.f), L"Bush");*/
 
-		//pMeshData = nullptr;
-		//pObj = nullptr;
-		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Bush_A.fbx");
-		//pObj = pMeshData->Instantiate();
-		//pObj->SetName(L"Bush_A");
-		//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Bush_A");
-		//pObj->GetRenderComponent()->SetFrustumCheck(false);
-		//pObj->Animator3D()->PlayRepeat(L"Bush_A\\Idle1_model.001", true, true, 0.1f);
-		////pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(45.f), XMConvertToRadians(-180.f)));
-		//pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		//SpawnGameObject(pObj, Vec3(1711.f, 14.8f, 1721.f), L"Bush");
+		pMeshData = nullptr;
+		pObj = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Bush_Type1.fbx");
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"Bush_Type1");
+		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Bush_Type1");
+		pObj->GetRenderComponent()->SetFrustumCheck(false);
+		pObj->Animator3D()->PlayRepeat(L"Bush_Type1\\Front_model.001", true, true, 0.1f);
+		//pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(45.f), XMConvertToRadians(-180.f)));
+		pObj->Transform()->SetRelativeScale(Vec3(0.15f, 0.15f, 0.15f));
+		SpawnGameObject(pObj, Vec3(1711.f, 14.8f, 1721.f), L"Bush");
 
-		//pMeshData = nullptr;
-		//pObj = nullptr;
-		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Bush_B.fbx");
-		//pObj = pMeshData->Instantiate();
-		//pObj->SetName(L"Bush_B");
-		//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Bush_B");
-		//pObj->GetRenderComponent()->SetFrustumCheck(false);
-		//pObj->Animator3D()->PlayRepeat(L"Bush_B\\Idle1_model.001", true, true, 0.1f);
-		////pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(45.f), XMConvertToRadians(-180.f)));
-		//pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));
-		//SpawnGameObject(pObj, Vec3(1711.f, 14.8f, 1721.f), L"Bush");
+		pMeshData = nullptr;
+		pObj = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Bush_Type2.fbx");
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"Bush_Type2");
+		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Bush_Type2");
+		pObj->GetRenderComponent()->SetFrustumCheck(false);
+		pObj->Animator3D()->PlayRepeat(L"Bush_Type2\\Front_model.001", true, true, 0.1f);
+		//pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(45.f), XMConvertToRadians(-180.f)));
+		pObj->Transform()->SetRelativeScale(Vec3(0.15f, 0.15f, 0.15f));
+		SpawnGameObject(pObj, Vec3(1711.f, 14.8f, 1721.f), L"Bush");
 
-		//pMeshData = nullptr;
-		//pObj = nullptr;
-		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\Bush_C.fbx");
-		//pObj = pMeshData->Instantiate();
-		//pObj->SetName(L"Bush_C");
-		//pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\Bush_C");
-		//pObj->GetRenderComponent()->SetFrustumCheck(false);
-		//pObj->Animator3D()->PlayRepeat(L"Bush_C\\Idle1_model.001", true, true, 0.1f);
-		//pObj->AddComponent(new CCollider3D);
-		//pObj->AddComponent(new CBushScript);
+		pMeshData = nullptr;
+		pObj = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\BushThree.fbx");
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"BushThree");
+		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\BushThree");
+		pObj->GetRenderComponent()->SetFrustumCheck(false);
+		pObj->Animator3D()->PlayRepeat(L"BushThree\\Front_model.001", true, true, 0.1f);
+		//pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(45.f), XMConvertToRadians(-180.f)));
+		pObj->Transform()->SetRelativeScale(Vec3(0.15f, 0.15f, 0.15f));
+		SpawnGameObject(pObj, Vec3(1711.f, 14.8f, 1721.f), L"Bush");
+
+
+		pMeshData = nullptr;
+		/*pObj = nullptr;
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\BushThree.fbx");
+		pObj = pMeshData->Instantiate();
+		pObj->SetName(L"BushThree");
+		pObj->Animator3D()->LoadEveryAnimFromFolder(L"animation\\BushThree");
+		pObj->GetRenderComponent()->SetFrustumCheck(false);
+		pObj->Animator3D()->PlayRepeat(L"BushThree\\Front_model.001", true, true, 0.1f);*/
+		/*pObj->AddComponent(new CCollider3D);
+		pObj->AddComponent(new CBushScript);*/
 
 		////pObj->Transform()->SetRelativeRot(Vec3(XMConvertToRadians(-180.f), XMConvertToRadians(45.f), XMConvertToRadians(-180.f)));
 		//pObj->Transform()->SetRelativeScale(Vec3(0.18f, 0.18f, 0.18f));

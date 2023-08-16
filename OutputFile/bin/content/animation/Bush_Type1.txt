@@ -1,0 +1,5 @@
+BACK_model.002,1,145
+Front_model.001,146,290
+Idle1_model.001,291,435
+Left_model.001,436,580
+Right_model.001,581,725

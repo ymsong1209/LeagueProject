@@ -735,6 +735,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CMalphiteBasicAttackHitEffectScript";
 		break;
 
+	case SCRIPT_TYPE::MALPHITEBASICATTACKSCRIPT:
+		return L"CMalphiteBasicAttackScript";
+		break;
+
 	case SCRIPT_TYPE::MALPHITEEDECALSCRIPT:
 		return L"CMalphiteEDecalScript";
 		break;
@@ -873,6 +877,14 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::STRUCTURESCRIPT:
 		return L"CStructureScript";
+		break;
+
+	case SCRIPT_TYPE::TESTTURRETSCRIPT:
+		return L"CTestTurretScript";
+		break;
+
+	case SCRIPT_TYPE::TURRETATTACKSCRIPT:
+		return L"CTurretAttackScript";
 		break;
 
 	case SCRIPT_TYPE::TURRETBASICATTACKSCRIPT:
