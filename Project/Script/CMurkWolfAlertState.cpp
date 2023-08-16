@@ -25,7 +25,7 @@ void CMurkWolfAlertState::Enter()
 
 
 	Vec3 MurkWolfPos = GetOwner()->Transform()->GetRelativePos();
-	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\murkwolf\\alert.mp3", 1, 0.5f, true, 120.f, MurkWolfPos, Faction::NONE);
+	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\murkwolf\\alert.mp3", 1, 0.3f, true, 120.f, MurkWolfPos, Faction::NONE);
 	CJungleAlertState::Enter();
 }
 

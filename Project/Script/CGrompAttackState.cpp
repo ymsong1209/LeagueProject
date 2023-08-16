@@ -16,7 +16,7 @@ void CGrompAttackState::Enter()
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"gromp\\_attack1", false, false, true, 0.5f);
 
 	Vec3 GrompPos = GetOwner()->Transform()->GetRelativePos();
-	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\gromp\\attack.mp3", 1, 0.5f, true, 130.f, GrompPos, Faction::NONE);
+	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\gromp\\attack.mp3", 1, 0.3f, true, 130.f, GrompPos, Faction::NONE);
 
 
 	CJungleAttackState::Enter();

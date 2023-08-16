@@ -18,7 +18,7 @@ void CMurkWolfN2AState::Enter()
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"MurkWolf\\sru_murkwolf_idle_n2a", false, false, true, 0.5f);
 
 	Vec3 MurkWolfPos = GetOwner()->Transform()->GetRelativePos();
-	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\murkwolf\\n2a.mp3", 1, 0.5f, true, 120.f, MurkWolfPos, Faction::NONE);
+	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\murkwolf\\n2a.mp3", 1, 0.3f, true, 120.f, MurkWolfPos, Faction::NONE);
 
 	CJungleN2AState::Enter();
 }

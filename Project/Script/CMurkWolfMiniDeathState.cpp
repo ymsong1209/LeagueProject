@@ -18,7 +18,7 @@ void CMurkWolfMiniDeathState::Enter()
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, L"MurkWolf_Mini\\Death_Base", false, false, false, 0.f);
 
 	Vec3 MurkWolfMiniPos = GetOwner()->Transform()->GetRelativePos();
-	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\murkwolf_mini\\death.mp3", 1, 0.5f, true, 120.f, MurkWolfMiniPos, Faction::NONE);
+	CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\murkwolf_mini\\death.mp3", 1, 0.3f, true, 120.f, MurkWolfMiniPos, Faction::NONE);
 	CJungleDeathState::Enter();
 }
 

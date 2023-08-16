@@ -26,10 +26,10 @@ void CKrugMiniAttackState::Enter()
 
 	Vec3 KrugPos = GetOwner()->Transform()->GetRelativePos();
 	if (m_iAttackAnimNum % 2 == 1) {
-		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\krug\\attack.mp3", 1, 0.5f, true, 120.f, KrugPos, Faction::NONE);
+		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\krug\\attack.mp3", 1, 0.3f, true, 120.f, KrugPos, Faction::NONE);
 	}
 	else {
-		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\krug\\attack2.mp3", 1, 0.5f, true, 120.f, KrugPos, Faction::NONE);
+		CSendServerEventMgr::GetInst()->SendSoundPacket(L"sound3d\\krug\\attack2.mp3", 1, 0.3f, true, 120.f, KrugPos, Faction::NONE);
 	}
 	CJungleAttackState::Enter();
 }

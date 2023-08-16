@@ -77,8 +77,19 @@ void CChampionIdleState::HandleEvent(CGameEvent& event)
 		break;
 	case GAME_EVENT_TYPE::PLAYER_SKILL_Q:
 	{
-		if(GetOwnerFSM()->FindState(L"Q") != nullptr)
+		if (GetOwnerFSM()->FindState(L"Q") != nullptr)
+		{
+			PlayerQEvent* QEvent = dynamic_cast<PlayerQEvent*>(&event);
+
+			CChampionSkillState* SkillState = dynamic_cast<CChampionSkillState*>(GetOwnerFSM()->FindState(L"Q"));
+			if (SkillState != nullptr)
+			{
+				SkillState->SetUserObj(QEvent->GetUserObj());
+				SkillState->SetTargetObj(QEvent->GetTargetObj());
+			}
 			GetOwnerFSM()->ChangeState(L"Q");
+		}
+;
 		break;
 	}
 	case GAME_EVENT_TYPE::PLAYER_SKILL_W:
