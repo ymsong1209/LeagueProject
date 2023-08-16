@@ -754,6 +754,7 @@
     <ClCompile Include="CDefaultGetHitEffectScript.cpp">
       <Filter>Effect\GetHitEffect</Filter>
     </ClCompile>
+    <ClCompile Include="CImmediateGetHitScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCameraMoveScript.h" />
@@ -1060,6 +1061,7 @@
     <ClInclude Include="CDefaultGetHitEffectScript.h">
       <Filter>Effect\GetHitEffect</Filter>
     </ClInclude>
+    <ClInclude Include="CImmediateGetHitScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CPlayerScript.cpp">

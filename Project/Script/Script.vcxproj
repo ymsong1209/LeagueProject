@@ -242,6 +242,7 @@
     <ClInclude Include="CGrowScaleScript.h" />
     <ClInclude Include="CHpMpRatioUIScript.h" />
     <ClInclude Include="CIconTimerUIScript.h" />
+    <ClInclude Include="CImmediateGetHitScript.h" />
     <ClInclude Include="CInhibitorRespawnState.h" />
     <ClInclude Include="CInventoryUIScript.h" />
     <ClInclude Include="CJinxAttackState.h" />
@@ -526,6 +527,7 @@
     <ClCompile Include="CHeal.cpp" />
     <ClCompile Include="CHpMpRatioUIScript.cpp" />
     <ClCompile Include="CIconTimerUIScript.cpp" />
+    <ClCompile Include="CImmediateGetHitScript.cpp" />
     <ClCompile Include="CInhibitorBrokenState.cpp" />
     <ClCompile Include="CInhibitorIdleState.cpp" />
     <ClCompile Include="CInhibitorRespawnState.cpp" />

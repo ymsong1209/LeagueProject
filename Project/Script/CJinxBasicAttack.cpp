@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "CJinxBasicAttack.h"
 
+#include "CDefaultGetHitEffectScript.h"
+
 CJinxBasicAttack::CJinxBasicAttack()
 {
 	m_strSkillName = L"Jinx_Basic_Attack";
@@ -11,7 +13,7 @@ CJinxBasicAttack::CJinxBasicAttack()
 
 	CGameObject* JinxBasicAttackObj = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\JinxBasicAttackEffect.prefab")->Instantiate();
 	JinxBasicAttackObj->AddComponent(new CCollider2D);
-	JinxBasicAttackObj->Transform()->SetRelativeScale(Vec3(20.f, 100.f, 1.f));
+	JinxBasicAttackObj->Transform()->SetRelativeScale(Vec3(2.4f, 40.f, 1.f));
 	JinxBasicAttackObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
 	JinxBasicAttackObj->Collider2D()->SetAbsolute(true);
 	JinxBasicAttackObj->Collider2D()->SetOffsetScale(Vec2(10.f, 10.f));
@@ -22,10 +24,12 @@ CJinxBasicAttack::CJinxBasicAttack()
 	JinxBasicAttackObj->SetName(L"JinxBasicAttackMinigun");
 
 	vector<CGameObject*> Childs = JinxBasicAttackObj->GetChild();
-	for (int i = 0; i < Childs.size(); ++i)
-	{
-		Childs[i]->Transform()->SetRelativeScale(Vec3(20.f, 100.f, 1.f));
-	}
+
+	Childs[0]->Transform()->SetRelativeScale(Vec3(2.4f, 20.f, 1.f));
+	Childs[0]->Transform()->SetRelativePos(Vec3(-3.48f, -25.24f, 8.f));
+
+	Childs[1]->Transform()->SetRelativeScale(Vec3(2.4f, 30.f, 1.f));
+	Childs[1]->Transform()->SetRelativePos(Vec3(1.6f, -40.64f, 8.f));
 
 	Ptr<CPrefab> NewPrefab = new CPrefab;
 	CGameObject* PrefabObject = JinxBasicAttackObj->Clone();
@@ -35,7 +39,19 @@ CJinxBasicAttack::CJinxBasicAttack()
 
 	// 피격 이펙트
 	Ptr<CPrefab> JinxBasicAttackGetHitEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\JinxBasicAttackGetHitEffect.prefab");
+	JinxBasicAttackGetHitEffect.Get()->GetProtoObject()->AddComponent(new CDefaultGetHitEffectScript);
+	JinxBasicAttackGetHitEffect.Get()->GetProtoObject()->Transform()->SetRelativeScale(Vec3(10.f, 10.f, 1.f));
+	JinxBasicAttackGetHitEffect.Get()->GetProtoObject()->GetScript<CDefaultGetHitEffectScript>()->SetExpandSpeed(20.f);
+	JinxBasicAttackGetHitEffect.Get()->GetProtoObject()->GetScript<CDefaultGetHitEffectScript>()->SetDeleteScale(1.f);
+
+
+
+
 	m_SkillHitEffect = JinxBasicAttackGetHitEffect;
+
+
+
+
 
 	// 투사체 스크립트
 	m_iProjectileCount = 1;
