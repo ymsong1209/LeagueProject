@@ -22,8 +22,8 @@ CRedScript::~CRedScript()
 }
 void CRedScript::begin()
 {
-	m_fHP = 20;
-	m_fMaxHP = 20;
+	m_fHP = 100;
+	m_fMaxHP = 100;
 	m_fAttackRange = 30.f;
 	GetOwner()->Animator3D()->LoadEveryAnimFromFolder(L"animation\\jungle_red");
 	if (GetOwner()->GetComponent(COMPONENT_TYPE::FSM) == nullptr) GetOwner()->AddComponent(new CFsm);

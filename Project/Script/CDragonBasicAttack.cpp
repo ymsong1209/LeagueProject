@@ -91,7 +91,7 @@ void CDragonBasicAttack::GetHit(CUnitScript* _UserScript, CUnitScript* _TargetSc
 
 	Damage -= DefencePow;
 
-	float minDam = 10.f;
+	float minDam = 100.f;
 	if (Damage < minDam)
 	{
 		// 데미지 최소값

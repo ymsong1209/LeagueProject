@@ -90,7 +90,7 @@ void CRangedMinionBasicAttack::GetHit(CUnitScript* _UserScript, CUnitScript* _Ta
 
 	Damage -= DefencePow;
 
-	float minDam = 10.f;
+	float minDam = 30.f;
 	if (Damage < minDam)
 	{
 		// 데미지 최소값

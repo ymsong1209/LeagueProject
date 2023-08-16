@@ -28,7 +28,7 @@
 CMalphiteScript::CMalphiteScript()
 	:CChampionScript((UINT)MALPHITESCRIPT)
 {
-	m_fMaxHP = 1200;
+	m_fMaxHP = 800;
 	m_fMaxMP = 200;
 
 	//m_fAttackPower = 5.f;
