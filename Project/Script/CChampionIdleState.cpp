@@ -87,7 +87,7 @@ void CChampionIdleState::HandleEvent(CGameEvent& event)
 				SkillState->SetUserObj(QEvent->GetUserObj());
 				SkillState->SetTargetObj(QEvent->GetTargetObj());
 			}
-			GetOwnerFSM()->ChangeState(L"Q")
+			GetOwnerFSM()->ChangeState(L"Q");
 		}
 ;
 		break;
