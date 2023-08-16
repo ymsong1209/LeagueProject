@@ -14,8 +14,6 @@ CRangedMinionBasicAttack::CRangedMinionBasicAttack()
 	RangedMinionBasicAttackObj->SetName(L"RedRangedMinionBasicAttackProjectile");
 	//RangedMinionBasicAttackObj->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Minion\\MinionRedAttack.dds"));
 
-
-
 	// ««∞› ¿Ã∆Â∆Æ
 	Ptr<CPrefab> MinionBasicAttackHitEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MinionRedGetHitByBasicAttack.prefab");
 	MinionBasicAttackHitEffect.Get()->GetProtoObject()->AddComponent(new CDefaultGetHitEffectScript);

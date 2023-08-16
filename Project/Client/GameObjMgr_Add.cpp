@@ -2503,6 +2503,21 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 			// Skill Projectile 오브젝트 가지고 와서, 빈 UnitScript 스크립트와 서버 아이디 붙여줌
 			vector<CGameObject*> vecProj = skill->GetProjectile();
 
+			CUnitScript* MinionScript = UserObj->GetScript<CUnitScript>();
+
+			// 원거리 평타 쓰는 미니언만 예외처리
+			if (MinionScript->GetUnitType() == UnitType::RANGED_MINION || MinionScript->GetUnitType() == UnitType::SIEGE_MINION)
+			{
+				if (MinionScript->GetFaction() == Faction::RED)
+				{
+					vecProj[0]->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Minion\\MinionRedAttack.dds"));
+				}
+				else
+				{
+					vecProj[0]->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Minion\\MinionBlueAttack.dds"));
+				}
+			}
+
 			for (int i = 0; i < vecProj.size(); i++)
 			{
 				vecProj[i]->AddComponent(new CUnitScript);
@@ -2537,7 +2552,20 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 		if (skill->GetSkillEffect() != nullptr)
 		{
 			SpawnGameObject(skill->GetSkillEffect(), UserObj->Transform()->GetRelativePos(), L"Effect");
-			skill->GetSkillHitEffect()->SetLifeSpan(0.5f);
+
+			CUnitScript* MinionScript = UserObj->GetScript<CUnitScript>();
+
+			// 미니언만 예외처리
+			if ((UINT)UnitType::MELEE_MINION <= (UINT)MinionScript->GetUnitType() &&
+				(UINT)MinionScript->GetUnitType() <= (UINT)UnitType::SUPER_MINION)
+			{
+				if (MinionScript->GetFaction() == Faction::RED)
+				{
+					skill->GetSkillEffect()->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\BlueMinionHitEffect.mtrl"), 0);
+				}
+			}
+
+			skill->GetSkillHitEffect()->SetLifeSpan(0.3f);
 		}
 	}
 }
