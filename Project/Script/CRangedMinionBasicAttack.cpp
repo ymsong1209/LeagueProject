@@ -18,7 +18,7 @@ CRangedMinionBasicAttack::CRangedMinionBasicAttack()
 	RangedMinionBasicAttackObj->Collider2D()->SetOffsetScale(Vec2(10.f, 10.f));
 	RangedMinionBasicAttackObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
 	RangedMinionBasicAttackObj->Collider2D()->SetDrawCollision(true);
-	RangedMinionBasicAttackObj->Transform()->SetBillBoard(false);
+	RangedMinionBasicAttackObj->Transform()->SetBillBoard(true);
 	
 
 	// 피격 이펙트
