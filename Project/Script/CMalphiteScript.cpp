@@ -28,8 +28,8 @@
 CMalphiteScript::CMalphiteScript()
 	:CChampionScript((UINT)MALPHITESCRIPT)
 {
-	m_fMaxHP = 1500;
-	m_fMaxMP = 50;
+	m_fMaxHP = 1200;
+	m_fMaxMP = 200;
 
 	//m_fAttackPower = 5.f;
 	m_fAttackPower = 50.f;
@@ -205,6 +205,7 @@ void CMalphiteScript::GetInput()
 					evn->SetTargetObj(Unit);
 					CGameEventMgr::GetInst()->NotifyEvent(*evn);
 				}
+				m_fMP -= m_Skill[1]->GetCost();
 			}
 		}
 
@@ -228,6 +229,7 @@ void CMalphiteScript::GetInput()
 				evn->SetTargetObj(nullptr);
 				CGameEventMgr::GetInst()->NotifyEvent(*evn);
 			}
+			m_fMP -= m_Skill[2]->GetCost();
 		}
 	}
 	if (KEY_TAP(KEY::E))
@@ -247,6 +249,7 @@ void CMalphiteScript::GetInput()
 				evn->SetTargetObj(nullptr);
 				CGameEventMgr::GetInst()->NotifyEvent(*evn);
 			}
+			m_fMP -= m_Skill[3]->GetCost();
 		}
 	}
 	if (KEY_TAP(KEY::R))
@@ -266,6 +269,7 @@ void CMalphiteScript::GetInput()
 				evn->SetTargetObj(nullptr);
 				CGameEventMgr::GetInst()->NotifyEvent(*evn);
 			}
+			m_fMP -= m_Skill[4]->GetCost();
 		}
 	}
 
