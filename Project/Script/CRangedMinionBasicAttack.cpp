@@ -12,7 +12,14 @@ CRangedMinionBasicAttack::CRangedMinionBasicAttack()
 
 	CGameObject* RangedMinionBasicAttackObj = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\RedMinionBasicAttack.prefab")->Instantiate();
 	RangedMinionBasicAttackObj->SetName(L"RedRangedMinionBasicAttackProjectile");
-	//RangedMinionBasicAttackObj->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Minion\\MinionRedAttack.dds"));
+	RangedMinionBasicAttackObj->AddComponent(new CCollider2D);
+	RangedMinionBasicAttackObj->Collider2D()->SetCollider2DType(COLLIDER2D_TYPE::CIRCLE);
+	RangedMinionBasicAttackObj->Collider2D()->SetAbsolute(true);
+	RangedMinionBasicAttackObj->Collider2D()->SetOffsetScale(Vec2(10.f, 10.f));
+	RangedMinionBasicAttackObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
+	RangedMinionBasicAttackObj->Collider2D()->SetDrawCollision(true);
+	RangedMinionBasicAttackObj->Transform()->SetBillBoard(false);
+	
 
 	// ««∞› ¿Ã∆Â∆Æ
 	Ptr<CPrefab> MinionBasicAttackHitEffect = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MinionRedGetHitByBasicAttack.prefab");
