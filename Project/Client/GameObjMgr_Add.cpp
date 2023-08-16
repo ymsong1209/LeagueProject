@@ -2520,6 +2520,7 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 					RangedMinionBasicAttackObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
 					RangedMinionBasicAttackObj->Collider2D()->SetDrawCollision(true);
 					RangedMinionBasicAttackObj->Transform()->SetBillBoard(true);
+					RangedMinionBasicAttackObj->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Minion\\MinionBlueAttack.dds"));
 					vecProj[0] = RangedMinionBasicAttackObj;
 				}
 				else if(MinionScript->GetFaction() == Faction::BLUE)
@@ -2534,6 +2535,8 @@ void GameObjMgr::AddSkillProjectile(uint64 _projectileId, SkillInfo _skillInfo)
 					RangedMinionBasicAttackObj->Collider2D()->SetOffsetRot(Vec3(XM_PI / 2.f, 0.f, 0.f));
 					RangedMinionBasicAttackObj->Collider2D()->SetDrawCollision(true);
 					RangedMinionBasicAttackObj->Transform()->SetBillBoard(true);
+					RangedMinionBasicAttackObj->ParticleSystem()->SetParticleTexture(CResMgr::GetInst()->FindRes<CTexture>(L"texture\\Minion\\MinionRedAttack.dds"));
+
 					vecProj[0] = RangedMinionBasicAttackObj;
 				}
 			}
