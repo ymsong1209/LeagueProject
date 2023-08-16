@@ -12,6 +12,7 @@ private:
     CGameObject*     m_UserObj;
     CGameObject*     m_TargetObj;
 
+    Vec3             m_EnterRot;
 public:
     virtual void tick() override;
     virtual void Enter() override;

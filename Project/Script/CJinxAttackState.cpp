@@ -7,7 +7,7 @@
 #include "CBasicAttackScript.h"
 #include "CUnitScript.h"
 #include "CJinxScript.h"
-
+#include "CSkill.h"
 
 CJinxAttackState::CJinxAttackState()
 {
@@ -23,7 +23,7 @@ void CJinxAttackState::tick()
 }
 
 void CJinxAttackState::Enter()
-{
+{	
 	// 애니메이션
 	wstring animName = L"";
 	if (GetOwner()->GetScript<CJinxScript>()->GetWeaponMode() == JinxWeaponMode::MINIGUN)
@@ -36,6 +36,16 @@ void CJinxAttackState::Enter()
 	UINT64 targetId = GetOwner()->GetScript<CUnitScript>()->GetServerID();
 	CSendServerEventMgr::GetInst()->SendAnimPacket(targetId, animName, false, true, false, 0.0f);
 
+
+	CSkill* JinxBasicAttack = GetOwner()->GetScript<CChampionScript>()->GetSkill(0);
+
+	// 현재 위치
+	Vec3 CurPos = GetOwner()->Transform()->GetRelativePos();
+	// 가야할 방향 구하기
+	Vec3 Dir = (JinxBasicAttack->GetMousePos() - CurPos).Normalize();
+
+	float targetYaw = atan2f(-Dir.x, -Dir.z);
+	GetOwner()->Transform()->SetRelativeRot(Vec3(0.f, targetYaw, 0.f));
 
 	CChampionAttackState::Enter();
 }
