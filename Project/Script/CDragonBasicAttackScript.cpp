@@ -26,6 +26,8 @@ void CDragonBasicAttackScript::begin()
 	// z축 회전(-90도)
 	GetOwner()->Transform()->SetRelativeRot(Vec3(0.f, 0.f, targetAngle - XMConvertToRadians(90)));
 
+	GetOwner()->MeshRender()->GetMaterial(0)
+		->SetShader(CResMgr::GetInst()->FindRes<CGraphicsShader>(L"Std2DEffectShaderAlpha"));
 
 	GetOwner()->Animator2D()->Play(L"DragonBasicAttack", true);
 }

@@ -317,6 +317,7 @@ void ServerPacketHandler::Handle_S_GAME_START(PacketSessionRef& session, BYTE* b
 		    CTimeMgr::GetInst()->SetTimeScale(0.f);
 		}
 		level->ChangeState(LEVEL_STATE::PLAY);
+		CTimeMgr::GetInst()->SetTimeScale(1.f);
 		////===================================================================
 
 
