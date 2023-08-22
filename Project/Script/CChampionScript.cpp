@@ -127,6 +127,7 @@ bool CChampionScript::CheckDeath()
 		if (m_fRespawnTime <= 0)
 		{
 			m_fHP = m_fMaxHP;
+			m_fMP = m_fMaxMP;
 			m_bUnitDead = false;
 			m_fRespawnTime = 5;
 			m_eCurCC = CC::NO_CC;
