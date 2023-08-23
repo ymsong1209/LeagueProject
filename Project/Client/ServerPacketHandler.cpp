@@ -106,6 +106,14 @@ void ServerPacketHandler::HandlePacket(PacketSessionRef& session, BYTE* buffer, 
 	case S_OBJECT_MTRL:
 		Handle_S_OBJECT_MTRL(session, buffer, len);
 		break;
+
+	case S_CHAT:
+		Handle_S_CHAT(session, buffer, len);
+		break;
+
+	case S_EFFECT:
+		Handle_S_EFFECT(session, buffer, len);
+		break;
 	}
 }
 
@@ -908,4 +916,84 @@ void ServerPacketHandler::Handle_S_OBJECT_MTRL(PacketSessionRef& session, BYTE* 
 
 	std::cout << "===============================" << endl;
 	m.unlock();
+}
+
+void ServerPacketHandler::Handle_S_CHAT(PacketSessionRef& session, BYTE* buffer, int32 len)
+{
+	cout << "S_CHAT Packet" << endl;
+	BufferReader br(buffer, len);
+
+	PKT_S_CHAT* pkt = reinterpret_cast<PKT_S_CHAT*>(buffer);
+
+	if (pkt->Validate() == false)
+	{
+		cout << "S_CHAT Validate False" << endl;
+		return;
+	}
+
+	uint64 id = pkt->ownerId;
+
+	PKT_S_CHAT::ChatLog chatLogBuffs = pkt->GetChatLog();
+	
+	// chatlog wstring 
+	wstring _ChatLog = L"";
+	for (auto& chatLogBuff : chatLogBuffs)
+	{
+		_ChatLog.push_back(chatLogBuff.chatLog);
+	}
+	
+	std::wstring* pNickName = new std::wstring(GameObjMgr::GetInst()->FindPlayer(id)->GetScript<CUnitScript>()->GetNickname());
+	std::wstring* pChatLog = new std::wstring(_ChatLog);
+
+	tServerEvent evn = {};
+	evn.Type = SERVER_EVENT_TYPE::CHAT_PACKET;
+	evn.wParam = reinterpret_cast<DWORD_PTR>(pNickName);
+	evn.lParam = reinterpret_cast<DWORD_PTR>(pChatLog);
+
+	ServerEventMgr::GetInst()->AddEvent(evn);
+
+	std::cout << "===============================" << endl;
+}
+
+void ServerPacketHandler::Handle_S_EFFECT(PacketSessionRef& session, BYTE* buffer, int32 len)
+{
+	cout << "S_EFFECT Packet" << endl;
+	BufferReader br(buffer, len);
+
+	PKT_S_EFFECT* pkt = reinterpret_cast<PKT_S_EFFECT*>(buffer);
+
+	if (pkt->Validate() == false)
+	{
+		cout << "S_EFFECT Validate False" << endl;
+		return;
+	}
+
+	PKT_S_EFFECT::PrefabName prefabNameBuffs = pkt->GetPrefabName();
+
+	// prefabNaem wstring 
+	wstring _PrefabName = L"";
+	for (auto& prefabNameBuff : prefabNameBuffs)
+	{
+		_PrefabName.push_back(prefabNameBuff.prefabName);
+	}
+
+	EffectInfo* effectInfo= new EffectInfo();
+	effectInfo->lifespan = pkt->Lifespan;
+	effectInfo->Pos.x = pkt->Pos.x;
+	effectInfo->Pos.y = pkt->Pos.y;
+	effectInfo->Pos.z = pkt->Pos.z;
+	effectInfo->Dir.x = pkt->Dir.x;
+	effectInfo->Dir.y = pkt->Dir.y;
+	effectInfo->Dir.z = pkt->Dir.z;
+
+
+	std::wstring* pPrefabName = new std::wstring(_PrefabName);
+
+	tServerEvent evn = {};
+	evn.Type = SERVER_EVENT_TYPE::EFFECT_PACKET;
+	evn.wParam = reinterpret_cast<DWORD_PTR>(pPrefabName);
+	evn.lParam = reinterpret_cast<DWORD_PTR>(effectInfo);
+
+	ServerEventMgr::GetInst()->AddEvent(evn);
+	std::cout << "===============================" << endl;
 }

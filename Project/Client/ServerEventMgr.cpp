@@ -164,7 +164,6 @@ void ServerEventMgr::clienttick()
 		{
 			switch (m_vecEvent[i].Type)
 			{
-
 			case SERVER_EVENT_TYPE::MOVE_PACKET:
 			{
 				CGameObject* NewObject = (CGameObject*)m_vecEvent[i].wParam;
@@ -367,6 +366,7 @@ void ServerEventMgr::clienttick()
 				kdacsInfo = nullptr;
 			}
 			break;
+
 			case SERVER_EVENT_TYPE::SOUND_PACKET:
 			{
 				
@@ -395,6 +395,7 @@ void ServerEventMgr::clienttick()
 				soundInfo = nullptr;
 			}
 			break;
+
 			case SERVER_EVENT_TYPE::MTRL_PACKET:
 			{
 				MtrlInfo*	mtrlInfo = (MtrlInfo*)m_vecEvent[i].wParam;
@@ -412,6 +413,38 @@ void ServerEventMgr::clienttick()
 				mtrlInfo = nullptr;
 			}
 			break;
+
+
+			case SERVER_EVENT_TYPE::CHAT_PACKET:
+			{
+				wstring* pNickName = (wstring*)m_vecEvent[i].wParam;
+				wstring* pChatLog = (wstring*)m_vecEvent[i].lParam;
+
+				// TODO
+				// pNickName + " : " + pChatLog 같은 형식으로 문장이 나오면 좋을텐데
+
+
+				// 사용이 끝난 후에는 메모리를 해제
+				delete pNickName; pNickName = nullptr;
+				delete pChatLog; pChatLog = nullptr;
+			}
+			break;
+
+			case SERVER_EVENT_TYPE::EFFECT_PACKET:
+			{
+				wstring* prefabName = (wstring*)m_vecEvent[i].wParam;
+				EffectInfo* effectInfo = (EffectInfo*)m_vecEvent[i].lParam;
+				
+				// TODO
+				// 여기서 prefab 이름을 통해 찾아서 생성. setlifespan으로 바로 삭제
+				// 서버 id로 관리 X
+
+				// 사용이 끝난 후에는 메모리를 해제
+				delete prefabName; prefabName = nullptr;
+				delete effectInfo; effectInfo = nullptr;
+			}
+			break;
+
 			}
 		}
 

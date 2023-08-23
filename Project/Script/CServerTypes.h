@@ -15,6 +15,9 @@ enum class SERVER_EVENT_TYPE
 	SOUND_PACKET,       // wParam : uint64 soundId,	   lParam : SoundInfo
 	TIME_PACKET,
 	MTRL_PACKET,		 // wParam : MtrlInfo
+	
+	CHAT_PACKET,
+	EFFECT_PACKET,
 
 	// Script Send Packet
 	SEND_ANIM_PACKET,		  // wParam : X,  lParam : AnimInfo
@@ -326,4 +329,11 @@ enum JinxWeaponMode
 {
 	MINIGUN = 0,           // 공격속도++
 	ROCKET_LAUNCHER = 1,    // 사거리++ 공격속도-- 범위피해
+};
+
+struct EffectInfo
+{
+	float lifespan;
+	Vec3  Pos;
+	Vec3  Dir;
 };

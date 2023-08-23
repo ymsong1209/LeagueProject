@@ -145,7 +145,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             else if (KEY_TAP(KEY::NUM_4))      
             {
                //std::cout << "Test Pakcet" << endl;
-               //PKT_C_KDA_CS_WRITE  pktWriter(6, UnitType::MELEE_MINION);
+               //
+               //wstring _chatTest = L"Hello my chat";
+               //PKT_C_CHAT_WRITE  pktWriter(1);
+               //PKT_C_CHAT_WRITE::ChatLog chatLog = pktWriter.ReserveChatLog(_chatTest.size());
+               //for (int i = 0; i < _chatTest.size(); i++)
+               //{
+               //    chatLog[i] = { _chatTest[i] };
+               //}
+               //
                //SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
                //service->Broadcast(sendBuffer);
                //std::cout << "===============================" << endl;
