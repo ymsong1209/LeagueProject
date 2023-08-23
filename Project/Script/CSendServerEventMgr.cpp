@@ -203,22 +203,44 @@ void CSendServerEventMgr::SendSetMtrlPacket(UINT64 _objId, int _mtrlIndex, wstri
 
 }
 
-//void CSendServerEventMgr::SendMtrlPacket(UINT64 _objId, int _mtrlIndex, TEX_PARAM _texParam, wstring _TexName)
-//{
-//	std::mutex m;
-//	{
-//		std::lock_guard<std::mutex> lock(m);
-//
-//		MtrlInfo* mtrlInfo = new MtrlInfo();
-//		mtrlInfo->targetId = _objId;
-//		mtrlInfo->iMtrlIndex = _mtrlIndex;
-//		mtrlInfo->tex_param = _texParam;
-//		mtrlInfo->wTexName = _TexName;
-//
-//		tServerEvent serverEvn = {};
-//		serverEvn.Type = SERVER_EVENT_TYPE::SEND_MTRL_PACKET;
-//		serverEvn.wParam = (DWORD_PTR)mtrlInfo;
-//		//serverEvn.lParam;
-//		CSendServerEventMgr::GetInst()->AddServerSendEvent(serverEvn);
-//	}
-//}
+void CSendServerEventMgr::SendChatPacket(UINT64 _userId, wstring _chatLog)
+{
+	std::mutex m;
+	{
+		std::lock_guard<std::mutex> lock(m);
+
+		std::wstring* pChatLog = new std::wstring(_chatLog);
+
+		tServerEvent serverEvn = {};
+		serverEvn.Type = SERVER_EVENT_TYPE::SEND_CHAT_PACKET;
+		serverEvn.wParam = (DWORD_PTR)_userId;
+		serverEvn.lParam = (DWORD_PTR)pChatLog;
+
+		CSendServerEventMgr::GetInst()->AddServerSendEvent(serverEvn);
+	}
+}
+
+void CSendServerEventMgr::SendEffectPacket(wstring _prefabName, float _lifespan, Vec3 _pos, Vec3 _dir)
+{
+	std::mutex m;
+	{
+		std::lock_guard<std::mutex> lock(m);
+
+		std::wstring* pPrefabName = new std::wstring(_prefabName);
+		EffectInfo* effectInfo = new EffectInfo();
+		effectInfo->lifespan = _lifespan;
+		effectInfo->Pos.x = _pos.x;
+		effectInfo->Pos.y = _pos.y;
+		effectInfo->Pos.z = _pos.z;
+		effectInfo->Dir.x = _dir.x;
+		effectInfo->Dir.y = _dir.y;
+		effectInfo->Dir.z = _dir.z;
+
+		tServerEvent serverEvn = {};
+		serverEvn.Type = SERVER_EVENT_TYPE::SEND_EFFECT_PACKET;
+		serverEvn.wParam = (DWORD_PTR)pPrefabName;
+		serverEvn.lParam = (DWORD_PTR)effectInfo;
+
+		CSendServerEventMgr::GetInst()->AddServerSendEvent(serverEvn);
+	}
+}

@@ -27,6 +27,8 @@ enum class SERVER_EVENT_TYPE
 	SEND_KDA_CS_PACKET,		  // wParam : KDACSInfo
 	SEND_SOUND_PACKET,		  // wParam : SoundInfo
 	SEND_MTRL_PACKET,		  // wParam : MtrlInfo
+	SEND_CHAT_PACKET,		  // wParam : userid, lParam : chatlog
+	SEND_EFFECT_PACKET,		  // wParam : prefabName, lParam : effectInfo
 
 
 	// Client Send Packet

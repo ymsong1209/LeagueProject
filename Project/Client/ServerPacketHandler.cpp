@@ -862,7 +862,6 @@ void ServerPacketHandler::Handle_S_TIME(PacketSessionRef& session, BYTE* buffer,
 	m.unlock();
 }
 
-
 void ServerPacketHandler::Handle_S_OBJECT_MTRL(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
 	std::mutex m;

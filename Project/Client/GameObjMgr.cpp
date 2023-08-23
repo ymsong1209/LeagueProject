@@ -400,209 +400,221 @@ void GameObjMgr::SendPlacedObjectUpdate(uint64 _id, CGameObject* _obj, ClientSer
 void GameObjMgr::SendSkillSpawn(SkillInfo* _skillInfo, ClientServiceRef _service)
 {
 	// 스킬을 쏜 오브젝트가 생성 패킷을 보낸다. 
-	std::mutex m;
-	{
-		std::lock_guard<std::mutex> lock(m);
 
-		SkillInfo skillInfoPacket = {};
-		// this time, we don't know skill projectile Id
-		//skillInfoPacket.SkillId = _skillInfo->SkillId;
-		skillInfoPacket.OwnerId = _skillInfo->OwnerId;
-		skillInfoPacket.TargetId = _skillInfo->TargetId;
-		skillInfoPacket.SkillLevel = _skillInfo->SkillLevel;
-		skillInfoPacket.skillType = _skillInfo->skillType;
-		skillInfoPacket.offsetPos = _skillInfo->offsetPos;
-		skillInfoPacket.projectileCount = _skillInfo->projectileCount;
-		skillInfoPacket.UseMousePos = _skillInfo->UseMousePos;
-		skillInfoPacket.MousePos = _skillInfo->MousePos;
-		skillInfoPacket.UseMouseDir = _skillInfo->UseMouseDir;
-		skillInfoPacket.MouseDir = _skillInfo->MouseDir;
+	SkillInfo skillInfoPacket = {};
+	// this time, we don't know skill projectile Id
+	//skillInfoPacket.SkillId = _skillInfo->SkillId;
+	skillInfoPacket.OwnerId = _skillInfo->OwnerId;
+	skillInfoPacket.TargetId = _skillInfo->TargetId;
+	skillInfoPacket.SkillLevel = _skillInfo->SkillLevel;
+	skillInfoPacket.skillType = _skillInfo->skillType;
+	skillInfoPacket.offsetPos = _skillInfo->offsetPos;
+	skillInfoPacket.projectileCount = _skillInfo->projectileCount;
+	skillInfoPacket.UseMousePos = _skillInfo->UseMousePos;
+	skillInfoPacket.MousePos = _skillInfo->MousePos;
+	skillInfoPacket.UseMouseDir = _skillInfo->UseMouseDir;
+	skillInfoPacket.MouseDir = _skillInfo->MouseDir;
 
-		PKT_C_SKILL_PROJECTILE_WRITE  pktWriter(skillInfoPacket);
+	PKT_C_SKILL_PROJECTILE_WRITE  pktWriter(skillInfoPacket);
 
-		// 서버에게 패킷 전송
-		std::cout << "Send C_SKILL_PROJECTILE Pakcet " << endl;
-		SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
-		_service->Broadcast(sendBuffer);
+	// 서버에게 패킷 전송
+	std::cout << "Send C_SKILL_PROJECTILE Pakcet " << endl;
+	SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+	_service->Broadcast(sendBuffer);
 
-		std::cout << "===============================" << endl;
-	}
+	std::cout << "===============================" << endl;
 }
 
 void GameObjMgr::SendSkillHit(HitInfo* _hitInfo, ClientServiceRef _service)
 {
 	// hitOjbId가 스킬을 맞았다고 보낸다. 
-	std::mutex m;
-	{
-		std::lock_guard<std::mutex> lock(m);
 
-		SkillInfo skillInfoPacket = {};
-		skillInfoPacket.SkillId =		_hitInfo->skillObjId;
-		skillInfoPacket.OwnerId =		_hitInfo->useObjId;
-		skillInfoPacket.TargetId =		_hitInfo->hitObjId;
-		skillInfoPacket.SkillLevel =	_hitInfo->SkillLevel;
-		skillInfoPacket.skillType =		_hitInfo->skillType;
+	SkillInfo skillInfoPacket = {};
+	skillInfoPacket.SkillId =		_hitInfo->skillObjId;
+	skillInfoPacket.OwnerId =		_hitInfo->useObjId;
+	skillInfoPacket.TargetId =		_hitInfo->hitObjId;
+	skillInfoPacket.SkillLevel =	_hitInfo->SkillLevel;
+	skillInfoPacket.skillType =		_hitInfo->skillType;
 
-		PKT_C_SKILL_HIT_WRITE  pktWriter(_hitInfo->hitObjId,skillInfoPacket);
+	PKT_C_SKILL_HIT_WRITE  pktWriter(_hitInfo->hitObjId,skillInfoPacket);
 
-		// 서버에게 패킷 전송
-		std::cout << "Send C_SKILL_HIT Pakcet " << endl;
-		SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
-		_service->Broadcast(sendBuffer);
+	// 서버에게 패킷 전송
+	std::cout << "Send C_SKILL_HIT Pakcet " << endl;
+	SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+	_service->Broadcast(sendBuffer);
 
-		std::cout << "===============================" << endl;
-	}
+	std::cout << "===============================" << endl;
+	
 }
 
 void GameObjMgr::SendDespawn(UINT64 _despawnId, float lifespan, ClientServiceRef _service)
 {
 	// 이 오브젝트를 lifespan시간뒤에 삭제하라고 서버에게 보낸다.
-	std::mutex m;
-	{
-		std::lock_guard<std::mutex> lock(m);
 
-		PKT_C_DESPAWN_OBJECT_WRITE  pktWriter(_despawnId, lifespan);
+	PKT_C_DESPAWN_OBJECT_WRITE  pktWriter(_despawnId, lifespan);
 
-		// 서버에게 패킷 전송
-		std::cout << "Send C_DESPAWN_OBJECT Pakcet " << endl;
-		SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
-		_service->Broadcast(sendBuffer);
+	// 서버에게 패킷 전송
+	std::cout << "Send C_DESPAWN_OBJECT Pakcet " << endl;
+	SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+	_service->Broadcast(sendBuffer);
 
-		std::cout << "===============================" << endl;
-	}
+	std::cout << "===============================" << endl;
+
 }
 
 void GameObjMgr::SendKDACS(KDACSInfo* _kdacsInfo, ClientServiceRef _service)
 {
 	// 누군가 죽였고, 누군가 죽었다고 알린다. (죽은 id는 UnitType에 따라 확인유무 갈림)
-	std::mutex m;
-	{
-		std::lock_guard<std::mutex> lock(m);
 
-		KDACSInfo kdacsInfo = {};
-		kdacsInfo.killerId = _kdacsInfo->killerId;
-		kdacsInfo.victimId = _kdacsInfo->victimId;
-		kdacsInfo.deadObjUnitType = _kdacsInfo->deadObjUnitType;
+	KDACSInfo kdacsInfo = {};
+	kdacsInfo.killerId = _kdacsInfo->killerId;
+	kdacsInfo.victimId = _kdacsInfo->victimId;
+	kdacsInfo.deadObjUnitType = _kdacsInfo->deadObjUnitType;
 
-		PKT_C_KDA_CS_WRITE  pktWriter(kdacsInfo);
+	PKT_C_KDA_CS_WRITE  pktWriter(kdacsInfo);
 
-		// 서버에게 패킷 전송
-		std::cout << "Send C_KDA_CS Pakcet " << endl;
-		SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
-		_service->Broadcast(sendBuffer);
+	// 서버에게 패킷 전송
+	std::cout << "Send C_KDA_CS Pakcet " << endl;
+	SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+	_service->Broadcast(sendBuffer);
 
-		std::cout << "===============================" << endl;
-	}
+	std::cout << "===============================" << endl;
+
 }
 
 void GameObjMgr::SendSound(SoundInfo* _soundInfo, ClientServiceRef _service)
 {
-
-	std::mutex m;
+	
+	SoundInfoPacket soundInfoPacket = {};
+	soundInfoPacket.faction = _soundInfo->faction;
+	soundInfoPacket.iLoopCount = _soundInfo->iLoopCount;
+	soundInfoPacket.fVolume = _soundInfo->fVolume;
+	soundInfoPacket.bOverlap = _soundInfo->bOverlap;
+	soundInfoPacket.fRange= _soundInfo->fRange;
+	soundInfoPacket.soundPos.x = _soundInfo->soundPos.x;
+	soundInfoPacket.soundPos.y = _soundInfo->soundPos.y;
+	soundInfoPacket.soundPos.z = _soundInfo->soundPos.z;
+	
+	wstring _soundName = _soundInfo->soundName;
+	
+	PKT_C_SOUND_WRITE  pktWriter(soundInfoPacket);
+	PKT_C_SOUND_WRITE::SoundNameList soundNamePacket = pktWriter.ReserveAnimNameList(_soundName.size());
+	for (int i = 0; i < _soundName.size(); i++)
 	{
-		std::lock_guard<std::mutex> lock(m);
-
-		SoundInfoPacket soundInfoPacket = {};
-		soundInfoPacket.faction = _soundInfo->faction;
-		soundInfoPacket.iLoopCount = _soundInfo->iLoopCount;
-		soundInfoPacket.fVolume = _soundInfo->fVolume;
-		soundInfoPacket.bOverlap = _soundInfo->bOverlap;
-		soundInfoPacket.fRange= _soundInfo->fRange;
-		soundInfoPacket.soundPos.x = _soundInfo->soundPos.x;
-		soundInfoPacket.soundPos.y = _soundInfo->soundPos.y;
-		soundInfoPacket.soundPos.z = _soundInfo->soundPos.z;
-
-		wstring _soundName = _soundInfo->soundName;
-
-		PKT_C_SOUND_WRITE  pktWriter(soundInfoPacket);
-		PKT_C_SOUND_WRITE::SoundNameList soundNamePacket = pktWriter.ReserveAnimNameList(_soundName.size());
-		for (int i = 0; i < _soundName.size(); i++)
-		{
-			soundNamePacket[i] = { _soundName[i] };
-		}
-
-		// 서버에게 패킷 전송
-		std::cout << "Send C_SOUND Pakcet " << endl;
-		SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
-		_service->Broadcast(sendBuffer);
-
-		std::cout << "===============================" << endl;
+		soundNamePacket[i] = { _soundName[i] };
 	}
+	
+	// 서버에게 패킷 전송
+	std::cout << "Send C_SOUND Pakcet " << endl;
+	SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+	_service->Broadcast(sendBuffer);
+	
+	std::cout << "===============================" << endl;
+
 }
 
 void GameObjMgr::SendObjectMtrl(MtrlInfo* _mtrlInfo, ClientServiceRef _service)
 {
-	std::mutex m;
+	MtrlInfoPacket mtrlInfoPacket = {};
+	mtrlInfoPacket.IsSetTexParamUsage = _mtrlInfo->IsSetTexParamUsage;
+	mtrlInfoPacket.targetId = _mtrlInfo->targetId;
+	mtrlInfoPacket.iMtrlIndex = _mtrlInfo->iMtrlIndex;
+	mtrlInfoPacket.tex_param = _mtrlInfo->tex_param;
+	
+	wstring _texName = _mtrlInfo->wTexName;
+	
+	PKT_C_OBJECT_MTRL_WRITE  pktWriter(mtrlInfoPacket);
+	PKT_C_OBJECT_MTRL_WRITE::TexNameList texNamePacket = pktWriter.ReserveTexNameList(_texName.size());
+	for (int i = 0; i < _texName.size(); i++)
 	{
-		std::lock_guard<std::mutex> lock(m);
-
-		MtrlInfoPacket mtrlInfoPacket = {};
-		mtrlInfoPacket.IsSetTexParamUsage = _mtrlInfo->IsSetTexParamUsage;
-		mtrlInfoPacket.targetId = _mtrlInfo->targetId;
-		mtrlInfoPacket.iMtrlIndex = _mtrlInfo->iMtrlIndex;
-		mtrlInfoPacket.tex_param = _mtrlInfo->tex_param;
-
-		wstring _texName = _mtrlInfo->wTexName;
-
-		PKT_C_OBJECT_MTRL_WRITE  pktWriter(mtrlInfoPacket);
-		PKT_C_OBJECT_MTRL_WRITE::TexNameList texNamePacket = pktWriter.ReserveTexNameList(_texName.size());
-		for (int i = 0; i < _texName.size(); i++)
-		{
-			texNamePacket[i] = { _texName[i] };
-		}
-
-		//
-
-		wstring _mtrlName = _mtrlInfo->wMtrlName;
-
-
-		PKT_C_OBJECT_MTRL_WRITE::MtrlNameList mtrlNamePacket = pktWriter.ReserveMtrlNameList(_mtrlName.size());
-		for (int i = 0; i < _mtrlName.size(); i++)
-		{
-			mtrlNamePacket[i] = { _mtrlName[i] };
-		}
-
-		// 서버에게 패킷 전송
-		std::cout << "Send C_OBJECT_MTRL Pakcet " << endl;
-		SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
-		_service->Broadcast(sendBuffer);
-
-		std::cout << "===============================" << endl;
+		texNamePacket[i] = { _texName[i] };
 	}
-
+	
+	//
+	
+	wstring _mtrlName = _mtrlInfo->wMtrlName;
+	
+	
+	PKT_C_OBJECT_MTRL_WRITE::MtrlNameList mtrlNamePacket = pktWriter.ReserveMtrlNameList(_mtrlName.size());
+	for (int i = 0; i < _mtrlName.size(); i++)
+	{
+		mtrlNamePacket[i] = { _mtrlName[i] };
+	}
+	
+	// 서버에게 패킷 전송
+	std::cout << "Send C_OBJECT_MTRL Pakcet " << endl;
+	SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+	_service->Broadcast(sendBuffer);
+	
+	std::cout << "===============================" << endl;
 }
 
 void GameObjMgr::SendObjectAnim(AnimInfo* _animInfo, ClientServiceRef _service)
 {
-	std::mutex m;
+	AnimInfoPacket animInfoPacket = {};
+	animInfoPacket.targetId = _animInfo->targetId;
+	animInfoPacket.bRepeat = _animInfo->bRepeat;
+	animInfoPacket.blend = _animInfo->blend;
+	animInfoPacket.blendTime = _animInfo->blendTime;
+	animInfoPacket.animSpeed = _animInfo->animSpeed;
+
+	wstring _animName = _animInfo->animName;
+
+	// 보내는 사람의 Id	  : MyPlayer.id
+	// 변경될 오브젝트의 Id : animInfo.targetId
+	PKT_C_OBJECT_ANIM_WRITE  pktWriter(MyPlayer.id, animInfoPacket);
+	PKT_C_OBJECT_ANIM_WRITE::AnimNameList animNamePacket = pktWriter.ReserveAnimNameList(_animName.size());
+	for (int i = 0; i < _animName.size(); i++)
 	{
-		std::lock_guard<std::mutex> lock(m);
-
-		AnimInfoPacket animInfoPacket = {};
-		animInfoPacket.targetId = _animInfo->targetId;
-		animInfoPacket.bRepeat = _animInfo->bRepeat;
-		animInfoPacket.blend = _animInfo->blend;
-		animInfoPacket.blendTime = _animInfo->blendTime;
-		animInfoPacket.animSpeed = _animInfo->animSpeed;
-
-		wstring _animName = _animInfo->animName;
-
-		// 보내는 사람의 Id	  : MyPlayer.id
-		// 변경될 오브젝트의 Id : animInfo.targetId
-		PKT_C_OBJECT_ANIM_WRITE  pktWriter(MyPlayer.id, animInfoPacket);
-		PKT_C_OBJECT_ANIM_WRITE::AnimNameList animNamePacket = pktWriter.ReserveAnimNameList(_animName.size());
-		for (int i = 0; i < _animName.size(); i++)
-		{
-			animNamePacket[i] = { _animName[i] };
-		}
-
-		// 서버에게 패킷 전송
-		std::cout << "Send C_OBJECT_ANIM Pakcet " << endl;
-		SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
-		_service->Broadcast(sendBuffer);
-
-		std::cout << "===============================" << endl;
+		animNamePacket[i] = { _animName[i] };
 	}
+
+	// 서버에게 패킷 전송
+	std::cout << "Send C_OBJECT_ANIM Pakcet " << endl;
+	SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+	_service->Broadcast(sendBuffer);
+
+	std::cout << "===============================" << endl;
 }
 
 
+
+void GameObjMgr::SendChat(UINT64 _userId, wstring* _chatLog, ClientServiceRef _service)
+{
+	PKT_C_CHAT_WRITE  pktWriter(_userId);
+	PKT_C_CHAT_WRITE::ChatLog chatLog = pktWriter.ReserveChatLog(_chatLog->size());
+	for (int i = 0; i < _chatLog->size(); i++)
+	{
+		chatLog[i] = { (*_chatLog)[i] };
+	}
+
+	// 서버에게 패킷 전송
+	std::cout << "Send C_CHAT Pakcet " << endl;
+	SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+	_service->Broadcast(sendBuffer);
+}
+
+void GameObjMgr::SendEffect(wstring* _prefabName, EffectInfo* _effectInfo, ClientServiceRef _service)
+{
+	PKT_C_EFFECT::vec3Server pos;
+	pos.x = _effectInfo->Pos.x;
+	pos.y = _effectInfo->Pos.y;
+	pos.z = _effectInfo->Pos.z;
+
+	PKT_C_EFFECT::vec3Server dir;
+	dir.x = _effectInfo->Dir.x;
+	dir.y = _effectInfo->Dir.y;
+	dir.z = _effectInfo->Dir.z;
+
+	PKT_C_EFFECT_WRITE  pktWriter(_effectInfo->lifespan, pos, dir);
+	PKT_C_EFFECT_WRITE::PrefabName prefabName= pktWriter.ReservePrefabName(_prefabName->size());
+	for (int i = 0; i < _prefabName->size(); i++)
+	{
+		prefabName[i] = { (*_prefabName)[i] };
+	}
+
+	// 서버에게 패킷 전송
+	std::cout << "Send C_EFFECT Pakcet " << endl;
+	SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
+	_service->Broadcast(sendBuffer);
+}

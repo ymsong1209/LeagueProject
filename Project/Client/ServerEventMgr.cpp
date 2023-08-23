@@ -147,6 +147,24 @@ void ServerEventMgr::sendtick(ClientServiceRef _service)
 			break;
 		}
 
+		case SERVER_EVENT_TYPE::SEND_CHAT_PACKET:
+		{
+			UINT64 _userId = (UINT64)(_vecScriptEvent[i].wParam);
+			wstring* _chatlog = (wstring*)(_vecScriptEvent[i].lParam);
+			GameObjMgr::GetInst()->SendChat(_userId, _chatlog, _service);
+			delete _chatlog; _chatlog = nullptr; // 메모리 사용 해제
+			break;
+		}
+		case SERVER_EVENT_TYPE::SEND_EFFECT_PACKET:
+		{
+			wstring* _prefabName = (wstring*)(_vecScriptEvent[i].wParam);
+			EffectInfo* _effectInfo = (EffectInfo*)(_vecScriptEvent[i].lParam);
+			GameObjMgr::GetInst()->SendEffect(_prefabName, _effectInfo, _service);
+			delete _prefabName; _prefabName = nullptr; // 메모리 사용 해제
+			delete _effectInfo; _effectInfo = nullptr;
+			break;
+		}
+
 
 		}
 
@@ -409,8 +427,7 @@ void ServerEventMgr::clienttick()
 					pObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(mtrlInfo->wMtrlName), mtrlInfo->iMtrlIndex);
 				
 				// 사용이 끝난 후에는 메모리를 해제
-				delete mtrlInfo;
-				mtrlInfo = nullptr;
+				delete mtrlInfo; mtrlInfo = nullptr;
 			}
 			break;
 
@@ -421,7 +438,7 @@ void ServerEventMgr::clienttick()
 				wstring* pChatLog = (wstring*)m_vecEvent[i].lParam;
 
 				// TODO
-				// pNickName + " : " + pChatLog 같은 형식으로 문장이 나오면 좋을텐데
+				// [전체] pNickName + (챔피언타입이름) + " : " + pChatLog 같은 형식으로 문장 예상
 
 
 				// 사용이 끝난 후에는 메모리를 해제

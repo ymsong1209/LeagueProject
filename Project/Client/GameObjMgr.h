@@ -46,6 +46,8 @@ public:
 	void SendKDACS(KDACSInfo* _kdacsInfo, ClientServiceRef _service);
 	void SendSound(SoundInfo* _soundInfo, ClientServiceRef _service);
 	void SendObjectMtrl(MtrlInfo* _mtrlInfo, ClientServiceRef _service);
+	void SendChat(UINT64 _userId, wstring* _chatLog, ClientServiceRef _service);
+	void SendEffect(wstring* _prefabName, EffectInfo* _effectInfo, ClientServiceRef _service);
 
 public:
 	CGameObject* FindPlayer(uint64 _targetId);
