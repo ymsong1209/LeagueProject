@@ -89,5 +89,10 @@ public:
     // SetMtrl ¿¹½Ã  : GetOwner()->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"material\\turret_rubble_Rubble_red.mtrl"), 0);
     void SendSetTexParamPacket(UINT64 _objId, int _mtrlIndex, TEX_PARAM _texParam, wstring _TexName); 
     void SendSetMtrlPacket(UINT64 _objId, int _mtrlIndex, wstring _mtrlName);
+
+    void SendChatPacket(UINT64 _userId, wstring _chatLog );
+    void SendEffectPacket(wstring _prefabName, float _lifespan, Vec3 _pos, Vec3 _dir);
+
+
 };
 

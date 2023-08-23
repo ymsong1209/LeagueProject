@@ -86,9 +86,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     
     ClientServiceRef service = MakeShared<ClientService>(
         //NetAddress(L"221.148.206.199", 40000),  // 다혜집 데탑 IP
-        NetAddress(L"14.35.246.224", 40000),    // snow
+        //NetAddress(L"14.35.246.224", 40000),    // snow
         //NetAddress(L"192.168.0.19", 40000), //  내부ip
-        //NetAddress(L"127.0.0.1", 40000), // 로컬 호스트
+        NetAddress(L"127.0.0.1", 40000), // 로컬 호스트
         MakeShared<IocpCore>(),
         MakeShared<ServerSession>, // TODO : SessionManager 등
         1);
@@ -131,7 +131,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         {
             if (KEY_TAP(KEY::LSHIFT) && service->GetCurrentSessionCount() > 0)
             {
-                Send_CLogin(service, L"Rehpe");
+                Send_CLogin(service, L"랄랄라라");
             }
             else if (KEY_TAP(KEY::N))
             {
@@ -145,7 +145,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             else if (KEY_TAP(KEY::NUM_4))      
             {
                //std::cout << "Test Pakcet" << endl;
-               //PKT_C_KDA_CS_WRITE  pktWriter(6, UnitType::MELEE_MINION);
+               //
+               //wstring _chatTest = L"Hello my chat";
+               //PKT_C_CHAT_WRITE  pktWriter(1);
+               //PKT_C_CHAT_WRITE::ChatLog chatLog = pktWriter.ReserveChatLog(_chatTest.size());
+               //for (int i = 0; i < _chatTest.size(); i++)
+               //{
+               //    chatLog[i] = { _chatTest[i] };
+               //}
+               //
                //SendBufferRef sendBuffer = pktWriter.CloseAndReturn();
                //service->Broadcast(sendBuffer);
                //std::cout << "===============================" << endl;
