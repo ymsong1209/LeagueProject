@@ -68,6 +68,9 @@ void CMalphiteRState::tick()
 		MalphiteR->SetOwnerScript(GetOwner()->GetScript<CChampionScript>());
 		MalphiteR->Use();
 
+		// 이펙트 패킷 전송
+		CSendServerEventMgr::GetInst()->SendEffectPacket(L"prefab\\MalphiteRDecal.prefab", 1.f, GetOwner()->Transform()->GetRelativePos(), Vec3(0, 0, 0));
+
 		GetOwner()->Fsm()->ChangeState(L"Idle");
 		return;
 	}

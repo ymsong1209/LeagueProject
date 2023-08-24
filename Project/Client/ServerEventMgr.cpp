@@ -454,7 +454,12 @@ void ServerEventMgr::clienttick()
 				
 				// TODO
 				// 여기서 prefab 이름을 통해 찾아서 생성. setlifespan으로 바로 삭제
-				// 서버 id로 관리 X
+				wstring prefabKey = *prefabName;
+				Ptr<CPrefab> EffectPrefab = CResMgr::GetInst()->FindRes<CPrefab>(prefabKey);
+				CGameObject* Effect = EffectPrefab->Instantiate();
+
+				SpawnGameObject(Effect, effectInfo->Pos, L"Effect");
+				Effect->SetLifeSpan(effectInfo->lifespan);
 
 				// 사용이 끝난 후에는 메모리를 해제
 				delete prefabName; prefabName = nullptr;
