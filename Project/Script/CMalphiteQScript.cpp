@@ -17,6 +17,8 @@ CMalphiteQScript::~CMalphiteQScript()
 
 void CMalphiteQScript::begin()
 {
+	Transform()->SetAbsolute(true);
+	
 	// 첫 생성 위치 기억
 	m_vSpawnPos = GetOwner()->Transform()->GetRelativePos();
 
@@ -25,7 +27,7 @@ void CMalphiteQScript::begin()
 
 	CMalphiteQDecalScript* decalscript = m_pMalphiteQDecal->GetScript<CMalphiteQDecalScript>();
 	decalscript->SetSpawnPos(m_vSpawnPos);
-	decalscript->SetTargetPos(m_TargetObj->Transform()->GetRelativePos());
+	decalscript->SetTargetPos(Transform()->GetRelativePos());
 
 	//m_pMalphiteQModel = CResMgr::GetInst()->FindRes<CPrefab>(L"prefab\\MalphiteQShard.prefab")->Instantiate();
 	//SpawnGameObject(m_pMalphiteQModel, GetOwner()->Transform()->GetRelativePos(), L"Default");
@@ -50,7 +52,7 @@ void CMalphiteQScript::tick()
 	Direction.Normalize();
 
 	// 투사체 이동
-	Vec3 NewPos = ProjectilePos + Direction * m_fProjectileSpeed * EditorDT;
+	Vec3 NewPos = ProjectilePos + Direction * m_fProjectileSpeed * DT;
 
 	GetOwner()->Transform()->SetRelativePos(NewPos);
 
@@ -59,23 +61,12 @@ void CMalphiteQScript::tick()
 	Vec3 m_vDiff = TargetPos - m_vSpawnPos;  // 두 점 사이의 차이 계산
 	float rotation_angle = atan2(m_vDiff.x, m_vDiff.z);  // atan2 함수를 사용하여 회전 각도 계산
 
-	//GetOwner()->Transform()->SetRelativeRot(0.f, rotation_angle, 0.f);
 	GetOwner()->Transform()->SetRelativeRot(CurRot.x + DT * 3.f, rotation_angle, CurRot.z);
 
-	//CMalphiteQDecalScript* script = m_pMalphiteQDecal->GetScript<CMalphiteQDecalScript>();
-	//script->SetTargetPos(TargetPos);
-	//
-	//CMalphiteQModelScript* Modelscript = m_pMalphiteQModel->GetScript<CMalphiteQModelScript>();
-	//Modelscript->SetTargetPos(TargetPos);
-	//Modelscript->SetPos(ProjectilePos);
-	//
-	//
-	//
-	//Vec3 CurRot = GetOwner()->Transform()->GetRelativeRot();
-	//Vec3 m_vDiff = m_vTargetPos - m_vSpawnPos;  // 두 점 사이의 차이 계산
-	//float rotation_angle = atan2(m_vDiff.x, m_vDiff.z);  // atan2 함수를 사용하여 회전 각도 계산
 
-	//GetOwner()->Transform()->SetRelativeRot(CurRot.x + DT * 3.f, rotation_angle, CurRot.z);
+	CMalphiteQDecalScript* decalscript = m_pMalphiteQDecal->GetScript<CMalphiteQDecalScript>();
+	decalscript->SetSpawnPos(m_vSpawnPos);
+	decalscript->SetTargetPos(Transform()->GetRelativePos());
 
 }
 

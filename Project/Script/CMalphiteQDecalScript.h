@@ -7,7 +7,10 @@ private:
     float       m_fTime;
     float       m_bDeathActivated;
 
+    //¸»ÆÄ º»Ã¼ position
     Vec3        m_vSpawnPos;
+
+    //¸»ÆÄ ±¼··¼è position
     Vec3        m_vTargetPos;
 public:
     virtual void begin() override;

@@ -18,6 +18,7 @@ CMalphiteQDecalScript::~CMalphiteQDecalScript()
 void CMalphiteQDecalScript::begin()
 {
 	GetOwner()->Transform()->SetAbsolute(true);
+	GetOwner()->Transform()->SetNoParentaffected(true);
 }
 
 void CMalphiteQDecalScript::tick()
