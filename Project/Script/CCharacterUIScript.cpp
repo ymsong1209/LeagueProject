@@ -81,9 +81,9 @@ void CCharacterUIScript::tick()
 		newSound->Load(filepath);
 		CSoundMgr::GetInst()->AddSound(newSound);
 		int soundId = newSound->GetSoundIndex();
-		CSoundMgr::GetInst()->Play(soundId, 5, 0.5f, true, 0.f, Vec3(0.f,0.f,0.f));
+		CSoundMgr::GetInst()->Play(soundId, 1, 0.5f, true, 0.f, Vec3(0.f,0.f,0.f));
 		CSoundMgr::GetInst()->Stop(soundId);
-		CSoundMgr::GetInst()->Play(soundId, 5, 0.5f, true, 0.f, Vec3(0.f, 0.f, 0.f));
+		CSoundMgr::GetInst()->Play(soundId, 1, 0.5f, true, 0.f, Vec3(0.f, 0.f, 0.f));
 	}
 		
 	wstring Level = to_wstring((int)CurChampLevel);
