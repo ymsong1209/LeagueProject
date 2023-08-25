@@ -58,9 +58,9 @@ void CreateTestLevel()
 	// 
 	//return;	
 	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurLevel();
-	pCurLevel->ChangeState(LEVEL_STATE::PLAY);
-	//pCurLevel->ChangeState(LEVEL_STATE::STOP);
-	CTimeMgr::GetInst()->SetTimeScale(1.f);    // TestLevel에서 강제로 PLAY모드로 전환해서 DT를 흐르게 하기 위함. 추후 삭제
+	//pCurLevel->ChangeState(LEVEL_STATE::PLAY);
+	pCurLevel->ChangeState(LEVEL_STATE::STOP);
+	//CTimeMgr::GetInst()->SetTimeScale(1.f);    // TestLevel에서 강제로 PLAY모드로 전환해서 DT를 흐르게 하기 위함. 추후 삭제
 
 	//롤맵 레이어에는 롤맵만 넣을것!
 	pCurLevel->GetLayer(0)->SetName(L"Default");
@@ -190,7 +190,7 @@ void CreateTestLevel()
 	{
 		Ptr<CMeshData> pMeshData = nullptr;
 		CGameObject* pObj = nullptr;
-		//pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\LoLMapRot19Size30.fbx");
+		pMeshData = CResMgr::GetInst()->LoadFBX(L"fbx\\ahri_q_frontcapsule.fbx");
 		//pObj = pMeshData->Instantiate();
 		//pObj->SetName(L"LoLMapRot19Size30");
 		//pObj->GetRenderComponent()->SetFrustumCheck(false);
