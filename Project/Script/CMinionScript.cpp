@@ -202,6 +202,14 @@ void CMinionScript::tick()
 
 	CUnitScript::tick();
 
+	//그림자 컬링
+	if (GetOwner()->GetRenderComponent()->IsCulled()) {
+		GetOwner()->GetRenderComponent()->SetDynamicShadow(false);
+	}
+	else {
+		GetOwner()->GetRenderComponent()->SetDynamicShadow(true);
+	}
+
 	// 공속 쿨타임 세줌
 	AttackCoolDown();
 

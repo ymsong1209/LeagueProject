@@ -87,6 +87,14 @@ void CDragonScript::tick()
 	if (CLevelMgr::GetInst()->GetCurLevel()->GetState() == LEVEL_STATE::STOP) return;
 	if (CheckDeath()) return;
 
+	//그림자 컬링
+	if (GetOwner()->GetRenderComponent()->IsCulled()) {
+		GetOwner()->GetRenderComponent()->SetDynamicShadow(false);
+	}
+	else {
+		GetOwner()->GetRenderComponent()->SetDynamicShadow(true);
+	}
+
 
 	if (//공격을 받았음 && 현재 state가 attack state가 아님, && 어그로가 풀려서 돌아가는중이 아님
 		m_pTarget &&
