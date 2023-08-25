@@ -73,6 +73,15 @@ void CJungleMonsterScript::begin()
 void CJungleMonsterScript::tick()
 {
 	CUnitScript::tick();
+
+	//그림자 컬링
+	if (GetOwner()->GetRenderComponent()->IsCulled()) {
+		GetOwner()->GetRenderComponent()->SetDynamicShadow(false);
+	}
+	else {
+		GetOwner()->GetRenderComponent()->SetDynamicShadow(true);
+	}
+
 	if (CLevelMgr::GetInst()->GetCurLevel()->GetState() == LEVEL_STATE::STOP) return;
 	if (CheckDeath()) return;
 	

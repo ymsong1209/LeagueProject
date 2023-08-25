@@ -62,6 +62,14 @@ void CChampionScript::tick()
 {
 	CUnitScript::tick();
 
+	//그림자 컬링
+	if (GetOwner()->GetRenderComponent()->IsCulled()) {
+		GetOwner()->GetRenderComponent()->SetDynamicShadow(false);
+	}
+	else {
+		GetOwner()->GetRenderComponent()->SetDynamicShadow(true);
+	}
+
 	if (KEY_TAP(KEY::P))
 	{
 		m_fHP = 0;
