@@ -225,15 +225,14 @@ void CRenderMgr::CalcRayForFog()
         m_FogOfWarShader->Execute();
 
 
-        // 전장의 안개 필터 제작 컴퓨트 쉐이더 -> 추후 0.1초에 한번하도록 변경
+        // 전장의 안개 필터맵 제작 컴퓨트 쉐이더 -> 추후 0.1초에 한번하도록 변경
         int m_iWidth = 1024;
         int m_itHeight = 1024; // 구조화버퍼 생성 사이즈도 init에서 1024로 해줌
 
-        m_FogFilterShader->SetCalcedFogInfo(m_RWBuffer);
-        // m_FogFilterShader->SetFogFilterMap(m_FogFilterMapBuffer, m_iWidth, m_itHeight);
-        m_FogFilterShader->SetFogFilterMap(m_FogFilterMap);
-        m_FogFilterShader->SetCountObject((int)m_vecRayObject.size()); // 시야 오브젝트의 개수
-        m_FogFilterShader->SetCountRayPerObj(m_iRayCount); // 오브젝트가 가지는 레이 개수
+        m_FogFilterShader->SetCalcedFogInfo(m_RWBuffer);                // 안개 필터맵을 만들기 위해 필요한 계산 값(=첫번째 컴퓨트쉐이더에서의 결과값)
+        m_FogFilterShader->SetFogFilterMap(m_FogFilterMap);             // m_FogFilterMap에 결과를 받아 올것이다. 
+        m_FogFilterShader->SetCountObject((int)m_vecRayObject.size());  // 시야 오브젝트의 개수
+        m_FogFilterShader->SetCountRayPerObj(m_iRayCount);              // 오브젝트가 가지는 Ray 개수
         m_FogFilterShader->UpdateData();
         m_FogFilterShader->Execute();
         m_FogFilterTime = 0.f;

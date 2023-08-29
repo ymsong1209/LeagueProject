@@ -22,12 +22,16 @@ CFogFilterShader::~CFogFilterShader()
 
 void CFogFilterShader::UpdateData()
 {
+	// 0 : 필터맵의 넓이
+	// 1 : 필터맵의 높이
+	// 2 : 시야를 가진 오브젝트 개수
+	// 3 : 오브젝트가 쏠 레이의 개수
 	m_Const.arrInt[0] = (int)m_pFogFilterMap->Width();
 	m_Const.arrInt[1] = (int)m_pFogFilterMap->Height();
 	m_Const.arrInt[2] = m_iCntObjectsWithSight;
 	m_Const.arrInt[3] = m_iCntRayPerObject;
 
-
+	// u1 : 계산에 필요한 정보, u0 : 계산된 안개필터맵
 	m_pCalcedFogInfo->UpdateData_CS(1, false);
 	m_pFogFilterMap->UpdateData_CS(0, false);
 
