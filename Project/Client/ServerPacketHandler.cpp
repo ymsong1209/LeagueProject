@@ -976,23 +976,17 @@ void ServerPacketHandler::Handle_S_EFFECT(PacketSessionRef& session, BYTE* buffe
 		_PrefabName.push_back(prefabNameBuff.prefabName);
 	}
 
-	EffectInfo* effectInfo= new EffectInfo();
-	effectInfo->lifespan = pkt->Lifespan;
-	effectInfo->Pos.x = pkt->Pos.x;
-	effectInfo->Pos.y = pkt->Pos.y;
-	effectInfo->Pos.z = pkt->Pos.z;
-	effectInfo->Dir.x = pkt->Dir.x;
-	effectInfo->Dir.y = pkt->Dir.y;
-	effectInfo->Dir.z = pkt->Dir.z;
 
 
-	std::wstring* pPrefabName = new std::wstring(_PrefabName);
+	// 이팩트 패킷이 오면, Prefab을 찾아 바로 생성한다. 
+	wstring prefabKey = _PrefabName;
+	Ptr<CPrefab> EffectPrefab = CResMgr::GetInst()->FindRes<CPrefab>(prefabKey);
+	CGameObject* Effect = EffectPrefab->Instantiate();
 
-	tServerEvent evn = {};
-	evn.Type = SERVER_EVENT_TYPE::EFFECT_PACKET;
-	evn.wParam = reinterpret_cast<DWORD_PTR>(pPrefabName);
-	evn.lParam = reinterpret_cast<DWORD_PTR>(effectInfo);
+	SpawnGameObject(Effect, Vec3(pkt->Pos.x, pkt->Pos.y, pkt->Pos.z), L"Effect");
+	Effect->SetLifeSpan(pkt->Lifespan);
 
-	ServerEventMgr::GetInst()->AddEvent(evn);
+	// 추후 pkt->Dir 필요할 시 사용.
+
 	std::cout << "===============================" << endl;
 }
