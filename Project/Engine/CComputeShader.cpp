@@ -9,7 +9,7 @@
 CComputeShader::CComputeShader()
 	: CShader(RES_TYPE::COMPUTE_SHADER)
 	, m_iGroupX(1)
-	, m_iGroupY(1)	
+	, m_iGroupY(1)
 	, m_iGroupZ(1)
 {
 }
@@ -20,7 +20,7 @@ CComputeShader::~CComputeShader()
 
 void CComputeShader::CreateComputeShader(const wstring& _strFileName, const string& _strFuncName)
 {
-	// Shader ÆÄÀÏ °æ·Î
+	// Shader íŒŒì¼ ê²½ë¡œ
 	wstring strShaderFile = CPathMgr::GetInst()->GetContentPath();
 	strShaderFile += _strFileName;
 
@@ -32,7 +32,7 @@ void CComputeShader::CreateComputeShader(const wstring& _strFileName, const stri
 			, "Compute Shader Compile Failed!!", MB_OK);
 	}
 
-	// ÄÄÆÄÀÏµÈ °´Ã¼·Î Shader ¸¦ ¸¸µç´Ù.
+	// ì»´íŒŒì¼ëœ ê°ì²´ë¡œ Shader ë¥¼ ë§Œë“ ë‹¤.
 	DEVICE->CreateComputeShader(m_CSBlob->GetBufferPointer(), m_CSBlob->GetBufferSize()
 		, nullptr, m_CS.GetAddressOf());
 }

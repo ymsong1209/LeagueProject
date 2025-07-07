@@ -5,10 +5,10 @@
 #include "struct.fx"
 #include "func.fx"
 
-RWStructuredBuffer<tParticle>       ParticleBuffer : register(u0);
-RWStructuredBuffer<int4>            ParticleSpawnCount : register(u1);
-StructuredBuffer<tParticleModule>   ParticleModuleData : register(t20);
-Texture2D                           NoiseTexture : register(t21);
+RWStructuredBuffer<tParticle> ParticleBuffer : register(u0);
+RWStructuredBuffer<int4> ParticleSpawnCount : register(u1);
+StructuredBuffer<tParticleModule> ParticleModuleData : register(t20);
+Texture2D NoiseTexture : register(t21);
 
 
 #define ObjectPos           g_vec4_0
@@ -27,7 +27,7 @@ Texture2D                           NoiseTexture : register(t21);
 [numthreads(128, 1, 1)]
 void CS_ParticleUpdate(int3 _ID : SV_DispatchThreadID)
 {
-    // ½º·¹µå ID °¡ ÆÄÆ¼Å¬¹öÆÛ ÃÖ´ë ¼ö¸¦ ³Ñ±ä°æ¿ì or ½º·¹µå ´ã´ç ÆÄÆ¼Å¬ÀÌ ºñÈ°¼ºÈ­ »óÅÂÀÎ °æ¿ì
+    // ìŠ¤ë ˆë“œ ID ê°€ íŒŒí‹°í´ë²„í¼ ìµœëŒ€ ìˆ˜ë¥¼ ë„˜ê¸´ê²½ìš° or ìŠ¤ë ˆë“œ ë‹´ë‹¹ íŒŒí‹°í´ì´ ë¹„í™œì„±í™” ìƒíƒœì¸ ê²½ìš°
     if (ParticleMaxCount <= _ID.x)
         return;
         
@@ -35,49 +35,49 @@ void CS_ParticleUpdate(int3 _ID : SV_DispatchThreadID)
            
     if (SpawnModule)
     {
-        // ÆÄÆ¼Å¬ÀÌ ºñÈ°¼ºÈ­ »óÅÂÀÎ °æ¿ì
+        // íŒŒí‹°í´ì´ ë¹„í™œì„±í™” ìƒíƒœì¸ ê²½ìš°
         if (particle.Active == 0)
         {
-            // SpawnCount ¸¦ È®ÀÎ
-            // ¸¸¾à SpawnCount °¡ 0 ÀÌ»óÀÌ¶ó¸é, ÆÄÆ¼Å¬À» È°¼ºÈ­½ÃÅ´      
+            // SpawnCount ë¥¼ í™•ì¸
+            // ë§Œì•½ SpawnCount ê°€ 0 ì´ìƒì´ë¼ë©´, íŒŒí‹°í´ì„ í™œì„±í™”ì‹œí‚´      
             while (0 < SpawnCount)
             {
                 int orgvalue = SpawnCount;
                 int outvalue = 0;
-                InterlockedCompareExchange(SpawnCount, orgvalue, SpawnCount - 1, outvalue); 
+                InterlockedCompareExchange(SpawnCount, orgvalue, SpawnCount - 1, outvalue);
             
                 if (orgvalue == outvalue)
-                {   
+                {
                     particle.Active = 1;
                     
-                    // ·£´ı °á°ú¸¦ ¹ŞÀ» º¯¼ö
+                    // ëœë¤ ê²°ê³¼ë¥¼ ë°›ì„ ë³€ìˆ˜
                     float3 vOut1 = (float3) 0.f;
                     float3 vOut2 = (float3) 0.f;
                     float3 vOut3 = (float3) 0.f;
                     
-                    // ÀüÃ¼ À¯È¿ ½º·¹µåÀÇ ¾ÆÀÌµğ¸¦ 0 ~ 1 ·Î Á¤±ÔÈ­
+                    // ì „ì²´ ìœ íš¨ ìŠ¤ë ˆë“œì˜ ì•„ì´ë””ë¥¼ 0 ~ 1 ë¡œ ì •ê·œí™”
                     float fNormalizeThreadID = (float) _ID.x / (float) ParticleMaxCount;
                     GaussianSample(NoiseTexture, NoiseTexResolution, fNormalizeThreadID, vOut1);
                     GaussianSample(NoiseTexture, NoiseTexResolution, fNormalizeThreadID + 0.1f, vOut2);
                     GaussianSample(NoiseTexture, NoiseTexResolution, fNormalizeThreadID + 0.2f, vOut3);
                     
-                    // Box ½ºÆù
+                    // Box ìŠ¤í°
                     if (ModuleData.SpawnShapeType == 0)
-                    {  
-                        //2D¿¡¼­ ZÃàÀ¸·Îµµ ·£´ıÇÏ°Ô ½ºÆù½ÃÅ°¸é ORTHOGRAPHICÇÑ Ä«¸Ş¶ó¿¡¼­ ÆÄÆ¼Å¬ÀÌ Velocity¹æÇâÀ¸·Î ÀÌµ¿ÇÏ¸é ÆÄÆ¼Å¬ÀÌ
-                        //ÀÛ¾ÆÁ®¼­ º¸ÀÎ´Ù.
+                    {
+                        //2Dì—ì„œ Zì¶•ìœ¼ë¡œë„ ëœë¤í•˜ê²Œ ìŠ¤í°ì‹œí‚¤ë©´ ORTHOGRAPHICí•œ ì¹´ë©”ë¼ì—ì„œ íŒŒí‹°í´ì´ Velocityë°©í–¥ìœ¼ë¡œ ì´ë™í•˜ë©´ íŒŒí‹°í´ì´
+                        //ì‘ì•„ì ¸ì„œ ë³´ì¸ë‹¤.
                         particle.vLocalPos.xyz = float3(ModuleData.vBoxShapeScale.x * vOut1.r - ModuleData.vBoxShapeScale.x * 0.5f
                                                       , ModuleData.vBoxShapeScale.y * vOut2.r - ModuleData.vBoxShapeScale.y * 0.5f
-                                                      , 0.f);//ModuleData.vBoxShapeScale.z * vOut3.r - ModuleData.vBoxShapeScale.z * 0.5f);
+                                                      , 0.f); //ModuleData.vBoxShapeScale.z * vOut3.r - ModuleData.vBoxShapeScale.z * 0.5f);
                         particle.vWorldPos.xyz = particle.vLocalPos.xyz + ObjectPos.xyz;
                         
                         
-                        // ½ºÆù Å©±â ¹üÀ§³»¿¡¼­ ·£´ı Å©±â·Î ÁöÁ¤ (Min, Max °¡ ÀÏÄ¡ÇÏ¸é °íÁ¤Å©±â)
-                        float4 vSpawnScale = ModuleData.vSpawnScaleMin + (ModuleData.vSpawnScaleMax - ModuleData.vSpawnScaleMin) * vOut3.x;                                                
+                        // ìŠ¤í° í¬ê¸° ë²”ìœ„ë‚´ì—ì„œ ëœë¤ í¬ê¸°ë¡œ ì§€ì • (Min, Max ê°€ ì¼ì¹˜í•˜ë©´ ê³ ì •í¬ê¸°)
+                        float4 vSpawnScale = ModuleData.vSpawnScaleMin + (ModuleData.vSpawnScaleMax - ModuleData.vSpawnScaleMin) * vOut3.x;
                         particle.vWorldScale.xyz = vSpawnScale.xyz;
                     }
                     
-                    // Sphere ½ºÆù
+                    // Sphere ìŠ¤í°
                     else if (ModuleData.SpawnShapeType == 1)
                     {
                         float fRadius = 500.f; //vOut1.r * 200.f;
@@ -85,11 +85,11 @@ void CS_ParticleUpdate(int3 _ID : SV_DispatchThreadID)
                         //particle.vWorldPos.xyz = float3(fRadius * cos(fAngle), fRadius * sin(fAngle), 100.f);
                     }
                     
-                    // ÆÄÆ¼Å¬ Áú·® ¼³Á¤
-                    particle.Mass = 1.f;                    
+                    // íŒŒí‹°í´ ì§ˆëŸ‰ ì„¤ì •
+                    particle.Mass = 1.f;
                     
                     
-                    // AddVelocity ¸ğµâ
+                    // AddVelocity ëª¨ë“ˆ
                     if (ModuleData.AddVelocity)
                     {
                         // From Center
@@ -121,11 +121,11 @@ void CS_ParticleUpdate(int3 _ID : SV_DispatchThreadID)
                             float4 rotatedVelocity = mul(rotationMatrix, float4(vVelocity, 1.f));
                             particle.vVelocity.xyz = rotatedVelocity.xyz * ModuleData.Speed;
                         }
-                    }                    
+                    }
                     
                    
                     
-                    particle.vColor = ModuleData.vSpawnColor;                                      
+                    particle.vColor = ModuleData.vSpawnColor;
                     particle.Age = 0.f;
                     particle.LifeTime = ModuleData.MinLifeTime + (ModuleData.MaxLifeTime - ModuleData.MinLifeTime) * vOut2.r;
                     break;
@@ -134,33 +134,33 @@ void CS_ParticleUpdate(int3 _ID : SV_DispatchThreadID)
         }
     }
     
-    // ÆÄÆ¼Å¬ÀÌ È°¼ºÈ­ÀÎ °æ¿ì
-    if(particle.Active)
+    // íŒŒí‹°í´ì´ í™œì„±í™”ì¸ ê²½ìš°
+    if (particle.Active)
     {
-        // ÆÄÆ¼Å¬ÀÇ Age ¿¡ ½Ã°£À» ´©Àû½ÃÅ´
+        // íŒŒí‹°í´ì˜ Age ì— ì‹œê°„ì„ ëˆ„ì ì‹œí‚´
         particle.PrevAge = particle.Age;
         particle.Age += g_DT;
-        particle.NormalizedAge = saturate(particle.Age / particle.LifeTime);        
+        particle.NormalizedAge = saturate(particle.Age / particle.LifeTime);
         particle.vForce.xyz = (float3) 0.f;
         
         
-        // ÆÄÆ¼Å¬ÀÇ ¼ö¸íÀÌ ³¡³ª¸é, ´Ù½Ã ºñÈ°¼ºÈ­ »óÅÂ·Î µÇµ¹¸²
+        // íŒŒí‹°í´ì˜ ìˆ˜ëª…ì´ ëë‚˜ë©´, ë‹¤ì‹œ ë¹„í™œì„±í™” ìƒíƒœë¡œ ë˜ëŒë¦¼
         if (particle.LifeTime <= particle.Age)
         {
             particle.Active = 0.f;
         }
                 
-        // NoiseForce ¸ğµâ (·£´ıÀ¸·Î Èû) Àû¿ë ¸ğµâ
+        // NoiseForce ëª¨ë“ˆ (ëœë¤ìœ¼ë¡œ í˜) ì ìš© ëª¨ë“ˆ
         if (ModuleData.NoiseForce)
-        {            
+        {
             if (particle.PrevAge == 0.f)
             {
-                 // ·£´ı °á°ú¸¦ ¹ŞÀ» º¯¼ö
+                 // ëœë¤ ê²°ê³¼ë¥¼ ë°›ì„ ë³€ìˆ˜
                 float3 vOut1 = (float3) 0.f;
                 float3 vOut2 = (float3) 0.f;
                 float3 vOut3 = (float3) 0.f;
                     
-                // ÀüÃ¼ À¯È¿ ½º·¹µåÀÇ ¾ÆÀÌµğ¸¦ 0 ~ 1 ·Î Á¤±ÔÈ­
+                // ì „ì²´ ìœ íš¨ ìŠ¤ë ˆë“œì˜ ì•„ì´ë””ë¥¼ 0 ~ 1 ë¡œ ì •ê·œí™”
                 float fNormalizeThreadID = (float) _ID.x / (float) ParticleMaxCount;
                 GaussianSample(NoiseTexture, NoiseTexResolution, fNormalizeThreadID, vOut1);
                 GaussianSample(NoiseTexture, NoiseTexResolution, fNormalizeThreadID + 0.1f, vOut2);
@@ -174,15 +174,15 @@ void CS_ParticleUpdate(int3 _ID : SV_DispatchThreadID)
                 int Age = int(particle.Age * (1.f / ModuleData.fNoiseTerm));
                 int PrevAge = int(particle.PrevAge * (1.f / ModuleData.fNoiseTerm));
 
-                // ÁöÁ¤ÇÑ °£°İÀ» ³Ñ¾î°£ ¼ø°£, »õ·Î¿î ·£´ı Force ¸¦ ÁØ´Ù.
+                // ì§€ì •í•œ ê°„ê²©ì„ ë„˜ì–´ê°„ ìˆœê°„, ìƒˆë¡œìš´ ëœë¤ Force ë¥¼ ì¤€ë‹¤.
                 if (Age != PrevAge)
                 {
-                    // ·£´ı °á°ú¸¦ ¹ŞÀ» º¯¼ö
+                    // ëœë¤ ê²°ê³¼ë¥¼ ë°›ì„ ë³€ìˆ˜
                     float3 vOut1 = (float3) 0.f;
                     float3 vOut2 = (float3) 0.f;
                     float3 vOut3 = (float3) 0.f;
                     
-                    // ÀüÃ¼ À¯È¿ ½º·¹µåÀÇ ¾ÆÀÌµğ¸¦ 0 ~ 1 ·Î Á¤±ÔÈ­
+                    // ì „ì²´ ìœ íš¨ ìŠ¤ë ˆë“œì˜ ì•„ì´ë””ë¥¼ 0 ~ 1 ë¡œ ì •ê·œí™”
                     float fNormalizeThreadID = (float) _ID.x / (float) ParticleMaxCount;
                     GaussianSample(NoiseTexture, NoiseTexResolution, fNormalizeThreadID, vOut1);
                     GaussianSample(NoiseTexture, NoiseTexResolution, fNormalizeThreadID + 0.1f, vOut2);
@@ -191,68 +191,68 @@ void CS_ParticleUpdate(int3 _ID : SV_DispatchThreadID)
                     float3 vForce = normalize(float3(vOut1.x, vOut2.x, vOut1.z) * 2.f - 1.f);
                     particle.vRandomForce.xyz = vForce * ModuleData.fNoiseForce;
                 }
-            }   
+            }
             
             particle.vForce.xyz += particle.vRandomForce.xyz;
-        }                
+        }
        
         if (ModuleData.Gravity)
         {
             particle.vForce.y -= ModuleData.fGravityForce * particle.Age;
         }
         
-        // ÆÄÆ¼Å¬¿¡ ÈûÀÌ Àû¿ë µÈ °æ¿ì, Èû¿¡ ÀÇÇÑ ¼ÓµµÀÇ º¯È­·® °è»ê
+        // íŒŒí‹°í´ì— í˜ì´ ì ìš© ëœ ê²½ìš°, í˜ì— ì˜í•œ ì†ë„ì˜ ë³€í™”ëŸ‰ ê³„ì‚°
         float3 vAccel = particle.vForce.xyz / particle.Mass;
-        particle.vVelocity.xyz += vAccel * g_DT; 
+        particle.vVelocity.xyz += vAccel * g_DT;
         
         
-        // ¼Óµµ Á¦ÇÑ(Drag) ¸ğµâ
+        // ì†ë„ ì œí•œ(Drag) ëª¨ë“ˆ
         if (ModuleData.Drag)
         {
-            // ÆÄÆ¼Å¬ÀÇ ÇöÀç ¼Ó·Â
+            // íŒŒí‹°í´ì˜ í˜„ì¬ ì†ë ¥
             float Speed = length(particle.vVelocity);
             float fDrag = ModuleData.StartDrag + (ModuleData.EndDrag - ModuleData.StartDrag) * particle.NormalizedAge;
             
-            // ¼Óµµ°¡ ¹İ´ë·Î µÚÁıÈ÷´Â°Í ¹æÁö
-            // ¼Óµµ°¡ 0ÀÌ¸é particle_render¿¡¼­ 0ÀÎ Velocity¶û ³»ÀûÀ» ÇØ¼­ particleÀÌ ¾È³ª¿Â´Ù.
-            if(fDrag <= 0.f)
+            // ì†ë„ê°€ ë°˜ëŒ€ë¡œ ë’¤ì§‘íˆëŠ”ê²ƒ ë°©ì§€
+            // ì†ë„ê°€ 0ì´ë©´ particle_renderì—ì„œ 0ì¸ Velocityë‘ ë‚´ì ì„ í•´ì„œ particleì´ ì•ˆë‚˜ì˜¨ë‹¤.
+            if (fDrag <= 0.f)
                 fDrag = 0.001f;
             
             if (fDrag < Speed)
             {
                 particle.vVelocity = normalize(particle.vVelocity) * fDrag;
             }
-        }                
+        }
         
-        // ¼Óµµ¿¡ µû¸¥ ÆÄÆ¼Å¬À§Ä¡ ÀÌµ¿
-        // Sim ÁÂÇ¥°è¿¡ µû¶ó¼­ ÀÌµ¿¹æ½Ä ºĞ±â
+        // ì†ë„ì— ë”°ë¥¸ íŒŒí‹°í´ìœ„ì¹˜ ì´ë™
+        // Sim ì¢Œí‘œê³„ì— ë”°ë¼ì„œ ì´ë™ë°©ì‹ ë¶„ê¸°
         if (ModuleData.Space == 0)
-        {                        
+        {
             particle.vWorldPos += particle.vVelocity * g_DT;
         }
-        else if(ModuleData.Space == 1)
+        else if (ModuleData.Space == 1)
         {
             particle.vLocalPos += particle.vVelocity * g_DT;
             particle.vWorldPos.xyz = particle.vLocalPos.xyz + ObjectPos.xyz;
         }
         
         
-        // Å©±â º¯È­ ¸ğµâÀÌ È°¼ºÈ­ µÇ¾îÀÖÀ¸¸é
-        if(ModuleData.ScaleChange)
-            particle.ScaleFactor = ModuleData.StartScale + particle.NormalizedAge * (ModuleData.EndScale - ModuleData.StartScale);                    
+        // í¬ê¸° ë³€í™” ëª¨ë“ˆì´ í™œì„±í™” ë˜ì–´ìˆìœ¼ë©´
+        if (ModuleData.ScaleChange)
+            particle.ScaleFactor = ModuleData.StartScale + particle.NormalizedAge * (ModuleData.EndScale - ModuleData.StartScale);
         else
             particle.ScaleFactor = 1.f;
         
         
-        // »ö»ó º¯È­¸ğµâÀÌ È°¼ºÈ­ µÇ¾îÀÖÀ¸¸é
-        if(ModuleData.ColorChange)
+        // ìƒ‰ìƒ ë³€í™”ëª¨ë“ˆì´ í™œì„±í™” ë˜ì–´ìˆìœ¼ë©´
+        if (ModuleData.ColorChange)
         {
             particle.vColor = ModuleData.vStartColor + particle.NormalizedAge * (ModuleData.vEndColor - ModuleData.vStartColor);
-        }               
+        }
         
-    }    
+    }
     
-    // º¯°æÁ¡ Àû¿ë
+    // ë³€ê²½ì  ì ìš©
     ParticleBuffer[_ID.x] = particle;
 }
 

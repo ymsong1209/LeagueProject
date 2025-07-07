@@ -11,17 +11,17 @@
 
 void CRenderMgr::init()
 {
-	// Light2DBuffer ±∏¡∂»≠ πˆ∆€ ª˝º∫
+	// Light2DBuffer Íµ¨Ï°∞Ìôî Î≤ÑÌçº ÏÉùÏÑ±
 	m_Light2DBuffer = new CStructuredBuffer;
 	m_Light2DBuffer->Create(sizeof(tLightInfo), 10, SB_TYPE::READ_ONLY, true);
 
-	// Light3DBuffer ±∏¡∂»≠ πˆ∆€ ª˝º∫
+	// Light3DBuffer Íµ¨Ï°∞Ìôî Î≤ÑÌçº ÏÉùÏÑ±
 	m_Light3DBuffer = new CStructuredBuffer;
 	m_Light3DBuffer->Create(sizeof(tLightInfo), 10, SB_TYPE::READ_ONLY, true);
 
 
 	// ==================
-	// SwapChain MRT ª˝º∫
+	// SwapChain MRT ÏÉùÏÑ±
 	// ==================
 	{
 		Ptr<CTexture> arrRTTex[8] = { CResMgr::GetInst()->FindRes<CTexture>(L"RenderTargetTex"), };
@@ -64,16 +64,16 @@ void CRenderMgr::init()
 				, DXGI_FORMAT_R32G32B32A32_FLOAT, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE
 				, D3D11_USAGE_DEFAULT),
 
-			//∆˜∏À¿∫ ¿œ¥‹ DXGI_FORMAT_R32G32B32A32_FLOAT∑Œ «ÿµ◊¥¬µ• √ﬂ»ƒ ∫Ø∞Ê∞°¥…(∞™æ»æ≤∏È ∫Ø∞Ê«ÿµµµ )
-			CResMgr::GetInst()->CreateTexture(L"DefaultContourTargetTex"
-				, (UINT)vRenderResolotion.x, (UINT)vRenderResolotion.y
-				, DXGI_FORMAT_R32G32B32A32_FLOAT, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE
-				, D3D11_USAGE_DEFAULT),
+			  //Ìè¨Îß∑ÏùÄ ÏùºÎã® DXGI_FORMAT_R32G32B32A32_FLOATÎ°ú Ìï¥ÎíÄÎäîÎç∞ Ï∂îÌõÑ Î≥ÄÍ≤ΩÍ∞ÄÎä•(Í∞íÏïàÏì∞Î©¥ Î≥ÄÍ≤ΩÌï¥ÎèÑÎê®)
+			  CResMgr::GetInst()->CreateTexture(L"DefaultContourTargetTex"
+				  , (UINT)vRenderResolotion.x, (UINT)vRenderResolotion.y
+				  , DXGI_FORMAT_R32G32B32A32_FLOAT, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE
+				  , D3D11_USAGE_DEFAULT),
 
-			CResMgr::GetInst()->CreateTexture(L"ContourTargetTex"
-				, (UINT)vRenderResolotion.x, (UINT)vRenderResolotion.y
-				, DXGI_FORMAT_R32G32B32A32_FLOAT, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE
-				, D3D11_USAGE_DEFAULT),
+			  CResMgr::GetInst()->CreateTexture(L"ContourTargetTex"
+				  , (UINT)vRenderResolotion.x, (UINT)vRenderResolotion.y
+				  , DXGI_FORMAT_R32G32B32A32_FLOAT, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE
+				  , D3D11_USAGE_DEFAULT),
 
 		};
 
@@ -140,7 +140,7 @@ void CRenderMgr::init()
 
 		Vec4 arrClear[8] = { Vec4(0.f, 0.f, 0.f, 0.f) , };
 
-		// Depth Stencil Texture ∏∏µÈ±‚
+		// Depth Stencil Texture ÎßåÎì§Í∏∞
 		Ptr<CTexture> DSTex = CResMgr::GetInst()->CreateTexture(L"DepthMapDSTex", 4096, 4096
 			, DXGI_FORMAT_D32_FLOAT, D3D11_BIND_DEPTH_STENCIL, D3D11_USAGE_DEFAULT);
 
@@ -148,41 +148,41 @@ void CRenderMgr::init()
 		m_MRT[(UINT)MRT_TYPE::SHADOW]->Create(arrRTTex, arrClear, DSTex);
 	}
 
-   // =============
-   // FogOfWar  MRT
-   // =============
-    {
+	// =============
+	// FogOfWar  MRT
+	// =============
+	{
 
-        Ptr<CTexture> arrRTTex[8] = {
-           CResMgr::GetInst()->CreateTexture(L"FogOfWarTex"
-             , 4096, 4096
-             , DXGI_FORMAT_R32_FLOAT, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE
-             , D3D11_USAGE_DEFAULT),
-        };
+		Ptr<CTexture> arrRTTex[8] = {
+		   CResMgr::GetInst()->CreateTexture(L"FogOfWarTex"
+			 , 4096, 4096
+			 , DXGI_FORMAT_R32_FLOAT, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE
+			 , D3D11_USAGE_DEFAULT),
+		};
 
-        Vec4 arrClear[8] = { Vec4(0.f, 0.f, 0.f, 0.f) , };
+		Vec4 arrClear[8] = { Vec4(0.f, 0.f, 0.f, 0.f) , };
 
-        // Depth Stencil Texture ∏∏µÈ±‚
-        Ptr<CTexture> DSTex = CResMgr::GetInst()->CreateTexture(L"FogOfWarDSTex", 4096, 4096
-            , DXGI_FORMAT_D32_FLOAT, D3D11_BIND_DEPTH_STENCIL, D3D11_USAGE_DEFAULT);
+		// Depth Stencil Texture ÎßåÎì§Í∏∞
+		Ptr<CTexture> DSTex = CResMgr::GetInst()->CreateTexture(L"FogOfWarDSTex", 4096, 4096
+			, DXGI_FORMAT_D32_FLOAT, D3D11_BIND_DEPTH_STENCIL, D3D11_USAGE_DEFAULT);
 
-        m_MRT[(UINT)MRT_TYPE::FOGOFWAR] = new CMRT;
-        m_MRT[(UINT)MRT_TYPE::FOGOFWAR]->Create(arrRTTex, arrClear, DSTex);
-    }
+		m_MRT[(UINT)MRT_TYPE::FOGOFWAR] = new CMRT;
+		m_MRT[(UINT)MRT_TYPE::FOGOFWAR]->Create(arrRTTex, arrClear, DSTex);
+	}
 
 
-   /* CResMgr::GetInst()->CreateTexture(L"DataTargetTex"
-        , (UINT)vRenderResolotion.x, (UINT)vRenderResolotion.y
-        , DXGI_FORMAT_R32G32B32A32_FLOAT, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE
-        , D3D11_USAGE_DEFAULT),*/
+	/* CResMgr::GetInst()->CreateTexture(L"DataTargetTex"
+		 , (UINT)vRenderResolotion.x, (UINT)vRenderResolotion.y
+		 , DXGI_FORMAT_R32G32B32A32_FLOAT, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE
+		 , D3D11_USAGE_DEFAULT),*/
 
-    // ¿¸¿Â¿« æ»∞≥ « ≈Õ ∏  ≈ÿΩ∫√≥ ª˝º∫
-    m_FogFilterMap = CResMgr::GetInst()->FindRes<CTexture>(L"FogFilterMap");
-    if (!m_FogFilterMap.Get()) {
-        m_FogFilterMap = CResMgr::GetInst()->CreateTexture(L"FogFilterMap"
-            , 2048, 2048
-            , DXGI_FORMAT_R8_UNORM
-            , D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS
-            , D3D11_USAGE_DEFAULT);
-    }
+		 // Ï†ÑÏû•Ïùò ÏïàÍ∞ú ÌïÑÌÑ∞ Îßµ ÌÖçÏä§Ï≤ò ÏÉùÏÑ±
+	m_FogFilterMap = CResMgr::GetInst()->FindRes<CTexture>(L"FogFilterMap");
+	if (!m_FogFilterMap.Get()) {
+		m_FogFilterMap = CResMgr::GetInst()->CreateTexture(L"FogFilterMap"
+			, 2048, 2048
+			, DXGI_FORMAT_R8_UNORM
+			, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS
+			, D3D11_USAGE_DEFAULT);
+	}
 }

@@ -13,8 +13,8 @@ class CFogOfWarShader;
 class CFogFilterShader;
 
 
-//-----------ÀüÀåÀÇ ¾È°³¿¡ Àü´ŞÇØÁÙ ±¸Á¶Ã¼---------------------//
-struct ColliderStruct{
+//-----------ì „ì¥ì˜ ì•ˆê°œì— ì „ë‹¬í•´ì¤„ êµ¬ì¡°ì²´---------------------//
+struct ColliderStruct {
     Matrix      m_ColliderFinalMat;
     int         m_ColliderType;     //0 : Sphere, 1 : Cube;
     int         padding[3];
@@ -28,12 +28,12 @@ struct RayStruct {
 };
 
 struct RWStruct {
-    Vec3        m_vCrossPos;        //Ray¶û »ç°¢ÇüÀÌ ºÎµúÈù ÁöÁ¡.
-    float       m_vCrossRadius;     //Ray¶û ±³Â÷µÈ ÁöÁ¡ÀÇ ÁÂÇ¥, ±³Â÷°¡ ¾ÈµÇ¸é ÃÖ´ë ¹İÁö¸§ÀÌ µé¾î¿È
-    Vec3        m_vCenterPos;       //RayÀÇ Áß¾Ó ÁöÁ¡
-    int         m_iRayCount;        //¸î¹øÂ° RayÀÎÁö
+    Vec3        m_vCrossPos;        //Rayë‘ ì‚¬ê°í˜•ì´ ë¶€ë”ªíŒ ì§€ì .
+    float       m_vCrossRadius;     //Rayë‘ êµì°¨ëœ ì§€ì ì˜ ì¢Œí‘œ, êµì°¨ê°€ ì•ˆë˜ë©´ ìµœëŒ€ ë°˜ì§€ë¦„ì´ ë“¤ì–´ì˜´
+    Vec3        m_vCenterPos;       //Rayì˜ ì¤‘ì•™ ì§€ì 
+    int         m_iRayCount;        //ëª‡ë²ˆì§¸ Rayì¸ì§€
 
-    float       m_fMaxRadius;       //RayÀÇ ¿øº» ¹üÀ§
+    float       m_fMaxRadius;       //Rayì˜ ì›ë³¸ ë²”ìœ„
     float       padding[3];
 };
 //------------------------------------------------------------//
@@ -44,10 +44,10 @@ class CRenderMgr :
 {
     SINGLE(CRenderMgr);
 private:
-    CMRT*                       m_MRT[(UINT)MRT_TYPE::END];
+    CMRT* m_MRT[(UINT)MRT_TYPE::END];
 
     vector<CCamera*>            m_vecCam;
-    CCamera*                    m_pEditorCam;
+    CCamera* m_pEditorCam;
 
     vector<tDebugShapeInfo>     m_vecShapeInfo;
     vector<tDebugBoundingInfo>  m_vecBoundingInfo;
@@ -55,37 +55,37 @@ private:
     vector<CLight2D*>           m_vecLight2D;
     CStructuredBuffer*          m_Light2DBuffer;
 
-    vector<CLight3D*>           m_vecLight3D;    
+    vector<CLight3D*>           m_vecLight3D;
     CStructuredBuffer*          m_Light3DBuffer;
 
-    CGameObject*                m_GizMoTargetObject;  //±âÁî¸ğ°¡ »ı°Ü¾ßÇÒ Å¸°Ù ¿ÀºêÁ§Æ®
+    CGameObject*                m_GizMoTargetObject;  //ê¸°ì¦ˆëª¨ê°€ ìƒê²¨ì•¼í•  íƒ€ê²Ÿ ì˜¤ë¸Œì íŠ¸
     bool                        m_bGizmoObjectChanged;
 
-    bool                        b_IsImGuiHovered; //Imgui¿Í »óÈ£ÀÛ¿ëÁßÀÎ »óÅÂ¶ó¸é Æ¯Á¤ Å°¸¦ ¾È¸ÔÈ÷µµ·Ï ÇÏ´Âµ¥ »ç¿ë
-   
+    bool                        b_IsImGuiHovered; //Imguiì™€ ìƒí˜¸ì‘ìš©ì¤‘ì¸ ìƒíƒœë¼ë©´ íŠ¹ì • í‚¤ë¥¼ ì•ˆë¨¹íˆë„ë¡ í•˜ëŠ”ë° ì‚¬ìš©
+
     Ptr<CTexture>               m_RTCopyTex;
 
- 
-    // ÀüÀåÀÇ ¾È°³
-    Ptr<CFogOfWarShader>        m_FogOfWarShader;   //ÀüÀåÀÇ ¾È°³ ComputeShader
-    vector<ColliderStruct>      m_vecWallObject;    //Ray¿¡ Ãæµ¹µÉ °¡´É¼ºÀÌ ÀÖ´Â º® ¿ÀºêÁ§Æ®
-    vector<CGameObject*>        m_vecRayObject;     //Ray¸¦ ½î´Â object player, ¿Íµå µî
-    vector<RayStruct>           m_vecRayStruct;     //RayObject¸¦ ÅëÇØ ¸¸µé¾îÁø RayStruct±¸Á¶Ã¼ ¸ğÀ½
+
+    // ì „ì¥ì˜ ì•ˆê°œ
+    Ptr<CFogOfWarShader>        m_FogOfWarShader;   //ì „ì¥ì˜ ì•ˆê°œ ComputeShader
+    vector<ColliderStruct>      m_vecWallObject;    //Rayì— ì¶©ëŒë  ê°€ëŠ¥ì„±ì´ ìˆëŠ” ë²½ ì˜¤ë¸Œì íŠ¸
+    vector<CGameObject*>        m_vecRayObject;     //Rayë¥¼ ì˜ëŠ” object player, ì™€ë“œ ë“±
+    vector<RayStruct>           m_vecRayStruct;     //RayObjectë¥¼ í†µí•´ ë§Œë“¤ì–´ì§„ RayStructêµ¬ì¡°ì²´ ëª¨ìŒ
     CStructuredBuffer*          m_WallBuffer;
     CStructuredBuffer*          m_RayBuffer;
-    CStructuredBuffer*          m_RWBuffer;         // ComputeShader °è»ê ÈÄ ¹Ş¾Æ¿Ã ¹öÆÛ 
-    int                         m_iRayCount;         // ¹°Ã¼ ÇÏ³ª°¡ ½ò Ray°³¼ö
+    CStructuredBuffer*          m_RWBuffer;         // ComputeShader ê³„ì‚° í›„ ë°›ì•„ì˜¬ ë²„í¼ 
+    int                         m_iRayCount;         // ë¬¼ì²´ í•˜ë‚˜ê°€ ì  Rayê°œìˆ˜
     bool                        m_bIsQClicked;
-   
-    // ÀüÀåÀÇ ¾È°³ ÇÊÅÍ
-    Ptr<CFogFilterShader>       m_FogFilterShader;  // ÀüÀåÀÇ ¾È°³ ÇÊÅÍ¸Ê ComputeShader
-    
-    //CStructuredBuffer*          m_FogFilterMapBuffer; // ComputeShader °è»ê ÈÄ ¹Ş¾Æ¿Ã ¹öÆÛ 
-    Ptr<CTexture>               m_FogFilterMap; // °á°ú ¾È°³ ÇÊÅÍ¸Ê ÅØ½ºÃ³
+
+    // ì „ì¥ì˜ ì•ˆê°œ í•„í„°
+    Ptr<CFogFilterShader>       m_FogFilterShader;  // ì „ì¥ì˜ ì•ˆê°œ í•„í„°ë§µ ComputeShader
+
+    //CStructuredBuffer*          m_FogFilterMapBuffer; // ComputeShader ê³„ì‚° í›„ ë°›ì•„ì˜¬ ë²„í¼ 
+    Ptr<CTexture>               m_FogFilterMap; // ê²°ê³¼ ì•ˆê°œ í•„í„°ë§µ í…ìŠ¤ì²˜
 
     int                         m_iMaxRWSize;
     float                       m_FogFilterTime;
- 
+
     void (CRenderMgr::* RENDER_FUNC)(void);
 
 public:
@@ -116,31 +116,31 @@ public:
     void AddDebugShapeInfo(const tDebugShapeInfo& _info);
     vector<tDebugShapeInfo>& GetDebugShapeInfo() { return m_vecShapeInfo; }
 
-    void AddDebugBoundingInfo(const tDebugBoundingInfo& _info) {m_vecBoundingInfo.push_back(_info); }
+    void AddDebugBoundingInfo(const tDebugBoundingInfo& _info) { m_vecBoundingInfo.push_back(_info); }
     vector<tDebugBoundingInfo>& GetDebugBoundingInfo() { return m_vecBoundingInfo; }
 
-    CCamera* GetMainCam();      // »óÅÂ¿¡ µû¶ó MainCamÀ» °¡Á®¿Â´Ù
-    CCamera* GetPlayMainCam();  // PLAY »óÅÂÀÇ MainCamÀ» °¡Á®¿Â´Ù
+    CCamera* GetMainCam();      // ìƒíƒœì— ë”°ë¼ MainCamì„ ê°€ì ¸ì˜¨ë‹¤
+    CCamera* GetPlayMainCam();  // PLAY ìƒíƒœì˜ MainCamì„ ê°€ì ¸ì˜¨ë‹¤
     CCamera* GetEditorCam() { return m_pEditorCam; }
 
 
     const vector<CLight3D*> GetLight3D() { return m_vecLight3D; }
 
- 
+
     bool GetIsImGuiHovered() { return b_IsImGuiHovered; }
     void SetIsImGuiHovered(bool _IsHovered) { b_IsImGuiHovered = _IsHovered; }
- 
+
     CCamera* GetCamerafromIdx(int _idx) { return m_vecCam[_idx]; }
 
 public:
-    CGameObject* GetGizMoTargetObj() { return m_GizMoTargetObject; }   //±âÁî¸ğ°¡ »ı°Ü¾ßÇÒ Å¸°Ù¿ÀºêÁ§Æ® °ÔÅÍ, ¼¼ÅÍ ÇÔ¼ö
+    CGameObject* GetGizMoTargetObj() { return m_GizMoTargetObject; }   //ê¸°ì¦ˆëª¨ê°€ ìƒê²¨ì•¼í•  íƒ€ê²Ÿì˜¤ë¸Œì íŠ¸ ê²Œí„°, ì„¸í„° í•¨ìˆ˜
     void SetGizMoTargetObj(CGameObject* _Object) { m_GizMoTargetObject = _Object; }
 
     void SetGizmoObjectChanged(bool _State) { m_bGizmoObjectChanged = _State; }
     bool GetGizmoObjectChanged() { return m_bGizmoObjectChanged; }
 
-    // ÀüÀåÀÇ ¾È°³¿ë ray¸¦ ½î°í ÀÖ´Â object¸ğÀ½Áı return
-    vector<CGameObject*> GetRayObjectVec() { return m_vecRayObject; } 
+    // ì „ì¥ì˜ ì•ˆê°œìš© rayë¥¼ ì˜ê³  ìˆëŠ” objectëª¨ìŒì§‘ return
+    vector<CGameObject*> GetRayObjectVec() { return m_vecRayObject; }
     vector<ColliderStruct> GetWallObjectVec() { return m_vecWallObject; }
 
     void CopyRenderTarget();

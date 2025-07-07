@@ -115,7 +115,7 @@ Vec4 CMeshRender::GetFuncValue(MovTexType _TexType)
     else if (_TexType == MovTexType::PUNCTURE)
         return m_tMeshMoveData.PunctureTexFuncValue;
     else
-        return Vec4(0.f, 0.f, 0.f, 0.f); // ÀÇ¹Ì¾ø´Â °ª. ÀÌ ºĞ±â·Î ºüÁö¸é ÇÔ¼ö Àß¸ø »ç¿ëÁßÀÎ °ÍÀÓ.
+        return Vec4(0.f, 0.f, 0.f, 0.f); // ì˜ë¯¸ì—†ëŠ” ê°’. ì´ ë¶„ê¸°ë¡œ ë¹ ì§€ë©´ í•¨ìˆ˜ ì˜ëª» ì‚¬ìš©ì¤‘ì¸ ê²ƒì„.
 }
 
 MovTexMoveType CMeshRender::GetTexMovingStyle(MovTexType _TexType)
@@ -127,7 +127,7 @@ MovTexMoveType CMeshRender::GetTexMovingStyle(MovTexType _TexType)
         return (MovTexMoveType)m_tMeshMoveData.PunctureTexMovingStyle;
 
     else
-        return (MovTexMoveType::END); // ÀÌ ºĞ±â·Î ºüÁö¸é ÄÚµå Àß¸ø¾²°í ÀÖ´Â °ÍÀÓ.
+        return (MovTexMoveType::END); // ì´ ë¶„ê¸°ë¡œ ë¹ ì§€ë©´ ì½”ë“œ ì˜ëª»ì“°ê³  ìˆëŠ” ê²ƒì„.
 }
 
 Vec2 CMeshRender::GetOffsetValue(MovTexType _TexType)
@@ -147,7 +147,7 @@ Vec2 CMeshRender::GetOffsetValue(MovTexType _TexType)
     case MovTexType::ADDITIVE:
     case MovTexType::END:
     {
-        return Vec2(0.f, 0.f); // ¿©±â·Î ºüÁö¸é ÀÇµµ´ë·Î ÇÔ¼ö¸¦ ¾²°í ÀÖÁö ¾ÊÀº °ÍÀÓ.
+        return Vec2(0.f, 0.f); // ì—¬ê¸°ë¡œ ë¹ ì§€ë©´ ì˜ë„ëŒ€ë¡œ í•¨ìˆ˜ë¥¼ ì“°ê³  ìˆì§€ ì•Šì€ ê²ƒì„.
     }
     }
 }
@@ -175,8 +175,8 @@ void CMeshRender::CalculateNextOffset(int _MoveStyle, Vec2& _PreviousPos, Vec4 _
     else if (_MoveStyle == 3) // Linear
     {
         // FunctionValue.x : dx / dt;
-        // FunctionValue.y : x °è¼ö
-        // FunctionValue.z : y ÀıÆí
+        // FunctionValue.y : x ê³„ìˆ˜
+        // FunctionValue.z : y ì ˆí¸
 
 
         _PreviousPos.x += _DT * _FunctionValue.x;
@@ -186,9 +186,9 @@ void CMeshRender::CalculateNextOffset(int _MoveStyle, Vec2& _PreviousPos, Vec4 _
     else if (_MoveStyle == 4) // Parabola
     {
         // FuncValue.x : dx / dt
-        // FuncValue.y : x^2 °è¼ö
-        // FuncValye.z : x °è¼ö
-        // FuncValue.w : y ÀıÆí
+        // FuncValue.y : x^2 ê³„ìˆ˜
+        // FuncValye.z : x ê³„ìˆ˜
+        // FuncValue.w : y ì ˆí¸
         _PreviousPos.x += _DT * _FunctionValue.x;
         _PreviousPos.y = _FunctionValue.y * _PreviousPos.x * _PreviousPos.x + _FunctionValue.z * _PreviousPos.x + _FunctionValue.w;
         m_iTurnNumber = static_cast<int>(std::floor(fabsf(_PreviousPos.y)));
@@ -196,9 +196,9 @@ void CMeshRender::CalculateNextOffset(int _MoveStyle, Vec2& _PreviousPos, Vec4 _
     else if (_MoveStyle == 5) // Sin
     {
         // FuncValue.x : dx / dt
-        // FuncValue.y : sin °è¼ö
-        // FuncValue.z : ÁÖÆÄ¼ö
-        // FuncValue.w : yÀıÆí
+        // FuncValue.y : sin ê³„ìˆ˜
+        // FuncValue.z : ì£¼íŒŒìˆ˜
+        // FuncValue.w : yì ˆí¸
         _PreviousPos.x += _DT * _FunctionValue.x;
         _PreviousPos.y = _FunctionValue.y + sin(_FunctionValue.z * _PreviousPos.x) + _FunctionValue.w;
         m_iTurnNumber = static_cast<int>(std::floor(fabsf(_PreviousPos.y)));
@@ -206,9 +206,9 @@ void CMeshRender::CalculateNextOffset(int _MoveStyle, Vec2& _PreviousPos, Vec4 _
     else if (_MoveStyle == 6) // Cos
     {
         // FuncValue.x : dx / dt
-        // FuncValue.y : cos °è¼ö
-        // FuncValue.z : ÁÖÆÄ¼ö
-        // FuncValue.w : yÀıÆí
+        // FuncValue.y : cos ê³„ìˆ˜
+        // FuncValue.z : ì£¼íŒŒìˆ˜
+        // FuncValue.w : yì ˆí¸
         _PreviousPos.x += _DT * _FunctionValue.x;
         _PreviousPos.y = _FunctionValue.y * cos(_FunctionValue.z * _PreviousPos.x) + _FunctionValue.w;
         m_iTurnNumber = static_cast<int>(std::floor(fabsf(_PreviousPos.y)));
@@ -242,14 +242,14 @@ void CMeshRender::render()
     if (nullptr == GetMesh() || nullptr == GetMaterial(0))
         return;
 
-    // Transform ¿¡ UpdateData ¿äÃ»
+    // Transform ì— UpdateData ìš”ì²­
     Transform()->UpdateData();
 
 
     // MeshMoveData Update
     CConstBuffer* pMeshMoveBuffer = CDevice::GetInst()->GetConstBuffer(CB_TYPE::MESHRENDER);
 
-    // Mesh Texture Update (PunctureTex, AdditiveTex¸¸ ¹ÙÀÎµùÇÑ´Ù. OutputTex´Â Material¿¡¼­ ¼¼ÆÃµÊ)
+    // Mesh Texture Update (PunctureTex, AdditiveTexë§Œ ë°”ì¸ë”©í•œë‹¤. OutputTexëŠ” Materialì—ì„œ ì„¸íŒ…ë¨)
     if (m_arrMeshTex[MESH_TEX_PARAM::PUNCTURE] == nullptr)
     {
         m_tMeshMoveData.isPunctureTextureUsed = 0;
@@ -278,13 +278,13 @@ void CMeshRender::render()
     pMeshMoveBuffer->UpdateData();
 
 
-    // Animator2D ÄÄÆ÷³ÍÆ®°¡ ÀÖ´Ù¸é
+    // Animator2D ì»´í¬ë„ŒíŠ¸ê°€ ìˆë‹¤ë©´
     if (Animator2D())
     {
         Animator2D()->UpdateData();
     }
 
-    // Animator3D ¾÷µ¥ÀÌÆ®
+    // Animator3D ì—…ë°ì´íŠ¸
     if (Animator3D())
     {
         Animator3D()->UpdateData();
@@ -294,28 +294,28 @@ void CMeshRender::render()
             if (nullptr == GetMaterial(i))
                 continue;
 
-            GetMaterial(i)->SetAnim3D(true); // Animation Mesh ¾Ë¸®±â
+            GetMaterial(i)->SetAnim3D(true); // Animation Mesh ì•Œë¦¬ê¸°
             GetMaterial(i)->SetBoneCount(Animator3D()->GetBoneCount());
         }
     }
 
 
-    // ·»´õ
+    // ë Œë”
     UINT iSubsetCount = GetMesh()->GetSubsetCount();
 
     for (UINT i = 0; i < iSubsetCount; ++i)
     {
         if (nullptr != GetMaterial(i))
         {
-            // »ç¿ëÇÒ ÀçÁú ¾÷µ¥ÀÌÆ®
+            // ì‚¬ìš©í•  ì¬ì§ˆ ì—…ë°ì´íŠ¸
             GetMaterial(i)->UpdateData();
 
-            // »ç¿ëÇÒ ¸Ş½¬ ¾÷µ¥ÀÌÆ® ¹× ·»´õ¸µ
+            // ì‚¬ìš©í•  ë©”ì‰¬ ì—…ë°ì´íŠ¸ ë° ë Œë”ë§
             GetMesh()->render(i);
         }
     }
 
-    // Animation °ü·Ã Á¤º¸ Á¦°Å
+    // Animation ê´€ë ¨ ì •ë³´ ì œê±°
     if (Animator2D())
         Animator2D()->Clear();
 
@@ -325,95 +325,95 @@ void CMeshRender::render()
 
 void CMeshRender::render(UINT _iSubset)
 {
-	if (nullptr == GetMesh() || nullptr == GetMaterial(_iSubset))
-		return;
+    if (nullptr == GetMesh() || nullptr == GetMaterial(_iSubset))
+        return;
 
-	// Transform ¿¡ UpdateData ¿äÃ»
-	Transform()->UpdateData();
+    // Transform ì— UpdateData ìš”ì²­
+    Transform()->UpdateData();
 
-	// MeshMoveData Update
-	CConstBuffer* pMeshMoveBuffer = CDevice::GetInst()->GetConstBuffer(CB_TYPE::MESHRENDER);
+    // MeshMoveData Update
+    CConstBuffer* pMeshMoveBuffer = CDevice::GetInst()->GetConstBuffer(CB_TYPE::MESHRENDER);
 
-	// Mesh Texture Update (PunctureTex, AdditiveTex¸¸ ¹ÙÀÎµùÇÑ´Ù. OutputTex´Â Material¿¡¼­ ¼¼ÆÃµÊ)
-	if (m_arrMeshTex[MESH_TEX_PARAM::PUNCTURE] == nullptr)
-	{
-		m_tMeshMoveData.isPunctureTextureUsed = 0;
-		CTexture::Clear(14);
-	}
+    // Mesh Texture Update (PunctureTex, AdditiveTexë§Œ ë°”ì¸ë”©í•œë‹¤. OutputTexëŠ” Materialì—ì„œ ì„¸íŒ…ë¨)
+    if (m_arrMeshTex[MESH_TEX_PARAM::PUNCTURE] == nullptr)
+    {
+        m_tMeshMoveData.isPunctureTextureUsed = 0;
+        CTexture::Clear(14);
+    }
 
-	else
-	{
-		m_tMeshMoveData.isPunctureTextureUsed = 1;
-		m_arrMeshTex[MESH_TEX_PARAM::PUNCTURE]->UpdateData(14, PS_ALL_STAGES);
-	}
+    else
+    {
+        m_tMeshMoveData.isPunctureTextureUsed = 1;
+        m_arrMeshTex[MESH_TEX_PARAM::PUNCTURE]->UpdateData(14, PS_ALL_STAGES);
+    }
 
-	if (m_arrMeshTex[MESH_TEX_PARAM::ADDITIVE] == nullptr)
-	{
-		m_tMeshMoveData.isAdditiveTextureUsed = 0;
-		CTexture::Clear(15);
-	}
+    if (m_arrMeshTex[MESH_TEX_PARAM::ADDITIVE] == nullptr)
+    {
+        m_tMeshMoveData.isAdditiveTextureUsed = 0;
+        CTexture::Clear(15);
+    }
 
-	else
-	{
-		m_tMeshMoveData.isAdditiveTextureUsed = 1;
-		m_arrMeshTex[MESH_TEX_PARAM::ADDITIVE]->UpdateData(15, PS_ALL_STAGES);
-	}
+    else
+    {
+        m_tMeshMoveData.isAdditiveTextureUsed = 1;
+        m_arrMeshTex[MESH_TEX_PARAM::ADDITIVE]->UpdateData(15, PS_ALL_STAGES);
+    }
 
-	pMeshMoveBuffer->SetData(&m_tMeshMoveData);
-	pMeshMoveBuffer->UpdateData();
+    pMeshMoveBuffer->SetData(&m_tMeshMoveData);
+    pMeshMoveBuffer->UpdateData();
 
 
-	// Animator2D ÄÄÆ÷³ÍÆ®°¡ ÀÖ´Ù¸é
-	if (Animator2D())
-	{
-		Animator2D()->UpdateData();
-	}
+    // Animator2D ì»´í¬ë„ŒíŠ¸ê°€ ìˆë‹¤ë©´
+    if (Animator2D())
+    {
+        Animator2D()->UpdateData();
+    }
 
-	// Animator3D ¾÷µ¥ÀÌÆ®
-	if (Animator3D())
-	{
-		if (Animator3D()->UpdateData()) {
-			GetMaterial(_iSubset)->SetAnim3D(true); // Animation Mesh ¾Ë¸®±â
-			GetMaterial(_iSubset)->SetBoneCount(Animator3D()->GetBoneCount());
-		};
-	}
+    // Animator3D ì—…ë°ì´íŠ¸
+    if (Animator3D())
+    {
+        if (Animator3D()->UpdateData()) {
+            GetMaterial(_iSubset)->SetAnim3D(true); // Animation Mesh ì•Œë¦¬ê¸°
+            GetMaterial(_iSubset)->SetBoneCount(Animator3D()->GetBoneCount());
+        };
+    }
 
-	// »ç¿ëÇÒ ÀçÁú ¾÷µ¥ÀÌÆ®
-	GetMaterial(_iSubset)->UpdateData();
+    // ì‚¬ìš©í•  ì¬ì§ˆ ì—…ë°ì´íŠ¸
+    GetMaterial(_iSubset)->UpdateData();
 
-	// »ç¿ëÇÒ ¸Ş½¬ ¾÷µ¥ÀÌÆ® ¹× ·»´õ¸µ
-	GetMesh()->render(_iSubset);
+    // ì‚¬ìš©í•  ë©”ì‰¬ ì—…ë°ì´íŠ¸ ë° ë Œë”ë§
+    GetMesh()->render(_iSubset);
 
-	// Animation °ü·Ã Á¤º¸ Á¦°Å
-	if (Animator2D())
-		Animator2D()->Clear();
+    // Animation ê´€ë ¨ ì •ë³´ ì œê±°
+    if (Animator2D())
+        Animator2D()->Clear();
 
-	if (Animator3D())
-		Animator3D()->ClearData();
+    if (Animator3D())
+        Animator3D()->ClearData();
 }
 
 
 
 void CMeshRender::SaveToLevelFile(FILE* _File)
-{	
-	CRenderComponent::SaveToLevelFile(_File);
-	fwrite(&m_tMeshMoveData, sizeof(tMeshMoveData), 1, _File);
+{
+    CRenderComponent::SaveToLevelFile(_File);
+    fwrite(&m_tMeshMoveData, sizeof(tMeshMoveData), 1, _File);
 
-	for (int i = 0; i < (int)MESH_TEX_PARAM::MESH_TEX_END; ++i)
-	{
-		SaveResRef(m_arrMeshTex[i].Get(), _File);
-	}
+    for (int i = 0; i < (int)MESH_TEX_PARAM::MESH_TEX_END; ++i)
+    {
+        SaveResRef(m_arrMeshTex[i].Get(), _File);
+    }
 }
 
 void CMeshRender::LoadFromLevelFile(FILE* _File)
 {
-	CRenderComponent::LoadFromLevelFile(_File);
-	fread(&m_tMeshMoveData, sizeof(tMeshMoveData), 1, _File);
+    CRenderComponent::LoadFromLevelFile(_File);
+    fread(&m_tMeshMoveData, sizeof(tMeshMoveData), 1, _File);
 
-	for (int i = 0; i < (int)MESH_TEX_PARAM::MESH_TEX_END; ++i)
-	{
-		LoadResRef(m_arrMeshTex[i], _File);
-	}
+    for (int i = 0; i < (int)MESH_TEX_PARAM::MESH_TEX_END; ++i)
+    {
+        LoadResRef(m_arrMeshTex[i], _File);
+    }
 }
 
 void CMeshRender::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType& allocator)
@@ -423,16 +423,16 @@ void CMeshRender::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType&
     //Struct tMeshMoveData
     Value MeshMoveDataValue(kObjectType);
 
-    // Output Texture¿¡ ´ëÇÑ Á¤º¸ ÀúÀå
+    // Output Textureì— ëŒ€í•œ ì •ë³´ ì €ì¥
     MeshMoveDataValue.AddMember("OutputTexFuncValue", SaveVec4Json(m_tMeshMoveData.OutputTexFuncValue, allocator), allocator);
     MeshMoveDataValue.AddMember("OutputTePreviousPos", SaveVec2Json(m_tMeshMoveData.OutputTexPreviousPos, allocator), allocator);
     MeshMoveDataValue.AddMember("OutputTexMovingStyle", m_tMeshMoveData.OutputTexMovingStyle, allocator);
 
-    // Additive Texture¿¡ ´ëÇÑ Á¤º¸ ÀúÀå
+    // Additive Textureì— ëŒ€í•œ ì •ë³´ ì €ì¥
     MeshMoveDataValue.AddMember("isAdditiveTextureUsed", m_tMeshMoveData.isAdditiveTextureUsed, allocator);
     MeshMoveDataValue.AddMember("AdditiveColor", SaveVec4Json(m_tMeshMoveData.AdditiveColor, allocator), allocator);
 
-    // Puncture Texture¿¡ ´ëÇÑ Á¤º¸ ÀúÀå
+    // Puncture Textureì— ëŒ€í•œ ì •ë³´ ì €ì¥
     MeshMoveDataValue.AddMember("PunctureTextureValue", SaveVec4Json(m_tMeshMoveData.PunctureTexFuncValue, allocator), allocator);
     MeshMoveDataValue.AddMember("PunctureTexPreviousPos", SaveVec2Json(m_tMeshMoveData.PunctureTexPreviousPos, allocator), allocator);
     MeshMoveDataValue.AddMember("isPunctureTextureUsed", m_tMeshMoveData.isPunctureTextureUsed, allocator);
@@ -458,7 +458,7 @@ void CMeshRender::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType&
 
     //_objValue.AddMember("bIsUsingMovingVec", m_bIsUsingMovingVec, allocator);
 
-    //// ¸¸¾à¿¡ MovingVecÀ» »ç¿ëÇÏ°í ÀÖ¾ú´Ù¸é ÀÌ¿¡ ´ëÇÑ Á¤º¸µµ ÀúÀåÇØÁà¾ß ÇÑ´Ù.
+    //// ë§Œì•½ì— MovingVecì„ ì‚¬ìš©í•˜ê³  ìˆì—ˆë‹¤ë©´ ì´ì— ëŒ€í•œ ì •ë³´ë„ ì €ì¥í•´ì¤˜ì•¼ í•œë‹¤.
     //if (m_bIsUsingMovingVec)
     //{
     //   Value vMovingVecArray(kArrayType);
@@ -467,7 +467,7 @@ void CMeshRender::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorType&
     //      // Struct MovingStruct
     //      Value MovingStructValue(kObjectType);
 
-    //      // °¡µ¶¼º¿ë
+    //      // ê°€ë…ì„±ìš©
     //      string key = "m_vMovingVec[" + std::to_string(i) + "]";
     //      Value keyName(kStringType);
     //      keyName.SetString(key.c_str(), key.length(), allocator);
@@ -488,16 +488,16 @@ void CMeshRender::LoadFromLevelJsonFile(const Value& _componentValue)
 {
     CRenderComponent::LoadFromLevelJsonFile(_componentValue);
 
-    // Output Texture¿¡ ´ëÇÑ Á¤º¸ ºÒ·¯¿À±â
+    // Output Textureì— ëŒ€í•œ ì •ë³´ ë¶ˆëŸ¬ì˜¤ê¸°
     m_tMeshMoveData.OutputTexFuncValue = LoadVec4Json(_componentValue["MeshMoveDataInfo"]["OutputTexFuncValue"]);
     m_tMeshMoveData.OutputTexPreviousPos = LoadVec2Json(_componentValue["MeshMoveDataInfo"]["OutputTePreviousPos"]);
     m_tMeshMoveData.OutputTexMovingStyle = _componentValue["MeshMoveDataInfo"]["OutputTexMovingStyle"].GetInt();
 
-    // Additive Texture¿¡ ´ëÇÑ Á¤º¸ ºÒ·¯¿Ã±â
+    // Additive Textureì— ëŒ€í•œ ì •ë³´ ë¶ˆëŸ¬ì˜¬ê¸°
     m_tMeshMoveData.isAdditiveTextureUsed = _componentValue["MeshMoveDataInfo"]["isAdditiveTextureUsed"].GetInt();
     m_tMeshMoveData.AdditiveColor = LoadVec4Json(_componentValue["MeshMoveDataInfo"]["AdditiveColor"]);
 
-    // Puncture Texture¿¡ ´ëÇÑ Á¤º¸ ºÒ·¯¿À±â
+    // Puncture Textureì— ëŒ€í•œ ì •ë³´ ë¶ˆëŸ¬ì˜¤ê¸°
     m_tMeshMoveData.PunctureTexFuncValue = LoadVec4Json(_componentValue["MeshMoveDataInfo"]["PunctureTextureValue"]);
     m_tMeshMoveData.PunctureTexPreviousPos = LoadVec2Json(_componentValue["MeshMoveDataInfo"]["PunctureTexPreviousPos"]);
     m_tMeshMoveData.isPunctureTextureUsed = _componentValue["MeshMoveDataInfo"]["isPunctureTextureUsed"].GetInt();

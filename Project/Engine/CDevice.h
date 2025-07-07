@@ -10,8 +10,8 @@ class CDevice
 private:
 	HWND							m_hWnd;
 
-	ComPtr<ID3D11Device>			m_Device;		// GPU ¸Ş¸ğ¸® ÇÒ´ç
-	ComPtr<ID3D11DeviceContext>		m_Context;		// GPU Á¦¾î, ·»´õ¸µ, µ¿ÀÛ ¼öÇà
+	ComPtr<ID3D11Device>			m_Device;		// GPU ë©”ëª¨ë¦¬ í• ë‹¹
+	ComPtr<ID3D11DeviceContext>		m_Context;		// GPU ì œì–´, ë Œë”ë§, ë™ì‘ ìˆ˜í–‰
 
 	ComPtr<IDXGISwapChain>			m_SwapChain;
 
@@ -30,15 +30,15 @@ private:
 
 	D3D11_VIEWPORT					m_ViewPort;
 
-	// ·»´õÅ¸°Ù ÇØ»óµµ
-	Vec2							m_vRenderResolution;							
-	CConstBuffer*					m_arrConstBuffer[(UINT)CB_TYPE::END];
+	// ë Œë”íƒ€ê²Ÿ í•´ìƒë„
+	Vec2							m_vRenderResolution;
+	CConstBuffer* m_arrConstBuffer[(UINT)CB_TYPE::END];
 
 
 
 public:
 	int init(HWND _hWnd, UINT _iWidth, UINT _iHeight);
-	void Present()	{ m_SwapChain->Present(0, 0); }
+	void Present() { m_SwapChain->Present(0, 0); }
 
 	Vec2 GetRenderResolution() { return m_vRenderResolution; }
 
@@ -51,7 +51,7 @@ private:
 	int CreateSampler();
 	void CreateConstBuffer();
 
-public:	
+public:
 
 	ID3D11Device* GetDevice() { return m_Device.Get(); }
 	ID3D11DeviceContext* GetDeviceContext() { return m_Context.Get(); }

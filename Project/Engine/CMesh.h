@@ -9,7 +9,7 @@ struct tIndexInfo
 	ComPtr<ID3D11Buffer>    pIB;
 	D3D11_BUFFER_DESC       tIBDesc;
 	UINT				    iIdxCount;
-	void* pIdxSysMem;
+	void*					pIdxSysMem;
 };
 
 class CMesh
@@ -21,7 +21,7 @@ private:
 	UINT					m_VtxCount;
 	void* m_pVtxSys;
 
-	// ÇÏ³ªÀÇ ¹öÅØ½º¹öÆÛ¿¡ ¿©·¯°³ÀÇ ÀÎµ¦½º¹öÆÛ°¡ ¿¬°á
+	// í•˜ë‚˜ì˜ ë²„í…ìŠ¤ë²„í¼ì— ì—¬ëŸ¬ê°œì˜ ì¸ë±ìŠ¤ë²„í¼ê°€ ì—°ê²°
 	vector<tIndexInfo>		m_vecIdxInfo;
 
 public:
@@ -33,15 +33,15 @@ public:
 	const vector<tMTAnimClip>* GetAnimClip() { return &m_vecAnimClip; }
 	bool IsAnimMesh() { return !m_vecAnimClip.empty(); }
 
-	CStructuredBuffer* GetBoneFrameDataBuffer() { return m_pBoneFrameData; } // ÀüÃ¼ º» ÇÁ·¹ÀÓ Á¤º¸
-	CStructuredBuffer* GetBoneOffsetBuffer() { return  m_pBoneOffset; }	   // °¢ »ÀÀÇ offset Çà·Ä
+	CStructuredBuffer* GetBoneFrameDataBuffer() { return m_pBoneFrameData; } // ì „ì²´ ë³¸ í”„ë ˆì„ ì •ë³´
+	CStructuredBuffer* GetBoneOffsetBuffer() { return  m_pBoneOffset; }	   // ê° ë¼ˆì˜ offset í–‰ë ¬
 
-	// Animation3D Á¤º¸
+	// Animation3D ì •ë³´
 	vector<tMTAnimClip>		m_vecAnimClip;
 	vector<tMTBone>			m_vecBones;
 
-	CStructuredBuffer* m_pBoneFrameData;   // ÀüÃ¼ º» ÇÁ·¹ÀÓ Á¤º¸(Å©±â, ÀÌµ¿, È¸Àü) (ÇÁ·¹ÀÓ °³¼ö¸¸Å­)
-	CStructuredBuffer* m_pBoneOffset;	    // °¢ »ÀÀÇ offset Çà·Ä(°¢ »ÀÀÇ À§Ä¡¸¦ µÇµ¹¸®´Â Çà·Ä) (1Çà Â¥¸®)
+	CStructuredBuffer*		m_pBoneFrameData;   // ì „ì²´ ë³¸ í”„ë ˆì„ ì •ë³´(í¬ê¸°, ì´ë™, íšŒì „) (í”„ë ˆì„ ê°œìˆ˜ë§Œí¼)
+	CStructuredBuffer*		m_pBoneOffset;	    // ê° ë¼ˆì˜ offset í–‰ë ¬(ê° ë¼ˆì˜ ìœ„ì¹˜ë¥¼ ë˜ëŒë¦¬ëŠ” í–‰ë ¬) (1í–‰ ì§œë¦¬)
 
 
 public:

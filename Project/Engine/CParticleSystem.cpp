@@ -16,7 +16,7 @@ CParticleSystem::CParticleSystem()
 	, m_AccTime(0.f)
 {
 	m_ModuleData.iMaxParticleCount = 1000;
-	
+
 	m_ModuleData.ModuleCheck[(UINT)PARTICLE_MODULE::PARTICLE_SPAWN] = true;
 	m_ModuleData.SpawnRate = 20;
 	m_ModuleData.vSpawnColor = Vec3(0.4f, 1.f, 0.4f);
@@ -24,8 +24,8 @@ CParticleSystem::CParticleSystem()
 	m_ModuleData.vSpawnScaleMax = Vec3(20.f, 20.f, 1.f);
 
 	m_ModuleData.SpawnShapeType = 0;
-	m_ModuleData.vBoxShapeScale = Vec3(200.f, 200.f, 200.f);	
-	m_ModuleData.Space = 0; // Ω√πƒ∑π¿Ãº« ¡¬«•∞Ë
+	m_ModuleData.vBoxShapeScale = Vec3(200.f, 200.f, 200.f);
+	m_ModuleData.Space = 0; // ÏãúÎÆ¨Î†àÏù¥ÏÖò Ï¢åÌëúÍ≥Ñ
 
 	m_ModuleData.MinLifeTime = 3.f;
 	m_ModuleData.MaxLifeTime = 5.f;
@@ -35,8 +35,8 @@ CParticleSystem::CParticleSystem()
 	m_ModuleData.EndScale = 0.2f;
 
 	m_ModuleData.ModuleCheck[(UINT)PARTICLE_MODULE::COLOR_CHANGE] = true;
-	m_ModuleData.vStartColor = Vec4(0.2f, 0.3f, 1.0f,1.f);
-	m_ModuleData.vEndColor = Vec4(0.4f, 1.f, 0.4f,1.f);
+	m_ModuleData.vStartColor = Vec4(0.2f, 0.3f, 1.0f, 1.f);
+	m_ModuleData.vEndColor = Vec4(0.4f, 1.f, 0.4f, 1.f);
 
 	m_ModuleData.ModuleCheck[(UINT)PARTICLE_MODULE::ADD_VELOCITY] = true;
 	m_ModuleData.AddVelocityType = 0; // From Center
@@ -59,15 +59,15 @@ CParticleSystem::CParticleSystem()
 	m_ModuleData.vMaxSpeed = 500.f;
 
 
-	// ¿‘¿⁄ ∏ﬁΩ¨
+	// ÏûÖÏûê Î©îÏâ¨
 	SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"PointMesh"));
 
-	// ∆ƒ∆º≈¨ ¿¸øÎ ¿Á¡˙
-	SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"ParticleRenderMtrl"),0);
+	// ÌååÌã∞ÌÅ¥ Ï†ÑÏö© Ïû¨Ïßà
+	SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"ParticleRenderMtrl"), 0);
 
 	pParticleTex = CResMgr::GetInst()->FindRes<CTexture>(L"texture\\particle\\HardCircle.png");
 
-	// ∆ƒ∆º≈¨ æ˜µ•¿Ã∆Æ ƒƒ«ª∆Æ Ω¶¿Ã¥ı	
+	// ÌååÌã∞ÌÅ¥ ÏóÖÎç∞Ïù¥Ìä∏ Ïª¥Ìì®Ìä∏ ÏâêÏù¥Îçî	
 	m_UpdateCS = (CParticleUpdateShader*)CResMgr::GetInst()->FindRes<CComputeShader>(L"ParticleUpdateCS").Get();
 
 	m_ParticleBuffer = new CStructuredBuffer;
@@ -98,11 +98,11 @@ CParticleSystem::CParticleSystem(const CParticleSystem& _other)
 
 	m_ModuleDataBuffer->Create(sizeof(tParticleModule), 1, SB_TYPE::READ_ONLY, true);
 
-	// ¿‘¿⁄ ∏ﬁΩ¨
+	// ÏûÖÏûê Î©îÏâ¨
 	SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"PointMesh"));
 
-	// ∆ƒ∆º≈¨ ¿¸øÎ ¿Á¡˙
-	SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"ParticleRenderMtrl"),0);
+	// ÌååÌã∞ÌÅ¥ Ï†ÑÏö© Ïû¨Ïßà
+	SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"ParticleRenderMtrl"), 0);
 
 	GetMaterial(0)->SetTexParam(TEX_0, pParticleTex);
 
@@ -120,9 +120,9 @@ CParticleSystem::~CParticleSystem()
 		delete m_ModuleDataBuffer;
 }
 
-//∆ƒ∆º≈¨ ±∏¡∂»≠πˆ∆€ ≈©±‚ ¿Áº≥¡§ «‘ºˆ
-//«ˆ¿Á ∆ƒ∆º≈¨ ±∏¡∂»≠πˆ∆€ ≈©±‚∫∏¥Ÿ ¥ı ∏π¿∫ ∆ƒ∆º≈¨¿ª ∏∏µÈ∞Ì ΩÕ¿ª ∞ÊøÏ Ω««‡Ω√ƒ—¡‡æﬂ«‘
-//Imguiø°º≠ MaxParticleCountº≥¡§«ÿ¡Ÿ∂ß ≥÷æÓ¡‡æﬂ«‘
+//ÌååÌã∞ÌÅ¥ Íµ¨Ï°∞ÌôîÎ≤ÑÌçº ÌÅ¨Í∏∞ Ïû¨ÏÑ§Ï†ï Ìï®Ïàò
+//ÌòÑÏû¨ ÌååÌã∞ÌÅ¥ Íµ¨Ï°∞ÌôîÎ≤ÑÌçº ÌÅ¨Í∏∞Î≥¥Îã§ Îçî ÎßéÏùÄ ÌååÌã∞ÌÅ¥ÏùÑ ÎßåÎì§Í≥† Ïã∂ÏùÑ Í≤ΩÏö∞ Ïã§ÌñâÏãúÏºúÏ§òÏïºÌï®
+//ImguiÏóêÏÑú MaxParticleCountÏÑ§Ï†ïÌï¥Ï§ÑÎïå ÎÑ£Ïñ¥Ï§òÏïºÌï®
 void CParticleSystem::SetParticleBufferSize()
 {
 	if (m_ParticleBuffer->GetElementCount() < m_ModuleData.iMaxParticleCount)
@@ -133,27 +133,27 @@ void CParticleSystem::SetParticleBufferSize()
 
 void CParticleSystem::finaltick()
 {
-	// Ω∫∆˘ ∑π¿Ã∆Æ ∞ËªÍ
-	// 1∞≥ Ω∫∆˘ Ω√∞£
+	// Ïä§Ìè∞ Î†àÏù¥Ìä∏ Í≥ÑÏÇ∞
+	// 1Í∞ú Ïä§Ìè∞ ÏãúÍ∞Ñ
 	float fTimePerCount = 1.f / (float)m_ModuleData.SpawnRate;
 	m_AccTime += DT;
 
-	// ¥©¿˚Ω√∞£¿Ã ∞≥¥Á ª˝º∫Ω√∞£¿ª ≥—æÓº≠∏È
+	// ÎàÑÏ†ÅÏãúÍ∞ÑÏù¥ Í∞úÎãπ ÏÉùÏÑ±ÏãúÍ∞ÑÏùÑ ÎÑòÏñ¥ÏÑúÎ©¥
 	if (fTimePerCount < m_AccTime)
 	{
-		// √ ∞˙ πË¿≤ ==> ª˝º∫ ∞≥ºˆ
+		// Ï¥àÍ≥º Î∞∞Ïú® ==> ÏÉùÏÑ± Í∞úÏàò
 		float fData = m_AccTime / fTimePerCount;
 
-		// ≥™∏”¡ˆ¥¬ ≥≤¿∫ Ω√∞£
+		// ÎÇòÎ®∏ÏßÄÎäî ÎÇ®ÏùÄ ÏãúÍ∞Ñ
 		m_AccTime = fTimePerCount * (fData - floor(fData));
 
-		// πˆ∆€ø° Ω∫∆˘ ƒ´øÓ∆Æ ¿¸¥ﬁ
-		tRWParticleBuffer rwbuffer = { (int)fData, };		
+		// Î≤ÑÌçºÏóê Ïä§Ìè∞ Ïπ¥Ïö¥Ìä∏ Ï†ÑÎã¨
+		tRWParticleBuffer rwbuffer = { (int)fData, };
 		m_RWBuffer->SetData(&rwbuffer);
 	}
 
 
-	// ∆ƒ∆º≈¨ æ˜µ•¿Ã∆Æ ƒƒ«ª∆Æ Ω¶¿Ã¥ı
+	// ÌååÌã∞ÌÅ¥ ÏóÖÎç∞Ïù¥Ìä∏ Ïª¥Ìì®Ìä∏ ÏâêÏù¥Îçî
 	m_ModuleDataBuffer->SetData(&m_ModuleData);
 
 	m_UpdateCS->SetParticleBuffer(m_ParticleBuffer);
@@ -169,20 +169,20 @@ void CParticleSystem::render()
 {
 	Transform()->UpdateData();
 
-	// ∆ƒ∆º≈¨πˆ∆€ t20 ø° πŸ¿Œµ˘
+	// ÌååÌã∞ÌÅ¥Î≤ÑÌçº t20 Ïóê Î∞îÏù∏Îî©
 	m_ParticleBuffer->UpdateData(20, PIPELINE_STAGE::PS_ALL_STAGES);
 
-	// ∏µ‚ µ•¿Ã≈Õ t21 ø° πŸ¿Œµ˘
+	// Î™®Îìà Îç∞Ïù¥ÌÑ∞ t21 Ïóê Î∞îÏù∏Îî©
 	m_ModuleDataBuffer->UpdateData(21, PIPELINE_STAGE::PS_ALL_STAGES);
 
 	// Particle Render	
-	
+
 	GetMaterial(0)->SetTexParam(TEX_0, pParticleTex);
 
 	GetMaterial(0)->UpdateData();
 	GetMesh()->render_particle(m_ModuleData.iMaxParticleCount);
 
-	// ∆ƒ∆º≈¨ πˆ∆€ πŸ¿Œµ˘ «ÿ¡¶
+	// ÌååÌã∞ÌÅ¥ Î≤ÑÌçº Î∞îÏù∏Îî© Ìï¥Ï†ú
 	m_ParticleBuffer->Clear();
 	m_ModuleDataBuffer->Clear();
 }
@@ -195,7 +195,7 @@ void CParticleSystem::render(UINT _iSubset)
 void CParticleSystem::SaveToLevelFile(FILE* _File)
 {
 	CRenderComponent::SaveToLevelFile(_File);
-	
+
 	fwrite(&m_ModuleData, sizeof(tParticleModule), 1, _File);
 	SaveResRef(m_UpdateCS.Get(), _File);
 }
@@ -223,11 +223,11 @@ void CParticleSystem::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorT
 {
 	CRenderComponent::SaveToLevelJsonFile(_objValue, allocator);
 
-	// tParticleModule ¿˙¿Â
+	// tParticleModule Ï†ÄÏû•
 	Value tModuelVal(kObjectType);
 
-	// Spawn ∏µ‚
-	tModuelVal.AddMember("vSpawnColor",SaveVec4Json(m_ModuleData.vSpawnColor, allocator), allocator);
+	// Spawn Î™®Îìà
+	tModuelVal.AddMember("vSpawnColor", SaveVec4Json(m_ModuleData.vSpawnColor, allocator), allocator);
 	tModuelVal.AddMember("vSpawnScaleMin", SaveVec4Json(m_ModuleData.vSpawnScaleMin, allocator), allocator);
 	tModuelVal.AddMember("vSpawnScaleMax", SaveVec4Json(m_ModuleData.vSpawnScaleMax, allocator), allocator);
 	tModuelVal.AddMember("vBoxShapeScale", SaveVec3Json(m_ModuleData.vBoxShapeScale, allocator), allocator);
@@ -237,52 +237,52 @@ void CParticleSystem::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorT
 	tModuelVal.AddMember("Space", m_ModuleData.Space, allocator);
 	tModuelVal.AddMember("MinLifeTime", m_ModuleData.MinLifeTime, allocator);
 	tModuelVal.AddMember("MaxLifeTime", m_ModuleData.MaxLifeTime, allocator);
-	
-	// spawnpad πËø≠¿ª ¿˙¿Â
+
+	// spawnpad Î∞∞Ïó¥ÏùÑ Ï†ÄÏû•
 	Value spawnpadArray(kArrayType);
 	for (int i = 0; i < 3; ++i) {
 		spawnpadArray.PushBack(m_ModuleData.spawnpad[i], allocator);
 	}
 	tModuelVal.AddMember("spawnpad[3]", spawnpadArray, allocator);
 
-	// Color Change ∏µ‚
+	// Color Change Î™®Îìà
 	tModuelVal.AddMember("vStartColor", SaveVec4Json(m_ModuleData.vStartColor, allocator), allocator);
 	tModuelVal.AddMember("vEndColor", SaveVec4Json(m_ModuleData.vEndColor, allocator), allocator);
 
-	// Scale Change ∏µ‚
+	// Scale Change Î™®Îìà
 	tModuelVal.AddMember("StartScale", m_ModuleData.StartScale, allocator);
 	tModuelVal.AddMember("EndScale", m_ModuleData.EndScale, allocator);
 
-	// πˆ∆€ √÷¥Î≈©±‚
+	// Î≤ÑÌçº ÏµúÎåÄÌÅ¨Í∏∞
 	tModuelVal.AddMember("iMaxParticleCount", m_ModuleData.iMaxParticleCount, allocator);
 	tModuelVal.AddMember("ipad", m_ModuleData.ipad, allocator);
 
-	// Add Velocity ∏µ‚
+	// Add Velocity Î™®Îìà
 	tModuelVal.AddMember("vVelocityDir", SaveVec4Json(m_ModuleData.vVelocityDir, allocator), allocator);
 	tModuelVal.AddMember("AddVelocityType", m_ModuleData.AddVelocityType, allocator);
 	tModuelVal.AddMember("OffsetAngle", m_ModuleData.OffsetAngle, allocator);
 	tModuelVal.AddMember("Speed", m_ModuleData.Speed, allocator);
 	tModuelVal.AddMember("addvpad", m_ModuleData.addvpad, allocator);
 
-	// Drag ∏µ‚ - º”µµ ¡¶«—
+	// Drag Î™®Îìà - ÏÜçÎèÑ Ï†úÌïú
 	tModuelVal.AddMember("StartDrag", m_ModuleData.StartDrag, allocator);
 	tModuelVal.AddMember("EndDrag", m_ModuleData.EndDrag, allocator);
 
-	// NoiseForce ∏µ‚ - ∑£¥˝ »˚ ¿˚øÎ	
+	// NoiseForce Î™®Îìà - ÎûúÎç§ Ìûò Ï†ÅÏö©	
 	tModuelVal.AddMember("fNoiseTerm", m_ModuleData.fNoiseTerm, allocator);
 	tModuelVal.AddMember("fNoiseForce", m_ModuleData.fNoiseForce, allocator);
 
-	// Gravity ∏µ‚ - ¡ﬂ∑¬ √ﬂ∞°
+	// Gravity Î™®Îìà - Ï§ëÎ†• Ï∂îÍ∞Ä
 	tModuelVal.AddMember("fGravityForce", m_ModuleData.fGravityForce, allocator);
 
-	// GravityPad πËø≠¿ª ¿˙¿Â
+	// GravityPad Î∞∞Ïó¥ÏùÑ Ï†ÄÏû•
 	Value GravityPadArray(kArrayType);
 	for (int i = 0; i < 3; ++i) {
 		GravityPadArray.PushBack(m_ModuleData.GravityPad[i], allocator);
 	}
 	tModuelVal.AddMember("GravityPad[3]", GravityPadArray, allocator);
 
-	// Render ∏µ‚
+	// Render Î™®Îìà
 	tModuelVal.AddMember("VelocityAlignment", m_ModuleData.VelocityAlignment, allocator);
 	tModuelVal.AddMember("VelocityScale", m_ModuleData.VelocityScale, allocator);
 	tModuelVal.AddMember("AnimationUse", m_ModuleData.AnimationUse, allocator);
@@ -300,14 +300,14 @@ void CParticleSystem::SaveToLevelJsonFile(Value& _objValue, Document::AllocatorT
 
 	tModuelVal.AddMember("renderpad", m_ModuleData.renderpad, allocator);
 
-	// Module Check  πËø≠¿ª ¿˙¿Â
+	// Module Check  Î∞∞Ïó¥ÏùÑ Ï†ÄÏû•
 	Value ModuleCheckArray(kArrayType);
 	for (int i = 0; i < (UINT)PARTICLE_MODULE::END; ++i) {
 		ModuleCheckArray.PushBack(m_ModuleData.ModuleCheck[i], allocator);
 	}
 	tModuelVal.AddMember("ModuleCheck[PARTICLE_MODULE]", ModuleCheckArray, allocator);
 	_objValue.AddMember("ParticleModule", tModuelVal, allocator);
-	// tParticleModule ¿˙¿Â ≥°
+	// tParticleModule Ï†ÄÏû• ÎÅù
 
 	// m_UpdateCS 
 	string key = "UpdateCS";
@@ -320,7 +320,7 @@ void CParticleSystem::LoadFromLevelJsonFile(const Value& _componentValue)
 {
 	CRenderComponent::LoadFromLevelJsonFile(_componentValue);
 
-	// Ω∫∆˘ ∏µ‚
+	// Ïä§Ìè∞ Î™®Îìà
 	m_ModuleData.vSpawnColor = LoadVec4Json(_componentValue["ParticleModule"]["vSpawnColor"]);
 	m_ModuleData.vSpawnScaleMin = LoadVec4Json(_componentValue["ParticleModule"]["vSpawnScaleMin"]);
 	m_ModuleData.vSpawnScaleMax = LoadVec4Json(_componentValue["ParticleModule"]["vSpawnScaleMax"]);
@@ -331,43 +331,43 @@ void CParticleSystem::LoadFromLevelJsonFile(const Value& _componentValue)
 	m_ModuleData.Space = _componentValue["ParticleModule"]["Space"].GetInt();
 	m_ModuleData.MinLifeTime = _componentValue["ParticleModule"]["MinLifeTime"].GetFloat();
 	m_ModuleData.MaxLifeTime = _componentValue["ParticleModule"]["MaxLifeTime"].GetFloat();
-	
-	// pad¥¬ æ»æ≤¥œ Load æ»«ÿµ“
+
+	// padÎäî ÏïàÏì∞Îãà Load ÏïàÌï¥Îë†
 	// m_ModuleData.spawnpad[3];
-	
-	// Color Change ∏µ‚
+
+	// Color Change Î™®Îìà
 	m_ModuleData.vStartColor = LoadVec4Json(_componentValue["ParticleModule"]["vStartColor"]);
 	m_ModuleData.vEndColor = LoadVec4Json(_componentValue["ParticleModule"]["vEndColor"]);
-	
-	// Scale Change ∏µ‚
+
+	// Scale Change Î™®Îìà
 	m_ModuleData.StartScale = _componentValue["ParticleModule"]["StartScale"].GetFloat();
 	m_ModuleData.EndScale = _componentValue["ParticleModule"]["EndScale"].GetFloat();
 
-	// πˆ∆€ √÷¥Î≈©±‚
+	// Î≤ÑÌçº ÏµúÎåÄÌÅ¨Í∏∞
 	m_ModuleData.iMaxParticleCount = _componentValue["ParticleModule"]["iMaxParticleCount"].GetInt();
 	//m_ModuleData.ipad = _componentValue["ParticleModule"]["ipad"].GetInt();
 
-	// Add Velocity ∏µ‚
+	// Add Velocity Î™®Îìà
 	m_ModuleData.vVelocityDir = LoadVec4Json(_componentValue["ParticleModule"]["vVelocityDir"]);
 	m_ModuleData.AddVelocityType = _componentValue["ParticleModule"]["AddVelocityType"].GetInt();
 	m_ModuleData.OffsetAngle = _componentValue["ParticleModule"]["OffsetAngle"].GetFloat();
 	m_ModuleData.Speed = _componentValue["ParticleModule"]["Speed"].GetFloat();
 	//m_ModuleData.addvpad = _componentValue["ParticleModule"]["addvpad"].GetInt();
 
-	// Drag ∏µ‚ - º”µµ ¡¶«—
+	// Drag Î™®Îìà - ÏÜçÎèÑ Ï†úÌïú
 	m_ModuleData.StartDrag = _componentValue["ParticleModule"]["StartDrag"].GetFloat();
 	m_ModuleData.EndDrag = _componentValue["ParticleModule"]["EndDrag"].GetFloat();
 
-	// NoiseForce ∏µ‚ - ∑£¥˝ »˚ ¿˚øÎ	
+	// NoiseForce Î™®Îìà - ÎûúÎç§ Ìûò Ï†ÅÏö©	
 	m_ModuleData.fNoiseTerm = _componentValue["ParticleModule"]["fNoiseTerm"].GetFloat();
 	m_ModuleData.fNoiseForce = _componentValue["ParticleModule"]["fNoiseForce"].GetFloat();
 
-	// Gravity ∏µ‚ - ¡ﬂ∑¬ √ﬂ∞°
+	// Gravity Î™®Îìà - Ï§ëÎ†• Ï∂îÍ∞Ä
 	m_ModuleData.fGravityForce = _componentValue["ParticleModule"]["fGravityForce"].GetFloat();
-	// pad¥¬ æ»æ≤¥œ Load æ»«ÿµ“
+	// padÎäî ÏïàÏì∞Îãà Load ÏïàÌï¥Îë†
 	// float	GravityPad[3];
 
-	// Render ∏µ‚
+	// Render Î™®Îìà
 	m_ModuleData.VelocityAlignment = _componentValue["ParticleModule"]["VelocityAlignment"].GetInt();
 	m_ModuleData.VelocityScale = _componentValue["ParticleModule"]["VelocityScale"].GetInt();
 	m_ModuleData.AnimationUse = _componentValue["ParticleModule"]["AnimationUse"].GetInt();
@@ -383,14 +383,14 @@ void CParticleSystem::LoadFromLevelJsonFile(const Value& _componentValue)
 	m_ModuleData.iAnimYCount = _componentValue["ParticleModule"]["iAnimYCount"].GetInt();
 	m_ModuleData.fAnimFrmTime = _componentValue["ParticleModule"]["fAnimFrmTime"].GetFloat();
 	//m_ModuleData.renderpad = _componentValue["ParticleModule"]["renderpad"].GetInt();
-	
+
 	// Module Check
 	const Value& moduleCheckArray = _componentValue["ParticleModule"]["ModuleCheck[PARTICLE_MODULE]"];
 	for (size_t i = 0; i < moduleCheckArray.Size(); ++i) {
 		m_ModuleData.ModuleCheck[i] = moduleCheckArray[i].GetUint();
 	}
-	// tParticleModule ∑ŒµÂ ≥°
-	
+	// tParticleModule Î°úÎìú ÎÅù
+
 
 	// m_UpdateCS
 	if (_componentValue["UpdateCS"]["IsNull"].GetBool())

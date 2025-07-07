@@ -27,7 +27,7 @@
 enum class MRT_TYPE
 {
 	SWAPCHAIN,
-	DEFERRED,	
+	DEFERRED,
 	DECAL,
 	LIGHT,
 	SHADOW,
@@ -39,25 +39,25 @@ enum class MRT_TYPE
 enum class COMPONENT_TYPE
 {
 	// update
-	TRANSFORM,		// À§Ä¡, Å©±â, È¸Àü
-	COLLIDER2D,		// 2Â÷¿ø Ãæµ¹
-	COLLIDER3D,		// 3Â÷¿ø Ãæµ¹
+	TRANSFORM,		// ìœ„ì¹˜, í¬ê¸°, íšŒì „
+	COLLIDER2D,		// 2ì°¨ì› ì¶©ëŒ
+	COLLIDER3D,		// 3ì°¨ì› ì¶©ëŒ
 	ANIMATOR2D,		// Sprite Animation
 	ANIMATOR3D,		// Bone Sknning Animation
-	LIGHT2D,		// 2Â÷¿ø ±¤¿ø
-	LIGHT3D,		// 3Â÷¿ø ±¤¿ø
+	LIGHT2D,		// 2ì°¨ì› ê´‘ì›
+	LIGHT3D,		// 3ì°¨ì› ê´‘ì›
 	CAMERA,			// Camera
 	FSM,
-	PATHFINDER,		// ±æÃ£±â
+	PATHFINDER,		// ê¸¸ì°¾ê¸°
 
 	// render
-	MESHRENDER,		// ±âº»ÀûÀÎ ·»´õ¸µ
-	PARTICLESYSTEM, // ÀÔÀÚ ·»´õ¸µ
-	TILEMAP,		// 2Â÷¿ø Å¸ÀÏ
-	SKYBOX,			// ÇÏ´Ã
-	LANDSCAPE,		// 3Â÷¿ø ÁöÇü
-	DECAL,			// ³»ºÎ ·»´õ¸µ
-		
+	MESHRENDER,		// ê¸°ë³¸ì ì¸ ë Œë”ë§
+	PARTICLESYSTEM, // ìž…ìž ë Œë”ë§
+	TILEMAP,		// 2ì°¨ì› íƒ€ì¼
+	SKYBOX,			// í•˜ëŠ˜
+	LANDSCAPE,		// 3ì°¨ì› ì§€í˜•
+	DECAL,			// ë‚´ë¶€ ë Œë”ë§
+
 	END,
 
 	// custom
@@ -74,8 +74,8 @@ enum class RES_TYPE
 	MATERIAL,
 	PREFAB,
 
-	MESH,			// ÇüÅÂ
-	TEXTURE,		// ÀÌ¹ÌÁö
+	MESH,			// í˜•íƒœ
+	TEXTURE,		// ì´ë¯¸ì§€
 	SOUND,
 
 	GRAPHICS_SHADER,
@@ -157,7 +157,7 @@ enum SCALAR_PARAM
 	MAT_0,
 	MAT_1,
 	MAT_2,
-	MAT_3,	
+	MAT_3,
 };
 
 enum TEX_PARAM
@@ -193,9 +193,9 @@ enum PIPELINE_STAGE
 	PS_HULL = 0x02,
 	PS_DOMAIN = 0x04,
 	PS_GEOMETRY = 0x08,
-	PS_PIXEL = 0x10,	
+	PS_PIXEL = 0x10,
 
-	PS_ALL_STAGES = PS_VERTEX | PS_HULL | PS_DOMAIN | PS_GEOMETRY | PS_PIXEL,	
+	PS_ALL_STAGES = PS_VERTEX | PS_HULL | PS_DOMAIN | PS_GEOMETRY | PS_PIXEL,
 };
 
 enum class RS_TYPE
@@ -226,8 +226,8 @@ enum class BS_TYPE
 {
 	DEFAULT,		// No Blending
 	MASK,			// Alpha Coverage
-	ALPHA_BLEND,	// Alpha °è¼ö 
-	ONE_ONE,		// 1:1 È¥ÇÕ
+	ALPHA_BLEND,	// Alpha ê³„ìˆ˜ 
+	ONE_ONE,		// 1:1 í˜¼í•©
 	END,
 };
 
@@ -239,7 +239,7 @@ enum class DIR_TYPE
 {
 	RIGHT,
 	UP,
-	FRONT,	
+	FRONT,
 };
 
 enum class PROJ_TYPE
@@ -258,17 +258,17 @@ enum class SHADER_DOMAIN
 	DOMAIN_LIGHT,
 
 	// SwapChain(Foward)
-	DOMAIN_OPAQUE,		// ºÒÅõ¸í ¿ÀºêÁ§Æ®
-	DOMAIN_MASK,		// ºÒÅõ¸í, Åõ¸í
-	DOMAIN_TRANSPARENT,	// ¹ÝÅõ¸í
-	DOMAIN_POSTPROCESS, // ÈÄ Ã³¸®
+	DOMAIN_OPAQUE,		// ë¶ˆíˆ¬ëª… ì˜¤ë¸Œì íŠ¸
+	DOMAIN_MASK,		// ë¶ˆíˆ¬ëª…, íˆ¬ëª…
+	DOMAIN_TRANSPARENT,	// ë°˜íˆ¬ëª…
+	DOMAIN_POSTPROCESS, // í›„ ì²˜ë¦¬
 	DOMAIN_UI,
-	DOMAIN_CONTOURPAINT, // ¾Æ¿ô¶óÀÎ ÆäÀÎÆÃ
+	DOMAIN_CONTOURPAINT, // ì•„ì›ƒë¼ì¸ íŽ˜ì¸íŒ…
 
 	DOMAIN_UI_OPAQUE,
 	DOMAIN_UI_MASK,
 	DOMAIN_UI_TRANSPARENT,
-	DOMAIN_UNDEFINED,	// ¹ÌÁ¤
+	DOMAIN_UNDEFINED,	// ë¯¸ì •
 };
 
 
@@ -282,10 +282,10 @@ enum class EVENT_TYPE
 	DELETE_RESOURCE,	// wParam : RES_TYPE, lParam : Resource Adress
 
 	LEVEL_CHANGE,
-	//½ºÅ©¸³Æ® ½ÃÁ¡¿¡¼­ ¿ÀºêÁ§Æ®ÀÇ Æ¯Á¤ Á¤º¸¸¦ º¯°æÇØÁÙ°æ¿ì ÀÎ½ºÆåÅÍ¿¡ ¹Ý¿µÀÌ ¾ÈµÊ (½ºÅ©¸³Æ®¿¡¼­ ¿ÀºêÁ§Æ® ÀÌ¸§º¯°æ µî..)
-	//±×·¡¼­ ÀÌº¥Æ®¸Å´ÏÀú¿¡ ui ¸®·Îµå ÀÌº¥Æ® Ãß°¡
+	//ìŠ¤í¬ë¦½íŠ¸ ì‹œì ì—ì„œ ì˜¤ë¸Œì íŠ¸ì˜ íŠ¹ì • ì •ë³´ë¥¼ ë³€ê²½í•´ì¤„ê²½ìš° ì¸ìŠ¤íŽ™í„°ì— ë°˜ì˜ì´ ì•ˆë¨ (ìŠ¤í¬ë¦½íŠ¸ì—ì„œ ì˜¤ë¸Œì íŠ¸ ì´ë¦„ë³€ê²½ ë“±..)
+	//ê·¸ëž˜ì„œ ì´ë²¤íŠ¸ë§¤ë‹ˆì €ì— ui ë¦¬ë¡œë“œ ì´ë²¤íŠ¸ ì¶”ê°€
 	INSPECTOR_RELOAD,
-	LAYER_CHANGE,		// wParam : ¹Ù²Ü ¿ÀºêÁ§Æ® lParam : ¹Ù²Ü ·¹ÀÌ¾î ¹øÈ£
+	LAYER_CHANGE,		// wParam : ë°”ê¿€ ì˜¤ë¸Œì íŠ¸ lParam : ë°”ê¿€ ë ˆì´ì–´ ë²ˆí˜¸
 	EXCEPT_LAYER_UI,
 };
 
@@ -357,14 +357,14 @@ enum class LANDSCAPE_MOD
 };
 
 
-enum class PLAYER_STATE // Â¡Å©½º ÀÌµ¿ Å×½ºÆ®¿ë Run, Idle »óÅÂ Ãß°¡ (³ªÁß¿¡ fsm µµÀÔ ÈÄ »ç¶óÁú ¿¹Á¤)
+enum class PLAYER_STATE // ì§•í¬ìŠ¤ ì´ë™ í…ŒìŠ¤íŠ¸ìš© Run, Idle ìƒíƒœ ì¶”ê°€ (ë‚˜ì¤‘ì— fsm ë„ìž… í›„ ì‚¬ë¼ì§ˆ ì˜ˆì •)
 {
 	RUN,
 	IDLE,
 };
 
 
-//UIÀÌ¹ÌÁö¿ë
+//UIì´ë¯¸ì§€ìš©
 enum class SkillNum
 {
 	Q,
@@ -373,7 +373,7 @@ enum class SkillNum
 	R,
 	PASSIVE,
 	END,
-}; //ÀÌ ÀÌ¸§À» Á¶ÇÕÇÏ¿© ÀÚµ¿À¸·Î ¸ÓÅÍ¸®¾ó Ã£¾Æ¿À¹Ç·Î ÇÔºÎ·Î º¯°æ x!!
+}; //ì´ ì´ë¦„ì„ ì¡°í•©í•˜ì—¬ ìžë™ìœ¼ë¡œ ë¨¸í„°ë¦¬ì–¼ ì°¾ì•„ì˜¤ë¯€ë¡œ í•¨ë¶€ë¡œ ë³€ê²½ x!!
 
 extern const wchar_t* SKILL_TYPE_WSTR[(UINT)SkillNum::END];
 

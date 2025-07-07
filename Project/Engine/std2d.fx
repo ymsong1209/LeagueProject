@@ -22,18 +22,18 @@ struct VS_OUT
 // BlendState           : Mask
 // DepthStencilState    : Less
 
-// Animation °ü·Ã
+// Animation ê´€ë ¨
 #define bAnimUse                    g_int_0    // Anim Use
 #define LeftTop                     g_vec2_0   // AnimAtlas LeftTop
 #define Slice                       g_vec2_1   // AnimAtlas Slice
 #define Offset                      g_vec2_2
 #define BackSize                    g_vec2_3
 
-// MeshRender °ü·Ã Material¿¡¼­ ¹Ş´Â °ª
+// MeshRender ê´€ë ¨ Materialì—ì„œ ë°›ëŠ” ê°’
 #define IsOutputTextureExist        g_btex_0
 #define Output_Texture              g_tex_0
 
-// Ray Tex¿ë ¼ıÀÚ
+// Ray Texìš© ìˆ«ì
 #define RayTest          g_int_2
 // ============================
 VS_OUT VS_Std2D(VS_IN _in)
@@ -52,9 +52,9 @@ float4 PS_Std2D(VS_OUT _in) : SV_Target
     float4 vOutColor = float4(0.f, 0.f, 0.f, 1.f);
 
       
-    // Sample Texture°¡ ¾ø´Â °æ¿ì
-    // g_btex_0 °ªÀÌ ¿Ö 0, 1 ·Î ¹Ù²ğ ¼ö ÀÖ´Â Áö ¾Ë±â À§ÇØ¼± 
-    // CMaterial::UpdateData() Âü°í
+    // Sample Textureê°€ ì—†ëŠ” ê²½ìš°
+    // g_btex_0 ê°’ì´ ì™œ 0, 1 ë¡œ ë°”ë€” ìˆ˜ ìˆëŠ” ì§€ ì•Œê¸° ìœ„í•´ì„  
+    // CMaterial::UpdateData() ì°¸ê³ 
     if (IsOutputTextureExist)
     {
         if (bAnimUse)
@@ -70,21 +70,20 @@ float4 PS_Std2D(VS_OUT _in) : SV_Target
             }
             else
             {
-                // UV¸¦ ÃÊ°úÇÑ ¹Ù±ù ºÎºĞÀº ¹ö¸°´Ù. (BackSize°ü·Ã)
+                // UVë¥¼ ì´ˆê³¼í•œ ë°”ê¹¥ ë¶€ë¶„ì€ ë²„ë¦°ë‹¤. (BackSizeê´€ë ¨)
                 discard;
             }
 
-            // ¾ËÆÄ°ªÀÌ 0ÀÎ ºÎºĞÀº ¹ö¸°´Ù
+            // ì•ŒíŒŒê°’ì´ 0ì¸ ë¶€ë¶„ì€ ë²„ë¦°ë‹¤
             if (vOutColor.w == 0.f)
                 discard;
         }
-
         else
         {
-            // ÂüÁ¶ÇØ¾ßÇÏ´Â UV°ªÀÇ Offset
+            // ì°¸ì¡°í•´ì•¼í•˜ëŠ” UVê°’ì˜ Offset
             float2 Offset = float2(0.f, 0.f);
 
-            // Output Texture°¡ ¿òÁ÷¿©¾ß ÇÏ´ÂÁö È®ÀÎ
+            // Output Textureê°€ ì›€ì§ì—¬ì•¼ í•˜ëŠ”ì§€ í™•ì¸
             if (OutputTexMovingStyle != 0)
             {
                 Offset = OutputTexPreviousPos;
@@ -97,13 +96,13 @@ float4 PS_Std2D(VS_OUT _in) : SV_Target
         }
     }
 
-    // ±¸¸Û¶Õ±â (¾ËÆÄ°ª Ã³¸®) 
+    // êµ¬ë©ëš«ê¸° (ì•ŒíŒŒê°’ ì²˜ë¦¬) 
     if (isPunctureTextureUsed)
     {
-        // ÂüÁ¶ÇØ¾ßÇÏ´Â UV°ªÀÇ Offset
+        // ì°¸ì¡°í•´ì•¼í•˜ëŠ” UVê°’ì˜ Offset
         float2 Offset = float2(0.f, 0.f);
 
-        // Puncture Texture °¡ ¿òÁ÷¿©¾ß µÇ´ÂÁö È®ÀÎ 
+        // Puncture Texture ê°€ ì›€ì§ì—¬ì•¼ ë˜ëŠ”ì§€ í™•ì¸ 
         if (PunctureTexMovingStyle != 0)
         {
             Offset = PunctureTexPreviousPos;
@@ -115,7 +114,7 @@ float4 PS_Std2D(VS_OUT _in) : SV_Target
     }
 
 
-    // »ö»ó Ã·°¡ (Color Additive)
+    // ìƒ‰ìƒ ì²¨ê°€ (Color Additive)
     if (isAdditiveTextureUsed)
     {
         float4 vAdditiveSample = g_additive_tex.Sample(g_sam_0, _in.vUV);
@@ -219,18 +218,18 @@ float4 PS_Std2DLight(VS_Light_OUT _in) : SV_Target
     float3 vNormal = (float3) 0.f;
     if (g_btex_1)
     {
-        // Normal °ª ÃßÃâ
+        // Normal ê°’ ì¶”ì¶œ
         vNormal = g_tex_1.Sample(g_sam_0, _in.vUV);
         
-        // 0 ~ 1 ¹üÀ§¸¦ -1 ~ 1 ·Î º¯°æ
+        // 0 ~ 1 ë²”ìœ„ë¥¼ -1 ~ 1 ë¡œ ë³€ê²½
         vNormal = (vNormal * 2.f) - 1.f;
         
-        // NormalTexture ÁÂÇ¥°è´Â yÃà°ú z ÃàÀÌ ¹İ´ë·Î µÇ¾îÀÖ´Ù.
+        // NormalTexture ì¢Œí‘œê³„ëŠ” yì¶•ê³¼ z ì¶•ì´ ë°˜ëŒ€ë¡œ ë˜ì–´ìˆë‹¤.
         float f = vNormal.y;
         vNormal.y = vNormal.z;
         vNormal.z = f;
         
-        // Texture ¿¡¼­ ÃßÃâÇÑ Normal ¹æÇâÀ» ¿ùµå·Î º¯È¯½ÃÅ²´Ù.
+        // Texture ì—ì„œ ì¶”ì¶œí•œ Normal ë°©í–¥ì„ ì›”ë“œë¡œ ë³€í™˜ì‹œí‚¨ë‹¤.
         vNormal = normalize(mul(float4(vNormal, 0.f), g_matWorld)).xyz;
     }
     
@@ -243,10 +242,10 @@ float4 PS_Std2DLight(VS_Light_OUT _in) : SV_Target
     }
      
     
-    // Lighting Ã³¸®
+    // Lighting ì²˜ë¦¬
     tLightColor LightColor = (tLightColor) 0.f;
     
-    // vNormal ÀÌ Zero Vector ¶ó¸é
+    // vNormal ì´ Zero Vector ë¼ë©´
     if (dot(vNormal, vNormal) == 0.f)
     {
         CalcLight2D(_in.vWorldPos, LightColor);
@@ -269,7 +268,7 @@ float4 PS_Std2DLight(VS_Light_OUT _in) : SV_Target
 // DepthStencilState    : Less
 //
 // Parameter
-// g_int_0              : AnimUse (¾Ö´Ï¸ŞÀÌ¼Ç »ç¿ë ¿©ºÎ)
+// g_int_0              : AnimUse (ì• ë‹ˆë©”ì´ì…˜ ì‚¬ìš© ì—¬ë¶€)
 // g_vec2_0             : AnimAtlas LeftTop
 // g_vec2_1             : AnimAtlas Slice
 // g_vec2_2             : AnimAtlas Offset
@@ -297,7 +296,7 @@ struct VS_Anim_OUT
 
 VS_Anim_OUT VS_Anim2D(VS_Anim_IN _in)
 {
-    VS_OUT output = (VS_OUT) 0.f;
+    VS_Anim_OUT output = (VS_Anim_OUT) 0.f;
     output.vPosition = float4(_in.vPos.xy * 2.f, 0.5f, 1.f);
     output.vUV = _in.vUV;
     
@@ -308,9 +307,9 @@ float4 PS_Anim2D(VS_Anim_OUT _in) : SV_Target
 {
     float4 vOutColor = (float4) 0.f;
        
-    if (g_btex_0)       // ÅØ½ºÃ³ ¹ÙÀÎµùÀÌ µÈ °æ¿ì
+    if (g_btex_0)       // í…ìŠ¤ì²˜ ë°”ì¸ë”©ì´ ëœ ê²½ìš°
     {
-        // ¾Ö´Ï¸ŞÀÌ¼Ç »ç¿ë½Ã
+        // ì• ë‹ˆë©”ì´ì…˜ ì‚¬ìš©ì‹œ
         if (bAnimUse)
         {
             float2 vUV = LeftTop + (BackSize * _in.vUV);
@@ -324,19 +323,19 @@ float4 PS_Anim2D(VS_Anim_OUT _in) : SV_Target
             }
             else
             {
-                // UV¸¦ ÃÊ°úÇÑ ¹Ù±ù ºÎºĞÀº ¹ö¸°´Ù.
+                // UVë¥¼ ì´ˆê³¼í•œ ë°”ê¹¥ ë¶€ë¶„ì€ ë²„ë¦°ë‹¤.
                 //vOutColor = float4(1.f, 1.f, 0.f, 1.f);
                 discard;
             }
         }
-        // ¾Ö´Ï¸ŞÀÌ¼Ç »ç¿ëÇÏÁö ¾ÊÀ» ½Ã
+        // ì• ë‹ˆë©”ì´ì…˜ ì‚¬ìš©í•˜ì§€ ì•Šì„ ì‹œ
         else
         {
-            // ¹ÙÀÎµùµÈ ÅØ½ºÃ³ ·»´õ¸µ
+            // ë°”ì¸ë”©ëœ í…ìŠ¤ì²˜ ë Œë”ë§
             vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
         }
     }
-    else // ¹ÙÀÎµùµÈ ÅØ½ºÃ³°¡ ¾øÀ» °æ¿ì ¸¶Á¨Å¸»ö Ãâ·Â
+    else // ë°”ì¸ë”©ëœ í…ìŠ¤ì²˜ê°€ ì—†ì„ ê²½ìš° ë§ˆì  íƒ€ìƒ‰ ì¶œë ¥
     {
         vOutColor = float4(1.f, 0.f, 1.f, 1.f);
     }
@@ -394,7 +393,7 @@ float4 PS_CoolDown(VS_CoolDownOUT _in) : SV_Target
 
     float angleY = degrees(acos(dot(vDir, vYDir)));
 
-    // ÄğÅ¸ÀÓÀÇ °¢µµ¸¦ ¹İ´ë·Î °è»êÇÕ´Ï´Ù. (360.f - (360.f * g_float_0))´Â ÄğÅ¸ÀÓÀÌ °¡µæ Ã¡À» ¶§ 0µµºÎÅÍ ½ÃÀÛÇØ¼­ ½Ã°è¹æÇâÀ¸·Î °¨¼ÒÇÏ´Â ÇüÅÂ¸¦ ¸¸µì´Ï´Ù.
+    // ì¿¨íƒ€ì„ì˜ ê°ë„ë¥¼ ë°˜ëŒ€ë¡œ ê³„ì‚°í•©ë‹ˆë‹¤. (360.f - (360.f * g_float_0))ëŠ” ì¿¨íƒ€ì„ì´ ê°€ë“ ì°¼ì„ ë•Œ 0ë„ë¶€í„° ì‹œì‘í•´ì„œ ì‹œê³„ë°©í–¥ìœ¼ë¡œ ê°ì†Œí•˜ëŠ” í˜•íƒœë¥¼ ë§Œë“­ë‹ˆë‹¤.
     float angle = 360.f - (360.f * g_float_0);
 
     if (_in.vUV.x < 0.5)
@@ -402,7 +401,7 @@ float4 PS_CoolDown(VS_CoolDownOUT _in) : SV_Target
         angleY = 360.f - angleY;
     }
 
-    if (g_float_0 != 0.f) // g_float_0ÀÌ 0ÀÌ¸é ÄğÅ¸ÀÓÀÌ ¾ø´Â »óÅÂ, Áï ÀÏ¹İ ÅØ½ºÃÄ Ãâ·Â
+    if (g_float_0 != 0.f) // g_float_0ì´ 0ì´ë©´ ì¿¨íƒ€ì„ì´ ì—†ëŠ” ìƒíƒœ, ì¦‰ ì¼ë°˜ í…ìŠ¤ì³ ì¶œë ¥
     {
         if (angleY > angle)
         {
@@ -417,7 +416,7 @@ float4 PS_CoolDown(VS_CoolDownOUT _in) : SV_Target
     }
     else
     {
-        // g_float_0ÀÌ 0ÀÌ¸é ÄğÅ¸ÀÓÀÌ ¾øÀ¸¹Ç·Î ¿ø·¡ ÅØ½ºÃÄ ±×´ë·Î Ãâ·Â
+        // g_float_0ì´ 0ì´ë©´ ì¿¨íƒ€ì„ì´ ì—†ìœ¼ë¯€ë¡œ ì›ë˜ í…ìŠ¤ì³ ê·¸ëŒ€ë¡œ ì¶œë ¥
         vOutColor = vOutColor;
     }
 
@@ -431,7 +430,7 @@ float4 PS_CoolDown(VS_CoolDownOUT _in) : SV_Target
 // DepthStencilState    : Less
 
 // g_tex_0              : Output Texture
-// g_float_0            : XP Ratio (°æÇèÄ¡ ºñÀ²)
+// g_float_0            : XP Ratio (ê²½í—˜ì¹˜ ë¹„ìœ¨)
 // ============================
 
 VS_OUT VS_EXPRatio(VS_IN _in)
@@ -439,19 +438,19 @@ VS_OUT VS_EXPRatio(VS_IN _in)
     VS_OUT output = (VS_OUT) 0.f;
 
     output.vPosition = mul(float4(_in.vLocalPos, 1.f), g_matWVP);
-    output.vUV = _in.vUV; // UV Á¶Á¤Àº »èÁ¦
+    output.vUV = _in.vUV; // UV ì¡°ì •ì€ ì‚­ì œ
 
     return output;
 }
 
 float4 PS_EXPRatio(VS_OUT _in) : SV_Target
 {
-    // °æÇèÄ¡ ºñÀ²º¸´Ù ³·Àº ºÎºĞÀº ·»´õ¸µÇÏÁö ¾Ê½À´Ï´Ù.
+    // ê²½í—˜ì¹˜ ë¹„ìœ¨ë³´ë‹¤ ë‚®ì€ ë¶€ë¶„ì€ ë Œë”ë§í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
     if (_in.vUV.y < (1.0f - g_float_0))
     {
         discard;
     }
-    // ±× ¿Ü ºÎºĞÀº ÅØ½ºÃÄ »ùÇÃ¸µÀ» ÅëÇØ »ö»óÀ» °áÁ¤ÇÕ´Ï´Ù.
+    // ê·¸ ì™¸ ë¶€ë¶„ì€ í…ìŠ¤ì³ ìƒ˜í”Œë§ì„ í†µí•´ ìƒ‰ìƒì„ ê²°ì •í•©ë‹ˆë‹¤.
     float4 vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
     return vOutColor;
 }
@@ -464,7 +463,7 @@ float4 PS_EXPRatio(VS_OUT _in) : SV_Target
 // DepthStencilState    : Less
 
 // g_tex_0              : Output Texture
-// g_float_0            :  Ratio (¸¶³ªorÃ¼·Â ºñÀ²)
+// g_float_0            :  Ratio (ë§ˆë‚˜orì²´ë ¥ ë¹„ìœ¨)
 // ============================
 
 VS_OUT VS_HPMPRatio(VS_IN _in)
@@ -472,19 +471,19 @@ VS_OUT VS_HPMPRatio(VS_IN _in)
     VS_OUT output = (VS_OUT) 0.f;
 
     output.vPosition = mul(float4(_in.vLocalPos, 1.f), g_matWVP);
-    output.vUV = _in.vUV; // UV Á¶Á¤Àº »èÁ¦
+    output.vUV = _in.vUV; // UV ì¡°ì •ì€ ì‚­ì œ
 
     return output;
 }
 
 float4 PS_HPMPRatio(VS_OUT _in) : SV_Target
 {
-    // °æÇèÄ¡ ºñÀ²º¸´Ù ³·Àº ºÎºĞÀº ·»´õ¸µÇÏÁö ¾Ê½À´Ï´Ù.
+    // ê²½í—˜ì¹˜ ë¹„ìœ¨ë³´ë‹¤ ë‚®ì€ ë¶€ë¶„ì€ ë Œë”ë§í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
     if (_in.vUV.x > g_float_0)
     {
         discard;
     }
-    // ±× ¿Ü ºÎºĞÀº ÅØ½ºÃÄ »ùÇÃ¸µÀ» ÅëÇØ »ö»óÀ» °áÁ¤ÇÕ´Ï´Ù.
+    // ê·¸ ì™¸ ë¶€ë¶„ì€ í…ìŠ¤ì³ ìƒ˜í”Œë§ì„ í†µí•´ ìƒ‰ìƒì„ ê²°ì •í•©ë‹ˆë‹¤.
     float4 vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
     return vOutColor;
 }
@@ -496,7 +495,7 @@ float4 PS_HPMPRatio(VS_OUT _in) : SV_Target
 // DepthStencilState    : Less
 
 // g_tex_0              : Output Texture
-// g_float_0            :  Ratio (¸¶³ªorÃ¼·Â ºñÀ²)
+// g_float_0            :  Ratio (ë§ˆë‚˜orì²´ë ¥ ë¹„ìœ¨)
 // ============================
 
 VS_OUT VS_2dDefaultShader(VS_IN _in)
@@ -504,14 +503,14 @@ VS_OUT VS_2dDefaultShader(VS_IN _in)
     VS_OUT output = (VS_OUT) 0.f;
 
     output.vPosition = mul(float4(_in.vLocalPos, 1.f), g_matWVP);
-    output.vUV = _in.vUV; // UV Á¶Á¤Àº »èÁ¦
+    output.vUV = _in.vUV; // UV ì¡°ì •ì€ ì‚­ì œ
 
     return output;
 }
 
 float4 PS_2dDefaultShader(VS_OUT _in) : SV_Target
 {
-    // ±× ¿Ü ºÎºĞÀº ÅØ½ºÃÄ »ùÇÃ¸µÀ» ÅëÇØ »ö»óÀ» °áÁ¤ÇÕ´Ï´Ù.
+    // ê·¸ ì™¸ ë¶€ë¶„ì€ í…ìŠ¤ì³ ìƒ˜í”Œë§ì„ í†µí•´ ìƒ‰ìƒì„ ê²°ì •í•©ë‹ˆë‹¤.
     float4 vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
     return vOutColor;
 }
@@ -523,8 +522,8 @@ float4 PS_2dDefaultShader(VS_OUT _in) : SV_Target
 // DepthStencilState    : Less
 
 // g_tex_0              : Output Texture
-// g_float_0            :  HPRatio (¸¶³ªorÃ¼·Â ºñÀ²)
-// g_float_1            :  MPRatio (¸¶³ªorÃ¼·Â ºñÀ²)
+// g_float_0            :  HPRatio (ë§ˆë‚˜orì²´ë ¥ ë¹„ìœ¨)
+// g_float_1            :  MPRatio (ë§ˆë‚˜orì²´ë ¥ ë¹„ìœ¨)
 // ============================
 
 VS_OUT VS_WorldBar(VS_IN _in)
@@ -532,7 +531,7 @@ VS_OUT VS_WorldBar(VS_IN _in)
     VS_OUT output = (VS_OUT) 0.f;
 
     output.vPosition = mul(float4(_in.vLocalPos, 1.f), g_matWVP);
-    output.vUV = _in.vUV; // UV Á¶Á¤Àº »èÁ¦
+    output.vUV = _in.vUV; // UV ì¡°ì •ì€ ì‚­ì œ
 
     return output;
 }
@@ -592,15 +591,15 @@ float4 PS_WorldBar(VS_OUT _in) : SV_Target
 // DepthStencilState    : Less
 
 // g_tex_0              : Output Texture
-// g_float_0            : ÇöÀç bar´ëºñ ºñÀ² (¸¶³ªorÃ¼·Â ºñÀ²)
-// g_float_1            : Ã¼·Â¹ÙÀÇ ¿ŞÂÊ xÁöÁ¡
-// g_float_2            : Ã¼·Â¹ÙÀÇ ¿À¸¥ÂÊ xÁöÁ¡
-// g_float_3            : Ã¼·Â¹ÙÀÇ À§ yÁöÁ¡
-// g_float_4            : Ã¼·Â¹ÙÀÇ ¾Æ·¡ yÁöÁ¡
-// g_float_5            : ÀüÃ¼ ÅØ½ºÃÄ °¡·Î
-// g_float_6            : ÀüÃ¼ ÅØ½ºÃÄ ¼¼·Î
+// g_float_0            : í˜„ì¬ barëŒ€ë¹„ ë¹„ìœ¨ (ë§ˆë‚˜orì²´ë ¥ ë¹„ìœ¨)
+// g_float_1            : ì²´ë ¥ë°”ì˜ ì™¼ìª½ xì§€ì 
+// g_float_2            : ì²´ë ¥ë°”ì˜ ì˜¤ë¥¸ìª½ xì§€ì 
+// g_float_3            : ì²´ë ¥ë°”ì˜ ìœ„ yì§€ì 
+// g_float_4            : ì²´ë ¥ë°”ì˜ ì•„ë˜ yì§€ì 
+// g_float_5            : ì „ì²´ í…ìŠ¤ì³ ê°€ë¡œ
+// g_float_6            : ì „ì²´ í…ìŠ¤ì³ ì„¸ë¡œ
 
-// Animation °ü·Ã
+// Animation ê´€ë ¨
 #define Ratio                   g_float_0  
 #define LeftX                   g_float_1  
 #define RightX                  g_float_2  
@@ -615,7 +614,7 @@ VS_OUT VS_BarRatioShader(VS_IN _in)
     VS_OUT output = (VS_OUT) 0.f;
 
     output.vPosition = mul(float4(_in.vLocalPos, 1.f), g_matWVP);
-    output.vUV = _in.vUV; // UV Á¶Á¤Àº »èÁ¦
+    output.vUV = _in.vUV; // UV ì¡°ì •ì€ ì‚­ì œ
 
     return output;
 }
@@ -653,7 +652,7 @@ float4 PS_BarRatioShader(VS_OUT _in) : SV_Target
 // DepthStencilState    : Less
 
 // g_tex_0              : Output Texture
-// g_float_0            : ÇöÀç bar´ëºñ ºñÀ² (¸¶³ªorÃ¼·Â ºñÀ²)
+// g_float_0            : í˜„ì¬ barëŒ€ë¹„ ë¹„ìœ¨ (ë§ˆë‚˜orì²´ë ¥ ë¹„ìœ¨)
 // ============================
 
 VS_OUT VS_JungleBarRatioShader(VS_IN _in)
@@ -661,7 +660,7 @@ VS_OUT VS_JungleBarRatioShader(VS_IN _in)
     VS_OUT output = (VS_OUT) 0.f;
 
     output.vPosition = mul(float4(_in.vLocalPos, 1.f), g_matWVP);
-    output.vUV = _in.vUV; // UV Á¶Á¤Àº »èÁ¦
+    output.vUV = _in.vUV; // UV ì¡°ì •ì€ ì‚­ì œ
 
     return output;
 }
@@ -707,7 +706,7 @@ float4 PS_JungleBarRatioShader(VS_OUT _in) : SV_Target
 // DepthStencilState    : Less
 
 // g_tex_0              : Output Texture
-// g_float_0            : ÇöÀç bar´ëºñ ºñÀ² (¸¶³ªorÃ¼·Â ºñÀ²)
+// g_float_0            : í˜„ì¬ barëŒ€ë¹„ ë¹„ìœ¨ (ë§ˆë‚˜orì²´ë ¥ ë¹„ìœ¨)
 // ============================
 
 VS_OUT VS_MinionBarRatioShader(VS_IN _in)
@@ -715,7 +714,7 @@ VS_OUT VS_MinionBarRatioShader(VS_IN _in)
     VS_OUT output = (VS_OUT) 0.f;
 
     output.vPosition = mul(float4(_in.vLocalPos, 1.f), g_matWVP);
-    output.vUV = _in.vUV; // UV Á¶Á¤Àº »èÁ¦
+    output.vUV = _in.vUV; // UV ì¡°ì •ì€ ì‚­ì œ
 
     return output;
 }
@@ -761,7 +760,7 @@ float4 PS_MinionBarRatioShader(VS_OUT _in) : SV_Target
 // DepthStencilState    : Less
 
 // g_tex_0              : Output Texture
-// g_float_0            : ÇöÀç bar´ëºñ ºñÀ² (¸¶³ªorÃ¼·Â ºñÀ²)
+// g_float_0            : í˜„ì¬ barëŒ€ë¹„ ë¹„ìœ¨ (ë§ˆë‚˜orì²´ë ¥ ë¹„ìœ¨)
 // ============================
 
 VS_OUT VS_TurretBarRatioShader(VS_IN _in)
@@ -769,7 +768,7 @@ VS_OUT VS_TurretBarRatioShader(VS_IN _in)
     VS_OUT output = (VS_OUT) 0.f;
 
     output.vPosition = mul(float4(_in.vLocalPos, 1.f), g_matWVP);
-    output.vUV = _in.vUV; // UV Á¶Á¤Àº »èÁ¦
+    output.vUV = _in.vUV; // UV ì¡°ì •ì€ ì‚­ì œ
 
     return output;
 }
@@ -816,7 +815,7 @@ float4 PS_TurretBarRatioShader(VS_OUT _in) : SV_Target
 // DepthStencilState    : Less
 
 // g_tex_0              : Output Texture
-// g_float_0            : ÇöÀç bar´ëºñ ºñÀ² (¸¶³ªorÃ¼·Â ºñÀ²)
+// g_float_0            : í˜„ì¬ barëŒ€ë¹„ ë¹„ìœ¨ (ë§ˆë‚˜orì²´ë ¥ ë¹„ìœ¨)
 // ============================
 
 VS_OUT VS_InhibitorBarRatioShader(VS_IN _in)
@@ -824,7 +823,7 @@ VS_OUT VS_InhibitorBarRatioShader(VS_IN _in)
     VS_OUT output = (VS_OUT) 0.f;
 
     output.vPosition = mul(float4(_in.vLocalPos, 1.f), g_matWVP);
-    output.vUV = _in.vUV; // UV Á¶Á¤Àº »èÁ¦
+    output.vUV = _in.vUV; // UV ì¡°ì •ì€ ì‚­ì œ
 
     return output;
 }
@@ -871,10 +870,10 @@ float4 PS_InhibitorBarRatioShader(VS_OUT _in) : SV_Target
 // DepthStencilState    : Less
 
 // g_tex_0              : Output Texture
-// g_int_0              :½ºÅ³Q ·¹º§
-// g_int_1              :½ºÅ³W ·¹º§
-// g_int_2              :½ºÅ³E ·¹º§
-// g_int_3              :½ºÅ³R ·¹º§
+// g_int_0              :ìŠ¤í‚¬Q ë ˆë²¨
+// g_int_1              :ìŠ¤í‚¬W ë ˆë²¨
+// g_int_2              :ìŠ¤í‚¬E ë ˆë²¨
+// g_int_3              :ìŠ¤í‚¬R ë ˆë²¨
 
 #define Q_Level          g_int_0
 #define W_Level          g_int_1
@@ -887,7 +886,7 @@ VS_OUT VS_SkillLevelShader(VS_IN _in)
     VS_OUT output = (VS_OUT) 0.f;
 
     output.vPosition = mul(float4(_in.vLocalPos, 1.f), g_matWVP);
-    output.vUV = _in.vUV; // UV Á¶Á¤Àº »èÁ¦
+    output.vUV = _in.vUV; // UV ì¡°ì •ì€ ì‚­ì œ
 
     return output;
 }
@@ -901,17 +900,17 @@ float4 PS_SkillLevelShader(VS_OUT _in) : SV_Target
     float2 Skill_Q_discardRegionMax = float2(56.f, 9.f) / TexSize;
     
     if (Q_Level == 0)
-       Skill_Q_discardRegionMin = float2(0.f, 0.f) / TexSize;
+        Skill_Q_discardRegionMin = float2(0.f, 0.f) / TexSize;
     else if (Q_Level == 1)
-       Skill_Q_discardRegionMin = float2(10.f, 0.f) / TexSize;
+        Skill_Q_discardRegionMin = float2(10.f, 0.f) / TexSize;
     else if (Q_Level == 2)
-       Skill_Q_discardRegionMin = float2(21.f, 0.f) / TexSize;
+        Skill_Q_discardRegionMin = float2(21.f, 0.f) / TexSize;
     else if (Q_Level == 3)
-       Skill_Q_discardRegionMin = float2(32.f, 0.f) / TexSize;
+        Skill_Q_discardRegionMin = float2(32.f, 0.f) / TexSize;
     else if (Q_Level == 4)
-       Skill_Q_discardRegionMin = float2(43.f, 0.f) / TexSize;
+        Skill_Q_discardRegionMin = float2(43.f, 0.f) / TexSize;
     else if (Q_Level == 5)
-       Skill_Q_discardRegionMin = float2(56.f, 0.f) / TexSize;
+        Skill_Q_discardRegionMin = float2(56.f, 0.f) / TexSize;
     
     //==================W=======================================
     
@@ -932,7 +931,7 @@ float4 PS_SkillLevelShader(VS_OUT _in) : SV_Target
         Skill_W_discardRegionMin = float2(132.f, 0.f) / TexSize;
 
     
-        // ÅØ½ºÃÄÀÇ Æ¯Á¤ ¿µ¿ª
+        // í…ìŠ¤ì³ì˜ íŠ¹ì • ì˜ì—­
     float2 Skill_E_discardRegionMin = float2(0.f, 0.f) / TexSize;
     float2 Skill_E_discardRegionMax = float2(207.f, 9.f) / TexSize;
     
@@ -950,7 +949,7 @@ float4 PS_SkillLevelShader(VS_OUT _in) : SV_Target
         Skill_E_discardRegionMin = float2(207.f, 0.f) / TexSize;
     
     
-        // ÅØ½ºÃÄÀÇ Æ¯Á¤ ¿µ¿ª
+        // í…ìŠ¤ì³ì˜ íŠ¹ì • ì˜ì—­
     float2 Skill_R_discardRegionMin = float2(0.f, 0.f) / TexSize;
     float2 Skill_R_discardRegionMax = float2(279.f, 9.f) / TexSize;
     
@@ -968,34 +967,34 @@ float4 PS_SkillLevelShader(VS_OUT _in) : SV_Target
     //    Skill_R_discardRegionMin = float2(279.f, 0.f) / TexSize;
 
 
-        // ÇöÀç UV ÁÂÇ¥°¡ ÇØ´ç ¿µ¿ª¿¡ ¼ÓÇÏ´ÂÁö È®ÀÎ
+        // í˜„ì¬ UV ì¢Œí‘œê°€ í•´ë‹¹ ì˜ì—­ì— ì†í•˜ëŠ”ì§€ í™•ì¸
     if (_in.vUV.x >= Skill_Q_discardRegionMin.x && _in.vUV.x <= Skill_Q_discardRegionMax.x &&
         _in.vUV.y >= Skill_Q_discardRegionMin.y && _in.vUV.y <= Skill_Q_discardRegionMax.y)
     {
-        discard; // ÇØ´ç ¿µ¿ªÀÇ ÇÈ¼¿Àº ·»´õ¸µÇÏÁö ¾ÊÀ½
+        discard; // í•´ë‹¹ ì˜ì—­ì˜ í”½ì…€ì€ ë Œë”ë§í•˜ì§€ ì•ŠìŒ
     }
     
-            // ÇöÀç UV ÁÂÇ¥°¡ ÇØ´ç ¿µ¿ª¿¡ ¼ÓÇÏ´ÂÁö È®ÀÎ
+            // í˜„ì¬ UV ì¢Œí‘œê°€ í•´ë‹¹ ì˜ì—­ì— ì†í•˜ëŠ”ì§€ í™•ì¸
     if (_in.vUV.x >= Skill_W_discardRegionMin.x && _in.vUV.x <= Skill_W_discardRegionMax.x &&
         _in.vUV.y >= Skill_W_discardRegionMin.y && _in.vUV.y <= Skill_W_discardRegionMax.y)
     {
-        discard; // ÇØ´ç ¿µ¿ªÀÇ ÇÈ¼¿Àº ·»´õ¸µÇÏÁö ¾ÊÀ½
+        discard; // í•´ë‹¹ ì˜ì—­ì˜ í”½ì…€ì€ ë Œë”ë§í•˜ì§€ ì•ŠìŒ
     }
 
     
-            // ÇöÀç UV ÁÂÇ¥°¡ ÇØ´ç ¿µ¿ª¿¡ ¼ÓÇÏ´ÂÁö È®ÀÎ
+            // í˜„ì¬ UV ì¢Œí‘œê°€ í•´ë‹¹ ì˜ì—­ì— ì†í•˜ëŠ”ì§€ í™•ì¸
     if (_in.vUV.x >= Skill_E_discardRegionMin.x && _in.vUV.x <= Skill_E_discardRegionMax.x &&
         _in.vUV.y >= Skill_E_discardRegionMin.y && _in.vUV.y <= Skill_E_discardRegionMax.y)
     {
-        discard; // ÇØ´ç ¿µ¿ªÀÇ ÇÈ¼¿Àº ·»´õ¸µÇÏÁö ¾ÊÀ½
+        discard; // í•´ë‹¹ ì˜ì—­ì˜ í”½ì…€ì€ ë Œë”ë§í•˜ì§€ ì•ŠìŒ
     }
 
     
-            // ÇöÀç UV ÁÂÇ¥°¡ ÇØ´ç ¿µ¿ª¿¡ ¼ÓÇÏ´ÂÁö È®ÀÎ
+            // í˜„ì¬ UV ì¢Œí‘œê°€ í•´ë‹¹ ì˜ì—­ì— ì†í•˜ëŠ”ì§€ í™•ì¸
     if (_in.vUV.x >= Skill_R_discardRegionMin.x && _in.vUV.x <= Skill_R_discardRegionMax.x &&
         _in.vUV.y >= Skill_R_discardRegionMin.y && _in.vUV.y <= Skill_R_discardRegionMax.y)
     {
-        discard; // ÇØ´ç ¿µ¿ªÀÇ ÇÈ¼¿Àº ·»´õ¸µÇÏÁö ¾ÊÀ½
+        discard; // í•´ë‹¹ ì˜ì—­ì˜ í”½ì…€ì€ ë Œë”ë§í•˜ì§€ ì•ŠìŒ
     }
 
     return vOutColor;
@@ -1015,8 +1014,8 @@ float4 PS_SkillLevelShader(VS_OUT _in) : SV_Target
 // DepthStencilState    : Less
 
 // g_tex_0              : Output Texture
-// g_int_0              : ¾ËÆÄ ¶óÆ¼¿À »ç¿ë¿©ºÎ
-// g_float_0            : ¾ËÆÄ ºñÀ²
+// g_int_0              : ì•ŒíŒŒ ë¼í‹°ì˜¤ ì‚¬ìš©ì—¬ë¶€
+// g_float_0            : ì•ŒíŒŒ ë¹„ìœ¨
 // ============================
 
 VS_OUT VS_AlphaDurationShader(VS_IN _in)
@@ -1024,7 +1023,7 @@ VS_OUT VS_AlphaDurationShader(VS_IN _in)
     VS_OUT output = (VS_OUT) 0.f;
 
     output.vPosition = mul(float4(_in.vLocalPos, 1.f), g_matWVP);
-    output.vUV = _in.vUV; // UV Á¶Á¤Àº »èÁ¦
+    output.vUV = _in.vUV; // UV ì¡°ì •ì€ ì‚­ì œ
 
     return output;
 }
@@ -1032,7 +1031,7 @@ VS_OUT VS_AlphaDurationShader(VS_IN _in)
 float4 PS_AlphaDurationShader(VS_OUT _in) : SV_Target
 {
     float4 vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
-    if (g_int_0 == 1) // ¾ËÆÄ ¶óÆ¼¿À »ç¿ëÇÒ°æ¿ì
+    if (g_int_0 == 1) // ì•ŒíŒŒ ë¼í‹°ì˜¤ ì‚¬ìš©í• ê²½ìš°
     {
         vOutColor.a *= g_float_0;
     }

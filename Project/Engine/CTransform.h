@@ -5,28 +5,28 @@ class CTransform :
     public CComponent
 {
 private:
-    Vec3    m_vRelativePos; //UI°°Àº ºÎ¸ğ, ÀÚ½Ä °´Ã¼°£ÀÇ »ó´ëÀûÀÎ ÁÂÇ¥
-    Vec3    m_vRelativeScale; //ºÎ¸ğÀÇ Å©±â¿¡´Ù ³» Å©±â°¡ »½Æ¢±âµÉ¼öÀÖ±â ¶§¹®
-    Vec3    m_vRelativeRot; //È¸Àü
+    Vec3    m_vRelativePos; //UIê°™ì€ ë¶€ëª¨, ìì‹ ê°ì²´ê°„ì˜ ìƒëŒ€ì ì¸ ì¢Œí‘œ
+    Vec3    m_vRelativeScale; //ë¶€ëª¨ì˜ í¬ê¸°ì—ë‹¤ ë‚´ í¬ê¸°ê°€ ë»¥íŠ€ê¸°ë ìˆ˜ìˆê¸° ë•Œë¬¸
+    Vec3    m_vRelativeRot; //íšŒì „
 
-    bool    m_bAbsolute;    // »ó´ë ÀÌµ¿, Å©±â¸¦ Àı´ë°ªÀ¸·Î ÁöÁ¤  
+    bool    m_bAbsolute;    // ìƒëŒ€ ì´ë™, í¬ê¸°ë¥¼ ì ˆëŒ€ê°’ìœ¼ë¡œ ì§€ì •  
 
-    Vec3    m_vRelativeDir[3]; //¹æÇâº¤ÅÍ
+    Vec3    m_vRelativeDir[3]; //ë°©í–¥ë²¡í„°
     Vec3    m_vWorldDir[3];
 
-    Matrix  m_matWorldRot;      // ¿ùµå È¸Àü Çà·Ä
-    Matrix  m_matWorldScale;    // ¿ùµå Å©±â Çà·Ä
-    Matrix  m_matWorldPos;      // ¿ùµå À§Ä¡(ÀÌµ¿) Çà·Ä
+    Matrix  m_matWorldRot;      // ì›”ë“œ íšŒì „ í–‰ë ¬
+    Matrix  m_matWorldScale;    // ì›”ë“œ í¬ê¸° í–‰ë ¬
+    Matrix  m_matWorldPos;      // ì›”ë“œ ìœ„ì¹˜(ì´ë™) í–‰ë ¬
 
-    Matrix  m_matWorld; // Å©±â, È¸Àü, ÀÌµ¿ Á¤º¸¸¦ ÇÕÃÄ³õÀ½
-    Matrix  m_matWorldInv; // ¿ùµå ¿ªÇà·Ä
+    Matrix  m_matWorld; // í¬ê¸°, íšŒì „, ì´ë™ ì •ë³´ë¥¼ í•©ì³ë†“ìŒ
+    Matrix  m_matWorldInv; // ì›”ë“œ ì—­í–‰ë ¬
 
-    float   m_fGizmoBounding_Radius; //±âÁî¸ğÇÑÅ× Å¬¸¯µÉ ¹Ù¿îµù ¹üÀ§(±¸Ã¼ ¹İÁö¸§°ª)
-    bool    m_bGizmoObjExcept; // ±âÁî¸ğÇÑÅ× ¼±ÅÃµÇÁö ¾Ê¾Æ¾ßÇÏ´Â ¿ÀºêÁ§Æ®ÀÏ °æ¿ì true
-    bool    m_bUseMouseOutLine; //¸¶¿ì½º ÇÇÅ· ¾Æ¿ô¶óÀÎ Ãâ·ÂÀ» »ç¿ëÇÏ·Á¸é true
+    float   m_fGizmoBounding_Radius; //ê¸°ì¦ˆëª¨í•œí…Œ í´ë¦­ë  ë°”ìš´ë”© ë²”ìœ„(êµ¬ì²´ ë°˜ì§€ë¦„ê°’)
+    bool    m_bGizmoObjExcept; // ê¸°ì¦ˆëª¨í•œí…Œ ì„ íƒë˜ì§€ ì•Šì•„ì•¼í•˜ëŠ” ì˜¤ë¸Œì íŠ¸ì¼ ê²½ìš° true
+    bool    m_bUseMouseOutLine; //ë§ˆìš°ìŠ¤ í”¼í‚¹ ì•„ì›ƒë¼ì¸ ì¶œë ¥ì„ ì‚¬ìš©í•˜ë ¤ë©´ true
 
 
-    bool    m_bIsShootingRay;  // ¿Íµå,Player´Â Ray¸¦ ½ğ´Ù.
+    bool    m_bIsShootingRay;  // ì™€ë“œ,PlayerëŠ” Rayë¥¼ ìœë‹¤.
     float   m_fRayRange;
     float   m_fOutlinethickness;
 
@@ -34,8 +34,8 @@ private:
     bool    m_bCustomBillBoard;
     Vec3    m_vCustomBillBoardAngle;
 
-    bool    m_bNoParentaffected; //¾Æ¿¹ ºÎ¸ğ¿ÀºêÁ§Æ®ÀÇ Æ÷Áî,½ºÄÉÀÏ,·ÎÅ×ÀÌ¼Ç ¿µÇâÀ» ¾È¹Ş°í ½ÍÀº°æ¿ì true 
-                                //=> ÀÚ½Ä¿ÀºêÁ§Æ® UIÄ«¸Ş¶ó°¡ Á÷±³, ºÎ¸ğ°¡ ¸ŞÀÎÄ«¸Ş¶ó ¿ø±Ù ÀÌ¶ó¼­ Á÷±³ÀÚ½ÄÀÌ ¿ø±ÙºÎ¸ğ ¿µÇâÀ» ¹Ş¾Æ ÀÌ»óÇÏ°Ô ÁÂÇ¥°ªÀÌ ³ª¿Í¼­ ¸¸µé¾ú¾î¿ä
+    bool    m_bNoParentaffected; //ì•„ì˜ˆ ë¶€ëª¨ì˜¤ë¸Œì íŠ¸ì˜ í¬ì¦ˆ,ìŠ¤ì¼€ì¼,ë¡œí…Œì´ì…˜ ì˜í–¥ì„ ì•ˆë°›ê³  ì‹¶ì€ê²½ìš° true 
+                                //=> ìì‹ì˜¤ë¸Œì íŠ¸ UIì¹´ë©”ë¼ê°€ ì§êµ, ë¶€ëª¨ê°€ ë©”ì¸ì¹´ë©”ë¼ ì›ê·¼ ì´ë¼ì„œ ì§êµìì‹ì´ ì›ê·¼ë¶€ëª¨ ì˜í–¥ì„ ë°›ì•„ ì´ìƒí•˜ê²Œ ì¢Œí‘œê°’ì´ ë‚˜ì™€ì„œ ë§Œë“¤ì—ˆì–´ìš”
 
 public:
     void SetRelativePos(Vec3 _vPos) { m_vRelativePos = _vPos; }
@@ -46,7 +46,7 @@ public:
     void SetRelativeScale(float _x, float _y, float _z) { m_vRelativeScale = Vec3(_x, _y, _z); }
     void SetRelativeRot(float _x, float _y, float _z) { m_vRelativeRot = Vec3(_x, _y, _z); }
 
-    // »ó´ë ÀÌµ¿, Å©±â¸¦ Àı´ë°ªÀ¸·Î ÁöÁ¤  
+    // ìƒëŒ€ ì´ë™, í¬ê¸°ë¥¼ ì ˆëŒ€ê°’ìœ¼ë¡œ ì§€ì •  
     void SetAbsolute(bool _Set) { m_bAbsolute = _Set; }
     const bool& GetAbsolute() { return m_bAbsolute; }
 
@@ -70,11 +70,11 @@ public:
 
     void SetGizmoBounding(float _Bounding) { m_fGizmoBounding_Radius = _Bounding; }
     float GetGizmoBounding() { return m_fGizmoBounding_Radius; }
-    //±âÁî¸ğÇÑÅ× Å¬¸¯µÉ ¹Ù¿îµù ¹üÀ§(±¸Ã¼ ¹İÁö¸§°ª)
+    //ê¸°ì¦ˆëª¨í•œí…Œ í´ë¦­ë  ë°”ìš´ë”© ë²”ìœ„(êµ¬ì²´ ë°˜ì§€ë¦„ê°’)
 
     void SetGizmoObjExcept(bool _IsNoGizmoObj) { m_bGizmoObjExcept = _IsNoGizmoObj; }
     bool GetGizmoObjExcept() { return m_bGizmoObjExcept; }
-    // ±âÁî¸ğÇÑÅ× ¼±ÅÃµÇÁö ¾Ê¾Æ¾ßÇÏ´Â ¿ÀºêÁ§Æ®ÀÏ °æ¿ì true
+    // ê¸°ì¦ˆëª¨í•œí…Œ ì„ íƒë˜ì§€ ì•Šì•„ì•¼í•˜ëŠ” ì˜¤ë¸Œì íŠ¸ì¼ ê²½ìš° true
 
 
     void SetIsShootingRay(bool _ray) { m_bIsShootingRay = _ray; }

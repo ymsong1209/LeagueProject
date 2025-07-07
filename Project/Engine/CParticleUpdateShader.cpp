@@ -31,7 +31,7 @@ void CParticleUpdateShader::UpdateData()
 	m_ModuleData->UpdateData_CS(20, true);
 	m_NoiseTex->UpdateData_CS(21, true);
 
-	// ±×·ì ¼ö
+	// ê·¸ë£¹ ìˆ˜
 	m_iGroupX = (m_ParticleBuffer->GetElementCount() / m_iGroupPerThreadX) + 1;
 }
 

@@ -5,7 +5,7 @@
 
 CMRT::CMRT()
 	: m_RT{}
-	, m_RTCount(0)	
+	, m_RTCount(0)
 	, m_tViewPort{}
 {
 }
@@ -23,7 +23,7 @@ void CMRT::Create(Ptr<CTexture>(&_RTArr)[8], Vec4(&_Clear)[8], Ptr<CTexture> _DS
 			m_RTCount = i;
 			break;
 		}
-		
+
 		m_RT[i] = _RTArr[i];
 	}
 
@@ -31,7 +31,7 @@ void CMRT::Create(Ptr<CTexture>(&_RTArr)[8], Vec4(&_Clear)[8], Ptr<CTexture> _DS
 
 	m_DSTex = _DSTex;
 
-	//// ViewPort ¼³Á¤	
+	//// ViewPort ì„¤ì •	
 	m_tViewPort.TopLeftX = 0;
 	m_tViewPort.TopLeftY = 0;
 
@@ -50,12 +50,12 @@ void CMRT::OMSet()
 		RTView[i] = m_RT[i]->GetRTV().Get();
 	}
 
-	if(nullptr != m_DSTex)
+	if (nullptr != m_DSTex)
 		CONTEXT->OMSetRenderTargets(m_RTCount, RTView, m_DSTex->GetDSV().Get());
 	else
 		CONTEXT->OMSetRenderTargets(m_RTCount, RTView, nullptr);
 
-	// ºäÆ÷Æ® ¼³Á¤
+	// ë·°í¬íŠ¸ ì„¤ì •
 	CONTEXT->RSSetViewports(1, &m_tViewPort);
 }
 
@@ -65,9 +65,9 @@ void CMRT::Clear()
 	{
 		CONTEXT->ClearRenderTargetView(m_RT[i]->GetRTV().Get(), m_Clear[i]);
 	}
-		
+
 	if (nullptr != m_DSTex)
 	{
 		CONTEXT->ClearDepthStencilView(m_DSTex->GetDSV().Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.f, 0);
-	}	
+	}
 }

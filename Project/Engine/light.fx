@@ -14,7 +14,7 @@
 
 // g_tex_0 : Position Target
 // g_tex_1 : Normal Target
-// g_tex_2 : FogMap // ÀüÀåÀÇ ¾È°³ 
+// g_tex_2 : FogMap // ì „ìž¥ì˜ ì•ˆê°œ 
 // g_tex_3 : Shadow DepthMap
 // ========================
 
@@ -44,12 +44,12 @@ VS_OUT VS_DirLightShader(VS_IN _in)
 
 struct PS_OUT
 {
-    float4 vDiffuse     : SV_Target0;
-    float4 vSpecular    : SV_Target1;
+    float4 vDiffuse : SV_Target0;
+    float4 vSpecular : SV_Target1;
 };
 
 PS_OUT PS_DirLightShader(VS_OUT _in)
-{ 
+{
     PS_OUT output = (PS_OUT) 0.f;
     
     // Position Target 
@@ -66,22 +66,22 @@ PS_OUT PS_DirLightShader(VS_OUT _in)
     CalcLight3D(vViewPos, vViewNormal, g_int_0, lightcolor);
         
     
-    // ±×¸²ÀÚ ÆÇÁ¤
+    // ê·¸ë¦¼ìž íŒì •
     // ViewPos -> WorldPos
     float3 vWorldPos = mul(float4(vViewPos.xyz, 1.f), g_matViewInv).xyz;
 
-    // WorldPos -> Light Åõ¿µ
+    // WorldPos -> Light íˆ¬ì˜
     float4 vLightProj = mul(float4(vWorldPos, 1.f), g_mat_0);
 
-    // w ·Î ³ª´²¼­ ½ÇÁ¦ xy Åõ¿µÁÂÇ¥¸¦ ±¸ÇÔ
+    // w ë¡œ ë‚˜ëˆ ì„œ ì‹¤ì œ xy íˆ¬ì˜ì¢Œí‘œë¥¼ êµ¬í•¨
     vLightProj.xyz /= vLightProj.w;
 
-    // »ùÇÃ¸µÀ» ÇÏ±â À§ÇØ¼­ Åõ¿µÁÂÇ¥°è¸¦ UV ÁÂÇ¥°è·Î º¯È¯
+    // ìƒ˜í”Œë§ì„ í•˜ê¸° ìœ„í•´ì„œ íˆ¬ì˜ì¢Œí‘œê³„ë¥¼ UV ì¢Œí‘œê³„ë¡œ ë³€í™˜
     float fShadowPow = 0.f;
     float2 vDepthMapUV = float2((vLightProj.x / 2.f) + 0.5f, -(vLightProj.y / 2.f) + 0.5f);
     float fDepth = g_tex_3.Sample(g_sam_0, vDepthMapUV).r;
 
-    // ±¤¿ø¿¡ ±â·ÏµÈ ±íÀÌº¸´Ù, ¹°Ã¼ÀÇ ±íÀÌ°¡ ´õ ¸Ö ¶§, ±×¸²ÀÚ ÆÇÁ¤
+    // ê´‘ì›ì— ê¸°ë¡ëœ ê¹Šì´ë³´ë‹¤, ë¬¼ì²´ì˜ ê¹Šì´ê°€ ë” ë©€ ë•Œ, ê·¸ë¦¼ìž íŒì •
     if (0.f != fDepth
         && 0.f <= vDepthMapUV.x && vDepthMapUV.x <= 1.f
         && 0.f <= vDepthMapUV.y && vDepthMapUV.y <= 1.f
@@ -131,18 +131,18 @@ PS_OUT PS_PointLightShader(VS_OUT _in)
       
     float2 vUV = _in.vPosition.xy / g_Resolution;
     
-    float3 vViewPos = g_tex_0.Sample(g_sam_0, vUV).xyz;    
+    float3 vViewPos = g_tex_0.Sample(g_sam_0, vUV).xyz;
     float3 vWorldPos = mul(float4(vViewPos, 1.f), g_matViewInv);
     float3 vLocalPos = mul(float4(vWorldPos, 1.f), g_matWorldInv);
     
     if (length(vLocalPos) <= 0.5f)
     {
-        // ³»ºÎ   
+        // ë‚´ë¶€   
         
         tLightColor lightcolor = (tLightColor) 0.f;
         float3 vViewNormal = g_tex_1.Sample(g_sam_0, vUV).xyz;
         
-        CalcLight3D(vViewPos, vViewNormal, g_int_0, lightcolor);        
+        CalcLight3D(vViewPos, vViewNormal, g_int_0, lightcolor);
         
         output.vDiffuse = lightcolor.vDiffuse + lightcolor.vAmbient;
         output.vSpecular = lightcolor.vSpecular;
@@ -186,7 +186,7 @@ PS_OUT PS_SpotLightShader(VS_OUT _in)
     
     if (length(vLocalPos) <= 0.5f)
     {
-        // ³»ºÎ   
+        // ë‚´ë¶€   
         
         tLightColor lightcolor = (tLightColor) 0.f;
         float3 vViewNormal = g_tex_1.Sample(g_sam_0, vUV).xyz;

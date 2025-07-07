@@ -15,7 +15,7 @@
 // g_float_9 : alpha
 
 
-// MeshRender°ü·Ã
+// MeshRenderê´€ë ¨
 
 #define IsOutputTextureExist        g_btex_0
 #define Additive_Color              g_vec4_0
@@ -111,11 +111,11 @@ VS_OUT VS_Std3D_Deferred_Inst(VTX_IN_INST _in)
 
 struct PS_OUT
 {
-    float4 vColor       : SV_Target0;
-    float4 vNormal      : SV_Target1;
-    float4 vPosition    : SV_Target2;
-    float4 vData        : SV_Target3;
-    float4 vEmissive    : SV_Target4;
+    float4 vColor : SV_Target0;
+    float4 vNormal : SV_Target1;
+    float4 vPosition : SV_Target2;
+    float4 vData : SV_Target3;
+    float4 vEmissive : SV_Target4;
 };
 
 PS_OUT PS_Std3D_Deferred(VS_OUT _in) : SV_Target
@@ -126,13 +126,13 @@ PS_OUT PS_Std3D_Deferred(VS_OUT _in) : SV_Target
     float3 vViewNormal = _in.vViewNormal;
 
     
-    // ÅØ½ºÃÄ°¡ ÀÖÀ¸¸é, ÇØ´ç »ö»óÀ» »ç¿ëÇÑ´Ù.
+    // í…ìŠ¤ì³ê°€ ìˆìœ¼ë©´, í•´ë‹¹ ìƒ‰ìƒì„ ì‚¬ìš©í•œë‹¤.
     if (g_btex_0)
     {
         vObjectColor = g_tex_0.Sample(g_sam_0, _in.vUV);
     }
        
-    // NomalMap ÀÌ ÀÖ´Ù¸é
+    // NomalMap ì´ ìˆë‹¤ë©´
     if (g_btex_1)
     {
         float3x3 matRot =
@@ -158,12 +158,12 @@ PS_OUT PS_Std3D_Deferred(VS_OUT _in) : SV_Target
     output.vNormal = float4(vViewNormal.xyz, 1.f);
     output.vPosition = float4(_in.vViewPos.xyz, 1.f);
     
-    // ¸ğµç deferred object´Â ÀÚ½ÅÀÇ layer¹øÈ£¸¦ datattexÀÇ xÀÚ¸®¿¡ Áı¾î³ÖÀ½
-    // decal.fx¿¡¼­ datatex¸¦ °¡Á®¿Í ¿øÇÏ´Â layer¿¡¸¸ Ãâ·Â½ÃÅ°°Ô ÇÑ´Ù.
+    // ëª¨ë“  deferred objectëŠ” ìì‹ ì˜ layerë²ˆí˜¸ë¥¼ datattexì˜ xìë¦¬ì— ì§‘ì–´ë„£ìŒ
+    // decal.fxì—ì„œ datatexë¥¼ ê°€ì ¸ì™€ ì›í•˜ëŠ” layerì—ë§Œ ì¶œë ¥ì‹œí‚¤ê²Œ í•œë‹¤.
     if (g_float_0)
     {
         //g_float_0 : 1~32
-        //layer´Â 0~31ÀÌÁö¸¸ ÇÑÄ­ ¿Å°å´Ù.
+        //layerëŠ” 0~31ì´ì§€ë§Œ í•œì¹¸ ì˜®ê²¼ë‹¤.
         float3 data = float3(0.03f * g_float_0, 0.f, 0.f);
         output.vData = float4(data, 1.f);
     }

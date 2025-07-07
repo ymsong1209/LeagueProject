@@ -27,7 +27,7 @@ private:
 	map<UINT_PTR, bool>		m_mapColID;
 
 public:
-	//¾î´À Layer°¡ ¼­·Î Ãæµ¹ÇÏ´ÂÁö Á¤ÇØÁÖ´Â ÇÔ¼ö
+	//ì–´ëŠ Layerê°€ ì„œë¡œ ì¶©ëŒí•˜ëŠ”ì§€ ì •í•´ì£¼ëŠ” í•¨ìˆ˜
 	void LayerCheck(UINT _left, UINT _right);
 	void LayerCheck(const wstring& _strLeftLayer, const wstring& _strRightLayer);
 
@@ -44,11 +44,11 @@ public:
 	void tick();
 
 private:
-	//Layer¾ÈÀÇ object¿¡ Ãæµ¹°Ë»ç¸¦ ÇØÁØ´Ù.
-	//Object°£¿¡ Ãæµ¹°Ë»ç¸¦ ÁøÇàÇØ BeginOverlap, OnOverLap, EndOverlap ÆÇº°
+	//Layerì•ˆì˜ objectì— ì¶©ëŒê²€ì‚¬ë¥¼ í•´ì¤€ë‹¤.
+	//Objectê°„ì— ì¶©ëŒê²€ì‚¬ë¥¼ ì§„í–‰í•´ BeginOverlap, OnOverLap, EndOverlap íŒë³„
 	void CollisionBtwLayer(CLayer* _LeftLayer, CLayer* _RightLayer);
 
-	//Collider³¢¸® Ãæµ¹Çß´ÂÁö È®ÀÎ
+	//Colliderë¼ë¦¬ ì¶©ëŒí–ˆëŠ”ì§€ í™•ì¸
 	void CollisionBtw2DObject(CGameObject* _LeftObject, CGameObject* _RightObject);
 	void CollisionBtw3DObject(CGameObject* _LeftObject, CGameObject* _RightObject);
 

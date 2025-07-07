@@ -75,13 +75,13 @@ CMesh* CMesh::CreateFromContainer(CFBXLoader& _loader)
 	pMesh->m_tVBDesc = tVtxDesc;
 	pMesh->m_pVtxSys = pSys;
 
-	// ÀÎµ¦½º Á¤º¸
+	// ì¸ë±ìŠ¤ ì •ë³´
 	UINT iIdxBufferCount = (UINT)container->vecIdx.size();
 	D3D11_BUFFER_DESC tIdxDesc = {};
 
 	for (UINT i = 0; i < iIdxBufferCount; ++i)
 	{
-		tIdxDesc.ByteWidth = (UINT)container->vecIdx[i].size() * sizeof(UINT); // Index Format ÀÌ R32_UINT ÀÌ±â ¶§¹®
+		tIdxDesc.ByteWidth = (UINT)container->vecIdx[i].size() * sizeof(UINT); // Index Format ì´ R32_UINT ì´ê¸° ë•Œë¬¸
 		tIdxDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
 		tIdxDesc.Usage = D3D11_USAGE_DEFAULT;
 		if (D3D11_USAGE_DYNAMIC == tIdxDesc.Usage)
@@ -166,10 +166,10 @@ CMesh* CMesh::CreateFromContainer(CFBXLoader& _loader)
 		pMesh->m_vecAnimClip.push_back(tClip);
 	}
 
-	// Animation ÀÌ ÀÖ´Â Mesh °æ¿ì structuredbuffer ¸¸µé¾îµÎ±â
+	// Animation ì´ ìˆëŠ” Mesh ê²½ìš° structuredbuffer ë§Œë“¤ì–´ë‘ê¸°
 	if (pMesh->IsAnimMesh())
 	{
-		// BoneOffet Çà·Ä
+		// BoneOffet í–‰ë ¬
 		vector<Matrix> vecOffset;
 		vector<tFrameTrans> vecFrameTrans;
 		vecFrameTrans.resize((UINT)pMesh->m_vecBones.size() * iFrameCount);
@@ -207,19 +207,19 @@ void CMesh::Create(void* _VtxSysMem, UINT _iVtxCount, void* _IdxSysMem, UINT _Id
 	tIndexInfo IndexInfo = {};
 	IndexInfo.iIdxCount = _IdxCount;
 
-	// Á¤Á¡ µ¥ÀÌÅÍ¸¦ ÀúÀåÇÒ ¹öÅØ½º ¹öÆÛ¸¦ »ı¼ºÇÑ´Ù.	
+	// ì •ì  ë°ì´í„°ë¥¼ ì €ì¥í•  ë²„í…ìŠ¤ ë²„í¼ë¥¼ ìƒì„±í•œë‹¤.	
 	m_tVBDesc.ByteWidth = sizeof(Vtx) * _iVtxCount;
 
-	// Á¤Á¡ ¹öÆÛ´Â Ã³À½ »ı¼ºÀÌÈÄ¿¡ ¹öÆÛ¸¦ ¼öÁ¤ÇÏÁö ¾Ê´Â´Ù.
+	// ì •ì  ë²„í¼ëŠ” ì²˜ìŒ ìƒì„±ì´í›„ì— ë²„í¼ë¥¼ ìˆ˜ì •í•˜ì§€ ì•ŠëŠ”ë‹¤.
 	m_tVBDesc.CPUAccessFlags = 0;
 	m_tVBDesc.Usage = D3D11_USAGE_DEFAULT;
 
-	// Á¤Á¡À» ÀúÀåÇÏ´Â ¸ñÀûÀÇ ¹öÆÛ ÀÓÀ» ¾Ë¸²
+	// ì •ì ì„ ì €ì¥í•˜ëŠ” ëª©ì ì˜ ë²„í¼ ì„ì„ ì•Œë¦¼
 	m_tVBDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_VERTEX_BUFFER;
 	m_tVBDesc.MiscFlags = 0;
 	m_tVBDesc.StructureByteStride = 0;
 
-	// ÃÊ±â µ¥ÀÌÅÍ¸¦ ³Ñ°ÜÁÖ±â À§ÇÑ Á¤º¸ ±¸Á¶Ã¼
+	// ì´ˆê¸° ë°ì´í„°ë¥¼ ë„˜ê²¨ì£¼ê¸° ìœ„í•œ ì •ë³´ êµ¬ì¡°ì²´
 	D3D11_SUBRESOURCE_DATA tSubDesc = {};
 	tSubDesc.pSysMem = _VtxSysMem;
 
@@ -230,16 +230,16 @@ void CMesh::Create(void* _VtxSysMem, UINT _iVtxCount, void* _IdxSysMem, UINT _Id
 
 	IndexInfo.tIBDesc.ByteWidth = sizeof(UINT) * _IdxCount;
 
-	// ¹öÆÛ »ı¼º ÀÌÈÄ¿¡µµ, ¹öÆÛÀÇ ³»¿ëÀ» ¼öÁ¤ ÇÒ ¼ö ÀÖ´Â ¿É¼Ç
+	// ë²„í¼ ìƒì„± ì´í›„ì—ë„, ë²„í¼ì˜ ë‚´ìš©ì„ ìˆ˜ì • í•  ìˆ˜ ìˆëŠ” ì˜µì…˜
 	IndexInfo.tIBDesc.CPUAccessFlags = 0;
 	IndexInfo.tIBDesc.Usage = D3D11_USAGE::D3D11_USAGE_DEFAULT;
 
-	// Á¤Á¡À» ÀúÀåÇÏ´Â ¸ñÀûÀÇ ¹öÆÛ ÀÓÀ» ¾Ë¸²
+	// ì •ì ì„ ì €ì¥í•˜ëŠ” ëª©ì ì˜ ë²„í¼ ì„ì„ ì•Œë¦¼
 	IndexInfo.tIBDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_INDEX_BUFFER;
 	IndexInfo.tIBDesc.MiscFlags = 0;
 	IndexInfo.tIBDesc.StructureByteStride = 0;
 
-	// ÃÊ±â µ¥ÀÌÅÍ¸¦ ³Ñ°ÜÁÖ±â À§ÇÑ Á¤º¸ ±¸Á¶Ã¼
+	// ì´ˆê¸° ë°ì´í„°ë¥¼ ë„˜ê²¨ì£¼ê¸° ìœ„í•œ ì •ë³´ êµ¬ì¡°ì²´
 	tSubDesc = {};
 	tSubDesc.pSysMem = _IdxSysMem;
 
@@ -248,7 +248,7 @@ void CMesh::Create(void* _VtxSysMem, UINT _iVtxCount, void* _IdxSysMem, UINT _Id
 		assert(nullptr);
 	}
 
-	// ½Ã½ºÅÛ ¸Ş¸ğ¸® ÇÒ´ç
+	// ì‹œìŠ¤í…œ ë©”ëª¨ë¦¬ í• ë‹¹
 	m_pVtxSys = new Vtx[_iVtxCount];
 	memcpy(m_pVtxSys, _VtxSysMem, sizeof(Vtx) * _iVtxCount);
 
@@ -261,28 +261,28 @@ void CMesh::Create(void* _VtxSysMem, UINT _iVtxCount, void* _IdxSysMem, UINT _Id
 
 int CMesh::Save(const wstring& _strRelativePath)
 {
-	// »ó´ë°æ·Î ÀúÀå
+	// ìƒëŒ€ê²½ë¡œ ì €ì¥
 	SetRelativePath(_strRelativePath);
 
-	// ÆÄÀÏ °æ·Î ¸¸µé±â
+	// íŒŒì¼ ê²½ë¡œ ë§Œë“¤ê¸°
 	wstring strFilePath = CPathMgr::GetInst()->GetContentPath() + _strRelativePath;
 
-	// ÆÄÀÏ ¾²±â¸ğµå·Î ¿­±â
+	// íŒŒì¼ ì“°ê¸°ëª¨ë“œë¡œ ì—´ê¸°
 	FILE* pFile = nullptr;
 	errno_t err = _wfopen_s(&pFile, strFilePath.c_str(), L"wb");
 	assert(pFile);
 
-	// Å°°ª, »ó´ë °æ·Î	
+	// í‚¤ê°’, ìƒëŒ€ ê²½ë¡œ	
 	SaveWString(GetName(), pFile);
 	SaveWString(GetKey(), pFile);
 	SaveWString(GetRelativePath(), pFile);
 
-	// Á¤Á¡ µ¥ÀÌÅÍ ÀúÀå				
+	// ì •ì  ë°ì´í„° ì €ì¥				
 	int iByteSize = m_tVBDesc.ByteWidth;
 	fwrite(&iByteSize, sizeof(int), 1, pFile);
 	fwrite(m_pVtxSys, iByteSize, 1, pFile);
 
-	// ÀÎµ¦½º Á¤º¸
+	// ì¸ë±ìŠ¤ ì •ë³´
 	UINT iMtrlCount = (UINT)m_vecIdxInfo.size();
 	fwrite(&iMtrlCount, sizeof(int), 1, pFile);
 
@@ -295,7 +295,7 @@ int CMesh::Save(const wstring& _strRelativePath)
 			, 1, pFile);
 	}
 
-	// Animation3D Á¤º¸ 
+	// Animation3D ì •ë³´ 
 	UINT iCount = (UINT)m_vecAnimClip.size();
 	fwrite(&iCount, sizeof(int), 1, pFile);
 	for (UINT i = 0; i < iCount; ++i)
@@ -340,11 +340,11 @@ int CMesh::Save(const wstring& _strRelativePath)
 int CMesh::Load(const wstring& _strFilePath)
 {
 
-	// ÀĞ±â¸ğµå·Î ÆÄÀÏ¿­±â
+	// ì½ê¸°ëª¨ë“œë¡œ íŒŒì¼ì—´ê¸°
 	FILE* pFile = nullptr;
 	_wfopen_s(&pFile, _strFilePath.c_str(), L"rb");
 
-	// Å°°ª, »ó´ë°æ·Î
+	// í‚¤ê°’, ìƒëŒ€ê²½ë¡œ
 	wstring strName, strKey, strRelativePath;
 	LoadWString(strName, pFile);
 	LoadWString(strKey, pFile);
@@ -354,7 +354,7 @@ int CMesh::Load(const wstring& _strFilePath)
 	SetKey(strKey);
 	SetRelativePath(strRelativePath);
 
-	// Á¤Á¡µ¥ÀÌÅÍ
+	// ì •ì ë°ì´í„°
 	UINT iByteSize = 0;
 	fread(&iByteSize, sizeof(int), 1, pFile);
 
@@ -375,7 +375,7 @@ int CMesh::Load(const wstring& _strFilePath)
 		assert(nullptr);
 	}
 
-	// ÀÎµ¦½º Á¤º¸
+	// ì¸ë±ìŠ¤ ì •ë³´
 	UINT iMtrlCount = 0;
 	fread(&iMtrlCount, sizeof(int), 1, pFile);
 
@@ -400,7 +400,7 @@ int CMesh::Load(const wstring& _strFilePath)
 		m_vecIdxInfo.push_back(info);
 	}
 
-	// Animation3D Á¤º¸ ÀĞ±â
+	// Animation3D ì •ë³´ ì½ê¸°
 	int iCount = 0;
 	fread(&iCount, sizeof(int), 1, pFile);
 	for (int i = 0; i < iCount; ++i)
@@ -443,12 +443,12 @@ int CMesh::Load(const wstring& _strFilePath)
 		}
 	}
 
-	// Animation ÀÌ ÀÖ´Â Mesh °æ¿ì Bone StructuredBuffer ¸¸µé±â
+	// Animation ì´ ìˆëŠ” Mesh ê²½ìš° Bone StructuredBuffer ë§Œë“¤ê¸°
 	if (m_vecAnimClip.size() > 0 && m_vecBones.size() > 0)
 	{
 		wstring strBone = GetName();
 
-		// BoneOffet Çà·Ä
+		// BoneOffet í–‰ë ¬
 		vector<Matrix> vecOffset;
 		vector<tFrameTrans> vecFrameTrans;
 		vecFrameTrans.resize((UINT)m_vecBones.size() * _iFrameCount);
@@ -513,7 +513,7 @@ void CMesh::render_particle(UINT _iParticleCount)
 {
 	UpdateData(0);
 
-	// ÀÎ½ºÅÏ½Ì
+	// ì¸ìŠ¤í„´ì‹±
 	CONTEXT->DrawIndexedInstanced(m_vecIdxInfo[0].iIdxCount, _iParticleCount, 0, 0, 0);
 }
 

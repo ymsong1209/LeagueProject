@@ -2,12 +2,12 @@
 
 
 
-// ¿ÀºêÁ§Æ® »ı¼º
+// ì˜¤ë¸Œì íŠ¸ ìƒì„±
 class CGameObject;
 void SpawnGameObject(CGameObject* _NewObject, Vec3 _vWorldPos, int _LayerIdx);
 void SpawnGameObject(CGameObject* _NewObject, Vec3 _vWorldPos, const wstring& _LayerName);
 
-// ¿ÀºêÁ§Æ® »èÁ¦
+// ì˜¤ë¸Œì íŠ¸ ì‚­ì œ
 void DestroyObject(CGameObject* _DeletObject);
 void ScriptInspectorReload();
 
@@ -39,8 +39,8 @@ const wchar_t* ToWSTring(RES_TYPE);
 const char* ToString(COMPONENT_TYPE);
 const wchar_t* ToWSTring(COMPONENT_TYPE);
 
- 
-// Relative Path °¡Á®¿À±â
+
+// Relative Path ê°€ì ¸ì˜¤ê¸°
 wstring GetRelativePath(const wstring& _strBase, const wstring& _strPath);
 
 // FbxMatrix -> Matrix
@@ -64,9 +64,9 @@ class CResMgr;
 template<typename T>
 void LoadResRef(Ptr<T>& _Res, FILE* _File)
 {
-	int i = 0;	
+	int i = 0;
 	fread(&i, sizeof(i), 1, _File);
-	
+
 	if (i)
 	{
 		wstring strKey, strRelativePath;
@@ -118,7 +118,7 @@ void Safe_Del_Array(T* (&arr)[Size])
 	{
 		if (nullptr != arr[i])
 			delete arr[i];
-	}	
+	}
 }
 
 template<typename T>
@@ -146,7 +146,7 @@ void Safe_Del_Map(map<T1, T2>& _map)
 	_map.clear();
 }
 
-//¹®ÀÚ¿­³»¿¡ |¹®ÀÚ¸¦ -·Î ¹Ù²Ù´Â ÇÔ¼ö
-//ÆÄÀÏÀúÀå½Ã¿¡ |¸¦ ÀúÀå ¸øÇÔ
+//ë¬¸ìì—´ë‚´ì— |ë¬¸ìë¥¼ -ë¡œ ë°”ê¾¸ëŠ” í•¨ìˆ˜
+//íŒŒì¼ì €ì¥ì‹œì— |ë¥¼ ì €ì¥ ëª»í•¨
 wstring ReplacePipeCharacter(const std::wstring& _mywstring);
 
