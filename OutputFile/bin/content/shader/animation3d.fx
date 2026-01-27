@@ -47,7 +47,7 @@ float4 VectorShiftLeft(in float4 _V1, in float4 _V2, uint _Elements)
 {
     float4 vOut = (float4) 0.f;
 
-    VectorPermute(_Elements, ((_Elements)+1), ((_Elements)+2), ((_Elements)+3), _V1, _V2, vOut);
+    VectorPermute(_Elements, ((_Elements) + 1), ((_Elements) + 2), ((_Elements) + 3), _V1, _V2, vOut);
 
     return vOut;
 }
@@ -225,7 +225,7 @@ void CS_Animation3D(int3 _iThreadIdx : SV_DispatchThreadID)
     if (BoneCount <= _iThreadIdx.x)
         return;
 
-    // ¿ÀÇÁ¼Â Çà·ÄÀ» °öÇÏ¿© ÃÖÁ¾ º»Çà·ÄÀ» ¸¸µé¾î³½´Ù.		
+    // ì˜¤í”„ì…‹ í–‰ë ¬ì„ ê³±í•˜ì—¬ ìµœì¢… ë³¸í–‰ë ¬ì„ ë§Œë“¤ì–´ë‚¸ë‹¤.		
     float4 vQZero = float4(0.f, 0.f, 0.f, 1.f);
     matrix matBone = (matrix) 0.f;
 
@@ -245,15 +245,15 @@ void CS_Animation3D(int3 _iThreadIdx : SV_DispatchThreadID)
         qRot = QuternionLerp(g_arrFrameTrans[iBlendFrameDataIdx].qRot, qRot, BlendRatio);
     }
 
-    // ÃÖÁ¾ º»Çà·Ä ¿¬»ê
+    // ìµœì¢… ë³¸í–‰ë ¬ ì—°ì‚°
     MatrixAffineTransformation(vScale, vQZero, qRot, vTrans, matBone);
 
-    // ÃÖÁ¾ º»Çà·Ä ¿¬»ê    
+    // ìµœì¢… ë³¸í–‰ë ¬ ì—°ì‚°    
     //MatrixAffineTransformation(g_arrFrameTrans[iFrameDataIndex].vScale, vQZero, g_arrFrameTrans[iFrameDataIndex].qRot, g_arrFrameTrans[iFrameDataIndex].vTranslate, matBone);
 
     matrix matOffset = transpose(g_arrOffset[_iThreadIdx.x]);
 
-    // ±¸Á¶È­¹öÆÛ¿¡ °á°ú°ª ÀúÀå
+    // êµ¬ì¡°í™”ë²„í¼ì— ê²°ê³¼ê°’ ì €ìž¥
     g_arrFinelMat[_iThreadIdx.x] = mul(matOffset, matBone);
 }
 

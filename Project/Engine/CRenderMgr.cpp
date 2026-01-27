@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include "CRenderMgr.h"
 
 #include "CDevice.h"
@@ -213,7 +213,6 @@ void CRenderMgr::CalcRayForFog()
     }
     else {
 
-        // ������ �Ȱ� ray/wall �浹 ����
         m_FogOfWarShader->SetSourceLightCount((int)RayBuffSize);
         m_FogOfWarShader->SetSourceLightPerRay(m_iRayCount);
         m_FogOfWarShader->SetColliderVecCount((int)WallSize);
@@ -237,89 +236,7 @@ void CRenderMgr::CalcRayForFog()
         m_FogFilterShader->Execute();
         m_FogFilterTime = 0.f;
     }
-  
 
-    // 전장의 안개 테스트용 코드 (왜인지 터짐 흠...)
-    /*
-    if (CKeyMgr::GetInst()->GetKeyState(KEY::Q) == KEY_STATE::TAP)
-    {
-        m_bIsQClicked = true;
-        UINT bufferSize = m_RWBuffer->GetBufferSize();
-        size_t size = sizeof(RWStruct);
-        RWStruct* data = new RWStruct[bufferSize / sizeof(RWStruct)];
-        m_RWBuffer->GetData((void*)data);
-
-        if (m_bIsQClicked == true)
-        {
-            CGameObject* TestObj;
-
-            for (int i = 0; i < m_iRayCount * m_vecRayObject.size(); ++i)
-            {
-                TestObj = new CGameObject;
-                TestObj->SetName(L"HI!");
-                TestObj->AddComponent(new CMeshRender);
-                TestObj->AddComponent(new CTransform);
-                TestObj->Transform()->SetRelativeScale(Vec3(10.f, 10.f, 10.f));
-                TestObj->MeshRender()->SetMesh(CResMgr::GetInst()->FindRes<CMesh>(L"CubeMesh"));
-                TestObj->MeshRender()->SetMaterial(CResMgr::GetInst()->FindRes<CMaterial>(L"Std3DMtrl"), 0);
-
-
-                SpawnGameObject(TestObj, data[i].m_vCrossPos, 0);
-
-
-            }
-
-            m_bIsQClicked = false;
-        }
-
-        delete[] data;
-    }
-    */
-      
-
-
-    // 전장의 안개 디버깅용 코드. 나중에 지워도 됨.
-
-    /*auto a = m_RWBuffer[0];
-
-    UINT bufferSize = m_RWBuffer->GetBufferSize();
-    size_t size = sizeof(RWStruct);
-    RWStruct* data = new RWStruct[bufferSize / sizeof(RWStruct)];
-    m_RWBuffer->GetData((void*)data);
-
-    if (data && bufferSize > 30) {
-        RWStruct test = data[0];
-        RWStruct test2 = data[1];
-        RWStruct test3 = data[2];
-        RWStruct test4 = data[3];
-        RWStruct test5 = data[4];
-        RWStruct test6 = data[5];
-        RWStruct test7 = data[6];
-        RWStruct test8 = data[7];
-        RWStruct test9 = data[8];
-        RWStruct test10 = data[9];
-        RWStruct test11 = data[10];
-        RWStruct test12 = data[11];
-        RWStruct test13 = data[12];
-        RWStruct test14 = data[13];
-        RWStruct test15 = data[14];
-        RWStruct test16 = data[15];
-        RWStruct test17 = data[16];
-        RWStruct test18 = data[17];
-        RWStruct test19 = data[18];
-        RWStruct test20 = data[19];
-
-        RWStruct test48 = data[47];
-        RWStruct test49 = data[48];
-        RWStruct test50 = data[49];
-        RWStruct test51 = data[50];
-        RWStruct test52 = data[51];
-
-       
-    }
-  
-
-    delete[] data;*/
 }
 
 int CRenderMgr::RegisterCamera(CCamera* _Cam, int _idx)

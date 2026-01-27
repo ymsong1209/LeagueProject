@@ -60,7 +60,8 @@ class Ptr;
 
 void SaveResRef(Ptr<CRes> _Res, FILE* _File);
 
-class CResMgr;
+//class CResMgr;
+#include "CResMgr.h"
 template<typename T>
 void LoadResRef(Ptr<T>& _Res, FILE* _File)
 {

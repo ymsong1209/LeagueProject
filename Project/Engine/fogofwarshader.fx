@@ -28,66 +28,6 @@ float3 RotateVec3Y(float3 _InitialDir, float _Angle)
 	return mul(_InitialDir, RotationMatrix);
 }
 
-// ¿ø·¡ °ÇÈñ´ÔÀÌ ½è´ø ÄÚµå. È¤½Ã ¸ğ¸£´Ï±ñ ³²°ÜµÒ
-//IntersectResult IntersectRay(float3* _Vertices, tRay _ray)
-//IntersectResult IntersectRay(float3 _Vertices0, float3 _Vertices1, float3 _Vertices2, tRay _ray)
-//{
-//    IntersectResult result;
-//    result.vCrossPoint = float3(0.f, 0.f, 0.f);
-//    result.bResult = false;
-//    result.fResult = 1000000.f;
-
-//    float3 edge[2] = { float3(0.f, 0.f, 0.f), float3(0.f, 0.f, 0.f) };
-//    edge[0] = _Vertices1.xyz - _Vertices0.xyz;
-//    edge[1] = _Vertices2.xyz - _Vertices0.xyz;
-    
-//    float3 normal = normalize(cross(edge[0], edge[1]));
-//    float b = dot(normal, _ray.vDir);
-
-//    float3 w0 = _ray.vStart - _Vertices0.xyz;
-//    float a = -dot(normal, w0);
-//    float t = a / b;
-
-//    result.fResult = t;
-
-//    float3 p = _ray.vStart + t * _ray.vDir;
-
-//    result.vCrossPoint = p;
-
-//    float uu, uv, vv, wu, wv, inverseD;
-//    uu = dot(edge[0], edge[0]);
-//    uv = dot(edge[0], edge[1]);
-//    vv = dot(edge[1], edge[1]);
-
-//    float3 w = p - _Vertices0;
-//    wu = dot(w, edge[0]);
-//    wv = dot(w, edge[1]);
-
-//    inverseD = uv * uv - uu * vv;
-//    inverseD = 1.0f / inverseD;
-
-//    float u = (uv * wv - vv * wu) * inverseD;
-//    if (u < 0.0f || u > 1.0f)
-//    {
-//        result.vCrossPoint = float3(0.f, 0.f, 0.f);
-//        result.fResult = 0.0f;
-//        result.bResult = false;
-//        return result;
-//    }
-
-//    float v = (uv * wu - uu * wv) * inverseD;
-//    if (v < 0.0f || v > 1.0f)
-//    {
-//        result.vCrossPoint = float3(0.f, 0.f, 0.f);
-//        result.fResult = 0.0f;
-//        result.bResult = false;
-//        return result;
-//    }
-
-//    result.bResult = true;
-//    return result;
-//}
-
 
 IntersectResult IntersectRay(float3 _Vertices0, float3 _Vertices1, float3 _Vertices2, tRay _ray)
 {
@@ -100,7 +40,7 @@ IntersectResult IntersectRay(float3 _Vertices0, float3 _Vertices1, float3 _Verti
     float3 pvec = cross(_ray.vDir, edge[1]);
     float det = dot(edge[0], pvec);
 
-    // ÀÌ °ªÀÌ ÀÛÀ¸¸é ray¿Í triangleÀÌ ÆòÇà
+    // ì´ ê°’ì´ ì‘ìœ¼ë©´ rayì™€ triangleì´ í‰í–‰
     if (abs(det) < 0.000001f)
     {
         return result;
@@ -126,7 +66,7 @@ IntersectResult IntersectRay(float3 _Vertices0, float3 _Vertices1, float3 _Verti
     float t = dot(edge[1], qvec) * invDet;
    
     
-    // ¼º°øÀûÀÎ ±³Â÷Á¡À» Ã£¾Ò´Ù¸é °á°ú¸¦ ÀúÀå
+    // ì„±ê³µì ì¸ êµì°¨ì ì„ ì°¾ì•˜ë‹¤ë©´ ê²°ê³¼ë¥¼ ì €ì¥
     result.vCrossPoint = _ray.vStart + _ray.vDir * t;
     result.fResult = t;
     result.bResult = true;
@@ -139,17 +79,17 @@ IntersectResult IntersectRay(float3 _Vertices0, float3 _Vertices1, float3 _Verti
 }
 
 
-// ¿©±â¼­ NÀº 0ºÎÅÍ ½ÃÀÛÇÑ´Ù. 0 <= _NthRay < _RayCountPerObj
+// ì—¬ê¸°ì„œ Nì€ 0ë¶€í„° ì‹œì‘í•œë‹¤. 0 <= _NthRay < _RayCountPerObj
 IntersectResult CalculateBtwRayCube(tRay Ray, row_major matrix WorldMat, float MaxRadius, inout int _check)
 {
     float3 arrLocal[6][3] =
     {
-        {float3(-0.5f, 0.5f, -0.5f),  float3(0.5f, 0.5f, -0.5f),  float3(-0.5f, 0.5f, 0.5f)},	 // À­¸é
-        {float3(-0.5f, -0.5f, -0.5f), float3(0.5f, -0.5f, -0.5f), float3(-0.5f, -0.5f, 0.5f)}, // ¹Ø¸é
-        {float3(-0.5f, -0.5f, -0.5f), float3(0.5f, -0.5f, -0.5f), float3(-0.5f, 0.5f, -0.5f)}, // ¾Õ¸é
-        {float3(-0.5f, -0.5f, 0.5f),  float3(0.5f, -0.5f, 0.5f),  float3(-0.5f, 0.5f, 0.5f)},  // µŞ¸é
-        {float3(-0.5f, 0.5f, -0.5f),  float3(-0.5f, -0.5f, -0.5f),float3(-0.5f, 0.5f, 0.5f)},  // ¿ŞÂÊ¸é
-        {float3(0.5f, 0.5f, -0.5f),   float3(0.5f, -0.5f, -0.5f), float3(0.5f, 0.5f, 0.5f)},   // ¿À¸¥ÂÊ¸é
+        {float3(-0.5f, 0.5f, -0.5f),  float3(0.5f, 0.5f, -0.5f),  float3(-0.5f, 0.5f, 0.5f)},	 // ìœ—ë©´
+        {float3(-0.5f, -0.5f, -0.5f), float3(0.5f, -0.5f, -0.5f), float3(-0.5f, -0.5f, 0.5f)}, // ë°‘ë©´
+        {float3(-0.5f, -0.5f, -0.5f), float3(0.5f, -0.5f, -0.5f), float3(-0.5f, 0.5f, -0.5f)}, // ì•ë©´
+        {float3(-0.5f, -0.5f, 0.5f),  float3(0.5f, -0.5f, 0.5f),  float3(-0.5f, 0.5f, 0.5f)},  // ë’·ë©´
+        {float3(-0.5f, 0.5f, -0.5f),  float3(-0.5f, -0.5f, -0.5f),float3(-0.5f, 0.5f, 0.5f)},  // ì™¼ìª½ë©´
+        {float3(0.5f, 0.5f, -0.5f),   float3(0.5f, -0.5f, -0.5f), float3(0.5f, 0.5f, 0.5f)},   // ì˜¤ë¥¸ìª½ë©´
     };
 
     for (int i = 0; i < 6; ++i)
@@ -182,14 +122,14 @@ IntersectResult CalculateBtwRayCube(tRay Ray, row_major matrix WorldMat, float M
 
         if (Temp.bResult == true )
         {
-        // Ã¹¹øÂ°·Î Ãæµ¹µÈ °æ¿ì
+        // ì²«ë²ˆì§¸ë¡œ ì¶©ëŒëœ ê²½ìš°
             if (Final1.bResult == false)
                 Final1 = Temp;
             else if (Final1.bResult == true && Final2.bResult == false)
             {
-            // Ray¿Í CubeÀÇ µÎ¸é¿¡¼­ ±³Á¡ÀÌ »ı±ä »óÈ²ÀÌ¸ç, ÀÌÁ¦ ¸Ö¸®ÀÖ´Â °ÍÀÌ Final1ÀÌ µÇµµ·Ï
-            // ¼ø¼­¸¦ ¹Ù²ã¾ß ÇÑ´Ù.
-            // ¿Ö³ÄÇÏ¸é, Final1¿¡ ÀÖ´Â Á¤º¸µéÀÌ Áß¿äÇÑµ¥, ½Ã¾ß ÆÇ´ÜÀÇ ±âÁØÀÌ µÇ±â ¶§¹®ÀÌ´Ù.
+            // Rayì™€ Cubeì˜ ë‘ë©´ì—ì„œ êµì ì´ ìƒê¸´ ìƒí™©ì´ë©°, ì´ì œ ë©€ë¦¬ìˆëŠ” ê²ƒì´ Final1ì´ ë˜ë„ë¡
+            // ìˆœì„œë¥¼ ë°”ê¿”ì•¼ í•œë‹¤.
+            // ì™œëƒí•˜ë©´, Final1ì— ìˆëŠ” ì •ë³´ë“¤ì´ ì¤‘ìš”í•œë°, ì‹œì•¼ íŒë‹¨ì˜ ê¸°ì¤€ì´ ë˜ê¸° ë•Œë¬¸ì´ë‹¤.
                 if (Final1.fResult < Temp.fResult)
                 {
                     IntersectResult SwapTemp;
@@ -212,13 +152,13 @@ IntersectResult CalculateBtwRayCube(tRay Ray, row_major matrix WorldMat, float M
                     Final2 = Temp;
                 }
             }
-            // Ray, Cube Ãæµ¹ÀÌ 3¹ø ÀÌ»ó ÀÏ¾î³². ÀÌ°Ç ÀÏ¾î³ª¸é ¾ÈµÊ
+            // Ray, Cube ì¶©ëŒì´ 3ë²ˆ ì´ìƒ ì¼ì–´ë‚¨. ì´ê±´ ì¼ì–´ë‚˜ë©´ ì•ˆë¨
             else if (Final1.bResult == true && Final2.bResult == true)
             {
                 _check += 1000;
             }
         }
-        //Ray, Cube°£ Ãæµ¹ÀÌ ÇÑ¹øµµ ¾ÈµÊ
+        //Ray, Cubeê°„ ì¶©ëŒì´ í•œë²ˆë„ ì•ˆë¨
         else
         {
             _check += 100;
@@ -227,26 +167,11 @@ IntersectResult CalculateBtwRayCube(tRay Ray, row_major matrix WorldMat, float M
 
     return Final1;
 
-    //// ¸¸¾à¿¡ ±³Á¡ÀÌ ÇÏ³ªµµ ¾ø¾ú´ø °æ¿ì,
-    //// °¡ÀåÀÚ¸®¿¡ ÀÖ´Â Á¡À¸·Î ±³Á¡ÀÇ ÁÂÇ¥¸¦ ¼¼ÆÃÇØÁØ´Ù.
-    //if (Final1.bResult = false)
-    //{
-    //    float3 InitialRayPos = Ray.vStart;
-
-    //    InitialRayPos.x = InitialRayPos.x + _SightRadius * Ray.vDir.x;
-    //    InitialRayPos.y = InitialRayPos.y + _SightRadius * Ray.vDir.y;
-    //    InitialRayPos.z = InitialRayPos.z + _SightRadius * Ray.vDir.z;
-
-    //    Final1.vCrossPoint.xyz = InitialRayPos.xyz;
-    //}
-
-    ////_OutputBuffer[_NthObj][_NthRay] = Final1.vCrossPoint;
-    //_OutputBuffer[_RayCountPerObj * _NthObj + _NthRay] = Final1.vCrossPoint;
     }
 
 
-StructuredBuffer<tRayLightInfo> RAYINFO : register(t16); // Ray¿¡ ´ëÇÑ Á¤º¸µé (CenterPos ÀÌ¿ëÇÒ °ÍÀÓ)
-StructuredBuffer<tColliderInfo> COLLIDERINFO : register(t17); // Collider¿¡ ´ëÇÑ Á¤º¸µé
+StructuredBuffer<tRayLightInfo> RAYINFO : register(t16); // Rayì— ëŒ€í•œ ì •ë³´ë“¤ (CenterPos ì´ìš©í•  ê²ƒì„)
+StructuredBuffer<tColliderInfo> COLLIDERINFO : register(t17); // Colliderì— ëŒ€í•œ ì •ë³´ë“¤
 RWStructuredBuffer<tRayOutput> RAYOUTPUT : register(u0); // Unordered Access
 
 #define SourceLightCount        g_int_0
@@ -257,8 +182,6 @@ RWStructuredBuffer<tRayOutput> RAYOUTPUT : register(u0); // Unordered Access
 [numthreads(16, 64, 1)]
 void  CS_FogOfWarShader(int3 _iThreadID : SV_DispatchThreadID)
 {
-    // ÀÌºÎºĞ¿¡ ´ëÇØ¼­ È®½ÅÀÌ ¾øÀ½... ÆÀ¿øµé¿¡°Ô ¹°¾îºÁ¾ß ÇÒµí 
-    // SourceLightCount, RayCountperObject º¯¼ö°¡ Á¤ÀÇµÇ¾î ÀÖ¾î¾ß ÇÔ. (#define ¹® ¾²¸é µÉµí »ó¼ö¹öÆÛ¿¡ ¹ÙÀÎµùÇØ¼­)
     if (SourceLightCount  <= _iThreadID.x || RayCountperObject <= _iThreadID.y)
         return;
 
@@ -266,7 +189,7 @@ void  CS_FogOfWarShader(int3 _iThreadID : SV_DispatchThreadID)
     tRay MainRay;
     tRay SupportRay;
 
-    // Ray ½ÃÀÛÁ¡ÀÇ ÁÂÇ¥´Â Ray¸¦ ½ò ObjectÀÇ ÁÂÇ¥¿¡¼­ y°ª¸¸ 10À¸·Î °íÁ¤
+    // Ray ì‹œì‘ì ì˜ ì¢Œí‘œëŠ” Rayë¥¼ ì  Objectì˜ ì¢Œí‘œì—ì„œ yê°’ë§Œ 10ìœ¼ë¡œ ê³ ì •
     MainRay.vStart.x = RAYINFO[(uint)_iThreadID.x].vRayLightCenterPos.x;
     MainRay.vStart.y = 10.f;
     MainRay.vStart.z = RAYINFO[(uint)_iThreadID.x].vRayLightCenterPos.z;
@@ -303,8 +226,8 @@ void  CS_FogOfWarShader(int3 _iThreadID : SV_DispatchThreadID)
     int check1 = 0;
     int check2 = 0;
 
-    // Int °ªÀÌ 1 ÀÏ°æ¿ì Box, Int °ªÀÌ 0 ÀÏ°æ¿ì Sphere
-    // #define À¸·Î ÀüÃ¼ ¸î°³ÀÇ Collider¸¦ °è»êÇØ¾ßÇÏ´ÂÁö »ó¼ö¹öÆÛ¿¡ ¹Ş¾Æ¿Í¾ßÇÔ
+    // Int ê°’ì´ 1 ì¼ê²½ìš° Box, Int ê°’ì´ 0 ì¼ê²½ìš° Sphere
+    // #define ìœ¼ë¡œ ì „ì²´ ëª‡ê°œì˜ Colliderë¥¼ ê³„ì‚°í•´ì•¼í•˜ëŠ”ì§€ ìƒìˆ˜ë²„í¼ì— ë°›ì•„ì™€ì•¼í•¨
     for (int i = 0; i < ColliderVecCount; ++i)
     {
         IntersectResult TempMainRayIntersect;
@@ -317,10 +240,10 @@ void  CS_FogOfWarShader(int3 _iThreadID : SV_DispatchThreadID)
         TempSupportRayIntersect.fResult = 0.f;
         TempSupportRayIntersect.bResult = false;
 
-        // BoxÀÎ °æ¿ì
+        // Boxì¸ ê²½ìš°
         if (COLLIDERINFO[i].iColliderType == 1)
         {
-            // ±¸Á¶È­ ¹öÆÛ ¾îµò°¡¿¡¼­ Radius¿¡ ´ëÇÑ Á¤º¸ ¹Ş¾Æ¿Í¾ß ÇÒ °Í °°À½
+            // êµ¬ì¡°í™” ë²„í¼ ì–´ë”˜ê°€ì—ì„œ Radiusì— ëŒ€í•œ ì •ë³´ ë°›ì•„ì™€ì•¼ í•  ê²ƒ ê°™ìŒ
             TempMainRayIntersect = CalculateBtwRayCube(MainRay, COLLIDERINFO[i].mColliderFinalMat, RAYINFO[_iThreadID.x].fRayRange,check1);
             TempSupportRayIntersect = CalculateBtwRayCube(SupportRay, COLLIDERINFO[i].mColliderFinalMat, RAYINFO[_iThreadID.x].fRayRange, check2);
         }
@@ -331,7 +254,7 @@ void  CS_FogOfWarShader(int3 _iThreadID : SV_DispatchThreadID)
         }
 
 
-        // ±âÁ¸¿¡ ÀÖ´ø °Í°ú ºñ±³¸¦ ÇØ¾ßÇÔ ±×·¡¼­ ´õ °¡±îÀÌ ÀÖ´Â CoilliderÀÇ Á¤º¸·Î °»½ÅÀ» ÇÒ °ÍÀÓ
+        // ê¸°ì¡´ì— ìˆë˜ ê²ƒê³¼ ë¹„êµë¥¼ í•´ì•¼í•¨ ê·¸ë˜ì„œ ë” ê°€ê¹Œì´ ìˆëŠ” Coilliderì˜ ì •ë³´ë¡œ ê°±ì‹ ì„ í•  ê²ƒì„
         if (FinalMainRayIntersect.bResult == false && TempMainRayIntersect.bResult == true)
         {
             FinalMainRayIntersect = TempMainRayIntersect;
@@ -357,16 +280,16 @@ void  CS_FogOfWarShader(int3 _iThreadID : SV_DispatchThreadID)
         }
     }
 
-    // º¸°£Á¡À» Ã£À»·Á°í ÀÛ¼ºÇÏ´Â ÄÚµå
+    // ë³´ê°„ì ì„ ì°¾ì„ë ¤ê³  ì‘ì„±í•˜ëŠ” ì½”ë“œ
     IntersectResult InterpolateIntersect;
    
 
-    // ±³Á¡ÀÌ ¾ø¾ú´Ù´Â ¶æÀÓ. ÀÌ·¸°ÔµÇ¸é ¹İÁö¸§ÀÇ °æ°è¿Í Ray°¡ ¸¸³ª´Â ÁöÁ¡À¸·Î ±³Á¡ÀÇ ÁÂÇ¥¸¦ Àâ¾Æ ÁÙ °ÍÀÌ´Ù.
+    // êµì ì´ ì—†ì—ˆë‹¤ëŠ” ëœ»ì„. ì´ë ‡ê²Œë˜ë©´ ë°˜ì§€ë¦„ì˜ ê²½ê³„ì™€ Rayê°€ ë§Œë‚˜ëŠ” ì§€ì ìœ¼ë¡œ êµì ì˜ ì¢Œí‘œë¥¼ ì¡ì•„ ì¤„ ê²ƒì´ë‹¤.
     if (FinalMainRayIntersect.bResult == false)
     {
         float3 InitialRayPos = MainRay.vStart;
 
-        // Sight Radius´Â Ray¸¦ ½î´Â ±¤¿øÀÇ ¹İÁö¸§ °ªÀÓ
+        // Sight RadiusëŠ” Rayë¥¼ ì˜ëŠ” ê´‘ì›ì˜ ë°˜ì§€ë¦„ ê°’ì„
         InitialRayPos.x = InitialRayPos.x + RAYINFO[_iThreadID.x].fRayRange * MainRay.vDir.x;
         InitialRayPos.y = 10.f;
         InitialRayPos.z = InitialRayPos.z + RAYINFO[_iThreadID.x].fRayRange * MainRay.vDir.z;
@@ -380,7 +303,7 @@ void  CS_FogOfWarShader(int3 _iThreadID : SV_DispatchThreadID)
     {
         float3 InitialRayPos = SupportRay.vStart;
 
-        // Sight Radius´Â Ray¸¦ ½î´Â ±¤¿øÀÇ ¹İÁö¸§ °ªÀÓ
+        // Sight RadiusëŠ” Rayë¥¼ ì˜ëŠ” ê´‘ì›ì˜ ë°˜ì§€ë¦„ ê°’ì„
         InitialRayPos.x = InitialRayPos.x + RAYINFO[_iThreadID.x].fRayRange * SupportRay.vDir.x;
         InitialRayPos.y = 10.f;
         InitialRayPos.z = InitialRayPos.z + RAYINFO[_iThreadID.x].fRayRange * SupportRay.vDir.z;
@@ -401,10 +324,9 @@ void  CS_FogOfWarShader(int3 _iThreadID : SV_DispatchThreadID)
 
     InterpolateIntersect.vCrossPoint.xyz = CrossPointFinalPos.xyz;
 
-    // Read Write±¸Á¶Ã¼¿¡ ´ã¾Æ¼­ °ªÀ» ¹İÈ¯ÇØÁà¾ßÇÔ.
+    // Read Writeêµ¬ì¡°ì²´ì— ë‹´ì•„ì„œ ê°’ì„ ë°˜í™˜í•´ì¤˜ì•¼í•¨.
     tRayOutput OutputResult;
     OutputResult.IntersectPos.xyz = FinalMainRayIntersect.vCrossPoint.xyz;
-    //InterpolateIntersect.vCrossPoint.xyz;
     OutputResult.Radius = InterpolateIntersect.fResult;
     OutputResult.CenterPos = MainRay.vStart;
     OutputResult.NthRay = _iThreadID.y;

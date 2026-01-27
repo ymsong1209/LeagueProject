@@ -4,7 +4,7 @@
 #include "value.fx"
 
 void CalcLight2D(float3 _vWorldPos, inout tLightColor _Light)
-{       
+{
     for (int i = 0; i < g_Light2DCount; ++i)
     {
         // Directional light
@@ -27,23 +27,23 @@ void CalcLight2D(float3 _vWorldPos, inout tLightColor _Light)
         // Spot Light
         else if (g_Light2DBuffer[i].LightType == 2)
         {
-             //±¤¿øÀÇ xÃàÀ¸·Î Å¸¿øÇü ºûÀ» ¹ß»çÇÑ´Ù.
+             //ê´‘ì›ì˜ xì¶•ìœ¼ë¡œ íƒ€ì›í˜• ë¹›ì„ ë°œì‚¬í•œë‹¤.
             float3 vLightDir = float3(g_Light2DBuffer[i].vWorldDir.xy, 0.f);
-            //±¤¿øÀÇ Áß½ÉÀÇ WorldPosition
+            //ê´‘ì›ì˜ ì¤‘ì‹¬ì˜ WorldPosition
             float3 vLightWorldPos = float3(g_Light2DBuffer[i].vWorldPos.xy, 0.f);
-            //±¤¿øÀÇ ºûÀ» ¹Þ´Â ¹°Ã¼ÀÇ Position
+            //ê´‘ì›ì˜ ë¹›ì„ ë°›ëŠ” ë¬¼ì²´ì˜ Position
             float3 vWorldPos = float3(_vWorldPos.xy, 0.f);
             
-           // ±¤¿ø Áß½É¿¡¼­ ¹°Ã¼¸¦ ÇâÇÏ´Â ¹æÇâ
+           // ê´‘ì› ì¤‘ì‹¬ì—ì„œ ë¬¼ì²´ë¥¼ í–¥í•˜ëŠ” ë°©í–¥
             float3 vLight = normalize(vWorldPos - vLightWorldPos);
             
             
             if (acos(dot(vLight, vLightDir)) < g_Light2DBuffer[i].Angle / 2.f)
             {
                 float fDistance = abs(distance(vWorldPos, vLightWorldPos));
-                //±¤¿ø¿¡¼­ ¸Ö¸® ÀÖ´Â ¹°Ã¼´Â Èå·ÁÁö°Ô ÇÔ
+                //ê´‘ì›ì—ì„œ ë©€ë¦¬ ìžˆëŠ” ë¬¼ì²´ëŠ” íë ¤ì§€ê²Œ í•¨
                 float fPow = saturate(1.f - (fDistance / g_Light2DBuffer[i].Radius));
-                //¾ç¿·À¸·Î °¥¼ö·Ï Èå·ÁÁö°Ô ÇÔ
+                //ì–‘ì˜†ìœ¼ë¡œ ê°ˆìˆ˜ë¡ íë ¤ì§€ê²Œ í•¨
                 float fAnglePow = saturate(1.f - acos(dot(vLight, vLightDir)) / (g_Light2DBuffer[i].Angle / 2.f));
         
                 _Light.vDiffuse.rgb += g_Light2DBuffer[i].Color.vDiffuse.rgb * fPow * fAnglePow;
@@ -63,7 +63,7 @@ void CalcLight2D(float3 _vWorldPos, float3 _vWorldDir, inout tLightColor _Light)
         if (g_Light2DBuffer[i].LightType == 0)
         {
             float fDiffusePow = saturate(dot(-g_Light2DBuffer[i].vWorldDir.xyz, _vWorldDir));
-            _Light.vDiffuse.rgb += g_Light2DBuffer[i].Color.vDiffuse.rgb * fDiffusePow;                        
+            _Light.vDiffuse.rgb += g_Light2DBuffer[i].Color.vDiffuse.rgb * fDiffusePow;
             _Light.vAmbient.rgb += g_Light2DBuffer[i].Color.vAmbient.rgb;
         }
         else if (g_Light2DBuffer[i].LightType == 1)
@@ -71,7 +71,7 @@ void CalcLight2D(float3 _vWorldPos, float3 _vWorldDir, inout tLightColor _Light)
             float3 vLightWorldPos = float3(g_Light2DBuffer[i].vWorldPos.xy, 0.f);
             float3 vWorldPos = float3(_vWorldPos.xy, 0.f);
 
-            // ±¤¿ø Áß½É¿¡¼­ ¹°Ã¼¸¦ ÇâÇÏ´Â ¹æÇâ
+            // ê´‘ì› ì¤‘ì‹¬ì—ì„œ ë¬¼ì²´ë¥¼ í–¥í•˜ëŠ” ë°©í–¥
             float3 vLight = normalize(vWorldPos - vLightWorldPos);
             float fDiffusePow = saturate(dot(-vLight, _vWorldDir));
             
@@ -83,23 +83,23 @@ void CalcLight2D(float3 _vWorldPos, float3 _vWorldDir, inout tLightColor _Light)
         else if (g_Light2DBuffer[i].LightType == 2)
         {
             
-            //±¤¿øÀÇ xÃàÀ¸·Î Å¸¿øÇü ºûÀ» ¹ß»çÇÑ´Ù.
+            //ê´‘ì›ì˜ xì¶•ìœ¼ë¡œ íƒ€ì›í˜• ë¹›ì„ ë°œì‚¬í•œë‹¤.
             float3 vLightDir = float3(g_Light2DBuffer[i].vWorldDir.xy, 0.f);
-            //±¤¿øÀÇ Áß½ÉÀÇ WorldPosition
+            //ê´‘ì›ì˜ ì¤‘ì‹¬ì˜ WorldPosition
             float3 vLightWorldPos = float3(g_Light2DBuffer[i].vWorldPos.xy, 0.f);
-            //±¤¿øÀÇ ºûÀ» ¹Þ´Â ¹°Ã¼ÀÇ Position
+            //ê´‘ì›ì˜ ë¹›ì„ ë°›ëŠ” ë¬¼ì²´ì˜ Position
             float3 vWorldPos = float3(_vWorldPos.xy, 0.f);
             
-           // ±¤¿ø Áß½É¿¡¼­ ¹°Ã¼¸¦ ÇâÇÏ´Â ¹æÇâ
+           // ê´‘ì› ì¤‘ì‹¬ì—ì„œ ë¬¼ì²´ë¥¼ í–¥í•˜ëŠ” ë°©í–¥
             float3 vLight = normalize(vWorldPos - vLightWorldPos);
             float fDiffusePow = saturate(dot(-vLight, _vWorldDir));
             
             if (acos(dot(vLight, vLightDir)) < g_Light2DBuffer[i].Angle / 2.f)
             {
                 float fDistance = abs(distance(vWorldPos, vLightWorldPos));
-                //±¤¿ø¿¡¼­ ¸Ö¸® ÀÖ´Â ¹°Ã¼´Â Èå·ÁÁö°Ô ÇÔ
+                //ê´‘ì›ì—ì„œ ë©€ë¦¬ ìžˆëŠ” ë¬¼ì²´ëŠ” íë ¤ì§€ê²Œ í•¨
                 float fDistPow = saturate(1.f - (fDistance / g_Light2DBuffer[i].Radius));
-                //¾ç¿·À¸·Î °¥¼ö·Ï Èå·ÁÁö°Ô ÇÔ
+                //ì–‘ì˜†ìœ¼ë¡œ ê°ˆìˆ˜ë¡ íë ¤ì§€ê²Œ í•¨
                 float fAnglePow = saturate(1.f - acos(dot(vLight, vLightDir)) / (g_Light2DBuffer[i].Angle / 2.f));
         
                 _Light.vDiffuse.rgb += g_Light2DBuffer[i].Color.vDiffuse.rgb * fDiffusePow * fDistPow * fAnglePow;
@@ -125,39 +125,39 @@ void CalcLight3D(float3 _vViewPos, float3 _vViewNormal, uint _LightIdx, inout tL
     // Directional Light
     if (0 == lightinfo.LightType)
     {
-        // Light ÀÇ ViewSpace ¿¡¼­ÀÇ ¹æÇâ
-        vLightDir = mul(float4(lightinfo.vWorldDir.xyz, 0.f), g_matView);     
+        // Light ì˜ ViewSpace ì—ì„œì˜ ë°©í–¥
+        vLightDir = mul(float4(lightinfo.vWorldDir.xyz, 0.f), g_matView);
     }
     
     // PointLight
     else if (1 == lightinfo.LightType)
     {
-        // Light ÀÇ ViewSpace ¿¡¼­ÀÇ ¹æÇâ
+        // Light ì˜ ViewSpace ì—ì„œì˜ ë°©í–¥
         float4 vLightViewPos = mul(float4(lightinfo.vWorldPos.xyz, 1.f), g_matView);
        
-        // Ç¥¸éÀ§Ä¡ - ±¤¿ø À§Ä¡
-        vLightDir = normalize(_vViewPos - vLightViewPos.xyz);          
+        // í‘œë©´ìœ„ì¹˜ - ê´‘ì› ìœ„ì¹˜
+        vLightDir = normalize(_vViewPos - vLightViewPos.xyz);
         
-        // °Å¸®¿¡ µû¸¥ ¼¼±â º¯È­
-        float fDist = distance(_vViewPos, vLightViewPos.xyz);        
-        fDistPow = 1.f - saturate(fDist / lightinfo.Radius);        
+        // ê±°ë¦¬ì— ë”°ë¥¸ ì„¸ê¸° ë³€í™”
+        float fDist = distance(_vViewPos, vLightViewPos.xyz);
+        fDistPow = 1.f - saturate(fDist / lightinfo.Radius);
     }
     
     // SpotLight
     else
     {
-        // Light ÀÇ ViewSpace ¿¡¼­ÀÇ ¹æÇâ
+        // Light ì˜ ViewSpace ì—ì„œì˜ ë°©í–¥
         float4 vLightViewPos = mul(float4(lightinfo.vWorldPos.xyz, 1.f), g_matView);
         
         float4 vLightViewDir = normalize(mul(float4(lightinfo.vWorldDir.xyz, 0.f), g_matView));
         
-        // ±¤¿ø->¹°Ã¼Ç¥¸é
+        // ê´‘ì›->ë¬¼ì²´í‘œë©´
         vLightDir = normalize(_vViewPos - vLightViewPos.xyz);
         
         
         if (acos(saturate(dot(vLightDir, vLightViewDir.xyz))) <= lightinfo.InnerAngle / 2.f)
         {
-                // °Å¸®¿¡ µû¸¥ ¼¼±â º¯È­
+                // ê±°ë¦¬ì— ë”°ë¥¸ ì„¸ê¸° ë³€í™”
             float fDist = distance(_vViewPos, vLightViewPos.xyz);
             fDistPow = 1.f - saturate(fDist / lightinfo.Radius);
                 
@@ -165,7 +165,7 @@ void CalcLight3D(float3 _vViewPos, float3 _vViewNormal, uint _LightIdx, inout tL
         }
         else if (acos(saturate(dot(vLightDir, vLightViewDir.xyz))) <= lightinfo.Angle / 2.f)
         {
-                // °Å¸®¿¡ µû¸¥ ¼¼±â º¯È­
+                // ê±°ë¦¬ì— ë”°ë¥¸ ì„¸ê¸° ë³€í™”
             float fDist = distance(_vViewPos, vLightViewPos.xyz);
             fDistPow = 1.f - saturate(fDist / lightinfo.Radius);
                 
@@ -176,23 +176,23 @@ void CalcLight3D(float3 _vViewPos, float3 _vViewNormal, uint _LightIdx, inout tL
         {
             fDistPow = 0.f;
         }
-    }             
+    }
     
     // Diffuse Power
     float fPow = saturate(dot(-vLightDir, _vViewNormal));
     
-    // Specular °è»ê
+    // Specular ê³„ì‚°
     float3 vViewReflect = normalize(vLightDir + 2.f * (dot(-vLightDir, _vViewNormal)) * _vViewNormal);
     
-    // Ä«¸Þ¶ó¿¡¼­ ÇÈ¼¿ ÁöÁ¡À» ¹Ù¶óº¸´Â ½Ã¼± º¤ÅÍ
+    // ì¹´ë©”ë¼ì—ì„œ í”½ì…€ ì§€ì ì„ ë°”ë¼ë³´ëŠ” ì‹œì„  ë²¡í„°
     float3 vEye = -normalize(_vViewPos);
     
-    // ¹Ý»ç±¤ ¼¼±â          
-    float fRelfectPow = pow(saturate(dot(vViewReflect, vEye)), 10);
+    // ë°˜ì‚¬ê´‘ ì„¸ê¸°          
+    float fReflectPow = pow(saturate(dot(vViewReflect, vEye)), 10);
     
-    // °á°ú°ª ÀúÀå
+    // ê²°ê³¼ê°’ ì €ìž¥
     _LightColor.vDiffuse += lightinfo.Color.vDiffuse * fPow * fDistPow;
-    _LightColor.vSpecular += lightinfo.Color.vSpecular * fRelfectPow * fDistPow;
+    _LightColor.vSpecular += lightinfo.Color.vSpecular * fReflectPow * fDistPow;
     _LightColor.vAmbient += lightinfo.Color.vAmbient;
 }
 
@@ -204,45 +204,45 @@ void CalcLight3D(float3 _vViewPos, float3 _vViewNormal, uint _LightIdx, inout tL
 // ======
 static float GaussianFilter[5][5] =
 {
-    0.003f,  0.0133f, 0.0219f, 0.0133f, 0.003f,
+    0.003f, 0.0133f, 0.0219f, 0.0133f, 0.003f,
     0.0133f, 0.0596f, 0.0983f, 0.0596f, 0.0133f,
     0.0219f, 0.0983f, 0.1621f, 0.0983f, 0.0219f,
     0.0133f, 0.0596f, 0.0983f, 0.0596f, 0.0133f,
-    0.003f,  0.0133f, 0.0219f, 0.0133f, 0.003f,
+    0.003f, 0.0133f, 0.0219f, 0.0133f, 0.003f,
 };
 
 void GaussianSample(in Texture2D _NoiseTex, float2 _vResolution, float _NomalizedThreadID, out float3 _vOut)
 {
-    float2 vUV = float2(_NomalizedThreadID, 0.5f);       
+    float2 vUV = float2(_NomalizedThreadID, 0.5f);
     
     vUV.x += g_AccTime * 0.5f;
     
-    // sin ±×·¡ÇÁ·Î ÅØ½ºÃÄÀÇ »ùÇÃ¸µ À§Ä¡ UV ¸¦ °è»ê
-    vUV.y -= (sin((_NomalizedThreadID - (g_AccTime/*±×·¡ÇÁ ¿ìÃø ÀÌµ¿ ¼Óµµ*/)) * 2.f * 3.1415926535f * 10.f/*¹Ýº¹ÁÖ±â*/) / 2.f);
+    // sin ê·¸ëž˜í”„ë¡œ í…ìŠ¤ì³ì˜ ìƒ˜í”Œë§ ìœ„ì¹˜ UV ë¥¼ ê³„ì‚°
+    vUV.y -= (sin((_NomalizedThreadID - (g_AccTime /*ê·¸ëž˜í”„ ìš°ì¸¡ ì´ë™ ì†ë„*/)) * 2.f * 3.1415926535f * 10.f /*ë°˜ë³µì£¼ê¸°*/) / 2.f);
     
-    if( 1.f < vUV.x)
+    if (1.f < vUV.x)
         vUV.x = frac(vUV.x);
-    else if(vUV.x < 0.f)
+    else if (vUV.x < 0.f)
         vUV.x = 1.f + frac(vUV.x);
     
-    if( 1.f < vUV.y)
+    if (1.f < vUV.y)
         vUV.y = frac(vUV.y);
     else if (vUV.y < 0.f)
         vUV.y = 1.f + frac(vUV.y);
         
-    int2 pixel = vUV * _vResolution;           
+    int2 pixel = vUV * _vResolution;
     int2 offset = int2(-2, -2);
-    float3 vOut = (float3) 0.f;    
+    float3 vOut = (float3) 0.f;
     
     for (int i = 0; i < 5; ++i)
     {
         for (int j = 0; j < 5; ++j)
-        {            
+        {
             vOut += _NoiseTex[pixel + offset + int2(j, i)] * GaussianFilter[i][j];
         }
-    }        
+    }
     
-    _vOut = vOut;    
+    _vOut = vOut;
 }
 
 
@@ -322,7 +322,7 @@ void Skinning(inout float3 _vPos, inout float3 _vTangent, inout float3 _vBinorma
     , inout float4 _vWeight, inout float4 _vIndices
     , int _iRowIdx)
 {
-    tSkinningInfo info = (tSkinningInfo)0.f;
+    tSkinningInfo info = (tSkinningInfo) 0.f;
 
     if (_iRowIdx == -1)
         return;
@@ -332,7 +332,7 @@ void Skinning(inout float3 _vPos, inout float3 _vTangent, inout float3 _vBinorma
         if (0.f == _vWeight[i])
             continue;
 
-        matrix matBone = GetBoneMat((int)_vIndices[i], _iRowIdx);
+        matrix matBone = GetBoneMat((int) _vIndices[i], _iRowIdx);
 
         info.vPos += (mul(float4(_vPos, 1.f), matBone) * _vWeight[i]).xyz;
         info.vTangent += (mul(float4(_vTangent, 0.f), matBone) * _vWeight[i]).xyz;

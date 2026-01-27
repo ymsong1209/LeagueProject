@@ -13,13 +13,13 @@
 // g_int_0 : Particle Index
 // =========================
 
-StructuredBuffer<tParticle>         ParticleBuffer : register(t20);
-StructuredBuffer<tParticleModule>   ParticleModuleData : register(t21);
+StructuredBuffer<tParticle> ParticleBuffer : register(t20);
+StructuredBuffer<tParticleModule> ParticleModuleData : register(t21);
 #define ModuleData                  ParticleModuleData[0]
 
 struct VS_IN
 {
-    float3 vPos : POSITION;    
+    float3 vPos : POSITION;
     uint iInstID : SV_InstanceID;
 };
 
@@ -31,7 +31,7 @@ struct VS_OUT
 
 VS_OUT VS_ParticleRender(VS_IN _in)
 {
-    VS_OUT output = (VS_OUT) 0.f;      
+    VS_OUT output = (VS_OUT) 0.f;
      
     output.vPos = _in.vPos;
     output.iInstID = _in.iInstID;
@@ -39,19 +39,19 @@ VS_OUT VS_ParticleRender(VS_IN _in)
     return output;
 }
 
-// GeometryShader »ç¿ë
-// 1. ÆÄÀÌÇÁ¶óÀÎ Á¦¾î
-// 2. ºôº¸µå Ã³¸® (Ä«¸Ş¶ó¸¦ ¹Ù¶óº¸´Â..)
+// GeometryShader ì‚¬ìš©
+// 1. íŒŒì´í”„ë¼ì¸ ì œì–´
+// 2. ë¹Œë³´ë“œ ì²˜ë¦¬ (ì¹´ë©”ë¼ë¥¼ ë°”ë¼ë³´ëŠ”..)
 struct GS_OUT
 {
-    float4  vPosition : SV_Position;
-    float2  vUV : TEXCOORD;
-    uint    iInstID : SV_InstanceID;
+    float4 vPosition : SV_Position;
+    float2 vUV : TEXCOORD;
+    uint iInstID : SV_InstanceID;
 };
 
 [maxvertexcount(6)]
-void GS_ParticleRender (point VS_OUT _in[1], inout TriangleStream<GS_OUT> _outstream)
-{    
+void GS_ParticleRender(point VS_OUT _in[1], inout TriangleStream<GS_OUT> _outstream)
+{
     uint id = _in[0].iInstID;
     
     if (0 == ParticleBuffer[id].Active)
@@ -73,51 +73,51 @@ void GS_ParticleRender (point VS_OUT _in[1], inout TriangleStream<GS_OUT> _outst
     
     
     if (ModuleData.Render)
-    {        
+    {
         if (ModuleData.VelocityScale)
         {
-            // ÇöÀç ÆÄÆ¼Å¬ÀÇ ¼Ó·ÂÀ» ¾Ë¾Æ³½´Ù.
-            float fCurSpeed = length(ParticleBuffer[id].vVelocity);            
+            // í˜„ì¬ íŒŒí‹°í´ì˜ ì†ë ¥ì„ ì•Œì•„ë‚¸ë‹¤.
+            float fCurSpeed = length(ParticleBuffer[id].vVelocity);
             if (ModuleData.vMaxSpeed < fCurSpeed)
                 fCurSpeed = ModuleData.vMaxSpeed;
             
-            // ÃÖ´ë¼Óµµ ´ëºñ ÇöÀç ¼ÓµµÀÇ ºñÀ²À» ±¸ÇÑ´Ù.
-            float fRatio = saturate(fCurSpeed / ModuleData.vMaxSpeed);            
+            // ìµœëŒ€ì†ë„ ëŒ€ë¹„ í˜„ì¬ ì†ë„ì˜ ë¹„ìœ¨ì„ êµ¬í•œë‹¤.
+            float fRatio = saturate(fCurSpeed / ModuleData.vMaxSpeed);
           
-            // ºñÀ²¿¡ ¸Â´Â Å©±âº¯È­·®À» ±¸ÇÑ´Ù.
+            // ë¹„ìœ¨ì— ë§ëŠ” í¬ê¸°ë³€í™”ëŸ‰ì„ êµ¬í•œë‹¤.
             float3 vDefaultScale = float3(1.f, 1.f, 1.f);
             float3 fScale = vDefaultScale + (ModuleData.vMaxVelocityScale.xyz - vDefaultScale) * fRatio;
                       
             NewPos[0] = NewPos[0] * fScale;
-            NewPos[3] = NewPos[3] * fScale;            
+            NewPos[3] = NewPos[3] * fScale;
         }
         
         
         if (ModuleData.VelocityAlignment)
         {
-            // ÆÄÆ¼Å¬ ¿ùµå ±âÁØ ¼Óµµ¸¦ View °ø°£À¸·Î º¯È¯
+            // íŒŒí‹°í´ ì›”ë“œ ê¸°ì¤€ ì†ë„ë¥¼ View ê³µê°„ìœ¼ë¡œ ë³€í™˜
             float3 vVelocity = normalize(ParticleBuffer[id].vVelocity);
             vVelocity = mul(float4(vVelocity, 0.f), g_matView).xyz;
                        
-            // ÆÄÆ¼Å¬ Right ¹æÇâ°ú ÀÌµ¿ ¹æÇâÀ» ³»ÀûÇØ¼­ µÑ »çÀÌÀÇ °¢µµ¸¦ ±¸ÇÑ´Ù.
+            // íŒŒí‹°í´ Right ë°©í–¥ê³¼ ì´ë™ ë°©í–¥ì„ ë‚´ì í•´ì„œ ë‘˜ ì‚¬ì´ì˜ ê°ë„ë¥¼ êµ¬í•œë‹¤.
             float3 vRight = float3(1.f, 0.f, 0.f);
             float fTheta = acos(dot(vRight, vVelocity));
             
-            // ³»ÀûÀÇ °á°ú°¡ ÄÚ»çÀÎ ¿¹°¢À» ±âÁØÀ¸·Î ÇÏ±â ¶§¹®¿¡, 2ÆÄÀÌ ¿¡¼­ ¹İ´ë·Î µÚÁı¾î ÁØ´Ù.
+            // ë‚´ì ì˜ ê²°ê³¼ê°€ ì½”ì‚¬ì¸ ì˜ˆê°ì„ ê¸°ì¤€ìœ¼ë¡œ í•˜ê¸° ë•Œë¬¸ì—, 2íŒŒì´ ì—ì„œ ë°˜ëŒ€ë¡œ ë’¤ì§‘ì–´ ì¤€ë‹¤.
             if (vVelocity.y < vRight.y)
             {
                 fTheta = (2.f * 3.1415926535f) - fTheta;
             }
             
-            // ±¸ÇÑ °¢µµ·Î Z Ãà È¸Àü Çà·ÄÀ» ¸¸µç´Ù.
+            // êµ¬í•œ ê°ë„ë¡œ Z ì¶• íšŒì „ í–‰ë ¬ì„ ë§Œë“ ë‹¤.
             float3x3 matRotZ =
             {
-                cos(fTheta),  sin(fTheta),      0,
-                -sin(fTheta), cos(fTheta),      0,
-                          0,            0,    1.f,
+                cos(fTheta), sin(fTheta), 0,
+                -sin(fTheta), cos(fTheta), 0,
+                          0, 0, 1.f,
             };
             
-            // 4°³ÀÇ Á¤Á¡À» È¸Àü½ÃÅ²´Ù.
+            // 4ê°œì˜ ì •ì ì„ íšŒì „ì‹œí‚¨ë‹¤.
             for (int i = 0; i < 4; ++i)
             {
                 NewPos[i] = mul(NewPos[i], matRotZ);
@@ -136,7 +136,7 @@ void GS_ParticleRender (point VS_OUT _in[1], inout TriangleStream<GS_OUT> _outst
                 angle = ModuleData.fRotationAngle * ModuleData.fRotateSpeed * g_AccTime;
             }
            
-            // ±¸ÇÑ °¢µµ·Î Z Ãà È¸Àü Çà·ÄÀ» ¸¸µç´Ù.
+            // êµ¬í•œ ê°ë„ë¡œ Z ì¶• íšŒì „ í–‰ë ¬ì„ ë§Œë“ ë‹¤.
             float3x3 matRotZ =
             {
                 cos(angle), sin(angle), 0,
@@ -144,7 +144,7 @@ void GS_ParticleRender (point VS_OUT _in[1], inout TriangleStream<GS_OUT> _outst
                 0, 0, 1.f,
             };
             
-            // 4°³ÀÇ Á¤Á¡À» È¸Àü½ÃÅ²´Ù.
+            // 4ê°œì˜ ì •ì ì„ íšŒì „ì‹œí‚¨ë‹¤.
             for (int i = 0; i < 4; ++i)
             {
                 NewPos[i] = mul(NewPos[i], matRotZ);
@@ -172,7 +172,7 @@ void GS_ParticleRender (point VS_OUT _in[1], inout TriangleStream<GS_OUT> _outst
     output[3].iInstID = id;
     
     
-    // Á¤Á¡ »ı¼º
+    // ì •ì  ìƒì„±
     _outstream.Append(output[0]);
     _outstream.Append(output[1]);
     _outstream.Append(output[2]);
@@ -193,7 +193,7 @@ float4 PS_ParticleRender(GS_OUT _in) : SV_Target
     if (g_btex_0)
     {
         
-        //Render Module ³»¿¡ AnimaionÈ°¼ºÈ­ ±â´ÉÀÌ ÀÖ´Ù.
+        //Render Module ë‚´ì— Animationí™œì„±í™” ê¸°ëŠ¥ì´ ìˆë‹¤.
         if (ModuleData.Render)
         {
             
